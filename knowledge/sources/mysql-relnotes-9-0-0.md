@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
     title: "MySQL 9.0.0 Release Notes (2024-07-01)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "9.0.0, 2024-07-01"
 ---
 

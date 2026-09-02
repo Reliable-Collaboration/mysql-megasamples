@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/download_programs/tools-download-request5.asp?bm_type=TPC-H&bm_vers=3.0.1&mode=CURRENT-ONLY
     title: TPC-H Tools download request
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

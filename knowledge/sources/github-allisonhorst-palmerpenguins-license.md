@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/LICENSE.md
     title: LICENSE.md (6,966 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/allisonhorst/palmerpenguins
     title: GitHub API license CC0-1.0
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

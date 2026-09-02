@@ -10,13 +10,13 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
     title: CO scripts
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-fractional-seconds.md
     title: MySQL fractional seconds rounding
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-json.md
     title: MySQL JSON normalisation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

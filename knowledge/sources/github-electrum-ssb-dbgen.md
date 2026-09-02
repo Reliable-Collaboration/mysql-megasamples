@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/electrum/ssb-dbgen/master/README
     title: README (SSBM dbgen readme)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; pushed_at 2024-03-11; GitHub license null; 124 stars
 ---
 

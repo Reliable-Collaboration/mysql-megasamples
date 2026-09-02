@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/ClickHouse/clickhouse-docs/main/docs/getting-started/example-datasets/star-schema.md
     title: star-schema.md (source of the rendered page; the clickhouse.com URL returned HTTP 530 during this session)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

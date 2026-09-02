@@ -6,34 +6,34 @@ resource: https://docs.github.com/
 tags: [tool, github, limits, ci, registry, docker-hub]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:49:47Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:49:47Z" }
 sources:
   - resource: https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.github.com/en/actions/reference/limits
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/docker-hub/usage/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/docker-hub/usage/pulls/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 | Limit | Value | Source |
 |---|---|---|
 | Repository size | "ideally less than 1 GB, and less than 5 GB is strongly recommended" | [large files](/sources/github-docs-about-large-files.md) |
@@ -52,7 +52,7 @@ sources:
 * **Inferred:** a public ghcr.io image is the right distribution channel (free, no pull limits documented), and a release asset (< 2 GiB each) is the right channel for extended-tier bundles; Git LFS is wrong for both (owner pays bandwidth).
 * **Inferred:** Docker Hub anonymous pulls from shared CI egress are unreliable; log in with a `DOCKERHUB_TOKEN` secret before `docker pull mysql:9.7.2`, or mirror the base image to `ghcr.io/<org>/mysql-base:9.7.2` once and build from that.
 
-# Limits that matter for this project
+# Limits
 1. No converted data or upstream archive over 50 MiB is committed; upstream artifacts are fetched at build time from their canonical URL with sha256 pinning, or from a release asset / [archive.org mirror](/tools/internet-archive-mirroring.md).
 2. The core image (baked datadir) must fit one ghcr layer < 10 GB and upload within 10 minutes; split datasets across layers (one `COPY --from` per dataset directory) so no single layer approaches the limit.
 3. CI builds only the core tier; extended datasets that need more than ~6 hours or ~10 GB scratch are built locally and published as release assets.

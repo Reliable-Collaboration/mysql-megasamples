@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/fixed-point-types.html
     title: Fixed-Point Types (Exact Value) - DECIMAL, NUMERIC
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

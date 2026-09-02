@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.ah-ruhe.de/enron-email-data/
     title: Enron Data (redirect target of http://www.ahschulz.de/enron-email-data/)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

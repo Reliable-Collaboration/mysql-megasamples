@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/README.md
     title: README.md (9,675 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main @ 8957207 (2024-09-19); GitHub release v0.1.0 (2020-07-25)
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/DESCRIPTION
     title: DESCRIPTION (Version 0.1.1, Date 2022-08-12, License CC0, Encoding UTF-8)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

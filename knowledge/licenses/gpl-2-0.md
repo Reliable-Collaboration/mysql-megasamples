@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
     title: gpl.txt (GPL v2, June 1991)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust.c
     title: source header "version 2 ... or (at your option) any later version"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Where the text lives
@@ -28,11 +28,14 @@ sources:
 * Section 2 (aggregation): "mere aggregation of another work not based on the Program with the Program ... on a volume of a storage or distribution medium does not bring the other work under the scope of this License."
 * Section 0 (output): "the output from the Program is covered only if its contents constitute a work based on the Program".
 
-# Obligations for this project
+# Obligations
 * Redistributing the DS3 DDL/index/procedure scripts (even edited) = distributing a GPL work: ship `gpl.txt`, keep Dell/VMware notices, mark modified files with a change notice (Section 2(a)), and license the modified scripts GPL-2.0-or-later.
 * Because of the aggregation clause, including the DS3 scripts in the image does not force the other datasets or the project's own build code under the GPL, provided they are separate works on the same medium.
 * The generated CSV data: see [open question](/questions/dvdstore-generated-data-license.md).
 
+# Attribution
+Ship `gpl.txt` (GPL-2.0-or-later) next to the DVD Store scripts, keep the Dell (2005) and VMware (2014) copyright headers, and mark every modified script with a dated change note. Wording used in NOTICE: "Dell DVD Store 3 kit © 2005 Dell, Inc. and © 2014 VMware, Inc., GNU GPL v2 or later; MySQL scripts adapted (InnoDB, utf8mb4, lower-case identifiers) by this project." sysbench (GPL-2.0) is executed at load time only and is not redistributed.
+
 # Applied to
 * [Dell DVD Store 3](/datasets/dell-dvd-store.md) - `ds3/mysqlds3/build/*.sql`, `ds3/mysqlds3/load/**/*.sql`, generators and drivers.
-* [TPC-C](/datasets/tpc-c.md) — the `sysbench` binary (Debian package 1.0.20+ds-7; GitHub license detection GPL-2.0, text not opened in that session) executes the Apache-2.0 sysbench-tpcc scripts at load time; nothing GPL is redistributed. See [TPC-C implementations](/tools/tpcc-implementations.md).
+* [TPC-C](/datasets/tpc-c.md) — the `sysbench` binary (Debian package 1.0.20+ds-7; **Inferred:** GPL-2.0 per GitHub's license detection, the license file itself was not opened — confirm at task B-03) executes the Apache-2.0 sysbench-tpcc scripts at load time; nothing GPL is redistributed. See [TPC-C implementations](/tools/tpcc-implementations.md).

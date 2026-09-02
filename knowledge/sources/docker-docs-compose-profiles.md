@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/compose/how-tos/profiles/
     title: "Docker Docs: Using profiles with Compose"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

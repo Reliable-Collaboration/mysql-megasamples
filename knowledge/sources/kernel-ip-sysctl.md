@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
     title: "Linux kernel documentation: ip-sysctl (disable_ipv6)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

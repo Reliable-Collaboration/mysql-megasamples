@@ -6,23 +6,23 @@ resource: https://python-oracledb.readthedocs.io/en/latest/
 tags: [oracle, python, driver, license]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://python-oracledb.readthedocs.io/en/latest/user_guide/introduction.html
     title: Introduction to python-oracledb
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://python-oracledb.readthedocs.io/en/latest/user_guide/installation.html
     title: Installing python-oracledb
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://python-oracledb.readthedocs.io/en/latest/license.html
     title: License
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/oracle/python-oracledb/main/LICENSE.txt
     title: LICENSE.txt (repo); latest release v4.0.2 published 2026-07-14 (GitHub releases API)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v4.0.2
 ---
 

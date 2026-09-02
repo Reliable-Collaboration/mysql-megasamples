@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
     title: "MySQL 9.7 Reference Manual: Functions That Create Geometry Values from WKT Values"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 14.16.3"
 ---
 

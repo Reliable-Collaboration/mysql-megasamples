@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
     title: Data Dictionary - LPEP Trip Records
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: document date "March 18, 2025"; 148,750 bytes; 2 pages
 ---
 

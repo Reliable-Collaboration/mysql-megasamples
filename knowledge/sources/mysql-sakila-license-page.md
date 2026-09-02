@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
     title: 9 License for the Sakila Sample Database
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: manual revision 84779 (2026-08-04)
 ---
 

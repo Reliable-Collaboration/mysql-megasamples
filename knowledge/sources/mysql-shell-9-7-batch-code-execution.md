@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
     title: "MySQL Shell 9.7: Batch Code Execution"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7 manual, section 5.6"
 ---
 

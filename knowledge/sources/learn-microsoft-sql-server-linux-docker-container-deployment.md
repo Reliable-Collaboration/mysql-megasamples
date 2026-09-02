@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
     title: Deploy and Connect to SQL Server Linux Containers - SQL Server | Microsoft Learn (canonical linux/containers/deploy)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-05-07, updated_at 2026-06-12, git commit 2b0a712a054f0c7f4addacee8956f9eb1019999a
 ---
 

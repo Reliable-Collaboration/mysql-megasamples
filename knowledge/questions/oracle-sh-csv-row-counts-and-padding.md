@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
     title: SH scripts and CSV samples
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

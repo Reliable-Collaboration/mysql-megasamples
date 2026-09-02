@@ -6,14 +6,14 @@ resource: https://pypi.org/pypi/sqlparse/json
 tags: [python, pypi, sql]
 status: stable
 trust: verified
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
 sources:
   - resource: https://pypi.org/pypi/sqlparse/json
     title: "PyPI JSON metadata: sqlparse"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "0.6.0"
 ---
 

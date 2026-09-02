@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://hbiostat.org/data/
     title: Vanderbilt Biostatistics Datasets ("Published July 14, 2026")
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://bind9.readthedocs.io/en/latest/manpages.html
     title: "BIND 9 manual pages: dig"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

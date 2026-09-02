@@ -12,25 +12,25 @@ verified:
 sources:
   - resource: https://github.com/mediawiki-utilities/python-mwxml
     title: python-mwxml README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://pypi.org/pypi/mwxml/json
     title: PyPI metadata for mwxml
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 0.3.8 (uploaded 2026-04-08)
   - resource: https://github.com/mediawiki-utilities/python-mwsql
     title: python-mwsql README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://pypi.org/pypi/mwsql/json
     title: PyPI metadata for mwsql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 1.0.4 (uploaded 2024-02-19)
   - resource: https://www.mediawiki.org/xml/export-0.11.xsd
     title: MediaWiki export schema 0.11
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
     title: first 8 KB of the redirect SQL dump (header + first INSERT)
-    accessed: 2026-09-02
-    version: 20260901
+    accessed: "2026-09-02"
+    version: "20260901"
 ---
 
 # Two input formats, two paths
@@ -63,7 +63,12 @@ So: **yes, every .sql.gz includes `DROP TABLE` + `CREATE TABLE` + multi-row `INS
 6. `DEFAULT CHARSET=binary` + `varbinary` titles: keep as-is (lossless, matches MediaWiki docs); add `_utf8` views with `CONVERT(col USING utf8mb4)` for humans.
 * **mwsql 1.0.4** (GPL-3.0-or-later; Python >=3.9; deps requests, tqdm; last push 2024-02-19) parses these files into Python rows (`Dump.from_file(...).rows(convert_dtypes=True)`) — useful only if we want to re-emit rows (e.g., to convert binary titles to utf8mb4 or subset rows); its GPL license is fine for a build-time tool but keep it out of the shipped image.
 
-# Verified facts
+# Facts
 * `linktarget` is required: 20260901 `categorylinks` has `cl_target_id` and no `cl_to`; `pagelinks` has `pl_target_id` and no `pl_namespace/pl_title` (headers read 2026-09-02). Category names = `linktarget.lt_title WHERE lt_namespace = 14`.
 * Dumps are produced by MariaDB 10.11 `mysqldump`, `SET NAMES utf8mb4`, `TIME_ZONE='+00:00'`, `SQL_MODE='NO_AUTO_VALUE_ON_ZERO'`, and disable FK/unique checks during load.
 * Checksums: `simplewiki-latest-md5sums.txt` and `-sha1sums.txt` list every file by its dated name (`simplewiki-20260901-...`).
+
+# Limits
+* The `.sql.gz` dumps are MariaDB `mysqldump` output and need the fix-ups listed above before MySQL 9.7 accepts them ([question](/questions/mediawiki-sql-dump-ddl-compatibility-mysql-9-7.md)).
+* `revision` and `text` are not published as SQL; they are synthesized from the XML, so their row counts are only known after parsing ([question](/questions/simplewiki-pages-articles-page-count.md)).
+* From the 2025 schema on, `categorylinks`/`pagelinks` carry no title columns; every title join must go through `linktarget`.

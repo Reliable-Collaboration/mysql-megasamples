@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
     title: "MySQL 8.4 Reference Manual: What Is New in MySQL 8.4"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 8.4 manual, section 1.4"
 ---
 

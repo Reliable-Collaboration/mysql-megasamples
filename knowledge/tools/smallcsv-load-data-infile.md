@@ -12,25 +12,25 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/load/cust/mysqlds3_load_cust.sql
     title: DS3 loader scripts (LOAD DATA LOCAL INFILE pattern)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
     title: DS3 CSV inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
     title: Jaffle seeds inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://hbiostat.org/data/repo/titanic3.csv
     title: titanic3.csv inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://archive.ics.uci.edu/static/public/53/iris.zip
     title: iris.zip inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/allisonhorst/palmerpenguins/tree/main/inst/extdata
     title: penguins CSV inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Verified per-dataset CSV facts
+# Facts
 | dataset | header | quoting | missing token | dates | line endings / encoding | notes |
 |---|---|---|---|---|---|---|
 | DS3 | none | `OPTIONALLY ENCLOSED BY '"'` (upstream), rarely needed | empty | `YYYY/MM/DD`, `YYYY/MM` | LF, ASCII | upstream: `LOAD DATA LOCAL INFILE ... FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'`, keys disabled during load |
@@ -50,3 +50,7 @@ sources:
 
 # Applies to
 [Dell DVD Store](/datasets/dell-dvd-store.md), [Jaffle Shop](/datasets/jaffle-shop.md), [Lahman](/datasets/lahman.md), [Contoso](/datasets/contoso.md), [Titanic](/datasets/titanic.md), [Iris](/datasets/iris.md), [Palmer Penguins](/datasets/palmer-penguins.md).
+
+# Limits
+* Superseded for the build pipeline: every dataset now loads through the `mysql-build` service during `make <dataset>` (see [bake decision](/decisions/bake-data-vs-initdb.md)); the recipe above remains valid for ad-hoc loads but the init-directory delivery it mentions is not used.
+* Header-less and BOM-bearing CSVs (DVD Store, Lahman) need the pre-pass described per dataset.

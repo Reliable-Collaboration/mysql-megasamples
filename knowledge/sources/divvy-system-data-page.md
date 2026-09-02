@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://divvybikes.com/system-data
     title: Divvy System Data
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

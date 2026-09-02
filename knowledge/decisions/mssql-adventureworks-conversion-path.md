@@ -12,16 +12,16 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
     title: instawdb.sql (CODEPAGE 65001, terminators per table)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
     title: CSV sampling (UTF-8, LF, hex-encoded binary/hierarchyid/geography)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
     title: LT 2012 script zip (Windows-1252 + one UTF-16 CSV)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
     title: .bak asset sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

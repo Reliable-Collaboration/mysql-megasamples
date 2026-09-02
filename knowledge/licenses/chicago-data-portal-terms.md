@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
     title: "City of Chicago :: Data Terms of Use"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
     title: Crimes dataset metadata (license = "See Terms of Use")
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Where the verbatim text lives
+# Where the text lives
 `https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html` - the full text is quoted in [the source record](/sources/chicago-data-terms-of-use.md). The Socrata metadata for each dataset declares `license: {"name": "See Terms of Use"}`, i.e. these terms and nothing else. Ship as `LICENSES/CHICAGO-DATA-TERMS-OF-USE.txt`.
 
 # Terms (excerpts read 2026-09-02)
@@ -38,7 +38,7 @@ sources:
 * **Personal data:** the data is already block-level redacted; do not attempt to re-derive addresses.
 * **Risk:** the City may revoke; the image must be able to drop the dataset.
 
-# Attribution string to ship
+# Attribution
 > Crime data: City of Chicago Data Portal, "Crimes - 2001 to Present" (ijzp-q8t2), Chicago Police Department. Terms of use: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
 >
 > This site provides applications using data that has been modified for use from its original source, www.cityofchicago.org, the official website of the City of Chicago. The City of Chicago makes no claims as to the content, accuracy, timeliness, or completeness of any of the data provided at this site. The data provided at this site is subject to change at any time. It is understood that the data provided at this site is being used at one's own risk.

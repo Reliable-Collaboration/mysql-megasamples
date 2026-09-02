@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/optimizing-innodb-bulk-data-loading.html
     title: "MySQL 9.7 Reference Manual: Bulk Data Loading for InnoDB Tables"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 10.5.5"
 ---
 

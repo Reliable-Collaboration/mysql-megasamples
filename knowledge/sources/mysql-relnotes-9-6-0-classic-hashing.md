@@ -3,7 +3,7 @@ type: Source
 title: MySQL 9.6.0 release notes - MD5() and SHA1() moved to the classic_hashing component
 description: "Security note WL #16956 in the 9.6.0 release notes (2026-01-20) relocating MD5() and SHA1() out of the core server."
 resource: https://dev.mysql.com/doc/relnotes/mysql/9.6/en/news-9-6-0.html
-tags: [mysql, 9.6, md5, sha1, checksum]
+tags: [mysql, "9.6", md5, sha1, checksum]
 status: stable
 trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/relnotes/mysql/9.6/en/news-9-6-0.html
     title: Changes in MySQL 9.6.0 (2026-01-20, Innovation Release)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/encryption-functions.html
     title: 9.7 Reference Manual - Encryption and Compression Functions (function table)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

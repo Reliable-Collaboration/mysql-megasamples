@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/miscellaneous-functions.html
     title: "MySQL 9.7 Reference Manual: Miscellaneous Functions (UUID, UUID_TO_BIN, BIN_TO_UUID, IS_UUID)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 14.25"
 ---
 

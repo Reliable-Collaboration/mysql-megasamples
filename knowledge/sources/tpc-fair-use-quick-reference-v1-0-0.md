@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
     title: Fair Use of TPC Benchmarks
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: dated 2019-06-05, 108 KB PDF (text extracted locally with a zlib stream parser; one phrase set in a different font was lost, noted below)
 ---
 

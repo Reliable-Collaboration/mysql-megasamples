@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.gnu.org/licenses/fdl-1.3.txt
     title: fdl-1.3.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

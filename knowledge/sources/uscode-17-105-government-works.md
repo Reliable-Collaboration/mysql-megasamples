@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.law.cornell.edu/uscode/text/17/105
     title: "17 U.S. Code Sec. 105 - Subject matter of copyright: United States Government works (LII)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/README.md
     title: README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main @ fd7bfac (2024-04-18); repository archived
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/dbt_project.yml
     title: dbt_project.yml
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

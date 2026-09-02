@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/config.json
     title: config.json
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
     title: build_single.cmd
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_all.cmd
     title: build_all.cmd
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

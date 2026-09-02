@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/specify-field-and-row-terminators-sql-server
     title: Specify Field and Row Terminators (SQL Server) - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2025-03-30, updated_at 2026-08-24, git commit 58c9ba7063458281263c05cba4e0e8dc7da7358a
 ---
 

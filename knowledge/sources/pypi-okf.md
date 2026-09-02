@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://pypi.org/pypi/okf/json
     title: "PyPI JSON metadata: okf"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "0.1.0"
 ---
 

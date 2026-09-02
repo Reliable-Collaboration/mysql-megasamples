@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
     title: MCR catalog details API (the JSON behind the About page; lastModifiedDate 2026-08-13)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://mcr.microsoft.com/v2/mssql/server/tags/list
     title: OCI/Docker registry tags list (274 tags on 2026-09-02)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://mcr.microsoft.com/v2/mssql/server/manifests/2022-latest
     title: manifests for 2022-latest and 2025-latest plus their config blobs
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # What was read

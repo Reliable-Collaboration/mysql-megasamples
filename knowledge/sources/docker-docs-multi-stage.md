@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/build/building/multi-stage/
     title: "Docker Docs: Multi-stage builds"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/details/stackexchange
     title: Stack Exchange Data Dump
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

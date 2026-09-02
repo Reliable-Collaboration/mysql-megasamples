@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
     title: Box share page probe
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
     title: readme (license permits redistribution)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -25,3 +25,10 @@ Build automation needs a URL. Box shared folders can be downloaded via the Box "
 
 # Related
 [Lahman](/datasets/lahman.md), [decision](/decisions/lahman-conversion-path.md).
+
+# Resolves
+Records that depend on the answer:
+* [lahman.md](/datasets/lahman.md)
+* [sabr-box-lahman-csv-share.md](/sources/sabr-box-lahman-csv-share.md)
+* [sabr-lahman-database-page.md](/sources/sabr-lahman-database-page.md)
+* PLAN.md §9 risk register (outside the bundle)

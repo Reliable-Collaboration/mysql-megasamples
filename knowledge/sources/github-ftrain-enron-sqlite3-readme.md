@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/ftrain/enron-sqlite3/master/README.md
     title: README.md at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

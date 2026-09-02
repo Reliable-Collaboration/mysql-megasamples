@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
     title: "MySQL Shell 9.7 manual front page and preface links"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7 manual"
 ---
 

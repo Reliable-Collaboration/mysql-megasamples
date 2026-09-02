@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
     title: releases/tags/wide-world-importers-v1.0 (published 2016-06-08T19:25:10Z)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # What was read
 GitHub releases API for the tag. Download URL pattern `https://github.com/microsoft/sql-server-samples/releases/download/wide-world-importers-v1.0/<asset>`; no auth or click-through; no checksums published.
 
-# Assets (bytes)
+# Relevant excerpt
 * WideWorldImporters-Full.bak 127,111,168; WideWorldImporters-Full.bacpac 61,291,839; WideWorldImporters-Full_old.bak 127,056,896; WideWorldImporters-Full_old.bacpac 62,009,561
 * **WideWorldImporters-Standard.bak 126,951,424**; WideWorldImporters-Standard.bacpac 60,996,994; -Standard_old.bak 126,938,624; -Standard_old.bacpac 61,294,900
 * WideWorldImportersDW-Full.bak 50,044,416; WideWorldImportersDW-Full.bacpac 20,566,783

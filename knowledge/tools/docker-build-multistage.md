@@ -11,22 +11,22 @@ verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
 sources:
   - resource: /sources/docker-docs-multi-stage.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/docker-docs-dockerfile-reference.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/docker-docs-volumes.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/docker-library-mysql-9-7-docker-entrypoint.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/docker-library-mysql-9-7-dockerfile-oracle.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/docker-docs-compose-profiles.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/docker-docs-buildx-build.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 * Multi-stage: "Each FROM instruction can use a different base"; `COPY --from=<stage>`; "BuildKit only builds the stages that the target stage depends on" ([multi-stage](/sources/docker-docs-multi-stage.md)).
 * `RUN --mount=type=cache` persists between builds but "may be cleared and must not be relied on for correctness"; `RUN --mount=type=bind` is read-only by default and writes are discarded; heredoc `RUN <<EOF` supported; `RUN --network=host` available ([Dockerfile reference](/sources/docker-docs-dockerfile-reference.md)).
 * The official image declares `VOLUME /var/lib/mysql`, runs as uid/gid 999 `mysql` via gosu, base `oraclelinux:9-slim` with `microdnf` only, and bundles `mysqlsh` ([Dockerfile](/sources/docker-library-mysql-9-7-dockerfile-oracle.md)).
@@ -40,6 +40,6 @@ sources:
 * **Inferred:** `COPY --from=builder --chown=999:999 /var/lib/mysql /var/lib/mysql` preserves ownership; `mysqld` refuses a datadir it cannot write, so P-03 also checks `ls -ln`.
 * **Inferred:** running `mysqld` inside a single `RUN` (start → load → shutdown) works because the process tree lives only for that instruction; a clean `mysqladmin shutdown` is required so the redo log is empty and `ALTER INSTANCE ENABLE INNODB REDO_LOG` has been issued.
 
-# Limits that matter for this project
+# Limits
 * The builder that runs SQL Server or Oracle cannot be a Dockerfile stage (no Docker-in-Docker); those run as Compose services on the host and only their exported TSV/dump directories enter the build context ([orchestration decision](/decisions/build-orchestration.md)).
 * Base is `microdnf`-only; extra tools (python, duckdb, curl) live in the separate `loader` image, never in the final stage.

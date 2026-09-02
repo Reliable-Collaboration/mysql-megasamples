@@ -6,50 +6,50 @@ resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
 tags: [tool, mysql-shell, bulk-load, dump, build-time, ships-in-image]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
 sources:
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
     title: "12.4 Parallel Table Import Utility"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7"
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
     title: "12.6 Dump Loading Utility"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7"
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-dump-instance-schema.html
     title: "12.5 Instance Dump Utility, Schema Dump Utility, and Table Dump Utility"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7"
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utils-copy.html
     title: "12.8 Copy Instance, Schemas, and Tables"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7"
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
     title: "5.8.1 Command Line Integration Overview"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
     title: "5.6 Batch Code Execution"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
     title: "MySQL Shell 9.7 manual front page (preface license links)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
     title: "mysql/mysql-shell LICENSE at 9.7.1"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "9.7.1"
   - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
     title: "docker-library/mysql 9.7/Dockerfile.oracle"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "master @ 2f988f19 (2026-08-19)"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
     title: "8.1.6 Security Considerations for LOAD DATA LOCAL"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 
 ## Availability and license
 * `mysqlsh` **is in the official image**: `9.7/Dockerfile.oracle` installs `mysql-shell-9.7.1-1.el9` from `repo.mysql.com/yum/mysql-tools-9.7-community` and runs `mysqlsh --version` during the build ([Dockerfile record](/sources/docker-library-mysql-9-7-dockerfile-oracle.md)). No extra package is needed in the final stage or in a builder stage derived from `mysql:9.7.2`.
@@ -87,7 +87,7 @@ sources:
 * **Inferred:** `importTable` with `bytesPerChunk` 50M and 8 threads is I/O-bound on the WSL2 disk; the plan's default is `threads: 4` matching the image's 4-vCPU CI target, tuned by task E-02.
 * **Inferred:** the `.tsv.zst` chunk format written by `dumpSchemas` is also a good *publishing* format for extended-tier bundles (zstd, chunked, self-describing, loadable with `deferTableIndexes:"all"`), at the cost of requiring mysqlsh on the consumer side, which the image provides.
 
-# Limits that matter for this project
+# Limits
 1. Every Shell loader needs `local_infile=ON` on the temporary build server; forgetting it fails with ERROR 3950.
 2. Compressed inputs to `importTable` are single-threaded per file — keep converter output uncompressed (or split into many files) when speed matters; compress only for publishing.
 3. `importTable` is strictly one target table per invocation and cannot express foreign-key order; the Makefile orders calls.

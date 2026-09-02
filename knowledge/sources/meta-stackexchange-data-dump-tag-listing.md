@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://api.stackexchange.com/2.3/questions?site=meta&tagged=data-dump&sort=creation&order=desc&pagesize=30&fromdate=1719792000
     title: API listing (titles, dates, scores only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

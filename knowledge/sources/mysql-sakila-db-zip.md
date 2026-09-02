@@ -6,18 +6,18 @@ resource: https://downloads.mysql.com/docs/sakila-db.zip
 tags: [sakila, artifact, checksum, measurement]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://downloads.mysql.com/docs/sakila-db.zip
     title: sakila-db.zip
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "Version 1.5 (file headers); HTTP Last-Modified Mon, 31 Aug 2026 22:05:33 GMT"
   - resource: https://downloads.mysql.com/docs/sakila-db.tar.gz
     title: sakila-db.tar.gz (HEAD only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

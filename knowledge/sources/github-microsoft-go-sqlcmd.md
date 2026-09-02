@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://api.github.com/repos/microsoft/go-sqlcmd
     title: repository metadata (license.spdx_id MIT; description "The new sqlcmd, CLI for SQL Server and Azure SQL (winget install sqlcmd / sqlcmd create mssql / sqlcmd open ads)")
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/go-sqlcmd/releases/latest
     title: latest release v1.10.0, published 2026-03-03T17:02:18Z
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/go-sqlcmd/main/LICENSE
     title: LICENSE (first lines read)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # What was read

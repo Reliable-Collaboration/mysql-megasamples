@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
     title: instnwnd.sql at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: blob ae61e5631d7f03029ec15213ce672b45ceb7e629, 1,049,720 bytes
 ---
 
 # What was read
 The whole file was downloaded with curl (1,049,720 bytes, matches the GitHub API size) and analysed with `file`, `xxd`, `grep`, `awk`, `iconv`.
 
-# Findings (all measured on the file)
+# Relevant excerpt
 * **Encoding**: no BOM (first bytes `2f2a0a` = `/*\n`); `file` reports "ASCII text, with very long lines"; `iconv -f UTF-8` validates it as UTF-8; 433 lines contain non-ASCII bytes (UTF-8 encoded), LF line endings (0 CRLF lines), longest line 44,123 characters (an `Employees.Photo` hex literal).
 * Header: `** Copyright Microsoft, Inc. 1994 - 2000  ** All Rights Reserved.` then `-- This script does not create a database. -- Run this script in the database you want the objects to be created. -- Default schema is dbo.` `SET DATEFORMAT mdy` is set explicitly.
 * Batches: 122 `GO` separators. `set quoted_identifier on`; identifiers are double-quoted (e.g. `"Order Details"`, `"Employee Sales by Country"`), and the 2000-era tail uses `[dbo].[Region]` bracket style.

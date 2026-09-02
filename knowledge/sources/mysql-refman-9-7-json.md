@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
     title: The JSON Data Type
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

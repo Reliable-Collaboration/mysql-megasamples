@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/fractional-seconds.html
     title: Fractional Seconds in Time Values
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,9 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dhuny/tpch/master/README.md
     title: README.md (+ tpch_to_mariadb.sql)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; pushed_at 2024-06-08; license null; 6 stars
 ---
+# What was read
+* https://raw.githubusercontent.com/dhuny/tpch/master/README.md, “README.md (+ tpch_to_mariadb.sql)”, accessed 2026-09-02, version master; pushed_at 2024-06-08; license null; 6 stars
 
 # Relevant excerpt
 * README: build with `DATABASE= ORACLE MACHINE = LINUX WORKLOAD = TPCH`, `./dbgen -s 1`; "based on Catarina Ribeiro's port to MySQL"; references "TPC-H version 3.0.0 (published 18 February 2021)".

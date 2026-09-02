@@ -12,35 +12,35 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/sakila/en/
     title: Sakila Sample Database (index)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "Document generated on: 2026-08-04 (revision: 84779)"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-installation.html
     title: 4 Installation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-structure-tables.html
     title: 5.1 Tables
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-structure-tables-address.html
     title: 5.1.2 The address Table
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-structure-views.html
     title: 5.2 Views
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-structure-procedures.html
     title: 5.3 Stored Procedures
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-structure-functions.html
     title: 5.4 Stored Functions
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-structure-triggers.html
     title: 5.5 Triggers
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-history.html
     title: 3 History
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-preface.html
     title: Preface and Legal Notices
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

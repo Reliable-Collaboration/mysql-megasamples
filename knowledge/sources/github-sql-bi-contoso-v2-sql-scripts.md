@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
     title: CreateTablesCommon.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesSales.sql
     title: CreateTablesSales.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesOrders.sql
     title: CreateTablesOrders.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

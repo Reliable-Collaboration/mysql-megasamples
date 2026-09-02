@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/LICENSE.md
     title: LICENSE.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master (1,117 bytes)
 ---
 

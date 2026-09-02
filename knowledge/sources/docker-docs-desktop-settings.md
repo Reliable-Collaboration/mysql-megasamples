@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
     title: "Docker Docs: Change your Docker Desktop settings"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

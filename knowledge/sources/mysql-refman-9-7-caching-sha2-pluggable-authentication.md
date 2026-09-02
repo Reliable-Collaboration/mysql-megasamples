@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/caching-sha2-pluggable-authentication.html
     title: "MySQL 9.7 Reference Manual: Caching SHA-2 Pluggable Authentication"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 8.4.1.1"
 ---
 

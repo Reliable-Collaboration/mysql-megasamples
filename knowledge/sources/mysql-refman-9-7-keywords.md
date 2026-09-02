@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/keywords.html
     title: Keywords and Reserved Words
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/keywords.html, “Keywords and Reserved Words”, accessed 2026-09-02
 
 # Relevant excerpt
 * "Reserved keywords are marked with (R)." Entries: `DATE`, `TIME`, `YEAR` (not reserved); `ORDER (R)` (reserved). PART, SUPPLIER, CUSTOMER, ORDERS, LINEITEM, NATION, REGION, ITEM, STOCK, HISTORY, DISTRICT, WAREHOUSE, INVENTORY, REASON, STORE, PROMOTION are not keywords.

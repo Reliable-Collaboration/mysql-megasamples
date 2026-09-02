@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
     title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA TABLES Table"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html, “MySQL 9.7 Reference Manual: INFORMATION_SCHEMA TABLES Table”, accessed 2026-09-02
 
 # Relevant excerpt
 > "For other storage engines, such as InnoDB, this value is an approximation, and may vary from the actual value by as much as 40% to 50%. In such cases, use SELECT COUNT(*) to obtain an accurate count."

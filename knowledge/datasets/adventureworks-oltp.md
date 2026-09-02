@@ -3,7 +3,7 @@ type: Dataset
 title: AdventureWorks (OLTP)
 description: Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer); available as version-specific .bak files and as a SQLCMD install script plus 69 UTF-8 CSV files (~95 MB) that need no SQL Server to read; MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/adventure-works/oltp-install-script
-tags: [tier-extended, mssql-origin, csv-load, mit, multi-schema]
+tags: [tier-core-medium, mssql-origin, csv-load, mit, multi-schema]
 status: stable
 trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
@@ -12,28 +12,28 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
     title: instawdb.sql (Updated November 14, 2025)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master, commit b47eadc852 (2025-11-14)
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
     title: directory listing with CSV sizes; 46 small CSVs read in full, 5 large ones sampled by HTTP range
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
     title: release assets (.bak sizes, AdventureWorks-oltp-install-script.zip 17,486,641 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
     title: adventure-works README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
     title: AdventureWorks sample databases (Learn)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: license.txt (MIT)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity
-AdventureWorks OLTP (Adventure Works Cycles). Proposed MySQL database name: **`adventureworks`**; schema mapping per [decision](/decisions/schema-to-database-mapping.md) (recommendation: `Sales_SalesOrderHeader` prefixes inside one database).
+AdventureWorks OLTP (Adventure Works Cycles). Proposed MySQL database name: **`adventureworks`**; schema mapping per [decision](/decisions/schema-to-database-mapping.md) (accepted: lower-cased schema-prefixed names such as `sales_salesorderheader` inside one database).
 
 # Source artifact
 Two upstream forms, both MIT, no auth, no click-through, no published checksums:
@@ -75,12 +75,12 @@ Port PKs, 170 FKs, 59 unique indexes (rowguid, AK_ names), the nonclustered inde
 
 # Tests and expected values
 * Row counts per table (verified list above; inferred list to be replaced by CSV counts).
-* `SELECT SUM(TotalDue) FROM Sales_SalesOrderHeader` and `SUM(LineTotal) FROM Sales_SalesOrderDetail` computed from the loaded data and pinned as checksums after first load (**Inferred** classic values: 123,216,786.1159 and 109,846,381.4 - the 2025 edition kept amounts, only dates moved, but do not trust without measuring).
-* Encoding probe: `SELECT LastName FROM Person_Person WHERE BusinessEntityID=1` = `Sánchez`; ProductDescription rows for culture `fr` contain `chromé`; culture `zh-cht`/`ar`/`th` rows must round-trip (4-byte-safe utf8mb4).
+* `SELECT SUM(totaldue) FROM sales_salesorderheader` and `SUM(linetotal) FROM sales_salesorderdetail` computed from the loaded data and pinned as checksums after first load (**Inferred** classic values: 123,216,786.1159 and 109,846,381.4 - the 2025 edition kept amounts, only dates moved, but do not trust without measuring).
+* Encoding probe: `SELECT lastname FROM person_person WHERE businessentityid=1` = `Sánchez`; ProductDescription rows for culture `fr` contain `chromé`; culture `zh-cht`/`ar`/`th` rows must round-trip (4-byte-safe utf8mb4).
 * hierarchyid probe: Employee 2's decoded path = `/1/`, level 1; Employee 3 = `/1/1/`.
 
 # Tier assignment
-**extended** (download-at-build): 95 MB of CSV, **Inferred** ~200 MB loaded, above the ~50 MB core guideline. If the coordinator wants one "big classic" in core, this is the candidate over WWI because it needs no SQL Server.
+**core (medium)** per [tier assignments](/decisions/tier-assignments.md): 95 MB of CSV, **Inferred** 180–250 MB loaded, inside the medium-core band because it is the one "big classic" that needs no SQL Server. It is the first dataset moved to extended if the measured core data directory exceeds 3 GB (task E-01).
 
 # License and attribution
 MIT, repository `license.txt` ([license record](/licenses/mit.md)); the script header adds "Copyright (C) Microsoft Corporation. All rights reserved. ... All data in this database is fictitious." Attribution string: "AdventureWorks sample database, Copyright (c) Microsoft Corporation, MIT License (https://github.com/microsoft/sql-server-samples/blob/master/license.txt)". No share-alike, no real personal data.

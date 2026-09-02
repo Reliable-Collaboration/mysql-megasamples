@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/engine/daemon/ipv6/
     title: "Docker Docs: Use IPv6 networking"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

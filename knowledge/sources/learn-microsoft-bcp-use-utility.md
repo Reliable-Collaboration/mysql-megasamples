@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/tools/bcp/bcp-use-utility
     title: How to Use the bcp Utility - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-06-25, updated_at 2026-08-24, git commit 3788e363569c9a5af042c9b4f688384852d2d144
 ---
 

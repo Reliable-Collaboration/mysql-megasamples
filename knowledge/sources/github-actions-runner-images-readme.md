@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
     title: "actions/runner-images README"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "main branch, read 2026-09-02"
 ---
 

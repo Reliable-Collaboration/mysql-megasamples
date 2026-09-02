@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/developers/ias3.html
     title: "Internet Archive Developer Portal: ias3 S3-like API"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

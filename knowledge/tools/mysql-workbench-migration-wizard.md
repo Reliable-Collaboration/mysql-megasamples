@@ -6,46 +6,46 @@ resource: https://dev.mysql.com/doc/workbench/en/wb-migration.html
 tags: [tool, workbench, migration, gui, rejected]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
 sources:
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration.html
     title: "Chapter 10 Database Migration Wizard"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview.html
     title: "10.2 Migration Overview"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview-supported.html
     title: "10.2.2 Migrating from Supported Databases"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard.html
     title: "10.8 Using the MySQL Workbench Migration Wizard"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-setup.html
     title: "10.8.10 Data Transfer and Migration Setup"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-transfer.html
     title: "10.8.11 Bulk Data Transfer"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
     title: "10.5.4 Microsoft SQL Server Type Mapping"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-preface.html
     title: "Preface and Legal Notices"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/
     title: "MySQL Workbench Manual (8.0 through 8.0.47)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "8.0.47"
   - resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
     title: "mysql/mysql-workbench plugins/migration sources and License.txt"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "8.0.47"
 ---
 
-# Facts (verified)
+# Facts
 * Version and license: the manual "documents the MySQL Workbench Community and MySQL Workbench Commercial releases for versions 8.0 through 8.0.47" ([front page](/sources/mysql-workbench-manual-front-page.md)); repository tags 8.0.47/8.0.46/8.0.45, last push 2026-04-23. `License.txt` at 8.0.47: "released under version 2 of the GNU General Public License (GPLv2) ... with the following additional permissions" (OpenSSL-style linking permission), "Last updated: March 2026" ([plugin sources record](/sources/github-mysql-workbench-migration-plugin.md); preface links the same text as `workbench-8.0-gpl-en.pdf`, [preface](/sources/mysql-workbench-wb-preface.md)). See [GPL-2.0](/licenses/gpl-2-0.md).
 * Supported sources ("currently tested and supported"): Microsoft SQL Server 2000 and later; Microsoft Access 2007 and later; MySQL 5.6+; PostgreSQL 8.0 and later; SQL Anywhere; SQLite; Sybase Adaptive Server Enterprise 15.x and later; other products through "Generic database support, as long as you have an ODBC driver for it" ([supported](/sources/mysql-workbench-wb-migration-overview-supported.md), [overview](/sources/mysql-workbench-wb-migration-overview.md)).
 * It is a wizard inside the Workbench GUI: chapter 10.8 is twelve sequential wizard pages (Connecting, Schema Retrieval, Reverse Engineering, Object Selection, Migration, **Manual Editing**, Target Creation Options, Schema Creation, Create Target Results, Data Transfer Setup, Bulk Data Transfer, Migration Report) ([wizard](/sources/mysql-workbench-wb-migration-wizard.md)). The chapter opens with "Setup may be the most challenging aspect of using the MySQL Workbench Migration Wizard" (ODBC libraries and drivers per platform) ([chapter](/sources/mysql-workbench-wb-migration.md)).
@@ -58,7 +58,7 @@ sources:
 * **Inferred:** `wbcopytables` is scriptable (all inputs are flags and a table file) but it is only built and installed as part of a full Workbench package with GUI toolkit dependencies; there is no standalone package, no Docker image, and it needs an ODBC DSN or Python DB-API connection string to the *running* source product — so it saves nothing over talking to that product directly.
 * **Inferred:** the type map is a reasonable published baseline for reviewers, but the project's map is stricter (MONEY→DECIMAL(19,4), UNIQUEIDENTIFIER→BINARY(16) with UUID_TO_BIN, DATETIMEOFFSET→DATETIME(6)+offset column, ROWVERSION→BINARY(8), XML→LONGTEXT/JSON, geography→GEOMETRY SRID 4326) — see [MySQL 9.x behaviour notes](/tools/mysql-9x-behaviour-notes.md).
 
-# Limits that matter for this project
+# Limits
 1. Schema conversion requires clicking through the wizard; the "Manual Editing" step is where every type-mapping decision would be taken by hand — not reproducible, not diffable, not runnable in CI.
 2. Views, procedures, functions and triggers arrive as commented-out text, so the hardest part of each port (programmable objects) is not done at all.
 3. Requires a live ODBC connection to the source product; the project already needs the source container for SQL Server/Oracle sources, and from there bcp/sqlcmd or DuckDB exports are simpler.

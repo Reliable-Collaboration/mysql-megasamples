@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md
     title: SPEC.md at main
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main branch as of 2026-09-02 (commit not captured; executor should pin it)
 ---
 

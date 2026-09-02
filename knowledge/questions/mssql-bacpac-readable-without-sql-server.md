@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
     title: Data-tier applications overview (Learn)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

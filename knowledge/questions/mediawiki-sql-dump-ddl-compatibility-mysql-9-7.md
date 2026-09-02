@@ -9,9 +9,9 @@ trust: open
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
     title: readme (47,982 bytes; md5 56e80e2c9bd5e27a73891321bf04cc14; CRLF, no BOM)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "Release Date: Dec 10, 2025"
 ---
 

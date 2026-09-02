@@ -12,23 +12,23 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/human_resources/hr_install.sql
     title: hr_install.sql (8,275 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/human_resources/hr_create.sql
     title: hr_create.sql (17,112 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/human_resources/hr_populate.sql
     title: hr_populate.sql (41,301 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/human_resources/hr_code.sql
     title: hr_code.sql (3,849 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/human_resources/README.md
     title: human_resources/README.md (2,642 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
 ---
 

@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
     title: OE/OC scripts, XML loading
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-spatial-type-overview.md
     title: MySQL SRID attribute (axis order not covered)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

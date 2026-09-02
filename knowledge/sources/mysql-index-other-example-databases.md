@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/index-other.html
     title: Other MySQL Documentation - Example Databases
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

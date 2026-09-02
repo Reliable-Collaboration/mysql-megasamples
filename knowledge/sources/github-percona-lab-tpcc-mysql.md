@@ -12,17 +12,17 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/README.md
     title: README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ 1ec1c5eb5b11b55ecf26f81a74db86b659c4e7b9 (2017-01-20, latest commit); GitHub API archived=true, license=null, pushed_at 2018-06-13, 487 stars
   - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/create_table.sql
     title: create_table.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/add_fkey_idx.sql
     title: add_fkey_idx.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/src/load.c
     title: src/load.c (+ src/tpc.h, src/support.c, Dockerfile, load.sh)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

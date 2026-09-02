@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
     title: 11 Sakila Change History
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: manual revision 84779; latest entry Version 1.5
 ---
 

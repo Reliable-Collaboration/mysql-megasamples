@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/privileges-provided.html
     title: Privileges Provided by MySQL
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/privileges-provided.html, “Privileges Provided by MySQL”, accessed 2026-09-02
 
 # Relevant excerpt
 Summary table: SELECT (tables or columns), SHOW VIEW (views), EXECUTE (stored routines), PROCESS / SHOW DATABASES (server administration), USAGE ("synonym for no privileges"). `ALL [PRIVILEGES]` is "shorthand for all privileges available at a given privilege level (except GRANT OPTION)". CREATE USER "Enables use of the ALTER USER, CREATE ROLE, CREATE USER, DROP ROLE, DROP USER, RENAME USER, and REVOKE ALL PRIVILEGES statements." Dynamic privileges (ROLE_ADMIN, SET_ANY_DEFINER, ...) are granted separately from static ALL.

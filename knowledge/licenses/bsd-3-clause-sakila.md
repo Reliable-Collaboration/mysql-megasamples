@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
     title: 9 License for the Sakila Sample Database
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://downloads.mysql.com/docs/sakila-db.zip
     title: sakila-db.zip file headers (Version 1.5)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://opensource.org/license/bsd-3-clause
     title: The 3-Clause BSD License (OSI)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Where the text lives
@@ -41,6 +41,9 @@ sources:
 
 # Scope warning
 Only the two .sql files are open-licensed. "The additional materials included in the Sakila distribution, including this documentation, are not licensed under an open license." Therefore do NOT redistribute `sakila.mwb` or the HTML/PDF manual in the public repository or image.
+
+# Attribution
+Reproduce the upstream notice verbatim in `datasets/sakila/LICENSE`: the Oracle copyright line ("Copyright (c) 2006, 2026, Oracle and/or its affiliates"), the three BSD conditions and the disclaimer paragraph, as found in the headers of `sakila-schema.sql` and `sakila-data.sql`. Wording used in NOTICE: "Sakila sample database © Oracle and/or its affiliates, New BSD License."
 
 # Applied to
 * [Sakila](/datasets/sakila.md) - `sakila-schema.sql`, `sakila-data.sql` (Version 1.5).

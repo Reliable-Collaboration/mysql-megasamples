@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
     title: "mysql/mysql-workbench: plugins/migration sources (wbcopytables) and License.txt at 8.0.47"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "tag 8.0.47; repo last push 2026-04-23"
 ---
 

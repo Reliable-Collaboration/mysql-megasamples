@@ -6,14 +6,14 @@ resource: https://www.tpc.org/tpc_documents_current_versions/current_specificati
 tags: [tpc, tpc-h, tpc-ds, tpc-c, versions]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://www.tpc.org/tpc_documents_current_versions/current_specifications5.asp
     title: TPC Current Specifications
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page dated "2-Sept-2026 at 8:11 PM [GMT]"
 ---
 

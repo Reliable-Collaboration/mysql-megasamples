@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
     title: TPC BENCHMARK C Standard Specification Revision 5.11, February 2010
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Revision 5.11, 1.1 MB PDF (text extracted locally)
 ---
 

@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://archive.ics.uci.edu/dataset/53/iris
     title: UCI Iris page (CC BY 4.0 statement)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING
     title: scikit-learn COPYING (BSD-3-Clause)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -24,3 +24,10 @@ None needed technically. Policy: pick (b) - ship the corrected 150 rows from sci
 
 # Related
 [Iris](/datasets/iris.md), [CC BY 4.0](/licenses/cc-by-4-0.md).
+
+# Resolves
+Records that depend on the answer:
+* [iris.md](/datasets/iris.md)
+* [cc-by-4-0.md](/licenses/cc-by-4-0.md)
+* [uci-iris-dataset-page.md](/sources/uci-iris-dataset-page.md)
+* PLAN.md §9 risk register (outside the bundle)

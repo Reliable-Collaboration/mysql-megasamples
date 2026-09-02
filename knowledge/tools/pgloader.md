@@ -6,27 +6,27 @@ resource: https://pgloader.readthedocs.io/
 tags: [tool, pgloader, postgresql, rejected]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
 sources:
   - resource: https://pgloader.readthedocs.io/en/latest/
     title: "pgloader documentation index"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://pgloader.readthedocs.io/en/latest/intro.html
     title: "pgloader Introduction"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
     title: "Migrating a MS SQL Database to PostgreSQL"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/dimitri/pgloader
     title: "dimitri/pgloader README, LICENSE, releases and tags"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "latest release v3.6.9 (2022-10-24); tag v4-dev; master pushed 2026-07-24"
 ---
 
-# Facts (verified)
+# Facts
 * Direction: "pgloader loads data from various sources into PostgreSQL. It can transform the data it reads on the fly and submit raw SQL before and after the loading." and "It uses the COPY PostgreSQL protocol to stream the data into the server" ([index](/sources/pgloader-readthedocs-index.md)). Sources per the Introduction: files CSV, Fixed Format, Postgres COPY text, DBF, IXF; databases SQLite, MySQL, MS SQL Server, PostgreSQL, Redshift ([intro](/sources/pgloader-readthedocs-intro.md)). **There is no MySQL target.**
 * MS SQL Server source: "This command instructs pgloader to load data from a MS SQL database. Automatic discovery of the schema is supported, including build of the indexes, primary and foreign keys constraints." Connection `mssql://[user[:password]@][host][:port][/dbname]`. The current "latest" docs say "pgloader v4 uses the official Microsoft JDBC driver (mssql-jdbc) so no FreeTDS or ODBC installation is required." while a later section of the same page still says "pgloader is using the FreeTDS driver, and internally expects the data to be sent in utf-8" with a `~/.freetds.conf` example (`tds version = 7.4`, `client charset = UTF-8`) — the v3 text survives ([mssql page](/sources/pgloader-readthedocs-mssql.md)). Default casts include `uniqueidentifier→uuid`, `bit→boolean`, `datetime/datetime2→timestamptz`, `money→numeric`, `xml→text`.
 * Release state: GitHub's latest release is v3.6.9 (2022-10-24) with a v3.6.10 tag; the README on master describes "pgloader v4 is a full rewrite in Clojure, distributed as a single self-contained JAR requiring Java 21 or later", downloaded from the `v4-dev` pre-release tag, "A v4 Debian package is planned." ([repo record](/sources/github-dimitri-pgloader-repo.md)).
@@ -36,7 +36,7 @@ sources:
 * **Inferred:** the only way pgloader could participate is as a staging hop MSSQL → PostgreSQL, followed by a PostgreSQL → CSV/MySQL export (DuckDB's postgres extension reads PostgreSQL with binary COPY, [DuckDB record](/tools/duckdb.md)). That adds a PostgreSQL container, a second type-mapping layer (T-SQL → PostgreSQL → MySQL) and a JVM or SBCL runtime, and yields nothing that `bcp`/`sqlcmd` or DuckDB reading the source container cannot produce directly.
 * **Inferred:** the docs/README/release skew (docs describe v4-JDBC, releases are v3.6.9-FreeTDS) means any pin would be either a 2022 binary with FreeTDS caveats or an unreleased development JAR — neither is acceptable for a reproducible build.
 
-# Limits that matter for this project
+# Limits
 1. Target is PostgreSQL only — cannot write to MySQL under any option.
 2. Its MySQL support is a *source* reader (MySQL → PostgreSQL), the opposite of what we need.
 3. Type casting rules target PostgreSQL types (uuid, timestamptz, boolean) that would have to be re-mapped to MySQL afterwards.

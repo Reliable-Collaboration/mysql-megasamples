@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/reference/cli/docker/buildx/build/
     title: "Docker Docs: docker buildx build reference"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

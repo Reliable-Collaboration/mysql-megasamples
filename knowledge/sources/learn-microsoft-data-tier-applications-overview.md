@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
     title: Data-Tier Applications (DAC) Overview - SQL Server | Microsoft Learn (canonical tools/sql-database-projects/concepts/data-tier-applications/overview)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-03-13, updated_at 2026-07-21, git commit 4f43f815712bfe38231ce50021bfd788a7269693
 ---
 

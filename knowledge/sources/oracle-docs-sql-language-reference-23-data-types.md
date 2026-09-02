@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html
     title: Data Types (SQL Language Reference 23)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

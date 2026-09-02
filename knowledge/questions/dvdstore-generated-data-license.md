@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
     title: gpl.txt section 0 and 2
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/prod/prod.csv
     title: prod.csv (titles/actors embedded from ds2_data.h word lists)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -24,3 +24,10 @@ No experiment resolves a legal question; the cheapest safe action is to (a) labe
 
 # Related
 [Dell DVD Store](/datasets/dell-dvd-store.md), [GPL-2.0 record](/licenses/gpl-2-0.md).
+
+# Resolves
+Records that depend on the answer:
+* [dell-dvd-store.md](/datasets/dell-dvd-store.md)
+* [gpl-2-0.md](/licenses/gpl-2-0.md)
+* [github-dvdstore-ds3-gpl-and-source-headers.md](/sources/github-dvdstore-ds3-gpl-and-source-headers.md)
+* PLAN.md §9 risk register (outside the bundle)

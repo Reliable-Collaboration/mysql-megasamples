@@ -11,13 +11,13 @@ verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://github.com/Percona-Lab/sysbench-tpcc
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/Percona-Lab/tpcc-mysql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/TPC-Council/HammerDB
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://packages.debian.org/trixie/sysbench
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

@@ -9,7 +9,7 @@ trust: open
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

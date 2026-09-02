@@ -12,12 +12,12 @@ verified:
 sources:
   - resource: https://s3.amazonaws.com/tripdata/
     title: S3 ListBucket XML for the tripdata bucket
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 174 keys, IsTruncated=false
   - resource: https://s3.amazonaws.com/tripdata/JC-202602-citibike-tripdata.csv.zip
     title: JC-202602 archive (central directory + first CSV block)
-    accessed: 2026-09-02
-stale_after: 2026-12-01
+    accessed: "2026-09-02"
+stale_after: "2026-12-01"
 ---
 
 # What was read

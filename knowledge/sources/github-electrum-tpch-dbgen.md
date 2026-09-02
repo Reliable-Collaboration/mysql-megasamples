@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/README
     title: README (the TPC README, "@(#)README 2.4.0")
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; repo pushed_at 2023-09-03; 342 stars; GitHub license field null
   - resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/makefile.suite
     title: makefile.suite
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/release.h
     title: release.h
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -10,16 +10,16 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://www.cs.cmu.edu/~enron/
     title: Enron Email Dataset page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
     title: Enron2mbox README (maildir layout, 517,401 files)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
     title: enron-emails README (517,401 emails; "encoded in ASCII")
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Verified input shape
+# Facts
 * Tarball extracts to `maildir/<custodian>/<folder>/<n>.` — each file is one message in RFC 822 form ("distributed in maildir format, which means that each message is stored in a separate file" — Enron2mbox README). Two independent third-party counts give **517,401** files (Enron2mbox `count_messages.sh`; enron-emails "Total Emails: 517,401"); 150 custodian directories (CMU page: "about 150 users").
 * Note the Enron tree is *not* a real Maildir (no `cur/`/`new/`); Enron2mbox restructures it to use Python's `mailbox.Maildir`. We do not need that: walk the tree and parse each file with `email.parser.BytesParser(policy=email.policy.compat32).parse(fh)`.
 
@@ -31,3 +31,7 @@ sources:
 * Charset: files are mostly 7-bit ASCII (enron-emails README: "the emails where encoded in ASCII"); **Inferred:** some bodies contain Latin-1 / Windows-1252 bytes and quoted-printable `=20` sequences; decode with `charset` from `Content-Type` if declared, else try UTF-8 then fall back to `cp1252` with `errors="replace"` and record `charset_fallback = 1`. Body stored as utf8mb4 `MEDIUMTEXT`.
 * Malformed headers: `email` returns `defects`; store `header_defects` count.
 * Duplicates: the same message often appears in several folders (`all_documents`, `inbox`, `sent`, `sent_items`, `_sent_mail`); keep every file as a row (the folder placement is data) and expose a `sha1(body)` column so consumers can deduplicate.
+
+# Limits
+* Charset declarations are unreliable (cp1252 fallback with a per-row flag) and `Date` headers carry inconsistent offsets; both are measured on the first 1,000 files before the full run ([question](/questions/enron-header-anomalies-charset-dates-message-id.md)).
+* `Message-ID` uniqueness is unverified, so no unique index until measured.

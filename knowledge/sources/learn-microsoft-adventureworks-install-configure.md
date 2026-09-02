@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
     title: AdventureWorks sample databases - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-03-16, updated_at 2026-08-27, git commit 0e15016bdadf2052263550047d86e9d8eef54be5
 ---
 

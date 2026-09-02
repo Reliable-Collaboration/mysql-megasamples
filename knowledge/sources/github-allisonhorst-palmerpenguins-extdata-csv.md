@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv
     title: penguins.csv (md5 a06a0210251465a86fb970018292304d; sha256 f204db2c753b0937caac3cb35258562c14f073e4bbc76be24b4c51ce22767a93)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins_raw.csv
     title: penguins_raw.csv (md5 049da101568e078f9845c8b366481810)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

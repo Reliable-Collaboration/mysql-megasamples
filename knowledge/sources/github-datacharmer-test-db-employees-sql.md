@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
     title: employees.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ e324b56
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees_partitioned.sql
     title: employees_partitioned.sql (grep only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/load_departments.dump
     title: load_departments.dump (full) and load_employees.dump (head + non-ASCII scan)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

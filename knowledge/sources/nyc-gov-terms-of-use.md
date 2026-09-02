@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.nyc.gov/home/terms-of-use.page
     title: NYC.gov Terms of Use
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.mediawiki.org/wiki/Manual:Database_layout
     title: Manual:Database layout (diagram for 1.41.0)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

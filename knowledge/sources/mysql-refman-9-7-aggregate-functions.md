@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/aggregate-functions.html
     title: "MySQL 9.7 Reference Manual: Aggregate Functions"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/aggregate-functions.html, “MySQL 9.7 Reference Manual: Aggregate Functions”, accessed 2026-09-02
 
 # Relevant excerpt
 * BIT_XOR: "Returns the bitwise XOR of all bits in expr." "Numeric evaluation occurs otherwise, with argument value conversion to unsigned 64-bit integers as necessary." "Binary-string evaluation produces a binary string of the same length as the argument values ... If the argument size exceeds 511 bytes, an ER_INVALID_BITWISE_AGGREGATE_OPERANDS_SIZE error occurs." "NULL values do not affect the result unless all values are NULL." Empty set → neutral value (all bits 0).

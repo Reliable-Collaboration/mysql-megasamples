@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://okf.md/spec/
     title: Open Knowledge Format (OKF) — An Annotated Guide
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-statistics-table.html
     title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA STATISTICS Table"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/information-schema-statistics-table.html, “MySQL 9.7 Reference Manual: INFORMATION_SCHEMA STATISTICS Table”, accessed 2026-09-02
 
 # Relevant excerpt
 Columns: TABLE_SCHEMA, TABLE_NAME, NON_UNIQUE (0/1), INDEX_NAME (`PRIMARY` for primary keys), SEQ_IN_INDEX (from 1), COLUMN_NAME (NULL for functional key parts), COLLATION (A/D/NULL), CARDINALITY, SUB_PART (prefix length or NULL), NULLABLE, INDEX_TYPE ("BTREE, FULLTEXT, HASH, RTREE"), COMMENT, INDEX_COMMENT, IS_VISIBLE, EXPRESSION.

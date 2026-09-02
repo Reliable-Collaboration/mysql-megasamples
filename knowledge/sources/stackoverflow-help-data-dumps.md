@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://stackoverflow.com/help/data-dumps
     title: What is the data dump? How often is an updated version posted?
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -11,13 +11,13 @@ verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://github.com/gregrahn/tpch-kit
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://duckdb.org/docs/current/core_extensions/tpch.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/download_programs/tools-download-request5.asp?bm_type=TPC-H&bm_vers=3.0.1&mode=CURRENT-ONLY
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

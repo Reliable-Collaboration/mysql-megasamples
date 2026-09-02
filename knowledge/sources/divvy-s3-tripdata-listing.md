@@ -12,12 +12,12 @@ verified:
 sources:
   - resource: https://divvy-tripdata.s3.amazonaws.com/
     title: S3 ListBucket XML for divvy-tripdata
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 95 keys, IsTruncated=false
   - resource: https://divvy-tripdata.s3.amazonaws.com/202004-divvy-tripdata.zip
     title: 202004 archive (central directory + first CSV block)
-    accessed: 2026-09-02
-stale_after: 2026-12-01
+    accessed: "2026-09-02"
+stale_after: "2026-12-01"
 ---
 
 # What was read

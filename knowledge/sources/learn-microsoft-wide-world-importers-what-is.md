@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is
     title: Wide World Importers - Sample Database for SQL - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-01-02, updated_at 2026-01-06, git commit f02da12619a30beccdc5b67320e584af3c0497e3
 ---
 

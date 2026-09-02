@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/workbench/en/
     title: "MySQL Workbench Manual front page"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "8.0.47"
 ---
 

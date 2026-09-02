@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
     title: README.md (4,993 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main @ 01c0e83 (2025-12-17); latest tag v0.4.14 (2024-04-27)
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.cs.cmu.edu/~enron/
     title: Enron Email Dataset
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page links enron_mail_20150507.tar.gz (May 7, 2015 version)
 ---
 

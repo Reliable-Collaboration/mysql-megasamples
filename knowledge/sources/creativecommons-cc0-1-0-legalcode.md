@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://creativecommons.org/publicdomain/zero/1.0/legalcode
     title: CC0 1.0 Universal
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://api.github.com/repos/dbt-labs/jaffle-shop/contents/seeds/jaffle-data
     title: directory listing with sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/seeds/jaffle-data/raw_orders.csv
     title: raw_*.csv (streamed through wc -l / head)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

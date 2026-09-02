@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_sp.sql
     title: mysqlds3_create_sp.sql (5/27/15)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_trigger2.sql
     title: mysqlds3_create_trigger2.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

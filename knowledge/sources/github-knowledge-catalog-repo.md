@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
     title: "GoogleCloudPlatform/knowledge-catalog repository tree"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "main branch, read via GitHub API on 2026-09-02"
 ---
 

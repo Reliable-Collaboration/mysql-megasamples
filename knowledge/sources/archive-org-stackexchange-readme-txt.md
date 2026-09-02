@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/download/stackexchange/readme.txt
     title: readme.txt (5,856 bytes, UTF-8 with BOM)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

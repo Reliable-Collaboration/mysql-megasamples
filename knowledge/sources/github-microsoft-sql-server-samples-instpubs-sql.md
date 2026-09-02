@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
     title: instpubs.sql at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: blob d887fd48cb06436a9aa2e988d00ba7b036dfd6d4, 125,718 bytes
 ---
 
 # What was read
 The whole file (125,718 bytes) downloaded with curl and analysed with `file`, `xxd`, `grep`, `iconv`.
 
-# Findings
+# Relevant excerpt
 * **Encoding**: no BOM, LF line endings, `file` says "Unicode text, UTF-8 text" but a byte scan finds **0 lines with non-ASCII bytes** (pure ASCII); longest line 1,912 chars. Header: `InstPubs.SQL - Creates the Pubs database`, `Copyright Microsoft, Inc. 1994 - 2000`.
 * Unlike Northwind, this script **creates the database**: `USE master`, drops an existing `pubs`, `CREATE DATABASE pubs`, `CHECKPOINT`, `raiserror(...) with nowait` progress messages, `set dateformat mdy`. 75 `GO` batches.
 * **User-defined types** via `sp_addtype`: `id varchar(11) NOT NULL`, `tid varchar(6) NOT NULL`, `empid char(9) NOT NULL`.

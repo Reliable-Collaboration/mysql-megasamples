@@ -9,9 +9,9 @@ trust: open
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: http://archive.org/wayback/available?url=isi.edu/~adibi/Enron/Enron.htm
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.ah-ruhe.de/enron-email-data/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

@@ -12,19 +12,19 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
     title: gpl.txt (18,013 bytes; md5 ebf4e8b49780ab187d51bd26aaa022c6)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust.c
     title: ds3_create_cust.c header
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/ds3_create_reviews.c
     title: ds3_create_reviews.c header
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/membership/ds3_create_membership.c
     title: ds3_create_membership.c header
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/ds3mysqlfns.cs
     title: ds3mysqlfns.cs header
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

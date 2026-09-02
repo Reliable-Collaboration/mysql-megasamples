@@ -11,11 +11,11 @@ verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://www.cs.cmu.edu/~enron/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.ah-ruhe.de/enron-email-data/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/ftrain/enron-sqlite3/master/README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

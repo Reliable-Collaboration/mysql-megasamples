@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/string-functions.html
     title: String Functions and Operators
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/string-functions.html, “String Functions and Operators”, accessed 2026-09-02
 
 # Relevant excerpt
 * "SUBSTR() is a synonym for SUBSTRING()."; forms `SUBSTRING(str, pos)`, `SUBSTRING(str FROM pos)`, `SUBSTRING(str, pos, len)`, `SUBSTRING(str FROM pos FOR len)`.

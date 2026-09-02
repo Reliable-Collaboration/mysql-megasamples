@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://curl.se/docs/manpage.html
     title: "curl manual page: -4/-6, -I, -s/-S, --connect-timeout, -L, --retry"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

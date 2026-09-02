@@ -12,22 +12,22 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/ds3_data_files_readme.txt
     title: ds3_data_files_readme.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust_readme.txt
     title: ds3_create_cust_readme.txt and ds3_create_cust_small.sh
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/orders/ds3_create_orders_readme.txt
     title: ds3_create_orders_readme.txt and ds3_create_orders_small.sh
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/prod/ds3_create_prod_readme.txt
     title: ds3_create_prod_readme.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/Install_DVDStore.pl
     title: Install_DVDStore.pl (grep for review/member formulas)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/ds3_create_reviews.c
     title: ds3_create_reviews.c (grep)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

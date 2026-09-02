@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration.html
     title: "MySQL Workbench Manual: Chapter 10 Database Migration Wizard"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Workbench 8.0 manual"
 ---
 

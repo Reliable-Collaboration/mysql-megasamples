@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
     title: "City of Chicago :: Data Terms of Use"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page footer "Copyright (c) 2010 - 2026 City of Chicago"
 ---
 

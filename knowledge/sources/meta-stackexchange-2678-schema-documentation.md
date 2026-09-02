@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://api.stackexchange.com/2.3/answers/2678?site=meta&filter=withbody
     title: answer body via the Stack Exchange API
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: last edited 2026-03-23T16:06Z; original owner Stu Thompson (community wiki)
 ---
 

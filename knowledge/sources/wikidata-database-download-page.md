@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.wikidata.org/wiki/Wikidata:Database_download
     title: Wikidata:Database download
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

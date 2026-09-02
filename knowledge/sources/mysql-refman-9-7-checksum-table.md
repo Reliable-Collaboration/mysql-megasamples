@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
     title: "MySQL 9.7 Reference Manual: CHECKSUM TABLE Statement"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html, “MySQL 9.7 Reference Manual: CHECKSUM TABLE Statement”, accessed 2026-09-02
 
 # Relevant excerpt
 > "The checksum value depends on the table row format. If the row format changes, the checksum also changes."

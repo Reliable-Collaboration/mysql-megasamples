@@ -12,25 +12,25 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/ds3_mysql_readme.txt
     title: ds3_mysql_readme.txt (6/2/15)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/mysqlds3_create_all.sh
     title: mysqlds3_create_all.sh
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/load/cust/mysqlds3_load_cust.sql
     title: mysqlds3_load_cust.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/load/orders/mysqlds3_load_orders.sql
     title: mysqlds3_load_orders.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/load/reviews/mysqlds3_load_reviews.sql
     title: mysqlds3_load_reviews.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_cleanup_small.sql
     title: mysqlds3_cleanup_small.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/ds3_mysql_change_log.txt
     title: ds3_mysql_change_log.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

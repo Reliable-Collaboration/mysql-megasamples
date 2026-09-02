@@ -11,31 +11,31 @@ verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
 sources:
   - resource: https://man7.org/linux/man-pages/man1/getent.1.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://bind9.readthedocs.io/en/latest/manpages.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://curl.se/docs/manpage.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/engine/daemon/ipv6/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/engine/daemon/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/reference/cli/docker/buildx/build/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/reference/cli/docker/network/inspect/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.docker.com/docker-hub/usage/pulls/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/build-machine-environment-2026-09-02.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /runbooks/executor-discipline.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # 0. The rule

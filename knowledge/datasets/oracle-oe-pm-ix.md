@@ -6,32 +6,32 @@ resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/order_e
 tags: [tier-core, oracle, oe, oc, pm, ix, archived, object-relational, encoding-canary, mit]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
     title: Releases, tags, tree sizes (where the archived schemas live)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
     title: OE/OC/PM scripts at v23.3, IX at v19.2
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-readme-and-license.md
     title: README (archived status), LICENSE.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
     title: Oracle Sample Schemas guide (OE/PM pages, IX/BI/QS removed)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-docs-sql-language-reference-23-data-types.md
     title: Oracle data types (TSLTZ, NUMBER)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-spatial-type-overview.md
     title: MySQL spatial SRID attribute
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-fractional-seconds.md
     title: MySQL fractional seconds
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
@@ -76,7 +76,7 @@ Path (a): Python parser over the populate scripts listed above (see [decision](/
 # Type-mapping hazards
 * `NUMBER(12)` order_id → `BIGINT`; `NUMBER(6)`/`NUMBER(3)`/`NUMBER(2)`/`NUMBER(1)` → `INT`/`SMALLINT`/`TINYINT`; `NUMBER(8,2)`/`NUMBER(9,2)` → `DECIMAL`.
 * `TIMESTAMP WITH LOCAL TIME ZONE`: Oracle normalises to the DB zone and renders in the session zone ([data types](/sources/oracle-docs-sql-language-reference-23-data-types.md)); the literals carry no zone, so the converter stores them verbatim as `DATETIME(6)` and documents "wall-clock as written in the script (2007–2008 dates)". `orders_view` (which casts to DATE) ports as `DATE(order_date)`.
-* `NVARCHAR2` → `VARCHAR` utf8mb4 (**Inferred:** MySQL's `NVARCHAR` is a `VARCHAR` synonym tied to utf8mb3 — from memory, avoid it either way).
+* `NVARCHAR2` → `VARCHAR` utf8mb4 (MySQL's `NVARCHAR` is a `VARCHAR` synonym tied to utf8mb3 — [verified](/sources/mysql-refman-9-7-charset-national.md); avoid it).
 * `INTERVAL YEAR TO MONTH` → `SMALLINT` months (no interval type in MySQL).
 * `SDO_GEOMETRY` points (SRID 8307 = WGS84 lon/lat) → `DECIMAL(9,6)` lon/lat columns; a generated `POINT SRID 4326` column is optional but MySQL's 4326 axis order (lat-long) was not verified in this research ([spatial source](/sources/mysql-refman-9-7-spatial-type-overview.md)) — keep it out of v1.
 * `XMLType` → `TEXT` + scalar columns (above).

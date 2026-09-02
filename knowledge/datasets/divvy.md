@@ -3,7 +3,7 @@ type: Dataset
 title: Divvy (Chicago) trip data
 description: City-of-Chicago-owned, Lyft-operated Divvy trip records from a public S3 bucket; the licence forbids redistributing the data as a stand-alone dataset, so it is extended tier and user-fetched only.
 resource: https://divvybikes.com/system-data
-tags: [tier-extended, csv, bikeshare, redistribution-blocked]
+tags: [tier-user-fetched, csv, bikeshare, redistribution-blocked]
 status: stable
 trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
@@ -12,15 +12,15 @@ verified:
 sources:
   - resource: https://divvybikes.com/system-data
     title: Divvy System Data
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://divvybikes.com/data-license-agreement
     title: Divvy Data License Agreement
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/divvy-s3-tripdata-listing.md
     title: S3 bucket listing and archive inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 95 keys on 2026-09-02; newest 202607
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 ---
 
 # Identity

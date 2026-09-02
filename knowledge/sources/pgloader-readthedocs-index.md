@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://pgloader.readthedocs.io/en/latest/
     title: "pgloader documentation index (readthedocs latest)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "readthedocs 'latest' (tracks the master/v4 branch), read 2026-09-02"
 ---
 

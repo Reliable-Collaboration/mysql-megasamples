@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.oracle.com/downloads/licenses/oracle-free-license.html
     title: Oracle Free Use Terms and Conditions
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "Last updated: 9 June 2021"
 ---
 

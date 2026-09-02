@@ -3,37 +3,37 @@ type: Dataset
 title: Jaffle Shop
 description: dbt Labs' fictional jaffle (toasted sandwich) shop - classic seeds (customers 100, orders 99, payments 113) under Apache-2.0, plus the newer jafgen-generated multi-table data (1 year = 62K orders; 6 years public on S3).
 resource: https://github.com/dbt-labs/jaffle-shop-classic
-tags: [tier-core, tier-extended, csv, jaffle-shop, dbt, apache-2-0, generator]
+tags: [tier-core, tier-generated, csv, jaffle-shop, dbt, apache-2-0, generator]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/README.md
     title: jaffle-shop-classic README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main @ fd7bfac (archived)
   - resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
     title: classic seeds (measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/LICENSE
     title: Apache-2.0 LICENSE
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/README.md
     title: dbt-labs/jaffle-shop README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main @ 7d0d8de (2026-07-27)
   - resource: https://github.com/dbt-labs/jaffle-shop/tree/main/seeds/jaffle-data
     title: jaffle-data seeds (measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
     title: jafgen README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dbt-tutorial-public.s3.us-west-2.amazonaws.com/long_term_dataset/raw_orders.csv
     title: S3 long_term_dataset (HEAD)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
@@ -72,13 +72,13 @@ Primary keys on ids; FK `raw_orders.user_id -> raw_customers.id`, `raw_payments.
 Classic: 100 / 99 / 113 rows; `SELECT SUM(amount) FROM raw_payments` recorded at first load; `SELECT status, COUNT(*) FROM raw_orders GROUP BY status` recorded; file md5s pinned. New/generated: counts recorded per build (non-deterministic generator) or fixed if a snapshot is vendored.
 
 # Tier assignment
-core: classic seeds (6.6 KB). extended: jafgen 3-6 years (16 MB per year of CSV) or the 546 MB S3 snapshot once licensed. Evidence: [seed sizes](/sources/github-dbt-labs-jaffle-shop-classic-seeds.md), [S3 sizes](/sources/dbt-tutorial-public-s3-long-term-dataset.md).
+core: classic seeds (6.6 KB). extended: jafgen 3-6 years (16 MB per year of CSV) loaded into `jaffle_shop_gen` or the 546 MB S3 snapshot once licensed. Evidence: [seed sizes](/sources/github-dbt-labs-jaffle-shop-classic-seeds.md), [S3 sizes](/sources/dbt-tutorial-public-s3-long-term-dataset.md).
 
 # License and attribution
 Classic seeds and jafgen: [Apache-2.0](/licenses/apache-2-0.md) (copyright holder not filled in upstream; attribute to dbt Labs, Inc.). New-repo seeds and S3 data: no license - [open question](/questions/jaffle-shop-new-repo-license.md); not vendored until resolved.
 
 # Database name
-`jaffle_shop` (classic) as listed in the [naming convention](/decisions/database-naming-convention.md); generated multi-year data in `jaffle_shop_v3` (this group's recommendation, not yet in the convention list) to avoid the `raw_customers`/`raw_orders` clash.
+`jaffle_shop` (classic) as listed in the [naming convention](/decisions/database-naming-convention.md); generated multi-year data in `jaffle_shop_gen` (this group's recommendation, not yet in the convention list) to avoid the `raw_customers`/`raw_orders` clash.
 
 # Open questions
 * [License of new-repo seeds / S3 data](/questions/jaffle-shop-new-repo-license.md).

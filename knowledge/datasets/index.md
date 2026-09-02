@@ -1,4 +1,4 @@
-# Datasets
+# datasets
 
 ## Concepts
 * [AdventureWorksDW](adventureworks-dw.md) - The AdventureWorks star-schema data warehouse (31 dbo tables, dimension/fact naming), available as .bak files or as a SQLCMD install script with 30 pipe-delimited UTF-8 CSVs (~86 MB); MIT licensed.

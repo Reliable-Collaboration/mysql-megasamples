@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://citibikenyc.com/system-data
     title: Citi Bike System Data
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

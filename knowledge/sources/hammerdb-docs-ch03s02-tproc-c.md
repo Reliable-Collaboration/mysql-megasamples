@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.hammerdb.com/docs/ch03s02.html
     title: What is the TPC and the TPROC-C workload derived from TPC-C?
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

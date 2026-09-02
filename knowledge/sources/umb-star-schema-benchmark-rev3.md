@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
     title: Star Schema Benchmark Revision 3, June 5, 2009
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Revision 3, June 5 2009; 137 KB PDF (text extracted locally)
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
     title: "MySQL Workbench Manual: 10.5.4 Microsoft SQL Server Type Mapping"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Workbench 8.0 manual"
 ---
 

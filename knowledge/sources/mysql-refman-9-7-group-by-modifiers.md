@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/group-by-modifiers.html
     title: GROUP BY Modifiers
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/group-by-modifiers.html, “GROUP BY Modifiers”, accessed 2026-09-02
 
 # Relevant excerpt
 * `GROUP BY year WITH ROLLUP` and, "MySQL supports an additional, alternative syntax for this modifier ... GROUP BY ROLLUP (year)".

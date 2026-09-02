@@ -12,18 +12,18 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/main/README.md
     title: README.md at main (6,420 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: commit 6660bad (2025-06-25)
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/README.md
     title: README.md at v23.3 (3,784 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: tag v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/LICENSE.txt
     title: LICENSE.txt (1,094 bytes; identical content at main)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v19.2/README.md
     title: README.md at v19.2 (schema list for the pre-restructure layout)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
 sources:
   - resource: /tools/github-limits.md
     title: GitHub size limits (tools agent)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -21,49 +21,47 @@ What is committed, what is downloaded, and how does the build find downloads wit
 2. Git LFS for medium artifacts — rejected: free LFS bandwidth quotas make a public repo's clones fail unpredictably; GitHub Releases assets (2 GB/file) cover the same need without quota. Evidence: [GitHub limits](/tools/github-limits.md).
 3. Commit converted `data.sql` for small datasets — accepted only where the upstream artifact itself is a small SQL/CSV file that we redistribute unchanged (Sakila, Chinook, Northwind, Pubs, HR, Jaffle Shop, small CSVs); converted output is never committed, it is rebuilt.
 
+# Evidence
+* [GitHub limits](/tools/github-limits.md): 100 MiB file cap, 2 GiB release assets, LFS metered billing.
+* Per-dataset source sizes in the dataset records (committed artifacts are all under 7 MB per file).
+
 # Outcome
+The authoritative tree is PLAN.md §2.1; this record mirrors it and is updated in the same commit whenever it changes.
 ```
 .
-├── PLAN.md
-├── README.md                     # per-dataset license table, attribution notices
-├── LICENSES.md                   # generated from knowledge/licenses/*.md
-├── Makefile                      # make <dataset>, make core, make image, make test
-├── docker/
-│   ├── Dockerfile                # multi-stage: builder(s) → final mysql:9.7.2
-│   ├── loader.Dockerfile         # extended-tier loader (mysqlsh, duckdb, python, curl)
-│   ├── compose.yaml              # services: mysql, loader(profile extended), mssql/oracle (profile build)
-│   └── my.cnf                    # utf8mb4, local_infile, innodb settings
-├── manifest.yaml                 # every downloadable artifact: url, mirrors, sha256, size, license
-├── scripts/                      # shared: fetch.py, load.py, verify.py, checksum.py, okf_check.py
-├── datasets/<name>/
-│   ├── LICENSE                   # verbatim upstream license (generated from knowledge/licenses)
-│   ├── PROVENANCE.md             # generated from knowledge/datasets/<name>.md
-│   ├── schema.sql                # MySQL DDL, no secondary indexes / FKs
-│   ├── indexes.sql               # secondary indexes, FULLTEXT, SPATIAL
-│   ├── constraints.sql           # foreign keys and checks, applied last
-│   ├── convert/                  # conversion code (python, sql, shell); or fetch.sh for generators
-│   ├── data.sql | data/          # ONLY when the upstream artifact is itself small and redistributable
-│   ├── tests/                    # expected_counts.yaml, samples.yaml, checksums.yaml, smoke.sql, explain.yaml
-│   └── build/                    # git-ignored output: *.sql.zst, mysqlsh dump dirs, baseline.json
-├── downloads/                    # git-ignored, sha256-verified upstream artifacts
-├── knowledge/                    # OKF bundle
-└── .github/workflows/            # ci.yaml (core), extended.yaml (manual), okf.yaml
+├── PLAN.md  README.md  LICENSES.md  NOTICE.md   # LICENSES/NOTICE generated from knowledge/licenses
+├── Makefile                                     # targets listed in PLAN.md §2.4
+├── manifest.yaml                                # every downloadable artifact: url, mirrors, sha256, size, license, flags
+├── uv.lock  pyproject.toml
+├── docker/  Dockerfile  loader.Dockerfile  compose.yaml  my.cnf  init/00-users.sql  entrypoint-wrapper.sh
+├── scripts/  fetch.py  canon.py  canon.sql  verify.py  load.py  dumps.py  registry.py  gen_provenance.py  okf_check.py  okf_fix_quotes.py  mirror.sh (maintainer upload wrapper)
+├── datasets/<db_name>/
+│   ├── dataset.yaml                             # db name, tier, tables and load order, manifest ids, routines security
+│   ├── LICENSE  PROVENANCE.md  name_map.yaml    # generated
+│   ├── schema.sql  indexes.sql  constraints.sql  routines.sql
+│   ├── convert/                                 # converter or generator runner
+│   ├── data/                                    # only small upstream artifacts that are themselves redistributable
+│   ├── tests/                                   # expected_counts.yaml  samples.yaml  indexes.yaml  explain.yaml  smoke.sql  smoke.expected.yaml
+│   └── build/                                   # git-ignored: tsv/, dump/, baseline.json, load.log
+├── downloads/                                   # git-ignored, sha256-verified upstream artifacts (+ <id>.meta.json)
+├── knowledge/                                   # OKF bundle
+└── .github/workflows/  ci.yaml  native.yaml  extended.yaml  okf.yaml
 ```
-* `.gitignore`: `downloads/`, `datasets/*/build/`, `*.bak`, `*.7z`, `*.parquet`, `*.zst`, `.venv/`, `work/`.
+* `.gitignore` (the committed file is authoritative): `downloads/`, `datasets/*/build/`, `docker/context/`, `*.bak`, `*.7z`, `*.parquet`, `*.zst`, `*.tsv`, `.venv/`, `work/`, `__pycache__/`.
 * `manifest.yaml` entry schema:
 ```yaml
 - id: nyc_taxi/yellow_2025-01
   dataset: nyc_taxi
   url: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet
   mirrors: [https://github.com/<org>/mysql-megasamples/releases/download/data-v1/yellow_tripdata_2025-01.parquet, https://archive.org/download/<item>/yellow_tripdata_2025-01.parquet]
-  sha256: "<filled at first verified fetch; build fails if absent and MEGASAMPLES_TRUST_FIRST_FETCH!=1>"
-  size_bytes: 0
+  sha256: ""            # empty until the first verified fetch; the build refuses to proceed unless MEGASAMPLES_TRUST_FIRST_FETCH=1, then writes the value back
+  size_bytes: 59158238
   license: nyc-open-data-terms
   requires_login: false
-  ipv4_only: true         # curl -4 first; hosts with AAAA that hang
+  ipv4_first: true      # curl -4 first; set for hosts with AAAA records that hang (cloudfront, wikimedia); default false
 ```
-* `scripts/fetch.py` reads the manifest, tries `url` then `mirrors` in order, uses `curl --fail --location --retry 5 --retry-all-errors -4` (falls back to default stack only if `-4` fails to resolve), verifies sha256, writes `downloads/<id>.ok`, and skips files with a valid `.ok` marker.
-* Projected fresh clone size: code + DDL + committed small artifacts, target **< 150 MB**; the largest committed items are the Employees dump files only if they are under 50 MB each (see the dataset record), otherwise they are release assets too.
+* `scripts/fetch.py` reads the manifest, tries `url` then `mirrors` in order with `curl --fail --location --retry 5 --retry-all-errors --connect-timeout 20 -C -` (adding `-4` when `ipv4_first`), verifies sha256, writes `downloads/<id>.ok` and `<id>.meta.json` (size, Last-Modified, source used), and skips files with a valid `.ok` marker.
+* Projected fresh clone size: code + DDL + committed small artifacts, target **< 60 MB** (ceiling 150 MB); the Employees dumps (172 MB) and everything larger are downloads mirrored as release assets.
 
 # Status
 accepted; sizes to be confirmed during execution

@@ -6,21 +6,21 @@ resource: https://github.com/allisonhorst/palmerpenguins
 tags: [tier-core, csv, penguins, smallsets, cc0]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/README.md
     title: README and DESCRIPTION
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: package 0.1.1 (2022-08-12); main @ 8957207 (2024-09-19)
   - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/LICENSE.md
     title: LICENSE.md (CC0 1.0)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/allisonhorst/palmerpenguins/tree/main/inst/extdata
     title: penguins.csv / penguins_raw.csv (measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity

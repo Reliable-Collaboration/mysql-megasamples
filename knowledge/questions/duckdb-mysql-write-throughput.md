@@ -10,15 +10,15 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
     title: MySQL Extension - DuckDB documentation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# The question
+# Question
 The DuckDB MySQL extension page documents `CREATE TABLE`, `INSERT INTO` and `COPY ... FROM` against an attached MySQL database, but says nothing about how rows reach the server: batched multi-row `INSERT` statements, prepared-statement batches, or `LOAD DATA LOCAL INFILE`. It also has no limitations section and quotes no throughput figures.
 
 This matters because the plan's conversion path for the large tabular datasets is Parquet/CSV -> DuckDB -> **CSV** -> `LOAD DATA LOCAL INFILE`. If the extension already uses `LOAD DATA` internally, the CSV intermediate and its disk cost can be dropped and the pipeline becomes a single `CREATE TABLE mysqldb.trips AS SELECT ... FROM read_parquet(...)`.
 
-# Cheapest experiment that resolves it
+# Cheapest experiment
 On the builder, with a throwaway MySQL 9.7 container:
 
 ```sql
@@ -34,3 +34,10 @@ Then read the general log: it shows verbatim whether the server received `INSERT
 
 # Provisional answer used by the plan
 **Inferred:** treat the extension as row-protocol `INSERT`s and keep the CSV + `LOAD DATA` path for anything over ~1 million rows; use the extension directly for dimension tables (265 taxi zones, 434 IUCR codes, ~19k airports).
+
+# Resolves
+Records that depend on the answer:
+* [large-tabular-conversion-path.md](/decisions/large-tabular-conversion-path.md)
+* [duckdb-generator-fidelity.md](/questions/duckdb-generator-fidelity.md)
+* [duckdb-mysql-extension-docs.md](/sources/duckdb-mysql-extension-docs.md)
+* [duckdb.md](/tools/duckdb.md)

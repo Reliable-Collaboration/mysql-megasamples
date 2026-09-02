@@ -12,18 +12,18 @@ verified:
 sources:
   - resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
     title: Socrata view metadata for ijzp-q8t2
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: truth last modified Wed, 02 Sep 2026 11:37:15 GMT; 8,627,693 rows
   - resource: /sources/chicago-crimes-socrata-metadata.md
     title: Portal metadata and SODA measurements
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/chicago-iucr-codes-dataset.md
     title: IUCR code lookup (c7ck-438e)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
     title: City of Chicago Data Terms of Use
-    accessed: 2026-09-02
-stale_after: 2026-12-01
+    accessed: "2026-09-02"
+stale_after: "2026-12-01"
 ---
 
 # Identity

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://stackoverflow.com/legal/terms-of-service/public
     title: Public Network Terms of Service
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Last updated November 13, 2025
 ---
 

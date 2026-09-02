@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://github.com/duckdb/duckdb
     title: "duckdb/duckdb: releases (API), extension/tpch/dbgen/LICENSE (TPC EULA 2.2) and extension/tpcds/dsdgen-c source headers (TPC Legal Notice)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "main branch and releases read via GitHub API/raw on 2026-09-02"
 ---
 

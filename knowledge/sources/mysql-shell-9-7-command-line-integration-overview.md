@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
     title: "MySQL Shell 9.7: Command Line Integration Overview"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7 manual, section 5.8.1"
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.tpc.org/tpch/
     title: TPC-H Homepage
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

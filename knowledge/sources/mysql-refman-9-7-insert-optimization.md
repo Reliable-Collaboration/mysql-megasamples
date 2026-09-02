@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/insert-optimization.html
     title: "MySQL 9.7 Reference Manual: Optimizing INSERT Statements"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 10.2.5.1"
 ---
 

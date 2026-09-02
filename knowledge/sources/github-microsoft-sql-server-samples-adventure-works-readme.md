@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
     title: README.md (adventure-works)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master, 7,158 bytes; directory last substantively changed by commit b47eadc852 "AdventureWorks 2025 updates" 2025-11-14
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://man7.org/linux/man-pages/man1/getent.1.html
     title: "getent(1) Linux manual page"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

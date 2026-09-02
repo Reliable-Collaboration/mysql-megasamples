@@ -9,9 +9,9 @@ trust: open
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://www.cs.cmu.edu/~enron/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

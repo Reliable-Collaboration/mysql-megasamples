@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://duckdb.org/docs/current/sql/statements/copy.html
     title: COPY Statement
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

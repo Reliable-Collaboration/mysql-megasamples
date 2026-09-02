@@ -6,14 +6,14 @@ resource: https://duckdb.org/docs/current/core_extensions/tpch.html
 tags: [duckdb, tpc-h, dbgen]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://duckdb.org/docs/current/core_extensions/tpch.html
     title: TPC-H Extension (docs/stable/extensions/tpch redirects here)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: DuckDB docs "current" (latest DuckDB release v1.5.5, 2026-07-22 per GitHub)
 ---
 

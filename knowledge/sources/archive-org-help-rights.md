@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://help.archive.org/help/rights/
     title: "Internet Archive Help Center: Rights"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-install-configure
     title: Install and configure WideWorldImporters sample database - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2018-04-04, updated_at 2025-11-25, git commit 46e3eed3e68637ec3da44585e2871a0f33bf0dad
 ---
 

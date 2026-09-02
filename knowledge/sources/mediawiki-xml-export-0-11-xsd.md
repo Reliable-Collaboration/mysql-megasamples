@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.mediawiki.org/xml/export-0.11.xsd
     title: export-0.11.xsd (11,677 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

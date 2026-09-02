@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://divvybikes.com/data-license-agreement
     title: Divvy Data License Agreement
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page footer "(c) Lyft, Inc. 2026"; no effective date stated in the agreement
 ---
 

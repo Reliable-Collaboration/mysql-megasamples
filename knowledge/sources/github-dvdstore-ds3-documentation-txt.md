@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_Documentation.txt
     title: ds3_Documentation.txt (Dave Jaffe, Todd Muirhead; DS2.1 features by Girish Khadke)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_faq.txt
     title: ds3_faq.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

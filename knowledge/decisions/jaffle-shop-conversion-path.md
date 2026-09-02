@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
     title: classic seeds inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
     title: jafgen README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -31,7 +31,7 @@ Which Jaffle Shop data to ship and how to load it, given two generations of the 
 [classic seeds](/sources/github-dbt-labs-jaffle-shop-classic-seeds.md), [new seeds](/sources/github-dbt-labs-jaffle-shop-seeds-jaffle-data.md), [S3 sizes](/sources/dbt-tutorial-public-s3-long-term-dataset.md), [jafgen](/tools/jafgen.md), [license question](/questions/jaffle-shop-new-repo-license.md).
 
 # Outcome
-Core: option 1, converted at build time into `CREATE TABLE` + INSERT statements (types: id INT PK, first_name/last_name VARCHAR(50), order_date DATE, status VARCHAR(20), payment_method VARCHAR(20), amount INT cents) - **Inferred** DDL, since dbt seeds carry no types. Extended: option 4 (`jafgen 3`, tables customers/orders/items/products/stores/supplies with UUID CHAR(36) keys, DATETIME timestamps, price INT cents, perishable BOOLEAN) loaded via CSV; revisit options 2/3 if dbt Labs adds a license. Both generations live in one database `jaffle_shop` with the classic tables named `raw_customers`, `raw_orders`, `raw_payments` and the jafgen tables prefixed `raw_` as generated (name clash on `raw_customers`/`raw_orders`: put the jafgen set in a second database `jaffle_shop_v3` or a table prefix `jaf_` - coordinator's call; recommendation: second database).
+Core: option 1, converted at build time into `CREATE TABLE` + INSERT statements (types: id INT PK, first_name/last_name VARCHAR(50), order_date DATE, status VARCHAR(20), payment_method VARCHAR(20), amount INT cents) - **Inferred** DDL, since dbt seeds carry no types. Extended: option 4 (`jafgen 3`, tables customers/orders/items/products/stores/supplies with UUID CHAR(36) keys, DATETIME timestamps, price INT cents, perishable BOOLEAN) loaded via CSV; revisit options 2/3 if dbt Labs adds a license. Both generations live in one database `jaffle_shop` with the classic tables named `raw_customers`, `raw_orders`, `raw_payments` and the jafgen tables prefixed `raw_` as generated (name clash on `raw_customers`/`raw_orders`: put the jafgen set in a second database `jaffle_shop_gen` or a table prefix `jaf_` - coordinator's call; recommendation: second database).
 
 # Status
-accepted (core); pending (extended naming)
+accepted: core is option 1 in `jaffle_shop`; extended jafgen output goes into `jaffle_shop_gen` (named in the [naming convention](/decisions/database-naming-convention.md)), non-reproducible by design

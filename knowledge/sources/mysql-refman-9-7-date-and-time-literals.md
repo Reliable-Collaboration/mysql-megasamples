@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/date-and-time-literals.html
     title: Date and Time Literals
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/date-and-time-literals.html, “Date and Time Literals”, accessed 2026-09-02
 
 # Relevant excerpt (verbatim)
 * "Standard SQL requires temporal literals to be specified using a type keyword and a string. The space between the keyword and string is optional. DATE 'str' TIME 'str' TIMESTAMP 'str' MySQL recognizes but, unlike standard SQL, does not require the type keyword."

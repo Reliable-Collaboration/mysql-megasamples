@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://hbiostat.org/data/repo/titanic.html
     title: Titanic Data (Frank E Harrell Jr, last modified 2002-12-27)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

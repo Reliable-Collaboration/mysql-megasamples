@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/tobymao/sqlglot/main/README.md
     title: "tobymao/sqlglot README and dialect list"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "main branch, read 2026-09-02; repo license MIT; latest PyPI 30.17.0"
 ---
 

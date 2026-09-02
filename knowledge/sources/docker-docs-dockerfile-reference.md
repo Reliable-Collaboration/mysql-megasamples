@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/reference/dockerfile/
     title: "Docker Docs: Dockerfile reference"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dumps.wikimedia.org/legal.html
     title: Wikimedia dumps legal notice
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

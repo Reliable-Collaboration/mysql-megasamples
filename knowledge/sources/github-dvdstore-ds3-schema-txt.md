@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_schema.txt
     title: ds3_schema.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

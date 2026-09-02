@@ -6,32 +6,32 @@ resource: /tools/tpcc-implementations.md
 tags: [tool, tpc-c, loader, sysbench, hammerdb]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://github.com/Percona-Lab/tpcc-mysql
     title: Percona-Lab/tpcc-mysql (README, create_table.sql, add_fkey_idx.sql, src/load.c, src/support.c, src/tpc.h, Dockerfile, load.sh)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/Percona-Lab/sysbench-tpcc
     title: Percona-Lab/sysbench-tpcc (README, LICENSE, tpcc_common.lua)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/akopytov/sysbench
     title: akopytov/sysbench README + Debian package page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/TPC-Council/HammerDB
     title: TPC-Council/HammerDB (README, LICENSE, hammerdbcli, Docker/, src/mysql/mysqloltp.tcl, modules/tpcccommon-1.0.tm)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.hammerdb.com/docs/ch03s02.html
     title: HammerDB docs ch03s02, ch04s03, ch01s12, ch09s03
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
     title: TPC-C spec 5.11
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Comparison (all facts verified in the linked source records unless marked)
+# Facts
 | | Percona-Lab/tpcc-mysql | Percona-Lab/sysbench-tpcc (+ sysbench) | HammerDB TPROC-C (MySQL) |
 |---|---|---|---|
 | Record | [source](/sources/github-percona-lab-tpcc-mysql.md) | [source](/sources/github-percona-lab-sysbench-tpcc.md), [sysbench](/sources/github-akopytov-sysbench.md) | [source](/sources/github-tpc-council-hammerdb.md), [docs](/sources/hammerdb-docs-ch03s02-tproc-c.md) |

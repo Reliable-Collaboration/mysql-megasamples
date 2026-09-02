@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: license.txt at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master (repo head fd84be9ed763069e4fdaf88f5983942c7d3a2821, 2026-08-31); file last changed in commit 4693087abe "MIT license" 2016-03-25
 ---
 

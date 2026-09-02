@@ -12,17 +12,17 @@ verified:
 sources:
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
     title: GitHub contents listing (70 files with sizes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master, commit b47eadc852 (2025-11-14)
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/AWBuildVersion.csv
     title: AWBuildVersion.csv and 45 other small CSVs (full reads); Address.csv, Person.csv, ProductPhoto.csv, Document.csv, SalesOrderHeader.csv (HTTP range 0-1500 bytes only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read
 Full downloads of the CSVs under ~100 KB (46 files, 1,046,089 bytes total) and HTTP range requests (first 0.4-1.5 KB) of Address.csv, Person.csv, ProductPhoto.csv, Document.csv, SalesOrderHeader.csv. HEAD requests confirmed Content-Length of the big files: Person.csv 13,565,030; SalesOrderDetail.csv 13,727,911; SalesOrderHeader.csv 7,899,987; TransactionHistory.csv 8,937,794; WorkOrderRouting.csv 10,598,429. Sum of all 69 CSV sizes from the API listing is about 95 MB.
 
-# Findings
+# Relevant excerpt
 * **Encoding**: every sampled file is valid UTF-8 without BOM, LF-only line endings (0 CRLF). `file` reports ASCII for files without accents. Non-ASCII present in CountryRegion.csv (4 lines), StateProvince.csv (21), Employee.csv (2), JobCandidate.csv (24), ProductDescription.csv (114 lines, e.g. `Acier chromé.`, `Cuvettes en alliage d'aluminium ; axe de grand diamètre.`, `Vif et facile à manœuvrer` - French, and other cultures), Person.csv (`Sánchez` in row 1). This contradicts older knowledge that the files are UTF-16LE: the 2023 commits were "Update line endings for UTF-16 LE encoded files", and the 2025-11-14 commit re-encoded them to UTF-8 (`CODEPAGE = '65001'` in the script).
 * **AWBuildVersion.csv** (one row): `1\t17.0.1000.3\t2025-10-06 21:25:57.990\t2025-11-14 12:13:16.797\n` - i.e. the repository script produces the **SQL Server 2025 (17.0) edition of AdventureWorks** with shifted dates (SalesOrderHeader row 43659 has OrderDate `2022-05-30`; Product row 1 SellStartDate `2019-04-30`; Department ModifiedDate `2008-04-30` unchanged).
 * **hierarchyid is serialised as its binary hex form without `0x`**: Employee.csv rows 1-6 show OrganizationNode empty (root `/`), `58` (`/1/`), `5AC0`, `5AD6`, `5ADA`, `5ADE`, followed by a placeholder column for the computed OrganizationLevel (0..3). Document.csv likewise starts with ` ` (root) then `58`, `5AC0`. **Inferred:** decoding these to path strings needs the hierarchyid binary format (documented by Microsoft) or a SQL Server round-trip.

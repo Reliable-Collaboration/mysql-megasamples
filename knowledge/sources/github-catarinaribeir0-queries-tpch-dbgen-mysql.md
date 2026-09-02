@@ -12,9 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/catarinaribeir0/queries-tpch-dbgen-mysql/master/README.md
     title: README.md (+ 1.sql)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; pushed_at 2019-12-16; license null; 49 stars
 ---
+# What was read
+* https://raw.githubusercontent.com/catarinaribeir0/queries-tpch-dbgen-mysql/master/README.md, “README.md (+ 1.sql)”, accessed 2026-09-02, version master; pushed_at 2019-12-16; license null; 49 stars
 
 # Relevant excerpt
 * README: uses TPC-H 2.16.0 dbgen; edits makefile to `DATABASE=SQLSERVER MACHINE=LINUX WORKLOAD=TPCH` and tpcd.h's SQLSERVER block to `START_TRAN "BEGIN WORK;" END_TRAN "COMMIT WORK;" SET_ROWCOUNT "limit %d;\n\n" SET_DBASE "use %s;\n"`; generates with `./dbgen -s 0.1` ("0.1 (=100MB)") — evidence that fractional `-s` works.

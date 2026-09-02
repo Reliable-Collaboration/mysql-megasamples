@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://creativecommons.org/licenses/by-sa/4.0/legalcode
     title: Attribution-ShareAlike 4.0 International legal code
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

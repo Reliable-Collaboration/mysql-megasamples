@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/readme.md
     title: readme.md (northwind-pubs)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; directory last changed by commit c6f4e6fb7a 2024-06-27 "Made tables script more readable for northwind-pubs"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/northwind-pubs
     title: GitHub contents API listing (sizes and blob SHAs)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

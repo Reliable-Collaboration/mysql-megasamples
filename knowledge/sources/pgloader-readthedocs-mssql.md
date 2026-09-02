@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
     title: "pgloader documentation: Migrating a MS SQL Database to PostgreSQL"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "readthedocs 'latest', read 2026-09-02"
 ---
 

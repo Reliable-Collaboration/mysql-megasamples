@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
     title: Chinook_MySql.sql v1.4.5
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/charset-national.html
     title: The National Character Set (9.7)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

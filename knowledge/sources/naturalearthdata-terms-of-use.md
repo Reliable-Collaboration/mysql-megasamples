@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.naturalearthdata.com/about/terms-of-use/
     title: Natural Earth » Terms of Use
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page footer "© 2009 - 2026. Natural Earth."
 ---
 

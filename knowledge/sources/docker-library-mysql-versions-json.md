@@ -6,15 +6,17 @@ resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions
 tags: [docker, mysql, image]
 status: stable
 trust: verified
-stale_after: 2026-10-01
+stale_after: "2026-10-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
 sources:
   - resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
     title: versions.json on master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://raw.githubusercontent.com/docker-library/mysql/master/versions.json, “versions.json on master”, accessed 2026-09-02
 
 # Relevant excerpt
 Paraphrase of the JSON: `innovation` → 26.7.0 (oracle variant 26.7.0-1.el9, mysql-shell 26.7.1-1.el9); `9.7` → 9.7.2 (9.7.2-1.el9, mysql-shell 9.7.1-1.el9); `8.4` → 8.4.11 (8.4.11-1.el9, mysql-shell 8.4.10-1.el9). All on base OS variant "9-slim" (Oracle Linux 9), architectures amd64 and arm64v8.

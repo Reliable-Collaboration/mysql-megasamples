@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://divvybikes.com/data-license-agreement
     title: Divvy Data License Agreement (full text)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://divvybikes.com/system-data
     title: Divvy System Data (links to the agreement)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Where the verbatim text lives
+# Where the text lives
 `https://divvybikes.com/data-license-agreement` (the System Data page links to `https://www.divvybikes.com/data-license-agreement`, which redirects there). **The document states no effective or revision date.** Full text quoted in [the source record](/sources/divvy-data-license-agreement.md). Ship as `LICENSES/DIVVY-DATA-LICENSE-AGREEMENT.txt`.
 
 # Terms (verbatim, read 2026-09-02)
@@ -37,12 +37,12 @@ sources:
 
 **What the agreement does NOT say** (checked, because it is often mis-stated): there is no general "non-commercial use only" restriction on use, and no "may not compete with Divvy/Lyft" clause. The non-commercial limit attaches only to the redistribution carve-out.
 
-# Obligations and the blocking finding
+# Obligations
 Identical in substance to [Citi Bike](/licenses/citibike-data-use-policy.md): no attribution required, no share-alike, no re-identification, no DIVVY/Lyft/City-of-Chicago marks, no implied endorsement, and **redistribution of the corpus as a stand-alone dataset is prohibited**. Note that although the City of Chicago owns the data, the permissive [Chicago data portal terms](/licenses/chicago-data-portal-terms.md) do **not** apply - Divvy data is published under this agreement instead.
 
 **Consequence:** extended tier only, downloaded from `https://divvy-tripdata.s3.amazonaws.com/` by the user at build/load time. Never baked into a published image or release asset.
 
-# Attribution string to ship (in documentation, not as branding)
+# Attribution
 > Bike trip data downloaded by the user at build time from the Divvy system-data bucket (https://divvybikes.com/system-data), owned by the City of Chicago and licensed under the Divvy Data License Agreement (https://divvybikes.com/data-license-agreement). This project is not affiliated with, endorsed or sponsored by Lyft Bikes and Scooters, LLC or the City of Chicago.
 
 # Applied to

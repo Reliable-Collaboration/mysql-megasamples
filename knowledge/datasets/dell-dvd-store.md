@@ -3,36 +3,36 @@ type: Dataset
 title: Dell DVD Store 3 (DS3)
 description: Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships); Small size = 20,000 customers, 12,000 orders, 10,000 products, plus 200,000 reviews; MySQL kit; GPL-2.0-or-later.
 resource: https://github.com/dvdstore/ds3
-tags: [tier-core, tier-extended, csv, dvdstore, gpl-2-0, benchmark]
+tags: [tier-core, tier-extended, tier-generated, csv, dvdstore, gpl-2-0, benchmark]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/readme.md
     title: root readme
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ 8226cc0 (2021-11-08)
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_readme.txt
     title: ds3_readme.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_schema.txt
     title: ds3_schema.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_Documentation.txt
     title: ds3_Documentation.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
     title: MySQL build scripts (create_db, create_ind, create_sp, trigger2, cleanup, loaders)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
     title: Small CSV files (measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
     title: gpl.txt and source headers
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
@@ -85,7 +85,7 @@ Upstream DDL (InnoDB/utf8mb4-adjusted) + build-time CSV-to-SQL conversion; revie
 Port `mysqlds3_create_ind.sql` unchanged ([create_ind](/sources/github-dvdstore-ds3-mysql-create-ind.md)): unique username, FKs with CASCADE/SET NULL, FULLTEXT `IX_PROD_ACTOR`, `IX_PROD_TITLE`, review composite indexes. Create indexes after the bulk load.
 
 # Tests and expected values
-Row counts above (core: 9 tables; extended: + REVIEWS 200,000, REVIEWS_HELPFULNESS 4,106,382). Spot checks: `SELECT TITLE, ACTOR FROM PRODUCTS WHERE PROD_ID=1` = `ACADEMY ACADEMY`, `PENELOPE GUINESS`; `SELECT TOTALAMOUNT FROM ORDERS WHERE ORDERID=1` = 339.08; `SELECT COUNT(*) FROM CATEGORIES` = 16; `SELECT MAX(ORDERDATE) FROM ORDERS` within 2013 (**Inferred**). Record `CHECKSUM TABLE` after the first load; `mysqlds3_cleanup_small.sql` documents the baseline (customers <= 20000, orders <= 12000).
+Row counts above (core: 9 tables; extended: + REVIEWS 200,000, REVIEWS_HELPFULNESS 4,106,382). Spot checks: `SELECT title, actor FROM products WHERE prod_id=1` = `ACADEMY ACADEMY`, `PENELOPE GUINESS`; `SELECT totalamount FROM orders WHERE orderid=1` = 339.08; `SELECT COUNT(*) FROM categories` = 16; `SELECT MAX(orderdate) FROM orders` within 2013 (**Inferred**). Record `CHECKSUM TABLE` after the first load; `mysqlds3_cleanup_small.sql` documents the baseline (customers <= 20000, orders <= 12000).
 
 # Tier assignment
 core for the DS2-part tables (about 6.5 MB CSV); extended for REVIEWS/REVIEWS_HELPFULNESS (190 MB CSV, 4.3 M rows) and for Medium/Large regenerated sizes. Evidence: [CSV inspection](/sources/github-dvdstore-ds3-small-csv-files.md).

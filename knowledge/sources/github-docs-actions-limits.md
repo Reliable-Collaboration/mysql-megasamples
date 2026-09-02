@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/actions/reference/limits
     title: "GitHub Docs: Actions limits"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

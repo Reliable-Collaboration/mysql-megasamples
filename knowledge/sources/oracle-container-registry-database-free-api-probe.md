@@ -6,17 +6,17 @@ resource: https://container-registry.oracle.com/v2/database/free/tags/list
 tags: [oracle, container-registry, oracle-database-free, measurement]
 status: stable
 trust: verified
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://container-registry.oracle.com/auth?service=Oracle%20Registry&scope=repository:database/free:pull
     title: Token endpoint (anonymous request)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://container-registry.oracle.com/v2/database/free/manifests/latest
     title: OCI image index for :latest and per-arch manifests for 23.26.3.0
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

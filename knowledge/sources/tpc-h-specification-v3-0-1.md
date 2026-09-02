@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
     title: TPC BENCHMARK H (Decision Support) Standard Specification Revision 3.0.1
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Revision 3.0.1, © 1993-2022, 1.7 MB PDF (text extracted locally)
 ---
 

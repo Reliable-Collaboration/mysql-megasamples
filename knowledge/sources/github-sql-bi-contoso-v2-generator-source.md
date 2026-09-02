@@ -12,22 +12,22 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/DatabaseGenerator.csproj
     title: DatabaseGenerator.csproj
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Config.cs
     title: Config.cs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
     title: Engine.cs (grep Random)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine_Setup.cs
     title: Engine_Setup.cs (lines 170-185, grep)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/MyRnd.cs
     title: MyRnd.cs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Program.cs
     title: Program.cs (grep)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

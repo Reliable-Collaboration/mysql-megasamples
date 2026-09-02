@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://github.com/mediawiki-utilities/python-mwxml
     title: README (WebFetch)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/mediawiki-utilities/python-mwxml
     title: GitHub API repo metadata (pushed_at 2026-04-09T20:39Z, license MIT, 63 stars, not archived, default branch master)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.ics.uci.edu/static/public/53/iris.zip
     title: iris.zip (3,738 bytes; md5 7a07b2b4163b650dc451aca467d4fb58)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

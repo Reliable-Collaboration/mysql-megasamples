@@ -6,21 +6,21 @@ resource: https://github.com/Percona-Lab/sysbench-tpcc
 tags: [tpc-c, sysbench, lua, github]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/Percona-Lab/sysbench-tpcc/master/README.md
     title: README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ f110afa8023c7924b1ba00177232a9090624acb5 (2025-07-03); GitHub license Apache-2.0; 331 stars
   - resource: https://raw.githubusercontent.com/Percona-Lab/sysbench-tpcc/master/LICENSE
     title: LICENSE (Apache License Version 2.0, January 2004)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/Percona-Lab/sysbench-tpcc/master/tpcc_common.lua
     title: tpcc_common.lua
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -11,13 +11,13 @@ verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://github.com/eyalroz/ssb-dbgen
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/electrum/ssb-dbgen
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/ClickHouse/clickhouse-docs/main/docs/getting-started/example-datasets/star-schema.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

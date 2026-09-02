@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
     title: MySQL Extension
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

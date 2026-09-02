@@ -12,8 +12,8 @@ verified:
 sources:
   - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-site_stats.sql.gz
     title: site_stats.sql.gz (862 bytes, md5 af0898a45c9e589153ac523030654fa3)
-    accessed: 2026-09-02
-    version: 20260901
+    accessed: "2026-09-02"
+    version: "20260901"
 ---
 
 # What was read

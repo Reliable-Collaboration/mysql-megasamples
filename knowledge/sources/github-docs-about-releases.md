@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
     title: "GitHub Docs: About releases"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

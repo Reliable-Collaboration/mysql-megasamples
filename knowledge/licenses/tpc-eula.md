@@ -12,16 +12,16 @@ verified:
 sources:
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
     title: END USER LICENSE AGREEMENT VERSION 2.2
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
     title: Fair Use of TPC Benchmarks (2019-06-05)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Where the verbatim text lives
+# Where the text lives
 https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt (18,323 bytes, plain text) — full excerpt in [the EULA source record](/sources/tpc-eula-v2-2.md). Identical copies: `EULA.txt` in gregrahn/tpch-kit and gregrahn/tpcds-kit; `extension/tpch/dbgen/LICENSE` in duckdb/duckdb. This is **not** an OSI license; SPDX has no identifier for it (use `LicenseRef-TPC-EULA-2.2` in SBOMs — **Inferred** naming convention).
 
-# What it allows and requires (read in full on 2026-09-02)
+# Obligations
 | Question | Answer from the text |
 |---|---|
 | May we run the tools in our build? | Yes: clause 3 grants a "restricted, non-exclusive, revocable license to install and use"; clause 4.b "You may modify the Software." |
@@ -32,7 +32,7 @@ https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt (18,323 b
 | Warranty/liability | "AS IS", liability capped at US $100; US export (EAR) clause 13. |
 | Removing the license | Clause 5: "You may not remove or modify this license without permission." |
 
-# Attribution wording the repository must carry (verbatim requirements)
+# Attribution
 1. A complete copy of the EULA next to any TPC-derived code or query text we ship (`datasets/tpch/LICENSE`, `datasets/tpcds/LICENSE`, `datasets/ssb/LICENSE`).
 2. The legend, in caps at the top of the license/label: `THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC.`
 3. The original TPC copyright headers on any TPC file or excerpt (e.g. "Copyright owned by the Transaction Processing Performance Council"; the TPC-DS "Legal Notice" block).

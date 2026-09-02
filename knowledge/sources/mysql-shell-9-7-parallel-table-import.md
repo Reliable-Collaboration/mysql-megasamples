@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
     title: "MySQL Shell 9.7: Parallel Table Import Utility (util.importTable)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7 manual, section 12.4"
 ---
 

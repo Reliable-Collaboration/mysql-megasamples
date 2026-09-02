@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools
     title: Install the sqlcmd and bcp SQL Server Command-Line Tools on Linux - SQL Server | Microsoft Learn (canonical linux/install-upgrade/setup-tools)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-05-07, updated_at 2026-08-21, git commit 5f29d7e8dd0206c096d3274256be8b1fbe5a38b0
 ---
 

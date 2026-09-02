@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://api.stackexchange.com/2.3/questions/402311?site=meta&filter=withbody
     title: question and top answer (M--) via API
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

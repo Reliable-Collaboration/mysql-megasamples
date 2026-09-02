@@ -12,18 +12,18 @@ verified:
 sources:
   - resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
     title: TranStats download page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: latest available data June 2026
   - resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
     title: TranStats table profile (109 fields, 234,378,386 records)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/bts-prezip-archive-inspection.md
     title: PREZIP archive inspection (URL pattern, header, encodings)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/transtats-download-lookup-tables.md
     title: Lookup-table endpoints
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity

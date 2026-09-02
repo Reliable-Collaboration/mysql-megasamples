@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/mysqldump.html
     title: "MySQL 9.7 Reference Manual: mysqldump"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 6.5.4"
 ---
 

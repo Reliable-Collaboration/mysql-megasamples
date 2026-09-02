@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://zenodo.org/api/records/19425640
     title: Technical Report — Serious Doubt on the Authenticity of the Enron Email Corpus (2026-04-05)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://zenodo.org/api/records/19447717
     title: Further Evidence on the Authenticity and Integrity of the Enron Email Corpus (2026-04-07)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://downloads.mysql.com/docs/sakila-db.zip
     title: sakila-db.zip (HEAD and content inspection)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -21,3 +21,10 @@ Pin checksums on the extracted files instead of the archive: `sakila-schema.sql`
 
 # Related
 [Sakila dataset](/datasets/sakila.md), [conversion decision](/decisions/sakila-conversion-path.md).
+
+# Resolves
+Records that depend on the answer:
+* [sakila.md](/datasets/sakila.md)
+* [sakila-conversion-path.md](/decisions/sakila-conversion-path.md)
+* [mysql-sakila-db-zip.md](/sources/mysql-sakila-db-zip.md)
+* PLAN.md §9 risk register (outside the bundle)

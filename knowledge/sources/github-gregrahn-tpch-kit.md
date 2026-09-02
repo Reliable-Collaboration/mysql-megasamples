@@ -6,39 +6,39 @@ resource: https://github.com/gregrahn/tpch-kit
 tags: [tpc-h, dbgen, qgen, github]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/README.md
     title: tpch-kit README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ 852ad0a5ee31ebefeed884cea4188781dd9613a3 (2018-05-07, latest commit); repo pushed_at 2022-07-20; 217 stars; GitHub license field null
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/Makefile
     title: dbgen/Makefile
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/tpcd.h
     title: dbgen/tpcd.h
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/dss.ddl
     title: dbgen/dss.ddl
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/dss.ri
     title: dbgen/dss.ri
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/README
     title: dbgen/README (the TPC's own DBGEN/QGEN README, "@(#)README 2.4.0")
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/release.h
     title: dbgen/release.h
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/queries/1.sql
     title: dbgen/queries/1.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/dbgen/answers/q1.out
     title: dbgen/answers/q1.out
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

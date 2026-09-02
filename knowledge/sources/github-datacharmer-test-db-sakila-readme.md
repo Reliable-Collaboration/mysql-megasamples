@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/sakila/README.md
     title: sakila/README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

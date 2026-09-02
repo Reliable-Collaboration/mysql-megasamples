@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.mediawiki.org/wiki/Manual:Text_table
     title: Manual:Text table
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

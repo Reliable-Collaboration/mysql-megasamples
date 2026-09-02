@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
     title: instnwnd.sql (hex literal prefixes measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

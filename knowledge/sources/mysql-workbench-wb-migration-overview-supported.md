@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview-supported.html
     title: "MySQL Workbench Manual: 10.2.2 Migrating from Supported Databases"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Workbench 8.0 manual"
 ---
 

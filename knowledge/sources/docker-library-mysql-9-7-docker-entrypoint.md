@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/docker-entrypoint.sh
     title: "docker-library/mysql 9.7/docker-entrypoint.sh"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "master @ 2f988f198f35d25b1454fa2504a0e4c348100549 (2026-08-19)"
 ---
 

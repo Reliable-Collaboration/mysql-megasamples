@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/developers/internetarchive/
     title: "Internet Archive Developer Portal: internetarchive Python library and ia CLI"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

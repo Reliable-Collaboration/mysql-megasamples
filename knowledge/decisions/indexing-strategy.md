@@ -9,19 +9,29 @@ trust: inferred
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:40:00Z" }
 sources:
   - resource: /sources/mysql-refman-9-7-explain-output.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-information-schema-statistics.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /tools/load-data-infile.md
     title: bulk-load recommendations (tools agent)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /tools/mysql-9x-behaviour-notes.md
     title: partitioning and FULLTEXT limits (tools agent)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
 What indexes does each converted database get, in what order are they created, and how is that verified?
+
+# Options considered
+1. **Faithful carry-over plus a derived design for index-less sources, loaded before indexing** (chosen).
+2. Carry only primary keys and let users add indexes — rejected: canonical queries would full-scan and the image would not demonstrate MySQL indexing.
+3. Create every index before loading — rejected by the bulk-loading guidance below; measured in task E-02.
+
+# Evidence
+* [EXPLAIN output](/sources/mysql-refman-9-7-explain-output.md), [STATISTICS table](/sources/mysql-refman-9-7-information-schema-statistics.md).
+* [LOAD DATA record](/tools/load-data-infile.md) quoting the InnoDB bulk-loading page (PK order, FULLTEXT after load, `unique_checks`/`foreign_key_checks`).
+* [MySQL 9.x notes](/tools/mysql-9x-behaviour-notes.md): partitioned tables cannot carry foreign keys; SPATIAL needs NOT NULL + SRID.
 
 # Rules
 1. **Faithful carry-over** for sources with declared keys: primary keys, unique constraints, foreign keys, and plain secondary indexes are recreated with the same column order and names (lower-cased). Unsupported forms map as follows and each instance is listed in the dataset record: filtered indexes → plain index on the same columns (+ comment naming the dropped predicate); included columns → appended as trailing key columns only if the total key stays under 3072 bytes, else dropped; bitmap indexes (Oracle) → B-tree; columnstore (SQL Server) → none (documented); partitioned indexes → plain; clustered index on a non-PK column → the PK remains the InnoDB cluster, the clustered column gets a secondary index; XML/spatial/full-text indexes → FULLTEXT or SPATIAL where MySQL supports the column type.
@@ -43,6 +53,9 @@ Load-time measurement: `make bench-index-order DATASET=employees` loads once wit
 # Verification
 * `tests/indexes.yaml` lists every expected index as `table, name, unique, type, columns[]`; `scripts/verify.py indexes` compares it with `INFORMATION_SCHEMA.STATISTICS` grouped by index ([doc](/sources/mysql-refman-9-7-information-schema-statistics.md)); missing or extra indexes fail the build.
 * `tests/explain.yaml` lists each smoke query with the tables that must not show `access_type: "ALL"` in `EXPLAIN FORMAT=JSON` ([doc](/sources/mysql-refman-9-7-explain-output.md)); tiny lookup tables (< 100 rows) are exempt because the optimizer legitimately scans them.
+
+# Outcome
+The rules, order of operations and verification above are adopted for every dataset; per-dataset index lists live in the dataset records and `datasets/<name>/indexes.sql`.
 
 # Status
 accepted

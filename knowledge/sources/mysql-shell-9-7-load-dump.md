@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
     title: "MySQL Shell 9.7: Dump Loading Utility (util.loadDump)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL Shell 9.7 manual, section 12.6"
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://duckdb.org/faq
     title: "DuckDB FAQ: license and governance"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "read 2026-09-02"
 ---
 

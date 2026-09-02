@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://api.stackexchange.com/2.3/questions/401324?site=meta&filter=withbody
     title: question body via the Stack Exchange API (HTML pages return 403 to non-browser clients)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: created 2024-07-12T13:30Z, last edited 2024-09-09T20:24Z, owner Philippe (staff)
 ---
 

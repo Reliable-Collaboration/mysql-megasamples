@@ -6,27 +6,27 @@ resource: https://dev.mysql.com/doc/sakila/en/
 tags: [tier-core, mysql-native, sakila, spatial, fulltext, bsd-3-clause]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://dev.mysql.com/doc/sakila/en/
     title: Sakila Sample Database manual
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: revision 84779 (2026-08-04)
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
     title: License for the Sakila Sample Database
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
     title: Sakila Change History
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/index-other.html
     title: Example Databases download table
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://downloads.mysql.com/docs/sakila-db.zip
     title: sakila-db.zip (Version 1.5)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "Last-Modified 2026-08-31; md5 a80df38456f8d4f36903771b67a1129a"
 ---
 
@@ -58,7 +58,7 @@ Total 46,268 inserted rows (counted from the data file). Note payment is 16,044,
 * Size: 3.4 MB of SQL. **Inferred:** loaded InnoDB footprint under 10 MB.
 
 # Conversion path
-Run the two upstream files unchanged via the mysql client in the init sequence, schema then data ([decision](/decisions/sakila-conversion-path.md)). No conversion tool.
+Run the two upstream files unchanged through the mysql client against the `mysql-build` service during `make sakila`, schema then data; the loaded database is dumped with `util.dumpSchemas` and baked into the image like every other core dataset (no init-directory files) ([decision](/decisions/sakila-conversion-path.md)). No conversion tool.
 
 # Type-mapping hazards
 * `address.location GEOMETRY SRID 0 NOT NULL` with `SPATIAL KEY idx_location`, inserted as WKB hex literals inside `/*!50705 ... */` comments; many points are (0,0). A 9.7 server executes all version-gated comments (50705, 50610, 80003).

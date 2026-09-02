@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-dw-ssdt/README.md
     title: wwi-dw-ssdt/README.md (3,792 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/wide-world-importers/wwi-dw-ssdt/wwi-dw-ssdt
     title: project tree (Application, Dimension, Fact, Integration, PostDeploymentScripts, Security, Sequences, Storage, dbo) and Fact/Tables, Dimension/Tables listings
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

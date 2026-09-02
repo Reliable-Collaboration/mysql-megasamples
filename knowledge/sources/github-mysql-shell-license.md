@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
     title: "mysql/mysql-shell LICENSE at tag 9.7.1"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "tag 9.7.1; \"Last updated: March 2026\""
 ---
 

@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://github.com/Networks-Learning/stackexchange-dump-to-postgres
     title: README (WebFetch)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/Networks-Learning/stackexchange-dump-to-postgres
     title: GitHub API repo metadata (pushed_at 2026-04-21T21:02Z, license MIT, 92 stars, default branch master)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

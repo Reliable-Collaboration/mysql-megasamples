@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
     title: WideWorldImporters OLAP database catalog - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2018-08-04, updated_at 2026-07-20, git commit 2ceb7c07640735a9c49dbb6ff1de511aceead449
 ---
 

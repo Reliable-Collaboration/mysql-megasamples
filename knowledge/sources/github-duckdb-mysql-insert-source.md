@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/duckdb/duckdb-mysql/main/src/storage/mysql_insert.cpp
     title: "duckdb/duckdb-mysql src/storage/mysql_insert.cpp (write path)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "main branch, read 2026-09-02; repo MIT, last push 2026-08-28"
 ---
 

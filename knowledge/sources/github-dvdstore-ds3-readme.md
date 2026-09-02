@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/readme.md
     title: readme.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ 8226cc0 (2021-11-08)
   - resource: https://api.github.com/repos/dvdstore/ds3
     title: repository metadata (license null, size 320,941 KB, no releases/tags)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

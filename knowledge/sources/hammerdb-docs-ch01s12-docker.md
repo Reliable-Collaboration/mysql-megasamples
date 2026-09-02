@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.hammerdb.com/docs/ch01s12.html
     title: HammerDB Docker Container Build & Run
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,18 +12,18 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
     title: instawdbdw.sql (Updated November 14, 2025)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master, commit b47eadc852
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/data-warehouse-install-script
     title: directory listing (30 CSVs with sizes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
     title: release assets (AdventureWorksDW*.bak, AdventureWorksDW-data-warehouse-install-script.zip 16,765,004 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: license.txt (MIT)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity

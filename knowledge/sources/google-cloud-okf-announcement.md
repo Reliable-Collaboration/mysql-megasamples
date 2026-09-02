@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://cloud.google.com/blog/products/data-analytics/how-the-open-knowledge-format-can-improve-data-sharing
     title: How the Open Knowledge Format can improve data sharing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: published 2026-06-12
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/metadata/edrm.enron.email.data.set.v2.xml
     title: metadata JSON for item edrm.enron.email.data.set.v2.xml
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

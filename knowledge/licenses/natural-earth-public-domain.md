@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://www.naturalearthdata.com/about/terms-of-use/
     title: Natural Earth » Terms of Use
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is
     title: WWI "Terms of use" section naming data.gov and Natural Earth as the public data sources
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Where the verbatim text lives
+# Where the text lives
 `https://www.naturalearthdata.com/about/terms-of-use/` ([source record](/sources/naturalearthdata-terms-of-use.md)).
 
 # Key terms (verbatim)
@@ -28,6 +28,9 @@ sources:
 
 # Obligations
 None (public domain; commercial use and modification allowed). Courtesy credit "Made with Natural Earth" is optional. data.gov content is US federal public data (no separate terms page was read for it - the WWI Learn page is the only citation; treat as public domain but do not quote terms).
+
+# Attribution
+None required (public domain). Courtesy line in the WideWorldImporters NOTICE: "Country and state boundaries and city locations derived from Natural Earth (public domain, https://www.naturalearthdata.com/) and data.gov."
 
 # Applied to
 * [WideWorldImporters](/datasets/wideworldimporters.md) (`Application.Countries.Border`, `Application.StateProvinces.Border`, `Application.Cities.Location`/population) and [WideWorldImportersDW](/datasets/wideworldimporters-dw.md) (`Dimension.City`).

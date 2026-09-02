@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
     title: README.md (1,704 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main (pushed 2025-07-02); latest release 2.0.1 (2025-01-17)
   - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2
     title: repository metadata (MIT) and releases/latest
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://stackoverflow.com/help/licensing
     title: Help Center - Licensing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

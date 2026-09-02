@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
     title: "GitHub Docs: About large files on GitHub"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

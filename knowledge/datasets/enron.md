@@ -3,36 +3,36 @@ type: Dataset
 title: Enron email corpus (CMU, May 7, 2015 version)
 description: About 517k real corporate emails from 150 Enron custodians, distributed by CMU as a maildir-style tree of RFC 822 files; converted to messages/recipients/mailbox tables with FULLTEXT.
 resource: https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz
-tags: [dataset, text-corpus, email, tier-extended, core-subset-possible, personal-data, public-record, text-group]
+tags: [tier-core, tier-extended, dataset, text-corpus, email, personal-data, public-record, text-group]
 status: stable
 trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
-stale_after: 2027-09-01
+stale_after: "2027-09-01"
 sources:
   - resource: https://www.cs.cmu.edu/~enron/
     title: Enron Email Dataset (CMU)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: May 7, 2015
   - resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
     title: DELETIONS.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
     title: Enron2mbox README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
     title: enron-emails README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.ah-ruhe.de/enron-email-data/
     title: repaired Shetty/Adibi MySQL dump page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/enrondata/enrondata/master/edrm-v2.0.0/README.md
     title: EDRM v2 README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
     title: EnronData.org EDRM page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity

@@ -6,30 +6,30 @@ resource: https://github.com/sql-bi/Contoso-Data-Generator-V2-Data
 tags: [tier-core, tier-extended, csv, contoso, mit, generator, star-schema]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
     title: ready-to-use-data release assets
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: release ready-to-use-data (2025-09-21)
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
     title: generator README (2.0.1)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
     title: build parameters and config.json
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
     title: SQL Server DDL
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.sqlbi.com/contoso-data-generator/
     title: SQLBI docs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/LICENSE
     title: MIT LICENSE (data)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity

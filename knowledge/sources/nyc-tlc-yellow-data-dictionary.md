@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
     title: Data Dictionary - Yellow Taxi Trip Records
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: document date "March 18, 2025"; 148,556 bytes; Last-Modified Tue, 21 Jul 2026 16:38:17 GMT
 ---
 

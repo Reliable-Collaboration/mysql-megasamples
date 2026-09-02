@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
     title: "GitHub Docs: Working with the Container registry"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

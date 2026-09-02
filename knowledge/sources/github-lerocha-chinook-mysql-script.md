@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
     title: Chinook_MySql.sql (release asset)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "v1.4.5; md5 75acf33f91aebf8bf0d79f4458d43b79"
 ---
 

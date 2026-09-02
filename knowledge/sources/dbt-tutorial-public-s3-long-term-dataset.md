@@ -6,14 +6,14 @@ resource: https://dbt-tutorial-public.s3.us-west-2.amazonaws.com/long_term_datas
 tags: [jaffle-shop, s3, sizes]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://dbt-tutorial-public.s3.us-west-2.amazonaws.com/long_term_dataset/raw_orders.csv
     title: HEAD on raw_customers, raw_orders, raw_order_items, raw_products, raw_supplies, raw_stores
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

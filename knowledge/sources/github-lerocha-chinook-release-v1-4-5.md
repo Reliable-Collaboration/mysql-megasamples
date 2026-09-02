@@ -6,14 +6,14 @@ resource: https://github.com/lerocha/chinook-database/releases/tag/v1.4.5
 tags: [chinook, release, github-api]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://api.github.com/repos/lerocha/chinook-database/releases/latest
     title: releases/latest, /releases, /compare/v1.4.5...master, /contents/ChinookDatabase/DataSources
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

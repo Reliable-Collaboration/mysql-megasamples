@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download
     title: Data dumps/What's available for download
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

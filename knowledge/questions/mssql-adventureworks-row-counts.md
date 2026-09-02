@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
 sources:
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
     title: CSV sampling results
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
     title: test_employees_sha2.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ e324b56
 ---
 

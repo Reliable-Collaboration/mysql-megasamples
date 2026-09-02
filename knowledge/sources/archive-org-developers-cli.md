@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/developers/internetarchive/cli.html
     title: "Internet Archive Developer Portal: ia command-line interface"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

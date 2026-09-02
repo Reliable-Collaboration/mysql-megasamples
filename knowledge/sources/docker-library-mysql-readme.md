@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md
     title: mysql image README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md, “mysql image README”, accessed 2026-09-02
 
 # Relevant excerpt
 * Tags: `26.7.0, 26.7, 26, latest, innovation`; `9.7.2, 9.7, 9, lts`; `8.4.11, 8.4, 8`; variants `oraclelinux9` and `oracle` (default).

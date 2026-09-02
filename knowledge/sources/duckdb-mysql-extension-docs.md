@@ -12,9 +12,9 @@ verified:
 sources:
   - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
     title: MySQL Extension - DuckDB documentation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: docs "current" channel; the page did not print a version number
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 ---
 
 # What was read

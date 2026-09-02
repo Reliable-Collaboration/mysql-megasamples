@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
     title: Policy:Terms of Use
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: effective June 7, 2023
 ---
 

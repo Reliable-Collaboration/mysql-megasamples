@@ -9,11 +9,11 @@ trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 sources:
   - resource: https://archive.org/metadata/stackexchange
     title: metadata JSON (116,026 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

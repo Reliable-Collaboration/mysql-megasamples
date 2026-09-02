@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/8.0/en/set-operations.html
     title: Set Operations with UNION, INTERSECT, and EXCEPT (8.0 manual)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/8.0/en/set-operations.html, “Set Operations with UNION, INTERSECT, and EXCEPT (8.0 manual)”, accessed 2026-09-02
 
 # Relevant excerpt (verbatim)
 * "MySQL has long supported UNION; MySQL 8.0 adds support for INTERSECT and EXCEPT (MySQL 8.0.31 and later)."

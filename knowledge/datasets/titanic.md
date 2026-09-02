@@ -6,24 +6,24 @@ resource: https://hbiostat.org/data/repo/titanic3.csv
 tags: [tier-core, csv, titanic, smallsets, permission]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://hbiostat.org/data/
     title: Vanderbilt Biostatistics Datasets (permission statement)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://hbiostat.org/data/repo/titanic.html
     title: Titanic Data description
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://hbiostat.org/data/repo/titanic3.csv
     title: titanic3.csv (measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "md5 01b027be0a49ab8538efbd60a8c43288"
   - resource: https://hbiostat.org/data/repo/titanic5.html
     title: titanic5 notes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity

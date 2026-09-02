@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/innodb-auto-increment-handling.html
     title: "MySQL 9.7 Reference Manual: AUTO_INCREMENT Handling in InnoDB"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 17.6.1.6"
 ---
 

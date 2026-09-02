@@ -6,14 +6,14 @@ resource: https://pypi.org/pypi/PyYAML/json
 tags: [python, pypi, yaml]
 status: stable
 trust: verified
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
 sources:
   - resource: https://pypi.org/pypi/PyYAML/json
     title: "PyPI JSON metadata: PyYAML"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "6.0.3"
 ---
 

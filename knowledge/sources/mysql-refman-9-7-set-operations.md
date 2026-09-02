@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/set-operations.html
     title: Set Operations with UNION, INTERSECT, and EXCEPT
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/set-operations.html, “Set Operations with UNION, INTERSECT, and EXCEPT”, accessed 2026-09-02
 
 # Relevant excerpt (verbatim)
 * "MySQL supports UNION, INTERSECT, and EXCEPT."

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-generate-data
     title: Generate data in SQL samples WideWorldImporters - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2020-10-23, updated_at 2025-05-30, git commit 67ebe15c092655bcc23eeca30a2effef022a6ed6
 ---
 

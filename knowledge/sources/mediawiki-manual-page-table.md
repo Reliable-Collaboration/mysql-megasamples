@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.mediawiki.org/wiki/Manual:Page_table
     title: Manual:Page table
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

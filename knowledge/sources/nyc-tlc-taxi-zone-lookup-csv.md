@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
     title: taxi_zone_lookup.csv
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Content-Length 12331; Last-Modified Thu, 22 Feb 2024 21:33:00 GMT; ETag c6064b7c144c716450641f769659d178
 ---
 

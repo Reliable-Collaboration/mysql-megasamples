@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/enrondata/enrondata/master/edrm-v2.0.0/README.md
     title: edrm-v2.0.0/README.md at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

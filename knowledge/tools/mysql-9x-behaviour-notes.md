@@ -6,70 +6,70 @@ resource: https://dev.mysql.com/doc/refman/9.7/en/
 tags: [tool, mysql, type-mapping, behaviour, reference]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:47:28Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:47:28Z" }
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/charset-server.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/caching-sha2-pluggable-authentication.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/creating-spatial-indexes.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-generated-columns.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-length.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-case-sensitivity.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/fixed-point-types.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/miscellaneous-functions.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-search.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-fine-tuning.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-indexes.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/check-table.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified), grouped by the decision they drive
+# Facts
 
 ## Character set and collation
 * "By default, these are utf8mb4 and utf8mb4_0900_ai_ci" ([charset-server](/sources/mysql-refman-9-7-charset-server.md)). `_ai_ci` = accent- and case-insensitive comparisons: `'resume' = 'résumé'` is true, so uniqueness constraints and `DISTINCT` behave differently from SQL Server `_CS_AS`/binary collations and Oracle's case-sensitive default. Converters declare `CHARACTER SET utf8mb4` explicitly and choose `utf8mb4_0900_as_cs` or `utf8mb4_bin` per column only where the source semantics demand it (dataset records list those columns).
@@ -125,7 +125,7 @@ sources:
 # Inferred: the project type map versus Workbench's published map
 Workbench documents MONEY→DECIMAL, UNIQUEIDENTIFIER→VARCHAR(64), XML→TEXT, DATETIMEOFFSET→DATETIME, ROWVERSION→TIMESTAMP, HIERARCHYID not migrated ([Workbench map](/sources/mysql-workbench-wb-migration-database-mssql-typemapping.md)). **Inferred** project choices, each justified by a verified fact above: MONEY→DECIMAL(19,4) (exact, 65-digit cap irrelevant); SMALLMONEY→DECIMAL(10,4); UNIQUEIDENTIFIER→BINARY(16); XML→LONGTEXT (or JSON only when converted); DATETIMEOFFSET→DATETIME(6)+offset; ROWVERSION→BINARY(8) (a TIMESTAMP would silently rewrite on update); HIERARCHYID→VARCHAR(4000) path string via `.ToString()`; SQL_VARIANT→LONGTEXT with a type tag column; geography/geometry→GEOMETRY SRID 4326 / SRID 0; BIT→TINYINT(1); NVARCHAR(MAX)→LONGTEXT; VARBINARY(MAX)→LONGBLOB; Oracle NUMBER(p,s)→DECIMAL(p,s), unconstrained NUMBER→DECIMAL(38,10) or DOUBLE per column statistics, CLOB→LONGTEXT, RAW(16)→BINARY(16), TIMESTAMP WITH TIME ZONE→DATETIME(6) UTC + offset, INTERVAL→VARCHAR ISO-8601 text; PostgreSQL uuid→BINARY(16), jsonb→JSON, arrays→JSON, timestamptz→DATETIME(6) UTC, boolean→TINYINT(1), serial→AUTO_INCREMENT, text→LONGTEXT, numeric without precision→DECIMAL(38,10), inet/cidr→VARCHAR(45), tsvector→dropped + FULLTEXT. Dataset records override per column.
 
-# Limits that matter for this project
+# Limits
 1. `lower_case_table_names` is an initialization-time choice for the baked datadir — decide before P-03.
 2. Accent/case-insensitive default collation changes uniqueness semantics; expect duplicate-key failures on sources with case-variant keys (dataset records flag them).
 3. No year-0/year-10000 temporal values, no TIMESTAMP past 2038, no UUID/offset types — all handled in converters, none at load time.

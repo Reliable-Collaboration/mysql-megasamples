@@ -6,30 +6,30 @@ resource: https://duckdb.org/docs/current/core_extensions/tpch.html
 tags: [tool, duckdb, tpc-h, tpc-ds, generator]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://duckdb.org/docs/current/core_extensions/tpch.html
     title: DuckDB TPC-H extension docs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
     title: DuckDB TPC-DS extension docs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
     title: extension/tpch and extension/tpcds source (LICENSE, release.h, answers)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main on 2026-09-02; latest release v1.5.5 (2026-07-22)
   - resource: https://duckdb.org/docs/current/sql/statements/copy.html
     title: COPY statement docs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
     title: MySQL extension docs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 * `INSTALL tpch; LOAD tpch; CALL dbgen(sf = 0.01);` creates the 8 TPC-H tables; `sf` is DOUBLE; `children`/`step` generate one partition at a time (bounded memory); `suffix`/`catalog` place tables. `FROM tpch_queries()` gives the 22 queries with fixed (validation) parameters; `FROM tpch_answers()` has answers for **sf 0.01, 0.1 and 1** (the source tree also has sf10/sf100). Port of dbgen **2.17.3** — identical version to tpch-kit; its `answers/sf1/q01.csv` matches the spec's Q1 validation output.
 * `INSTALL tpcds; LOAD tpcds; CALL dsdgen(sf = 0.01, keys = true);` creates the 24 TPC-DS tables (`keys` adds PK/FK); `sf` DOUBLE (fractional SF possible, unlike the C dsdgen); `tpcds_queries()` (99) and `tpcds_answers()` for **sf 1 and 10**. Port of dsdgen **2.10.0** — same as tpcds-kit; DuckDB says the generator "will change in DuckDB version 2.0 to make the generator compatible with TPC-DS version 4".
 * License: `extension/tpch/dbgen/LICENSE` is the TPC EULA v2.2; every dbgen header says "Copyright owned by the Transaction Processing Performance Council ... THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC."; dsdgen files carry the TPC "Legal Notice". DuckDB itself is MIT ([license](/licenses/mit.md)); the TPC parts stay under the [TPC EULA](/licenses/tpc-eula.md). The extensions are downloaded from DuckDB's extension repository at first use, so the megasamples repo redistributes nothing.

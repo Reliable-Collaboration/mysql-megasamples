@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
     title: "MySQL 8.0 Reference Manual: CHECK Constraints (8.0.16 history)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 8.0 manual, section 15.1.20.6"
 ---
 

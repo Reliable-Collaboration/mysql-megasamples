@@ -1,4 +1,4 @@
-# Tools
+# tools
 
 ## Concepts
 * [SQLBI Contoso Data Generator V2 (2.0.1)](contoso-data-generator-v2.md) - .NET 8 console tool (MIT) that generates the Contoso V2 star schema (customer, date, product, store, currencyexchange, sales, orders, orderrows) as CSV/Parquet/Delta for any OrdersCount; constant-seeded RNG; pre-built sizes published as 7z archives.

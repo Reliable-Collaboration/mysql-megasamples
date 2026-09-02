@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.org/download/stackexchange/license.txt
     title: license.txt (1,738 bytes; Windows-1252 curly quotes render as replacement chars)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

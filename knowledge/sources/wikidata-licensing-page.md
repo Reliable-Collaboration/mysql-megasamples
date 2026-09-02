@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.wikidata.org/wiki/Wikidata:Licensing
     title: Wikidata:Licensing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

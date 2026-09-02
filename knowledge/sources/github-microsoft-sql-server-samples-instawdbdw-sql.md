@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
     title: instawdbdw.sql at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 'master, 54,095 bytes; header "Date: October 26, 2017 / Updated: November 14, 2025"; commit b47eadc852'
 ---
 
 # What was read
 The full script (54,095 bytes, ASCII, no BOM) plus the GitHub contents listing of `data-warehouse-install-script/` (31 files: 30 CSVs + the script).
 
-# Findings
+# Relevant excerpt
 * SQLCMD mode, `:setvar DatabaseName "AdventureWorksDW"`, "Enable full-text search" instruction in the header (no full-text index is actually created in the DW script).
 * **All tables are in `dbo`** (31 `CREATE TABLE`): DatabaseLog, AdventureWorksDWBuildVersion, DimAccount, DimCurrency, DimCustomer, DimDate, DimDepartmentGroup, DimEmployee, DimGeography, DimOrganization, DimProduct, DimProductCategory, DimProductSubcategory, DimPromotion, DimReseller, DimSalesReason, DimSalesTerritory, DimScenario, FactAdditionalInternationalProductDescription, FactCallCenter, FactCurrencyRate, FactFinance, FactInternetSales, FactInternetSalesReason, FactProductInventory, FactResellerSales, FactSalesQuota, FactSurveyResponse, NewFactCurrencyRate, ProspectiveBuyer, sysdiagrams.
 * **29 BULK INSERT** statements, all `CODEPAGE = '65001'`, `DATAFILETYPE = 'char'`, `FIELDTERMINATOR = '|'`, `ROWTERMINATOR = '\n'` (DatabaseLog.csv and AdventureWorksDWBuildVersion are not bulk loaded by a matching statement in the same pattern; `DatabaseLog.csv` exists in the directory).

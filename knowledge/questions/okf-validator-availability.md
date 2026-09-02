@@ -1,7 +1,7 @@
 ---
 type: Open Question
 title: "Is there an OKF v0.2 validator we can run in CI?"
-description: "Neither GoogleCloudPlatform/open-knowledge-format nor knowledge-catalog ships a validator (only the reference agent's OKFDocument.validate requiring ); the PyPI  package is an unrelated stub; proposal: a 40-line Python check owned by this repository."
+description: "Neither GoogleCloudPlatform/open-knowledge-format nor knowledge-catalog ships a validator (only the reference agent has an OKFDocument.validate that requires a `type`); the PyPI `okf` package is an unrelated stub; the repository owns its own checker, scripts/okf_check.py."
 resource: /questions/okf-validator-availability.md
 tags: [okf, validator, ci, process]
 status: draft
@@ -10,24 +10,27 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
 sources:
   - resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
     title: "open-knowledge-format repository tree, pyproject.toml, src/reference_agent/bundle/document.py and index.py"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
     title: "knowledge-catalog repository tree (okf/, toolbox/)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://pypi.org/pypi/okf/json
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/okf-spec-v0-2.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# What exists (verified)
+# Question
+Is there an official OKF v0.2 validator that CI can run instead of, or in addition to, the project-owned `scripts/okf_check.py`?
+
+## What exists (verified)
 * `open-knowledge-format` root: `SPEC.md`, `bundles/`, `connectors/`, `samples/`, `src/`, `tests/`, `pyproject.toml`; no `tools/`, `okf/`, `scripts/` or `validator/` (404 for each). The package is `reference-agent` 0.1.0 (Apache-2.0 header, `requires-python >=3.11`, depends on `google-adk>=2.0`, `google-cloud-bigquery`, `pyyaml`, `pydantic`, `markdownify`), a bundle-*producing* agent, not a checker ([repo record](/sources/github-open-knowledge-format-repo.md)).
 * The only validation code: `src/reference_agent/bundle/document.py` — comment "OKF v0.2 §11: `type` is the only always-required frontmatter key.", `REQUIRED_FRONTMATTER_KEYS = ("type",)`, `OKFDocument.parse()` (YAML frontmatter with a loader that keeps timestamps as strings), `validate()` (missing `type` → error), plus `normalize_verified`, `trust_tier`, `is_stale`; `index.py` has `regenerate_indexes()`. No link checking, no index completeness check, no CLI entry point for validation (the only script is `reference-agent`).
 * `knowledge-catalog` mirrors the same layout under `okf/` and adds `toolbox/` (Metadata-as-Code and an enrichment agent for Google's Knowledge Catalog) — nothing about OKF validation ([repo record](/sources/github-knowledge-catalog-repo.md)).
 * PyPI `okf` 0.1.0 is "A CLI for OKF — Currently in development" by an individual author with no project URLs; not usable ([pypi record](/sources/pypi-okf.md)).
 * Conformance rules to check come from the spec: frontmatter parseable YAML with non-empty `type`; reserved files `index.md`/`log.md`; consumers must tolerate broken links and unknown keys ([spec record](/sources/okf-spec-v0-2.md)); project conventions add `trust`, `verified` presence when `trust: verified`, absolute links, and an `index.md` per directory listing every file ([conventions](/runbooks/knowledge-bundle-conventions.md)).
 
-# Cheapest experiment / proposal
+# Cheapest experiment
 Own the check. `scripts/okf_check.py` (PyYAML only), run in CI as a warning until the bundle is marked stable, then as a failure:
 
 ```python
@@ -72,3 +75,12 @@ Exit status is non-zero only for spec violations (frontmatter/type); broken link
 
 # Status
 Open until the script exists in the repository and has run once over this bundle (task P-00).
+
+# Resolves
+Records that depend on the answer:
+* [github-knowledge-catalog-repo.md](/sources/github-knowledge-catalog-repo.md)
+* [github-open-knowledge-format-repo.md](/sources/github-open-knowledge-format-repo.md)
+* [google-cloud-okf-announcement.md](/sources/google-cloud-okf-announcement.md)
+* [pypi-okf.md](/sources/pypi-okf.md)
+* [pypi-pyyaml.md](/sources/pypi-pyyaml.md)
+* PLAN.md §9 risk register (outside the bundle)

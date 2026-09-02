@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
     title: Programming guidelines - ODBC Driver for SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2022-02-17, updated_at 2026-08-24, git commit b327fa345801101e505260268af60a60ca2ab4bb
 ---
 

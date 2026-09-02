@@ -4,38 +4,38 @@ title: Oracle sample schemas — convert from the plain scripts/CSVs with a Pyth
 description: For HR, CO, SH and OE the upstream artifacts are plain INSERT scripts and RFC-4180 CSV files, so no Oracle product is needed; an opt-in build-oracle Compose profile (Oracle Database Free + python-oracledb) is reserved for cross-checking row counts and checksums.
 resource: /decisions/oracle-conversion-path.md
 tags: [decision, oracle, conversion-path, oracle-group]
-status: draft
-trust: open
+status: stable
+trust: inferred
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-hr-scripts.md
     title: HR scripts
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
     title: CO scripts
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
     title: SH scripts and CSV samples
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
     title: OE/PM/IX scripts
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-container-registry-database-free-api-probe.md
     title: Oracle Free image sizes and anonymous pull
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-free-use-terms-and-conditions.md
     title: Oracle Free Use Terms
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-otn-license-agreement.md
     title: OTN license (SQLcl)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
 How do we turn the four Oracle sample schemas (HR, CO, SH, OE) into MySQL databases: (a) parse the upstream SQL/CSV artifacts directly, or (b) run Oracle Database Free in the build, install the schemas with their own scripts, and export?
 
 # Options considered
-1. **(a) Direct conversion with a Python converter (`tools/oracle_convert.py`)** — chosen for all four schemas.
+1. **(a) Direct conversion with a Python converter (`datasets/oracle_*/convert/oracle_scripts.py (one shared parser module, `scripts/oracle_scripts.py`)`)** — chosen for all four schemas.
    * HR: 7 tables / 216 rows of `INSERT ... VALUES` with `TO_DATE` — trivial grammar ([HR source](/sources/github-oracle-samples-db-sample-schemas-hr-scripts.md)).
    * CO: one 1.27 MB script of column-list INSERTs with `TO_TIMESTAMP` and `UTL_RAW.CAST_TO_RAW('{json}')`; multi-line literals ([CO source](/sources/github-oracle-samples-db-sample-schemas-co-scripts.md)).
    * SH: three tiny INSERT dimensions plus **six plain CSV files with header rows** (SQLcl `LOAD` defaults = comma, double-quote enclosure, UTF-8); only quirks are 80-column space padding in sales.csv and `""`-as-NULL ([SH source](/sources/github-oracle-samples-db-sample-schemas-sh-scripts.md)). `LOAD DATA LOCAL INFILE` handles 918,843 rows in seconds.

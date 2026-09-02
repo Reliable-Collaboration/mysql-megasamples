@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
     title: "GoogleCloudPlatform/open-knowledge-format repository tree and reference agent code"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "main branch, read via GitHub API and raw files on 2026-09-02"
 ---
 

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://github.com/dimitri/pgloader
     title: "dimitri/pgloader repository: README, LICENSE, releases and tags"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "repo pushed 2026-07-24; releases/tags read via GitHub API 2026-09-02"
 ---
 

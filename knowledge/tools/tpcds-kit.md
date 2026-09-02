@@ -6,21 +6,21 @@ resource: https://github.com/gregrahn/tpcds-kit
 tags: [tool, tpc-ds, generator, c, tpc-eula]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://github.com/gregrahn/tpcds-kit
     title: gregrahn/tpcds-kit (README, EULA, tools/params.h, tools/release.h, tools/tpcds.sql, query_templates/*.tpl, tests/mysql_setup.sh)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: commit 5a3a81796992b725c2a8b216767e142609966752 (2020-03-11)
   - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
     title: TPC-DS spec 2.10.0
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 * Version: dsdgen/dsqgen **2.10.0** (`tools/release.h`); the TPC's current tools are **4.0.0** (click-through). DuckDB's port is also 2.10.0. What changed in the generator between 2.10 and 4.0 is unknown ([open question](/questions/tpcds-dsdgen-version-output-identity.md)).
 * License: TPC EULA v2.2 (`EULA.txt` at root; TPC "Legal Notice" header on every template and `tpcds.sql`) — [license record](/licenses/tpc-eula.md).
 * Build: `apt-get install gcc make flex bison byacc git`; `cd tools && make OS=LINUX` (produces `dsdgen`, `dsqgen`, `mkheader`, `checksum`, `distcomp`).

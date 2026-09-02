@@ -12,12 +12,12 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
     title: instpubs.sql (blob d887fd48cb06436a9aa2e988d00ba7b036dfd6d4)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master, 125,718 bytes
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: sql-server-samples license.txt (MIT)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity

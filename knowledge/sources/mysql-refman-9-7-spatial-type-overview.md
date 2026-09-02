@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
     title: Spatial Data Types
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

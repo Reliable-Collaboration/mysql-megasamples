@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/stored-objects-security.html
     title: Stored Object Access Control
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/stored-objects-security.html, “Stored Object Access Control”, accessed 2026-09-02
 
 # Relevant excerpt
 > "A stored object that executes in definer security context executes with the privileges of the account named by its DEFINER attribute... during object execution, the invoker's privileges are ignored and only the DEFINER account privileges matter."

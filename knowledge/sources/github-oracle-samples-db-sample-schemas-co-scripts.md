@@ -12,19 +12,19 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_install.sql
     title: co_install.sql (8,141 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_create.sql
     title: co_create.sql (19,570 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_populate.sql
     title: co_populate.sql (1,274,129 B, 8,980 lines)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/README.md
     title: customer_orders/README.md (2,384 B)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
 ---
 

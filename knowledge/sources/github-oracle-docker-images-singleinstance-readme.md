@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/oracle/docker-images/main/OracleDatabase/SingleInstance/README.md
     title: SingleInstance README (main)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/oracle/docker-images/contents/OracleDatabase/SingleInstance/dockerfiles/23.26.1
     title: dockerfiles/23.26.1 directory listing (Containerfile.free, runOracle.sh, createDB.sh, license.txt ...)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

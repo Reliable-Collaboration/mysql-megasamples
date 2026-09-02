@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
     title: "gai.conf(5) Linux manual page"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

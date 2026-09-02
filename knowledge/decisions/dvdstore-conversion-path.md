@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: Dell DVD Store 3 conversion path - upstream MySQL DDL plus server-side LOAD DATA of the committed Small CSVs; reviews split to extended
-description: Reuse mysqlds3_create_db/ind/sp with InnoDB and utf8mb4 fixes, load the ~6.5 MB DS2-part CSVs at init, defer the 190 MB reviews CSVs to the extended tier, drop the broken RESTOCK trigger.
+description: Reuse mysqlds3_create_db/ind/sp with InnoDB and utf8mb4 fixes, load the ~6.5 MB DS2-part CSVs into the build server during `make dvdstore`, defer the 190 MB reviews CSVs to the extended tier, drop the broken RESTOCK trigger.
 resource: /decisions/dvdstore-conversion-path.md
 tags: [dvdstore, decision, csv, load-data]
 status: stable
@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
     title: mysqlds3_create_db.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
     title: Small CSV inspection
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -32,7 +32,7 @@ How to build the DS3 database for the image, and which parts belong in core.
 * InnoDB supports the two FULLTEXT indexes on PRODUCTS (Sakila already relies on InnoDB FULLTEXT).
 
 # Outcome
-Option 2 with build-time CSV-to-SQL conversion (keeps the runtime image free of `local_infile`/`secure_file_priv` assumptions; generic behaviour is documented by the tools agent). Core tier: CUSTOMERS, ORDERS, ORDERLINES, CUST_HIST, PRODUCTS, INVENTORY, CATEGORIES, MEMBERSHIP, REORDER (empty) and the four procedures. Extended tier: REVIEWS and REVIEWS_HELPFULNESS loaded from the same repository at build/start when enabled. Drop `mysqlds3_create_trigger2.sql` (upstream marks it "Doesn't work yet"). Pin commit `8226cc06584fde1688a37184c2bd9fbc6faf7282`.
+Option 2: the CSVs are converted to the project's contract TSV (with `build/baseline.json` computed from the parsed rows) and loaded into the build server with server-side `LOAD DATA`, exactly like every other dataset ([bake decision](/decisions/bake-data-vs-initdb.md)); the runtime image carries the baked result. Core tier: CUSTOMERS, ORDERS, ORDERLINES, CUST_HIST, PRODUCTS, INVENTORY, CATEGORIES, MEMBERSHIP, REORDER (empty) and the four procedures. Extended tier: REVIEWS and REVIEWS_HELPFULNESS loaded from the same repository at build/start when enabled. Drop `mysqlds3_create_trigger2.sql` (upstream marks it "Doesn't work yet"). Pin commit `8226cc06584fde1688a37184c2bd9fbc6faf7282`.
 
 # Status
 accepted

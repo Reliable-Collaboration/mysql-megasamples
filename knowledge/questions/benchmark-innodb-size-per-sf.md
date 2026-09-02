@@ -9,11 +9,11 @@ trust: open
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

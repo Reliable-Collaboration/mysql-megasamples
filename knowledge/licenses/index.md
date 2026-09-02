@@ -1,4 +1,4 @@
-# Licenses
+# licenses
 
 ## Concepts
 * [GNU AGPL v3 (internetarchive Python library / ia CLI)](agpl-3-0.md) - Strong copyleft licence of the maintainer-side upload tool; never shipped in the image and never linked by project code, so no obligation attaches to the repository or the image.

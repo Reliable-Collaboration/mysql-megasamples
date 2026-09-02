@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/LICENSE
     title: LICENSE (1,062 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/LICENSE
     title: LICENSE (1,062 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

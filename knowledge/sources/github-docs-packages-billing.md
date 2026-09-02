@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
     title: "GitHub Docs: GitHub Packages billing"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

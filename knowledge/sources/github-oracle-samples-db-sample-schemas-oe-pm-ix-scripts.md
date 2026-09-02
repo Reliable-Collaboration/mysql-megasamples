@@ -12,23 +12,23 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/order_entry/oe_main.sql
     title: oe_main.sql, oe_cre.sql, ccus_v3.sql, cord_v3.sql, cwhs_v3.sql, oe_idx.sql, oe_views.sql, oe_drop.sql, loe_v3.sql, poe_v3.sql, README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/order_entry/pcus_v3.sql
     title: Populate scripts pcus_v3.sql, pord_v3.sql, pwhs_v3.sql, oe_p_pi.sql, oe_p_itm.sql, oe_p_inv.sql, oe_p_pd.sql and the 30 oe_p_<lang>.sql files
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/order_entry/oc_cre.sql
     title: oc_cre.sql, oc_popul.sql, oc_main.sql, coe_xml.sql, xdb03usg.sql, createResources.sql, createFolders.sql, bi_oe_or.ctl
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/product_media/pm_cre.sql
     title: pm_cre.sql, pm_main.sql, pm_p_lob.sql, pm_p_lob.ctl, pm_p_lob.dat, README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v23.3
   - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v19.2/info_exchange/cix_v3.sql
     title: info_exchange/cix_v3.sql (IX object creation) and sales_history/sh_sales.ctl, sh_cust.ctl, time_v3.ctl (old SQL*Loader control files)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: v19.2
 ---
 

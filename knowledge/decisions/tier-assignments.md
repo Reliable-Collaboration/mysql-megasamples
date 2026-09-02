@@ -9,11 +9,19 @@ trust: inferred
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:02:00Z" }
 sources:
   - resource: /decisions/tier-model.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
 Apply the [tier model](/decisions/tier-model.md) to every dataset record's size evidence.
+
+# Options considered
+1. **Apply the thresholds of the tier model dataset by dataset, allowing a small medium band** (chosen).
+2. Strict 50 MB cut-off — rejected: it would exclude Employees, Oracle SH and AdventureWorks, the three datasets most users expect in a MySQL sample image.
+3. Everything in one image — rejected: extended datasets total tens of GB and several may not be redistributed at all.
+
+# Evidence
+Each row of the table links to the dataset record that holds the size evidence; the licensing constraints come from [the Citi Bike/Divvy finding](/questions/citibike-divvy-redistribution.md) and [the Wikidata decision](/decisions/wikidata-vs-wikipedia-simple.md).
 
 # Outcome
 | Database | Tier | Loaded size (MB, inferred unless a record says measured) | Evidence |

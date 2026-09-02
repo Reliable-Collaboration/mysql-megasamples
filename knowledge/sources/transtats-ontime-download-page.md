@@ -12,9 +12,9 @@ verified:
 sources:
   - resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
     title: TranStats - Download - Reporting Carrier On-Time Performance (1987-present)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page snapshot 2026-09-02; latest available data June 2026
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 ---
 
 # What was read

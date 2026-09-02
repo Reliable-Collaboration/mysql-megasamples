@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/mathematical-functions.html
     title: "MySQL 9.7 Reference Manual: Mathematical Functions"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/mathematical-functions.html, “MySQL 9.7 Reference Manual: Mathematical Functions”, accessed 2026-09-02
 
 # Relevant excerpt
 * CONV: "Returns a string representation of the number N, converted from base from_base to base to_base. Returns NULL if any argument is NULL ... If from_base is a negative number, N is regarded as a signed number. Otherwise, N is treated as unsigned. CONV() works with 64-bit precision."

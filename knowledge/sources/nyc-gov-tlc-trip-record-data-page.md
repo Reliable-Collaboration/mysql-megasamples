@@ -12,9 +12,9 @@ verified:
 sources:
   - resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
     title: TLC Trip Record Data
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page snapshot 2026-09-02; latest month linked = May 2026
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 ---
 
 # What was read

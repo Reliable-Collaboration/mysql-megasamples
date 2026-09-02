@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/explain-output.html
     title: "MySQL 9.7 Reference Manual: EXPLAIN Output Format"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/explain-output.html, “MySQL 9.7 Reference Manual: EXPLAIN Output Format”, accessed 2026-09-02
 
 # Relevant excerpt
 * ALL: "A full table scan is done for each combination of rows from the previous tables. This is normally not good if the table is the first table not marked const, and usually very bad in all other cases."

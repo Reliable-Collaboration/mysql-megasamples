@@ -9,9 +9,9 @@ trust: open
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://archive.org/metadata/stackexchange
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,36 +3,36 @@ type: Dataset
 title: Wikidata (candidate — not recommended; prefer Simple English Wikipedia)
 description: CC0 structured data whose official dumps are 43-253 GB; no small official relational-friendly extract exists, so a reproducible bundle is impractical; recorded as a candidate with the extract options evaluated.
 resource: https://dumps.wikimedia.org/wikidatawiki/entities/
-tags: [dataset, candidate, cc0, wikidata, tier-none, text-group]
+tags: [tier-not-shipped, dataset, candidate, cc0, wikidata, text-group]
 status: draft
 trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 sources:
   - resource: https://dumps.wikimedia.org/wikidatawiki/entities/
     title: entity dump listing (2026-09-02)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/wikidatawiki/latest/
     title: wikidatawiki SQL/XML listing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.wikidata.org/wiki/Wikidata:Licensing
     title: Wikidata:Licensing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.wikidata.org/wiki/Wikidata:Database_download
     title: Wikidata:Database download
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/legal.html
     title: dumps legal notice
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/simplewiki/latest/
     title: simplewiki listing (wbc_entity_usage.sql.gz)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
-Wikidata, the Wikimedia knowledge base. Proposed MySQL database name if ever built: **`wikidata`**. Status: candidate; recommendation below is to ship [Simple English Wikipedia](/datasets/wikipedia-simple.md) instead ([decision, pending coordinator](/decisions/wikidata-vs-wikipedia-simple.md)).
+Wikidata, the Wikimedia knowledge base. Proposed MySQL database name if ever built: **`wikidata`**. Status: candidate; recommendation below is to ship [Simple English Wikipedia](/datasets/wikipedia-simple.md) instead ([decision, accepted](/decisions/wikidata-vs-wikipedia-simple.md)).
 
 # Source artifact
 Official dumps ([listing](/sources/wikimedia-dumps-wikidata-entities-listing.md), 2026-09-02): `latest-all.json.bz2` **102,943,257,005 bytes** (weekly, "the recommended format" — [Database download](/sources/wikidata-database-download-page.md)); `latest-all.json.gz` 155.9 GB; `latest-all.ttl.bz2` 125.2 GB; `latest-all.nt.bz2` 195.3 GB; `latest-truthy.nt.bz2` 43.3 GB; `latest-lexemes.json.bz2` 452.0 MB; `latest-lexemes.ttl.bz2` 635.7 MB. MediaWiki-table dumps of wikidatawiki ([listing](/sources/wikimedia-dumps-wikidatawiki-latest-listing.md)): `page.sql.gz` 3.61 GB, `page_props.sql.gz` 1.56 GB, `pagelinks.sql.gz` 9.42 GB — metadata only, no entity content, still multi-GB. No auth. Checksums exist per run directory (md5sums.txt, 55,722 bytes for wikidatawiki-latest).

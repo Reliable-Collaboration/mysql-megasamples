@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://stackoverflow.blog/2009/06/25/attribution-required/
     title: Attribution Required
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

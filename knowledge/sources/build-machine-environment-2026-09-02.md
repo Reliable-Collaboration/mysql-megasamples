@@ -6,17 +6,19 @@ resource: file:///home/mattc/wsldev/mysql-megasamples
 tags: [environment, docker, ipv6, wsl2]
 status: stable
 trust: verified
-stale_after: 2026-10-02
+stale_after: "2026-10-02"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
 sources:
   - resource: "shell: docker info; docker --version; id -nG; cat /proc/net/if_inet6; getent ahosts*; curl -4/-6; docker manifest inspect; df; free; nproc"
     title: Commands run on the build machine
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* shell: docker info; docker --version; id -nG; cat /proc/net/if_inet6; getent ahosts*; curl -4/-6; docker manifest inspect; df; free; nproc, “Commands run on the build machine”, accessed 2026-09-02
 
-# What was observed (commands run 2026-09-02, no state changed)
+# Relevant excerpt
 
 | Item | Value |
 |---|---|
@@ -33,9 +35,12 @@ sources:
 | Host tools present | python3 3.14.4, uv 0.12.6, curl 8.18.0, wget 1.25.0, xz 5.8.3, gh 2.46.0, git |
 | Host tools missing | make, jq, zstd, bzip2, 7z, aria2c, mysql client, mysqlsh, duckdb, git-lfs, pip3 |
 
-# Consequences
+## What it was used to decide
 * Docker Desktop engine settings are edited in the Docker Desktop GUI (Settings → Docker Engine) or the user-writable `daemon.json` above, and require a Docker Desktop restart on Windows; the executing agent cannot restart Docker Desktop, so any such change is handed to the user under the privilege rule even though the file itself is writable.
 * IPv6 exposure is inside the Docker Desktop VM, not the WSL distro: Docker pulls go through Docker Desktop's own network stack, so host-side `curl -4` success does not prove `docker pull` will succeed. See [IPv6 and privileges runbook](/runbooks/ipv6-and-privileges.md).
 * Missing host packages (`make jq zstd bzip2 p7zip-full`) need `sudo apt-get install`; per project rule the executor asks the user rather than working around it. Everything else runs inside containers.
 * Python tooling can be provisioned per-project with `uv` without privileges (normal usage, not a workaround).
 * The pin is `mysql:9.7.2` until 9.7.3 is published ([decision](/decisions/target-mysql-version.md)).
+
+# What it was used to decide
+[IPv6 runbook](/runbooks/ipv6-and-privileges.md), [target version pin](/decisions/target-mysql-version.md), [build orchestration](/decisions/build-orchestration.md), [executor discipline](/runbooks/executor-discipline.md).

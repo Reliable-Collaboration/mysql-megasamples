@@ -12,19 +12,19 @@ verified:
 sources:
   - resource: https://opendata.cityofnewyork.us/overview/
     title: NYC Open Data - Terms of Use section
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://opendata.cityofnewyork.us/faq/
     title: NYC Open Data FAQ
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.nyc.gov/home/terms-of-use.page
     title: NYC.gov Terms of Use
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
     title: TLC Trip Record Data (accuracy disclaimer)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Where the verbatim text lives
+# Where the text lives
 There is **no single licence document**. Three pages together form the terms, and all three were read on 2026-09-02:
 
 1. `https://opendata.cityofnewyork.us/overview/` (the `#termsofuse` section) - [source record](/sources/nyc-open-data-overview-terms.md)
@@ -51,7 +51,7 @@ This is **not** an SPDX-identifiable licence. Ship the three URLs plus the quote
 * **Trademarks:** the City's marks (including the City seal) are not licensed; do not use them.
 * **Personal data:** trip records are already de-identified to taxi-zone granularity (no coordinates since 2016); no additional obligation is stated.
 
-# Attribution string to ship
+# Attribution
 > Trip record data: NYC Taxi & Limousine Commission, published via NYC Open Data (https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page). The trip data was not created by the TLC, and TLC makes no representations as to the accuracy of these data. Terms of use: https://opendata.cityofnewyork.us/overview/#termsofuse
 
 # Applied to

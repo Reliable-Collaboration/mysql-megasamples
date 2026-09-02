@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/docker-hub/usage/pulls/
     title: "Docker Docs: Docker Hub pull usage and limits"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

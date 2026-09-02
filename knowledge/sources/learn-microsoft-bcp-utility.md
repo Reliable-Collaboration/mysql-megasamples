@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/tools/bcp-utility
     title: Bulk Copy with bcp Utility - SQL Server | Microsoft Learn (canonical tools/bcp/bcp-utility)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-08-11, updated_at 2026-08-24, git commit 3788e363569c9a5af042c9b4f688384852d2d144
 ---
 

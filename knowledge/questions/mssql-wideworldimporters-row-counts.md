@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
     title: WWI OLTP catalog (no counts)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
     title: WWI DW catalog (no counts)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

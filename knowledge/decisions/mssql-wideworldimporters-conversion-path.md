@@ -12,16 +12,16 @@ verified:
 sources:
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
     title: release assets (.bak/.bacpac only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-ssdt/README.md
     title: wwi-ssdt README (randomised generation; reference data only in scripts)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-generate-data
     title: Generate data (random factor)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
     title: SQL Server container platform statement
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

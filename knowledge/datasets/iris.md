@@ -6,24 +6,24 @@ resource: https://archive.ics.uci.edu/dataset/53/iris
 tags: [tier-core, csv, iris, smallsets, cc-by-4-0, licensing-flag]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://archive.ics.uci.edu/dataset/53/iris
     title: UCI Iris page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://archive.ics.uci.edu/static/public/53/iris.zip
     title: iris.zip (measured)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "md5 7a07b2b4163b650dc451aca467d4fb58"
   - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
     title: scikit-learn iris.csv, iris.rst, COPYING
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html
     title: load_iris docs
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity

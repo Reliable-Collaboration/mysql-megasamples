@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/use-unicode-character-format-to-import-or-export-data-sql-server
     title: Use Unicode Character Format to Import & Export Data - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-02-10, updated_at 2026-08-24, git commit 58c9ba7063458281263c05cba4e0e8dc7da7358a
 ---
 

@@ -3,32 +3,32 @@ type: Dataset
 title: Oracle SH (Sales History) sample schema
 description: Oracle's star-schema data-warehouse sample (918,843 SALES facts, 55,500 customers, 9 tables) whose v23.3 data ships as six plain CSV files loaded by SQLcl; converted with LOAD DATA, partitions/bitmap indexes/MVs/dimensions replaced.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/sales_history
-tags: [tier-core, medium, oracle, sh, star-schema, csv, mit]
+tags: [tier-core-medium, oracle, sh, star-schema, csv, mit]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
     title: Releases, tags, tree sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
     title: sh_install/sh_create/sh_populate scripts and CSV samples
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
     title: Oracle Sample Schemas guide (SH pages, SQLcl requirement)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-docs-sqlcl-26-2-load-and-sqlformat.md
     title: SQLcl LOAD defaults
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
     title: v19.2 SQL*Loader control files (for comparison)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-char.md
     title: MySQL CHAR semantics
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
@@ -68,8 +68,8 @@ Path (a): Python converter emits MySQL DDL, inserts the three small dimensions f
 * `DATE` columns → `DATE` (no time component in any CSV value or script literal); `time_id` stays `DATE` so `times` remains a proper calendar dimension.
 * `CHAR(1)`/`CHAR(2)`/`CHAR(7)` → `CHAR(n)`; values are always full length so MySQL's trailing-space stripping ([CHAR semantics](/sources/mysql-refman-9-7-char.md)) has no visible effect.
 * `VARCHAR2(4000)` → `VARCHAR(4000)` (utf8mb4: 16,000 bytes, under the 65,535-byte row limit but `products` has two of them plus `VARCHAR2(2000)`×2 → row max ≈ 40 KB, still under the limit; alternatively `TEXT`). Keep `VARCHAR`.
-* `sales` has **no primary key** upstream ("all rows are uniquely identified by the combination of all foreign keys" — the comment even admits duplicates are possible). InnoDB works without a PK (hidden row id) but `mysqlsh util.dumpTables`/`loadDump` chunking and replication prefer one; add an invisible `sales_id BIGINT AUTO_INCREMENT INVISIBLE PRIMARY KEY`? **Recommendation (inferred, invisible-column syntax from memory):** add `INVISIBLE` surrogate PK columns to `sales` and `costs` (does not change `SELECT *`), document it.
-* **Partitioning:** **Inferred:** (from memory, verify on 9.7) InnoDB partitioned tables cannot carry foreign keys; keep the FKs and **drop partitioning** (document the original 15/20 range partitions in the table COMMENT). `COMPRESS` → nothing (or `ROW_FORMAT=COMPRESSED`, not recommended).
+* `sales` has **no primary key** upstream ("all rows are uniquely identified by the combination of all foreign keys" — the comment even admits duplicates are possible). InnoDB works without a PK (hidden row id) but `mysqlsh util.dumpTables`/`loadDump` chunking and replication prefer one; add an invisible `sales_id BIGINT AUTO_INCREMENT INVISIBLE PRIMARY KEY`? **Recommendation (inferred, invisible-column syntax unverified):** add `INVISIBLE` surrogate PK columns to `sales` and `costs` (does not change `SELECT *`), document it.
+* **Partitioning:** Verified: "Partitioned tables using the InnoDB storage engine do not support foreign keys" ([partitioning limitations](/sources/mysql-refman-9-7-partitioning-limitations.md)); keep the FKs and **drop partitioning** (document the original 15/20 range partitions in the table COMMENT). `COMPRESS` → nothing (or `ROW_FORMAT=COMPRESSED`, not recommended).
 * **Bitmap indexes** (sales ×5, costs ×2, products, customers ×3) → ordinary B-tree indexes on the same columns (the FK columns get them anyway).
 * **Oracle Text** `sup_text_idx` (`INDEXTYPE IS ctxsys.context`) → `FULLTEXT INDEX (comments)` (InnoDB FULLTEXT; behaviour differs from Oracle Text, documented).
 * **Materialized views** `cal_month_sales_mv`, `fweek_pscat_sales_mv` (+ their bitmap indexes) → create as ordinary `VIEW`s with the same names (query rewrite is lost; documented).

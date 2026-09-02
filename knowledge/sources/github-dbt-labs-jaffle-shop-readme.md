@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/README.md
     title: README.md (23,543 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: main @ 7d0d8de (2026-07-27); dbt_project.yml version 3.0.0
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/dbt_project.yml
     title: dbt_project.yml
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/dbt-labs/jaffle-shop
     title: repository metadata (license null; /license endpoint 404)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

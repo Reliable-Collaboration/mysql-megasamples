@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/README.md
     title: README.md (wide-world-importers), 5,079 bytes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master (directory last touched 2026-08-31 by dependabot merges)
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/wide-world-importers
     title: directory listing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

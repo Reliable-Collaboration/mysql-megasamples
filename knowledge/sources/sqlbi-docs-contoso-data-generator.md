@@ -12,19 +12,19 @@ verified:
 sources:
   - resource: https://docs.sqlbi.com/contoso-data-generator/
     title: Contoso Data Generator (index)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.sqlbi.com/contoso-data-generator/details
     title: Details
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.sqlbi.com/contoso-data-generator/config-json
     title: Configuration file (config.json)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.sqlbi.com/contoso-data-generator/formats
     title: Output formats and related parameters
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.sqlbi.com/contoso-data-generator/sqlscripts
     title: SQL Scripts
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

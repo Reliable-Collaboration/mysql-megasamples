@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
     title: adventure-works README (release history statements)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
     title: LT 2012 script zip
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

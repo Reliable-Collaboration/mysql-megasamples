@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
     title: "GitHub Docs: GitHub-hosted runners reference"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

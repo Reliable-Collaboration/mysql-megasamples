@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/working_parquet_format.pdf
     title: Working With Parquet Format
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 81,043 bytes, 1 page
 ---
 

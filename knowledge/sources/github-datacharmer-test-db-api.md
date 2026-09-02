@@ -6,14 +6,14 @@ resource: https://api.github.com/repos/datacharmer/test_db
 tags: [employees, test_db, github-api, sizes]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://api.github.com/repos/datacharmer/test_db
     title: repos/datacharmer/test_db, /releases/latest, /contents, /contents/sakila, /commits/master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://pgloader.readthedocs.io/en/latest/intro.html
     title: "pgloader documentation: Introduction"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "readthedocs 'latest', read 2026-09-02"
 ---
 

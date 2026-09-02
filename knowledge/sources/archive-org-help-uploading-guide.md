@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://help.archive.org/help/uploading-a-basic-guide/
     title: "Internet Archive Help Center: Uploading - A Basic Guide"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

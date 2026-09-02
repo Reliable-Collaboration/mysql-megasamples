@@ -6,30 +6,30 @@ resource: https://github.com/TPC-Council/HammerDB
 tags: [tpc-c, hammerdb, tproc-c, github, gpl-3-0]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/README.md
     title: README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; latest release v6.0 "Version 6.0" published 2026-06-26; GitHub license GPL-3.0; pushed_at 2026-08-25; 780 stars
   - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/LICENSE
     title: LICENSE (GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/hammerdbcli
     title: hammerdbcli launcher
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/Docker/Readme.md
     title: Docker/Readme.md (+ Docker/Dockerfile)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/src/mysql/mysqloltp.tcl
     title: src/mysql/mysqloltp.tcl
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/modules/tpcccommon-1.0.tm
     title: modules/tpcccommon-1.0.tm
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,8 +12,8 @@ verified:
 sources:
   - resource: https://download.microsoft.com/download/4/F/7/4F7E81B0-7CEB-401D-BCFA-BF8BF73D868C/EULAs/License_Dev_Linux.rtf
     title: License_Dev_Linux.rtf (302 redirect target of https://go.microsoft.com/fwlink/?linkid=857698), 132,035 bytes, RTF
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # What was read

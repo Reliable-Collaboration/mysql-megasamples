@@ -6,29 +6,29 @@ resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/human_r
 tags: [tier-core, oracle, hr, small, mit]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
     title: Releases, tags, tree sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-hr-scripts.md
     title: hr_install/hr_create/hr_populate/hr_code scripts
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-samples-db-sample-schemas-readme-and-license.md
     title: README and LICENSE.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
     title: Oracle Sample Schemas guide (HR pages)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-docs-sql-language-reference-23-data-types.md
     title: Oracle data types
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-refman-9-7-char.md
     title: MySQL CHAR semantics
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
@@ -72,10 +72,10 @@ Python script parser → MySQL DDL + `INSERT` (path (a) in [the decision](/decis
 |---|---|---|
 | view `emp_details_view` | port | plain 6-table join; drop `WITH READ ONLY` (MySQL join views are non-updatable anyway) |
 | procedure `secure_dml` | port | `SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT='You may only make changes during normal office hours'` when `DATE_FORMAT(NOW(),'%H:%i') NOT BETWEEN '08:00' AND '18:00' OR DAYOFWEEK(NOW()) IN (1,7)` |
-| trigger `secure_employees` | **not created** (documented) | upstream creates it and immediately `ALTER TRIGGER ... DISABLE`s it; **Inferred:** MySQL has no disabled-trigger state (from memory), and an active copy would block all writes outside office hours |
+| trigger `secure_employees` | **not created** (documented) | upstream creates it and immediately `ALTER TRIGGER ... DISABLE`s it; **Inferred:** MySQL has no disabled-trigger state (no `ALTER TRIGGER ... DISABLE` exists; confirmed at S-05), and an active copy would block all writes outside office hours |
 | procedure `add_job_history` | port | simple INSERT wrapper |
 | trigger `update_job_history` | port | `AFTER UPDATE ON employees FOR EACH ROW IF NOT (OLD.job_id <=> NEW.job_id) OR NOT (OLD.department_id <=> NEW.department_id) THEN CALL add_job_history(OLD.employee_id, OLD.hire_date, CURDATE(), OLD.job_id, OLD.department_id)` — MySQL lacks `UPDATE OF column`, so the column test is explicit; note the PK (employee_id, start_date) collision if hire_date already exists in job_history, exactly as in Oracle |
-| CHECK constraints `emp_salary_min`, `jhist_date_interval` | port | **Inferred:** MySQL enforces CHECK since 8.0.16 (from memory; the tools agent's MySQL 9.x notes are authoritative) |
+| CHECK constraints `emp_salary_min`, `jhist_date_interval` | port | MySQL enforces CHECK constraints since 8.0.16 ([verified](/sources/mysql-refman-8-0-create-table-check-constraints.md); see [9.x notes](/tools/mysql-9x-behaviour-notes.md)) |
 | `COMMENT ON TABLE/COLUMN` | port | as `COMMENT` clauses in DDL |
 | sequences | replace | see hazards |
 

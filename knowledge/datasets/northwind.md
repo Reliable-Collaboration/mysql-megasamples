@@ -12,15 +12,15 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
     title: instnwnd.sql (blob ae61e5631d7f03029ec15213ce672b45ceb7e629)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master, 1,049,720 bytes
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/readme.md
     title: northwind-pubs readme.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: sql-server-samples license.txt (MIT)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity
@@ -59,9 +59,9 @@ Pure script translation, no SQL Server: see [decision](/decisions/mssql-northwin
 Primary keys on every table, `Order Details` composite PK (OrderID, ProductID), foreign keys as in the script, plus the script's secondary indexes on Customers (City, CompanyName, PostalCode, Region), Employees (LastName, PostalCode), Orders (CustomerID, EmployeeID, OrderDate, ShippedDate, ShipPostalCode), Products (CategoryID, ProductName, SupplierID), Suppliers (CompanyName, PostalCode). **Inferred** list from memory of the script's `CREATE INDEX` statements - the executor should copy them from the script (the grep pattern used in research only matched the `CREATE UNIQUE|CLUSTERED` forms and reported 0; the script uses `CREATE INDEX "City" ON dbo.Customers...` style).
 
 # Tests and expected values
-* Row counts above (13 tables). `SELECT COUNT(*) FROM \`Order Details\`` = 2155; `SUM(UnitPrice*Quantity*(1-Discount))` over Order Details ~ 1,265,793.04 (**inferred** classic value; verify after load).
-* Encoding probe: `SELECT CompanyName FROM Customers WHERE CustomerID='KOENE'` must return `Königlich Essen`; `SELECT City FROM Customers WHERE CustomerID='BERGS'` = `Luleå`.
-* Binary probe: `SELECT LENGTH(Picture) FROM Categories WHERE CategoryID=1` = 10746.
+* Row counts above (13 tables). `SELECT COUNT(*) FROM order_details` = 2155; `SUM(unitprice*quantity*(1-discount))` over `order_details` ~ 1,265,793.04 (**inferred** classic value; verify after load).
+* Encoding probe: `SELECT companyname FROM customers WHERE customerid='KOENE'` must return `Königlich Essen`; `SELECT city FROM customers WHERE customerid='BERGS'` = `Luleå`.
+* Binary probe: `SELECT LENGTH(picture) FROM categories WHERE categoryid=1` = 10746.
 
 # Tier assignment
 **core** - source 1 MB, loaded size single-digit MB ([release/API sizes](/sources/github-microsoft-sql-server-samples-northwind-pubs-readme.md)).

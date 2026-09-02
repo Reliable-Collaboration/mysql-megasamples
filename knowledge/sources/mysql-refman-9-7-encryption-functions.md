@@ -3,7 +3,7 @@ type: Source
 title: MySQL 9.7 Reference Manual - Encryption and Compression Functions
 description: The 9.7 function summary table (AES_*, COMPRESS, RANDOM_BYTES, SHA2, STATEMENT_DIGEST*, UNCOMPRESS*, VALIDATE_PASSWORD_STRENGTH) omits MD5() and SHA()/SHA1().
 resource: https://dev.mysql.com/doc/refman/9.7/en/encryption-functions.html
-tags: [mysql, 9.7, functions, md5, sha2]
+tags: [mysql, "9.7", functions, md5, sha2]
 status: stable
 trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/encryption-functions.html
     title: 14.13 Encryption and Compression Functions
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
     title: "What Is New in MySQL 9.7 (checked - no mention of MD5/SHA removal; removed features list only names two replication variables)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

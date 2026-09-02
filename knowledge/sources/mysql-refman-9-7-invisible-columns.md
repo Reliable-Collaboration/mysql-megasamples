@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
     title: "MySQL 9.7 Reference Manual: Invisible Columns"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 15.1.25.10"
 ---
 

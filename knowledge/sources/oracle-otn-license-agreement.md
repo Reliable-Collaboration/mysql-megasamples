@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.oracle.com/downloads/licenses/standard-license.html
     title: Oracle Technology Network License Agreement
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

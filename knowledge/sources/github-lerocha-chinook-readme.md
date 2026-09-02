@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/README.md
     title: README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master (pushed 2025-10-05)
 ---
 

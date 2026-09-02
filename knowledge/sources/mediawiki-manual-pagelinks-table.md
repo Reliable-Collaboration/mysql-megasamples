@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.mediawiki.org/wiki/Manual:Pagelinks_table
     title: Manual:Pagelinks table
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

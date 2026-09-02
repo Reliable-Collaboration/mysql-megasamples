@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://opensource.org/license/bsd-3-clause
     title: The 3-Clause BSD License
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

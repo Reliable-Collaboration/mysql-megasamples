@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/akopytov/sysbench/master/README.md
     title: sysbench README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master; GitHub API license GPL-2.0, latest release tag 1.0.20 (2020-04-24), pushed_at 2025-03-09
   - resource: https://packages.debian.org/trixie/sysbench
     title: Debian trixie package sysbench
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 1.0.20+ds-7
 ---
 

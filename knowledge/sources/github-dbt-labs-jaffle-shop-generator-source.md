@@ -12,19 +12,19 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/pyproject.toml
     title: pyproject.toml
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/cli.py
     title: jafgen/cli.py (grep)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/simulation.py
     title: jafgen/simulation.py (grep)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/customers/customers.py
     title: jafgen/customers/customers.py (grep)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://pypi.org/pypi/jafgen/json
     title: PyPI jafgen JSON (version 0.4.14, license Apache-2.0 text, releases 0.3.1 ... 0.4.14)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

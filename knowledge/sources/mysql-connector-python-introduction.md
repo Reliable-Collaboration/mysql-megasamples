@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/connector-python/en/connector-python-introduction.html
     title: "MySQL Connector/Python Developer Guide: Introduction"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

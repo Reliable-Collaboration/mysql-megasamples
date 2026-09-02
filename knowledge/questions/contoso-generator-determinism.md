@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
     title: Engine.cs Random(0) usage
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -21,3 +21,10 @@ Run the 2.0.1 linux-x64 binary twice with the `csv-10k` parameters from build_si
 
 # Related
 [Contoso](/datasets/contoso.md), [tool](/tools/contoso-data-generator-v2.md).
+
+# Resolves
+Records that depend on the answer:
+* [contoso.md](/datasets/contoso.md)
+* [github-sql-bi-contoso-v2-generator-source.md](/sources/github-sql-bi-contoso-v2-generator-source.md)
+* [contoso-data-generator-v2.md](/tools/contoso-data-generator-v2.md)
+* PLAN.md §9 risk register (outside the bundle)

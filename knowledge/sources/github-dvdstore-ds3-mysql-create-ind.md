@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_ind.sql
     title: mysqlds3_create_ind.sql (5/27/15)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -9,14 +9,14 @@ trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
-stale_after: 2026-10-05
+stale_after: "2026-10-05"
 sources:
   - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-md5sums.txt
     title: md5sums (38 lines)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-sha1sums.txt
     title: sha1sums
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

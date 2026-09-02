@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://data.cityofchicago.org/api/views/c7ck-438e.json
     title: Socrata view metadata for c7ck-438e
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://data.cityofchicago.org/resource/c7ck-438e.csv
     title: SODA endpoint for the IUCR codes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

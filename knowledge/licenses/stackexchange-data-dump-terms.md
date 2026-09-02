@@ -9,33 +9,41 @@ trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 sources:
   - resource: https://stackoverflow.com/help/data-dumps
     title: Help Center - What is the data dump?
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
     title: Announcing a change to the data-dump process (2024-07-12, last edited 2024-09-09)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: read via api.stackexchange.com /questions/401324?filter=withbody
   - resource: https://stackoverflow.com/legal/terms-of-service/public
     title: Public Network Terms of Service (Last updated November 13, 2025)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://archive.org/download/stackexchange/license.txt
     title: license.txt in the archive.org Stack Exchange Data Dump item (2024-04-01)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://stackoverflow.com/help/licensing
     title: Help Center - Licensing
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://meta.stackexchange.com/questions/402019/creative-commons-license-by-sa-violation-data-dump-must-not-force-users-to-ag
     title: Creative Commons License (BY-SA) Violation claim and top answer (2024-08-08)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://meta.stackexchange.com/questions/402311/am-i-allowed-to-publicly-reshare-some-json-file-containing-se-data-created-after
     title: Am I allowed to publicly reshare SE data created after the new process? (2024-08-22)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# The three layers
+# Where the text lives
+* Content license statement: https://stackoverflow.com/help/licensing ([source](/sources/stackoverflow-help-licensing.md)).
+* Current dump access page with the click-through: https://stackoverflow.com/help/data-dumps ([source](/sources/stackoverflow-help-data-dumps.md)).
+* Attribution rules: `license.txt` inside the archive.org item ([source](/sources/archive-org-stackexchange-license-txt.md)).
+
+# Obligations
+Attribution and share-alike under CC BY-SA (version by post date); no click-through obligation because the project sources the pre-clause snapshot. Details in the layers below.
+
+## The three layers
 
 ## 1. Content license (unchanged): CC BY-SA, version by post date
 Help/licensing (read 2026-09-02): "Content contributed before 2011-04-08 (UTC) is distributed under the terms of CC BY-SA 2.5. Content contributed from 2011-04-08 up to but not including 2018-05-02 (UTC) is distributed under the terms of CC BY-SA 3.0. Content contributed on or after 2018-05-02 (UTC) is distributed under the terms of CC BY-SA 4.0." Each dump row carries `ContentLicense`. See [CC BY-SA 4.0](/licenses/cc-by-sa-4-0.md) and [CC BY-SA 3.0](/licenses/cc-by-sa-3-0.md).
@@ -67,6 +75,9 @@ Other statements in the announcement: "The CC BY-SA license is unchanged."; "Sta
 * Nevertheless, a public MySQL image redistributes the content to anyone, including LLM trainers. A maintainer who obtained the file through the profile page could be accused of distributing it "for the purpose of LLM training" and lose access; that is a project-governance risk, not a copyright problem.
 * **Decision taken here:** source the dumps from the archive.org item (last snapshot 2024-04-02, files dated 2024-04-06/07), which carries only the CC BY-SA license (`licenseurl` = by-sa/4.0 in item metadata; `license.txt` inside) and no click-through. Nobody on the project needs to accept the profile-page agreement, and the README states that. Trade-off: data is frozen at April 2024. See [Stack Exchange dataset](/datasets/stackexchange.md) and [decision](/decisions/stackexchange-conversion-path.md).
 * If the coordinator later wants a newer dump: (a) the July 2025+ dumps contain two fabricated "watermark" posts (Ids 1000000001 and 1000000010) that are not user content and must be deleted before redistribution (Meta 2678 schema note; Meta 412018 with staff confirmation), and (b) the downloading maintainer should be named in the README as having accepted the clause, with the image's purpose stated as a sample database, not an LLM corpus.
+
+# Attribution
+The contractual click-through is not accepted by this project (the 2024-04 archive.org snapshot predates it). The CC BY-SA attribution rules from `license.txt` are shipped in README: visually indicate the content is from Stack Exchange, link directly to the original post, show the author name(s) and link to their profile pages, and do not add `rel="nofollow"`; post and user IDs are preserved in the tables to make this possible. PROVENANCE.md quotes the click-through text and states that it was not accepted.
 
 # Applied to
 * [Stack Exchange data dump](/datasets/stackexchange.md)

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.usa.gov/government-copyright
     title: Copyright and other rights to government works
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

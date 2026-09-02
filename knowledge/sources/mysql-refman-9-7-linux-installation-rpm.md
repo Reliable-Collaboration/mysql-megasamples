@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/linux-installation-rpm.html
     title: "MySQL 9.7 Reference Manual: Installing MySQL on Linux Using RPM Packages from Oracle"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 2.5.4, Table 2.13"
 ---
 

@@ -12,27 +12,27 @@ verified:
 sources:
   - resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
     title: TLC Trip Record Data
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: snapshot 2026-09-02; newest month published = 2026-05
   - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
     title: Yellow Taxi data dictionary
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: dated March 18, 2025
   - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
     title: Green (LPEP) data dictionary
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: dated March 18, 2025
   - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf
     title: High Volume FHV data dictionary
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
     title: Taxi Zone Lookup Table
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Last-Modified 2024-02-22; MD5 c6064b7c144c716450641f769659d178
   - resource: /sources/nyc-tlc-parquet-footer-inspection.md
     title: Parquet footer inspection (row counts, types, drift)
-    accessed: 2026-09-02
-stale_after: 2026-12-01
+    accessed: "2026-09-02"
+stale_after: "2026-12-01"
 ---
 
 # Identity

@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/employee/en/employees-installation.html
     title: 3 Installation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/employee/en/employees-validation.html
     title: 4 Validating the Employee Data
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

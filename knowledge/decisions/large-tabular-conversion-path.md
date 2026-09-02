@@ -10,13 +10,13 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: /tools/duckdb.md
     title: DuckDB
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/nyc-tlc-parquet-footer-inspection.md
     title: Observed Parquet schemas and drift
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/bts-prezip-archive-inspection.md
     title: BTS CSV quirks
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -36,10 +36,10 @@ How do five very different flat-file sources - Parquet (TLC), zipped 243 MB CSV 
 
 # Outcome
 Per dataset, the loader does:
-1. **Fetch** the upstream artifact into `./downloads/`, record `sha256` and `Content-Length` into the `megasamples.datasets` manifest (no upstream checksums exist for any of these five - see each dataset record).
+1. **Fetch** the upstream artifact into `./downloads/`, record `sha256`, `Content-Length` and `Last-Modified` in `downloads/<id>.meta.json`, which `scripts/registry.py` folds into the `megasamples.datasets` table at image build or extended load (no upstream checksums exist for any of these five - see each dataset record).
 2. **Normalise with DuckDB**: one `.sql` per dataset that selects from `read_parquet` / `read_csv` with an explicit column list and target types, renames columns to lower snake_case, and `COPY ... TO 'staging/<table>.csv' (FORMAT CSV, HEADER false, NULLSTR '\N')`.
 3. **Load** with `mysqlsh util.importTable` into a pre-created table whose DDL lives in the repo (never rely on inferred DDL).
-4. **Verify** `COUNT(*)` and a `CHECKSUM TABLE` against the values recorded in the dataset record.
+4. **Verify** `COUNT(*)`, the canonical digests of the [checksum method](/decisions/test-checksum-method.md) and the `CHECKSUM TABLE` fingerprint against the values recorded in the dataset record and `build/baseline.json`.
 
 Dimension tables (taxi zones, IUCR codes, `L_AIRPORT`/`L_AIRLINE_ID`/`L_UNIQUE_CARRIERS`) skip steps 2-3 and are written straight through the DuckDB MySQL extension.
 

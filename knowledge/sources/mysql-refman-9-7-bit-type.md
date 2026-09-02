@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
     title: "MySQL 9.7 Reference Manual: Bit-Value Type - BIT"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 13.1.5"
 ---
 

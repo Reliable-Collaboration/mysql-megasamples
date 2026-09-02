@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
     title: EDRM Enron Email Datasets
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

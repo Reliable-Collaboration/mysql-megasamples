@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://bexhoma.readthedocs.io/en/latest/Example-TPC-DS.html
     title: "Benchmark: TPC-DS — Bexhoma documentation"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://bexhoma.readthedocs.io/en/latest/Example-TPC-DS.html, “Benchmark: TPC-DS — Bexhoma documentation”, accessed 2026-09-02
 
 # Relevant excerpt (verbatim)
 * "MySQL is excluded currently because the treatment of NULL during INSERT is complicated."

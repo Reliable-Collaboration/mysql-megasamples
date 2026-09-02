@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
     title: "MySQL 9.7 Reference Manual: Restrictions and Limitations on Partitioning"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 26.6"
 ---
 

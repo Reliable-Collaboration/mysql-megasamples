@@ -10,10 +10,10 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://sabr.org/lahman-database/
     title: SABR Lahman page (formats)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
     title: readme 2025
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

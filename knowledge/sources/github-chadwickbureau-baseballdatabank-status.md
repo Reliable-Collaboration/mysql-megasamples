@@ -6,14 +6,14 @@ resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
 tags: [lahman, baseballdatabank, chadwick, mirror]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
     title: repos/chadwickbureau/baseballdatabank (HTTP 404), users/chadwickbureau/repos, search/repositories?q=baseballdatabank
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

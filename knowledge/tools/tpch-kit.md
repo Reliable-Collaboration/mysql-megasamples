@@ -6,24 +6,24 @@ resource: https://github.com/gregrahn/tpch-kit
 tags: [tool, tpc-h, generator, c, tpc-eula]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://github.com/gregrahn/tpch-kit
     title: gregrahn/tpch-kit (README, Makefile, tpcd.h, dss.ddl, dss.ri, TPC README, release.h, answers/q1.out)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: commit 852ad0a5ee31ebefeed884cea4188781dd9613a3 (2018-05-07)
   - resource: https://github.com/electrum/tpch-dbgen
     title: electrum/tpch-dbgen (README, makefile.suite, release.h)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
     title: TPC-H spec 3.0.1
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 * Version: dbgen/qgen **2.17.3** (`release.h`), i.e. the TPC-H 2.17.3 tools plus macOS/PostgreSQL build fixes. The TPC's current tools are **3.0.1** (click-through only, [download form](/sources/tpc-tools-download-request-form.md)); the 3.0.x spec revisions changed only pricing/metric clauses ([spec record](/sources/tpc-h-specification-v3-0-1.md)) — output identity is an [open question](/questions/tpch-dbgen-version-output-identity.md).
 * License: the repository root carries the **TPC EULA v2.2** (`EULA.txt`), no OSI license ([license record](/licenses/tpc-eula.md)). Redistribution of the kit requires the EULA copy plus the "THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC." legend; the plan clones it at a pinned commit at build time instead of vendoring.
 * Build (Debian/Ubuntu builder stage): `apt-get install gcc make git`; `git clone https://github.com/gregrahn/tpch-kit && cd tpch-kit/dbgen && git checkout 852ad0a && make MACHINE=LINUX DATABASE=POSTGRESQL WORKLOAD=TPCH`. Valid `DATABASE` values: INFORMIX, DB2, TDAT, SQLSERVER, SYBASE, ORACLE, VECTORWISE, POSTGRESQL — **there is no MYSQL value**; use **POSTGRESQL** because its `SET_ROWCOUNT` is `limit %d;` (tpcd.h), which MySQL accepts, whereas INFORMIX gives `FIRST %d` and ORACLE `where rownum <= %d`. (The brief's suggestion of INFORMIX/ORACLE is therefore not the best choice for MySQL; community ports patched SQLSERVER's block to `limit %d` before POSTGRESQL existed in the Makefile — [catarinaribeir0](/sources/github-catarinaribeir0-queries-tpch-dbgen-mysql.md).)

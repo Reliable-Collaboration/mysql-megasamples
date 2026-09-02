@@ -6,27 +6,27 @@ resource: https://docs.oracle.com/en/database/oracle/sql-developer-command-line/
 tags: [oracle, sqlcl, csv, export]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://docs.oracle.com/en/database/oracle/sql-developer-command-line/index.html
     title: SQLcl documentation index (latest 26.2)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://docs.oracle.com/en/database/oracle/sql-developer-command-line/26.2/sqcug/loading-file.html
     title: LOAD command, SET LOAD, SET LOADFORMAT
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: SQLcl 26.2
   - resource: https://docs.oracle.com/en/database/oracle/sql-developer-command-line/26.2/sqcug/set-system_variable-value.html
     title: SET system_variable value (SQLFORMAT, ENCODING)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://download.oracle.com/otn_software/java/sqldeveloper/sqlcl-latest.zip
     title: sqlcl-latest.zip (HTTP HEAD only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.oracle.com/tools/downloads/sqlcl-downloads.html
     title: SQLcl download page
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

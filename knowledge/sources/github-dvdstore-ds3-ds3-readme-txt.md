@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_readme.txt
     title: ds3_readme.txt (5/14/15)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

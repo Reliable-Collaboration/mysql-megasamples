@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
     title: DELETIONS.txt
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 1,191 bytes, 41 lines
 ---
 

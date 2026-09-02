@@ -12,16 +12,16 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
     title: iris.csv (md5 d69a16ea6136ccb02a7c37c66375ebba)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/descr/iris.rst
     title: descr/iris.rst
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING
     title: COPYING (BSD 3-Clause License, Copyright (c) 2007-2026 The scikit-learn developers)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html
     title: sklearn.datasets.load_iris documentation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

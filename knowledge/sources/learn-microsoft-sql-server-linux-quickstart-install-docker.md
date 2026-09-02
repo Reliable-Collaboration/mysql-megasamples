@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver17
     title: "Docker: Run Containers for SQL Server on Linux - SQL Server | Microsoft Learn (canonical linux/install-upgrade/quickstart-install-docker)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2026-05-07, updated_at 2026-07-20, git commit e3d58b450af7ac2150dd72e0fbdaeaaabf5dc6ad
 ---
 

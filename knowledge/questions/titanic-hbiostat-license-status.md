@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://hbiostat.org/data/
     title: permission statement
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -22,3 +22,8 @@ The permission ("Permission is granted to anyone wishing to use the data sets pr
 
 # Related
 [Titanic](/datasets/titanic.md), [permission record](/licenses/hbiostat-data-permission.md).
+
+# Resolves
+Records that depend on the answer:
+* [titanic.md](/datasets/titanic.md)
+* [hbiostat-data-permission.md](/licenses/hbiostat-data-permission.md)

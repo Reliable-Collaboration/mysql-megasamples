@@ -12,11 +12,11 @@ verified:
 sources:
   - resource: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet
     title: yellow_tripdata_2025-01.parquet (footer only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Content-Length 59158238; Last-Modified Wed, 23 Apr 2025 16:31:58 GMT; ETag 3f99a46606c0c7e76a386f81167d8e15-12
   - resource: https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-01.parquet
     title: green_tripdata_2025-01.parquet (footer only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: Content-Length 1178451; ETag 110776612e1b020e9c4a0e41f16da597 (single-part, = MD5)
 ---
 

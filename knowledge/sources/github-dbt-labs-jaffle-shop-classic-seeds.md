@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_customers.csv
     title: raw_customers.csv (md5 c07b5acaaab79acc27a00ad489ab4150)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_orders.csv
     title: raw_orders.csv (md5 7deaec91356accb3cf8908934a8af81c)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_payments.csv
     title: raw_payments.csv (md5 8e525f53c0858fba7660598144549edf)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

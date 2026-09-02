@@ -12,20 +12,20 @@ verified:
 sources:
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
     title: release assets AdventureWorksLT2012..2025.bak
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
     title: adventure-works-2012-oltp-lt-script.zip (937,314 bytes) - listed and inspected
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
     title: AdventureWorks sample databases (Learn) - "Lightweight (LT) data is a lightweight and pared down version of the OLTP sample"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
     title: adventure-works README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: license.txt (MIT)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity
@@ -55,7 +55,7 @@ Views (3): `vProductAndDescription` (port), `vGetAllCategories` (recursive CTE -
 PKs, FKs, unique `AK_*` indexes and rowguid unique indexes from the script.
 
 # Tests and expected values
-Row counts above; `SELECT SUM(TotalDue) FROM SalesOrderHeader` pinned after load (**Inferred** classic 1,124,180.4489 (approx.) - measure); probe `SELECT CompanyName FROM Customer WHERE CustomerID=1` and a `fr` ProductDescription row for accents; `LENGTH(ThumbNailPhoto)` for ProductID 680.
+Row counts above; `SELECT SUM(totaldue) FROM salesorderheader` pinned after load (**Inferred** classic 1,124,180.4489 (approx.) - measure); probe `SELECT companyname FROM customer WHERE customerid=1` and a `fr` ProductDescription row for accents; `LENGTH(thumbnailphoto)` for productid 680.
 
 # Tier assignment
 **core**: <1 MB download, <10 MB loaded.

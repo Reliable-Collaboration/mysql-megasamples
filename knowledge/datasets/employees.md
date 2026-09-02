@@ -6,33 +6,33 @@ resource: https://github.com/datacharmer/test_db
 tags: [tier-core-medium, mysql-native, employees, cc-by-sa-3-0, checksums]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
     title: test_db README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ e324b56 (2026-04-10)
   - resource: https://api.github.com/repos/datacharmer/test_db
     title: GitHub API - release v1.0.7, file sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
     title: employees.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/objects.sql
     title: objects.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
     title: test_employees_sha2.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/Changelog
     title: Changelog
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dev.mysql.com/doc/employee/en/employees-validation.html
     title: MySQL Employees manual - validation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Identity
@@ -56,7 +56,7 @@ Native: MySQL SQL - `employees.sql` (DDL + views) that `source`s eight `.dump` f
 Total 3,919,015 rows. Encoding: no charset declared in the DDL (server default utf8mb4 applies); `load_employees.dump` contains no non-ASCII bytes; names are Latin transliterations ("Kyoichi Maliniak", "Duangkaew Piveteau"). **Inferred:** the other dumps (dates, ints, titles like "Senior Engineer") are ASCII too. Loaded size: **Inferred** 150-250 MB InnoDB including secondary indexes (the dumps are 172 MB of text).
 
 # Conversion path
-Concatenate DDL + dumps (+ objects.sql) into one SQL stream, drop `source`/`flush binary logs`, load via the entrypoint, verify with `test_employees_sha2.sql` ([decision](/decisions/employees-conversion-path.md)).
+Concatenate DDL + dumps (+ objects.sql) into one SQL stream, drop `source`/`flush binary logs`, load through the mysql client against the build server during `make employees`, verify with `test_employees_sha2.sql` ([decision](/decisions/employees-conversion-path.md)).
 
 # Type-mapping hazards
 * `flush /*!50503 binary */ logs;` in employees.sql - remove (needs RELOAD, and binary logging may be off).

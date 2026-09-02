@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.docker.com/engine/daemon/
     title: "Docker Docs: Docker daemon configuration overview"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

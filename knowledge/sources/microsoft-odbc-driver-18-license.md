@@ -12,8 +12,8 @@ verified:
 sources:
   - resource: https://download.microsoft.com/download/1/7/c/17c9447c-dfa6-49e0-abdf-90095a85d986/odbc/eula18/LICENSE18.TXT
     title: LICENSE18.TXT (301 redirect target of https://aka.ms/odbc18eula), 11.9 KB
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # What was read

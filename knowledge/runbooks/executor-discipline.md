@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: /runbooks/knowledge-bundle-conventions.md
     title: Knowledge bundle conventions
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # 1. Privileges: stop and ask, never work around
@@ -35,7 +35,7 @@ What does **not** need asking: `uv`-managed Python environments, Docker builds a
 Before any step marked "verify first" in PLAN.md, run the named check and record the result as a **Verification** entry in [log.md](/log.md), updating the record it concerns. Never assume a tag, URL, checksum or row count that the plan flags as unverified.
 
 # 3. Knowledge bundle upkeep (every session)
-* Append to `log.md` under today's ISO date: **Creation** for new records, **Update** for changed ones, **Verification** for measurements (with the command), **Deviation** for departures from PLAN.md.
+* Append to `log.md` under today's ISO date: **Creation** for new records, **Update** for changed ones, **Verification** for measurements (with the command), **Deviation** for departures from PLAN.md, **Deprecation** when a decision is superseded.
 * When a conversion reveals a fact (actual row count, a type-mapping surprise, the tool version actually used, load time), update the dataset record's `# Tests and expected values` or `# Type-mapping hazards`, bump `generated.at`, add the evidence to `sources`, and add a `verified` entry with `process:<script-name>` if a script produced it.
 * Any research (reading a doc, README, issue, license) creates a `sources/` record at that moment, with URL, access date, version/commit and the excerpt that mattered. No citation without a record.
 * A deviation from PLAN.md gets: a dated **Deviation** log entry, a new or updated `decisions/` record (question, options, evidence, outcome), and an edit to PLAN.md pointing at that record. The old decision is set `status: deprecated` with `superseded-by`.

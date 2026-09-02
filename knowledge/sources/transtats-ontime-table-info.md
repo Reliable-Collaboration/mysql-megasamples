@@ -12,9 +12,9 @@ verified:
 sources:
   - resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
     title: TranStats - Table Information
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: snapshot 2026-09-02
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 ---
 
 # What was read

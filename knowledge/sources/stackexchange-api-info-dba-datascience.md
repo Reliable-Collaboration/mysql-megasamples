@@ -9,14 +9,14 @@ trust: verified
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 sources:
   - resource: https://api.stackexchange.com/2.3/info?site=dba
     title: /info site=dba
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.stackexchange.com/2.3/info?site=datascience
     title: /info site=datascience
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

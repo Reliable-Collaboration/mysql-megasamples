@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
     title: "MySQL 9.7 Reference Manual: The DATE, DATETIME, and TIMESTAMP Types"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "MySQL 9.7 manual, section 13.2.2"
 ---
 

@@ -6,14 +6,14 @@ resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
 tags: [duckdb, tpc-ds, dsdgen]
 status: stable
 trust: verified
-stale_after: 2027-03-01
+stale_after: "2027-03-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
 sources:
   - resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
     title: TPC-DS Extension (docs/stable/extensions/tpcds redirects here)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

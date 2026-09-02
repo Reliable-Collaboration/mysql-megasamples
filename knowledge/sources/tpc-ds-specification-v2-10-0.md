@@ -12,14 +12,12 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
     title: TPC BENCHMARK DS Standard Specification Version 2.10.0, September 2018
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 2.10.0, 3.4 MB PDF (text extracted locally)
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-DS_v4.0.0.pdf
-    title: TPC-DS v4.0.0 PDF (downloaded, 2.9 MB, but its subset fonts defeated local text extraction — NOT read)
-    accessed: 2026-09-02
 ---
 
 # What was read
+Only the v2.10.0 PDF was read. The current v4.0.0 PDF (https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-DS_v4.0.0.pdf, 2.9 MB) was downloaded but its subset fonts defeated local text extraction, so it is deliberately absent from `sources` and nothing in this bundle cites it.
 Version 2.10.0 (September 2018): Clauses 3.1–3.3, 4.2.3, Table 3-2. The current v4.0.0 PDF could not be text-extracted locally; its content is **not** cited anywhere in this bundle (see [open question](/questions/tpcds-dsdgen-version-output-identity.md)).
 
 # Relevant excerpt (verbatim)

@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://docs.percona.com/percona-toolkit/pt-table-checksum.html
     title: Percona Toolkit pt-table-checksum documentation
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://docs.percona.com/percona-toolkit/pt-table-checksum.html, “Percona Toolkit pt-table-checksum documentation”, accessed 2026-09-02
 
 # Relevant excerpt
 > "Hash function for checksums (FNV1A_64, MURMUR_HASH, SHA1, MD5, CRC32, etc). The default is to use CRC32(), but MD5() and SHA1() also work" — CRC32 is described as faster but "prone to hash collisions", MD5/SHA1 as "very CPU-intensive".

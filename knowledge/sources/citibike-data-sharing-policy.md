@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://citibikenyc.com/data-sharing-policy
     title: Citi Bike Data Sharing Policy
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: page footer "(c) Lyft, Inc. 2026"
 ---
 

@@ -12,10 +12,10 @@ verified:
 sources:
   - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
     title: ready-to-use-data assets
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
     title: SQL Server DDL
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question

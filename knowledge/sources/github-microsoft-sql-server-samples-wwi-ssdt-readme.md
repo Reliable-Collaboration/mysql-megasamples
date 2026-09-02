@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-ssdt/README.md
     title: wwi-ssdt/README.md (6,179 bytes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/wide-world-importers/wwi-ssdt/wwi-ssdt
     title: SSDT project tree listings (Application/Tables, Sales/Tables, Purchasing/Tables, Warehouse/Tables, Sequences/Sequences, Security, DataLoadSimulation/Stored Procedures, PostDeploymentScripts)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-ssdt/wwi-ssdt/Sales/Tables/Orders.sql
     title: Table definitions read in full or grep'd - Sales/Orders.sql, Sales/Customers.sql, Sales/Invoices.sql, Sales/OrderLines.sql, Sales/InvoiceLines.sql, Application/Cities.sql, Application/People.sql, Application/Countries.sql, Warehouse/StockItems.sql, Warehouse/ColdRoomTemperatures.sql, Warehouse/StockItemTransactions.sql; PostDeploymentScripts/Script.PostDeployment1.sql and the first ~1 KB of pds100-ins-app-people.sql, pds110-ins-app-countries.sql, pds150-ins-app-cities.sql
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

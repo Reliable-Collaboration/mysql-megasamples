@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://archive.ics.uci.edu/dataset/53/iris
     title: Iris - UCI Machine Learning Repository
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

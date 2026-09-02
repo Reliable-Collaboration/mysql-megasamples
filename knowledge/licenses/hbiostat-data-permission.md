@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://hbiostat.org/data/
     title: Vanderbilt Biostatistics Datasets
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Where the text lives
@@ -24,6 +24,9 @@ On the index page https://hbiostat.org/data/ ([source](/sources/hbiostat-data-in
 * Include the acknowledgement: "Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of Biostatistics."
 * Reference the original source: Encyclopedia Titanica; Eaton & Haas (1994) Titanic: Triumph and Tragedy; Thomas Cason (UVa) for titanic3 ([description](/sources/hbiostat-titanic-description.md)).
 * No share-alike. The statement is a permission, not a recognised open license (no SPDX id); the underlying passenger facts are historical public records - see [question](/questions/titanic-hbiostat-license-status.md).
+
+# Attribution
+Ship the requested acknowledgement verbatim: "Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of Biostatistics." plus the dataset's own credits: "titanic3: compiled by Thomas Cason from the Encyclopedia Titanica; see Eaton & Haas (1994), Titanic: Triumph and Tragedy."
 
 # Applied to
 * [Titanic (titanic3)](/datasets/titanic.md).

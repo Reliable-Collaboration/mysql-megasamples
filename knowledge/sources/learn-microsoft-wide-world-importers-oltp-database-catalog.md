@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
     title: WideWorldImporters OLTP database catalog - SQL Server | Microsoft Learn
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: ms.date 2018-04-04, updated_at 2026-01-23, git commit f6b13d333be03651dafb8f1c24ac816d53f1f877
 ---
 

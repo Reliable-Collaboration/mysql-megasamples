@@ -12,13 +12,13 @@ verified:
 sources:
   - resource: https://api.github.com/repos/dvdstore/ds3/git/trees/HEAD?recursive=1
     title: repository tree with blob sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/us_cust.csv
     title: us_cust.csv, row_cust.csv, prod/prod.csv, prod/inv.csv, membership/membership.csv, orders/*_orders.csv, *_orderlines.csv, *_cust_hist.csv (fetched and counted)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/reviews.csv
     title: reviews.csv and review_helpfulness.csv (HEAD + HTTP Range on head and tail only)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://duckdb.org/docs/current/data/csv/overview
     title: "DuckDB documentation: CSV Import (data/csv/overview)"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: "docs 'current' (DuckDB 1.5.5), read 2026-09-02"
 ---
 

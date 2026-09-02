@@ -6,26 +6,26 @@ resource: https://container-registry.oracle.com/database/free
 tags: [oracle, docker, build-stage, oracle-database-free, oracle-group]
 status: stable
 trust: verified
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: /sources/oracle-container-registry-database-free-api-probe.md
     title: Registry API probe (anonymous token, tags, sizes)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-database-free-faq-and-get-started.md
     title: Oracle Database Free FAQ / get-started / licensing manual
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/oracle-free-use-terms-and-conditions.md
     title: Oracle Free Use Terms and Conditions
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-oracle-docker-images-singleinstance-readme.md
     title: oracle/docker-images SingleInstance README
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/github-gvenzl-oci-oracle-free-readme.md
     title: gvenzl/oci-oracle-free README + Docker Hub sizes
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Facts (verified 2026-09-02)
@@ -41,3 +41,7 @@ sources:
 
 # Cost model (inferred)
 Pull 3.7 GB (or 1.2 GB gvenzl) + ≈2–5 min first start (database creation) + SQLcl/JDK ≈ 400 MB; RAM cap 2 GB. Acceptable for an opt-in `build-oracle` verification profile, not for the default build. See [conversion path decision](/decisions/oracle-conversion-path.md).
+
+# Limits
+* Oracle Free Use Terms cap the database at 2 CPUs, 2 GB RAM and 12 GB of user data; the image is 3.7 GB compressed (`-lite` 0.9 GB).
+* Used only by the opt-in `make verify-oracle` cross-check; the archived OE/PM installers target 19c and may not run on 26ai ([question](/questions/oracle-oe-xml-purchase-orders-scope.md)).

@@ -12,20 +12,20 @@ verified:
 sources:
   - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
     title: release assets
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
     title: WideWorldImporters OLAP database catalog (Learn)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-install-configure
     title: Install & configure WideWorldImportersDW (Learn)
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-dw-ssdt/README.md
     title: wwi-dw-ssdt README and project tree
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
     title: license.txt (MIT)
-    accessed: 2026-09-02
-stale_after: 2027-03-01
+    accessed: "2026-09-02"
+stale_after: "2027-03-01"
 ---
 
 # Identity
@@ -58,7 +58,7 @@ Drop all: `Application.Configuration_*` (columnstore/in-memory/PolyBase/partitio
 PKs on keys, FKs from facts to dimensions (present in the .bak), nonclustered indexes on fact foreign keys; drop columnstore.
 
 # Tests and expected values
-Per-table counts pinned at export; `SUM([Total Including Tax]) FROM Fact.Sale`, `SUM(Quantity) FROM Fact.Movement`, `MAX([Invoice Date Key])` pinned at export; City geography probe as in OLTP.
+Per-table counts pinned at export; `SUM(total_including_tax) FROM fact_sale`, `SUM(quantity) FROM fact_movement`, `MAX(invoice_date_key) FROM fact_sale` pinned at export; City geography probe as in OLTP.
 
 # Tier assignment
 **extended** (needs SQL Server once; ~150 MB loaded, inferred).

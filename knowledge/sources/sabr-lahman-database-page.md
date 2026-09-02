@@ -6,14 +6,14 @@ resource: https://sabr.org/lahman-database/
 tags: [lahman, sabr, download]
 status: stable
 trust: verified
-stale_after: 2027-01-15
+stale_after: "2027-01-15"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://sabr.org/lahman-database/
     title: Lahman Baseball Database - Society for American Baseball Research
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

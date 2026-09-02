@@ -6,28 +6,28 @@ resource: /tools/python-conversion-stack.md
 tags: [python, tools, licenses]
 status: stable
 trust: verified
-stale_after: 2026-12-01
+stale_after: "2026-12-01"
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
 verified:
   - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
 sources:
   - resource: /sources/pypi-pymysql.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/pypi-sqlglot.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/pypi-pyarrow.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/pypi-lxml.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/pypi-duckdb.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/mysql-connector-python-preface.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: /sources/build-machine-environment-2026-09-02.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
-# Facts (verified)
+# Facts
 | Package | Version (2026-09-02) | License | Role |
 |---|---|---|---|
 | Python | 3.14.4 on the build host; container image `python:3.13-slim` (**Inferred** availability; 3.13 chosen because pyarrow supports 3.10–3.14 and 3.13 is the most widely packaged) | PSF | runtime |
@@ -42,6 +42,6 @@ sources:
 
 Rejected: `mysql-connector-python` — its software license was not confirmed this session (the manual preface only covers the documentation, [record](/sources/mysql-connector-python-preface.md)); PyMySQL covers every need.
 
-# Limits that matter for this project
+# Limits
 * No host installs beyond `uv`-managed virtualenvs (already present); everything else runs in the `loader` image.
 * Converters are pure Python + DuckDB; no compiled extensions beyond the wheels above, so arm64 builds work.

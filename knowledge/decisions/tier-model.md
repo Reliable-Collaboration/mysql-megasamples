@@ -10,7 +10,7 @@ generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
 sources:
   - resource: /sources/docker-library-mysql-readme.md
     title: initdb behaviour
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
@@ -19,7 +19,12 @@ How are the two tiers delivered and how does a user opt in to the extended tier?
 # Options considered
 1. **Core baked into the image; extended delivered as (a) compressed MySQL Shell dump release assets loaded by an `extended-loader` sidecar or `make load-<dataset>`, and (b) generators run on demand** (chosen).
 2. Two images (`:core` and `:extended`) — rejected: the extended tier is tens of GB and several datasets (TPC-*, Stack Exchange) cannot be redistributed pre-generated or are click-through downloads, so a self-contained extended image is impossible anyway.
-3. Download-at-first-start inside the entrypoint — rejected as default: slow, non-deterministic first start, and breaks the "container starts within budget" test; kept as an explicit `MEGASAMPLES_EXTENDED=nyc_taxi,chicago_crimes` env option implemented by the same loader script for users who want a one-container experience.
+3. Download-at-first-start inside the entrypoint — rejected outright: slow, non-deterministic first start, it breaks the "container starts within budget" test, and the conversion tooling lives in the loader image, not in the MySQL image (the wrapper hands off to the official entrypoint with `exec`, see [bake decision](/decisions/bake-data-vs-initdb.md)).
+
+# Evidence
+* [Official image README](/sources/docker-library-mysql-readme.md): initdb runs only on an empty datadir.
+* [Compose profiles](/sources/docker-docs-compose-profiles.md): opt-in services.
+* Size figures per dataset in [tier assignments](/decisions/tier-assignments.md).
 
 # Outcome
 * Tier thresholds: **core** = loaded InnoDB size ≤ 50 MB per dataset, plus a small set of "medium" core datasets (Employees, Sakila-sized and up to roughly 200 MB each) such that the core image stays under 2 GB compressed; **extended** = anything larger, anything generated, anything requiring click-through or login upstream.

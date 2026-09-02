@@ -12,8 +12,10 @@ verified:
 sources:
   - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
     title: MySQL 9.7 Reference Manual, section 1.3
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
+# What was read
+* https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html, “MySQL 9.7 Reference Manual, section 1.3”, accessed 2026-09-02
 
 # Relevant excerpt
 > "These releases only contain necessary fixes to reduce the risks associated with changes in the database software's behavior. There are no removals within an LTS release. Features can be removed (and added) only in the first LTS release (such as 8.4.0 LTS) but not later."

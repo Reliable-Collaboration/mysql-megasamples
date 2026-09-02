@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
     title: README.md
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: master @ e324b56 (2026-04-10)
 ---
 

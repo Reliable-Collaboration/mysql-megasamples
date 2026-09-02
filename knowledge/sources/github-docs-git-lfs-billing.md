@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
     title: "GitHub Docs: Git Large File Storage billing"
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

@@ -12,14 +12,14 @@ verified:
 sources:
   - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
     title: instawdb.sql at master
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
     version: 'master, 329,368 bytes; header "Date: October 26, 2017 / Updated: November 14, 2025"; commit b47eadc852'
 ---
 
 # What was read
 The full script (329,368 bytes; UTF-8 **with BOM** `EF BB BF`, LF line endings), analysed with grep/awk.
 
-# Findings
+# Relevant excerpt
 * Runs in **SQLCMD mode**: `:setvar SqlSamplesSourceDataPath "C:\Samples\AdventureWorks\"`, `:setvar DatabaseName "AdventureWorks"`; requires full-text search; creates the database with `RECOVERY SIMPLE`, `ACCELERATED_DATABASE_RECOVERY = ON`, `OPTIMIZED_LOCKING = ON`, `QUERY_STORE = ON` (the SQL Server 2025 changes). References FILESTREAM in extended properties ("Required for FileStream").
 * **Schemas**: `HumanResources`, `Person`, `Production`, `Purchasing`, `Sales` (plus `dbo`).
 * **Tables**: 71 `CREATE TABLE` = 68 user tables in the five schemas + `dbo.AWBuildVersion`, `dbo.DatabaseLog`, `dbo.ErrorLog`. Full list: HumanResources.{Department, Employee, EmployeeDepartmentHistory, EmployeePayHistory, JobCandidate, Shift}; Person.{Address, AddressType, BusinessEntity, BusinessEntityAddress, BusinessEntityContact, ContactType, CountryRegion, EmailAddress, Password, Person, PersonPhone, PhoneNumberType, StateProvince}; Production.{BillOfMaterials, Culture, Document, Illustration, Location, Product, ProductCategory, ProductCostHistory, ProductDescription, ProductDocument, ProductInventory, ProductListPriceHistory, ProductModel, ProductModelIllustration, ProductModelProductDescriptionCulture, ProductPhoto, ProductProductPhoto, ProductReview, ProductSubcategory, ScrapReason, TransactionHistory, TransactionHistoryArchive, UnitMeasure, WorkOrder, WorkOrderRouting}; Purchasing.{ProductVendor, PurchaseOrderDetail, PurchaseOrderHeader, ShipMethod, Vendor}; Sales.{CountryRegionCurrency, CreditCard, Currency, CurrencyRate, Customer, PersonCreditCard, SalesOrderDetail, SalesOrderHeader, SalesOrderHeaderSalesReason, SalesPerson, SalesPersonQuotaHistory, SalesReason, SalesTaxRate, SalesTerritory, SalesTerritoryHistory, ShoppingCartItem, SpecialOffer, SpecialOfferProduct, Store}.

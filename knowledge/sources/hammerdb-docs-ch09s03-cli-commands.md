@@ -12,7 +12,7 @@ verified:
 sources:
   - resource: https://www.hammerdb.com/docs/ch09s03.html
     title: CLI Commands
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # What was read

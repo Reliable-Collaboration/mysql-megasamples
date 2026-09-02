@@ -1,19 +1,19 @@
 ---
 type: Decision
-title: Ship Simple English Wikipedia; do not ship a Wikidata extract (coordinator to confirm)
+title: "Ship Simple English Wikipedia rather than a Wikidata extract"
 description: Between the two Wikimedia text-heavy candidates, recommend Simple English Wikipedia (356 MB artifact, MySQL-native link tables, CC BY-SA) over any Wikidata extract (43-253 GB official dumps, no reproducible small subset).
 resource: /decisions/wikidata-vs-wikipedia-simple.md
 tags: [decision, wikidata, wikipedia, scope, text-group]
-status: draft
-trust: open
+status: stable
+trust: inferred
 generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
 sources:
   - resource: https://dumps.wikimedia.org/wikidatawiki/entities/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://dumps.wikimedia.org/simplewiki/latest/
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
   - resource: https://www.wikidata.org/wiki/Wikidata:Database_download
-    accessed: 2026-09-02
+    accessed: "2026-09-02"
 ---
 
 # Question
