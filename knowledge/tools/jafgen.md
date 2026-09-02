@@ -3,26 +3,34 @@ type: Tool
 title: jafgen (Jaffle Shop Generator) 0.4.14
 description: Python CLI that simulates a jaffle shop and writes raw_*.csv files for customers, orders, items, products, supplies, stores, tweets; Apache-2.0; not idempotent (no seed option).
 resource: https://github.com/dbt-labs/jaffle-shop-generator
-tags: [tool, generator, jaffle-shop, python, apache-2-0]
+tags:
+- tool
+- generator
+- jaffle-shop
+- python
+- apache-2-0
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
-    title: jafgen README
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/pyproject.toml
-    title: pyproject.toml / cli.py / simulation.py
-    accessed: "2026-09-02"
-  - resource: https://pypi.org/pypi/jafgen/json
-    title: PyPI jafgen
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/dbt-labs/jaffle-shop-generator
-    title: GitHub API (Apache-2.0, latest release v0.4.14 2024-04-27, last push 2025-12-17)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
+  title: jafgen README
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/pyproject.toml
+  title: pyproject.toml / cli.py / simulation.py
+  accessed: "2026-09-02"
+- resource: https://pypi.org/pypi/jafgen/json
+  title: PyPI jafgen
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/dbt-labs/jaffle-shop-generator
+  title: GitHub API (Apache-2.0, latest release v0.4.14 2024-04-27, last push 2025-12-17)
+  accessed: "2026-09-02"
 ---
 
 # Facts

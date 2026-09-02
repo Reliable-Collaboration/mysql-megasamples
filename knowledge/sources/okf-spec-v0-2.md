@@ -3,17 +3,22 @@ type: Source
 title: Open Knowledge Format SPEC.md v0.2 (GitHub)
 description: Authoritative OKF specification text, version 0.2, read from the GoogleCloudPlatform/open-knowledge-format repository.
 resource: https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md
-tags: [okf, spec]
+tags:
+- okf
+- spec
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md
-    title: SPEC.md at main
-    accessed: "2026-09-02"
-    version: main branch as of 2026-09-02 (commit not captured; executor should pin it)
+- resource: https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md
+  title: SPEC.md at main
+  accessed: "2026-09-02"
+  version: main branch as of 2026-09-02 (commit not captured; executor should pin it)
 ---
 
 # What was read

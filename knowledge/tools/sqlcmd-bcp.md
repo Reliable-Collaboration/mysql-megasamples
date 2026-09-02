@@ -3,37 +3,45 @@ type: Tool
 title: sqlcmd and bcp (mssql-tools18 / go-sqlcmd)
 description: Command-line query and bulk-export tools for SQL Server; bcp (proprietary, ODBC-based, in mssql-tools18) is the export path for .bak-only datasets, go-sqlcmd (MIT) is the redistributable query client. Records the UTF-8 export rules on Linux and bcp's no-quoting hazard.
 resource: https://learn.microsoft.com/en-us/sql/tools/bcp-utility
-tags: [tool, bcp, sqlcmd, export, build-time-only]
+tags:
+- tool
+- bcp
+- sqlcmd
+- export
+- build-time-only
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/tools/bcp-utility
-    title: bcp utility reference (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/tools/bcp/bcp-use-utility
-    title: How to use the bcp utility (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/specify-field-and-row-terminators-sql-server
-    title: Specify field and row terminators (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/use-unicode-character-format-to-import-or-export-data-sql-server
-    title: Use Unicode character format (bcp -w) (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
-    title: ODBC Driver for SQL Server on Linux - character set support (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools
-    title: Install sqlcmd and bcp on Linux (Learn)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/microsoft/go-sqlcmd
-    title: microsoft/go-sqlcmd (MIT, v1.10.0)
-    accessed: "2026-09-02"
-  - resource: https://aka.ms/odbc18eula
-    title: Microsoft ODBC Driver 18 for SQL Server license terms
-    accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/tools/bcp-utility
+  title: bcp utility reference (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/tools/bcp/bcp-use-utility
+  title: How to use the bcp utility (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/specify-field-and-row-terminators-sql-server
+  title: Specify field and row terminators (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/use-unicode-character-format-to-import-or-export-data-sql-server
+  title: Use Unicode character format (bcp -w) (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
+  title: ODBC Driver for SQL Server on Linux - character set support (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools
+  title: Install sqlcmd and bcp on Linux (Learn)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/go-sqlcmd
+  title: microsoft/go-sqlcmd (MIT, v1.10.0)
+  accessed: "2026-09-02"
+- resource: https://aka.ms/odbc18eula
+  title: Microsoft ODBC Driver 18 for SQL Server license terms
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

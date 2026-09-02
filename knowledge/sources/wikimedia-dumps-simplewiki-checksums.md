@@ -3,20 +3,26 @@ type: Source
 title: simplewiki-latest-md5sums.txt and -sha1sums.txt (20260901)
 description: Published checksums for every simplewiki dump file; the files list dated names, so the executor must map latest-* to 20260901-*.
 resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-sha1sums.txt
-tags: [source, wikipedia, checksums]
+tags:
+- source
+- wikipedia
+- checksums
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2026-10-05"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-md5sums.txt
-    title: md5sums (38 lines)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-sha1sums.txt
-    title: sha1sums
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-md5sums.txt
+  title: md5sums (38 lines)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-sha1sums.txt
+  title: sha1sums
+  accessed: "2026-09-02"
 ---
 
 # What was read

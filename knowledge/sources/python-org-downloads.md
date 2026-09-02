@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "python.org Downloads: active Python releases"
-description: "Latest release 3.14.7; 3.14 and 3.13 in bugfix status, 3.12 security-only until 2028-10, 3.10 security ends 2026-10."
+description: Latest release 3.14.7; 3.14 and 3.13 in bugfix status, 3.12 security-only until 2028-10, 3.10 security ends 2026-10.
 resource: https://www.python.org/downloads/
-tags: [python, versions]
+tags:
+- python
+- versions
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://www.python.org/downloads/
-    title: "python.org Downloads: active Python releases"
-    accessed: "2026-09-02"
+- resource: https://www.python.org/downloads/
+  title: "python.org Downloads: active Python releases"
+  accessed: "2026-09-02"
 ---
 
 # What was read

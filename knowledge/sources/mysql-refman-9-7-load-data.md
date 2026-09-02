@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: LOAD DATA Statement"
-description: "Syntax, LOCAL versus server-side file reading, secure_file_priv, default field/line terminators, NULL as \\N, IGNORE/REPLACE and nonrestrictive interpretation, SET transformations."
+description: Syntax, LOCAL versus server-side file reading, secure_file_priv, default field/line terminators, NULL as \N, IGNORE/REPLACE and nonrestrictive interpretation, SET transformations.
 resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
-tags: [mysql, docs, load-data]
+tags:
+- mysql
+- docs
+- load-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
-    title: "MySQL 9.7 Reference Manual: LOAD DATA Statement"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 15.2.9"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
+  title: "MySQL 9.7 Reference Manual: LOAD DATA Statement"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 15.2.9
 ---
 
 # What was read

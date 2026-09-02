@@ -3,25 +3,32 @@ type: Source
 title: scikit-learn iris copy (sklearn/datasets/data/iris.csv, descr/iris.rst, COPYING) and load_iris docs
 description: scikit-learn ships a corrected Iris (same as R, not as UCI) under BSD-3-Clause; 150 rows with numeric class codes 0/1/2.
 resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
-tags: [iris, scikit-learn, bsd-3-clause, alternative-source]
+tags:
+- iris
+- scikit-learn
+- bsd-3-clause
+- alternative-source
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
-    title: iris.csv (md5 d69a16ea6136ccb02a7c37c66375ebba)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/descr/iris.rst
-    title: descr/iris.rst
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING
-    title: COPYING (BSD 3-Clause License, Copyright (c) 2007-2026 The scikit-learn developers)
-    accessed: "2026-09-02"
-  - resource: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html
-    title: sklearn.datasets.load_iris documentation
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
+  title: iris.csv (md5 d69a16ea6136ccb02a7c37c66375ebba)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/descr/iris.rst
+  title: descr/iris.rst
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING
+  title: COPYING (BSD 3-Clause License, Copyright (c) 2007-2026 The scikit-learn developers)
+  accessed: "2026-09-02"
+- resource: https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html
+  title: sklearn.datasets.load_iris documentation
+  accessed: "2026-09-02"
 ---
 
 # What was read

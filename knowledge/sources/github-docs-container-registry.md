@@ -3,16 +3,22 @@ type: Source
 title: "GitHub Docs: Working with the Container registry"
 description: "ghcr.io: 10 GB per-layer limit, 10-minute upload timeout, no overall image size limit stated; GITHUB_TOKEN authentication in Actions."
 resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
-tags: [github, ghcr, limits]
+tags:
+- github
+- ghcr
+- limits
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
-    title: "GitHub Docs: Working with the Container registry"
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+  title: "GitHub Docs: Working with the Container registry"
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: AUTO_INCREMENT Handling in InnoDB"
-description: "innodb_autoinc_lock_mode=2 (interleaved) is the default; what bulk inserts (LOAD DATA, INSERT ... SELECT) mean for auto-increment gaps."
+description: innodb_autoinc_lock_mode=2 (interleaved) is the default; what bulk inserts (LOAD DATA, INSERT ... SELECT) mean for auto-increment gaps.
 resource: https://dev.mysql.com/doc/refman/9.7/en/innodb-auto-increment-handling.html
-tags: [mysql, docs, innodb]
+tags:
+- mysql
+- docs
+- innodb
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/innodb-auto-increment-handling.html
-    title: "MySQL 9.7 Reference Manual: AUTO_INCREMENT Handling in InnoDB"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 17.6.1.6"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/innodb-auto-increment-handling.html
+  title: "MySQL 9.7 Reference Manual: AUTO_INCREMENT Handling in InnoDB"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 17.6.1.6
 ---
 
 # What was read

@@ -3,17 +3,24 @@ type: Source
 title: test_db test_employees_md5.sql (MD5 integrity test, MySQL 8.0-9.5 only)
 description: Expected MD5 chained checksums per table; same recipe as the SHA-256 test but with MD5(); will not run on 9.6+ without the classic_hashing component.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_md5.sql
-tags: [employees, checksum, md5, test]
+tags:
+- employees
+- checksum
+- md5
+- test
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_md5.sql
-    title: test_employees_md5.sql
-    accessed: "2026-09-02"
-    version: master @ e324b56
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_md5.sql
+  title: test_employees_md5.sql
+  accessed: "2026-09-02"
+  version: master @ e324b56
 ---
 
 # What was read

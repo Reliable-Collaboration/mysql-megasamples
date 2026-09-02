@@ -3,31 +3,38 @@ type: Tool
 title: CSV loading notes for this group's flat-file datasets (LOAD DATA vs generated INSERTs)
 description: Dataset-specific CSV facts verified for DS3, Jaffle Shop, Lahman, Contoso, Titanic, Iris and Penguins (headers, quoting, NA tokens, date formats, BOMs) and the loader recipe they imply; generic MySQL LOAD DATA / secure_file_priv behaviour is covered by the tools agent.
 resource: /tools/smallcsv-load-data-infile.md
-tags: [tool, csv, load-data, group-smallcsv]
+tags:
+- tool
+- csv
+- load-data
+- group-smallcsv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/load/cust/mysqlds3_load_cust.sql
-    title: DS3 loader scripts (LOAD DATA LOCAL INFILE pattern)
-    accessed: "2026-09-02"
-  - resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
-    title: DS3 CSV inspection
-    accessed: "2026-09-02"
-  - resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
-    title: Jaffle seeds inspection
-    accessed: "2026-09-02"
-  - resource: https://hbiostat.org/data/repo/titanic3.csv
-    title: titanic3.csv inspection
-    accessed: "2026-09-02"
-  - resource: https://archive.ics.uci.edu/static/public/53/iris.zip
-    title: iris.zip inspection
-    accessed: "2026-09-02"
-  - resource: https://github.com/allisonhorst/palmerpenguins/tree/main/inst/extdata
-    title: penguins CSV inspection
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/load/cust/mysqlds3_load_cust.sql
+  title: DS3 loader scripts (LOAD DATA LOCAL INFILE pattern)
+  accessed: "2026-09-02"
+- resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
+  title: DS3 CSV inspection
+  accessed: "2026-09-02"
+- resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
+  title: Jaffle seeds inspection
+  accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/repo/titanic3.csv
+  title: titanic3.csv inspection
+  accessed: "2026-09-02"
+- resource: https://archive.ics.uci.edu/static/public/53/iris.zip
+  title: iris.zip inspection
+  accessed: "2026-09-02"
+- resource: https://github.com/allisonhorst/palmerpenguins/tree/main/inst/extdata
+  title: penguins CSV inspection
+  accessed: "2026-09-02"
 ---
 
 # Facts

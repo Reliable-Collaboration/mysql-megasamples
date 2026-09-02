@@ -1,19 +1,26 @@
 ---
 type: Source
 title: "MySQL Workbench Manual: 10.5.4 Microsoft SQL Server Type Mapping"
-description: "Workbench's documented SQL Server → MySQL type map (MONEY→DECIMAL, UNIQUEIDENTIFIER→VARCHAR(64), XML→TEXT, DATETIMEOFFSET→DATETIME, HIERARCHYID/SQL_VARIANT not migrated)."
+description: Workbench's documented SQL Server → MySQL type map (MONEY→DECIMAL, UNIQUEIDENTIFIER→VARCHAR(64), XML→TEXT, DATETIMEOFFSET→DATETIME, HIERARCHYID/SQL_VARIANT not migrated).
 resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
-tags: [workbench, migration, type-mapping, mssql]
+tags:
+- workbench
+- migration
+- type-mapping
+- mssql
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
-    title: "MySQL Workbench Manual: 10.5.4 Microsoft SQL Server Type Mapping"
-    accessed: "2026-09-02"
-    version: "MySQL Workbench 8.0 manual"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
+  title: "MySQL Workbench Manual: 10.5.4 Microsoft SQL Server Type Mapping"
+  accessed: "2026-09-02"
+  version: MySQL Workbench 8.0 manual
 ---
 
 # What was read

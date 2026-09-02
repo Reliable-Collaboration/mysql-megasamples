@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "GitHub Docs: Actions limits"
-description: "6-hour job limit, 35-day workflow limit, 256-job matrix, 10 GB cache per repository, concurrent job counts, GITHUB_TOKEN 1,000 requests/hour."
+description: 6-hour job limit, 35-day workflow limit, 256-job matrix, 10 GB cache per repository, concurrent job counts, GITHUB_TOKEN 1,000 requests/hour.
 resource: https://docs.github.com/en/actions/reference/limits
-tags: [github, actions, limits]
+tags:
+- github
+- actions
+- limits
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.github.com/en/actions/reference/limits
-    title: "GitHub Docs: Actions limits"
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/actions/reference/limits
+  title: "GitHub Docs: Actions limits"
+  accessed: "2026-09-02"
 ---
 
 # What was read

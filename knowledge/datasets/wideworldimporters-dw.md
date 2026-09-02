@@ -3,28 +3,37 @@ type: Dataset
 title: WideWorldImportersDW
 description: The star-schema warehouse companion of WideWorldImporters (Dimension/Fact/Integration schemas, 8 dimensions, 6 facts, table names with spaces), shipped only as .bak/.bacpac (Full with columnstore/partitioning, Standard without); MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/releases/tag/wide-world-importers-v1.0
-tags: [tier-extended, mssql-origin, bak-restore, mit, star-schema, multi-schema]
+tags:
+- tier-extended
+- mssql-origin
+- bak-restore
+- mit
+- star-schema
+- multi-schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
-    title: release assets
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
-    title: WideWorldImporters OLAP database catalog (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-install-configure
-    title: Install & configure WideWorldImportersDW (Learn)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-dw-ssdt/README.md
-    title: wwi-dw-ssdt README and project tree
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: license.txt (MIT)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
+  title: release assets
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
+  title: WideWorldImporters OLAP database catalog (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-install-configure
+  title: Install & configure WideWorldImportersDW (Learn)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/wwi-dw-ssdt/README.md
+  title: wwi-dw-ssdt README and project tree
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: license.txt (MIT)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

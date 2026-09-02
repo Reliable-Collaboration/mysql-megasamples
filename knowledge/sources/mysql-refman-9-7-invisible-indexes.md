@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Invisible Indexes"
-description: "Invisible indexes are maintained but ignored by the optimizer; primary keys cannot be invisible; use_invisible_indexes switch."
+description: Invisible indexes are maintained but ignored by the optimizer; primary keys cannot be invisible; use_invisible_indexes switch.
 resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-indexes.html
-tags: [mysql, docs, index]
+tags:
+- mysql
+- docs
+- index
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-indexes.html
-    title: "MySQL 9.7 Reference Manual: Invisible Indexes"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 10.3.12"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-indexes.html
+  title: "MySQL 9.7 Reference Manual: Invisible Indexes"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 10.3.12
 ---
 
 # What was read

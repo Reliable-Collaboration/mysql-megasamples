@@ -3,30 +3,38 @@ type: Tool
 title: DuckDB tpch and tpcds extensions (built-in dbgen 2.17.3 and dsdgen 2.10.0)
 description: Generate TPC-H/TPC-DS data at any (fractional) scale factor inside DuckDB without a C toolchain, then COPY to pipe-delimited files for LOAD DATA or ATTACH MySQL directly; the generator code is TPC-EULA-licensed inside an MIT project.
 resource: https://duckdb.org/docs/current/core_extensions/tpch.html
-tags: [tool, duckdb, tpc-h, tpc-ds, generator]
+tags:
+- tool
+- duckdb
+- tpc-h
+- tpc-ds
+- generator
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/tpch.html
-    title: DuckDB TPC-H extension docs
-    accessed: "2026-09-02"
-  - resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
-    title: DuckDB TPC-DS extension docs
-    accessed: "2026-09-02"
-  - resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
-    title: extension/tpch and extension/tpcds source (LICENSE, release.h, answers)
-    accessed: "2026-09-02"
-    version: main on 2026-09-02; latest release v1.5.5 (2026-07-22)
-  - resource: https://duckdb.org/docs/current/sql/statements/copy.html
-    title: COPY statement docs
-    accessed: "2026-09-02"
-  - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-    title: MySQL extension docs
-    accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/tpch.html
+  title: DuckDB TPC-H extension docs
+  accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
+  title: DuckDB TPC-DS extension docs
+  accessed: "2026-09-02"
+- resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
+  title: extension/tpch and extension/tpcds source (LICENSE, release.h, answers)
+  accessed: "2026-09-02"
+  version: main on 2026-09-02; latest release v1.5.5 (2026-07-22)
+- resource: https://duckdb.org/docs/current/sql/statements/copy.html
+  title: COPY statement docs
+  accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/mysql.html
+  title: MySQL extension docs
+  accessed: "2026-09-02"
 ---
 
 # Facts

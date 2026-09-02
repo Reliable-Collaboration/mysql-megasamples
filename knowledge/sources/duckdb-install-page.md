@@ -1,20 +1,25 @@
 ---
 type: Source
-title: "DuckDB installation page (version selector)"
-description: "Current stable 1.5.5; LTS 1.4.5; install commands per client."
+title: DuckDB installation page (version selector)
+description: Current stable 1.5.5; LTS 1.4.5; install commands per client.
 resource: https://duckdb.org/install/
-tags: [duckdb, version]
+tags:
+- duckdb
+- version
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://duckdb.org/install/
-    title: "DuckDB installation page (version selector)"
-    accessed: "2026-09-02"
-    version: "read 2026-09-02"
+- resource: https://duckdb.org/install/
+  title: DuckDB installation page (version selector)
+  accessed: "2026-09-02"
+  version: read 2026-09-02
 ---
 
 # What was read

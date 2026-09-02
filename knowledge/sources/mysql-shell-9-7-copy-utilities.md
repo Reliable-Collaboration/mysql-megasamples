@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "MySQL Shell 9.7: Copy Instance, Schemas, and Tables"
-description: "util.copyInstance/copySchemas/copyTables stream DDL and data between servers without intermediate files; local_infile=ON on the target; no resume."
+description: util.copyInstance/copySchemas/copyTables stream DDL and data between servers without intermediate files; local_infile=ON on the target; no resume.
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utils-copy.html
-tags: [mysql-shell, copy]
+tags:
+- mysql-shell
+- copy
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utils-copy.html
-    title: "MySQL Shell 9.7: Copy Instance, Schemas, and Tables"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual, section 12.8"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utils-copy.html
+  title: "MySQL Shell 9.7: Copy Instance, Schemas, and Tables"
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual, section 12.8
 ---
 
 # What was read

@@ -3,13 +3,18 @@ type: Open Question
 title: Does the TPC EULA restrict redistribution of dbgen/dsdgen OUTPUT (the generated rows)?
 description: The EULA licenses "the Software … and data files associated with such programs" but never mentions generated output; we ship none, but users and CI caches will.
 resource: /questions/tpc-eula-generated-data-redistribution.md
-tags: [question, tpc, license]
+tags:
+- question
+- tpc
+- license
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -1,18 +1,23 @@
 ---
 type: Source
 title: "Docker Docs: Docker daemon configuration overview"
-description: "daemon.json lives at /etc/docker/daemon.json on Linux; flags and file must not duplicate a setting."
+description: daemon.json lives at /etc/docker/daemon.json on Linux; flags and file must not duplicate a setting.
 resource: https://docs.docker.com/engine/daemon/
-tags: [docker, daemon]
+tags:
+- docker
+- daemon
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/engine/daemon/
-    title: "Docker Docs: Docker daemon configuration overview"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/engine/daemon/
+  title: "Docker Docs: Docker daemon configuration overview"
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,13 +3,17 @@ type: Decision
 title: Final tier assignment per dataset
 description: Which datasets are baked into the core image, which are extended (downloaded, generated, or user-fetched), with the size evidence behind each call.
 resource: /decisions/tier-assignments.md
-tags: [decision, tiers]
+tags:
+- decision
+- tiers
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:02:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:02:00Z"
 sources:
-  - resource: /decisions/tier-model.md
-    accessed: "2026-09-02"
+- resource: /decisions/tier-model.md
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,17 +3,23 @@ type: Source
 title: "Microsoft Learn - Quickstart: run SQL Server Linux container images with Docker"
 description: Prerequisites (2 GB RAM, 2 GB disk, x86-64 only), docker pull/run commands, ACCEPT_EULA and MSSQL_SA_PASSWORD parameter table, Developer edition default, and the go-sqlcmd `sqlcmd create mssql --accept-eula` alternative.
 resource: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker
-tags: [sql-server, container, docs]
+tags:
+- sql-server
+- container
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver17
-    title: "Docker: Run Containers for SQL Server on Linux - SQL Server | Microsoft Learn (canonical linux/install-upgrade/quickstart-install-docker)"
-    accessed: "2026-09-02"
-    version: ms.date 2026-05-07, updated_at 2026-07-20, git commit e3d58b450af7ac2150dd72e0fbdaeaaabf5dc6ad
+- resource: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver17
+  title: "Docker: Run Containers for SQL Server on Linux - SQL Server | Microsoft Learn (canonical linux/install-upgrade/quickstart-install-docker)"
+  accessed: "2026-09-02"
+  version: ms.date 2026-05-07, updated_at 2026-07-20, git commit e3d58b450af7ac2150dd72e0fbdaeaaabf5dc6ad
 ---
 
 # What was read

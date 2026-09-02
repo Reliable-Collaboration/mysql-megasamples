@@ -3,16 +3,22 @@ type: Source
 title: Wikidata:Database download
 description: Official description of the Wikidata dump formats (JSON weekly, RDF full/truthy, lexemes, XML warning, incremental).
 resource: https://www.wikidata.org/wiki/Wikidata:Database_download
-tags: [source, wikidata, dumps]
+tags:
+- source
+- wikidata
+- dumps
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.wikidata.org/wiki/Wikidata:Database_download
-    title: Wikidata:Database download
-    accessed: "2026-09-02"
+- resource: https://www.wikidata.org/wiki/Wikidata:Database_download
+  title: Wikidata:Database download
+  accessed: "2026-09-02"
 ---
 
 # What was read

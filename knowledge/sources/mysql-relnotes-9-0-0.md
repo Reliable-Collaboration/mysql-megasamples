@@ -1,19 +1,25 @@
 ---
 type: Source
-title: "MySQL 9.0.0 Release Notes (2024-07-01)"
-description: "Server-side removal of mysql_native_password, the VECTOR type, and JavaScript stored programs (Enterprise) introduced in 9.0."
+title: MySQL 9.0.0 Release Notes (2024-07-01)
+description: Server-side removal of mysql_native_password, the VECTOR type, and JavaScript stored programs (Enterprise) introduced in 9.0.
 resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
-tags: [mysql, release-notes, authentication]
+tags:
+- mysql
+- release-notes
+- authentication
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
-    title: "MySQL 9.0.0 Release Notes (2024-07-01)"
-    accessed: "2026-09-02"
-    version: "9.0.0, 2024-07-01"
+- resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
+  title: MySQL 9.0.0 Release Notes (2024-07-01)
+  accessed: "2026-09-02"
+  version: 9.0.0, 2024-07-01
 ---
 
 # What was read

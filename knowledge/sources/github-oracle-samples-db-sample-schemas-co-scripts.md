@@ -3,29 +3,36 @@ type: Source
 title: CO schema scripts at v23.3 (co_install.sql, co_create.sql, co_populate.sql, README.md)
 description: DDL with identity columns and JSON check constraint, the 1.27 MB populate script, views, and the built-in row-count verification of the Customer Orders schema.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/customer_orders
-tags: [oracle, co, scripts, json]
+tags:
+- oracle
+- co
+- scripts
+- json
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_install.sql
-    title: co_install.sql (8,141 B)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_create.sql
-    title: co_create.sql (19,570 B)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_populate.sql
-    title: co_populate.sql (1,274,129 B, 8,980 lines)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/README.md
-    title: customer_orders/README.md (2,384 B)
-    accessed: "2026-09-02"
-    version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_install.sql
+  title: co_install.sql (8,141 B)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_create.sql
+  title: co_create.sql (19,570 B)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/co_populate.sql
+  title: co_populate.sql (1,274,129 B, 8,980 lines)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/customer_orders/README.md
+  title: customer_orders/README.md (2,384 B)
+  accessed: "2026-09-02"
+  version: v23.3
 ---
 
 # What was read

@@ -3,16 +3,22 @@ type: Source
 title: ds3/ds3_readme.txt (kit overview, sizes table)
 description: The DS3 kit readme - directory layout, the three standard sizes (Small 10 MB / Medium 1 GB / Large 100 GB) and the tarball layout from linux.dell.com.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_readme.txt
-tags: [dvdstore, ds3, sizes]
+tags:
+- dvdstore
+- ds3
+- sizes
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_readme.txt
-    title: ds3_readme.txt (5/14/15)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_readme.txt
+  title: ds3_readme.txt (5/14/15)
+  accessed: "2026-09-02"
 ---
 
 # What was read

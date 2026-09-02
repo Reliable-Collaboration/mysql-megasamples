@@ -3,16 +3,22 @@ type: Source
 title: MediaWiki Manual:Page table
 description: Column-by-column documentation of the page table (matches the 20260901 dump DDL) and the underscore/varbinary title convention.
 resource: https://www.mediawiki.org/wiki/Manual:Page_table
-tags: [source, mediawiki, schema]
+tags:
+- source
+- mediawiki
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.mediawiki.org/wiki/Manual:Page_table
-    title: Manual:Page table
-    accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/wiki/Manual:Page_table
+  title: Manual:Page table
+  accessed: "2026-09-02"
 ---
 
 # What was read

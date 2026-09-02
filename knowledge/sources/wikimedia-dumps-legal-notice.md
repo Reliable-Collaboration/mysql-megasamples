@@ -3,16 +3,23 @@ type: Source
 title: dumps.wikimedia.org/legal.html — Wikimedia dumps legal notice
 description: The notice covering licensing of all Wikimedia dumps (GFDL + CC BY-SA 4.0 for text; CC0 for Wikidata structured data; at-your-own-risk disclaimer).
 resource: https://dumps.wikimedia.org/legal.html
-tags: [source, wikipedia, wikidata, license]
+tags:
+- source
+- wikipedia
+- wikidata
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dumps.wikimedia.org/legal.html
-    title: Wikimedia dumps legal notice
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/legal.html
+  title: Wikimedia dumps legal notice
+  accessed: "2026-09-02"
 ---
 
 # What was read

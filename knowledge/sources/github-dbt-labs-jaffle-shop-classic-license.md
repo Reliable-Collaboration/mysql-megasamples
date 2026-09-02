@@ -3,19 +3,25 @@ type: Source
 title: jaffle-shop-classic LICENSE (Apache License 2.0)
 description: Full Apache-2.0 text as shipped; the appendix copyright line is left as the template placeholder "Copyright {yyyy} {name of copyright owner}".
 resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/LICENSE
-tags: [jaffle-shop, license, apache-2-0]
+tags:
+- jaffle-shop
+- license
+- apache-2-0
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/LICENSE
-    title: LICENSE (11,357 bytes)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/dbt-labs/jaffle-shop-classic
-    title: GitHub license detection Apache-2.0
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/LICENSE
+  title: LICENSE (11,357 bytes)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/dbt-labs/jaffle-shop-classic
+  title: GitHub license detection Apache-2.0
+  accessed: "2026-09-02"
 ---
 
 # What was read

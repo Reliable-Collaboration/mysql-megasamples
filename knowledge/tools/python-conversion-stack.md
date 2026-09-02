@@ -3,28 +3,34 @@ type: Tool
 title: Python conversion stack
 description: Pinned Python packages for converters, verifiers and generators, chosen for permissive licenses and MySQL 9.7 compatibility.
 resource: /tools/python-conversion-stack.md
-tags: [python, tools, licenses]
+tags:
+- python
+- tools
+- licenses
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 sources:
-  - resource: /sources/pypi-pymysql.md
-    accessed: "2026-09-02"
-  - resource: /sources/pypi-sqlglot.md
-    accessed: "2026-09-02"
-  - resource: /sources/pypi-pyarrow.md
-    accessed: "2026-09-02"
-  - resource: /sources/pypi-lxml.md
-    accessed: "2026-09-02"
-  - resource: /sources/pypi-duckdb.md
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-connector-python-preface.md
-    accessed: "2026-09-02"
-  - resource: /sources/build-machine-environment-2026-09-02.md
-    accessed: "2026-09-02"
+- resource: /sources/pypi-pymysql.md
+  accessed: "2026-09-02"
+- resource: /sources/pypi-sqlglot.md
+  accessed: "2026-09-02"
+- resource: /sources/pypi-pyarrow.md
+  accessed: "2026-09-02"
+- resource: /sources/pypi-lxml.md
+  accessed: "2026-09-02"
+- resource: /sources/pypi-duckdb.md
+  accessed: "2026-09-02"
+- resource: /sources/mysql-connector-python-preface.md
+  accessed: "2026-09-02"
+- resource: /sources/build-machine-environment-2026-09-02.md
+  accessed: "2026-09-02"
 ---
 
 # Facts

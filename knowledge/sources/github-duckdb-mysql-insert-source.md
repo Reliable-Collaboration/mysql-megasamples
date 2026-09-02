@@ -1,19 +1,26 @@
 ---
 type: Source
-title: "duckdb/duckdb-mysql src/storage/mysql_insert.cpp (write path)"
-description: "The extension inserts by generating multi-row `INSERT INTO schema.table (cols) VALUES (...), (...)` statements, flushing whenever the accumulated VALUES text reaches 8000 bytes (INSERT_FLUSH_SIZE), with a final flush in Finalize; values are cast to VARCHAR and quoted."
+title: duckdb/duckdb-mysql src/storage/mysql_insert.cpp (write path)
+description: The extension inserts by generating multi-row `INSERT INTO schema.table (cols) VALUES (...), (...)` statements, flushing whenever the accumulated VALUES text reaches 8000 bytes (INSERT_FLUSH_SIZE), with a final flush in Finalize; values are cast to VARCHAR and quoted.
 resource: https://raw.githubusercontent.com/duckdb/duckdb-mysql/main/src/storage/mysql_insert.cpp
-tags: [duckdb, mysql, extension, source]
+tags:
+- duckdb
+- mysql
+- extension
+- source
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb-mysql/main/src/storage/mysql_insert.cpp
-    title: "duckdb/duckdb-mysql src/storage/mysql_insert.cpp (write path)"
-    accessed: "2026-09-02"
-    version: "main branch, read 2026-09-02; repo MIT, last push 2026-08-28"
+- resource: https://raw.githubusercontent.com/duckdb/duckdb-mysql/main/src/storage/mysql_insert.cpp
+  title: duckdb/duckdb-mysql src/storage/mysql_insert.cpp (write path)
+  accessed: "2026-09-02"
+  version: main branch, read 2026-09-02; repo MIT, last push 2026-08-28
 ---
 
 # What was read

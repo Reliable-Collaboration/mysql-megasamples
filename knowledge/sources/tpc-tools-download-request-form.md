@@ -3,16 +3,22 @@ type: Source
 title: TPC tools download request form (TPC-H 3.0.1)
 description: The registration form behind every TPC tools download; requires personal details and an EULA click-through, then e-mails a download link.
 resource: https://www.tpc.org/TPC_Documents_Current_Versions/download_programs/tools-download-request5.asp?bm_type=TPC-H&bm_vers=3.0.1&mode=CURRENT-ONLY
-tags: [tpc, download, click-through]
+tags:
+- tpc
+- download
+- click-through
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/download_programs/tools-download-request5.asp?bm_type=TPC-H&bm_vers=3.0.1&mode=CURRENT-ONLY
-    title: TPC-H Tools download request
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/download_programs/tools-download-request5.asp?bm_type=TPC-H&bm_vers=3.0.1&mode=CURRENT-ONLY
+  title: TPC-H Tools download request
+  accessed: "2026-09-02"
 ---
 
 # What was read

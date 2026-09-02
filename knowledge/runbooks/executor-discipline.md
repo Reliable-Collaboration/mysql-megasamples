@@ -3,16 +3,23 @@ type: Runbook
 title: Executor discipline
 description: Non-negotiable working rules for the agent or engineer executing PLAN.md; privilege handling, knowledge-bundle upkeep, deviation handling, and verification-first.
 resource: /runbooks/executor-discipline.md
-tags: [process, executor, privileges, okf]
+tags:
+- process
+- executor
+- privileges
+- okf
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:17:31Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:17:31Z"
 sources:
-  - resource: /runbooks/knowledge-bundle-conventions.md
-    title: Knowledge bundle conventions
-    accessed: "2026-09-02"
+- resource: /runbooks/knowledge-bundle-conventions.md
+  title: Knowledge bundle conventions
+  accessed: "2026-09-02"
 ---
 
 # 1. Privileges: stop and ask, never work around
@@ -37,7 +44,7 @@ Before any step marked "verify first" in PLAN.md, run the named check and record
 # 3. Knowledge bundle upkeep (every session)
 * Append to `log.md` under today's ISO date: **Creation** for new records, **Update** for changed ones, **Verification** for measurements (with the command), **Deviation** for departures from PLAN.md, **Deprecation** when a decision is superseded.
 * When a conversion reveals a fact (actual row count, a type-mapping surprise, the tool version actually used, load time), update the dataset record's `# Tests and expected values` or `# Type-mapping hazards`, bump `generated.at`, add the evidence to `sources`, and add a `verified` entry with `process:<script-name>` if a script produced it.
-* Any research (reading a doc, README, issue, license) creates a `sources/` record at that moment, with URL, access date, version/commit and the excerpt that mattered. No citation without a record.
+* Any research (reading a doc, README, issue, license) is recorded at that moment in a `sources/` record — one per source artifact (a document, a repository at a commit, a manual page set), every URL read listed under `sources` — with access date, version/commit and the excerpt that mattered. No citation without a record.
 * A deviation from PLAN.md gets: a dated **Deviation** log entry, a new or updated `decisions/` record (question, options, evidence, outcome), and an edit to PLAN.md pointing at that record. The old decision is set `status: deprecated` with `superseded-by`.
 * Trust marking: a record becomes `trust: verified` only when the claim was read in an authoritative source or produced by a command whose output is recorded. Estimates stay `inferred`.
 

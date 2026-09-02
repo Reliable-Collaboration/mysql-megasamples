@@ -3,17 +3,24 @@ type: Source
 title: BTS PREZIP archive inspection (URL pattern, members, header, sample rows)
 description: Direct HTTP inspection of the prezipped On-Time monthly archives - the URL pattern works without a browser session, and the enclosed CSV's exact header and value encodings were read.
 resource: https://transtats.bts.gov/PREZIP/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip
-tags: [bts, ontime, download, measurement]
+tags:
+- bts
+- ontime
+- download
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://transtats.bts.gov/PREZIP/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip
-    title: Prezipped On-Time monthly archive, 2025-01 (headers, central directory, readme.html, first ~380 KB of the CSV member)
-    accessed: "2026-09-02"
-    version: Content-Length 27108664; Last-Modified Thu, 08 May 2025 14:59:27 GMT
+- resource: https://transtats.bts.gov/PREZIP/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip
+  title: Prezipped On-Time monthly archive, 2025-01 (headers, central directory, readme.html, first ~380 KB of the CSV member)
+  accessed: "2026-09-02"
+  version: Content-Length 27108664; Last-Modified Thu, 08 May 2025 14:59:27 GMT
 stale_after: "2027-03-01"
 ---
 

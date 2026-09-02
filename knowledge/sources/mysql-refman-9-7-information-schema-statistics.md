@@ -3,16 +3,22 @@ type: Source
 title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA STATISTICS Table"
 description: Columns describing every index; basis for the index-existence test.
 resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-statistics-table.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:21:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:21:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:21:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:21:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-statistics-table.html
-    title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA STATISTICS Table"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-statistics-table.html
+  title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA STATISTICS Table"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/information-schema-statistics-table.html, “MySQL 9.7 Reference Manual: INFORMATION_SCHEMA STATISTICS Table”, accessed 2026-09-02

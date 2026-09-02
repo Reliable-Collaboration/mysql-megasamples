@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "PyPI: lxml"
-description: "Latest lxml release and license."
+description: Latest lxml release and license.
 resource: https://pypi.org/project/lxml/
-tags: [python, pypi, tools]
+tags:
+- python
+- pypi
+- tools
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 sources:
-  - resource: https://pypi.org/project/lxml/
-    title: "PyPI: lxml"
-    accessed: "2026-09-02"
+- resource: https://pypi.org/project/lxml/
+  title: "PyPI: lxml"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://pypi.org/project/lxml/, “PyPI: lxml”, accessed 2026-09-02

@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 8.4 Reference Manual: What Is New in MySQL 8.4"
-description: "mysqlpump and mysql_upgrade were removed in 8.4; mysql_native_password disabled by default; innodb_change_buffering default none."
+description: mysqlpump and mysql_upgrade were removed in 8.4; mysql_native_password disabled by default; innodb_change_buffering default none.
 resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
-tags: [mysql, docs, release]
+tags:
+- mysql
+- docs
+- release
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
-    title: "MySQL 8.4 Reference Manual: What Is New in MySQL 8.4"
-    accessed: "2026-09-02"
-    version: "MySQL 8.4 manual, section 1.4"
+- resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
+  title: "MySQL 8.4 Reference Manual: What Is New in MySQL 8.4"
+  accessed: "2026-09-02"
+  version: MySQL 8.4 manual, section 1.4
 ---
 
 # What was read

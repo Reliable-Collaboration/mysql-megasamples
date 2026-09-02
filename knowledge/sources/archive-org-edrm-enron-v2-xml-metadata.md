@@ -3,16 +3,23 @@ type: Source
 title: archive.org item metadata — EDRM Enron Email Data Set v2 XML
 description: Metadata API record for the archive.org mirror of the EDRM v2 XML set (166 files, 79.1 GB, uploaded 2015, per-custodian zips).
 resource: https://archive.org/details/edrm.enron.email.data.set.v2.xml
-tags: [source, enron, edrm, size-evidence]
+tags:
+- source
+- enron
+- edrm
+- size-evidence
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.org/metadata/edrm.enron.email.data.set.v2.xml
-    title: metadata JSON for item edrm.enron.email.data.set.v2.xml
-    accessed: "2026-09-02"
+- resource: https://archive.org/metadata/edrm.enron.email.data.set.v2.xml
+  title: metadata JSON for item edrm.enron.email.data.set.v2.xml
+  accessed: "2026-09-02"
 ---
 
 # What was read

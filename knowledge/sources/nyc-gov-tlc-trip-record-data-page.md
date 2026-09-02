@@ -3,17 +3,23 @@ type: Source
 title: NYC TLC Trip Record Data page
 description: The TLC's canonical download and metadata page for yellow, green, FHV and HVFHV trip records; source of the Parquet URL pattern, publication cadence and disclaimer.
 resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-tags: [nyc-tlc, download, parquet]
+tags:
+- nyc-tlc
+- download
+- parquet
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-    title: TLC Trip Record Data
-    accessed: "2026-09-02"
-    version: page snapshot 2026-09-02; latest month linked = May 2026
+- resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+  title: TLC Trip Record Data
+  accessed: "2026-09-02"
+  version: page snapshot 2026-09-02; latest month linked = May 2026
 stale_after: "2026-12-01"
 ---
 

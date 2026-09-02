@@ -3,16 +3,21 @@ type: Source
 title: Divvy System Data page
 description: The official landing page for Divvy trip data - contents, download location, processing rules and the licence link.
 resource: https://divvybikes.com/system-data
-tags: [divvy, download]
+tags:
+- divvy
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://divvybikes.com/system-data
-    title: Divvy System Data
-    accessed: "2026-09-02"
+- resource: https://divvybikes.com/system-data
+  title: Divvy System Data
+  accessed: "2026-09-02"
 ---
 
 # What was read

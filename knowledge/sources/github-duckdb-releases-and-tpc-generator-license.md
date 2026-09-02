@@ -1,19 +1,27 @@
 ---
 type: Source
 title: "duckdb/duckdb: releases (API), extension/tpch/dbgen/LICENSE (TPC EULA 2.2) and extension/tpcds/dsdgen-c source headers (TPC Legal Notice)"
-description: "Latest release v1.5.5 (2026-07-22), LTS 1.4.5; the TPC-H generator carries the TPC End User License Agreement v2.2; the TPC-DS generator files carry the TPC 'Legal Notice ... maintained by the TPC' header; the DuckDB repository itself is MIT."
+description: Latest release v1.5.5 (2026-07-22), LTS 1.4.5; the TPC-H generator carries the TPC End User License Agreement v2.2; the TPC-DS generator files carry the TPC 'Legal Notice ... maintained by the TPC' header; the DuckDB repository itself is MIT.
 resource: https://github.com/duckdb/duckdb
-tags: [duckdb, tpch, tpcds, license, release]
+tags:
+- duckdb
+- tpch
+- tpcds
+- license
+- release
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://github.com/duckdb/duckdb
-    title: "duckdb/duckdb: releases (API), extension/tpch/dbgen/LICENSE (TPC EULA 2.2) and extension/tpcds/dsdgen-c source headers (TPC Legal Notice)"
-    accessed: "2026-09-02"
-    version: "main branch and releases read via GitHub API/raw on 2026-09-02"
+- resource: https://github.com/duckdb/duckdb
+  title: "duckdb/duckdb: releases (API), extension/tpch/dbgen/LICENSE (TPC EULA 2.2) and extension/tpcds/dsdgen-c source headers (TPC Legal Notice)"
+  accessed: "2026-09-02"
+  version: main branch and releases read via GitHub API/raw on 2026-09-02
 ---
 
 # What was read

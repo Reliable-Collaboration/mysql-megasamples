@@ -3,32 +3,41 @@ type: Dataset
 title: Wikidata (candidate — not recommended; prefer Simple English Wikipedia)
 description: CC0 structured data whose official dumps are 43-253 GB; no small official relational-friendly extract exists, so a reproducible bundle is impractical; recorded as a candidate with the extract options evaluated.
 resource: https://dumps.wikimedia.org/wikidatawiki/entities/
-tags: [tier-not-shipped, dataset, candidate, cc0, wikidata, text-group]
+tags:
+- tier-not-shipped
+- dataset
+- candidate
+- cc0
+- wikidata
+- text-group
 status: draft
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2026-12-01"
 sources:
-  - resource: https://dumps.wikimedia.org/wikidatawiki/entities/
-    title: entity dump listing (2026-09-02)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/wikidatawiki/latest/
-    title: wikidatawiki SQL/XML listing
-    accessed: "2026-09-02"
-  - resource: https://www.wikidata.org/wiki/Wikidata:Licensing
-    title: Wikidata:Licensing
-    accessed: "2026-09-02"
-  - resource: https://www.wikidata.org/wiki/Wikidata:Database_download
-    title: Wikidata:Database download
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/legal.html
-    title: dumps legal notice
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/
-    title: simplewiki listing (wbc_entity_usage.sql.gz)
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/wikidatawiki/entities/
+  title: entity dump listing (2026-09-02)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/wikidatawiki/latest/
+  title: wikidatawiki SQL/XML listing
+  accessed: "2026-09-02"
+- resource: https://www.wikidata.org/wiki/Wikidata:Licensing
+  title: Wikidata:Licensing
+  accessed: "2026-09-02"
+- resource: https://www.wikidata.org/wiki/Wikidata:Database_download
+  title: Wikidata:Database download
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/legal.html
+  title: dumps legal notice
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/
+  title: simplewiki listing (wbc_entity_usage.sql.gz)
+  accessed: "2026-09-02"
 ---
 
 # Identity

@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "MySQL Shell 9.7: Batch Code Execution"
-description: "mysqlsh --file, stdin redirection, --sql/--js/--py modes, batch mode has no interactive commands."
+description: mysqlsh --file, stdin redirection, --sql/--js/--py modes, batch mode has no interactive commands.
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
-tags: [mysql-shell, cli]
+tags:
+- mysql-shell
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
-    title: "MySQL Shell 9.7: Batch Code Execution"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual, section 5.6"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
+  title: "MySQL Shell 9.7: Batch Code Execution"
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual, section 5.6
 ---
 
 # What was read

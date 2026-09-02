@@ -3,17 +3,23 @@ type: Open Question
 title: Iris licensing - accept UCI's CC BY 4.0 with attribution, or ship the scikit-learn/R corrected copy (BSD-3) as facts?
 description: UCI labels Iris CC BY 4.0 (not public domain as commonly assumed); the same 150 measurements are shipped by scikit-learn under BSD-3-Clause and by R's datasets package; the data are 1936 facts.
 resource: /questions/iris-uci-cc-by-vs-public-domain.md
-tags: [iris, license, open, flag]
+tags:
+- iris
+- license
+- open
+- flag
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.ics.uci.edu/dataset/53/iris
-    title: UCI Iris page (CC BY 4.0 statement)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING
-    title: scikit-learn COPYING (BSD-3-Clause)
-    accessed: "2026-09-02"
+- resource: https://archive.ics.uci.edu/dataset/53/iris
+  title: UCI Iris page (CC BY 4.0 statement)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/COPYING
+  title: scikit-learn COPYING (BSD-3-Clause)
+  accessed: "2026-09-02"
 ---
 
 # Question

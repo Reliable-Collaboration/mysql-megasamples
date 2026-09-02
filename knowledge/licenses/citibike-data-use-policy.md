@@ -3,19 +3,25 @@ type: License
 title: Citi Bike / NYCBS Data Sharing Policy
 description: Lyft Bikes and Scooters' licence for Citi Bike trip data; it grants broad use but expressly forbids publishing or distributing the data as a stand-alone dataset, which blocks shipping it in this image.
 resource: https://citibikenyc.com/data-sharing-policy
-tags: [license, citibike, redistribution-blocked]
+tags:
+- license
+- citibike
+- redistribution-blocked
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://citibikenyc.com/data-sharing-policy
-    title: Citi Bike Data Sharing Policy (full text)
-    accessed: "2026-09-02"
-  - resource: https://citibikenyc.com/system-data
-    title: Citi Bike System Data (links to the policy as "NYCBS Data Use Policy")
-    accessed: "2026-09-02"
+- resource: https://citibikenyc.com/data-sharing-policy
+  title: Citi Bike Data Sharing Policy (full text)
+  accessed: "2026-09-02"
+- resource: https://citibikenyc.com/system-data
+  title: Citi Bike System Data (links to the policy as "NYCBS Data Use Policy")
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

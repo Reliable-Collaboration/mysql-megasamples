@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "dimitri/pgloader repository: README, LICENSE, releases and tags"
-description: "Last release v3.6.9 (2022-10-24); tag v3.6.10; README now describes pgloader v4 as a Clojure rewrite needing Java 21, distributed as a v4-dev JAR; license is the PostgreSQL licence text (PGDG copyright)."
+description: Last release v3.6.9 (2022-10-24); tag v3.6.10; README now describes pgloader v4 as a Clojure rewrite needing Java 21, distributed as a v4-dev JAR; license is the PostgreSQL licence text (PGDG copyright).
 resource: https://github.com/dimitri/pgloader
-tags: [pgloader, license, release]
+tags:
+- pgloader
+- license
+- release
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://github.com/dimitri/pgloader
-    title: "dimitri/pgloader repository: README, LICENSE, releases and tags"
-    accessed: "2026-09-02"
-    version: "repo pushed 2026-07-24; releases/tags read via GitHub API 2026-09-02"
+- resource: https://github.com/dimitri/pgloader
+  title: "dimitri/pgloader repository: README, LICENSE, releases and tags"
+  accessed: "2026-09-02"
+  version: repo pushed 2026-07-24; releases/tags read via GitHub API 2026-09-02
 ---
 
 # What was read

@@ -3,23 +3,30 @@ type: Dataset
 title: Citi Bike (NYC) trip data
 description: Lyft-operated Citi Bike trip records from the public S3 bucket; the licence forbids redistributing the data as a stand-alone dataset, so it is extended tier and user-fetched only.
 resource: https://citibikenyc.com/system-data
-tags: [tier-user-fetched, csv, bikeshare, redistribution-blocked]
+tags:
+- tier-user-fetched
+- csv
+- bikeshare
+- redistribution-blocked
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://citibikenyc.com/system-data
-    title: Citi Bike System Data
-    accessed: "2026-09-02"
-  - resource: https://citibikenyc.com/data-sharing-policy
-    title: Citi Bike Data Sharing Policy
-    accessed: "2026-09-02"
-  - resource: /sources/citibike-s3-tripdata-listing.md
-    title: S3 bucket listing and archive inspection
-    accessed: "2026-09-02"
-    version: 174 keys on 2026-09-02; newest 202607
+- resource: https://citibikenyc.com/system-data
+  title: Citi Bike System Data
+  accessed: "2026-09-02"
+- resource: https://citibikenyc.com/data-sharing-policy
+  title: Citi Bike Data Sharing Policy
+  accessed: "2026-09-02"
+- resource: /sources/citibike-s3-tripdata-listing.md
+  title: S3 bucket listing and archive inspection
+  accessed: "2026-09-02"
+  version: 174 keys on 2026-09-02; newest 202607
 stale_after: "2026-12-01"
 ---
 

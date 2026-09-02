@@ -3,17 +3,23 @@ type: Source
 title: "MySQL Shell 9.7: Dump Loading Utility (util.loadDump)"
 description: "util.loadDump(): expects DDL .sql + .tsv(.zst) data + .json metadata; local_infile=ON required; loadIndexes/deferTableIndexes, loadUsers, ignoreVersion, resetProgress, threads, skipBinlog, createInvisiblePKs."
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
-tags: [mysql-shell, dump, load]
+tags:
+- mysql-shell
+- dump
+- load
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
-    title: "MySQL Shell 9.7: Dump Loading Utility (util.loadDump)"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual, section 12.6"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
+  title: "MySQL Shell 9.7: Dump Loading Utility (util.loadDump)"
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual, section 12.6
 ---
 
 # What was read

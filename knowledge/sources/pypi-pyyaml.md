@@ -1,20 +1,26 @@
 ---
 type: Source
 title: "PyPI JSON metadata: PyYAML"
-description: "6.0.3 (2025-09-25), requires Python >=3.8, MIT."
+description: 6.0.3 (2025-09-25), requires Python >=3.8, MIT.
 resource: https://pypi.org/pypi/PyYAML/json
-tags: [python, pypi, yaml]
+tags:
+- python
+- pypi
+- yaml
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://pypi.org/pypi/PyYAML/json
-    title: "PyPI JSON metadata: PyYAML"
-    accessed: "2026-09-02"
-    version: "6.0.3"
+- resource: https://pypi.org/pypi/PyYAML/json
+  title: "PyPI JSON metadata: PyYAML"
+  accessed: "2026-09-02"
+  version: 6.0.3
 ---
 
 # What was read

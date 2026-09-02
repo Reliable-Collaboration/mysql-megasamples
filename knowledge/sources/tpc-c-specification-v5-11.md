@@ -3,17 +3,22 @@ type: Source
 title: TPC Benchmark C Standard Specification Revision 5.11 (February 2010)
 description: The current TPC-C spec (v5.11.0 on the TPC page); read for per-warehouse cardinalities, population rules, NURand constants and the trademark/copying notice.
 resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
-tags: [tpc-c, specification]
+tags:
+- tpc-c
+- specification
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
-    title: TPC BENCHMARK C Standard Specification Revision 5.11, February 2010
-    accessed: "2026-09-02"
-    version: Revision 5.11, 1.1 MB PDF (text extracted locally)
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
+  title: TPC BENCHMARK C Standard Specification Revision 5.11, February 2010
+  accessed: "2026-09-02"
+  version: Revision 5.11, 1.1 MB PDF (text extracted locally)
 ---
 
 # What was read

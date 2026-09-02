@@ -3,16 +3,21 @@ type: Source
 title: hbiostat.org/data/repo/titanic.html - Titanic Data description
 description: Provenance of titanic, titanic2 and titanic3 (Encyclopedia Titanica, Eaton & Haas 1994, Findlay, Dawson, Thomas Cason 1999) and the variable list.
 resource: https://hbiostat.org/data/repo/titanic.html
-tags: [titanic, provenance]
+tags:
+- titanic
+- provenance
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://hbiostat.org/data/repo/titanic.html
-    title: Titanic Data (Frank E Harrell Jr, last modified 2002-12-27)
-    accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/repo/titanic.html
+  title: Titanic Data (Frank E Harrell Jr, last modified 2002-12-27)
+  accessed: "2026-09-02"
 ---
 
 # What was read

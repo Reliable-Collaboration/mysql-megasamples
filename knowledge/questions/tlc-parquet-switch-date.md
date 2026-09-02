@@ -3,17 +3,21 @@ type: Open Question
 title: When exactly did the TLC switch trip records from CSV to Parquet?
 description: The "May 2022" date repeated everywhere was not stated on any TLC page read in this session; only indirect evidence supports it.
 resource: /questions/tlc-parquet-switch-date.md
-tags: [nyc-tlc, provenance]
+tags:
+- nyc-tlc
+- provenance
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/working_parquet_format.pdf
-    title: Working With Parquet Format (states the switch, gives no date)
-    accessed: "2026-09-02"
-  - resource: /sources/nyc-tlc-parquet-footer-inspection.md
-    title: created_by values across the archive
-    accessed: "2026-09-02"
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/working_parquet_format.pdf
+  title: Working With Parquet Format (states the switch, gives no date)
+  accessed: "2026-09-02"
+- resource: /sources/nyc-tlc-parquet-footer-inspection.md
+  title: created_by values across the archive
+  accessed: "2026-09-02"
 ---
 
 # Question

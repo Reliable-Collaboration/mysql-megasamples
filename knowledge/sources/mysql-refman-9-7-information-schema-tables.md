@@ -3,16 +3,22 @@ type: Source
 title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA TABLES Table"
 description: TABLE_ROWS is an estimate for InnoDB; DATA_LENGTH/INDEX_LENGTH definitions; statistics caching.
 resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:21:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:21:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:21:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:21:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
-    title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA TABLES Table"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
+  title: "MySQL 9.7 Reference Manual: INFORMATION_SCHEMA TABLES Table"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html, “MySQL 9.7 Reference Manual: INFORMATION_SCHEMA TABLES Table”, accessed 2026-09-02

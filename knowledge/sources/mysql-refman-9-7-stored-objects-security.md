@@ -3,16 +3,23 @@ type: Source
 title: "MySQL 9.7 Reference Manual: Stored Object Access Control"
 description: DEFINER versus INVOKER security context for routines, views and triggers; determines how the read-only demo user is kept read-only.
 resource: https://dev.mysql.com/doc/refman/9.7/en/stored-objects-security.html
-tags: [mysql, docs, security, accounts]
+tags:
+- mysql
+- docs
+- security
+- accounts
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:24:01Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:24:01Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:24:01Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:24:01Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/stored-objects-security.html
-    title: Stored Object Access Control
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/stored-objects-security.html
+  title: Stored Object Access Control
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/stored-objects-security.html, “Stored Object Access Control”, accessed 2026-09-02

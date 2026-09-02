@@ -3,16 +3,22 @@ type: Source
 title: MediaWiki Manual:Revision table
 description: Revision table columns (≥1.43) used to design the revision table we synthesize from the XML dump.
 resource: https://www.mediawiki.org/wiki/Manual:Revision_table
-tags: [source, mediawiki, schema]
+tags:
+- source
+- mediawiki
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.mediawiki.org/wiki/Manual:Revision_table
-    title: Manual:Revision table
-    accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/wiki/Manual:Revision_table
+  title: Manual:Revision table
+  accessed: "2026-09-02"
 ---
 
 # What was read

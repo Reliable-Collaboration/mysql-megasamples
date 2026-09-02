@@ -3,20 +3,26 @@ type: Tool
 title: Official mysql Docker image
 description: Base image for the final stage; tag family, initdb behaviour, variants, and the verification step for the 9.7.3 tag.
 resource: https://hub.docker.com/_/mysql
-tags: [docker, base-image, mysql]
+tags:
+- docker
+- base-image
+- mysql
 status: stable
 trust: verified
 stale_after: "2026-10-20"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md
-    title: mysql image README
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
-    title: versions.json
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md
+  title: mysql image README
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
+  title: versions.json
+  accessed: "2026-09-02"
 ---
 
 # Facts

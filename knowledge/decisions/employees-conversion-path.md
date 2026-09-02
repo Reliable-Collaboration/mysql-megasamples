@@ -3,19 +3,25 @@ type: Decision
 title: Employees conversion path - concatenate schema and dumps into plain SQL, verify with SHA-256
 description: Replace the mysql-client `source` directives with a single generated SQL stream; drop `flush binary logs`; run test_employees_sha2.sql as the acceptance test.
 resource: /decisions/employees-conversion-path.md
-tags: [employees, decision, mysql-native]
+tags:
+- employees
+- decision
+- mysql-native
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
-    title: employees.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
-    title: test_employees_sha2.sql
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
+  title: employees.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
+  title: test_employees_sha2.sql
+  accessed: "2026-09-02"
 ---
 
 # Question

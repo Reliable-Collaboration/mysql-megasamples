@@ -3,16 +3,22 @@ type: Source
 title: GitHub release "Wide World Importers sample database v1.0" (tag wide-world-importers-v1.0)
 description: Asset list with exact byte sizes for the WideWorldImporters and WideWorldImportersDW Full/Standard .bak and .bacpac files plus the ETL and script assets.
 resource: https://github.com/microsoft/sql-server-samples/releases/tag/wide-world-importers-v1.0
-tags: [wideworldimporters, release, download]
+tags:
+- wideworldimporters
+- release
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
-    title: releases/tags/wide-world-importers-v1.0 (published 2016-06-08T19:25:10Z)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/wide-world-importers-v1.0
+  title: releases/tags/wide-world-importers-v1.0 (published 2016-06-08T19:25:10Z)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

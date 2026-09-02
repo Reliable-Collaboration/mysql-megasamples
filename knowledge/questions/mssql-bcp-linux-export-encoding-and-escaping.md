@@ -3,20 +3,26 @@ type: Open Question
 title: bcp on Linux - confirm UTF-8 output with -c, the NULL/empty-string sentinel, safe multi-character terminators, and the 2022 container's bcp flag set
 description: Documentation establishes that -C is Windows-only, the ODBC driver defaults narrow data to UTF-8, and bcp never quotes; the concrete command line for exporting WWI NVARCHAR(MAX)/JSON/geography columns losslessly has not been executed.
 resource: /questions/mssql-bcp-linux-export-encoding-and-escaping.md
-tags: [open-question, bcp, encoding, wideworldimporters]
+tags:
+- open-question
+- bcp
+- encoding
+- wideworldimporters
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/tools/bcp-utility
-    title: bcp reference (-C Windows-only; -Y/-u need bcp 18)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
-    title: ODBC driver character set support (UTF-8 default)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/specify-field-and-row-terminators-sql-server
-    title: terminator rules (no quoting)
-    accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/tools/bcp-utility
+  title: bcp reference (-C Windows-only; -Y/-u need bcp 18)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
+  title: ODBC driver character set support (UTF-8 default)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/specify-field-and-row-terminators-sql-server
+  title: terminator rules (no quoting)
+  accessed: "2026-09-02"
 ---
 
 # Question

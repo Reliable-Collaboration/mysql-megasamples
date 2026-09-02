@@ -3,30 +3,37 @@ type: Source
 title: duckdb/duckdb extension/tpch and extension/tpcds source tree (license and generator versions)
 description: What license notice DuckDB's bundled dbgen/dsdgen ports carry, which TPC tool versions they port, and the stored SF1 Q1 answer.
 resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
-tags: [duckdb, tpc-h, tpc-ds, license]
+tags:
+- duckdb
+- tpc-h
+- tpc-ds
+- license
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/LICENSE
-    title: extension/tpch/dbgen/LICENSE (17,729 B)
-    accessed: "2026-09-02"
-    version: main, 2026-09-02; DuckDB latest release v1.5.5 (2026-07-22)
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/include/dbgen/release.h
-    title: extension/tpch/dbgen/include/dbgen/release.h
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpcds/dsdgen/include/dsdgen-c/release.h
-    title: extension/tpcds/dsdgen/include/dsdgen-c/release.h
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/answers/sf1/q01.csv
-    title: extension/tpch/dbgen/answers/sf1/q01.csv
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb/main/LICENSE
-    title: DuckDB LICENSE (MIT, "Copyright 2018-2026 Stichting DuckDB Foundation")
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/LICENSE
+  title: extension/tpch/dbgen/LICENSE (17,729 B)
+  accessed: "2026-09-02"
+  version: main, 2026-09-02; DuckDB latest release v1.5.5 (2026-07-22)
+- resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/include/dbgen/release.h
+  title: extension/tpch/dbgen/include/dbgen/release.h
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpcds/dsdgen/include/dsdgen-c/release.h
+  title: extension/tpcds/dsdgen/include/dsdgen-c/release.h
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/answers/sf1/q01.csv
+  title: extension/tpch/dbgen/answers/sf1/q01.csv
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/duckdb/duckdb/main/LICENSE
+  title: DuckDB LICENSE (MIT, "Copyright 2018-2026 Stichting DuckDB Foundation")
+  accessed: "2026-09-02"
 ---
 
 # What was read

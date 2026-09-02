@@ -3,16 +3,22 @@ type: Source
 title: "MySQL 9.7 Reference Manual 1.3 \"MySQL Releases: Innovation and LTS\""
 description: Oracle's definition of Innovation versus LTS releases, LTS support duration, upgrade path 8.4 to 9.7, and the calendar-versioning change after 9.7.
 resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
-tags: [mysql, lts, versioning]
+tags:
+- mysql
+- lts
+- versioning
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
-    title: MySQL 9.7 Reference Manual, section 1.3
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
+  title: MySQL 9.7 Reference Manual, section 1.3
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html, “MySQL 9.7 Reference Manual, section 1.3”, accessed 2026-09-02

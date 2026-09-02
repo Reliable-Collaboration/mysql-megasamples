@@ -3,26 +3,34 @@ type: Tool
 title: SQLcl and python-oracledb as Oracle-side load/export tools
 description: SQLcl (Java CLI, OTN developer license) provides the LOAD command the SH installer requires and csv/json/insert SQLFORMAT spooling; python-oracledb (UPL/Apache, Thin mode, no Instant Client) is the preferred programmatic exporter for the optional Oracle verification profile.
 resource: https://docs.oracle.com/en/database/oracle/sql-developer-command-line/26.2/sqcug/
-tags: [oracle, sqlcl, python-oracledb, export, oracle-group]
+tags:
+- oracle
+- sqlcl
+- python-oracledb
+- export
+- oracle-group
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/oracle-docs-sqlcl-26-2-load-and-sqlformat.md
-    title: SQLcl 26.2 LOAD / SET LOADFORMAT / SET SQLFORMAT, download HEAD
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-otn-license-agreement.md
-    title: OTN License Agreement (SQLcl download license)
-    accessed: "2026-09-02"
-  - resource: /sources/python-oracledb-docs-and-license.md
-    title: python-oracledb docs and LICENSE
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-database-free-faq-and-get-started.md
-    title: "FAQ: SQLcl not part of Database Free"
-    accessed: "2026-09-02"
+- resource: /sources/oracle-docs-sqlcl-26-2-load-and-sqlformat.md
+  title: SQLcl 26.2 LOAD / SET LOADFORMAT / SET SQLFORMAT, download HEAD
+  accessed: "2026-09-02"
+- resource: /sources/oracle-otn-license-agreement.md
+  title: OTN License Agreement (SQLcl download license)
+  accessed: "2026-09-02"
+- resource: /sources/python-oracledb-docs-and-license.md
+  title: python-oracledb docs and LICENSE
+  accessed: "2026-09-02"
+- resource: /sources/oracle-database-free-faq-and-get-started.md
+  title: "FAQ: SQLcl not part of Database Free"
+  accessed: "2026-09-02"
 ---
 
 # Facts

@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "BIND 9 manual pages: dig"
-description: "dig synopsis, -4/-6, query type argument (default A; AAAA), +short."
+description: dig synopsis, -4/-6, query type argument (default A; AAAA), +short.
 resource: https://bind9.readthedocs.io/en/latest/manpages.html
-tags: [dns, ipv6, cli]
+tags:
+- dns
+- ipv6
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://bind9.readthedocs.io/en/latest/manpages.html
-    title: "BIND 9 manual pages: dig"
-    accessed: "2026-09-02"
+- resource: https://bind9.readthedocs.io/en/latest/manpages.html
+  title: "BIND 9 manual pages: dig"
+  accessed: "2026-09-02"
 ---
 
 # What was read

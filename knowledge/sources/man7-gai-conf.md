@@ -1,18 +1,24 @@
 ---
 type: Source
-title: "gai.conf(5) Linux manual page"
-description: "getaddrinfo address sorting per RFC 3484 is tunable in /etc/gai.conf with label/precedence lines."
+title: gai.conf(5) Linux manual page
+description: getaddrinfo address sorting per RFC 3484 is tunable in /etc/gai.conf with label/precedence lines.
 resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
-tags: [ipv6, glibc, dns]
+tags:
+- ipv6
+- glibc
+- dns
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
-    title: "gai.conf(5) Linux manual page"
-    accessed: "2026-09-02"
+- resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
+  title: gai.conf(5) Linux manual page
+  accessed: "2026-09-02"
 ---
 
 # What was read

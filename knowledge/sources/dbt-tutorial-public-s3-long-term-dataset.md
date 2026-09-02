@@ -3,17 +3,23 @@ type: Source
 title: dbt-tutorial-public S3 "long_term_dataset" (6-year Jaffle Shop CSVs) - HEAD sizes
 description: Public, unauthenticated CSV downloads referenced by the jaffle-shop README; raw_orders 297.9 MB and raw_order_items 248.0 MB.
 resource: https://dbt-tutorial-public.s3.us-west-2.amazonaws.com/long_term_dataset/raw_orders.csv
-tags: [jaffle-shop, s3, sizes]
+tags:
+- jaffle-shop
+- s3
+- sizes
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dbt-tutorial-public.s3.us-west-2.amazonaws.com/long_term_dataset/raw_orders.csv
-    title: HEAD on raw_customers, raw_orders, raw_order_items, raw_products, raw_supplies, raw_stores
-    accessed: "2026-09-02"
+- resource: https://dbt-tutorial-public.s3.us-west-2.amazonaws.com/long_term_dataset/raw_orders.csv
+  title: HEAD on raw_customers, raw_orders, raw_order_items, raw_products, raw_supplies, raw_stores
+  accessed: "2026-09-02"
 ---
 
 # What was read

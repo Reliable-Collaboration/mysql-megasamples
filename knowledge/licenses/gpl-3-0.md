@@ -3,16 +3,22 @@ type: License
 title: GNU General Public License v3.0 (HammerDB)
 description: Copyleft license of HammerDB; relevant only if HammerDB code is redistributed or linked, not for merely running it or shipping data it loaded.
 resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/LICENSE
-tags: [license, gpl, copyleft]
+tags:
+- license
+- gpl
+- copyleft
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/LICENSE
-    title: HammerDB LICENSE (35,149 bytes; header "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007")
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/TPC-Council/HammerDB/master/LICENSE
+  title: HammerDB LICENSE (35,149 bytes; header "GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007")
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

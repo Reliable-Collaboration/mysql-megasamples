@@ -3,17 +3,23 @@ type: Source
 title: simplewiki-20260901-site_stats.sql.gz (complete file)
 description: The one-row site_stats table from the 20260901 dump — authoritative page/article/edit/user counts for that exact snapshot.
 resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-site_stats.sql.gz
-tags: [source, wikipedia, row-counts]
+tags:
+- source
+- wikipedia
+- row-counts
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-site_stats.sql.gz
-    title: site_stats.sql.gz (862 bytes, md5 af0898a45c9e589153ac523030654fa3)
-    accessed: "2026-09-02"
-    version: "20260901"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-site_stats.sql.gz
+  title: site_stats.sql.gz (862 bytes, md5 af0898a45c9e589153ac523030654fa3)
+  accessed: "2026-09-02"
+  version: "20260901"
 ---
 
 # What was read

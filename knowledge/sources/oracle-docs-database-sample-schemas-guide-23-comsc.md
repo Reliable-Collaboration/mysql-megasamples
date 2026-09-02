@@ -3,40 +3,46 @@ type: Source
 title: Oracle Database Sample Schemas guide (docs.oracle.com /23/comsc/, now serving the 26ai edition)
 description: Official schema overview, install prerequisites (SQLcl mandatory for SH), and the per-table column descriptions for HR, CO, SH, OE and PM.
 resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/
-tags: [oracle, sample-schemas, documentation]
+tags:
+- oracle
+- sample-schemas
+- documentation
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/index.html
-    title: Title page — "Database Sample Schemas, 26ai, G43102-02, March 2026"
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/toc.htm
-    title: Table of contents
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/introduction-to-sample-schemas.html
-    title: Introduction to Sample Schemas
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/installing-sample-schemas.html
-    title: Installation of the Sample Schemas
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/HR-sample-schema-table-descriptions.html
-    title: HR table descriptions (+ HR-sample-schema-scripts-and-objects.html)
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/co-table-desciptions.html
-    title: CO table descriptions (+ co-schema.html)
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/SH-sample-schema-table-descriptions.html
-    title: SH table descriptions (+ SH-sample-schema-scripts-and-objects.html)
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/OE-sample-schema-table-descriptions.html
-    title: OE table descriptions (+ OE-sample-schema-scripts-and-objects.html)
-    accessed: "2026-09-02"
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/PM-sample-schema-table-descriptions.html
-    title: PM table descriptions
-    accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/index.html
+  title: Title page — "Database Sample Schemas, 26ai, G43102-02, March 2026"
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/toc.htm
+  title: Table of contents
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/introduction-to-sample-schemas.html
+  title: Introduction to Sample Schemas
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/installing-sample-schemas.html
+  title: Installation of the Sample Schemas
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/HR-sample-schema-table-descriptions.html
+  title: HR table descriptions (+ HR-sample-schema-scripts-and-objects.html)
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/co-table-desciptions.html
+  title: CO table descriptions (+ co-schema.html)
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/SH-sample-schema-table-descriptions.html
+  title: SH table descriptions (+ SH-sample-schema-scripts-and-objects.html)
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/OE-sample-schema-table-descriptions.html
+  title: OE table descriptions (+ OE-sample-schema-scripts-and-objects.html)
+  accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/comsc/PM-sample-schema-table-descriptions.html
+  title: PM table descriptions
+  accessed: "2026-09-02"
 ---
 
 # What was read

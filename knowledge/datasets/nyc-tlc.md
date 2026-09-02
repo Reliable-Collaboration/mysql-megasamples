@@ -3,35 +3,43 @@ type: Dataset
 title: NYC TLC trip records
 description: New York City yellow and green taxi trip records in Parquet, plus the 265-row taxi zone lookup; one month per colour, with the yellow month in the extended tier.
 resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-tags: [tier-core, tier-extended, parquet, public-data, nyc]
+tags:
+- tier-core
+- tier-extended
+- parquet
+- public-data
+- nyc
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-    title: TLC Trip Record Data
-    accessed: "2026-09-02"
-    version: snapshot 2026-09-02; newest month published = 2026-05
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
-    title: Yellow Taxi data dictionary
-    accessed: "2026-09-02"
-    version: dated March 18, 2025
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
-    title: Green (LPEP) data dictionary
-    accessed: "2026-09-02"
-    version: dated March 18, 2025
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf
-    title: High Volume FHV data dictionary
-    accessed: "2026-09-02"
-  - resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
-    title: Taxi Zone Lookup Table
-    accessed: "2026-09-02"
-    version: Last-Modified 2024-02-22; MD5 c6064b7c144c716450641f769659d178
-  - resource: /sources/nyc-tlc-parquet-footer-inspection.md
-    title: Parquet footer inspection (row counts, types, drift)
-    accessed: "2026-09-02"
+- resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+  title: TLC Trip Record Data
+  accessed: "2026-09-02"
+  version: snapshot 2026-09-02; newest month published = 2026-05
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
+  title: Yellow Taxi data dictionary
+  accessed: "2026-09-02"
+  version: dated March 18, 2025
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
+  title: Green (LPEP) data dictionary
+  accessed: "2026-09-02"
+  version: dated March 18, 2025
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf
+  title: High Volume FHV data dictionary
+  accessed: "2026-09-02"
+- resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
+  title: Taxi Zone Lookup Table
+  accessed: "2026-09-02"
+  version: Last-Modified 2024-02-22; MD5 c6064b7c144c716450641f769659d178
+- resource: /sources/nyc-tlc-parquet-footer-inspection.md
+  title: Parquet footer inspection (row counts, types, drift)
+  accessed: "2026-09-02"
 stale_after: "2026-12-01"
 ---
 
@@ -97,7 +105,7 @@ None upstream - the source is flat files. This project adds: a view `v_trip_zone
 * `SELECT COUNT(*) FROM taxi_zone` -> **265** (published-file-derived, exact).
 * `SELECT COUNT(*) FROM green_trips` -> **48,326** for 2025-01 (from the Parquet footer `num_rows`).
 * `SELECT COUNT(*) FROM yellow_trips` -> **3,475,226** for 2025-01 (footer `num_rows`).
-* `SELECT MAX(LocationID) FROM taxi_zone` -> 265; `SELECT COUNT(DISTINCT Borough) FROM taxi_zone` -> 8.
+* `SELECT MAX(locationid) FROM taxi_zone` -> 265; `SELECT COUNT(DISTINCT borough) FROM taxi_zone` -> 8.
 * Executor records `CHECKSUM TABLE` for each after first load; no upstream checksum exists to compare against.
 
 # Tier assignment

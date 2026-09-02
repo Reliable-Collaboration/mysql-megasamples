@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "PyPI: PyMySQL"
-description: "Latest PyMySQL release, license and caching_sha2_password support."
+description: Latest PyMySQL release, license and caching_sha2_password support.
 resource: https://pypi.org/project/PyMySQL/
-tags: [python, pypi, tools]
+tags:
+- python
+- pypi
+- tools
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 sources:
-  - resource: https://pypi.org/project/PyMySQL/
-    title: "PyPI: PyMySQL"
-    accessed: "2026-09-02"
+- resource: https://pypi.org/project/PyMySQL/
+  title: "PyPI: PyMySQL"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://pypi.org/project/PyMySQL/, “PyPI: PyMySQL”, accessed 2026-09-02

@@ -3,26 +3,33 @@ type: Dataset
 title: BTS Airline On-Time Performance
 description: One month of the US DOT Reporting Carrier On-Time Performance table (~536k flights, 109 columns) plus the airport and carrier lookup tables; public domain.
 resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
-tags: [tier-extended, csv, public-domain, aviation]
+tags:
+- tier-extended
+- csv
+- public-domain
+- aviation
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
-    title: TranStats download page
-    accessed: "2026-09-02"
-    version: latest available data June 2026
-  - resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
-    title: TranStats table profile (109 fields, 234,378,386 records)
-    accessed: "2026-09-02"
-  - resource: /sources/bts-prezip-archive-inspection.md
-    title: PREZIP archive inspection (URL pattern, header, encodings)
-    accessed: "2026-09-02"
-  - resource: /sources/transtats-download-lookup-tables.md
-    title: Lookup-table endpoints
-    accessed: "2026-09-02"
+- resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
+  title: TranStats download page
+  accessed: "2026-09-02"
+  version: latest available data June 2026
+- resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
+  title: TranStats table profile (109 fields, 234,378,386 records)
+  accessed: "2026-09-02"
+- resource: /sources/bts-prezip-archive-inspection.md
+  title: PREZIP archive inspection (URL pattern, header, encodings)
+  accessed: "2026-09-02"
+- resource: /sources/transtats-download-lookup-tables.md
+  title: Lookup-table endpoints
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 
@@ -81,7 +88,7 @@ None upstream. This project adds a view `v_ontime_delay` (flight, carrier name v
 * `SELECT COUNT(*) FROM ontime` -> **~536,000** for 2025-01 (**inferred**; the executor replaces this with the exact count at first load and logs a **Verification**).
 * `SELECT COUNT(*) FROM l_airport` / `l_airline_id` / `l_unique_carriers` -> recorded at first load (files are 319,686 / 66,730 / 54,217 bytes).
 * Column count check: `SELECT COUNT(*) FROM information_schema.columns WHERE table_name='ontime'` -> **109**.
-* Sanity: `SELECT COUNT(*) FROM ontime WHERE DepTime='2400'` -> non-zero, proving hazard 3 is preserved rather than silently mangled.
+* Sanity: `SELECT COUNT(*) FROM ontime WHERE deptime='2400'` -> non-zero, proving hazard 3 is preserved rather than silently mangled.
 
 # Tier assignment
 **Extended.** 27 MB zipped / **243 MB of CSV** for one month, 109 columns wide. **Inferred:** 250-400 MB as an InnoDB table before indexes - well over the 50 MB core budget and over the ~200 MB "medium core" allowance too, especially since a 109-column table is mostly empty `Div*` columns. Fetched by `make load-bts_ontime`. The three lookup tables (441 KB total) could ship in core as a standalone curiosity but are meaningless without the fact table, so they travel with it.

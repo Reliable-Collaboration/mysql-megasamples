@@ -3,17 +3,22 @@ type: Source
 title: test_db Changelog
 description: Version history 1.0.0 (2008-01-03) to 1.0.7 (2015-08-30) of the employees sample database.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/Changelog
-tags: [employees, changelog]
+tags:
+- employees
+- changelog
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/Changelog
-    title: Changelog
-    accessed: "2026-09-02"
-    version: master @ e324b56
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/Changelog
+  title: Changelog
+  accessed: "2026-09-02"
+  version: master @ e324b56
 ---
 
 # What was read

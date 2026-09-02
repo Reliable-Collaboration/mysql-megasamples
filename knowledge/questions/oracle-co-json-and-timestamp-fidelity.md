@@ -3,20 +3,27 @@ type: Open Question
 title: CO fidelity — 9-digit timestamps, JSON key normalisation, and GROUPING SETS in MySQL 9.7
 description: Three details where MySQL may render CO data or views differently from Oracle; each is a one-command experiment.
 resource: /questions/oracle-co-json-and-timestamp-fidelity.md
-tags: [question, oracle, co, json, datetime]
+tags:
+- question
+- oracle
+- co
+- json
+- datetime
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
-    title: CO scripts
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-fractional-seconds.md
-    title: MySQL fractional seconds rounding
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-json.md
-    title: MySQL JSON normalisation
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
+  title: CO scripts
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-fractional-seconds.md
+  title: MySQL fractional seconds rounding
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-json.md
+  title: MySQL JSON normalisation
+  accessed: "2026-09-02"
 ---
 
 # Question

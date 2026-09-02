@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Linux kernel documentation: ip-sysctl (disable_ipv6)"
-description: "net.ipv6.conf.*.disable_ipv6 default FALSE; TRUE disables IPv6 operation on the interface."
+description: net.ipv6.conf.*.disable_ipv6 default FALSE; TRUE disables IPv6 operation on the interface.
 resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
-tags: [ipv6, kernel, sysctl]
+tags:
+- ipv6
+- kernel
+- sysctl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
-    title: "Linux kernel documentation: ip-sysctl (disable_ipv6)"
-    accessed: "2026-09-02"
+- resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
+  title: "Linux kernel documentation: ip-sysctl (disable_ipv6)"
+  accessed: "2026-09-02"
 ---
 
 # What was read

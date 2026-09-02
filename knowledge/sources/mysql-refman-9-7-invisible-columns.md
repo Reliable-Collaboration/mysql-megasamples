@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Invisible Columns"
-description: "INVISIBLE columns are hidden from SELECT * but loadable by name; a table needs at least one visible column; mysqldump includes them."
+description: INVISIBLE columns are hidden from SELECT * but loadable by name; a table needs at least one visible column; mysqldump includes them.
 resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
-tags: [mysql, docs, schema]
+tags:
+- mysql
+- docs
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
-    title: "MySQL 9.7 Reference Manual: Invisible Columns"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 15.1.25.10"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
+  title: "MySQL 9.7 Reference Manual: Invisible Columns"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 15.1.25.10
 ---
 
 # What was read

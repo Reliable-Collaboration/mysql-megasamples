@@ -3,29 +3,37 @@ type: Tool
 title: Oracle Database Free container (container-registry.oracle.com/database/free, alternative gvenzl/oracle-free)
 description: The only way to execute Oracle-specific install scripts (OE/PM object types, XMLType, SQLcl LOAD) during the build; sizes, licensing, arm64 support, login requirement, and connection details verified for an optional build-oracle Compose profile.
 resource: https://container-registry.oracle.com/database/free
-tags: [oracle, docker, build-stage, oracle-database-free, oracle-group]
+tags:
+- oracle
+- docker
+- build-stage
+- oracle-database-free
+- oracle-group
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/oracle-container-registry-database-free-api-probe.md
-    title: Registry API probe (anonymous token, tags, sizes)
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-database-free-faq-and-get-started.md
-    title: Oracle Database Free FAQ / get-started / licensing manual
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-free-use-terms-and-conditions.md
-    title: Oracle Free Use Terms and Conditions
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-docker-images-singleinstance-readme.md
-    title: oracle/docker-images SingleInstance README
-    accessed: "2026-09-02"
-  - resource: /sources/github-gvenzl-oci-oracle-free-readme.md
-    title: gvenzl/oci-oracle-free README + Docker Hub sizes
-    accessed: "2026-09-02"
+- resource: /sources/oracle-container-registry-database-free-api-probe.md
+  title: Registry API probe (anonymous token, tags, sizes)
+  accessed: "2026-09-02"
+- resource: /sources/oracle-database-free-faq-and-get-started.md
+  title: Oracle Database Free FAQ / get-started / licensing manual
+  accessed: "2026-09-02"
+- resource: /sources/oracle-free-use-terms-and-conditions.md
+  title: Oracle Free Use Terms and Conditions
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-docker-images-singleinstance-readme.md
+  title: oracle/docker-images SingleInstance README
+  accessed: "2026-09-02"
+- resource: /sources/github-gvenzl-oci-oracle-free-readme.md
+  title: gvenzl/oci-oracle-free README + Docker Hub sizes
+  accessed: "2026-09-02"
 ---
 
 # Facts (verified 2026-09-02)

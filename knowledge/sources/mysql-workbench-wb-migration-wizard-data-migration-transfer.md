@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL Workbench Manual: 10.8.11 Bulk Data Transfer"
-description: "The transfer step either copies online, writes a simple script, or writes a source-host script producing a Zip with data and import script."
+description: The transfer step either copies online, writes a simple script, or writes a source-host script producing a Zip with data and import script.
 resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-transfer.html
-tags: [workbench, migration, data-copy]
+tags:
+- workbench
+- migration
+- data-copy
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-transfer.html
-    title: "MySQL Workbench Manual: 10.8.11 Bulk Data Transfer"
-    accessed: "2026-09-02"
-    version: "MySQL Workbench 8.0 manual"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-transfer.html
+  title: "MySQL Workbench Manual: 10.8.11 Bulk Data Transfer"
+  accessed: "2026-09-02"
+  version: MySQL Workbench 8.0 manual
 ---
 
 # What was read

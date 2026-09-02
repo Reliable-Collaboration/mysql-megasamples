@@ -3,31 +3,39 @@ type: Source
 title: ds3/data_files readmes, generator shell scripts, Install_DVDStore.pl and ds3_create_reviews.c
 description: How the Small CSVs were produced (20,000 customers, 12 x 1,000 orders, 10,000 products), the review generator formula (products x 20 reviews, 2-39 helpfulness rows each) and the membership rule (10% of customers).
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/Install_DVDStore.pl
-tags: [dvdstore, ds3, generator, perl, c]
+tags:
+- dvdstore
+- ds3
+- generator
+- perl
+- c
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/ds3_data_files_readme.txt
-    title: ds3_data_files_readme.txt
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust_readme.txt
-    title: ds3_create_cust_readme.txt and ds3_create_cust_small.sh
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/orders/ds3_create_orders_readme.txt
-    title: ds3_create_orders_readme.txt and ds3_create_orders_small.sh
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/prod/ds3_create_prod_readme.txt
-    title: ds3_create_prod_readme.txt
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/Install_DVDStore.pl
-    title: Install_DVDStore.pl (grep for review/member formulas)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/ds3_create_reviews.c
-    title: ds3_create_reviews.c (grep)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/ds3_data_files_readme.txt
+  title: ds3_data_files_readme.txt
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust_readme.txt
+  title: ds3_create_cust_readme.txt and ds3_create_cust_small.sh
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/orders/ds3_create_orders_readme.txt
+  title: ds3_create_orders_readme.txt and ds3_create_orders_small.sh
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/prod/ds3_create_prod_readme.txt
+  title: ds3_create_prod_readme.txt
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/Install_DVDStore.pl
+  title: Install_DVDStore.pl (grep for review/member formulas)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/ds3_create_reviews.c
+  title: ds3_create_reviews.c (grep)
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - Install and configure WideWorldImportersDW
 description: Prerequisites (SQL Server 2016 SP1+; full version needs Developer/Enterprise), download pointer, restore/bacpac steps, PolyBase configuration.
 resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-install-configure
-tags: [wideworldimporters-dw, docs, install]
+tags:
+- wideworldimporters-dw
+- docs
+- install
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-install-configure
-    title: Install & configure WideWorldImportersDW sample database - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2023-08-01, updated_at 2026-07-20, git commit 2ceb7c07640735a9c49dbb6ff1de511aceead449
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-install-configure
+  title: Install & configure WideWorldImportersDW sample database - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2023-08-01, updated_at 2026-07-20, git commit 2ceb7c07640735a9c49dbb6ff1de511aceead449
 ---
 
 # What was read

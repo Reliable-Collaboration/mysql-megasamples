@@ -3,17 +3,22 @@ type: Source
 title: TPC Benchmark H Standard Specification Revision 3.0.1
 description: The current TPC-H spec; read for table cardinalities, scale factors, permitted query modifications, the Q1 validation output and the revision history.
 resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-tags: [tpc-h, specification]
+tags:
+- tpc-h
+- specification
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-    title: TPC BENCHMARK H (Decision Support) Standard Specification Revision 3.0.1
-    accessed: "2026-09-02"
-    version: Revision 3.0.1, © 1993-2022, 1.7 MB PDF (text extracted locally)
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
+  title: TPC BENCHMARK H (Decision Support) Standard Specification Revision 3.0.1
+  accessed: "2026-09-02"
+  version: Revision 3.0.1, © 1993-2022, 1.7 MB PDF (text extracted locally)
 ---
 
 # What was read

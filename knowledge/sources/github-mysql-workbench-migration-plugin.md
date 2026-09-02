@@ -1,19 +1,26 @@
 ---
 type: Source
 title: "mysql/mysql-workbench: plugins/migration sources (wbcopytables) and License.txt at 8.0.47"
-description: "wbcopytables is a C++ command-line helper shipped inside Workbench (ODBC or Python-DB-API source, MySQL target, --table-file, --thread-count); the GUI writes copy_migrated_tables.sh/.cmd scripts that call it; Workbench 8.0.47 Community is GPLv2 with Oracle's linking permission."
+description: wbcopytables is a C++ command-line helper shipped inside Workbench (ODBC or Python-DB-API source, MySQL target, --table-file, --thread-count); the GUI writes copy_migrated_tables.sh/.cmd scripts that call it; Workbench 8.0.47 Community is GPLv2 with Oracle's linking permission.
 resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
-tags: [workbench, migration, source, license]
+tags:
+- workbench
+- migration
+- source
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
-    title: "mysql/mysql-workbench: plugins/migration sources (wbcopytables) and License.txt at 8.0.47"
-    accessed: "2026-09-02"
-    version: "tag 8.0.47; repo last push 2026-04-23"
+- resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
+  title: "mysql/mysql-workbench: plugins/migration sources (wbcopytables) and License.txt at 8.0.47"
+  accessed: "2026-09-02"
+  version: tag 8.0.47; repo last push 2026-04-23
 ---
 
 # What was read

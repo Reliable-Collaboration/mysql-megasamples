@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Internet Archive Developer Portal: ias3 S3-like API"
-description: "s3.us.archive.org endpoint, LOW auth header, x-archive-meta-* headers, auto-make-bucket, queue-derive, size hint, 503 SlowDown."
+description: s3.us.archive.org endpoint, LOW auth header, x-archive-meta-* headers, auto-make-bucket, queue-derive, size hint, 503 SlowDown.
 resource: https://archive.org/developers/ias3.html
-tags: [archive-org, mirroring, api]
+tags:
+- archive-org
+- mirroring
+- api
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://archive.org/developers/ias3.html
-    title: "Internet Archive Developer Portal: ias3 S3-like API"
-    accessed: "2026-09-02"
+- resource: https://archive.org/developers/ias3.html
+  title: "Internet Archive Developer Portal: ias3 S3-like API"
+  accessed: "2026-09-02"
 ---
 
 # What was read

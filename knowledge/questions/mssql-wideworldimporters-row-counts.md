@@ -3,17 +3,22 @@ type: Open Question
 title: WideWorldImporters and WideWorldImportersDW - published row counts and loaded sizes do not exist; measure at export
 description: No Microsoft page read publishes WWI row counts; the values in the dataset records are from memory and must be replaced by counts taken in SQL Server during the export step.
 resource: /questions/mssql-wideworldimporters-row-counts.md
-tags: [open-question, wideworldimporters, row-counts]
+tags:
+- open-question
+- wideworldimporters
+- row-counts
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
-    title: WWI OLTP catalog (no counts)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
-    title: WWI DW catalog (no counts)
-    accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
+  title: WWI OLTP catalog (no counts)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
+  title: WWI DW catalog (no counts)
+  accessed: "2026-09-02"
 ---
 
 # Question

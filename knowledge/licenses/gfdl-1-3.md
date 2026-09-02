@@ -3,22 +3,29 @@ type: License
 title: GNU Free Documentation License 1.3 (GFDL 1.3)
 description: Second license of the Wikipedia text dual license (CC BY-SA 4.0 + GFDL); reusers may pick either; this project relies on CC BY-SA and ships GFDL text for completeness.
 resource: https://www.gnu.org/licenses/fdl-1.3.txt
-tags: [license, gfdl, copyleft, documentation]
+tags:
+- license
+- gfdl
+- copyleft
+- documentation
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.gnu.org/licenses/fdl-1.3.txt
-    title: GNU Free Documentation License, Version 1.3 (plain text, 22,955 bytes)
-    accessed: "2026-09-02"
-  - resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
-    title: Wikimedia Foundation Terms of Use §7
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/legal.html
-    title: Wikimedia dumps legal notice
-    accessed: "2026-09-02"
+- resource: https://www.gnu.org/licenses/fdl-1.3.txt
+  title: GNU Free Documentation License, Version 1.3 (plain text, 22,955 bytes)
+  accessed: "2026-09-02"
+- resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
+  title: Wikimedia Foundation Terms of Use §7
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/legal.html
+  title: Wikimedia dumps legal notice
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

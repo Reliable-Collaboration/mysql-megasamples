@@ -1,19 +1,26 @@
 ---
 type: Source
-title: "docker-library/mysql 9.7/Dockerfile.oracle"
+title: docker-library/mysql 9.7/Dockerfile.oracle
 description: "The official mysql:9.7 image: oraclelinux:9-slim, gosu, Oracle RPM mysql-community-server-minimal 9.7.2-1.el9, mysql-shell 9.7.1-1.el9 installed, /etc/my.cnf patched, VOLUME /var/lib/mysql, ENTRYPOINT docker-entrypoint.sh."
 resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
-tags: [docker, mysql, image, dockerfile]
+tags:
+- docker
+- mysql
+- image
+- dockerfile
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
-    title: "docker-library/mysql 9.7/Dockerfile.oracle"
-    accessed: "2026-09-02"
-    version: "master @ 2f988f198f35d25b1454fa2504a0e4c348100549 (2026-08-19)"
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
+  title: docker-library/mysql 9.7/Dockerfile.oracle
+  accessed: "2026-09-02"
+  version: master @ 2f988f198f35d25b1454fa2504a0e4c348100549 (2026-08-19)
 ---
 
 # What was read

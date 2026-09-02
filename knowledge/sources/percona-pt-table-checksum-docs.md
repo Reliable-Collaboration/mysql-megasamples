@@ -3,16 +3,22 @@ type: Source
 title: Percona Toolkit pt-table-checksum documentation
 description: Prior art for aggregate table checksums in MySQL; documents the hash-function choice but not the exact aggregation algorithm.
 resource: https://docs.percona.com/percona-toolkit/pt-table-checksum.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:19:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:19:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:19:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:19:13Z"
 sources:
-  - resource: https://docs.percona.com/percona-toolkit/pt-table-checksum.html
-    title: Percona Toolkit pt-table-checksum documentation
-    accessed: "2026-09-02"
+- resource: https://docs.percona.com/percona-toolkit/pt-table-checksum.html
+  title: Percona Toolkit pt-table-checksum documentation
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://docs.percona.com/percona-toolkit/pt-table-checksum.html, “Percona Toolkit pt-table-checksum documentation”, accessed 2026-09-02

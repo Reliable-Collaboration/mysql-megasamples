@@ -3,19 +3,26 @@ type: License
 title: GNU General Public License v2.0 (or later) - Dell DVD Store 3
 description: Copyleft license of the DS3 kit (generators, drivers, build scripts); the data CSVs are program output whose status is an open question.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
-tags: [license, gpl-2-0, copyleft, dvdstore]
+tags:
+- license
+- gpl-2-0
+- copyleft
+- dvdstore
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
-    title: gpl.txt (GPL v2, June 1991)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust.c
-    title: source header "version 2 ... or (at your option) any later version"
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
+  title: gpl.txt (GPL v2, June 1991)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/ds3_create_cust.c
+  title: source header "version 2 ... or (at your option) any later version"
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives
@@ -39,3 +46,5 @@ Ship `gpl.txt` (GPL-2.0-or-later) next to the DVD Store scripts, keep the Dell (
 # Applied to
 * [Dell DVD Store 3](/datasets/dell-dvd-store.md) - `ds3/mysqlds3/build/*.sql`, `ds3/mysqlds3/load/**/*.sql`, generators and drivers.
 * [TPC-C](/datasets/tpc-c.md) — the `sysbench` binary (Debian package 1.0.20+ds-7; **Inferred:** GPL-2.0 per GitHub's license detection, the license file itself was not opened — confirm at task B-03) executes the Apache-2.0 sysbench-tpcc scripts at load time; nothing GPL is redistributed. See [TPC-C implementations](/tools/tpcc-implementations.md).
+* [MySQL Shell utilities](/tools/mysql-shell-utilities.md) - `mysqlsh` ships inside the official `mysql:9.7.2` image and is therefore redistributed in the final image under GPLv2 (with Oracle's OpenSSL exception); the image NOTICE names it.
+* [MySQL Workbench Migration Wizard](/tools/mysql-workbench-migration-wizard.md) - evaluated and rejected; nothing redistributed.

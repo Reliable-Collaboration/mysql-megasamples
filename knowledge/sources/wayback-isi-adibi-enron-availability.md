@@ -3,19 +3,26 @@ type: Source
 title: ISI Shetty/Adibi Enron page — live 403 and Wayback availability check
 description: Evidence that http://www.isi.edu/~adibi/Enron/Enron.htm is offline behind a Cloudflare block and that a 2013-12-13 Wayback snapshot exists (content not read due to rate limiting).
 resource: http://www.isi.edu/~adibi/Enron/Enron.htm
-tags: [source, enron, relational-versions, offline]
+tags:
+- source
+- enron
+- relational-versions
+- offline
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: http://archive.org/wayback/available?url=isi.edu/~adibi/Enron/Enron.htm
-    title: Wayback availability API response
-    accessed: "2026-09-02"
-  - resource: https://www.isi.edu/~adibi/Enron/Enron.htm
-    title: live page (HTTP 403, Cloudflare "Sorry, you have been blocked")
-    accessed: "2026-09-02"
+- resource: http://archive.org/wayback/available?url=isi.edu/~adibi/Enron/Enron.htm
+  title: Wayback availability API response
+  accessed: "2026-09-02"
+- resource: https://www.isi.edu/~adibi/Enron/Enron.htm
+  title: live page (HTTP 403, Cloudflare "Sorry, you have been blocked")
+  accessed: "2026-09-02"
 ---
 
 # What was read

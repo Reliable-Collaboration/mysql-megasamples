@@ -73,7 +73,7 @@
 * [datacharmer/test_db repository metadata (GitHub API)](github-datacharmer-test-db-api.md) - Release v1.0.7 asset, file sizes of the SQL dumps, sakila subdirectory, latest commit, as returned by the GitHub REST API.
 * [test_db Changelog](github-datacharmer-test-db-changelog.md) - Version history 1.0.0 (2008-01-03) to 1.0.7 (2015-08-30) of the employees sample database.
 * [test_db employees.sql (schema and loader driver)](github-datacharmer-test-db-employees-sql.md) - DDL for the six tables, two views, the `source` commands that pull in the dump files, and a `flush binary logs` statement.
-* [test_db objects.sql (optional functions, procedures, views)](github-datacharmer-test-db-objects-sql.md) - Four functions, two procedures and two views layered on the employees schema; not loaded by employees.sql.
+* [test_db objects.sql (optional functions, procedures, views)](github-datacharmer-test-db-objects-sql.md) - Five functions, two procedures and two views layered on the employees schema; not loaded by employees.sql.
 * [datacharmer/test_db README (master, 2026-04-10)](github-datacharmer-test-db-readme.md) - README of the MySQL Employees sample database repository - origin, license, install and test instructions, MD5/SHA removal note for MySQL 9.6+.
 * [test_db sakila/README.md](github-datacharmer-test-db-sakila-readme.md) - States that the Sakila copy inside test_db is derived from the MySQL "Sakila-spatial" download with conditional FULLTEXT/GEOMETRY.
 * [test_db test_employees_md5.sql (MD5 integrity test, MySQL 8.0-9.5 only)](github-datacharmer-test-db-test-md5.md) - Expected MD5 chained checksums per table; same recipe as the SHA-256 test but with MD5(); will not run on 9.6+ without the classic_hashing component.

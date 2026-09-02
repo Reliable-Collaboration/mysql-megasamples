@@ -1,19 +1,24 @@
 ---
 type: Source
-title: "MySQL Shell 9.7 manual front page and preface links"
-description: "Version support statement and the community/commercial license PDF links."
+title: MySQL Shell 9.7 manual front page and preface links
+description: Version support statement and the community/commercial license PDF links.
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
-tags: [mysql-shell, license]
+tags:
+- mysql-shell
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
-    title: "MySQL Shell 9.7 manual front page and preface links"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
+  title: MySQL Shell 9.7 manual front page and preface links
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual
 ---
 
 # What was read

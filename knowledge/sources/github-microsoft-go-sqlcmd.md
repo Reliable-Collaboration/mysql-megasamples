@@ -3,22 +3,28 @@ type: Source
 title: microsoft/go-sqlcmd repository (license and latest release)
 description: The new Go-based sqlcmd is MIT licensed; v1.10.0 (2026-03-03) ships Linux amd64/arm64/s390x tarballs.
 resource: https://github.com/microsoft/go-sqlcmd
-tags: [sqlcmd, mit, tool]
+tags:
+- sqlcmd
+- mit
+- tool
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/go-sqlcmd
-    title: repository metadata (license.spdx_id MIT; description "The new sqlcmd, CLI for SQL Server and Azure SQL (winget install sqlcmd / sqlcmd create mssql / sqlcmd open ads)")
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/microsoft/go-sqlcmd/releases/latest
-    title: latest release v1.10.0, published 2026-03-03T17:02:18Z
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/go-sqlcmd/main/LICENSE
-    title: LICENSE (first lines read)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/go-sqlcmd
+  title: repository metadata (license.spdx_id MIT; description "The new sqlcmd, CLI for SQL Server and Azure SQL (winget install sqlcmd / sqlcmd create mssql / sqlcmd open ads)")
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/go-sqlcmd/releases/latest
+  title: latest release v1.10.0, published 2026-03-03T17:02:18Z
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/go-sqlcmd/main/LICENSE
+  title: LICENSE (first lines read)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

@@ -3,17 +3,22 @@ type: Source
 title: TLC Green Taxi (LPEP) Trip Records data dictionary (PDF)
 description: Field definitions for the green/SHL taxi Parquet files, which add ehail_fee and trip_type to the yellow layout.
 resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
-tags: [nyc-tlc, data-dictionary]
+tags:
+- nyc-tlc
+- data-dictionary
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
-    title: Data Dictionary - LPEP Trip Records
-    accessed: "2026-09-02"
-    version: document date "March 18, 2025"; 148,750 bytes; 2 pages
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_green.pdf
+  title: Data Dictionary - LPEP Trip Records
+  accessed: "2026-09-02"
+  version: document date "March 18, 2025"; 148,750 bytes; 2 pages
 ---
 
 # What was read

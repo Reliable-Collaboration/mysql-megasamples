@@ -3,15 +3,20 @@ type: Open Question
 title: May the MySQL-ported TPC-H (22) and TPC-DS (99) query texts be committed to the public repository?
 description: Query templates are TPC Software under the EULA; modified redistribution requires the EULA copy, the caps legend and retained TPC headers; the alternative is generating and patching them at build time.
 resource: /questions/tpc-query-text-redistribution.md
-tags: [question, tpc, license]
+tags:
+- question
+- tpc
+- license
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
+  accessed: "2026-09-02"
 ---
 
 # Question

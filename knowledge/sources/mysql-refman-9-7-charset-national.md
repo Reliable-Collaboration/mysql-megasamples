@@ -3,16 +3,24 @@ type: Source
 title: MySQL 9.7 Reference Manual - The National Character Set
 description: NCHAR/NVARCHAR/NATIONAL CHAR map to utf8mb3 in 9.7 and raise a deprecation warning recommending CHARACTER SET utf8mb4.
 resource: https://dev.mysql.com/doc/refman/9.7/en/charset-national.html
-tags: [mysql, "9.7", nvarchar, utf8mb3, chinook]
+tags:
+- mysql
+- "9.7"
+- nvarchar
+- utf8mb3
+- chinook
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/charset-national.html
-    title: 12.3.7 The National Character Set
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/charset-national.html
+  title: 12.3.7 The National Character Set
+  accessed: "2026-09-02"
 ---
 
 # What was read

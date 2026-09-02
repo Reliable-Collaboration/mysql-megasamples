@@ -3,17 +3,24 @@ type: Source
 title: "MySQL 9.7 Reference Manual: Creating Spatial Indexes"
 description: "SPATIAL indexes: InnoDB/MyISAM only, NOT NULL columns, SRID-restricted columns for optimizer use, R-tree."
 resource: https://dev.mysql.com/doc/refman/9.7/en/creating-spatial-indexes.html
-tags: [mysql, docs, spatial, index]
+tags:
+- mysql
+- docs
+- spatial
+- index
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/creating-spatial-indexes.html
-    title: "MySQL 9.7 Reference Manual: Creating Spatial Indexes"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 13.4.10"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/creating-spatial-indexes.html
+  title: "MySQL 9.7 Reference Manual: Creating Spatial Indexes"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 13.4.10
 ---
 
 # What was read

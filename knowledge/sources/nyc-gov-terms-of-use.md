@@ -3,16 +3,21 @@ type: Source
 title: NYC.gov Terms of Use
 description: The site terms that NYC Open Data incorporates by reference; they reserve the City's rights in NYC.gov content and disclaim warranties.
 resource: https://www.nyc.gov/home/terms-of-use.page
-tags: [license, nyc-open-data]
+tags:
+- license
+- nyc-open-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/home/terms-of-use.page
-    title: NYC.gov Terms of Use
-    accessed: "2026-09-02"
+- resource: https://www.nyc.gov/home/terms-of-use.page
+  title: NYC.gov Terms of Use
+  accessed: "2026-09-02"
 ---
 
 # What was read

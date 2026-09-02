@@ -3,19 +3,25 @@ type: Decision
 title: Contoso conversion path - published csv-100k archive in core, csv-1m/10m in extended, MySQL DDL derived from SQLBI's SQL Server scripts
 description: Download SQLBI's ready-to-use CSV 7z (no generator run), map the Data-schema DDL to MySQL, load with LOAD DATA; the old Microsoft ContosoRetailDW .bak is not used.
 resource: /decisions/contoso-conversion-path.md
-tags: [contoso, decision, csv]
+tags:
+- contoso
+- decision
+- csv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
-    title: ready-to-use-data assets
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
-    title: SQL Server DDL
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
+  title: ready-to-use-data assets
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
+  title: SQL Server DDL
+  accessed: "2026-09-02"
 ---
 
 # Question

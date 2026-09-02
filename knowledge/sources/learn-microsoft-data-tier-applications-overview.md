@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - Data-tier applications (DAC) overview (.bacpac / .dacpac)
 description: Defines .bacpac as an encapsulation of schema plus data ("compressed but not encrypted"), importable only into a new database via SqlPackage/SSMS/VS Code; no documented way to read the data without a SQL engine.
 resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
-tags: [bacpac, dacfx, docs]
+tags:
+- bacpac
+- dacfx
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
-    title: Data-Tier Applications (DAC) Overview - SQL Server | Microsoft Learn (canonical tools/sql-database-projects/concepts/data-tier-applications/overview)
-    accessed: "2026-09-02"
-    version: ms.date 2026-03-13, updated_at 2026-07-21, git commit 4f43f815712bfe38231ce50021bfd788a7269693
+- resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
+  title: Data-Tier Applications (DAC) Overview - SQL Server | Microsoft Learn (canonical tools/sql-database-projects/concepts/data-tier-applications/overview)
+  accessed: "2026-09-02"
+  version: ms.date 2026-03-13, updated_at 2026-07-21, git commit 4f43f815712bfe38231ce50021bfd788a7269693
 ---
 
 # What was read

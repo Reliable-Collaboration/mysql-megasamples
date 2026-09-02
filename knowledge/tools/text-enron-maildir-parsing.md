@@ -3,20 +3,28 @@ type: Tool
 title: Enron maildir parsing with the Python `email` standard library
 description: Build-time parser for the CMU Enron maildir tree — one RFC 822 file per message, no attachments — into messages/recipients/mailbox tables.
 resource: https://docs.python.org/3/library/email.html
-tags: [tool, enron, python, email, mysql-load, text-group]
+tags:
+- tool
+- enron
+- python
+- email
+- mysql-load
+- text-group
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.cs.cmu.edu/~enron/
-    title: Enron Email Dataset page
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
-    title: Enron2mbox README (maildir layout, 517,401 files)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
-    title: enron-emails README (517,401 emails; "encoded in ASCII")
-    accessed: "2026-09-02"
+- resource: https://www.cs.cmu.edu/~enron/
+  title: Enron Email Dataset page
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
+  title: Enron2mbox README (maildir layout, 517,401 files)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
+  title: enron-emails README (517,401 emails; "encoded in ASCII")
+  accessed: "2026-09-02"
 ---
 
 # Facts

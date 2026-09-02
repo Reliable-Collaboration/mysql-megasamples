@@ -1,19 +1,25 @@
 ---
 type: Source
-title: "mysql/mysql-shell LICENSE at tag 9.7.1"
-description: "MySQL Shell 9.7 Community is GPLv2 with Oracle's additional linking permission (the 'Universal FOSS Exception' style grant for separately licensed software such as OpenSSL); Election of GPLv2."
+title: mysql/mysql-shell LICENSE at tag 9.7.1
+description: MySQL Shell 9.7 Community is GPLv2 with Oracle's additional linking permission (the 'Universal FOSS Exception' style grant for separately licensed software such as OpenSSL); Election of GPLv2.
 resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
-tags: [mysql-shell, license, gpl]
+tags:
+- mysql-shell
+- license
+- gpl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
-    title: "mysql/mysql-shell LICENSE at tag 9.7.1"
-    accessed: "2026-09-02"
-    version: "tag 9.7.1; \"Last updated: March 2026\""
+- resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
+  title: mysql/mysql-shell LICENSE at tag 9.7.1
+  accessed: "2026-09-02"
+  version: "tag 9.7.1; \"Last updated: March 2026\""
 ---
 
 # What was read

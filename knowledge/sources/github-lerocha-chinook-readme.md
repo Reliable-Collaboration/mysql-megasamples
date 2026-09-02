@@ -3,17 +3,22 @@ type: Source
 title: lerocha/chinook-database README (master, 2025-10-05)
 description: Describes the Chinook digital-media-store model, supported databases, that scripts are release assets, and how the data was generated from an iTunes library.
 resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/README.md
-tags: [chinook, readme]
+tags:
+- chinook
+- readme
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/README.md
-    title: README.md
-    accessed: "2026-09-02"
-    version: master (pushed 2025-10-05)
+- resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/README.md
+  title: README.md
+  accessed: "2026-09-02"
+  version: master (pushed 2025-10-05)
 ---
 
 # What was read

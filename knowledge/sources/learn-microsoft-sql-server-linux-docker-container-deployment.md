@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - Deploy and connect to SQL Server Linux containers
 description: Platform support statement (x86-64 only, emulation unsupported), sqlcmd path inside the container, tags, ACCEPT_EULA/MSSQL_SA_PASSWORD/MSSQL_PID usage, and the production-license statement.
 resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
-tags: [sql-server, container, docs]
+tags:
+- sql-server
+- container
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
-    title: Deploy and Connect to SQL Server Linux Containers - SQL Server | Microsoft Learn (canonical linux/containers/deploy)
-    accessed: "2026-09-02"
-    version: ms.date 2026-05-07, updated_at 2026-06-12, git commit 2b0a712a054f0c7f4addacee8956f9eb1019999a
+- resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
+  title: Deploy and Connect to SQL Server Linux Containers - SQL Server | Microsoft Learn (canonical linux/containers/deploy)
+  accessed: "2026-09-02"
+  version: ms.date 2026-05-07, updated_at 2026-06-12, git commit 2b0a712a054f0c7f4addacee8956f9eb1019999a
 ---
 
 # What was read

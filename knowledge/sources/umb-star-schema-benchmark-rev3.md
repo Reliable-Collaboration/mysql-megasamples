@@ -3,17 +3,22 @@ type: Source
 title: Star Schema Benchmark, Revision 3 (O'Neil, O'Neil, Chen, June 5 2009)
 description: The reference paper defining the SSB schema, cardinalities and 13 queries.
 resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
-tags: [ssb, paper]
+tags:
+- ssb
+- paper
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
-    title: Star Schema Benchmark Revision 3, June 5, 2009
-    accessed: "2026-09-02"
-    version: Revision 3, June 5 2009; 137 KB PDF (text extracted locally)
+- resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
+  title: Star Schema Benchmark Revision 3, June 5, 2009
+  accessed: "2026-09-02"
+  version: Revision 3, June 5 2009; 137 KB PDF (text extracted locally)
 ---
 
 # What was read

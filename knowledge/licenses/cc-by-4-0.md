@@ -3,19 +3,26 @@ type: License
 title: Creative Commons Attribution 4.0 International (CC BY 4.0) - UCI Iris
 description: Attribution-only license that UCI applies to its Iris distribution; requires creator credit, license notice and modification notice; no share-alike.
 resource: https://creativecommons.org/licenses/by/4.0/legalcode
-tags: [license, cc-by-4-0, attribution, iris]
+tags:
+- license
+- cc-by-4-0
+- attribution
+- iris
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://creativecommons.org/licenses/by/4.0/legalcode
-    title: Attribution 4.0 International legal code
-    accessed: "2026-09-02"
-  - resource: https://archive.ics.uci.edu/dataset/53/iris
-    title: UCI Iris page license statement
-    accessed: "2026-09-02"
+- resource: https://creativecommons.org/licenses/by/4.0/legalcode
+  title: Attribution 4.0 International legal code
+  accessed: "2026-09-02"
+- resource: https://archive.ics.uci.edu/dataset/53/iris
+  title: UCI Iris page license statement
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

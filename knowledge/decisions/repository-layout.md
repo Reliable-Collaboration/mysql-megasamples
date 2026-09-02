@@ -3,14 +3,20 @@ type: Decision
 title: Repository layout, committed versus downloaded content, and the download manifest
 description: One directory per dataset with code, DDL, tests, license and provenance committed; all upstream artifacts and generated dumps live in git-ignored folders and are fetched through a single YAML manifest.
 resource: /decisions/repository-layout.md
-tags: [decision, repository, gitignore, manifest]
+tags:
+- decision
+- repository
+- gitignore
+- manifest
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:17:31Z"
 sources:
-  - resource: /tools/github-limits.md
-    title: GitHub size limits (tools agent)
-    accessed: "2026-09-02"
+- resource: /tools/github-limits.md
+  title: GitHub size limits (tools agent)
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,20 +3,27 @@ type: Source
 title: allisonhorst/palmerpenguins README
 description: The R package README - two datasets (penguins 344x8, penguins_raw 344x17), CC-0 license statement per Palmer Station LTER data policy, package and data citations.
 resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/README.md
-tags: [penguins, readme, citation, cc0]
+tags:
+- penguins
+- readme
+- citation
+- cc0
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/README.md
-    title: README.md (9,675 bytes)
-    accessed: "2026-09-02"
-    version: main @ 8957207 (2024-09-19); GitHub release v0.1.0 (2020-07-25)
-  - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/DESCRIPTION
-    title: DESCRIPTION (Version 0.1.1, Date 2022-08-12, License CC0, Encoding UTF-8)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/README.md
+  title: README.md (9,675 bytes)
+  accessed: "2026-09-02"
+  version: main @ 8957207 (2024-09-19); GitHub release v0.1.0 (2020-07-25)
+- resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/DESCRIPTION
+  title: DESCRIPTION (Version 0.1.1, Date 2022-08-12, License CC0, Encoding UTF-8)
+  accessed: "2026-09-02"
 ---
 
 # What was read

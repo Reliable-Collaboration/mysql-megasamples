@@ -3,16 +3,20 @@ type: Source
 title: TPC-H homepage (tpc.org/tpch)
 description: Landing page for TPC-H; only useful for the V3.0 note and the pointer to the documentation page.
 resource: https://www.tpc.org/tpch/
-tags: [tpc-h]
+tags:
+- tpc-h
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/tpch/
-    title: TPC-H Homepage
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/tpch/
+  title: TPC-H Homepage
+  accessed: "2026-09-02"
 ---
 
 # What was read

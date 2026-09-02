@@ -3,17 +3,22 @@ type: Source
 title: Microsoft Learn - How to use the bcp utility (examples and best practices)
 description: Character-mode best practices (terminator collisions, use long unique terminators), computed-column behaviour on import/export, queryout examples, and the note that the row terminator is always appended.
 resource: https://learn.microsoft.com/en-us/sql/tools/bcp/bcp-use-utility
-tags: [bcp, docs]
+tags:
+- bcp
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/tools/bcp/bcp-use-utility
-    title: How to Use the bcp Utility - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2026-06-25, updated_at 2026-08-24, git commit 3788e363569c9a5af042c9b4f688384852d2d144
+- resource: https://learn.microsoft.com/en-us/sql/tools/bcp/bcp-use-utility
+  title: How to Use the bcp Utility - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2026-06-25, updated_at 2026-08-24, git commit 3788e363569c9a5af042c9b4f688384852d2d144
 ---
 
 # What was read

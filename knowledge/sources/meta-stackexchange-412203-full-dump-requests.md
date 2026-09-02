@@ -3,16 +3,22 @@ type: Source
 title: Meta SE 412203 — "Full data dump requests - the company doesn't seem to be holding up on its end" (2025-08-22, score 109, unanswered)
 description: Evidence that the promised full-network dump path via support ticket did not materialise within a year and that community archives on archive.org remain the practical full copy.
 resource: https://meta.stackexchange.com/questions/412203/full-data-dump-requests-the-company-doesn-t-seem-to-be-holding-up-on-its-end
-tags: [source, stackexchange, availability]
+tags:
+- source
+- stackexchange
+- availability
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/questions/412203?site=meta&filter=withbody
-    title: question body via API (Journeyman Geek)
-    accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/questions/412203?site=meta&filter=withbody
+  title: question body via API (Journeyman Geek)
+  accessed: "2026-09-02"
 ---
 
 # What was read

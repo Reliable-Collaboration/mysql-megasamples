@@ -3,20 +3,26 @@ type: Decision
 title: Target MySQL version is 9.7 LTS, pinned to the latest published official image point release
 description: Choose MySQL 9.7.x LTS (currently 9.7.3 upstream, 9.7.2 in the official image) over 8.4.x LTS as the image base.
 resource: /decisions/target-mysql-version.md
-tags: [decision, mysql, version]
+tags:
+- decision
+- mysql
+- version
 status: stable
 trust: verified
 stale_after: "2026-10-20"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/relnotes/mysql/9.7/en/
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/relnotes/mysql/9.7/en/
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
+  accessed: "2026-09-02"
 ---
 
 # Question

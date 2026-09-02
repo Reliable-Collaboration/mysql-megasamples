@@ -1,52 +1,61 @@
 ---
 type: Tool
 title: "MySQL Shell 9.7 utilities: importTable, dump/loadDump, copy"
-description: "mysqlsh 9.7.1 is already in the official mysql:9.7 image; util.importTable is the parallel LOAD DATA LOCAL loader, util.dumpSchemas/loadDump is the interchange format with deferred secondary indexes, util.copy* streams between servers; all need local_infile=ON."
+description: mysqlsh 9.7.1 is already in the official mysql:9.7 image; util.importTable is the parallel LOAD DATA LOCAL loader, util.dumpSchemas/loadDump is the interchange format with deferred secondary indexes, util.copy* streams between servers; all need local_infile=ON.
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
-tags: [tool, mysql-shell, bulk-load, dump, build-time, ships-in-image]
+tags:
+- tool
+- mysql-shell
+- bulk-load
+- dump
+- build-time
+- ships-in-image
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:43:49Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:43:49Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
-    title: "12.4 Parallel Table Import Utility"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
-    title: "12.6 Dump Loading Utility"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-dump-instance-schema.html
-    title: "12.5 Instance Dump Utility, Schema Dump Utility, and Table Dump Utility"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utils-copy.html
-    title: "12.8 Copy Instance, Schemas, and Tables"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
-    title: "5.8.1 Command Line Integration Overview"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
-    title: "5.6 Batch Code Execution"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
-    title: "MySQL Shell 9.7 manual front page (preface license links)"
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
-    title: "mysql/mysql-shell LICENSE at 9.7.1"
-    accessed: "2026-09-02"
-    version: "9.7.1"
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
-    title: "docker-library/mysql 9.7/Dockerfile.oracle"
-    accessed: "2026-09-02"
-    version: "master @ 2f988f19 (2026-08-19)"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
-    title: "8.1.6 Security Considerations for LOAD DATA LOCAL"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
+  title: 12.4 Parallel Table Import Utility
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-load-dump.html
+  title: 12.6 Dump Loading Utility
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-dump-instance-schema.html
+  title: 12.5 Instance Dump Utility, Schema Dump Utility, and Table Dump Utility
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utils-copy.html
+  title: 12.8 Copy Instance, Schemas, and Tables
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
+  title: 5.8.1 Command Line Integration Overview
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-batch-code-execution.html
+  title: 5.6 Batch Code Execution
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/
+  title: MySQL Shell 9.7 manual front page (preface license links)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/mysql/mysql-shell/9.7.1/LICENSE
+  title: mysql/mysql-shell LICENSE at 9.7.1
+  accessed: "2026-09-02"
+  version: 9.7.1
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
+  title: docker-library/mysql 9.7/Dockerfile.oracle
+  accessed: "2026-09-02"
+  version: master @ 2f988f19 (2026-08-19)
+- resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
+  title: 8.1.6 Security Considerations for LOAD DATA LOCAL
+  accessed: "2026-09-02"
 ---
 
 # Facts
@@ -84,7 +93,7 @@ sources:
 
 # Inferred
 * **Inferred:** because the builder stage runs inside the `mysql:9.7.2` image, the socket path is `/var/run/mysqld/mysqld.sock` (Dockerfile patches `/etc/my.cnf`), so loaders connect with `mysqlsh --no-defaults -uroot --socket=/var/run/mysqld/mysqld.sock --py --file ...`; the entrypoint's own `mysql_socket_fix` comment notes that "`mysqlsh --mysql` doesn't read the [client] config", so the socket must be passed explicitly.
-* **Inferred:** `importTable` with `bytesPerChunk` 50M and 8 threads is I/O-bound on the WSL2 disk; the plan's default is `threads: 4` matching the image's 4-vCPU CI target, tuned by task E-02.
+* **Inferred:** `importTable` with `bytesPerChunk` 50M and 8 threads is I/O-bound on the WSL2 disk; the plan's default is `threads: 4` matching the 4-vCPU CI target; the value is measured on the first table that uses `importTable` (Chicago full, task X-03) and recorded there.
 * **Inferred:** the `.tsv.zst` chunk format written by `dumpSchemas` is also a good *publishing* format for extended-tier bundles (zstd, chunked, self-describing, loadable with `deferTableIndexes:"all"`), at the cost of requiring mysqlsh on the consumer side, which the image provides.
 
 # Limits

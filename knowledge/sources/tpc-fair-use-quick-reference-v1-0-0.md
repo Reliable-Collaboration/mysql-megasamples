@@ -3,17 +3,23 @@ type: Source
 title: TPC Fair Use Quick Reference v1.0.0 (2019-06-05)
 description: The TPC's summary of how non-TPC (derived, unaudited) benchmark uses must be named and disclaimed.
 resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
-tags: [tpc, fair-use, trademark]
+tags:
+- tpc
+- fair-use
+- trademark
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
-    title: Fair Use of TPC Benchmarks
-    accessed: "2026-09-02"
-    version: dated 2019-06-05, 108 KB PDF (text extracted locally with a zlib stream parser; one phrase set in a different font was lost, noted below)
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
+  title: Fair Use of TPC Benchmarks
+  accessed: "2026-09-02"
+  version: dated 2019-06-05, 108 KB PDF (text extracted locally with a zlib stream parser; one phrase set in a different font was lost, noted below)
 ---
 
 # What was read

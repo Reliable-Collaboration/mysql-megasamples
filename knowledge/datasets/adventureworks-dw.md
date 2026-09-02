@@ -3,26 +3,34 @@ type: Dataset
 title: AdventureWorksDW
 description: The AdventureWorks star-schema data warehouse (31 dbo tables, dimension/fact naming), available as .bak files or as a SQLCMD install script with 30 pipe-delimited UTF-8 CSVs (~86 MB); MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/adventure-works/data-warehouse-install-script
-tags: [tier-extended, mssql-origin, csv-load, mit, star-schema]
+tags:
+- tier-extended
+- mssql-origin
+- csv-load
+- mit
+- star-schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
-    title: instawdbdw.sql (Updated November 14, 2025)
-    accessed: "2026-09-02"
-    version: master, commit b47eadc852
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/data-warehouse-install-script
-    title: directory listing (30 CSVs with sizes)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
-    title: release assets (AdventureWorksDW*.bak, AdventureWorksDW-data-warehouse-install-script.zip 16,765,004 bytes)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: license.txt (MIT)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
+  title: instawdbdw.sql (Updated November 14, 2025)
+  accessed: "2026-09-02"
+  version: master, commit b47eadc852
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/data-warehouse-install-script
+  title: directory listing (30 CSVs with sizes)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
+  title: release assets (AdventureWorksDW*.bak, AdventureWorksDW-data-warehouse-install-script.zip 16,765,004 bytes)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: license.txt (MIT)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 
@@ -59,7 +67,7 @@ Same as OLTP: CSV + translated DDL, no SQL Server ([decision](/decisions/mssql-a
 PKs and 46 FKs from the script; add the script's nonclustered indexes if any (few). Consider `FactProductInventory` (776k rows) PK (ProductKey, DateKey).
 
 # Tests and expected values
-Row counts per CSV (measure); `SUM(SalesAmount)` over FactInternetSales (**Inferred** classic 29,358,677.2207) and FactResellerSales (**Inferred** 80,450,596.9823) pinned after first load; encoding probe on DimProduct `FrenchProductName`/`ArabicDescription` columns.
+Row counts per CSV (measure); `SUM(salesamount)` over `factinternetsales` (**Inferred** classic 29,358,677.2207) and `factresellersales` (**Inferred** 80,450,596.9823) pinned after first load; encoding probe on `dimproduct.frenchproductname`/`arabicdescription` columns.
 
 # Tier assignment
 **extended**: 86 MB CSV / **Inferred** ~150 MB loaded.

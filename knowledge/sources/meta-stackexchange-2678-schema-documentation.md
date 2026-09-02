@@ -3,17 +3,23 @@ type: Source
 title: Meta SE answer 2678 — "Database schema documentation for the public data dump and SEDE" (last edited 2026-03-23)
 description: The community-maintained column-by-column schema of the dump XML files, including enumerations and the July 2025 canary-post note.
 resource: https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede/2678#2678
-tags: [source, stackexchange, schema]
+tags:
+- source
+- stackexchange
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/answers/2678?site=meta&filter=withbody
-    title: answer body via the Stack Exchange API
-    accessed: "2026-09-02"
-    version: last edited 2026-03-23T16:06Z; original owner Stu Thompson (community wiki)
+- resource: https://api.stackexchange.com/2.3/answers/2678?site=meta&filter=withbody
+  title: answer body via the Stack Exchange API
+  accessed: "2026-09-02"
+  version: last edited 2026-03-23T16:06Z; original owner Stu Thompson (community wiki)
 ---
 
 # What was read

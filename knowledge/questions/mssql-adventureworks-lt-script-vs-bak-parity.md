@@ -3,17 +3,21 @@ type: Open Question
 title: Does the 2012 AdventureWorksLT script zip produce the same data as the LT2016-LT2022 .bak files (and how does LT2025 differ)?
 description: The only SQL-Server-free form of AdventureWorksLT is the 2012 release zip; the README says 2012-2022 AdventureWorks builds differ only in name/compatibility level, and 2025 adjusted dates, but this was stated for the OLTP database, not explicitly for LT.
 resource: /questions/mssql-adventureworks-lt-script-vs-bak-parity.md
-tags: [open-question, adventureworks-lt]
+tags:
+- open-question
+- adventureworks-lt
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
-    title: adventure-works README (release history statements)
-    accessed: "2026-09-02"
-  - resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
-    title: LT 2012 script zip
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
+  title: adventure-works README (release history statements)
+  accessed: "2026-09-02"
+- resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
+  title: LT 2012 script zip
+  accessed: "2026-09-02"
 ---
 
 # Question

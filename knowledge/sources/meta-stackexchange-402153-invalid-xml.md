@@ -3,16 +3,23 @@ type: Source
 title: Meta SE 402153 — "Latest Data Dump has invalid XML and invalid characters" (2024-08-14)
 description: Report that the first profile-page dumps (2024-Q2) contained invalid XML character references such as &#x1E; and &#x00;, with a community stream-cleaning workaround.
 resource: https://meta.stackexchange.com/questions/402153/latest-data-dump-has-invalid-xml-and-invalid-characters
-tags: [source, stackexchange, xml, data-quality]
+tags:
+- source
+- stackexchange
+- xml
+- data-quality
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/questions/402153?site=meta&filter=withbody
-    title: question body and top answer (rene) via API
-    accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/questions/402153?site=meta&filter=withbody
+  title: question body and top answer (rene) via API
+  accessed: "2026-09-02"
 ---
 
 # What was read

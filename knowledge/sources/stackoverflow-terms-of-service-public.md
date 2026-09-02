@@ -3,17 +3,23 @@ type: Source
 title: Stack Overflow Public Network Terms of Service (Last updated November 13, 2025)
 description: The ToS clause defining the "Creative Commons Data Dump" and the Subscriber Content license grant.
 resource: https://stackoverflow.com/legal/terms-of-service/public
-tags: [source, stackexchange, license]
+tags:
+- source
+- stackexchange
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://stackoverflow.com/legal/terms-of-service/public
-    title: Public Network Terms of Service
-    accessed: "2026-09-02"
-    version: Last updated November 13, 2025
+- resource: https://stackoverflow.com/legal/terms-of-service/public
+  title: Public Network Terms of Service
+  accessed: "2026-09-02"
+  version: Last updated November 13, 2025
 ---
 
 # What was read

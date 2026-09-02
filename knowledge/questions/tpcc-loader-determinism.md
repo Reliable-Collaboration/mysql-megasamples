@@ -3,15 +3,21 @@ type: Open Question
 title: Can sysbench-tpcc produce an identical tpcc population on two runs (seed coverage, threads, Lua math.random, MySQL 9.7 client auth)?
 description: sysbench has --rand-seed, but tpcc_common.lua also uses Lua's math.random for the customer permutation and multi-threaded loads interleave RNG streams; HammerDB/tpcc-mysql are unseeded.
 resource: /questions/tpcc-loader-determinism.md
-tags: [question, tpc-c, sysbench, determinism]
+tags:
+- question
+- tpc-c
+- sysbench
+- determinism
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/Percona-Lab/sysbench-tpcc
-    accessed: "2026-09-02"
-  - resource: https://github.com/akopytov/sysbench
-    accessed: "2026-09-02"
+- resource: https://github.com/Percona-Lab/sysbench-tpcc
+  accessed: "2026-09-02"
+- resource: https://github.com/akopytov/sysbench
+  accessed: "2026-09-02"
 ---
 
 # Question

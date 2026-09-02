@@ -3,16 +3,21 @@ type: Source
 title: OSI page for the BSD 3-Clause "New" or "Revised" License
 description: The canonical BSD-3-Clause template text, read to confirm the Sakila file headers reproduce it.
 resource: https://opensource.org/license/bsd-3-clause
-tags: [license, bsd-3-clause]
+tags:
+- license
+- bsd-3-clause
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://opensource.org/license/bsd-3-clause
-    title: The 3-Clause BSD License
-    accessed: "2026-09-02"
+- resource: https://opensource.org/license/bsd-3-clause
+  title: The 3-Clause BSD License
+  accessed: "2026-09-02"
 ---
 
 # What was read

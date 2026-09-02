@@ -3,16 +3,23 @@ type: Source
 title: hbiostat.org/data - Vanderbilt Biostatistics Datasets index
 description: Frank Harrell's dataset repository page; carries the blanket permission statement and lists titanic, titanic2, titanic3 and titanic5 files.
 resource: https://hbiostat.org/data/
-tags: [titanic, hbiostat, vanderbilt, license]
+tags:
+- titanic
+- hbiostat
+- vanderbilt
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://hbiostat.org/data/
-    title: Vanderbilt Biostatistics Datasets ("Published July 14, 2026")
-    accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/
+  title: Vanderbilt Biostatistics Datasets ("Published July 14, 2026")
+  accessed: "2026-09-02"
 ---
 
 # What was read

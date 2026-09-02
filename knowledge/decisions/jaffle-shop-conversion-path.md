@@ -3,19 +3,25 @@ type: Decision
 title: Jaffle Shop conversion path - ship the classic Apache-2.0 seeds as generated INSERTs; jafgen run for larger data in extended
 description: Core = three classic CSVs (312 rows) converted to SQL at build time with explicit DDL; extended = jafgen-generated multi-year data loaded from CSV; do not vendor the unlicensed new-repo seeds.
 resource: /decisions/jaffle-shop-conversion-path.md
-tags: [jaffle-shop, decision, csv]
+tags:
+- jaffle-shop
+- decision
+- csv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
-    title: classic seeds inspection
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
-    title: jafgen README
-    accessed: "2026-09-02"
+- resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
+  title: classic seeds inspection
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/README.md
+  title: jafgen README
+  accessed: "2026-09-02"
 ---
 
 # Question

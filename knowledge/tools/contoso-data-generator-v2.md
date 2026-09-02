@@ -3,26 +3,34 @@ type: Tool
 title: SQLBI Contoso Data Generator V2 (2.0.1)
 description: .NET 8 console tool (MIT) that generates the Contoso V2 star schema (customer, date, product, store, currencyexchange, sales, orders, orderrows) as CSV/Parquet/Delta for any OrdersCount; constant-seeded RNG; pre-built sizes published as 7z archives.
 resource: https://github.com/sql-bi/Contoso-Data-Generator-V2
-tags: [tool, generator, contoso, dotnet, mit]
+tags:
+- tool
+- generator
+- contoso
+- dotnet
+- mit
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
-    title: README + release 2.0.1 assets
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
-    title: generator source (csproj, Config.cs, Engine*.cs)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
-    title: build scripts and config.json
-    accessed: "2026-09-02"
-  - resource: https://docs.sqlbi.com/contoso-data-generator/
-    title: SQLBI documentation
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
+  title: README + release 2.0.1 assets
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
+  title: generator source (csproj, Config.cs, Engine*.cs)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
+  title: build scripts and config.json
+  accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/
+  title: SQLBI documentation
+  accessed: "2026-09-02"
 ---
 
 # Facts

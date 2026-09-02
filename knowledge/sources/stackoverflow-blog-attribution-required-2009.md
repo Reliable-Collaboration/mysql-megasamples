@@ -3,16 +3,22 @@ type: Source
 title: Stack Overflow blog, "Attribution Required" (2009-06-25)
 description: The original statement of the four attribution rules for republishing Stack Exchange content.
 resource: https://stackoverflow.blog/2009/06/25/attribution-required/
-tags: [source, stackexchange, attribution]
+tags:
+- source
+- stackexchange
+- attribution
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://stackoverflow.blog/2009/06/25/attribution-required/
-    title: Attribution Required
-    accessed: "2026-09-02"
+- resource: https://stackoverflow.blog/2009/06/25/attribution-required/
+  title: Attribution Required
+  accessed: "2026-09-02"
 ---
 
 # What was read

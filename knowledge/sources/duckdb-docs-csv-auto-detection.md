@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "DuckDB documentation: CSV Auto Detection and sniff_csv"
-description: "The sniffer detects dialect, header and types from 20,480 sample rows; sniff_csv returns Delimiter, Quote, Escape, NewLineDelimiter, HasHeader, Columns, DateFormat, TimestampFormat and a Prompt; sample_size = -1 reads the whole file."
+description: The sniffer detects dialect, header and types from 20,480 sample rows; sniff_csv returns Delimiter, Quote, Escape, NewLineDelimiter, HasHeader, Columns, DateFormat, TimestampFormat and a Prompt; sample_size = -1 reads the whole file.
 resource: https://duckdb.org/docs/current/data/csv/auto_detection
-tags: [duckdb, csv]
+tags:
+- duckdb
+- csv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://duckdb.org/docs/current/data/csv/auto_detection
-    title: "DuckDB documentation: CSV Auto Detection and sniff_csv"
-    accessed: "2026-09-02"
-    version: "docs 'current' (DuckDB 1.5.5), read 2026-09-02"
+- resource: https://duckdb.org/docs/current/data/csv/auto_detection
+  title: "DuckDB documentation: CSV Auto Detection and sniff_csv"
+  accessed: "2026-09-02"
+  version: docs 'current' (DuckDB 1.5.5), read 2026-09-02
 ---
 
 # What was read

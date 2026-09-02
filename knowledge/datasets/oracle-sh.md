@@ -3,32 +3,41 @@ type: Dataset
 title: Oracle SH (Sales History) sample schema
 description: Oracle's star-schema data-warehouse sample (918,843 SALES facts, 55,500 customers, 9 tables) whose v23.3 data ships as six plain CSV files loaded by SQLcl; converted with LOAD DATA, partitions/bitmap indexes/MVs/dimensions replaced.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/sales_history
-tags: [tier-core-medium, oracle, sh, star-schema, csv, mit]
+tags:
+- tier-core-medium
+- oracle
+- sh
+- star-schema
+- csv
+- mit
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
-    title: Releases, tags, tree sizes
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
-    title: sh_install/sh_create/sh_populate scripts and CSV samples
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
-    title: Oracle Sample Schemas guide (SH pages, SQLcl requirement)
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-sqlcl-26-2-load-and-sqlformat.md
-    title: SQLcl LOAD defaults
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
-    title: v19.2 SQL*Loader control files (for comparison)
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-char.md
-    title: MySQL CHAR semantics
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
+  title: Releases, tags, tree sizes
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
+  title: sh_install/sh_create/sh_populate scripts and CSV samples
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
+  title: Oracle Sample Schemas guide (SH pages, SQLcl requirement)
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-sqlcl-26-2-load-and-sqlformat.md
+  title: SQLcl LOAD defaults
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
+  title: v19.2 SQL*Loader control files (for comparison)
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-char.md
+  title: MySQL CHAR semantics
+  accessed: "2026-09-02"
 ---
 
 # Identity

@@ -1,18 +1,24 @@
 ---
 type: Decision
 title: "Dispositions of the first code review (Claude code-review and GitHub Copilot) on PR #1"
-description: "Every finding from the two reviews validated against the original request, classified, and resolved as a class or explicitly declined with the reason; the conventions runbook revision 2 came out of this pass."
+description: Every finding from the first two reviews (and the second Copilot pass) validated against the original request, classified, and resolved as a class or explicitly declined with the reason; the conventions runbook revision 2 came out of this pass.
 resource: /decisions/review-2026-09-02-dispositions.md
-tags: [decision, review, process]
+tags:
+- decision
+- review
+- process
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T22:33:25Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T22:33:25Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T22:33:25Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T22:33:25Z"
 sources:
-  - resource: https://github.com/Reliable-Collaboration/mysql-megasamples/pull/1
-    title: "PR #1 with the Copilot review (8 comments) and the code-review findings (15 numbered, 38 merged, 6 refuted, about 30 cut)"
-    accessed: "2026-09-02"
+- resource: https://github.com/Reliable-Collaboration/mysql-megasamples/pull/1
+  title: "PR #1 with the Copilot review (8 comments) and the code-review findings (15 numbered, 38 merged, 6 refuted, about 30 cut)"
+  accessed: "2026-09-02"
 ---
 
 # Question
@@ -51,6 +57,31 @@ The finding texts are recorded in the PR; the sweeps that sized each class are i
 | 15f | verified.at earlier than generated.at in nine records (review, plausible) | valid, minor | conventions say re-stamp `verified` only when claims are re-checked; an **Update** log entry now records the convention-alignment edits |
 | cut | Duplicate BSD-3 records, dead imports, hardcoded index prose, CI/Enron efficiency items (review) | partly adopted | BSD generic record kept (build-time packages); dead code removed with the rewrite; root intro moved into a preserved marker block; Enron core subset published as a release asset; native.yaml runs on change instead of weekly; the other cuts declined as cosmetic |
 | refuted | S9 CHECKSUM TABLE, §7 sizes, oracle-sh FK claim, agpl resource, draft-with-trust, WWI-DW shared resource (review) | agreed | no change |
+
+# Outcome, second review (same day, commit c86315b)
+
+| # | Finding (source) | Verdict | Class and resolution |
+|---|---|---|---|
+| 1 | No network-reachable root account on the baked datadir (review) | valid, design defect | the skipped `docker_setup_db` also loads time-zone tables: builder now creates `root@'%'` (default `root`, overridable) and loads tz data; unsupported `MYSQL_*` env vars documented; S8 tests root over TCP and `CONVERT_TZ` ([bake decision](/decisions/bake-data-vs-initdb.md), [accounts](/decisions/database-naming-convention.md), PLAN §1/§2.2/§4) |
+| 2 | ci.yaml builds 12 datasets but S8 expects every core database; CORE_FAST rule contradicts its list (review) | valid | `make image DATASETS=` builds a subset image; S8 asserts the databases named in the built image's registry; CORE_FAST is an explicit curated list (16 datasets) with the exclusion reasons stated |
+| 3 | SUM over zero rows is NULL (review) | valid | `COALESCE(...,0)` in the fingerprint ([checksum method](/decisions/test-checksum-method.md)) |
+| 4 | SHOW WARNINGS after importTable is vacuous; loader rule contradicted by three sections (review) | valid | one project-wide loader rule in PLAN §2.2 (server-side strict `LOAD DATA`; `importTable` only ≥ 5 M rows with the S4 digest as guard and a verify-first on its summary line); §3.24/3.25/3.26, [large-tabular decision](/decisions/large-tabular-conversion-path.md) and the Shell record aligned |
+| 5, 11, 12 | checker crashes on list values; from-memory gate rejects `# Inferred` sections and ignores frontmatter; headings scanned inside code fences; literal Status match; no deprecated path (review) | valid | checker rewritten: type-checked frontmatter, code-stripped heading scan, Inferred section/paragraph aware hedge gate including title/description, Status normalized with accepted/pending/superseded-by/deprecated rules, `verified` shape, BOM/CRLF tolerance, `-` bullets, titled links |
+| 6 | line-based fixer has no YAML context (review) | valid, whole approach replaced | `okf_fix_quotes.py` is now a YAML-aware canonicalizer (parse → normalize types → dump, key order kept); the bundle was canonicalized once (block style) and `--check` guards it; the conventions describe the canonical form |
+| 7 | index links checked before child indexes are written; shallow subdirectory detection (review) | valid | indexes are all written first, then validated; directory detection and counts are recursive |
+| 8 | PLAN §10 still states revision-1 conventions (review) | valid | §10.1 and §10.3 rewritten to revision 2; executor-discipline sources rule aligned |
+| 9 | mixed-case identifiers in eight more records (review) | valid, class incomplete last time | all eight records and PLAN §3.2 lower-cased; the earlier sweep only matched `FROM/JOIN` patterns |
+| 10 | Employees smoke test names a non-existent view; salary dump sizes (review) | valid | `v_full_departments` named; exact byte sizes |
+| 13 | three license Applied-to sections omit linking records (review) | valid | checker now enforces coverage for every Dataset and Tool record that links a license (source records and questions merely cite licenses and are exempt by design); seven gaps filled |
+| 14 | extended.yaml scope exceeds `make extended` (review) | valid | workflow defined as `make extended` (release-asset datasets) plus explicit `gen-*` runs; Citi Bike/Divvy excluded from CI; [orchestration](/decisions/build-orchestration.md) names the target |
+| 15 | gen_provenance inputs inconsistent; record keys do not match database names (review) | valid | inputs specified once in PLAN §8.2 via `dataset.yaml` (which names the knowledge records and license ids per database), measurements optional; registry columns widened to JSON arrays |
+| cut | Sakila definer wording, IPv6 runbook fetch design, §5 clustered-key rule, jaffle tier wording, exit-code doc, BOM/CRLF, `-` bullets, titled links (review) | adopted | fixed alongside the classes above; the remaining cuts (CI double trigger, caching, single-RUN bake layer, tier lists in four places) declined as cosmetic or already documented redundancy |
+| C1 | Oracle NUMBER→DECIMAL "always fits"; truncated vs rounded (Copilot) | valid | mapping restricted to `0 ≤ s ≤ p ≤ 38, s ≤ 30` with the converter asserting no negative/oversized scales; rounding wording aligned with the source |
+| C2 | PR description says 525 concepts (Copilot) | valid | updated to 526 |
+| C3 | BSD record contradicts a verified source record (Copilot) | valid | cites the OSI source record; sqlparse removed |
+| C4 | objects.sql function count (Copilot) | valid | five |
+| C5 | `okf` package conclusion unsupported (Copilot) | valid | reworded to what the metadata shows (no documented interface; not inspected) |
+| C6 | stale sqlparse dependency (Copilot) | valid | sqlparse recorded as evaluated and rejected; converters own their `GO`/`DELIMITER` splitting |
 
 # Status
 accepted

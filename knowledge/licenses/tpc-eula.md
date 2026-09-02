@@ -3,19 +3,26 @@ type: License
 title: TPC End User License Agreement v2.2 (dbgen, qgen, dsdgen, dsqgen and derivatives)
 description: The license on every TPC benchmark tool and on anything merged with it; permits use, modification and no-fee redistribution with the full agreement and a legend, restricts performance-result publication and TPC name use, and is silent about generated data.
 resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-tags: [license, tpc, eula, proprietary]
+tags:
+- license
+- tpc
+- eula
+- proprietary
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-    title: END USER LICENSE AGREEMENT VERSION 2.2
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
-    title: Fair Use of TPC Benchmarks (2019-06-05)
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
+  title: END USER LICENSE AGREEMENT VERSION 2.2
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
+  title: Fair Use of TPC Benchmarks (2019-06-05)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives
@@ -47,3 +54,6 @@ Not copyleft in the GPL sense, but clause 9.a makes modified redistribution requ
 * [TPC-DS](/datasets/tpc-ds.md) — dsdgen/dsqgen 2.10.0 (tpcds-kit) and DuckDB's port.
 * [SSB](/datasets/ssb.md) — ssb-dbgen is a modified TPC-H dbgen ("all new code ... follow the #ifdef SSBM statements"); clause 8/9 apply even though the fork ships no license file.
 * Not applied to TPC-C: the TPC publishes no TPC-C software; only the spec's copying notice and trademark/fair-use rules apply ([TPC-C](/datasets/tpc-c.md)).
+* [tpch-kit](/tools/tpch-kit.md), [tpcds-kit](/tools/tpcds-kit.md) - cloned at build time for qgen/dsqgen and answer sets; EULA copy and legend accompany any generated query text.
+* [ssb-dbgen](/tools/ssb-dbgen.md) - compiled binary distributed inside the loader image with the EULA copy and legend.
+* [DuckDB tpch/tpcds extensions](/tools/duckdb-tpch-tpcds-extensions.md) - embed dbgen/dsdgen ports; the loader image carries the EULA copy.

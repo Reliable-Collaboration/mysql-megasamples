@@ -3,18 +3,25 @@ type: Source
 title: PyPI JSON metadata for mwsql
 description: Current release 1.0.4 (uploaded 2024-02-19), GPL-3.0-or-later, Python >=3.9,<4.0, deps requests and tqdm.
 resource: https://pypi.org/pypi/mwsql/json
-tags: [source, tool, python, version-pin]
+tags:
+- source
+- tool
+- python
+- version-pin
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2027-03-01"
 sources:
-  - resource: https://pypi.org/pypi/mwsql/json
-    title: PyPI JSON API
-    accessed: "2026-09-02"
-    version: 1.0.4
+- resource: https://pypi.org/pypi/mwsql/json
+  title: PyPI JSON API
+  accessed: "2026-09-02"
+  version: 1.0.4
 ---
 
 # What was read

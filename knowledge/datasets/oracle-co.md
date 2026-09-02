@@ -3,32 +3,41 @@ type: Dataset
 title: Oracle CO (Customer Orders) sample schema
 description: Oracle's "modern" e-commerce sample (7 tables, 8,783 rows) with identity columns, a JSON check constraint on a BLOB, 9-digit fractional timestamps and analytic views, converted from its single 1.27 MB INSERT script.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/customer_orders
-tags: [tier-core, oracle, co, json, small, mit]
+tags:
+- tier-core
+- oracle
+- co
+- json
+- small
+- mit
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
-    title: Releases, tags, tree sizes
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
-    title: co_install/co_create/co_populate scripts
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
-    title: Oracle Sample Schemas guide (CO pages)
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-fractional-seconds.md
-    title: MySQL fractional seconds
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-json.md
-    title: MySQL JSON type
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-fixed-point-types.md
-    title: MySQL DECIMAL
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
+  title: Releases, tags, tree sizes
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
+  title: co_install/co_create/co_populate scripts
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
+  title: Oracle Sample Schemas guide (CO pages)
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-fractional-seconds.md
+  title: MySQL fractional seconds
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-json.md
+  title: MySQL JSON type
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-fixed-point-types.md
+  title: MySQL DECIMAL
+  accessed: "2026-09-02"
 ---
 
 # Identity

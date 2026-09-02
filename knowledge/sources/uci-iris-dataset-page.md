@@ -3,16 +3,23 @@ type: Source
 title: UCI Machine Learning Repository - Iris (dataset 53) page
 description: UCI's landing page for Fisher's Iris data - CC BY 4.0 license statement, 150 instances, 4 features + class, known errors in samples 35 and 38, DOI 10.24432/C56C76.
 resource: https://archive.ics.uci.edu/dataset/53/iris
-tags: [iris, uci, license, cc-by-4-0]
+tags:
+- iris
+- uci
+- license
+- cc-by-4-0
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.ics.uci.edu/dataset/53/iris
-    title: Iris - UCI Machine Learning Repository
-    accessed: "2026-09-02"
+- resource: https://archive.ics.uci.edu/dataset/53/iris
+  title: Iris - UCI Machine Learning Repository
+  accessed: "2026-09-02"
 ---
 
 # What was read

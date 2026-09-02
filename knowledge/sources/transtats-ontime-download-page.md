@@ -3,17 +3,23 @@ type: Source
 title: TranStats "Reporting Carrier On-Time Performance" download page
 description: The BTS field-selection download form; source of the full field list, the prezipped-file option and the lookup-table links.
 resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
-tags: [bts, ontime, download]
+tags:
+- bts
+- ontime
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
-    title: TranStats - Download - Reporting Carrier On-Time Performance (1987-present)
-    accessed: "2026-09-02"
-    version: page snapshot 2026-09-02; latest available data June 2026
+- resource: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
+  title: TranStats - Download - Reporting Carrier On-Time Performance (1987-present)
+  accessed: "2026-09-02"
+  version: page snapshot 2026-09-02; latest available data June 2026
 stale_after: "2027-03-01"
 ---
 

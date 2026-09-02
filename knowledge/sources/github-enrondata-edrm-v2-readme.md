@@ -3,16 +3,22 @@ type: Source
 title: enrondata/enrondata edrm-v2.0.0 README — lineage of the EDRM/ZL Enron set
 description: Community README describing the EDRM v2 data set (PST, MIME, EDRM XML; 149 custodians) and where copies were archived.
 resource: https://github.com/enrondata/enrondata/blob/master/edrm-v2.0.0/README.md
-tags: [source, enron, edrm]
+tags:
+- source
+- enron
+- edrm
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/enrondata/enrondata/master/edrm-v2.0.0/README.md
-    title: edrm-v2.0.0/README.md at master
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/enrondata/enrondata/master/edrm-v2.0.0/README.md
+  title: edrm-v2.0.0/README.md at master
+  accessed: "2026-09-02"
 ---
 
 # What was read

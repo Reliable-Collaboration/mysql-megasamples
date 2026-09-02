@@ -3,16 +3,21 @@ type: Source
 title: okf.md annotated guide to OKF
 description: Third-party annotated guide at okf.md/spec that restates OKF v0.1 with v0.2 additions; used as an entry point, superseded by the GitHub SPEC.md.
 resource: https://okf.md/spec/
-tags: [okf, spec]
+tags:
+- okf
+- spec
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://okf.md/spec/
-    title: Open Knowledge Format (OKF) — An Annotated Guide
-    accessed: "2026-09-02"
+- resource: https://okf.md/spec/
+  title: Open Knowledge Format (OKF) — An Annotated Guide
+  accessed: "2026-09-02"
 ---
 
 # What was read

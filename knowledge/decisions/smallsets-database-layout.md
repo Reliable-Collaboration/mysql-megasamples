@@ -1,22 +1,30 @@
 ---
 type: Decision
 title: Small teaching datasets (titanic, iris, penguins) - one database each versus a shared `smallsets` database
-description: "Titanic, Iris and Palmer Penguins live as tables in one database named smallsets (option 2, accepted), following the naming convention; separate databases were considered and rejected."
+description: Titanic, Iris and Palmer Penguins live as tables in one database named smallsets (option 2, accepted), following the naming convention; separate databases were considered and rejected.
 resource: /decisions/smallsets-database-layout.md
-tags: [decision, smallsets, titanic, iris, penguins, naming]
+tags:
+- decision
+- smallsets
+- titanic
+- iris
+- penguins
+- naming
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:48:59Z"
 sources:
-  - resource: https://hbiostat.org/data/repo/titanic3.csv
-    title: titanic3.csv (117 KB)
-    accessed: "2026-09-02"
-  - resource: https://archive.ics.uci.edu/static/public/53/iris.zip
-    title: iris.zip (3.7 KB)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv
-    title: penguins.csv (15 KB)
-    accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/repo/titanic3.csv
+  title: titanic3.csv (117 KB)
+  accessed: "2026-09-02"
+- resource: https://archive.ics.uci.edu/static/public/53/iris.zip
+  title: iris.zip (3.7 KB)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv
+  title: penguins.csv (15 KB)
+  accessed: "2026-09-02"
 ---
 
 # Question

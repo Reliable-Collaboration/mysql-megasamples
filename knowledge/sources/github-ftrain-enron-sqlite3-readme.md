@@ -3,16 +3,22 @@ type: Source
 title: ftrain/enron-sqlite3 README — pointers to the surviving MySQL version of the Enron corpus
 description: README that describes a SQLite conversion of the 2015 tarball and points to the ahschulz/ah-ruhe MySQL dump as "the right way".
 resource: https://github.com/ftrain/enron-sqlite3
-tags: [source, enron, relational-versions]
+tags:
+- source
+- enron
+- relational-versions
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/ftrain/enron-sqlite3/master/README.md
-    title: README.md at master
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/ftrain/enron-sqlite3/master/README.md
+  title: README.md at master
+  accessed: "2026-09-02"
 ---
 
 # What was read

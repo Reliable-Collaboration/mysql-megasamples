@@ -3,17 +3,23 @@ type: Source
 title: instpubs.sql (pubs install script) - file analysis
 description: Structural analysis of the pubs T-SQL install script performed in this session (encoding, tables, insert counts, user-defined types, trigger, view, procedures).
 resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
-tags: [pubs, script-analysis, tsql]
+tags:
+- pubs
+- script-analysis
+- tsql
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
-    title: instpubs.sql at master
-    accessed: "2026-09-02"
-    version: blob d887fd48cb06436a9aa2e988d00ba7b036dfd6d4, 125,718 bytes
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
+  title: instpubs.sql at master
+  accessed: "2026-09-02"
+  version: blob d887fd48cb06436a9aa2e988d00ba7b036dfd6d4, 125,718 bytes
 ---
 
 # What was read

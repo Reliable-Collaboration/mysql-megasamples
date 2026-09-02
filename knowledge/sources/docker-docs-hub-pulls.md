@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Docker Docs: Docker Hub pull usage and limits"
-description: "What counts as a pull, multi-arch counting, shared-IP attribution on CI platforms, the rate-limit error text."
+description: What counts as a pull, multi-arch counting, shared-IP attribution on CI platforms, the rate-limit error text.
 resource: https://docs.docker.com/docker-hub/usage/pulls/
-tags: [docker, docker-hub, limits]
+tags:
+- docker
+- docker-hub
+- limits
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/docker-hub/usage/pulls/
-    title: "Docker Docs: Docker Hub pull usage and limits"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/docker-hub/usage/pulls/
+  title: "Docker Docs: Docker Hub pull usage and limits"
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -1,18 +1,25 @@
 ---
 type: Source
 title: "GitHub Docs: Git Large File Storage billing"
-description: "10 GiB free storage and 10 GiB/month bandwidth on Free and Pro; data packs replaced by metered billing; downloads count against the repository owner."
+description: 10 GiB free storage and 10 GiB/month bandwidth on Free and Pro; data packs replaced by metered billing; downloads count against the repository owner.
 resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
-tags: [github, limits, lfs, billing]
+tags:
+- github
+- limits
+- lfs
+- billing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
-    title: "GitHub Docs: Git Large File Storage billing"
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
+  title: "GitHub Docs: Git Large File Storage billing"
+  accessed: "2026-09-02"
 ---
 
 # What was read

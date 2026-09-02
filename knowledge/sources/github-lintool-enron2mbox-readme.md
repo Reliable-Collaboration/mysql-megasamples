@@ -3,16 +3,22 @@ type: Source
 title: lintool/Enron2mbox README — maildir layout and message count
 description: Third-party converter README that documents the extracted layout and reports 517,401 message files in enron_mail_20150507.
 resource: https://github.com/lintool/Enron2mbox
-tags: [source, enron, row-counts]
+tags:
+- source
+- enron
+- row-counts
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
-    title: README.md at master
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
+  title: README.md at master
+  accessed: "2026-09-02"
 ---
 
 # What was read

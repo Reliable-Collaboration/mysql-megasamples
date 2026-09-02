@@ -3,16 +3,22 @@ type: Source
 title: "GitHub Docs: GitHub-hosted runners reference"
 description: "Standard public-repository Linux runner: 4 vCPU, 16 GB RAM, 14 GB SSD (ubuntu-latest/24.04/22.04); private repositories 2 vCPU / 8 GB; ubuntu-slim 1 vCPU / 5 GB."
 resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
-tags: [github, actions, runners]
+tags:
+- github
+- actions
+- runners
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
-    title: "GitHub Docs: GitHub-hosted runners reference"
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
+  title: "GitHub Docs: GitHub-hosted runners reference"
+  accessed: "2026-09-02"
 ---
 
 # What was read

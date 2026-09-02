@@ -3,17 +3,23 @@ type: Open Question
 title: May a converted copy of Citi Bike / Divvy trip data be redistributed in a public image?
 description: Both Lyft bikeshare licences forbid publishing or distributing the data "as a stand-alone dataset"; this decides whether these two datasets can ship at all or must be user-fetched.
 resource: /questions/citibike-divvy-redistribution.md
-tags: [license, blocker, citibike, divvy]
+tags:
+- license
+- blocker
+- citibike
+- divvy
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://citibikenyc.com/data-sharing-policy
-    title: Citi Bike Data Sharing Policy
-    accessed: "2026-09-02"
-  - resource: https://divvybikes.com/data-license-agreement
-    title: Divvy Data License Agreement
-    accessed: "2026-09-02"
+- resource: https://citibikenyc.com/data-sharing-policy
+  title: Citi Bike Data Sharing Policy
+  accessed: "2026-09-02"
+- resource: https://divvybikes.com/data-license-agreement
+  title: Divvy Data License Agreement
+  accessed: "2026-09-02"
 ---
 
 # Question

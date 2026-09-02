@@ -3,16 +3,21 @@ type: Source
 title: MySQL 9.7 Reference Manual — String Functions (SUBSTR/SUBSTRING forms)
 description: SUBSTR() is a synonym for SUBSTRING(); the SUBSTRING(str FROM pos FOR len) standard form is supported.
 resource: https://dev.mysql.com/doc/refman/9.7/en/string-functions.html
-tags: [mysql, sql-syntax]
+tags:
+- mysql
+- sql-syntax
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/string-functions.html
-    title: String Functions and Operators
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/string-functions.html
+  title: String Functions and Operators
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/string-functions.html, “String Functions and Operators”, accessed 2026-09-02

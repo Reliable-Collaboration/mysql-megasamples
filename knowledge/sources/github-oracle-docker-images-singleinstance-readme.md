@@ -3,19 +3,25 @@ type: Source
 title: oracle/docker-images — OracleDatabase/SingleInstance README
 description: Official build scripts for Oracle Database container images, including the 26ai (23.26.1) Free Containerfile; fixed SID/PDB names, environment variables, ARM64 note, and the UPL 1.0 license of the scripts.
 resource: https://github.com/oracle/docker-images/blob/main/OracleDatabase/SingleInstance/README.md
-tags: [oracle, docker, oracle-database-free]
+tags:
+- oracle
+- docker
+- oracle-database-free
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/oracle/docker-images/main/OracleDatabase/SingleInstance/README.md
-    title: SingleInstance README (main)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/oracle/docker-images/contents/OracleDatabase/SingleInstance/dockerfiles/23.26.1
-    title: dockerfiles/23.26.1 directory listing (Containerfile.free, runOracle.sh, createDB.sh, license.txt ...)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/oracle/docker-images/main/OracleDatabase/SingleInstance/README.md
+  title: SingleInstance README (main)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/oracle/docker-images/contents/OracleDatabase/SingleInstance/dockerfiles/23.26.1
+  title: dockerfiles/23.26.1 directory listing (Containerfile.free, runOracle.sh, createDB.sh, license.txt ...)
+  accessed: "2026-09-02"
 ---
 
 # What was read

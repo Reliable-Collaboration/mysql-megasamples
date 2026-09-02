@@ -3,17 +3,22 @@ type: Source
 title: TLC Yellow Taxi Trip Records data dictionary (PDF)
 description: Field-by-field definitions for the yellow taxi Parquet files, including the 2025 cbd_congestion_fee column and the code lists for VendorID, RatecodeID and payment_type.
 resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
-tags: [nyc-tlc, data-dictionary]
+tags:
+- nyc-tlc
+- data-dictionary
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
-    title: Data Dictionary - Yellow Taxi Trip Records
-    accessed: "2026-09-02"
-    version: document date "March 18, 2025"; 148,556 bytes; Last-Modified Tue, 21 Jul 2026 16:38:17 GMT
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_yellow.pdf
+  title: Data Dictionary - Yellow Taxi Trip Records
+  accessed: "2026-09-02"
+  version: document date "March 18, 2025"; 148,556 bytes; Last-Modified Tue, 21 Jul 2026 16:38:17 GMT
 ---
 
 # What was read

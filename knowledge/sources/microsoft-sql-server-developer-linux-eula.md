@@ -3,16 +3,23 @@ type: Source
 title: Microsoft SQL Server Developer (Linux) EULA - License_Dev_Linux.rtf
 description: The End-User License Agreement that ACCEPT_EULA=Y accepts for the mssql/server container image (fwlink 857698); Developer edition may be used to design, develop, test and demonstrate only, not in a production environment.
 resource: https://go.microsoft.com/fwlink/?linkid=857698
-tags: [license, eula, sql-server, container]
+tags:
+- license
+- eula
+- sql-server
+- container
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://download.microsoft.com/download/4/F/7/4F7E81B0-7CEB-401D-BCFA-BF8BF73D868C/EULAs/License_Dev_Linux.rtf
-    title: License_Dev_Linux.rtf (302 redirect target of https://go.microsoft.com/fwlink/?linkid=857698), 132,035 bytes, RTF
-    accessed: "2026-09-02"
+- resource: https://download.microsoft.com/download/4/F/7/4F7E81B0-7CEB-401D-BCFA-BF8BF73D868C/EULAs/License_Dev_Linux.rtf
+  title: License_Dev_Linux.rtf (302 redirect target of https://go.microsoft.com/fwlink/?linkid=857698), 132,035 bytes, RTF
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

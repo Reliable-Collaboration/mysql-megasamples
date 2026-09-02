@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Functions That Create Geometry Values from WKT Values"
-description: "ST_GeomFromText(wkt, srid, options) with axis-order=lat-long|long-lat|srid-defined, and the latitude/longitude range errors for geographic SRSs."
+description: ST_GeomFromText(wkt, srid, options) with axis-order=lat-long|long-lat|srid-defined, and the latitude/longitude range errors for geographic SRSs.
 resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
-tags: [mysql, docs, spatial]
+tags:
+- mysql
+- docs
+- spatial
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
-    title: "MySQL 9.7 Reference Manual: Functions That Create Geometry Values from WKT Values"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 14.16.3"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
+  title: "MySQL 9.7 Reference Manual: Functions That Create Geometry Values from WKT Values"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 14.16.3
 ---
 
 # What was read

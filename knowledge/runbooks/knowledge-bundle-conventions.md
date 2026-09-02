@@ -1,26 +1,32 @@
 ---
 type: Runbook
 title: Knowledge bundle conventions
-description: "How every record in this OKF v0.2 bundle is written, typed, trusted, sectioned, indexed and logged; the checker in scripts/okf_check.py enforces the rules marked [checked]."
+description: How every record in this OKF v0.2 bundle is written, typed, trusted, sectioned, indexed and logged; the checker in scripts/okf_check.py enforces the rules marked [checked].
 resource: /runbooks/knowledge-bundle-conventions.md
-tags: [okf, conventions, process]
+tags:
+- okf
+- conventions
+- process
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T22:23:40Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T22:23:40Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T22:23:40Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T22:23:40Z"
 sources:
-  - resource: https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md
-    title: Open Knowledge Format SPEC.md (v0.2)
-    accessed: "2026-09-02"
-  - resource: https://okf.md/spec/
-    title: OKF annotated guide
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/GoogleCloudPlatform/open-knowledge-format/main/SPEC.md
+  title: Open Knowledge Format SPEC.md (v0.2)
+  accessed: "2026-09-02"
+- resource: https://okf.md/spec/
+  title: OKF annotated guide
+  accessed: "2026-09-02"
 ---
 
 # Purpose
 
-This bundle conforms to **OKF v0.2** as published in [the spec record](/sources/okf-spec-v0-2.md). The spec requires only `type`; everything else here is a project convention layered on top, which the spec permits ("producers may add custom fields; consumers must preserve unknown keys"). Rules marked **[checked]** are enforced by `scripts/okf_check.py` (PyYAML is required; there is no fallback parser). Revision 2 of this runbook (2026-09-02, after the first code review) replaced the contradictory trust wording of revision 1 and made the source-granularity and section rules explicit; see [review dispositions](/decisions/review-2026-09-02-dispositions.md).
+This bundle conforms to **OKF v0.2** as published in [the spec record](/sources/okf-spec-v0-2.md). The spec requires only `type`; everything else here is a project convention layered on top, which the spec permits ("producers may add custom fields; consumers must preserve unknown keys"). Rules marked **[checked]** are enforced by `scripts/okf_check.py` (PyYAML is required; there is no fallback parser; exit status 0 clean, 1 errors, 2 environment problem). Revision 2 of this runbook (2026-09-02, after the first code review) replaced the contradictory trust wording of revision 1 and made the source-granularity and section rules explicit; see [review dispositions](/decisions/review-2026-09-02-dispositions.md).
 
 # Directory groups and concept types
 
@@ -35,6 +41,8 @@ This bundle conforms to **OKF v0.2** as published in [the spec record](/sources/
 | `questions/` | `Open Question` | unresolved fact plus the cheapest experiment that resolves it |
 
 # Frontmatter template **[checked]**
+
+Frontmatter is kept in the canonical form written by `scripts/okf_fix_quotes.py` (block style, key order preserved, every date and version quoted as a string, tags as strings); run it after editing frontmatter by hand, and `--check` reports files that are not canonical. Hand-written frontmatter that parses is also accepted by the checker, so the template below is illustrative of the fields, not of the exact layout.
 
 ```yaml
 ---

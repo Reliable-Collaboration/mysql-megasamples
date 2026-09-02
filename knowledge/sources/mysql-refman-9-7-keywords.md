@@ -3,16 +3,21 @@ type: Source
 title: MySQL 9.7 Reference Manual — Keywords and Reserved Words (DATE, ORDER)
 description: DATE, TIME, YEAR are keywords but not reserved; ORDER is reserved — relevant to SSB's date table and TPC-C's ORDER table.
 resource: https://dev.mysql.com/doc/refman/9.7/en/keywords.html
-tags: [mysql, sql-syntax]
+tags:
+- mysql
+- sql-syntax
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/keywords.html
-    title: Keywords and Reserved Words
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/keywords.html
+  title: Keywords and Reserved Words
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/keywords.html, “Keywords and Reserved Words”, accessed 2026-09-02

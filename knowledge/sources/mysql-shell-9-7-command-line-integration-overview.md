@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "MySQL Shell 9.7: Command Line Integration Overview"
-description: "mysqlsh [options] -- object method [arguments]; camelCase methods become hyphenated; exit status 10 on unknown object/method; --no-defaults."
+description: mysqlsh [options] -- object method [arguments]; camelCase methods become hyphenated; exit status 10 on unknown object/method; --no-defaults.
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
-tags: [mysql-shell, cli]
+tags:
+- mysql-shell
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
-    title: "MySQL Shell 9.7: Command Line Integration Overview"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual, section 5.8.1"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/command-line-integration-overview.html
+  title: "MySQL Shell 9.7: Command Line Integration Overview"
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual, section 5.8.1
 ---
 
 # What was read

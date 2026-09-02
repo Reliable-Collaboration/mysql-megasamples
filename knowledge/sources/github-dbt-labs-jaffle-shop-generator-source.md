@@ -3,28 +3,34 @@ type: Source
 title: jaffle-shop-generator source (pyproject.toml, jafgen/cli.py, simulation.py, customers.py)
 description: Confirms version 0.4.14, dependencies numpy/Faker/typer, the years/days/pre CLI, and unseeded Faker/numpy random usage.
 resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/pyproject.toml
-tags: [jafgen, source, determinism]
+tags:
+- jafgen
+- source
+- determinism
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/pyproject.toml
-    title: pyproject.toml
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/cli.py
-    title: jafgen/cli.py (grep)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/simulation.py
-    title: jafgen/simulation.py (grep)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/customers/customers.py
-    title: jafgen/customers/customers.py (grep)
-    accessed: "2026-09-02"
-  - resource: https://pypi.org/pypi/jafgen/json
-    title: PyPI jafgen JSON (version 0.4.14, license Apache-2.0 text, releases 0.3.1 ... 0.4.14)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/pyproject.toml
+  title: pyproject.toml
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/cli.py
+  title: jafgen/cli.py (grep)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/simulation.py
+  title: jafgen/simulation.py (grep)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-generator/main/jafgen/customers/customers.py
+  title: jafgen/customers/customers.py (grep)
+  accessed: "2026-09-02"
+- resource: https://pypi.org/pypi/jafgen/json
+  title: PyPI jafgen JSON (version 0.4.14, license Apache-2.0 text, releases 0.3.1 ... 0.4.14)
+  accessed: "2026-09-02"
 ---
 
 # What was read

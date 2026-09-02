@@ -3,16 +3,23 @@ type: Source
 title: Official mysql Docker image README (docker-library/docs)
 description: Documented tags, entrypoint initialization behaviour, environment variables, data directory and licensing pointer for the official mysql image.
 resource: https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md
-tags: [docker, mysql, image, entrypoint]
+tags:
+- docker
+- mysql
+- image
+- entrypoint
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md
-    title: mysql image README
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md
+  title: mysql image README
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://raw.githubusercontent.com/docker-library/docs/master/mysql/README.md, “mysql image README”, accessed 2026-09-02

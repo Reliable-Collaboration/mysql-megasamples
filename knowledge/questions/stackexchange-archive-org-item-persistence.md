@@ -3,15 +3,21 @@ type: Open Question
 title: Will the archive.org Stack Exchange item remain available, and should the project mirror the chosen .7z files?
 description: The build depends on a 2024 upload that Stack Overflow said it would prefer not to see mirrored; the item has not been touched since 2025-06-24, but nothing guarantees it stays.
 resource: /questions/stackexchange-archive-org-item-persistence.md
-tags: [question, stackexchange, availability, text-group]
+tags:
+- question
+- stackexchange
+- availability
+- text-group
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.org/metadata/stackexchange
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
-    accessed: "2026-09-02"
+- resource: https://archive.org/metadata/stackexchange
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
+  accessed: "2026-09-02"
 ---
 
 # Question

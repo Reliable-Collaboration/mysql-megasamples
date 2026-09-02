@@ -3,17 +3,24 @@ type: Source
 title: instawdb.sql (AdventureWorks OLTP install script) - file analysis
 description: Analysis of the current AdventureWorks OLTP install script (updated 2025-11-14) including BULK INSERT parameters per table, schemas, types, computed columns, UDTs, XML schema collections, views, functions, procedures, triggers and full-text objects.
 resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
-tags: [adventureworks, script-analysis, tsql, bulk-insert]
+tags:
+- adventureworks
+- script-analysis
+- tsql
+- bulk-insert
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
-    title: instawdb.sql at master
-    accessed: "2026-09-02"
-    version: 'master, 329,368 bytes; header "Date: October 26, 2017 / Updated: November 14, 2025"; commit b47eadc852'
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
+  title: instawdb.sql at master
+  accessed: "2026-09-02"
+  version: "master, 329,368 bytes; header \"Date: October 26, 2017 / Updated: November 14, 2025\"; commit b47eadc852"
 ---
 
 # What was read

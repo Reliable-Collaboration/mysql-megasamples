@@ -3,23 +3,30 @@ type: Source
 title: dbt-labs/jaffle-shop README (new project, main @ 7d0d8de)
 description: The current Jaffle Shop dbt Cloud sandbox - 1-year jafgen seeds in seeds/jaffle-data, a 6-year public S3 dataset, and instructions to generate up to 10 years with jafgen; no LICENSE file in the repository.
 resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/README.md
-tags: [jaffle-shop, dbt, readme, jafgen]
+tags:
+- jaffle-shop
+- dbt
+- readme
+- jafgen
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/README.md
-    title: README.md (23,543 bytes)
-    accessed: "2026-09-02"
-    version: main @ 7d0d8de (2026-07-27); dbt_project.yml version 3.0.0
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/dbt_project.yml
-    title: dbt_project.yml
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/dbt-labs/jaffle-shop
-    title: repository metadata (license null; /license endpoint 404)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/README.md
+  title: README.md (23,543 bytes)
+  accessed: "2026-09-02"
+  version: main @ 7d0d8de (2026-07-27); dbt_project.yml version 3.0.0
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/dbt_project.yml
+  title: dbt_project.yml
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/dbt-labs/jaffle-shop
+  title: repository metadata (license null; /license endpoint 404)
+  accessed: "2026-09-02"
 ---
 
 # What was read

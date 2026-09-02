@@ -3,17 +3,23 @@ type: Source
 title: TranStats table profile - Reporting Carrier On-Time Performance
 description: The table-info page giving the field count (109), the total record count and the definition of an on-time arrival.
 resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
-tags: [bts, ontime, metadata]
+tags:
+- bts
+- ontime
+- metadata
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
-    title: TranStats - Table Information
-    accessed: "2026-09-02"
-    version: snapshot 2026-09-02
+- resource: https://www.transtats.bts.gov/TableInfo.asp?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr&V0s1_b0yB=D
+  title: TranStats - Table Information
+  accessed: "2026-09-02"
+  version: snapshot 2026-09-02
 stale_after: "2027-03-01"
 ---
 

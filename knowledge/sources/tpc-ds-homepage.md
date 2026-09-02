@@ -3,16 +3,21 @@ type: Source
 title: TPC-DS homepage (tpc.org/tpcds) — V4 change note
 description: States that TPC-DS V4 changed pricing (Dynamic Pricing Model) and that V4 results are not comparable with earlier versions; says nothing about data-generator changes.
 resource: https://www.tpc.org/tpcds/
-tags: [tpc-ds, versions]
+tags:
+- tpc-ds
+- versions
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/tpcds/
-    title: TPC-DS Homepage
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/tpcds/
+  title: TPC-DS Homepage
+  accessed: "2026-09-02"
 ---
 
 # What was read

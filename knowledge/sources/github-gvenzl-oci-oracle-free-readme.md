@@ -3,20 +3,27 @@ type: Source
 title: gvenzl/oci-oracle-free README and Docker Hub tag sizes (gvenzl/oracle-free)
 description: Community-maintained slimmed Oracle Database Free images with init-script support; tag families, multi-arch support from 23.5, environment variables, and measured compressed sizes from the Docker Hub API.
 resource: https://github.com/gvenzl/oci-oracle-free
-tags: [oracle, docker, oracle-database-free, community]
+tags:
+- oracle
+- docker
+- oracle-database-free
+- community
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/gvenzl/oci-oracle-free/main/README.md
-    title: README.md (main, repo pushed 2026-08-30; GitHub license detection Apache-2.0, LICENSE.txt)
-    accessed: "2026-09-02"
-  - resource: https://hub.docker.com/v2/repositories/gvenzl/oracle-free/tags/?page_size=100
-    title: Docker Hub tags API (full_size per architecture)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gvenzl/oci-oracle-free/main/README.md
+  title: README.md (main, repo pushed 2026-08-30; GitHub license detection Apache-2.0, LICENSE.txt)
+  accessed: "2026-09-02"
+- resource: https://hub.docker.com/v2/repositories/gvenzl/oracle-free/tags/?page_size=100
+  title: Docker Hub tags API (full_size per architecture)
+  accessed: "2026-09-02"
 ---
 
 # What was read

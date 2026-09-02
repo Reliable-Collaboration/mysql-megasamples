@@ -3,17 +3,24 @@ type: Source
 title: "MySQL 9.7 Reference Manual: Bulk Data Loading for InnoDB Tables"
 description: "The official bulk-load recommendations: autocommit off, unique_checks=0, foreign_key_checks=0, innodb_autoinc_lock_mode=2, PK order, multi-row INSERT, FULLTEXT after load, optional redo-log disable."
 resource: https://dev.mysql.com/doc/refman/9.7/en/optimizing-innodb-bulk-data-loading.html
-tags: [mysql, docs, innodb, bulk-load]
+tags:
+- mysql
+- docs
+- innodb
+- bulk-load
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/optimizing-innodb-bulk-data-loading.html
-    title: "MySQL 9.7 Reference Manual: Bulk Data Loading for InnoDB Tables"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 10.5.5"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/optimizing-innodb-bulk-data-loading.html
+  title: "MySQL 9.7 Reference Manual: Bulk Data Loading for InnoDB Tables"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 10.5.5
 ---
 
 # What was read

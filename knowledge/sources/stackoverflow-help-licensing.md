@@ -3,16 +3,22 @@ type: Source
 title: Stack Overflow Help Center — Licensing (CC BY-SA version by contribution date)
 description: The date ranges that map Stack Exchange content to CC BY-SA 2.5, 3.0 and 4.0.
 resource: https://stackoverflow.com/help/licensing
-tags: [source, stackexchange, license]
+tags:
+- source
+- stackexchange
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://stackoverflow.com/help/licensing
-    title: Help Center - Licensing
-    accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/licensing
+  title: Help Center - Licensing
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: CHECK Constraints"
-description: "CHECK syntax, disallowed expressions, ENFORCED/NOT ENFORCED, and behaviour under LOAD DATA ... IGNORE."
+description: CHECK syntax, disallowed expressions, ENFORCED/NOT ENFORCED, and behaviour under LOAD DATA ... IGNORE.
 resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
-tags: [mysql, docs, constraints]
+tags:
+- mysql
+- docs
+- constraints
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
-    title: "MySQL 9.7 Reference Manual: CHECK Constraints"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 15.1.25.6"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
+  title: "MySQL 9.7 Reference Manual: CHECK Constraints"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 15.1.25.6
 ---
 
 # What was read

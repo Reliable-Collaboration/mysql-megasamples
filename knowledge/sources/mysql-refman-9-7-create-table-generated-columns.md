@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: CREATE TABLE and Generated Columns"
-description: "Generated column syntax, VIRTUAL default, expression restrictions, DEFAULT-only assignment, indexability."
+description: Generated column syntax, VIRTUAL default, expression restrictions, DEFAULT-only assignment, indexability.
 resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-generated-columns.html
-tags: [mysql, docs, generated-columns]
+tags:
+- mysql
+- docs
+- generated-columns
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-generated-columns.html
-    title: "MySQL 9.7 Reference Manual: CREATE TABLE and Generated Columns"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 15.1.25.8"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-generated-columns.html
+  title: "MySQL 9.7 Reference Manual: CREATE TABLE and Generated Columns"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 15.1.25.8
 ---
 
 # What was read

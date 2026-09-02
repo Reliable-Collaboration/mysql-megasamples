@@ -3,19 +3,25 @@ type: License
 title: City of Chicago Data Terms of Use
 description: Chicago permits reuse of portal data but requires a verbatim disclaimer wherever a derivative application is published, plus an indemnity.
 resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
-tags: [license, chicago, attribution-required]
+tags:
+- license
+- chicago
+- attribution-required
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
-    title: "City of Chicago :: Data Terms of Use"
-    accessed: "2026-09-02"
-  - resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
-    title: Crimes dataset metadata (license = "See Terms of Use")
-    accessed: "2026-09-02"
+- resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
+  title: "City of Chicago :: Data Terms of Use"
+  accessed: "2026-09-02"
+- resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
+  title: Crimes dataset metadata (license = "See Terms of Use")
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives
@@ -46,3 +52,4 @@ sources:
 # Applied to
 * [Chicago crimes](/datasets/chicago-crimes.md) - the crimes extract and the IUCR code lookup.
 * Note: **Divvy data is City-of-Chicago-owned but is not licensed under these terms**; it carries its own [Divvy Data License Agreement](/licenses/divvy-data-license.md).
+* [Divvy](/datasets/divvy.md) - linked only to state that these terms do **not** cover Divvy data, which carries its own license.

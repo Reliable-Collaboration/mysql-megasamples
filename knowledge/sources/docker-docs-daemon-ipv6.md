@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Docker Docs: Use IPv6 networking"
-description: "IPv6 is Linux-only, enabled per daemon.json (ipv6, fixed-cidr-v6, ip6tables), daemon restart required."
+description: IPv6 is Linux-only, enabled per daemon.json (ipv6, fixed-cidr-v6, ip6tables), daemon restart required.
 resource: https://docs.docker.com/engine/daemon/ipv6/
-tags: [docker, ipv6, daemon]
+tags:
+- docker
+- ipv6
+- daemon
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/engine/daemon/ipv6/
-    title: "Docker Docs: Use IPv6 networking"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/engine/daemon/ipv6/
+  title: "Docker Docs: Use IPv6 networking"
+  accessed: "2026-09-02"
 ---
 
 # What was read

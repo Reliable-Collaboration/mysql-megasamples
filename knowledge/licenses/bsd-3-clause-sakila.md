@@ -3,22 +3,29 @@ type: License
 title: BSD 3-Clause ("New BSD") as applied to Sakila
 description: License of sakila-schema.sql and sakila-data.sql (Oracle); the manual and sakila.mwb are NOT under it.
 resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
-tags: [license, bsd-3-clause, sakila, permissive]
+tags:
+- license
+- bsd-3-clause
+- sakila
+- permissive
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
-    title: 9 License for the Sakila Sample Database
-    accessed: "2026-09-02"
-  - resource: https://downloads.mysql.com/docs/sakila-db.zip
-    title: sakila-db.zip file headers (Version 1.5)
-    accessed: "2026-09-02"
-  - resource: https://opensource.org/license/bsd-3-clause
-    title: The 3-Clause BSD License (OSI)
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
+  title: 9 License for the Sakila Sample Database
+  accessed: "2026-09-02"
+- resource: https://downloads.mysql.com/docs/sakila-db.zip
+  title: sakila-db.zip file headers (Version 1.5)
+  accessed: "2026-09-02"
+- resource: https://opensource.org/license/bsd-3-clause
+  title: The 3-Clause BSD License (OSI)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

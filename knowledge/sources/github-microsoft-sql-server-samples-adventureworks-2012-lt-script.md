@@ -3,16 +3,22 @@ type: Source
 title: adventure-works-2012-oltp-lt-script.zip (AdventureWorksLT 2012 install script) - contents
 description: Listing and analysis of the only script-plus-CSV form of AdventureWorksLT, taken from the adventureworks2012 release; UTF-16LE script, Windows-1252 (CODEPAGE ACP) CSVs plus one UTF-16 widechar CSV.
 resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
-tags: [adventureworks-lt, script-analysis, encoding]
+tags:
+- adventureworks-lt
+- script-analysis
+- encoding
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
-    title: adventure-works-2012-oltp-lt-script.zip (937,314 bytes, release adventureworks2012 published 2018-02-28)
-    accessed: "2026-09-02"
+- resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
+  title: adventure-works-2012-oltp-lt-script.zip (937,314 bytes, release adventureworks2012 published 2018-02-28)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

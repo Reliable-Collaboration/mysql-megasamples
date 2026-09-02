@@ -3,14 +3,19 @@ type: Open Question
 title: How does DuckDB's MySQL extension physically write rows, and is it fast enough to skip CSV?
 description: The docs never say whether writes are batched INSERTs or LOAD DATA; this decides whether the loader needs a CSV intermediate at all.
 resource: /questions/duckdb-mysql-write-throughput.md
-tags: [duckdb, mysql, performance]
+tags:
+- duckdb
+- mysql
+- performance
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-    title: MySQL Extension - DuckDB documentation
-    accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/mysql.html
+  title: MySQL Extension - DuckDB documentation
+  accessed: "2026-09-02"
 ---
 
 # Question

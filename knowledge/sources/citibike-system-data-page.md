@@ -3,16 +3,21 @@ type: Source
 title: Citi Bike System Data page
 description: The official landing page for Citi Bike trip data - field list, download location, processing rules and the link to the data use policy.
 resource: https://citibikenyc.com/system-data
-tags: [citibike, download]
+tags:
+- citibike
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://citibikenyc.com/system-data
-    title: Citi Bike System Data
-    accessed: "2026-09-02"
+- resource: https://citibikenyc.com/system-data
+  title: Citi Bike System Data
+  accessed: "2026-09-02"
 ---
 
 # What was read

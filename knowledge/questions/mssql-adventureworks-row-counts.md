@@ -3,14 +3,20 @@ type: Open Question
 title: AdventureWorks OLTP/DW - exact row counts of the large CSVs, the ProductReview line anomaly, and decoders for hierarchyid/geography
 description: Small-table counts were measured; the 25 largest OLTP tables and all DW tables are only inferred from memory, ProductReview.csv shows 34 physical lines for a 4-row table, and hierarchyid/geography values are binary hex that must be decoded without SQL Server.
 resource: /questions/mssql-adventureworks-row-counts.md
-tags: [open-question, adventureworks, row-counts, encoding]
+tags:
+- open-question
+- adventureworks
+- row-counts
+- encoding
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
-    title: CSV sampling results
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
+  title: CSV sampling results
+  accessed: "2026-09-02"
 ---
 
 # Question

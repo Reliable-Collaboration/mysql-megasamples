@@ -3,22 +3,29 @@ type: License
 title: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
 description: Share-alike copyleft license for content; applied to Stack Exchange posts contributed on or after 2018-05-02 and to Wikipedia text (dual-licensed with GFDL).
 resource: https://creativecommons.org/licenses/by-sa/4.0/legalcode
-tags: [license, cc-by-sa, share-alike, attribution]
+tags:
+- license
+- cc-by-sa
+- share-alike
+- attribution
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://creativecommons.org/licenses/by-sa/4.0/legalcode
-    title: CC BY-SA 4.0 legal code
-    accessed: "2026-09-02"
-  - resource: https://stackoverflow.com/help/licensing
-    title: Stack Overflow help - Licensing
-    accessed: "2026-09-02"
-  - resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
-    title: Wikimedia Foundation Terms of Use (effective 2023-06-07)
-    accessed: "2026-09-02"
+- resource: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+  title: CC BY-SA 4.0 legal code
+  accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/licensing
+  title: Stack Overflow help - Licensing
+  accessed: "2026-09-02"
+- resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
+  title: Wikimedia Foundation Terms of Use (effective 2023-06-07)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

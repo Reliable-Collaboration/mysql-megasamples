@@ -3,17 +3,23 @@ type: Source
 title: "MySQL Shell 9.7: Parallel Table Import Utility (util.importTable)"
 description: "util.importTable(): LOAD DATA LOCAL INFILE in parallel chunks; dialects, columns/decodeColumns, threads, bytesPerChunk, skipRows, characterSet, compression, globs; requires local_infile=ON."
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
-tags: [mysql-shell, import, load-data]
+tags:
+- mysql-shell
+- import
+- load-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
-    title: "MySQL Shell 9.7: Parallel Table Import Utility (util.importTable)"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual, section 12.4"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
+  title: "MySQL Shell 9.7: Parallel Table Import Utility (util.importTable)"
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual, section 12.4
 ---
 
 # What was read

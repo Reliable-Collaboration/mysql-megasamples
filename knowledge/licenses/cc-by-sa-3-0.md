@@ -3,22 +3,29 @@ type: License
 title: Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
 description: Copyleft data/content license used by the Employees (test_db) and Lahman Baseball databases; requires attribution and same-license redistribution of adaptations.
 resource: https://creativecommons.org/licenses/by-sa/3.0/legalcode
-tags: [license, cc-by-sa-3-0, share-alike, attribution]
+tags:
+- license
+- cc-by-sa-3-0
+- share-alike
+- attribution
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://creativecommons.org/licenses/by-sa/3.0/legalcode
-    title: Attribution-ShareAlike 3.0 Unported - Legal Code
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
-    title: test_db README LICENSE section
-    accessed: "2026-09-02"
-  - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
-    title: SABR Lahman readme 2025, section 0.1
-    accessed: "2026-09-02"
+- resource: https://creativecommons.org/licenses/by-sa/3.0/legalcode
+  title: Attribution-ShareAlike 3.0 Unported - Legal Code
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
+  title: test_db README LICENSE section
+  accessed: "2026-09-02"
+- resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
+  title: SABR Lahman readme 2025, section 0.1
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

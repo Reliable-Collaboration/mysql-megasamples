@@ -3,17 +3,24 @@ type: Source
 title: Wikimedia Foundation Terms of Use §7 "Licensing of Content" (effective 2023-06-07)
 description: "The controlling text for reusing Wikipedia text: CC BY-SA 4.0 + GFDL, and the three accepted attribution methods."
 resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
-tags: [source, wikipedia, license, attribution]
+tags:
+- source
+- wikipedia
+- license
+- attribution
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
-    title: Policy:Terms of Use
-    accessed: "2026-09-02"
-    version: effective June 7, 2023
+- resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
+  title: Policy:Terms of Use
+  accessed: "2026-09-02"
+  version: effective June 7, 2023
 ---
 
 # What was read

@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "MySQL Shell 9.7: Instance, Schema and Table Dump Utilities"
-description: "util.dumpInstance/dumpSchemas/dumpTables output layout (@.json, @.sql, schema.sql, schema@table.json/.sql, schema@table@@N.tsv.zst + .idx), compression, chunking 64 MB, threads 4, compatibility modifiers."
+description: util.dumpInstance/dumpSchemas/dumpTables output layout (@.json, @.sql, schema.sql, schema@table.json/.sql, schema@table@@N.tsv.zst + .idx), compression, chunking 64 MB, threads 4, compatibility modifiers.
 resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-dump-instance-schema.html
-tags: [mysql-shell, dump]
+tags:
+- mysql-shell
+- dump
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-dump-instance-schema.html
-    title: "MySQL Shell 9.7: Instance, Schema and Table Dump Utilities"
-    accessed: "2026-09-02"
-    version: "MySQL Shell 9.7 manual, section 12.5"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-dump-instance-schema.html
+  title: "MySQL Shell 9.7: Instance, Schema and Table Dump Utilities"
+  accessed: "2026-09-02"
+  version: MySQL Shell 9.7 manual, section 12.5
 ---
 
 # What was read

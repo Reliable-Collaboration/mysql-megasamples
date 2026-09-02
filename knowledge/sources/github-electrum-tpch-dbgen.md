@@ -3,23 +3,29 @@ type: Source
 title: electrum/tpch-dbgen (TPC-H dbgen 2.14.0 mirror)
 description: Older GitHub mirror of the TPC-H tools (2.14.0); no license file; kept for reference only.
 resource: https://github.com/electrum/tpch-dbgen
-tags: [tpc-h, dbgen, github]
+tags:
+- tpc-h
+- dbgen
+- github
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/README
-    title: README (the TPC README, "@(#)README 2.4.0")
-    accessed: "2026-09-02"
-    version: master; repo pushed_at 2023-09-03; 342 stars; GitHub license field null
-  - resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/makefile.suite
-    title: makefile.suite
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/release.h
-    title: release.h
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/README
+  title: README (the TPC README, "@(#)README 2.4.0")
+  accessed: "2026-09-02"
+  version: master; repo pushed_at 2023-09-03; 342 stars; GitHub license field null
+- resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/makefile.suite
+  title: makefile.suite
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/electrum/tpch-dbgen/master/release.h
+  title: release.h
+  accessed: "2026-09-02"
 ---
 
 # What was read

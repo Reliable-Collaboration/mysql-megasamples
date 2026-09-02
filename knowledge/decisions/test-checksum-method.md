@@ -3,25 +3,31 @@ type: Decision
 title: Row-count, sample, and aggregate-checksum test method
 description: A single canonical row-digest definition computed identically in Python on the source side and in SQL on the MySQL side, aggregated order-independently with BIT_XOR and SUM, plus per-column aggregates and deterministic samples.
 resource: /decisions/test-checksum-method.md
-tags: [decision, testing, checksum]
+tags:
+- decision
+- testing
+- checksum
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:40:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:40:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:40:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:40:00Z"
 sources:
-  - resource: /sources/mysql-refman-9-7-aggregate-functions.md
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-encryption-functions.md
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-mathematical-functions.md
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-checksum-table.md
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-information-schema-tables.md
-    accessed: "2026-09-02"
-  - resource: /sources/percona-pt-table-checksum-docs.md
-    accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-aggregate-functions.md
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-encryption-functions.md
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-mathematical-functions.md
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-checksum-table.md
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-information-schema-tables.md
+  accessed: "2026-09-02"
+- resource: /sources/percona-pt-table-checksum-docs.md
+  accessed: "2026-09-02"
 ---
 
 # Question
@@ -56,7 +62,7 @@ Columns in DDL order, joined by `\x1f` (unit separator), with each value rendere
 
 Row digest: `d = CAST(CONV(SUBSTRING(SHA2(row_text, 256), 1, 16), 16, 10) AS UNSIGNED)` — `CONV` returns a *string*, so the `CAST` is what makes the aggregates evaluate it as an unsigned 64-bit integer ([SHA2](/sources/mysql-refman-9-7-encryption-functions.md), [CONV 64-bit](/sources/mysql-refman-9-7-mathematical-functions.md)). Python: `int(hashlib.sha256(row_text.encode('utf-8')).hexdigest()[:16], 16)`.
 
-Table fingerprint: `(COUNT(*), BIT_XOR(d), SUM(d) MOD 18446744073709551616)`; BIT_XOR alone cancels duplicated rows and SUM alone is blind to nothing but duplicates, so both are recorded. `SUM` over the UNSIGNED digest returns DECIMAL ([doc](/sources/mysql-refman-9-7-aggregate-functions.md)) and cannot overflow; without the CAST, SUM over CONV's string would return DOUBLE and lose precision above 2^53, which is why the first code review rejected the earlier wording. Python keeps an int and reduces mod 2^64.
+Table fingerprint: `(COUNT(*), COALESCE(BIT_XOR(d), 0), COALESCE(SUM(d), 0) MOD 18446744073709551616)` — the `COALESCE` matters because `SUM` returns NULL over zero rows ([doc](/sources/mysql-refman-9-7-aggregate-functions.md)) while the Python side reduces an empty table to 0 (Northwind ships two empty tables); BIT_XOR alone cancels duplicated rows and SUM alone is blind to nothing but duplicates, so both are recorded. `SUM` over the UNSIGNED digest returns DECIMAL ([doc](/sources/mysql-refman-9-7-aggregate-functions.md)) and cannot overflow; without the CAST, SUM over CONV's string would return DOUBLE and lose precision above 2^53, which is why the first code review rejected the earlier wording. Python keeps an int and reduces mod 2^64.
 
 # Companion checks per column (cheap, catch truncation/coercion)
 `COUNT(col)`, `COUNT(DISTINCT col)`, `MIN`, `MAX`, and for text `SUM(CHAR_LENGTH(col))` and `SUM(LENGTH(col))` (byte length exposes charset mistakes: a Latin-1-loaded `é` is 1 byte, a proper utf8mb4 `é` is 2). Numeric columns add `SUM(col)`.

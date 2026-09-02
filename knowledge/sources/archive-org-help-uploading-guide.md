@@ -1,18 +1,23 @@
 ---
 type: Source
 title: "Internet Archive Help Center: Uploading - A Basic Guide"
-description: "No size limits stated; processing after upload may take seconds to days; test-collection items are removed after ~30 days."
+description: No size limits stated; processing after upload may take seconds to days; test-collection items are removed after ~30 days.
 resource: https://help.archive.org/help/uploading-a-basic-guide/
-tags: [archive-org, mirroring]
+tags:
+- archive-org
+- mirroring
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://help.archive.org/help/uploading-a-basic-guide/
-    title: "Internet Archive Help Center: Uploading - A Basic Guide"
-    accessed: "2026-09-02"
+- resource: https://help.archive.org/help/uploading-a-basic-guide/
+  title: "Internet Archive Help Center: Uploading - A Basic Guide"
+  accessed: "2026-09-02"
 ---
 
 # What was read

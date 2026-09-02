@@ -3,16 +3,23 @@ type: Source
 title: "Meta SE 402019 — \"Creative Commons License (BY-SA) Violation: Data dump must not force users to agree to additional terms\" (2024-08-08)"
 description: The argument that the click-through violates CC BY-SA's "no additional restrictions" clause, and the top-voted rebuttal that gating CC content is permitted.
 resource: https://meta.stackexchange.com/questions/402019/creative-commons-license-by-sa-violation-data-dump-must-not-force-users-to-ag
-tags: [source, stackexchange, click-through, cc-by-sa]
+tags:
+- source
+- stackexchange
+- click-through
+- cc-by-sa
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/questions/402019?site=meta&filter=withbody
-    title: question and top answer (Thomas Owens, score 15) via API
-    accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/questions/402019?site=meta&filter=withbody
+  title: question and top answer (Thomas Owens, score 15) via API
+  accessed: "2026-09-02"
 ---
 
 # What was read

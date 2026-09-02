@@ -3,21 +3,28 @@ type: License
 title: Enron email corpus — public record status and CMU distribution terms
 description: The CMU Enron corpus has no license text; it is FERC public-record material redistributed by CMU with a privacy request; this record states exactly what the page says and what is inferred.
 resource: https://www.cs.cmu.edu/~enron/
-tags: [license, public-record, enron, personal-data, no-license-text]
+tags:
+- license
+- public-record
+- enron
+- personal-data
+- no-license-text
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.cs.cmu.edu/~enron/
-    title: Enron Email Dataset (William W. Cohen, CMU)
-    accessed: "2026-09-02"
-    version: May 7, 2015 version
-  - resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
-    title: DELETIONS.txt removal history
-    accessed: "2026-09-02"
-  - resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
-    title: EnronData.org - EDRM Enron Email Datasets
-    accessed: "2026-09-02"
+- resource: https://www.cs.cmu.edu/~enron/
+  title: Enron Email Dataset (William W. Cohen, CMU)
+  accessed: "2026-09-02"
+  version: May 7, 2015 version
+- resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
+  title: DELETIONS.txt removal history
+  accessed: "2026-09-02"
+- resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
+  title: EnronData.org - EDRM Enron Email Datasets
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

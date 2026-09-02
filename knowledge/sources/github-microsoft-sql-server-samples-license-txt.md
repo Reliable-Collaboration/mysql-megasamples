@@ -3,17 +3,23 @@ type: Source
 title: microsoft/sql-server-samples license.txt (MIT)
 description: The repository-root license file that governs Northwind, pubs, AdventureWorks and WideWorldImporters sample databases; verbatim MIT text with a Microsoft copyright line.
 resource: https://github.com/microsoft/sql-server-samples/blob/master/license.txt
-tags: [license, mit, sql-server-samples]
+tags:
+- license
+- mit
+- sql-server-samples
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: license.txt at master
-    accessed: "2026-09-02"
-    version: master (repo head fd84be9ed763069e4fdaf88f5983942c7d3a2821, 2026-08-31); file last changed in commit 4693087abe "MIT license" 2016-03-25
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: license.txt at master
+  accessed: "2026-09-02"
+  version: master (repo head fd84be9ed763069e4fdaf88f5983942c7d3a2821, 2026-08-31); file last changed in commit 4693087abe "MIT license" 2016-03-25
 ---
 
 # What was read

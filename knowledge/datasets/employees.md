@@ -3,36 +3,44 @@ type: Dataset
 title: Employees (datacharmer/test_db)
 description: The MySQL "Employees Sample Database" - 300,024 fabricated employees with 2.8 M salary rows; MySQL-native SQL dumps with a published SHA-256 integrity suite; CC BY-SA 3.0.
 resource: https://github.com/datacharmer/test_db
-tags: [tier-core-medium, mysql-native, employees, cc-by-sa-3-0, checksums]
+tags:
+- tier-core-medium
+- mysql-native
+- employees
+- cc-by-sa-3-0
+- checksums
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:48:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
-    title: test_db README
-    accessed: "2026-09-02"
-    version: master @ e324b56 (2026-04-10)
-  - resource: https://api.github.com/repos/datacharmer/test_db
-    title: GitHub API - release v1.0.7, file sizes
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
-    title: employees.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/objects.sql
-    title: objects.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
-    title: test_employees_sha2.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/Changelog
-    title: Changelog
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/employee/en/employees-validation.html
-    title: MySQL Employees manual - validation
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
+  title: test_db README
+  accessed: "2026-09-02"
+  version: master @ e324b56 (2026-04-10)
+- resource: https://api.github.com/repos/datacharmer/test_db
+  title: GitHub API - release v1.0.7, file sizes
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
+  title: employees.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/objects.sql
+  title: objects.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
+  title: test_employees_sha2.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/Changelog
+  title: Changelog
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/employee/en/employees-validation.html
+  title: MySQL Employees manual - validation
+  accessed: "2026-09-02"
 ---
 
 # Identity

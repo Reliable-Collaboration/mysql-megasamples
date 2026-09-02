@@ -3,14 +3,19 @@ type: Open Question
 title: Does downloads.mysql.com regenerate sakila-db.zip, invalidating a pinned checksum?
 description: The archive's HTTP Last-Modified (2026-08-31) is newer than the manual revision (2026-08-04) and zip entries are dated 2026-09-01, suggesting periodic regeneration.
 resource: /questions/sakila-download-checksum-drift.md
-tags: [sakila, checksum, build]
+tags:
+- sakila
+- checksum
+- build
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://downloads.mysql.com/docs/sakila-db.zip
-    title: sakila-db.zip (HEAD and content inspection)
-    accessed: "2026-09-02"
+- resource: https://downloads.mysql.com/docs/sakila-db.zip
+  title: sakila-db.zip (HEAD and content inspection)
+  accessed: "2026-09-02"
 ---
 
 # Question

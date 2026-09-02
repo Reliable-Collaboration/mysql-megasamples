@@ -1,18 +1,23 @@
 ---
 type: Source
 title: "Docker Docs: Volumes"
-description: "A new volume is populated from the image's directory contents; anonymous volumes persist unless --rm; performance note."
+description: A new volume is populated from the image's directory contents; anonymous volumes persist unless --rm; performance note.
 resource: https://docs.docker.com/engine/storage/volumes/
-tags: [docker, volumes]
+tags:
+- docker
+- volumes
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/engine/storage/volumes/
-    title: "Docker Docs: Volumes"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/engine/storage/volumes/
+  title: "Docker Docs: Volumes"
+  accessed: "2026-09-02"
 ---
 
 # What was read

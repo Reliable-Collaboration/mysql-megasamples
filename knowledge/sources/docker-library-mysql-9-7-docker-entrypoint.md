@@ -1,19 +1,26 @@
 ---
 type: Source
-title: "docker-library/mysql 9.7/docker-entrypoint.sh"
+title: docker-library/mysql 9.7/docker-entrypoint.sh
 description: "Entrypoint logic: DATADIR from `mysqld --verbose --help`, DATABASE_ALREADY_EXISTS when $DATADIR/mysql exists, init path with temporary server and initdb.d processing, else straight exec."
 resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/docker-entrypoint.sh
-tags: [docker, mysql, image, entrypoint]
+tags:
+- docker
+- mysql
+- image
+- entrypoint
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/docker-entrypoint.sh
-    title: "docker-library/mysql 9.7/docker-entrypoint.sh"
-    accessed: "2026-09-02"
-    version: "master @ 2f988f198f35d25b1454fa2504a0e4c348100549 (2026-08-19)"
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/docker-entrypoint.sh
+  title: docker-library/mysql 9.7/docker-entrypoint.sh
+  accessed: "2026-09-02"
+  version: master @ 2f988f198f35d25b1454fa2504a0e4c348100549 (2026-08-19)
 ---
 
 # What was read

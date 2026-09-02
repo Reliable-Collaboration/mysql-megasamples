@@ -3,17 +3,24 @@ type: Source
 title: catarinaribeir0/queries-tpch-dbgen-mysql (TPC-H 22 queries hand-ported to MySQL)
 description: Community port of the TPC-H queries to MySQL; shows the SQLSERVER-dialect tpcd.h edit (limit %d) and the Q1 text as run on MySQL.
 resource: https://github.com/catarinaribeir0/queries-tpch-dbgen-mysql
-tags: [tpc-h, mysql, community, github]
+tags:
+- tpc-h
+- mysql
+- community
+- github
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/catarinaribeir0/queries-tpch-dbgen-mysql/master/README.md
-    title: README.md (+ 1.sql)
-    accessed: "2026-09-02"
-    version: master; pushed_at 2019-12-16; license null; 49 stars
+- resource: https://raw.githubusercontent.com/catarinaribeir0/queries-tpch-dbgen-mysql/master/README.md
+  title: README.md (+ 1.sql)
+  accessed: "2026-09-02"
+  version: master; pushed_at 2019-12-16; license null; 49 stars
 ---
 # What was read
 * https://raw.githubusercontent.com/catarinaribeir0/queries-tpch-dbgen-mysql/master/README.md, “README.md (+ 1.sql)”, accessed 2026-09-02, version master; pushed_at 2019-12-16; license null; 49 stars

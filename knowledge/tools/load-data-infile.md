@@ -1,60 +1,68 @@
 ---
 type: Tool
-title: "MySQL 9.7 LOAD DATA (server-side and LOCAL) and the bulk-load settings"
+title: MySQL 9.7 LOAD DATA (server-side and LOCAL) and the bulk-load settings
 description: "The ingestion primitive for every converted dataset: LOCAL versus server-side semantics, secure_file_priv in the official image, the converter TSV contract (\\N NULLs, backslash escapes), strict-versus-nonrestrictive loading, and the documented InnoDB bulk-load settings; mysqldump --tab as fallback exporter, mysqlpump gone."
 resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
-tags: [tool, mysql, load-data, bulk-load, build-time]
+tags:
+- tool
+- mysql
+- load-data
+- bulk-load
+- build-time
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:47:28Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:47:28Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:47:28Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:47:28Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
-    title: "15.2.9 LOAD DATA Statement"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
-    title: "8.1.6 Security Considerations for LOAD DATA LOCAL"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/optimizing-innodb-bulk-data-loading.html
-    title: "10.5.5 Bulk Data Loading for InnoDB Tables"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/insert-optimization.html
-    title: "10.2.5.1 Optimizing INSERT Statements"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/innodb-auto-increment-handling.html
-    title: "17.6.1.6 AUTO_INCREMENT Handling in InnoDB"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-command-options.html
-    title: "6.5.1.1 mysql Client Options"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysqldump.html
-    title: "6.5.4 mysqldump"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
-    title: "What Is New in MySQL 8.4 (mysqlpump removal)"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/linux-installation-rpm.html
-    title: "2.5.4 RPM installation layout (secure_file_priv)"
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
-    title: "docker-library/mysql 9.7/Dockerfile.oracle"
-    accessed: "2026-09-02"
-    version: "master @ 2f988f19 (2026-08-19)"
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/docker-entrypoint.sh
-    title: "docker-library/mysql 9.7/docker-entrypoint.sh"
-    accessed: "2026-09-02"
-    version: "master @ 2f988f19 (2026-08-19)"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
-    title: "7.1.11 Server SQL Modes"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
-    title: "15.1.25.6 CHECK Constraints"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
-    title: "MySQL Shell importTable (sessionInitSql example with sql_log_bin=0)"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
+  title: 15.2.9 LOAD DATA Statement
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
+  title: 8.1.6 Security Considerations for LOAD DATA LOCAL
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/optimizing-innodb-bulk-data-loading.html
+  title: 10.5.5 Bulk Data Loading for InnoDB Tables
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/insert-optimization.html
+  title: 10.2.5.1 Optimizing INSERT Statements
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/innodb-auto-increment-handling.html
+  title: 17.6.1.6 AUTO_INCREMENT Handling in InnoDB
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-command-options.html
+  title: 6.5.1.1 mysql Client Options
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysqldump.html
+  title: 6.5.4 mysqldump
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
+  title: What Is New in MySQL 8.4 (mysqlpump removal)
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/linux-installation-rpm.html
+  title: 2.5.4 RPM installation layout (secure_file_priv)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/Dockerfile.oracle
+  title: docker-library/mysql 9.7/Dockerfile.oracle
+  accessed: "2026-09-02"
+  version: master @ 2f988f19 (2026-08-19)
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/9.7/docker-entrypoint.sh
+  title: docker-library/mysql 9.7/docker-entrypoint.sh
+  accessed: "2026-09-02"
+  version: master @ 2f988f19 (2026-08-19)
+- resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
+  title: 7.1.11 Server SQL Modes
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
+  title: 15.1.25.6 CHECK Constraints
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/mysql-shell/9.7/en/mysql-shell-utilities-parallel-table.html
+  title: MySQL Shell importTable (sessionInitSql example with sql_log_bin=0)
+  accessed: "2026-09-02"
 ---
 
 # Facts

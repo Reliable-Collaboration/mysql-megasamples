@@ -6,17 +6,21 @@ Usage:
 
 Requires PyYAML. Enforces the rules marked [checked] in
 knowledge/runbooks/knowledge-bundle-conventions.md:
-  1. every non-reserved .md has parseable, terminated YAML frontmatter with a non-empty `type`
-  2. `status` and `trust` present and in their enums; `generated.at` ISO 8601; `verified` present iff trust == verified;
-     `tags` is a list of strings; `sources[]` entries have `resource`; no sources[].title says "not read"
-  3. type-specific required section headings, in order (prefix match)
-  4. Dataset tier tags from the vocabulary; Decision status/trust agree with the `# Status` section
-  5. trust: verified records may say "from memory" only in an **Inferred:**-marked line
-  6. every markdown link (concepts, index.md, log.md) and every bundle-path `resource` resolves; broken links are
+  1. every non-reserved .md has parseable, terminated YAML frontmatter with a non-empty string `type`
+  2. `status` and `trust` are strings in their enums; `generated.at` ISO 8601; `verified` is a list of {by, at}
+     present iff trust == verified; `tags` is a list of strings; `sources[]` entries have `resource`; no
+     sources[].title says "not read"
+  3. type-specific required section headings, in order (prefix match, code fences ignored)
+  4. Dataset tier tags from the vocabulary; a Decision's `# Status` text agrees with `status`/`trust`/tags
+     (accepted / pending / superseded-by)
+  5. a trust: verified record says "from memory" only inside an **Inferred:**-marked paragraph or a `# Inferred`
+     section (title and description included in the scan)
+  6. every License record's `# Applied to` links every Dataset or Tool record that links the license
+  7. every markdown link (concepts, index.md, log.md) and every bundle-path `resource` resolves; broken links are
      warnings while root index.md says `bundle_status: draft`, errors when it says `stable` or with --strict-links
-  7. log.md: only ISO-date `##` headings, descending; bullets start with an allowed bold verb
-  8. every directory's index.md equals the generated form (--write-index regenerates, then validates)
-Exit status 1 on any error, or when the bundle directory is missing or holds no concepts.
+  8. log.md: only ISO-date `##` headings, descending; every bullet (`*` or `-`) starts with an allowed bold verb
+  9. every directory's index.md equals the generated form; --write-index writes every index first, then validates
+Exit status: 0 clean, 1 errors, 2 usage/environment problem (missing PyYAML).
 """
 import argparse, datetime, os, re, sys
 
@@ -42,17 +46,21 @@ SECTIONS = {
     "Runbook": [],
 }
 ISO_DT = re.compile(r"^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2}))?$")
-LINK_RE = re.compile(r"\[[^\]]*\]\(([^)\s]+)\)")
+LINK_RE = re.compile(r"\[[^\]]*\]\(\s*<?([^)\s>]+)>?(?:\s+\"[^\"]*\")?\s*\)")
 HEADING_RE = re.compile(r"^# (.+?)\s*$", re.M)
 INTRO_OPEN, INTRO_CLOSE = "<!-- intro -->", "<!-- /intro -->"
+EXTERNAL = ("http://", "https://", "mailto:", "file:", "s3://", "oci://", "ftp://")
 
 
 def split_frontmatter(text):
-    """Return (frontmatter_text, body, error)."""
+    """Return (frontmatter_text, body, error). Tolerates a UTF-8 BOM and CRLF line endings."""
+    text = text.lstrip("﻿").replace("\r\n", "\n")
     if not text.startswith("---\n"):
         return None, text, "no frontmatter"
     end = text.find("\n---\n", 4)
     if end < 0:
+        if text.endswith("\n---"):
+            return text[4:-4], "", None
         return None, text, "unterminated frontmatter"
     return text[4:end], text[end + 5:], None
 
@@ -73,50 +81,76 @@ def parse_frontmatter(text):
 def is_iso(value):
     if isinstance(value, (datetime.date, datetime.datetime)):
         return True
-    return bool(ISO_DT.match(str(value)))
+    return isinstance(value, str) and bool(ISO_DT.match(value))
 
 
 def strip_code(text):
-    text = re.sub(r"```.*?```", "", text, flags=re.S)
+    text = re.sub(r"^(```|~~~).*?^\1", "", text, flags=re.S | re.M)
     return re.sub(r"`[^`\n]*`", "", text)
 
 
 def headings(body):
-    return [h for h in HEADING_RE.findall(body)]
+    return HEADING_RE.findall(strip_code(body))
 
 
 def section_text(body, name):
-    m = re.search(r"^# " + re.escape(name) + r"\b.*?$\n(.*?)(?=^# |\Z)", body, re.M | re.S)
+    m = re.search(r"^# " + re.escape(name) + r"\b.*?$\n(.*?)(?=^# |\Z)", strip_code(body), re.M | re.S)
     return m.group(1) if m else ""
+
+
+def hedge_ok(body, title, description):
+    """True unless 'from memory' appears outside an Inferred-marked paragraph or `# Inferred` section."""
+    if re.search(r"from memory", f"{title} {description}", re.I):
+        return False
+    in_inferred_section, in_inferred_para = False, False
+    for line in strip_code(body).splitlines():
+        m = re.match(r"^(#+) (.*)$", line)
+        if m:
+            in_inferred_section = m.group(1) == "#" and m.group(2).strip().lower().startswith("inferred")
+            in_inferred_para = False
+        if not line.strip():
+            in_inferred_para = False
+        if "**Inferred" in line:
+            in_inferred_para = True
+        if re.search(r"from memory", line, re.I) and not (in_inferred_section or in_inferred_para):
+            return False
+    return True
 
 
 class Checker:
     def __init__(self, bundle, strict_links):
-        self.bundle = bundle
+        self.bundle = os.path.normpath(bundle)
         self.strict_links = strict_links
         self.errors, self.warnings = [], []
-        self.concepts = {}
+        self.concepts = {}   # rel -> frontmatter
+        self.bodies = {}     # rel -> body
         self.bundle_status = "draft"
 
     def err(self, rel, msg): self.errors.append(f"{rel}: {msg}")
     def warn(self, rel, msg): self.warnings.append(f"{rel}: {msg}")
 
     def link_problem(self, rel, msg):
-        if self.strict_links or self.bundle_status == "stable":
-            self.err(rel, msg)
-        else:
-            self.warn(rel, msg)
+        (self.err if self.strict_links or self.bundle_status == "stable" else self.warn)(rel, msg)
+
+    def target_path(self, root, target):
+        target = target.split("#")[0]
+        if not target or target.startswith(EXTERNAL):
+            return None
+        if target.startswith("/"):
+            return os.path.join(self.bundle, target.lstrip("/"))
+        return os.path.normpath(os.path.join(root, target))
 
     def resolve(self, rel, root, target):
-        target = target.split("#")[0]
-        if not target or target.startswith(("http://", "https://", "mailto:", "file:", "s3://", "oci://")):
-            return
-        if target.startswith("/"):
-            path = os.path.join(self.bundle, target.lstrip("/"))
-        else:
-            path = os.path.normpath(os.path.join(root, target))
-        if not os.path.exists(path):
+        path = self.target_path(root, target)
+        if path is not None and not os.path.exists(path):
             self.link_problem(rel, f"broken link -> {target}")
+
+    def bundle_rel(self, root, target):
+        """Bundle-relative path ('/dir/file.md') of a link target, or None."""
+        path = self.target_path(root, target)
+        if path is None:
+            return None
+        return "/" + os.path.relpath(path, self.bundle).replace(os.sep, "/")
 
     # ---- per-file checks -------------------------------------------------
     def check_concept(self, rel, root, text):
@@ -124,23 +158,24 @@ class Checker:
         if err:
             self.err(rel, err); return None
         typ = fm.get("type")
-        if not typ or not isinstance(typ, str):
-            self.err(rel, "missing or empty `type`")
+        if not isinstance(typ, str) or not typ:
+            self.err(rel, f"`type` must be a non-empty string, got {typ!r}"); typ = ""
         st, tr = fm.get("status"), fm.get("trust")
-        if st not in STATUS: self.err(rel, f"status `{st}` not in {sorted(STATUS)}")
-        if tr not in TRUST: self.err(rel, f"trust `{tr}` not in {sorted(TRUST)}")
+        if not isinstance(st, str) or st not in STATUS: self.err(rel, f"status must be one of {sorted(STATUS)}, got {st!r}")
+        if not isinstance(tr, str) or tr not in TRUST: self.err(rel, f"trust must be one of {sorted(TRUST)}, got {tr!r}")
         gen = fm.get("generated")
         if not isinstance(gen, dict) or not is_iso(gen.get("at", "")):
             self.err(rel, "generated.at missing or not ISO 8601")
-        has_verified = bool(fm.get("verified"))
-        if tr == "verified" and not has_verified: self.err(rel, "trust=verified but no `verified` entries")
-        if tr != "verified" and has_verified: self.err(rel, f"trust={tr} but has `verified` entries")
+        ver = fm.get("verified")
+        if ver is not None and (not isinstance(ver, list) or not ver or any(not isinstance(v, dict) or not v.get("by") or not is_iso(v.get("at", "")) for v in ver)):
+            self.err(rel, "`verified` must be a non-empty list of {by, at} entries with ISO 8601 `at`"); ver = None
+        if tr == "verified" and not ver: self.err(rel, "trust=verified but no `verified` entries")
+        if tr != "verified" and ver: self.err(rel, f"trust={tr} but has `verified` entries")
         if tr == "open" and st != "draft": self.err(rel, "trust=open requires status=draft")
-        tags = fm.get("tags", [])
-        if tags is None: tags = []
+        tags = fm.get("tags") or []
         if not isinstance(tags, list) or any(not isinstance(t, str) for t in tags):
-            self.err(rel, f"tags must be a list of strings (quote numeric-looking tags): {tags}")
-            tags = [str(t) for t in (tags if isinstance(tags, list) else [])]
+            self.err(rel, f"tags must be a list of strings (quote numeric-looking tags): {tags!r}")
+            tags = [str(t) for t in tags] if isinstance(tags, list) else []
         for s in fm.get("sources") or []:
             if not isinstance(s, dict) or not s.get("resource"):
                 self.err(rel, "sources[] entry without `resource`"); continue
@@ -151,11 +186,11 @@ class Checker:
         res = fm.get("resource")
         if isinstance(res, str) and res.startswith("/"):
             self.resolve(rel, root, res)
-        # sections
+        # sections (code fences ignored)
         hs = headings(body)
-        req = SECTIONS.get(typ, [])
-        if typ not in SECTIONS:
+        if typ and typ not in SECTIONS:
             self.err(rel, f"unknown type `{typ}` (allowed: {sorted(SECTIONS)})")
+        req = SECTIONS.get(typ, [])
         found = []
         for name in req:
             idx = next((i for i, h in enumerate(hs) if h == name or h.startswith(name + " ") or h.startswith(name + ":")), None)
@@ -171,24 +206,32 @@ class Checker:
             if bad: self.err(rel, f"tier tags {bad} not in vocabulary {sorted(TIER_TAGS)}")
             if not tiers: self.err(rel, "Dataset record has no tier-* tag")
         if typ == "Decision":
-            status_text = section_text(body, "Status").strip().lower()
-            if status_text.startswith("accepted"):
+            status_text = re.sub(r"[*_`]", "", section_text(body, "Status")).strip().lower()
+            head = re.sub(r"^status:\s*", "", status_text)
+            desc = f"{fm.get('title', '')} {fm.get('description', '')}"
+            if head.startswith("accepted"):
                 if st != "stable" or tr == "open": self.err(rel, "Status says accepted but status/trust say draft/open")
                 if "pending" in tags: self.err(rel, "accepted decision still tagged `pending`")
-                if re.search(r"pending coordinator|coordinator to confirm", str(fm.get("title", "")) + str(fm.get("description", "")), re.I):
+                if re.search(r"pending coordinator|coordinator to confirm|outcome pending", desc, re.I):
                     self.err(rel, "accepted decision still described as pending in title/description")
-            elif status_text.startswith("pending"):
+            elif head.startswith("pending"):
                 if st != "draft" or tr != "open": self.err(rel, "Status says pending but status/trust are not draft/open")
-        if typ == "License":
-            if not section_text(body, "Attribution").strip(): self.err(rel, "License record has an empty `# Attribution` section")
-        if tr == "verified":
-            for line in body.splitlines():
-                if re.search(r"from memory", line, re.I) and "**Inferred" not in line:
-                    self.err(rel, "verified record says 'from memory' outside an **Inferred:** line")
-                    break
-        # links
+            elif head.startswith("superseded"):
+                if st != "deprecated": self.err(rel, "Status says superseded-by but status is not deprecated")
+                if not LINK_RE.search(section_text(body, "Status")): self.err(rel, "superseded-by needs a link to the replacing decision")
+            elif st == "deprecated":
+                self.err(rel, "status: deprecated requires a `# Status` beginning with superseded-by <link>")
+            elif not head:
+                self.err(rel, "Decision `# Status` section is empty")
+            else:
+                self.err(rel, f"Decision `# Status` must begin with accepted, pending or superseded-by (got `{head[:30]}`)")
+        if typ == "License" and not section_text(body, "Attribution").strip():
+            self.err(rel, "License record has an empty `# Attribution` section")
+        if tr == "verified" and not hedge_ok(body, fm.get("title", ""), fm.get("description", "")):
+            self.err(rel, "verified record says 'from memory' outside an **Inferred:** paragraph or `# Inferred` section")
         for target in LINK_RE.findall(strip_code(body)):
             self.resolve(rel, root, target)
+        self.bodies[rel] = body
         return fm
 
     def check_log(self, rel, text):
@@ -202,24 +245,54 @@ class Checker:
         if dates != sorted(dates, reverse=True):
             self.err(rel, f"date headings not in descending order: {dates}")
         for line in text.splitlines():
-            if line.startswith("* "):
-                m = re.match(r"\* \*\*([A-Za-z]+)\*\*:", line)
+            if re.match(r"^\s*[*-] ", line):
+                m = re.match(r"^\s*[*-] \*\*([A-Za-z]+)\*\*:", line)
                 if not m or m.group(1) not in LOG_VERBS:
-                    self.err(rel, f"log bullet must start with a bold verb from {sorted(LOG_VERBS)}: `{line[:60]}`")
+                    self.err(rel, f"log bullet must start with a bold verb from {sorted(LOG_VERBS)}: `{line.strip()[:60]}`")
         for target in LINK_RE.findall(strip_code(text)):
-            self.resolve(rel, os.path.join(self.bundle), target)
+            self.resolve(rel, self.bundle, target)
+
+    def check_license_coverage(self):
+        """Every record linking /licenses/<x>.md must be listed in that license's `# Applied to`."""
+        for lic_rel, fm in self.concepts.items():
+            if fm.get("type") != "License":
+                continue
+            lic_link = "/" + lic_rel.replace(os.sep, "/")
+            applied = section_text(self.bodies[lic_rel], "Applied to")
+            listed = set()
+            for t in LINK_RE.findall(applied):
+                bl = self.bundle_rel(os.path.join(self.bundle, os.path.dirname(lic_rel)), t)
+                if bl: listed.add(bl)
+            for other_rel, body in self.bodies.items():
+                if other_rel == lic_rel or self.concepts[other_rel].get("type") not in ("Dataset", "Tool"):
+                    continue  # only records that *apply* the license must be listed; sources/questions merely cite it
+                other_link = "/" + other_rel.replace(os.sep, "/")
+                links = {self.bundle_rel(os.path.join(self.bundle, os.path.dirname(other_rel)), t) for t in LINK_RE.findall(strip_code(body))}
+                if lic_link in links and other_link not in listed:
+                    self.err(lic_rel, f"`# Applied to` omits {other_link}, which links this license")
 
     # ---- index generation -------------------------------------------------
+    def dir_has_md(self, d):
+        for r, _, fs in os.walk(d):
+            if any(f.endswith(".md") for f in fs):
+                return True
+        return False
+
+    def count_concepts(self, d):
+        n = 0
+        for r, _, fs in os.walk(d):
+            n += sum(1 for f in fs if f.endswith(".md") and f not in RESERVED)
+        return n
+
     def expected_index(self, root, existing):
         rel_root = os.path.relpath(root, self.bundle)
         is_root = rel_root == "."
         files = sorted(f for f in os.listdir(root) if f.endswith(".md") and f not in RESERVED and os.path.isfile(os.path.join(root, f)))
-        subdirs = sorted(d for d in os.listdir(root) if os.path.isdir(os.path.join(root, d))
-                         and any(x.endswith(".md") for x in os.listdir(os.path.join(root, d))))
+        subdirs = sorted(d for d in os.listdir(root) if os.path.isdir(os.path.join(root, d)) and self.dir_has_md(os.path.join(root, d)))
         lines = []
         if is_root:
             lines += ["---", 'okf_version: "0.2"', f"bundle_status: {self.bundle_status}", "---", ""]
-        lines.append("# Knowledge bundle" if is_root else f"# {rel_root}")
+        lines.append("# Knowledge bundle" if is_root else f"# {rel_root.replace(os.sep, '/')}")
         lines.append("")
         if is_root:
             intro = ""
@@ -229,8 +302,7 @@ class Checker:
         if subdirs:
             lines.append("## Directories")
             for d in subdirs:
-                n = len([x for x in os.listdir(os.path.join(root, d)) if x.endswith(".md") and x not in RESERVED])
-                lines.append(f"* [{d}/]({d}/index.md) - {n} concepts")
+                lines.append(f"* [{d}/]({d}/index.md) - {self.count_concepts(os.path.join(root, d))} concepts")
             lines.append("")
         if files:
             lines.append("## Concepts")
@@ -273,18 +345,19 @@ class Checker:
                     self.concepts[rel] = fm
         if not self.concepts:
             self.err(self.bundle, "no concept files found")
-        # pass 2: indexes
-        for root, dirs, files in os.walk(self.bundle):
-            dirs.sort()
-            has_md = any(f.endswith(".md") for f in files) or any(
-                any(x.endswith(".md") for x in os.listdir(os.path.join(root, d))) for d in dirs)
-            if not has_md: continue
+        self.check_license_coverage()
+        # pass 2: indexes — write all first, then validate links
+        index_dirs = [root for root, _, _ in os.walk(self.bundle) if self.dir_has_md(root)]
+        contents = {}
+        for root in index_dirs:
             idx = os.path.join(root, "index.md")
-            rel = os.path.relpath(idx, self.bundle)
             existing = open(idx, encoding="utf-8").read() if os.path.exists(idx) else ""
             expected = self.expected_index(root, existing)
             if write_index and existing != expected:
                 open(idx, "w", encoding="utf-8").write(expected); existing = expected
+            contents[root] = (existing, expected)
+        for root, (existing, expected) in contents.items():
+            rel = os.path.relpath(os.path.join(root, "index.md"), self.bundle)
             if existing != expected:
                 self.err(rel, "index.md differs from the generated form (run --write-index)")
             for target in LINK_RE.findall(strip_code(existing)):

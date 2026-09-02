@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Internet Archive Developer Portal: internetarchive Python library and ia CLI"
-description: "pip install internetarchive; ia configure/upload/download; IAS3 keys; AGPL-3 license; mediatype/title/collection metadata."
+description: pip install internetarchive; ia configure/upload/download; IAS3 keys; AGPL-3 license; mediatype/title/collection metadata.
 resource: https://archive.org/developers/internetarchive/
-tags: [archive-org, mirroring, cli]
+tags:
+- archive-org
+- mirroring
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://archive.org/developers/internetarchive/
-    title: "Internet Archive Developer Portal: internetarchive Python library and ia CLI"
-    accessed: "2026-09-02"
+- resource: https://archive.org/developers/internetarchive/
+  title: "Internet Archive Developer Portal: internetarchive Python library and ia CLI"
+  accessed: "2026-09-02"
 ---
 
 # What was read

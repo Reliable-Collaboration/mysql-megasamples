@@ -3,17 +3,24 @@ type: Source
 title: Microsoft Learn - Install sqlcmd and bcp command-line tools on Linux
 description: Package names (mssql-tools18, msodbcsql18, unixodbc-dev), install commands, the ACCEPT_EULA=Y install requirement, x64/arm64 availability, /opt/mssql-tools18/bin path, and the pointer to go-sqlcmd.
 resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools
-tags: [sqlcmd, bcp, mssql-tools18, docs]
+tags:
+- sqlcmd
+- bcp
+- mssql-tools18
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools
-    title: Install the sqlcmd and bcp SQL Server Command-Line Tools on Linux - SQL Server | Microsoft Learn (canonical linux/install-upgrade/setup-tools)
-    accessed: "2026-09-02"
-    version: ms.date 2026-05-07, updated_at 2026-08-21, git commit 5f29d7e8dd0206c096d3274256be8b1fbe5a38b0
+- resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-setup-tools
+  title: Install the sqlcmd and bcp SQL Server Command-Line Tools on Linux - SQL Server | Microsoft Learn (canonical linux/install-upgrade/setup-tools)
+  accessed: "2026-09-02"
+  version: ms.date 2026-05-07, updated_at 2026-08-21, git commit 5f29d7e8dd0206c096d3274256be8b1fbe5a38b0
 ---
 
 # What was read

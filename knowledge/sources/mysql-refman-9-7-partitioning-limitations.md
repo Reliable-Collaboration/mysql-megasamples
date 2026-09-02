@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Restrictions and Limitations on Partitioning"
-description: "InnoDB partitioned tables do not support foreign keys; unique keys must include all partitioning columns; no FULLTEXT, no spatial columns; 8192 partitions."
+description: InnoDB partitioned tables do not support foreign keys; unique keys must include all partitioning columns; no FULLTEXT, no spatial columns; 8192 partitions.
 resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
-tags: [mysql, docs, partitioning]
+tags:
+- mysql
+- docs
+- partitioning
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
-    title: "MySQL 9.7 Reference Manual: Restrictions and Limitations on Partitioning"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 26.6"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
+  title: "MySQL 9.7 Reference Manual: Restrictions and Limitations on Partitioning"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 26.6
 ---
 
 # What was read

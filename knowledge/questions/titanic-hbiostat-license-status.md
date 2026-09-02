@@ -3,14 +3,19 @@ type: Open Question
 title: Is the hbiostat.org permission statement sufficient for redistributing titanic3 in a public image, or should a CC0/PD-labelled copy be preferred?
 description: hbiostat grants blanket permission with an acknowledgement request but names no license; Kaggle's copy needs login and terms; the R `titanic` CRAN package and OpenML copies were not read in this session.
 resource: /questions/titanic-hbiostat-license-status.md
-tags: [titanic, license, open]
+tags:
+- titanic
+- license
+- open
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://hbiostat.org/data/
-    title: permission statement
-    accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/
+  title: permission statement
+  accessed: "2026-09-02"
 ---
 
 # Question

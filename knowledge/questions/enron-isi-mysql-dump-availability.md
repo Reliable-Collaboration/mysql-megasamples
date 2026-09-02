@@ -3,15 +3,21 @@ type: Open Question
 title: What did the ISI Shetty/Adibi Enron MySQL page offer, and is any copy still authoritative?
 description: The live page is blocked (403) and Wayback rate-limited the 2013 snapshot; only a third-party "repaired" copy is reachable.
 resource: /questions/enron-isi-mysql-dump-availability.md
-tags: [question, enron, relational-versions, text-group]
+tags:
+- question
+- enron
+- relational-versions
+- text-group
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: http://archive.org/wayback/available?url=isi.edu/~adibi/Enron/Enron.htm
-    accessed: "2026-09-02"
-  - resource: https://www.ah-ruhe.de/enron-email-data/
-    accessed: "2026-09-02"
+- resource: http://archive.org/wayback/available?url=isi.edu/~adibi/Enron/Enron.htm
+  accessed: "2026-09-02"
+- resource: https://www.ah-ruhe.de/enron-email-data/
+  accessed: "2026-09-02"
 ---
 
 # Question

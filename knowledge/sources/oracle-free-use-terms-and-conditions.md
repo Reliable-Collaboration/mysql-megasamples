@@ -3,17 +3,23 @@ type: Source
 title: Oracle Free Use Terms and Conditions (license governing Oracle Database Free)
 description: The license text under which Oracle Database Free (and its container image) is distributed; grants internal use and unmodified redistribution, no resource limits stated in the text itself.
 resource: https://www.oracle.com/downloads/licenses/oracle-free-license.html
-tags: [oracle, license, oracle-database-free]
+tags:
+- oracle
+- license
+- oracle-database-free
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.oracle.com/downloads/licenses/oracle-free-license.html
-    title: Oracle Free Use Terms and Conditions
-    accessed: "2026-09-02"
-    version: "Last updated: 9 June 2021"
+- resource: https://www.oracle.com/downloads/licenses/oracle-free-license.html
+  title: Oracle Free Use Terms and Conditions
+  accessed: "2026-09-02"
+  version: "Last updated: 9 June 2021"
 ---
 
 # What was read

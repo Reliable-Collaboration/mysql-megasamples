@@ -3,17 +3,21 @@ type: Open Question
 title: Does NYC Open Data actually permit unrestricted redistribution of TLC trip data?
 description: The Open Data FAQ says there are no restrictions; the NYC.gov Terms of Use it incorporates reserve all rights. The tension is unresolved on the City's own pages.
 resource: /questions/nyc-open-data-reuse-terms.md
-tags: [license, nyc-open-data]
+tags:
+- license
+- nyc-open-data
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://opendata.cityofnewyork.us/faq/
-    title: NYC Open Data FAQ
-    accessed: "2026-09-02"
-  - resource: https://www.nyc.gov/home/terms-of-use.page
-    title: NYC.gov Terms of Use
-    accessed: "2026-09-02"
+- resource: https://opendata.cityofnewyork.us/faq/
+  title: NYC Open Data FAQ
+  accessed: "2026-09-02"
+- resource: https://www.nyc.gov/home/terms-of-use.page
+  title: NYC.gov Terms of Use
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Identifier Case Sensitivity"
-description: "lower_case_table_names defaults (Unix 0), can only be set at initialization, and which identifiers are case-insensitive everywhere."
+description: lower_case_table_names defaults (Unix 0), can only be set at initialization, and which identifiers are case-insensitive everywhere.
 resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-case-sensitivity.html
-tags: [mysql, docs, identifiers]
+tags:
+- mysql
+- docs
+- identifiers
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-case-sensitivity.html
-    title: "MySQL 9.7 Reference Manual: Identifier Case Sensitivity"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 11.2.3"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-case-sensitivity.html
+  title: "MySQL 9.7 Reference Manual: Identifier Case Sensitivity"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 11.2.3
 ---
 
 # What was read

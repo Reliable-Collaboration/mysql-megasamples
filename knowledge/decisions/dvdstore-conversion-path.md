@@ -3,19 +3,26 @@ type: Decision
 title: Dell DVD Store 3 conversion path - upstream MySQL DDL plus server-side LOAD DATA of the committed Small CSVs; reviews split to extended
 description: Reuse mysqlds3_create_db/ind/sp with InnoDB and utf8mb4 fixes, load the ~6.5 MB DS2-part CSVs into the build server during `make dvdstore`, defer the 190 MB reviews CSVs to the extended tier, drop the broken RESTOCK trigger.
 resource: /decisions/dvdstore-conversion-path.md
-tags: [dvdstore, decision, csv, load-data]
+tags:
+- dvdstore
+- decision
+- csv
+- load-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
-    title: mysqlds3_create_db.sql
-    accessed: "2026-09-02"
-  - resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
-    title: Small CSV inspection
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
+  title: mysqlds3_create_db.sql
+  accessed: "2026-09-02"
+- resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
+  title: Small CSV inspection
+  accessed: "2026-09-02"
 ---
 
 # Question

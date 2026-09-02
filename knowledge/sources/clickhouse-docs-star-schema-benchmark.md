@@ -3,16 +3,21 @@ type: Source
 title: ClickHouse docs — Star Schema Benchmark (SSB, 2009) example dataset
 description: A complete worked SSB setup (dbgen flags, table DDL, all 13 queries) used as the community reference for column types and query text.
 resource: https://clickhouse.com/docs/getting-started/example-datasets/star-schema
-tags: [ssb, clickhouse]
+tags:
+- ssb
+- clickhouse
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/ClickHouse/clickhouse-docs/main/docs/getting-started/example-datasets/star-schema.md
-    title: star-schema.md (source of the rendered page; the clickhouse.com URL returned HTTP 530 during this session)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/ClickHouse/clickhouse-docs/main/docs/getting-started/example-datasets/star-schema.md
+  title: star-schema.md (source of the rendered page; the clickhouse.com URL returned HTTP 530 during this session)
+  accessed: "2026-09-02"
 ---
 
 # What was read

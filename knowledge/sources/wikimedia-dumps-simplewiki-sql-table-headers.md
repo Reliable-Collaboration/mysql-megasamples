@@ -3,34 +3,42 @@ type: Source
 title: CREATE TABLE headers sampled from the simplewiki 20260901 .sql.gz dumps
 description: First 16 KB of redirect, page, categorylinks, pagelinks, linktarget, category and page_props dumps (decompressed) — the exact DDL MediaWiki/MariaDB emits, used to plan MySQL 9.7 load fix-ups.
 resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
-tags: [source, wikipedia, mediawiki, schema, ddl]
+tags:
+- source
+- wikipedia
+- mediawiki
+- schema
+- ddl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
-    title: redirect.sql.gz (bytes 0-8191)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
-    title: page.sql.gz (bytes 0-16383)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-categorylinks.sql.gz
-    title: categorylinks.sql.gz (bytes 0-16383)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-pagelinks.sql.gz
-    title: pagelinks.sql.gz (bytes 0-16383)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-linktarget.sql.gz
-    title: linktarget.sql.gz (bytes 0-16383)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-category.sql.gz
-    title: category.sql.gz (bytes 0-16383)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page_props.sql.gz
-    title: page_props.sql.gz (bytes 0-16383)
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
+  title: redirect.sql.gz (bytes 0-8191)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
+  title: page.sql.gz (bytes 0-16383)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-categorylinks.sql.gz
+  title: categorylinks.sql.gz (bytes 0-16383)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-pagelinks.sql.gz
+  title: pagelinks.sql.gz (bytes 0-16383)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-linktarget.sql.gz
+  title: linktarget.sql.gz (bytes 0-16383)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-category.sql.gz
+  title: category.sql.gz (bytes 0-16383)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page_props.sql.gz
+  title: page_props.sql.gz (bytes 0-16383)
+  accessed: "2026-09-02"
 ---
 
 # What was read

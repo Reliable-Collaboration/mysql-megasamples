@@ -3,23 +3,30 @@ type: Dataset
 title: Northwind
 description: Microsoft's classic 13-table trading-company sample (SQL Server 2000 era) shipped as a single 1 MB T-SQL script with all data inline; MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/instnwnd.sql
-tags: [tier-core, mssql-origin, script-translation, mit]
+tags:
+- tier-core
+- mssql-origin
+- script-translation
+- mit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
-    title: instnwnd.sql (blob ae61e5631d7f03029ec15213ce672b45ceb7e629)
-    accessed: "2026-09-02"
-    version: master, 1,049,720 bytes
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/readme.md
-    title: northwind-pubs readme.md
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: sql-server-samples license.txt (MIT)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
+  title: instnwnd.sql (blob ae61e5631d7f03029ec15213ce672b45ceb7e629)
+  accessed: "2026-09-02"
+  version: master, 1,049,720 bytes
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/readme.md
+  title: northwind-pubs readme.md
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: sql-server-samples license.txt (MIT)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

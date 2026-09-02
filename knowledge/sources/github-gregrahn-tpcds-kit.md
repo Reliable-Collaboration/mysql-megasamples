@@ -3,36 +3,43 @@ type: Source
 title: gregrahn/tpcds-kit (TPC-DS dsdgen/dsqgen 2.10.0 mirror with fixes)
 description: GitHub mirror of the TPC-DS tools based on v2.10.0; read README, EULA presence, query_templates (dialect files), tools/tpcds.sql, tools/params.h, tools/release.h, tests/mysql_setup.sh, answer_sets listing, and a feature survey of the 99 templates.
 resource: https://github.com/gregrahn/tpcds-kit
-tags: [tpc-ds, dsdgen, dsqgen, github]
+tags:
+- tpc-ds
+- dsdgen
+- dsqgen
+- github
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/README.md
-    title: tpcds-kit README
-    accessed: "2026-09-02"
-    version: master @ 5a3a81796992b725c2a8b216767e142609966752 (2020-03-11, latest commit); pushed_at 2024-04-16; 365 stars; GitHub license field null
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/query_templates/ansi.tpl
-    title: query_templates/ansi.tpl (+ netezza.tpl, sqlserver.tpl, db2.tpl, oracle.tpl, README, templates.lst)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tools/tpcds.sql
-    title: tools/tpcds.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tools/params.h
-    title: tools/params.h (dsdgen option table)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tools/release.h
-    title: tools/release.h
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tests/mysql_setup.sh
-    title: tests/mysql_setup.sh
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/query_templates/query16.tpl
-    title: query_templates/query1..99.tpl (all 99 downloaded and grepped; query5, 16, 36, 51, 97, 8, 14, 38, 87 read in part)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/README.md
+  title: tpcds-kit README
+  accessed: "2026-09-02"
+  version: master @ 5a3a81796992b725c2a8b216767e142609966752 (2020-03-11, latest commit); pushed_at 2024-04-16; 365 stars; GitHub license field null
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/query_templates/ansi.tpl
+  title: query_templates/ansi.tpl (+ netezza.tpl, sqlserver.tpl, db2.tpl, oracle.tpl, README, templates.lst)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tools/tpcds.sql
+  title: tools/tpcds.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tools/params.h
+  title: tools/params.h (dsdgen option table)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tools/release.h
+  title: tools/release.h
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/tests/mysql_setup.sh
+  title: tests/mysql_setup.sh
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/query_templates/query16.tpl
+  title: query_templates/query1..99.tpl (all 99 downloaded and grepped; query5, 16, 36, 51, 97, 8, 14, 38, 87 read in part)
+  accessed: "2026-09-02"
 ---
 
 # What was read

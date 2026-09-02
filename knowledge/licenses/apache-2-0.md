@@ -3,22 +3,28 @@ type: License
 title: Apache License 2.0
 description: Permissive license of dbt-labs/jaffle-shop-classic (seed data + dbt project) and the jafgen generator; requires license copy, change notices and retained attribution notices.
 resource: https://www.apache.org/licenses/LICENSE-2.0
-tags: [license, apache-2-0, permissive]
+tags:
+- license
+- apache-2-0
+- permissive
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/LICENSE
-    title: jaffle-shop-classic LICENSE (full Apache-2.0 text)
-    accessed: "2026-09-02"
-  - resource: https://pypi.org/pypi/jafgen/json
-    title: jafgen license metadata (full Apache-2.0 text)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/dbt-labs/jaffle-shop-generator
-    title: GitHub license detection Apache-2.0
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/LICENSE
+  title: jaffle-shop-classic LICENSE (full Apache-2.0 text)
+  accessed: "2026-09-02"
+- resource: https://pypi.org/pypi/jafgen/json
+  title: jafgen license metadata (full Apache-2.0 text)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/dbt-labs/jaffle-shop-generator
+  title: GitHub license detection Apache-2.0
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

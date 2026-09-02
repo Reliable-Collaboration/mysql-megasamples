@@ -3,19 +3,25 @@ type: Source
 title: allisonhorst/palmerpenguins LICENSE.md (CC0 1.0 Universal)
 description: Full CC0 1.0 text shipped with the package; GitHub detects CC0-1.0.
 resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/LICENSE.md
-tags: [penguins, license, cc0]
+tags:
+- penguins
+- license
+- cc0
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/LICENSE.md
-    title: LICENSE.md (6,966 bytes)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/allisonhorst/palmerpenguins
-    title: GitHub API license CC0-1.0
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/LICENSE.md
+  title: LICENSE.md (6,966 bytes)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/allisonhorst/palmerpenguins
+  title: GitHub API license CC0-1.0
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,19 +3,26 @@ type: Decision
 title: Conversion path for Northwind and pubs - translate the T-SQL install scripts directly
 description: Both datasets are single self-contained T-SQL scripts with inline data, so the build translates them to MySQL DDL/DML with a script (no SQL Server, no bcp).
 resource: /decisions/mssql-northwind-pubs-conversion-path.md
-tags: [decision, northwind, pubs, conversion-path]
+tags:
+- decision
+- northwind
+- pubs
+- conversion-path
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
-    title: instnwnd.sql analysis
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
-    title: instpubs.sql analysis
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
+  title: instnwnd.sql analysis
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
+  title: instpubs.sql analysis
+  accessed: "2026-09-02"
 ---
 
 # Question

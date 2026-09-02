@@ -3,44 +3,56 @@ type: Dataset
 title: Simple English Wikipedia (simplewiki dump 20260901)
 description: Current-revision article text plus MediaWiki link tables of the Simple English Wikipedia, loaded as page/revision/text/categorylinks/pagelinks/linktarget/redirect/category with FULLTEXT on wikitext.
 resource: https://dumps.wikimedia.org/simplewiki/20260901/
-tags: [tier-core, tier-extended, dataset, text-corpus, wiki, cc-by-sa, gfdl, mysql-native-dumps, text-group]
+tags:
+- tier-core
+- tier-extended
+- dataset
+- text-corpus
+- wiki
+- cc-by-sa
+- gfdl
+- mysql-native-dumps
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2026-12-01"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/
-    title: latest/ listing (20260901)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-sha1sums.txt
-    title: sha1sums / md5sums
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
-    title: DDL headers of page/categorylinks/pagelinks/linktarget/redirect/category/page_props
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-site_stats.sql.gz
-    title: site_stats (complete)
-    accessed: "2026-09-02"
-  - resource: https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download
-    title: What's available for download
-    accessed: "2026-09-02"
-  - resource: https://www.mediawiki.org/xml/export-0.11.xsd
-    title: export schema 0.11
-    accessed: "2026-09-02"
-  - resource: https://www.mediawiki.org/wiki/Manual:Page_table
-    title: Manual:Page table
-    accessed: "2026-09-02"
-  - resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
-    title: Terms of Use §7
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/legal.html
-    title: dumps legal notice
-    accessed: "2026-09-02"
-  - resource: https://simple.wikipedia.org/wiki/Special:Statistics
-    title: Special:Statistics
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/
+  title: latest/ listing (20260901)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-sha1sums.txt
+  title: sha1sums / md5sums
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
+  title: DDL headers of page/categorylinks/pagelinks/linktarget/redirect/category/page_props
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-site_stats.sql.gz
+  title: site_stats (complete)
+  accessed: "2026-09-02"
+- resource: https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download
+  title: What's available for download
+  accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/xml/export-0.11.xsd
+  title: export schema 0.11
+  accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/wiki/Manual:Page_table
+  title: Manual:Page table
+  accessed: "2026-09-02"
+- resource: https://foundation.wikimedia.org/wiki/Policy:Terms_of_Use
+  title: Terms of Use §7
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/legal.html
+  title: dumps legal notice
+  accessed: "2026-09-02"
+- resource: https://simple.wikipedia.org/wiki/Special:Statistics
+  title: Special:Statistics
+  accessed: "2026-09-02"
 ---
 
 # Identity

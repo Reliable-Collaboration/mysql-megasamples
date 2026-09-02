@@ -3,36 +3,44 @@ type: License
 title: Stack Exchange data dump terms (2024 "Data dump access" click-through, ToS clause, archive.org license.txt)
 description: The contractual layer around the CC BY-SA licensed Stack Exchange dumps since July 2024 — what the click-through says, what it restricts, and why this project sources the last archive.org dump instead.
 resource: https://stackoverflow.com/help/data-dumps
-tags: [license, stackexchange, click-through, licensing-finding, cc-by-sa]
+tags:
+- license
+- stackexchange
+- click-through
+- licensing-finding
+- cc-by-sa
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2027-03-01"
 sources:
-  - resource: https://stackoverflow.com/help/data-dumps
-    title: Help Center - What is the data dump?
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
-    title: Announcing a change to the data-dump process (2024-07-12, last edited 2024-09-09)
-    accessed: "2026-09-02"
-    version: read via api.stackexchange.com /questions/401324?filter=withbody
-  - resource: https://stackoverflow.com/legal/terms-of-service/public
-    title: Public Network Terms of Service (Last updated November 13, 2025)
-    accessed: "2026-09-02"
-  - resource: https://archive.org/download/stackexchange/license.txt
-    title: license.txt in the archive.org Stack Exchange Data Dump item (2024-04-01)
-    accessed: "2026-09-02"
-  - resource: https://stackoverflow.com/help/licensing
-    title: Help Center - Licensing
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/402019/creative-commons-license-by-sa-violation-data-dump-must-not-force-users-to-ag
-    title: Creative Commons License (BY-SA) Violation claim and top answer (2024-08-08)
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/402311/am-i-allowed-to-publicly-reshare-some-json-file-containing-se-data-created-after
-    title: Am I allowed to publicly reshare SE data created after the new process? (2024-08-22)
-    accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/data-dumps
+  title: Help Center - What is the data dump?
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
+  title: Announcing a change to the data-dump process (2024-07-12, last edited 2024-09-09)
+  accessed: "2026-09-02"
+  version: read via api.stackexchange.com /questions/401324?filter=withbody
+- resource: https://stackoverflow.com/legal/terms-of-service/public
+  title: Public Network Terms of Service (Last updated November 13, 2025)
+  accessed: "2026-09-02"
+- resource: https://archive.org/download/stackexchange/license.txt
+  title: license.txt in the archive.org Stack Exchange Data Dump item (2024-04-01)
+  accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/licensing
+  title: Help Center - Licensing
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/402019/creative-commons-license-by-sa-violation-data-dump-must-not-force-users-to-ag
+  title: Creative Commons License (BY-SA) Violation claim and top answer (2024-08-08)
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/402311/am-i-allowed-to-publicly-reshare-some-json-file-containing-se-data-created-after
+  title: Am I allowed to publicly reshare SE data created after the new process? (2024-08-22)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Internet Archive Developer Portal: ia command-line interface"
-description: "ia upload syntax with --metadata, mediatype defaults to data and cannot be changed, --retries, ia download --glob, ia metadata --modify."
+description: ia upload syntax with --metadata, mediatype defaults to data and cannot be changed, --retries, ia download --glob, ia metadata --modify.
 resource: https://archive.org/developers/internetarchive/cli.html
-tags: [archive-org, mirroring, cli]
+tags:
+- archive-org
+- mirroring
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://archive.org/developers/internetarchive/cli.html
-    title: "Internet Archive Developer Portal: ia command-line interface"
-    accessed: "2026-09-02"
+- resource: https://archive.org/developers/internetarchive/cli.html
+  title: "Internet Archive Developer Portal: ia command-line interface"
+  accessed: "2026-09-02"
 ---
 
 # What was read

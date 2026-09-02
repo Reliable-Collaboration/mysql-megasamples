@@ -3,16 +3,23 @@ type: Source
 title: MySQL 9.7 Reference Manual — The CHAR and VARCHAR Types
 description: CHAR is right-padded on storage and trailing spaces are stripped on retrieval; VARCHAR keeps trailing spaces; PAD SPACE vs NO PAD collations.
 resource: https://dev.mysql.com/doc/refman/9.7/en/char.html
-tags: [mysql, char, varchar, type-mapping]
+tags:
+- mysql
+- char
+- varchar
+- type-mapping
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/char.html
-    title: The CHAR and VARCHAR Types
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/char.html
+  title: The CHAR and VARCHAR Types
+  accessed: "2026-09-02"
 ---
 
 # What was read

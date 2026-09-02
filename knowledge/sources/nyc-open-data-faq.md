@@ -3,16 +3,21 @@ type: Source
 title: NYC Open Data FAQ - "no restrictions on the use of Open Data"
 description: The FAQ statement that NYC Open Data carries no use restrictions; the strongest permission wording the City publishes.
 resource: https://opendata.cityofnewyork.us/faq/
-tags: [license, nyc-open-data]
+tags:
+- license
+- nyc-open-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://opendata.cityofnewyork.us/faq/
-    title: NYC Open Data FAQ
-    accessed: "2026-09-02"
+- resource: https://opendata.cityofnewyork.us/faq/
+  title: NYC Open Data FAQ
+  accessed: "2026-09-02"
 ---
 
 # What was read

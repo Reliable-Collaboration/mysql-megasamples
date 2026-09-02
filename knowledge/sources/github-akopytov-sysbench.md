@@ -3,21 +3,27 @@ type: Source
 title: akopytov/sysbench README and repository metadata (license, LuaJIT, --rand-seed)
 description: sysbench itself is GPL-2.0, embeds LuaJIT, and exposes --rand-seed; Debian packages it as sysbench 1.0.20+ds.
 resource: https://github.com/akopytov/sysbench
-tags: [sysbench, gpl, luajit]
+tags:
+- sysbench
+- gpl
+- luajit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/akopytov/sysbench/master/README.md
-    title: sysbench README
-    accessed: "2026-09-02"
-    version: master; GitHub API license GPL-2.0, latest release tag 1.0.20 (2020-04-24), pushed_at 2025-03-09
-  - resource: https://packages.debian.org/trixie/sysbench
-    title: Debian trixie package sysbench
-    accessed: "2026-09-02"
-    version: 1.0.20+ds-7
+- resource: https://raw.githubusercontent.com/akopytov/sysbench/master/README.md
+  title: sysbench README
+  accessed: "2026-09-02"
+  version: master; GitHub API license GPL-2.0, latest release tag 1.0.20 (2020-04-24), pushed_at 2025-03-09
+- resource: https://packages.debian.org/trixie/sysbench
+  title: Debian trixie package sysbench
+  accessed: "2026-09-02"
+  version: 1.0.20+ds-7
 ---
 
 # What was read

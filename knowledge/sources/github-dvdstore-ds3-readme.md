@@ -3,20 +3,26 @@ type: Source
 title: dvdstore/ds3 root readme.md
 description: One-page description of DVD Store 3 as an open-source test/benchmark tool supporting Oracle, MySQL and SQL Server.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/readme.md
-tags: [dvdstore, ds3, readme]
+tags:
+- dvdstore
+- ds3
+- readme
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/readme.md
-    title: readme.md
-    accessed: "2026-09-02"
-    version: master @ 8226cc0 (2021-11-08)
-  - resource: https://api.github.com/repos/dvdstore/ds3
-    title: repository metadata (license null, size 320,941 KB, no releases/tags)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/readme.md
+  title: readme.md
+  accessed: "2026-09-02"
+  version: master @ 8226cc0 (2021-11-08)
+- resource: https://api.github.com/repos/dvdstore/ds3
+  title: repository metadata (license null, size 320,941 KB, no releases/tags)
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,19 +3,26 @@ type: Source
 title: dbt-labs/jaffle-shop seeds/jaffle-data (1-year jafgen output) - inspection
 description: Six CSVs (customers 935, orders 61,948, items 90,900, products 10, stores 6, supplies 65 rows; 16.4 MB) with UUID keys and ISO timestamps.
 resource: https://github.com/dbt-labs/jaffle-shop/tree/main/seeds/jaffle-data
-tags: [jaffle-shop, csv, measurement, jafgen]
+tags:
+- jaffle-shop
+- csv
+- measurement
+- jafgen
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/dbt-labs/jaffle-shop/contents/seeds/jaffle-data
-    title: directory listing with sizes
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/seeds/jaffle-data/raw_orders.csv
-    title: raw_*.csv (streamed through wc -l / head)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/dbt-labs/jaffle-shop/contents/seeds/jaffle-data
+  title: directory listing with sizes
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop/main/seeds/jaffle-data/raw_orders.csv
+  title: raw_*.csv (streamed through wc -l / head)
+  accessed: "2026-09-02"
 ---
 
 # What was read

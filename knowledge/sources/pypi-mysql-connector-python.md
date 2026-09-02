@@ -1,20 +1,26 @@
 ---
 type: Source
 title: "PyPI JSON metadata: mysql-connector-python"
-description: "26.7.0 (2026-07-29), requires Python >=3.10, license field \"GNU GPLv2 (with FOSS License Exception)\"."
+description: 26.7.0 (2026-07-29), requires Python >=3.10, license field "GNU GPLv2 (with FOSS License Exception)".
 resource: https://pypi.org/pypi/mysql-connector-python/json
-tags: [python, pypi, mysql]
+tags:
+- python
+- pypi
+- mysql
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://pypi.org/pypi/mysql-connector-python/json
-    title: "PyPI JSON metadata: mysql-connector-python"
-    accessed: "2026-09-02"
-    version: "26.7.0"
+- resource: https://pypi.org/pypi/mysql-connector-python/json
+  title: "PyPI JSON metadata: mysql-connector-python"
+  accessed: "2026-09-02"
+  version: 26.7.0
 ---
 
 # What was read

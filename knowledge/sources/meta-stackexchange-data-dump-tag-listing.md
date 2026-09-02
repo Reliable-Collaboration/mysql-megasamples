@@ -3,16 +3,22 @@ type: Source
 title: Meta SE questions tagged data-dump since July 2024 (API listing)
 description: Title-only survey of 30 recent data-dump questions used to spot post-2024 changes (invalid XML, Sites.xml removal, canary posts, checksums, ETA threads).
 resource: https://meta.stackexchange.com/questions/tagged/data-dump
-tags: [source, stackexchange, survey]
+tags:
+- source
+- stackexchange
+- survey
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/questions?site=meta&tagged=data-dump&sort=creation&order=desc&pagesize=30&fromdate=1719792000
-    title: API listing (titles, dates, scores only)
-    accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/questions?site=meta&tagged=data-dump&sort=creation&order=desc&pagesize=30&fromdate=1719792000
+  title: API listing (titles, dates, scores only)
+  accessed: "2026-09-02"
 ---
 
 # What was read

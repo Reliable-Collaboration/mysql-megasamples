@@ -3,20 +3,26 @@ type: Tool
 title: MySQL Server 9.7 LTS
 description: The target database engine; LTS status, support window, and the point release to pin.
 resource: https://dev.mysql.com/doc/refman/9.7/en/
-tags: [mysql, target, lts]
+tags:
+- mysql
+- target
+- lts
 status: stable
 trust: verified
 stale_after: "2026-10-20"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
-    title: MySQL Releases, Innovation and LTS
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/relnotes/mysql/9.7/en/
-    title: 9.7 release notes
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-releases.html
+  title: MySQL Releases, Innovation and LTS
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/relnotes/mysql/9.7/en/
+  title: 9.7 release notes
+  accessed: "2026-09-02"
 ---
 
 # Facts

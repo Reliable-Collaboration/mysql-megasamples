@@ -3,17 +3,23 @@ type: Source
 title: SABR Box share for the Lahman CSV version (probe)
 description: The CSV download link is a Box shared folder "lahman_1871-2025_csv" (itemID 357532062389) listing individual CSV files; guessed direct .zip URLs return 404.
 resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
-tags: [lahman, download, box]
+tags:
+- lahman
+- download
+- box
 status: stable
 trust: verified
 stale_after: "2027-01-15"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
-    title: Box share page (HTML, 57,742 bytes; final URL sabr.app.box.com/s/...)
-    accessed: "2026-09-02"
+- resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
+  title: Box share page (HTML, 57,742 bytes; final URL sabr.app.box.com/s/...)
+  accessed: "2026-09-02"
 ---
 
 # What was read

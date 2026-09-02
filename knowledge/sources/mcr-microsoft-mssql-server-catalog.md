@@ -3,22 +3,28 @@ type: Source
 title: Microsoft Artifact Registry - mssql/server image catalog entry, tag list and manifests
 description: The MCR "About" text for mcr.microsoft.com/mssql/server (featured tags, requirements, environment variables, EULA link, MSSQL_PID values) read via the MCR catalog API, plus the live tag list and the image manifests/configs for 2022-latest and 2025-latest.
 resource: https://mcr.microsoft.com/en-us/artifact/mar/mssql/server/about
-tags: [sql-server, container, mcr]
+tags:
+- sql-server
+- container
+- mcr
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
-    title: MCR catalog details API (the JSON behind the About page; lastModifiedDate 2026-08-13)
-    accessed: "2026-09-02"
-  - resource: https://mcr.microsoft.com/v2/mssql/server/tags/list
-    title: OCI/Docker registry tags list (274 tags on 2026-09-02)
-    accessed: "2026-09-02"
-  - resource: https://mcr.microsoft.com/v2/mssql/server/manifests/2022-latest
-    title: manifests for 2022-latest and 2025-latest plus their config blobs
-    accessed: "2026-09-02"
+- resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
+  title: MCR catalog details API (the JSON behind the About page; lastModifiedDate 2026-08-13)
+  accessed: "2026-09-02"
+- resource: https://mcr.microsoft.com/v2/mssql/server/tags/list
+  title: OCI/Docker registry tags list (274 tags on 2026-09-02)
+  accessed: "2026-09-02"
+- resource: https://mcr.microsoft.com/v2/mssql/server/manifests/2022-latest
+  title: manifests for 2022-latest and 2025-latest plus their config blobs
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

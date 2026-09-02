@@ -3,20 +3,25 @@ type: Source
 title: sql-server-samples wide-world-importers README.md
 description: "Upstream readme for the WideWorldImporters sample: what it is, authors, update history, and that the databases are built from SSDT projects (wwi-ssdt, wwi-dw-ssdt) with an SSIS ETL project."
 resource: https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/wide-world-importers
-tags: [wideworldimporters, sql-server-samples]
+tags:
+- wideworldimporters
+- sql-server-samples
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/README.md
-    title: README.md (wide-world-importers), 5,079 bytes
-    accessed: "2026-09-02"
-    version: master (directory last touched 2026-08-31 by dependabot merges)
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/wide-world-importers
-    title: directory listing
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/wide-world-importers/README.md
+  title: README.md (wide-world-importers), 5,079 bytes
+  accessed: "2026-09-02"
+  version: master (directory last touched 2026-08-31 by dependabot merges)
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/wide-world-importers
+  title: directory listing
+  accessed: "2026-09-02"
 ---
 
 # What was read

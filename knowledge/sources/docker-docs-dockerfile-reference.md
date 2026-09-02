@@ -3,16 +3,22 @@ type: Source
 title: "Docker Docs: Dockerfile reference"
 description: "RUN --mount=type=cache/bind/secret options, RUN --network, RUN --security, COPY --from/--link, heredocs, and the VOLUME rule: legacy builder discards changes, BuildKit keeps them."
 resource: https://docs.docker.com/reference/dockerfile/
-tags: [docker, build, buildkit]
+tags:
+- docker
+- build
+- buildkit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/reference/dockerfile/
-    title: "Docker Docs: Dockerfile reference"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/reference/dockerfile/
+  title: "Docker Docs: Dockerfile reference"
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "DuckDB FAQ: license and governance"
-description: "DuckDB is MIT licensed; the DuckDB Foundation holds the IP and guarantees MIT in perpetuity; DuckLabs joins AWS from September 2026."
+description: DuckDB is MIT licensed; the DuckDB Foundation holds the IP and guarantees MIT in perpetuity; DuckLabs joins AWS from September 2026.
 resource: https://duckdb.org/faq
-tags: [duckdb, license]
+tags:
+- duckdb
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://duckdb.org/faq
-    title: "DuckDB FAQ: license and governance"
-    accessed: "2026-09-02"
-    version: "read 2026-09-02"
+- resource: https://duckdb.org/faq
+  title: "DuckDB FAQ: license and governance"
+  accessed: "2026-09-02"
+  version: read 2026-09-02
 ---
 
 # What was read

@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Identifier Length Limits"
-description: "64-character limit for database, table, column, index, constraint and routine names; aliases 256; generated constraint names can overflow."
+description: 64-character limit for database, table, column, index, constraint and routine names; aliases 256; generated constraint names can overflow.
 resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-length.html
-tags: [mysql, docs, identifiers]
+tags:
+- mysql
+- docs
+- identifiers
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-length.html
-    title: "MySQL 9.7 Reference Manual: Identifier Length Limits"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 11.2.1"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-length.html
+  title: "MySQL 9.7 Reference Manual: Identifier Length Limits"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 11.2.1
 ---
 
 # What was read

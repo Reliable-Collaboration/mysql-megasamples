@@ -3,17 +3,22 @@ type: Open Question
 title: What changed in dsdgen/dsqgen between 2.10.0 (open ports) and the official TPC-DS Tools 4.0.0?
 description: The current spec is 4.0.0 but tpcds-kit and DuckDB implement 2.10.0; the v4.0.0 PDF could not be text-extracted in this session and the TPC-DS homepage describes only pricing changes.
 resource: /questions/tpcds-dsdgen-version-output-identity.md
-tags: [question, tpc-ds, generator]
+tags:
+- question
+- tpc-ds
+- generator
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/tpcds/
-    accessed: "2026-09-02"
-  - resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
-    accessed: "2026-09-02"
-  - resource: https://github.com/gregrahn/tpcds-kit
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/tpcds/
+  accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
+  accessed: "2026-09-02"
+- resource: https://github.com/gregrahn/tpcds-kit
+  accessed: "2026-09-02"
 ---
 
 # Question

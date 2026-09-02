@@ -3,16 +3,22 @@ type: Source
 title: MySQL 9.7 Reference Manual — The JSON Data Type
 description: JSON columns validate on insert, store a binary form with sorted keys where the last duplicate key wins, are size-limited by max_allowed_packet and are indexable only through generated columns.
 resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
-tags: [mysql, json, type-mapping]
+tags:
+- mysql
+- json
+- type-mapping
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
-    title: The JSON Data Type
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
+  title: The JSON Data Type
+  accessed: "2026-09-02"
 ---
 
 # What was read

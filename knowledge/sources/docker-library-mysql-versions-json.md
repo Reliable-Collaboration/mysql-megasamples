@@ -3,17 +3,23 @@ type: Source
 title: docker-library/mysql versions.json
 description: Machine-readable list of versions currently built for the official mysql Docker image; 9.7.2, 8.4.11 and 26.7.0 on 2026-09-02.
 resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
-tags: [docker, mysql, image]
+tags:
+- docker
+- mysql
+- image
 status: stable
 trust: verified
 stale_after: "2026-10-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:05:32Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:05:32Z"
 sources:
-  - resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
-    title: versions.json on master
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/docker-library/mysql/master/versions.json
+  title: versions.json on master
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://raw.githubusercontent.com/docker-library/mysql/master/versions.json, “versions.json on master”, accessed 2026-09-02

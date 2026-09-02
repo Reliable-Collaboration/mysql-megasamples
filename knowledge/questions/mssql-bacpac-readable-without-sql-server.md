@@ -3,14 +3,19 @@ type: Open Question
 title: Can a WideWorldImporters .bacpac be read without SQL Server (to allow arm64 builders)?
 description: A .bacpac is documented only as an importable DacFx package ("compressed but not encrypted"); its internal layout (zip with model.xml and per-table BCP-native data files) is not documented on the page read, so direct parsing is inferred and unverified.
 resource: /questions/mssql-bacpac-readable-without-sql-server.md
-tags: [open-question, wideworldimporters, bacpac]
+tags:
+- open-question
+- wideworldimporters
+- bacpac
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
-    title: Data-tier applications overview (Learn)
-    accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/relational-databases/data-tier-applications/data-tier-applications
+  title: Data-tier applications overview (Learn)
+  accessed: "2026-09-02"
 ---
 
 # Question

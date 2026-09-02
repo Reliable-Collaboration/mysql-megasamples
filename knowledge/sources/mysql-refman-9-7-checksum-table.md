@@ -3,16 +3,22 @@ type: Source
 title: "MySQL 9.7 Reference Manual: CHECKSUM TABLE Statement"
 description: What CHECKSUM TABLE computes and why it is not portable across versions or engines.
 resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:21:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:21:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:21:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:21:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
-    title: "MySQL 9.7 Reference Manual: CHECKSUM TABLE Statement"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
+  title: "MySQL 9.7 Reference Manual: CHECKSUM TABLE Statement"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html, “MySQL 9.7 Reference Manual: CHECKSUM TABLE Statement”, accessed 2026-09-02

@@ -3,17 +3,23 @@ type: Source
 title: DELETIONS.txt — CMU Enron corpus removal history
 description: The 41-line file listing which message files were removed from the corpus at the request of authors or recipients, by version date.
 resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
-tags: [source, enron, personal-data]
+tags:
+- source
+- enron
+- personal-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
-    title: DELETIONS.txt
-    accessed: "2026-09-02"
-    version: 1,191 bytes, 41 lines
+- resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
+  title: DELETIONS.txt
+  accessed: "2026-09-02"
+  version: 1,191 bytes, 41 lines
 ---
 
 # What was read

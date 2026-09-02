@@ -1,18 +1,23 @@
 ---
 type: Source
 title: "Docker Docs: Multi-stage builds"
-description: "Multiple FROM stages, COPY --from, --target, external images as stages, BuildKit builds only needed stages."
+description: Multiple FROM stages, COPY --from, --target, external images as stages, BuildKit builds only needed stages.
 resource: https://docs.docker.com/build/building/multi-stage/
-tags: [docker, build]
+tags:
+- docker
+- build
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/build/building/multi-stage/
-    title: "Docker Docs: Multi-stage builds"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/build/building/multi-stage/
+  title: "Docker Docs: Multi-stage builds"
+  accessed: "2026-09-02"
 ---
 
 # What was read

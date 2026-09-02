@@ -3,16 +3,22 @@ type: Source
 title: MySQL 9.7 Reference Manual — Fractional Seconds in Time Values
 description: DATETIME/TIMESTAMP carry at most 6 fractional digits; extra digits are rounded by default, truncated under TIME_TRUNCATE_FRACTIONAL.
 resource: https://dev.mysql.com/doc/refman/9.7/en/fractional-seconds.html
-tags: [mysql, datetime, type-mapping]
+tags:
+- mysql
+- datetime
+- type-mapping
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/fractional-seconds.html
-    title: Fractional Seconds in Time Values
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/fractional-seconds.html
+  title: Fractional Seconds in Time Values
+  accessed: "2026-09-02"
 ---
 
 # What was read

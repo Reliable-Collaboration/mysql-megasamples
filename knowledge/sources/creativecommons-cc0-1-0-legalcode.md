@@ -3,16 +3,21 @@ type: Source
 title: CC0 1.0 Universal legal code
 description: Sections 2 (Waiver) and 3 (Public License Fallback) of CC0, read for the palmerpenguins data.
 resource: https://creativecommons.org/publicdomain/zero/1.0/legalcode
-tags: [license, cc0]
+tags:
+- license
+- cc0
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://creativecommons.org/publicdomain/zero/1.0/legalcode
-    title: CC0 1.0 Universal
-    accessed: "2026-09-02"
+- resource: https://creativecommons.org/publicdomain/zero/1.0/legalcode
+  title: CC0 1.0 Universal
+  accessed: "2026-09-02"
 ---
 
 # What was read

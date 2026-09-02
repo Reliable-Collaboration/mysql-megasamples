@@ -3,34 +3,43 @@ type: Tool
 title: MediaWiki dump parsing (pages-articles XML via mwxml or iterparse; .sql.gz tables via mwsql or direct load)
 description: How the Simple English Wikipedia dumps get into MySQL — stream the XML for page text and revisions, and load the MediaWiki-produced .sql.gz files directly after DDL fix-ups.
 resource: https://github.com/mediawiki-utilities/python-mwxml
-tags: [tool, mediawiki, xml, python, mysql-load, text-group]
+tags:
+- tool
+- mediawiki
+- xml
+- python
+- mysql-load
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://github.com/mediawiki-utilities/python-mwxml
-    title: python-mwxml README
-    accessed: "2026-09-02"
-  - resource: https://pypi.org/pypi/mwxml/json
-    title: PyPI metadata for mwxml
-    accessed: "2026-09-02"
-    version: 0.3.8 (uploaded 2026-04-08)
-  - resource: https://github.com/mediawiki-utilities/python-mwsql
-    title: python-mwsql README
-    accessed: "2026-09-02"
-  - resource: https://pypi.org/pypi/mwsql/json
-    title: PyPI metadata for mwsql
-    accessed: "2026-09-02"
-    version: 1.0.4 (uploaded 2024-02-19)
-  - resource: https://www.mediawiki.org/xml/export-0.11.xsd
-    title: MediaWiki export schema 0.11
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
-    title: first 8 KB of the redirect SQL dump (header + first INSERT)
-    accessed: "2026-09-02"
-    version: "20260901"
+- resource: https://github.com/mediawiki-utilities/python-mwxml
+  title: python-mwxml README
+  accessed: "2026-09-02"
+- resource: https://pypi.org/pypi/mwxml/json
+  title: PyPI metadata for mwxml
+  accessed: "2026-09-02"
+  version: 0.3.8 (uploaded 2026-04-08)
+- resource: https://github.com/mediawiki-utilities/python-mwsql
+  title: python-mwsql README
+  accessed: "2026-09-02"
+- resource: https://pypi.org/pypi/mwsql/json
+  title: PyPI metadata for mwsql
+  accessed: "2026-09-02"
+  version: 1.0.4 (uploaded 2024-02-19)
+- resource: https://www.mediawiki.org/xml/export-0.11.xsd
+  title: MediaWiki export schema 0.11
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
+  title: first 8 KB of the redirect SQL dump (header + first INSERT)
+  accessed: "2026-09-02"
+  version: "20260901"
 ---
 
 # Two input formats, two paths

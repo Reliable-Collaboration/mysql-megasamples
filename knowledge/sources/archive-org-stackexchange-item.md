@@ -3,16 +3,22 @@ type: Source
 title: archive.org item "Stack Exchange Data Dump" — details page
 description: The public Internet Archive item that hosted the quarterly dumps until 2024; item description, license URL and headline size.
 resource: https://archive.org/details/stackexchange
-tags: [source, stackexchange, download]
+tags:
+- source
+- stackexchange
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.org/details/stackexchange
-    title: Stack Exchange Data Dump
-    accessed: "2026-09-02"
+- resource: https://archive.org/details/stackexchange
+  title: Stack Exchange Data Dump
+  accessed: "2026-09-02"
 ---
 
 # What was read

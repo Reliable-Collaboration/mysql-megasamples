@@ -3,17 +3,22 @@ type: Decision
 title: Lahman conversion path - vendor SABR's 2025 CSV release, load with explicit DDL
 description: Use the SABR Version 2025 CSV set (not the SQL Server .bak, not the Access .mdb, not GitHub mirrors), commit the files under CC BY-SA 3.0, strip BOMs, load with LOAD DATA / generated INSERTs into typed tables with composite keys.
 resource: /decisions/lahman-conversion-path.md
-tags: [lahman, decision, csv]
+tags:
+- lahman
+- decision
+- csv
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://sabr.org/lahman-database/
-    title: SABR Lahman page (formats)
-    accessed: "2026-09-02"
-  - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
-    title: readme 2025
-    accessed: "2026-09-02"
+- resource: https://sabr.org/lahman-database/
+  title: SABR Lahman page (formats)
+  accessed: "2026-09-02"
+- resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
+  title: readme 2025
+  accessed: "2026-09-02"
 ---
 
 # Question

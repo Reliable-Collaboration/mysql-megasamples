@@ -3,22 +3,29 @@ type: Source
 title: DS3 Small CSV data files (inspection, 2026-09-02)
 description: Sizes, line counts, encoding and sample rows of the committed Small data set, including the 200,000-row reviews and 4,106,382-row review_helpfulness files.
 resource: https://github.com/dvdstore/ds3/tree/master/ds3/data_files
-tags: [dvdstore, ds3, csv, measurement]
+tags:
+- dvdstore
+- ds3
+- csv
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/dvdstore/ds3/git/trees/HEAD?recursive=1
-    title: repository tree with blob sizes
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/us_cust.csv
-    title: us_cust.csv, row_cust.csv, prod/prod.csv, prod/inv.csv, membership/membership.csv, orders/*_orders.csv, *_orderlines.csv, *_cust_hist.csv (fetched and counted)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/reviews.csv
-    title: reviews.csv and review_helpfulness.csv (HEAD + HTTP Range on head and tail only)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/dvdstore/ds3/git/trees/HEAD?recursive=1
+  title: repository tree with blob sizes
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/cust/us_cust.csv
+  title: us_cust.csv, row_cust.csv, prod/prod.csv, prod/inv.csv, membership/membership.csv, orders/*_orders.csv, *_orderlines.csv, *_cust_hist.csv (fetched and counted)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/reviews/reviews.csv
+  title: reviews.csv and review_helpfulness.csv (HEAD + HTTP Range on head and tail only)
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Server Character Set and Collation"
-description: "Default server character set utf8mb4 and collation utf8mb4_0900_ai_ci."
+description: Default server character set utf8mb4 and collation utf8mb4_0900_ai_ci.
 resource: https://dev.mysql.com/doc/refman/9.7/en/charset-server.html
-tags: [mysql, docs, charset]
+tags:
+- mysql
+- docs
+- charset
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/charset-server.html
-    title: "MySQL 9.7 Reference Manual: Server Character Set and Collation"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 12.3.2"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/charset-server.html
+  title: "MySQL 9.7 Reference Manual: Server Character Set and Collation"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 12.3.2
 ---
 
 # What was read

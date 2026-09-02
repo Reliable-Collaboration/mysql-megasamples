@@ -3,16 +3,22 @@ type: Source
 title: GNU Free Documentation License 1.3 (fdl-1.3.txt)
 description: Plain-text license (22,955 bytes) — header, §2 and §11 quoted.
 resource: https://www.gnu.org/licenses/fdl-1.3.txt
-tags: [source, license, gfdl]
+tags:
+- source
+- license
+- gfdl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.gnu.org/licenses/fdl-1.3.txt
-    title: fdl-1.3.txt
-    accessed: "2026-09-02"
+- resource: https://www.gnu.org/licenses/fdl-1.3.txt
+  title: fdl-1.3.txt
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,16 +3,23 @@ type: Source
 title: Microsoft ODBC Driver 18 for SQL Server - license terms (LICENSE18.TXT)
 description: The proprietary Microsoft license accepted with ACCEPT_EULA=Y when installing msodbcsql18/mssql-tools18; permits install/use for development and test, contains distributable-code clauses, no production-use prohibition stated.
 resource: https://aka.ms/odbc18eula
-tags: [license, eula, odbc, mssql-tools18]
+tags:
+- license
+- eula
+- odbc
+- mssql-tools18
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://download.microsoft.com/download/1/7/c/17c9447c-dfa6-49e0-abdf-90095a85d986/odbc/eula18/LICENSE18.TXT
-    title: LICENSE18.TXT (301 redirect target of https://aka.ms/odbc18eula), 11.9 KB
-    accessed: "2026-09-02"
+- resource: https://download.microsoft.com/download/1/7/c/17c9447c-dfa6-49e0-abdf-90095a85d986/odbc/eula18/LICENSE18.TXT
+  title: LICENSE18.TXT (301 redirect target of https://aka.ms/odbc18eula), 11.9 KB
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

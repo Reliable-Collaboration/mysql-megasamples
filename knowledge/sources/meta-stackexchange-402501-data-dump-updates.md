@@ -3,16 +3,23 @@ type: Source
 title: Meta SE 402501 — "Data Dumps - updates and bug fixes" (staff, 2024-08-29)
 description: Staff changelog for the regenerated 2024-Q2 dumps — XML generator reverted to C#, license.txt and schema markdown inside each .7z, SHA256 checksums posted on Meta.
 resource: https://meta.stackexchange.com/questions/402501/data-dumps-updates-and-bug-fixes
-tags: [source, stackexchange, schema, checksums]
+tags:
+- source
+- stackexchange
+- schema
+- checksums
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/questions/402501?site=meta&filter=withbody
-    title: question body via API (owner Berthold, staff)
-    accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/questions/402501?site=meta&filter=withbody
+  title: question body via API (owner Berthold, staff)
+  accessed: "2026-09-02"
 ---
 
 # What was read

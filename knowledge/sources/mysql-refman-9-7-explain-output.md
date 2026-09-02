@@ -3,16 +3,22 @@ type: Source
 title: "MySQL 9.7 Reference Manual: EXPLAIN Output Format"
 description: Meaning of the access type values ALL, index, range, ref, eq_ref, const, fulltext and of Using index; basis for the index-usage test.
 resource: https://dev.mysql.com/doc/refman/9.7/en/explain-output.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:19:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:19:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:19:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:19:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/explain-output.html
-    title: "MySQL 9.7 Reference Manual: EXPLAIN Output Format"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/explain-output.html
+  title: "MySQL 9.7 Reference Manual: EXPLAIN Output Format"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/explain-output.html, “MySQL 9.7 Reference Manual: EXPLAIN Output Format”, accessed 2026-09-02

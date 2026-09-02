@@ -3,19 +3,26 @@ type: Decision
 title: Enron — parse the CMU maildir with Python's email stdlib into a three-table schema
 description: Choose a purpose-written parser over reusing third-party SQL dumps for the Enron corpus.
 resource: /decisions/enron-conversion-path.md
-tags: [decision, enron, conversion-path, text-group]
+tags:
+- decision
+- enron
+- conversion-path
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.cs.cmu.edu/~enron/
-    accessed: "2026-09-02"
-  - resource: https://www.ah-ruhe.de/enron-email-data/
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/ftrain/enron-sqlite3/master/README.md
-    accessed: "2026-09-02"
+- resource: https://www.cs.cmu.edu/~enron/
+  accessed: "2026-09-02"
+- resource: https://www.ah-ruhe.de/enron-email-data/
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/ftrain/enron-sqlite3/master/README.md
+  accessed: "2026-09-02"
 ---
 
 # Question

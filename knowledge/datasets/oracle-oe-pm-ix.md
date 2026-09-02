@@ -3,35 +3,48 @@ type: Dataset
 title: Oracle OE (Order Entry) with the archived OC, PM and IX schemas
 description: The object-relational Order Entry schema (7 relational tables, 11,140 rows incl. 8,640 multilingual product descriptions) is worth carrying in flattened form as oracle_oe; the OC object views, PM LOB/nested-table media schema and IX AQ queues are dropped.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/order_entry
-tags: [tier-core, oracle, oe, oc, pm, ix, archived, object-relational, encoding-canary, mit]
+tags:
+- tier-core
+- oracle
+- oe
+- oc
+- pm
+- ix
+- archived
+- object-relational
+- encoding-canary
+- mit
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
-    title: Releases, tags, tree sizes (where the archived schemas live)
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
-    title: OE/OC/PM scripts at v23.3, IX at v19.2
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-readme-and-license.md
-    title: README (archived status), LICENSE.txt
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
-    title: Oracle Sample Schemas guide (OE/PM pages, IX/BI/QS removed)
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-sql-language-reference-23-data-types.md
-    title: Oracle data types (TSLTZ, NUMBER)
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-spatial-type-overview.md
-    title: MySQL spatial SRID attribute
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-fractional-seconds.md
-    title: MySQL fractional seconds
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
+  title: Releases, tags, tree sizes (where the archived schemas live)
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
+  title: OE/OC/PM scripts at v23.3, IX at v19.2
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-readme-and-license.md
+  title: README (archived status), LICENSE.txt
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
+  title: Oracle Sample Schemas guide (OE/PM pages, IX/BI/QS removed)
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-sql-language-reference-23-data-types.md
+  title: Oracle data types (TSLTZ, NUMBER)
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-spatial-type-overview.md
+  title: MySQL spatial SRID attribute
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-fractional-seconds.md
+  title: MySQL fractional seconds
+  accessed: "2026-09-02"
 ---
 
 # Identity

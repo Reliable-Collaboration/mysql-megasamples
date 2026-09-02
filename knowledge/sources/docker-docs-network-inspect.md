@@ -1,18 +1,23 @@
 ---
 type: Source
 title: "Docker Docs: docker network inspect"
-description: "Synopsis and --format option for inspecting a network's configuration."
+description: Synopsis and --format option for inspecting a network's configuration.
 resource: https://docs.docker.com/reference/cli/docker/network/inspect/
-tags: [docker, cli]
+tags:
+- docker
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/reference/cli/docker/network/inspect/
-    title: "Docker Docs: docker network inspect"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/reference/cli/docker/network/inspect/
+  title: "Docker Docs: docker network inspect"
+  accessed: "2026-09-02"
 ---
 
 # What was read

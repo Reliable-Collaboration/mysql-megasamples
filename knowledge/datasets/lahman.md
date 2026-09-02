@@ -3,26 +3,33 @@ type: Dataset
 title: Lahman Baseball Database (SABR, Version 2025)
 description: Sean Lahman's historical MLB statistics 1871-2025, now published by SABR as 27 CSV tables (plus Access and SQL Server forms) under CC BY-SA 3.0; sizes and encoding still to be measured because the download is a Box share.
 resource: https://sabr.org/lahman-database/
-tags: [tier-core, csv, lahman, baseball, cc-by-sa-3-0]
+tags:
+- tier-core
+- csv
+- lahman
+- baseball
+- cc-by-sa-3-0
 status: stable
 trust: inferred
 stale_after: "2027-01-15"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:48:59Z"
 sources:
-  - resource: https://sabr.org/lahman-database/
-    title: SABR Lahman Baseball Database page
-    accessed: "2026-09-02"
-    version: Version 2025 (released 2026-01-02; BOM update 2026-02-18)
-  - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
-    title: readme2025.txt
-    accessed: "2026-09-02"
-    version: "Release Date: Dec 10, 2025"
-  - resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
-    title: Box share for the CSV version (probe only)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
-    title: former GitHub mirror (404)
-    accessed: "2026-09-02"
+- resource: https://sabr.org/lahman-database/
+  title: SABR Lahman Baseball Database page
+  accessed: "2026-09-02"
+  version: Version 2025 (released 2026-01-02; BOM update 2026-02-18)
+- resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
+  title: readme2025.txt
+  accessed: "2026-09-02"
+  version: "Release Date: Dec 10, 2025"
+- resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
+  title: Box share for the CSV version (probe only)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
+  title: former GitHub mirror (404)
+  accessed: "2026-09-02"
 ---
 
 # Identity

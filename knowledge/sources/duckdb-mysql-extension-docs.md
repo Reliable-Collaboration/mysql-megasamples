@@ -3,17 +3,23 @@ type: Source
 title: DuckDB MySQL extension documentation
 description: What the DuckDB docs state about attaching to MySQL and writing into it; notably they do not describe the bulk-insert mechanism.
 resource: https://duckdb.org/docs/stable/core_extensions/mysql
-tags: [duckdb, mysql, tool]
+tags:
+- duckdb
+- mysql
+- tool
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-    title: MySQL Extension - DuckDB documentation
-    accessed: "2026-09-02"
-    version: docs "current" channel; the page did not print a version number
+- resource: https://duckdb.org/docs/current/core_extensions/mysql.html
+  title: MySQL Extension - DuckDB documentation
+  accessed: "2026-09-02"
+  version: docs "current" channel; the page did not print a version number
 stale_after: "2027-03-01"
 ---
 

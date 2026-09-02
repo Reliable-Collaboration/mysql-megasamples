@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - Use Unicode character format to import or export data (bcp -w)
 description: bcp -w writes UTF-16 with a 0xFFFE byte-order mark, tab/newline terminators; recommended when extended characters would be lost in -c.
 resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/use-unicode-character-format-to-import-or-export-data-sql-server
-tags: [bcp, encoding, docs]
+tags:
+- bcp
+- encoding
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/use-unicode-character-format-to-import-or-export-data-sql-server
-    title: Use Unicode Character Format to Import & Export Data - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2026-02-10, updated_at 2026-08-24, git commit 58c9ba7063458281263c05cba4e0e8dc7da7358a
+- resource: https://learn.microsoft.com/en-us/sql/relational-databases/import-export/use-unicode-character-format-to-import-or-export-data-sql-server
+  title: Use Unicode Character Format to Import & Export Data - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2026-02-10, updated_at 2026-08-24, git commit 58c9ba7063458281263c05cba4e0e8dc7da7358a
 ---
 
 # What was read

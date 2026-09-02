@@ -3,17 +3,23 @@ type: Source
 title: electrum/ssb-dbgen (original SSBM dbgen README and CHANGES)
 description: The older SSB generator fork carrying the original UMass README; documents -T table letters and the supplier-cardinality fix.
 resource: https://github.com/electrum/ssb-dbgen
-tags: [ssb, dbgen, github]
+tags:
+- ssb
+- dbgen
+- github
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/electrum/ssb-dbgen/master/README
-    title: README (SSBM dbgen readme)
-    accessed: "2026-09-02"
-    version: master; pushed_at 2024-03-11; GitHub license null; 124 stars
+- resource: https://raw.githubusercontent.com/electrum/ssb-dbgen/master/README
+  title: README (SSBM dbgen readme)
+  accessed: "2026-09-02"
+  version: master; pushed_at 2024-03-11; GitHub license null; 124 stars
 ---
 
 # What was read

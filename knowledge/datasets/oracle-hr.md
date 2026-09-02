@@ -3,32 +3,40 @@ type: Dataset
 title: Oracle HR (Human Resources) sample schema
 description: The 7-table, 216-row teaching schema from Oracle's db-sample-schemas v23.3, converted from its plain INSERT scripts; the foundation OE depends on.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/human_resources
-tags: [tier-core, oracle, hr, small, mit]
+tags:
+- tier-core
+- oracle
+- hr
+- small
+- mit
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
-    title: Releases, tags, tree sizes
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-hr-scripts.md
-    title: hr_install/hr_create/hr_populate/hr_code scripts
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-readme-and-license.md
-    title: README and LICENSE.txt
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
-    title: Oracle Sample Schemas guide (HR pages)
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-docs-sql-language-reference-23-data-types.md
-    title: Oracle data types
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-char.md
-    title: MySQL CHAR semantics
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
+  title: Releases, tags, tree sizes
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-hr-scripts.md
+  title: hr_install/hr_create/hr_populate/hr_code scripts
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-readme-and-license.md
+  title: README and LICENSE.txt
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-database-sample-schemas-guide-23-comsc.md
+  title: Oracle Sample Schemas guide (HR pages)
+  accessed: "2026-09-02"
+- resource: /sources/oracle-docs-sql-language-reference-23-data-types.md
+  title: Oracle data types
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-char.md
+  title: MySQL CHAR semantics
+  accessed: "2026-09-02"
 ---
 
 # Identity

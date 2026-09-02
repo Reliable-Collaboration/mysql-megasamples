@@ -3,16 +3,22 @@ type: Source
 title: Oracle Database 23 SQL Language Reference — Data Types
 description: Authoritative statements on NUMBER precision/scale, DATE contents, VARCHAR2 limits, TIMESTAMP WITH LOCAL TIME ZONE normalisation and CHAR padding used for the Oracle-to-MySQL type mapping.
 resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html
-tags: [oracle, data-types, type-mapping]
+tags:
+- oracle
+- data-types
+- type-mapping
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html
-    title: Data Types (SQL Language Reference 23)
-    accessed: "2026-09-02"
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/sqlrf/Data-Types.html
+  title: Data Types (SQL Language Reference 23)
+  accessed: "2026-09-02"
 ---
 
 # What was read

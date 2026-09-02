@@ -3,24 +3,32 @@ type: Tool
 title: tpch-kit (TPC-H dbgen/qgen 2.17.3, GitHub mirror by gregrahn)
 description: Reference C generator for TPC-H data and the 22 query templates with SF=1 answers; built with make in a builder stage; output is pipe-delimited .tbl with a trailing pipe.
 resource: https://github.com/gregrahn/tpch-kit
-tags: [tool, tpc-h, generator, c, tpc-eula]
+tags:
+- tool
+- tpc-h
+- generator
+- c
+- tpc-eula
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/gregrahn/tpch-kit
-    title: gregrahn/tpch-kit (README, Makefile, tpcd.h, dss.ddl, dss.ri, TPC README, release.h, answers/q1.out)
-    accessed: "2026-09-02"
-    version: commit 852ad0a5ee31ebefeed884cea4188781dd9613a3 (2018-05-07)
-  - resource: https://github.com/electrum/tpch-dbgen
-    title: electrum/tpch-dbgen (README, makefile.suite, release.h)
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-    title: TPC-H spec 3.0.1
-    accessed: "2026-09-02"
+- resource: https://github.com/gregrahn/tpch-kit
+  title: gregrahn/tpch-kit (README, Makefile, tpcd.h, dss.ddl, dss.ri, TPC README, release.h, answers/q1.out)
+  accessed: "2026-09-02"
+  version: commit 852ad0a5ee31ebefeed884cea4188781dd9613a3 (2018-05-07)
+- resource: https://github.com/electrum/tpch-dbgen
+  title: electrum/tpch-dbgen (README, makefile.suite, release.h)
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
+  title: TPC-H spec 3.0.1
+  accessed: "2026-09-02"
 ---
 
 # Facts

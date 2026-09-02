@@ -3,16 +3,22 @@ type: Source
 title: "MySQL 9.7 Reference Manual: Aggregate Functions"
 description: Definitions of BIT_XOR, SUM, COUNT(DISTINCT), GROUP_CONCAT and their NULL handling; the basis for the per-table checksum design.
 resource: https://dev.mysql.com/doc/refman/9.7/en/aggregate-functions.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:19:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:19:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:19:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:19:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/aggregate-functions.html
-    title: "MySQL 9.7 Reference Manual: Aggregate Functions"
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/aggregate-functions.html
+  title: "MySQL 9.7 Reference Manual: Aggregate Functions"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/aggregate-functions.html, “MySQL 9.7 Reference Manual: Aggregate Functions”, accessed 2026-09-02

@@ -3,16 +3,22 @@ type: Source
 title: MySQL 9.7 Reference Manual — Spatial Data Types (overview)
 description: Spatial columns may carry an SRID attribute (e.g. POINT SRID 4326) which restricts stored values to that SRID and enables SPATIAL indexes in InnoDB.
 resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
-tags: [mysql, spatial, type-mapping]
+tags:
+- mysql
+- spatial
+- type-mapping
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
-    title: Spatial Data Types
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
+  title: Spatial Data Types
+  accessed: "2026-09-02"
 ---
 
 # What was read

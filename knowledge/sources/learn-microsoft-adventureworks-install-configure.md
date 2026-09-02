@@ -3,17 +3,22 @@ type: Source
 title: Microsoft Learn - AdventureWorks sample databases (install and configure)
 description: Official download table of AdventureWorks OLTP/DW/LT .bak files by SQL Server version (2008R2-2025), restore instructions, and the pointer to the OLTP/DW install-script zips.
 resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
-tags: [adventureworks, docs]
+tags:
+- adventureworks
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
-    title: AdventureWorks sample databases - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2026-03-16, updated_at 2026-08-27, git commit 0e15016bdadf2052263550047d86e9d8eef54be5
+- resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
+  title: AdventureWorks sample databases - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2026-03-16, updated_at 2026-08-27, git commit 0e15016bdadf2052263550047d86e9d8eef54be5
 ---
 
 # What was read

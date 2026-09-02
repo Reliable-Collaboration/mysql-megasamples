@@ -3,20 +3,26 @@ type: Source
 title: Divvy S3 tripdata bucket listing and archive inspection
 description: The full S3 index of divvy-tripdata with sizes, plus the CSV headers of the old quarterly and new monthly schemas read over range requests.
 resource: https://divvy-tripdata.s3.amazonaws.com/
-tags: [divvy, download, measurement]
+tags:
+- divvy
+- download
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://divvy-tripdata.s3.amazonaws.com/
-    title: S3 ListBucket XML for divvy-tripdata
-    accessed: "2026-09-02"
-    version: 95 keys, IsTruncated=false
-  - resource: https://divvy-tripdata.s3.amazonaws.com/202004-divvy-tripdata.zip
-    title: 202004 archive (central directory + first CSV block)
-    accessed: "2026-09-02"
+- resource: https://divvy-tripdata.s3.amazonaws.com/
+  title: S3 ListBucket XML for divvy-tripdata
+  accessed: "2026-09-02"
+  version: 95 keys, IsTruncated=false
+- resource: https://divvy-tripdata.s3.amazonaws.com/202004-divvy-tripdata.zip
+  title: 202004 archive (central directory + first CSV block)
+  accessed: "2026-09-02"
 stale_after: "2026-12-01"
 ---
 

@@ -3,20 +3,27 @@ type: Source
 title: sql-bi/Contoso-Data-Generator-V2-Data README and release assets
 description: The ready-to-use data repository (MIT) - release "ready-to-use-data" (2025-09-21) with csv/parquet/delta/pbix/bak archives for 10k, 100k, 1M, 10M, 100M orders; older "ready-to-use-data-2024" and "static-files" releases.
 resource: https://github.com/sql-bi/Contoso-Data-Generator-V2-Data/releases/tag/ready-to-use-data
-tags: [contoso, data, releases, sizes]
+tags:
+- contoso
+- data
+- releases
+- sizes
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/README.md
-    title: README.md (239 bytes)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
-    title: releases with assets (paginated)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/README.md
+  title: README.md (239 bytes)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
+  title: releases with assets (paginated)
+  accessed: "2026-09-02"
 ---
 
 # What was read

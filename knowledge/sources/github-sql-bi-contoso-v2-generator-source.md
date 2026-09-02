@@ -3,31 +3,39 @@ type: Source
 title: Contoso V2 generator source (DatabaseGenerator.csproj, Config.cs, Engine.cs, Engine_Setup.cs, MyRnd.cs, Program.cs)
 description: Confirms net8.0 target, the config schema, and that all random generators are seeded with constants (Random(0), per-day seed from the date) - no user-facing seed parameter.
 resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
-tags: [contoso, generator, source, determinism, dotnet]
+tags:
+- contoso
+- generator
+- source
+- determinism
+- dotnet
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/DatabaseGenerator.csproj
-    title: DatabaseGenerator.csproj
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Config.cs
-    title: Config.cs
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
-    title: Engine.cs (grep Random)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine_Setup.cs
-    title: Engine_Setup.cs (lines 170-185, grep)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/MyRnd.cs
-    title: MyRnd.cs
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Program.cs
-    title: Program.cs (grep)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/DatabaseGenerator.csproj
+  title: DatabaseGenerator.csproj
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Config.cs
+  title: Config.cs
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine.cs
+  title: Engine.cs (grep Random)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Engine_Setup.cs
+  title: Engine_Setup.cs (lines 170-185, grep)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/MyRnd.cs
+  title: MyRnd.cs
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/DatabaseGenerator/Program.cs
+  title: Program.cs (grep)
+  accessed: "2026-09-02"
 ---
 
 # What was read

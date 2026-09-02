@@ -3,26 +3,33 @@ type: Source
 title: Percona-Lab/tpcc-mysql (archived C implementation of a TPC-C-like load and driver for MySQL)
 description: Read README, create_table.sql, add_fkey_idx.sql, Dockerfile, load.sh, src/tpc.h, src/load.c, src/support.c; no license file exists and the repository is archived.
 resource: https://github.com/Percona-Lab/tpcc-mysql
-tags: [tpc-c, mysql, github, archived]
+tags:
+- tpc-c
+- mysql
+- github
+- archived
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/README.md
-    title: README.md
-    accessed: "2026-09-02"
-    version: master @ 1ec1c5eb5b11b55ecf26f81a74db86b659c4e7b9 (2017-01-20, latest commit); GitHub API archived=true, license=null, pushed_at 2018-06-13, 487 stars
-  - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/create_table.sql
-    title: create_table.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/add_fkey_idx.sql
-    title: add_fkey_idx.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/src/load.c
-    title: src/load.c (+ src/tpc.h, src/support.c, Dockerfile, load.sh)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/README.md
+  title: README.md
+  accessed: "2026-09-02"
+  version: master @ 1ec1c5eb5b11b55ecf26f81a74db86b659c4e7b9 (2017-01-20, latest commit); GitHub API archived=true, license=null, pushed_at 2018-06-13, 487 stars
+- resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/create_table.sql
+  title: create_table.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/add_fkey_idx.sql
+  title: add_fkey_idx.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/Percona-Lab/tpcc-mysql/master/src/load.c
+  title: src/load.c (+ src/tpc.h, src/support.c, Dockerfile, load.sh)
+  accessed: "2026-09-02"
 ---
 
 # What was read

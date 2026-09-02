@@ -3,24 +3,31 @@ type: Source
 title: Oracle Database Free FAQ and Get Started pages (oracle.com)
 description: Resource limits (2 CPUs, 2 GB RAM, 12 GB user data), production/support statements, the docker pull command, RPM sizes and platforms (x86-64 and aarch64) for Oracle AI Database 26ai Free.
 resource: https://www.oracle.com/database/free/faq/
-tags: [oracle, oracle-database-free, limits, container]
+tags:
+- oracle
+- oracle-database-free
+- limits
+- container
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.oracle.com/database/free/faq/
-    title: Oracle Database Free FAQ
-    accessed: "2026-09-02"
-  - resource: https://www.oracle.com/database/free/get-started/
-    title: Oracle AI Database Free – Quick Start
-    accessed: "2026-09-02"
-    version: 26ai (23.26.3)
-  - resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/dblic/Licensing-Information.html
-    title: Database Licensing Information User Manual (23/dblic)
-    accessed: "2026-09-02"
+- resource: https://www.oracle.com/database/free/faq/
+  title: Oracle Database Free FAQ
+  accessed: "2026-09-02"
+- resource: https://www.oracle.com/database/free/get-started/
+  title: Oracle AI Database Free – Quick Start
+  accessed: "2026-09-02"
+  version: 26ai (23.26.3)
+- resource: https://docs.oracle.com/en/database/oracle/oracle-database/23/dblic/Licensing-Information.html
+  title: Database Licensing Information User Manual (23/dblic)
+  accessed: "2026-09-02"
 ---
 
 # What was read

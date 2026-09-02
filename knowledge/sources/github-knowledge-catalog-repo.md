@@ -1,19 +1,24 @@
 ---
 type: Source
-title: "GoogleCloudPlatform/knowledge-catalog repository tree"
+title: GoogleCloudPlatform/knowledge-catalog repository tree
 description: "Contains okf/ (a copy of the OKF repo layout: SPEC.md, src/reference_agent, tests) and toolbox/ (mdcode, enrichment); no validator."
 resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
-tags: [okf, validator]
+tags:
+- okf
+- validator
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
-    title: "GoogleCloudPlatform/knowledge-catalog repository tree"
-    accessed: "2026-09-02"
-    version: "main branch, read via GitHub API on 2026-09-02"
+- resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
+  title: GoogleCloudPlatform/knowledge-catalog repository tree
+  accessed: "2026-09-02"
+  version: main branch, read via GitHub API on 2026-09-02
 ---
 
 # What was read

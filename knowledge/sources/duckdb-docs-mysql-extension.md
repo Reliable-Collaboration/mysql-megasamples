@@ -3,16 +3,22 @@ type: Source
 title: DuckDB documentation — MySQL extension (ATTACH a MySQL database)
 description: DuckDB can attach a MySQL server and insert into its tables directly, an alternative to writing .tbl files.
 resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-tags: [duckdb, mysql, extension]
+tags:
+- duckdb
+- mysql
+- extension
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-    title: MySQL Extension
-    accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/mysql.html
+  title: MySQL Extension
+  accessed: "2026-09-02"
 ---
 
 # What was read

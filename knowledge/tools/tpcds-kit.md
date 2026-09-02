@@ -3,21 +3,29 @@ type: Tool
 title: tpcds-kit (TPC-DS dsdgen/dsqgen 2.10.0, GitHub mirror by gregrahn)
 description: Reference C generator for the 24 TPC-DS tables and the 99 query templates with dialect files; integer scale factors only; deterministic RNG seed; ships a MySQL test script.
 resource: https://github.com/gregrahn/tpcds-kit
-tags: [tool, tpc-ds, generator, c, tpc-eula]
+tags:
+- tool
+- tpc-ds
+- generator
+- c
+- tpc-eula
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/gregrahn/tpcds-kit
-    title: gregrahn/tpcds-kit (README, EULA, tools/params.h, tools/release.h, tools/tpcds.sql, query_templates/*.tpl, tests/mysql_setup.sh)
-    accessed: "2026-09-02"
-    version: commit 5a3a81796992b725c2a8b216767e142609966752 (2020-03-11)
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
-    title: TPC-DS spec 2.10.0
-    accessed: "2026-09-02"
+- resource: https://github.com/gregrahn/tpcds-kit
+  title: gregrahn/tpcds-kit (README, EULA, tools/params.h, tools/release.h, tools/tpcds.sql, query_templates/*.tpl, tests/mysql_setup.sh)
+  accessed: "2026-09-02"
+  version: commit 5a3a81796992b725c2a8b216767e142609966752 (2020-03-11)
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
+  title: TPC-DS spec 2.10.0
+  accessed: "2026-09-02"
 ---
 
 # Facts

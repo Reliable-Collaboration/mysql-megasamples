@@ -3,17 +3,23 @@ type: Source
 title: dumps.wikimedia.org/wikidatawiki/latest/ SQL/XML listing (run 20260801, files dated 06-11 Aug 2026)
 description: Sizes of the wikidatawiki MediaWiki-table dumps (page, page_props, pagelinks, ...) showing that even metadata-only tables are multi-gigabyte.
 resource: https://dumps.wikimedia.org/wikidatawiki/latest/
-tags: [source, wikidata, size-evidence]
+tags:
+- source
+- wikidata
+- size-evidence
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2026-10-05"
 sources:
-  - resource: https://dumps.wikimedia.org/wikidatawiki/latest/
-    title: latest/ listing (grep of page*, md5sums, pages-articles-multistream*)
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/wikidatawiki/latest/
+  title: latest/ listing (grep of page*, md5sums, pages-articles-multistream*)
+  accessed: "2026-09-02"
 ---
 
 # What was read

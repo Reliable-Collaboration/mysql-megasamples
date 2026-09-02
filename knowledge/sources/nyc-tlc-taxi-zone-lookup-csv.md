@@ -3,17 +3,22 @@ type: Source
 title: TLC Taxi Zone Lookup Table (CSV)
 description: The 265-row zone dimension table that PULocationID/DOLocationID reference; downloaded and counted.
 resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
-tags: [nyc-tlc, lookup]
+tags:
+- nyc-tlc
+- lookup
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
-    title: taxi_zone_lookup.csv
-    accessed: "2026-09-02"
-    version: Content-Length 12331; Last-Modified Thu, 22 Feb 2024 21:33:00 GMT; ETag c6064b7c144c716450641f769659d178
+- resource: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
+  title: taxi_zone_lookup.csv
+  accessed: "2026-09-02"
+  version: Content-Length 12331; Last-Modified Thu, 22 Feb 2024 21:33:00 GMT; ETag c6064b7c144c716450641f769659d178
 ---
 
 # What was read

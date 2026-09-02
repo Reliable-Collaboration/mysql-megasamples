@@ -3,17 +3,22 @@ type: Source
 title: City of Chicago Data Terms of Use
 description: The City's data disclaimer page, including the exact disclaimer text a derivative application must republish.
 resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
-tags: [license, chicago]
+tags:
+- license
+- chicago
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
-    title: "City of Chicago :: Data Terms of Use"
-    accessed: "2026-09-02"
-    version: page footer "Copyright (c) 2010 - 2026 City of Chicago"
+- resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
+  title: "City of Chicago :: Data Terms of Use"
+  accessed: "2026-09-02"
+  version: page footer "Copyright (c) 2010 - 2026 City of Chicago"
 ---
 
 # What was read

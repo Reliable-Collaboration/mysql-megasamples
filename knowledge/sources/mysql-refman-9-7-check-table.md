@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: CHECK TABLE Statement"
-description: "CHECK TABLE options, InnoDB behaviour (QUICK/EXTENDED semantics, corruption handling), output columns."
+description: CHECK TABLE options, InnoDB behaviour (QUICK/EXTENDED semantics, corruption handling), output columns.
 resource: https://dev.mysql.com/doc/refman/9.7/en/check-table.html
-tags: [mysql, docs, testing]
+tags:
+- mysql
+- docs
+- testing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/check-table.html
-    title: "MySQL 9.7 Reference Manual: CHECK TABLE Statement"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 15.7.3.2"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/check-table.html
+  title: "MySQL 9.7 Reference Manual: CHECK TABLE Statement"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 15.7.3.2
 ---
 
 # What was read

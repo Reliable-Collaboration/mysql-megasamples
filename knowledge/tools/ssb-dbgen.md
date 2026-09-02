@@ -3,24 +3,32 @@ type: Tool
 title: ssb-dbgen (Star Schema Benchmark data generator, eyalroz unified fork)
 description: CMake-built C generator derived from TPC-H dbgen that writes the five SSB tables as pipe-delimited .tbl files; no license file, TPC EULA applies by derivation; no query generator.
 resource: https://github.com/eyalroz/ssb-dbgen
-tags: [tool, ssb, generator, c, tpc-eula]
+tags:
+- tool
+- ssb
+- generator
+- c
+- tpc-eula
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/eyalroz/ssb-dbgen
-    title: eyalroz/ssb-dbgen (README, CMakeLists.txt, doc/ssb.ddl, doc/ssb.ri, src/driver.c, listing)
-    accessed: "2026-09-02"
-    version: commit ae1e254aa4d603d8ef1f44078e5abed011634b23 (2025-04-26); no tags
-  - resource: https://github.com/electrum/ssb-dbgen
-    title: electrum/ssb-dbgen README/CHANGES
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/ClickHouse/clickhouse-docs/main/docs/getting-started/example-datasets/star-schema.md
-    title: ClickHouse SSB doc (uses vadimtk/ssb-dbgen)
-    accessed: "2026-09-02"
+- resource: https://github.com/eyalroz/ssb-dbgen
+  title: eyalroz/ssb-dbgen (README, CMakeLists.txt, doc/ssb.ddl, doc/ssb.ri, src/driver.c, listing)
+  accessed: "2026-09-02"
+  version: commit ae1e254aa4d603d8ef1f44078e5abed011634b23 (2025-04-26); no tags
+- resource: https://github.com/electrum/ssb-dbgen
+  title: electrum/ssb-dbgen README/CHANGES
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/ClickHouse/clickhouse-docs/main/docs/getting-started/example-datasets/star-schema.md
+  title: ClickHouse SSB doc (uses vadimtk/ssb-dbgen)
+  accessed: "2026-09-02"
 ---
 
 # Facts

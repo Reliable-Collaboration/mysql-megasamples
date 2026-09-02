@@ -3,19 +3,25 @@ type: Decision
 title: Chinook conversion path - run the upstream MySQL script with a NVARCHAR-to-utf8mb4 rewrite
 description: Use Chinook_MySql.sql v1.4.5 as-is except for replacing NVARCHAR with VARCHAR CHARACTER SET utf8mb4, an explicit utf8mb4 CREATE DATABASE, and (optionally) the lowercase database name.
 resource: /decisions/chinook-conversion-path.md
-tags: [chinook, decision, mysql-native]
+tags:
+- chinook
+- decision
+- mysql-native
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:48:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
-    title: Chinook_MySql.sql v1.4.5
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/charset-national.html
-    title: The National Character Set (9.7)
-    accessed: "2026-09-02"
+- resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
+  title: Chinook_MySql.sql v1.4.5
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/charset-national.html
+  title: The National Character Set (9.7)
+  accessed: "2026-09-02"
 ---
 
 # Question

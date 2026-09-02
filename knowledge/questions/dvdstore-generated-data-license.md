@@ -3,17 +3,23 @@ type: Open Question
 title: What license covers the DS3 Small CSV data files (generator output)?
 description: The DS3 kit is GPL-2.0-or-later, but the committed CSVs are the output of the generators; GPL section 0 says output is covered only if it is a "work based on the Program", and Dell never labelled the data separately.
 resource: /questions/dvdstore-generated-data-license.md
-tags: [dvdstore, license, gpl-2-0, data]
+tags:
+- dvdstore
+- license
+- gpl-2-0
+- data
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
-    title: gpl.txt section 0 and 2
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/prod/prod.csv
-    title: prod.csv (titles/actors embedded from ds2_data.h word lists)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/gpl.txt
+  title: gpl.txt section 0 and 2
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/data_files/prod/prod.csv
+  title: prod.csv (titles/actors embedded from ds2_data.h word lists)
+  accessed: "2026-09-02"
 ---
 
 # Question

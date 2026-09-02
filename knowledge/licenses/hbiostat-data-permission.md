@@ -3,16 +3,23 @@ type: License
 title: Vanderbilt Biostatistics (hbiostat.org/data) permission statement
 description: Blanket permission for the datasets hosted by Frank Harrell's group, with a requested acknowledgement line; not a formal open license.
 resource: https://hbiostat.org/data/
-tags: [license, permission, hbiostat, titanic]
+tags:
+- license
+- permission
+- hbiostat
+- titanic
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://hbiostat.org/data/
-    title: Vanderbilt Biostatistics Datasets
-    accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/
+  title: Vanderbilt Biostatistics Datasets
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

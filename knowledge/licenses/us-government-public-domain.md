@@ -3,19 +3,25 @@ type: License
 title: U.S. Government work (17 U.S.C. Sec. 105) - public domain
 description: Works of the U.S. federal government carry no copyright; applies to the BTS/DOT On-Time Performance data and its lookup tables.
 resource: https://www.law.cornell.edu/uscode/text/17/105
-tags: [license, public-domain, us-government]
+tags:
+- license
+- public-domain
+- us-government
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.law.cornell.edu/uscode/text/17/105
-    title: 17 U.S. Code Sec. 105
-    accessed: "2026-09-02"
-  - resource: https://www.usa.gov/government-copyright
-    title: USA.gov - copyright and other rights to government works
-    accessed: "2026-09-02"
+- resource: https://www.law.cornell.edu/uscode/text/17/105
+  title: 17 U.S. Code Sec. 105
+  accessed: "2026-09-02"
+- resource: https://www.usa.gov/government-copyright
+  title: USA.gov - copyright and other rights to government works
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

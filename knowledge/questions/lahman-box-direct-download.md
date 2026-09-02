@@ -3,17 +3,22 @@ type: Open Question
 title: How can the Lahman 2025 CSV set be fetched non-interactively (or should it be vendored)?
 description: SABR distributes the CSVs via a Box shared folder without a static download URL; guessed shared/static .zip links return 404; sizes are unknown.
 resource: /questions/lahman-box-direct-download.md
-tags: [lahman, download, build]
+tags:
+- lahman
+- download
+- build
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
-    title: Box share page probe
-    accessed: "2026-09-02"
-  - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
-    title: readme (license permits redistribution)
-    accessed: "2026-09-02"
+- resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
+  title: Box share page probe
+  accessed: "2026-09-02"
+- resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
+  title: readme (license permits redistribution)
+  accessed: "2026-09-02"
 ---
 
 # Question

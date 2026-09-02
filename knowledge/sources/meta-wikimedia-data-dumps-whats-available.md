@@ -3,16 +3,22 @@ type: Source
 title: meta.wikimedia.org "Data dumps/What's available for download"
 description: Official description of the XML/stub/SQL dump files, confirming which tables ship as SQL and that pages-articles carries current revisions of non-talk pages.
 resource: https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download
-tags: [source, wikipedia, dumps]
+tags:
+- source
+- wikipedia
+- dumps
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download
-    title: Data dumps/What's available for download
-    accessed: "2026-09-02"
+- resource: https://meta.wikimedia.org/wiki/Data_dumps/What%27s_available_for_download
+  title: Data dumps/What's available for download
+  accessed: "2026-09-02"
 ---
 
 # What was read

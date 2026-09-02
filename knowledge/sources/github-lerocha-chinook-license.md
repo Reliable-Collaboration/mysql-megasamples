@@ -3,17 +3,23 @@ type: Source
 title: lerocha/chinook-database LICENSE.md
 description: MIT license text with a custom "Chinook Database" heading and "Copyright (c) 2008-2024 Luis Rocha"; GitHub reports NOASSERTION because of the heading.
 resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/LICENSE.md
-tags: [chinook, license, mit]
+tags:
+- chinook
+- license
+- mit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/LICENSE.md
-    title: LICENSE.md
-    accessed: "2026-09-02"
-    version: master (1,117 bytes)
+- resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/LICENSE.md
+  title: LICENSE.md
+  accessed: "2026-09-02"
+  version: master (1,117 bytes)
 ---
 
 # What was read

@@ -1,19 +1,26 @@
 ---
 type: Source
 title: "MySQL 8.0 Reference Manual: CHECK Constraints (8.0.16 history)"
-description: "Before 8.0.16 CHECK constraints were parsed and ignored; from 8.0.16 they are enforced for all storage engines."
+description: Before 8.0.16 CHECK constraints were parsed and ignored; from 8.0.16 they are enforced for all storage engines.
 resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
-tags: [mysql, docs, constraints, history]
+tags:
+- mysql
+- docs
+- constraints
+- history
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
-    title: "MySQL 8.0 Reference Manual: CHECK Constraints (8.0.16 history)"
-    accessed: "2026-09-02"
-    version: "MySQL 8.0 manual, section 15.1.20.6"
+- resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
+  title: "MySQL 8.0 Reference Manual: CHECK Constraints (8.0.16 history)"
+  accessed: "2026-09-02"
+  version: MySQL 8.0 manual, section 15.1.20.6
 ---
 
 # What was read

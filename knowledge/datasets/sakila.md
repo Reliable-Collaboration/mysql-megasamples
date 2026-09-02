@@ -3,31 +3,40 @@ type: Dataset
 title: Sakila
 description: Oracle's DVD-rental sample database for MySQL (Version 1.5), 16 tables / 7 views / 3 procedures / 3 functions / 6 triggers, 46,268 rows, BSD-licensed SQL scripts.
 resource: https://dev.mysql.com/doc/sakila/en/
-tags: [tier-core, mysql-native, sakila, spatial, fulltext, bsd-3-clause]
+tags:
+- tier-core
+- mysql-native
+- sakila
+- spatial
+- fulltext
+- bsd-3-clause
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/sakila/en/
-    title: Sakila Sample Database manual
-    accessed: "2026-09-02"
-    version: revision 84779 (2026-08-04)
-  - resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
-    title: License for the Sakila Sample Database
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
-    title: Sakila Change History
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/index-other.html
-    title: Example Databases download table
-    accessed: "2026-09-02"
-  - resource: https://downloads.mysql.com/docs/sakila-db.zip
-    title: sakila-db.zip (Version 1.5)
-    accessed: "2026-09-02"
-    version: "Last-Modified 2026-08-31; md5 a80df38456f8d4f36903771b67a1129a"
+- resource: https://dev.mysql.com/doc/sakila/en/
+  title: Sakila Sample Database manual
+  accessed: "2026-09-02"
+  version: revision 84779 (2026-08-04)
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
+  title: License for the Sakila Sample Database
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
+  title: Sakila Change History
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/index-other.html
+  title: Example Databases download table
+  accessed: "2026-09-02"
+- resource: https://downloads.mysql.com/docs/sakila-db.zip
+  title: sakila-db.zip (Version 1.5)
+  accessed: "2026-09-02"
+  version: Last-Modified 2026-08-31; md5 a80df38456f8d4f36903771b67a1129a
 ---
 
 # Identity
@@ -73,7 +82,7 @@ All ported unchanged (native MySQL):
 * Procedures (3): rewards_report (`SQL SECURITY DEFINER`, creates a temporary table), film_in_stock, film_not_in_stock (OUT parameter).
 * Functions (3): get_customer_balance (DETERMINISTIC READS SQL DATA), inventory_held_by_customer, inventory_in_stock (RETURNS BOOLEAN).
 * Triggers (6): ins_film, upd_film, del_film (schema file, maintain film_text); customer_create_date, payment_date, rental_date (created inside the data file after the bulk load).
-* Definer: objects without an explicit DEFINER get the loading user (root@localhost in the entrypoint) - acceptable; note it in the image docs.
+* Definer: objects without an explicit DEFINER get the loading user (`root@localhost` in the build server); `routines.sql` then re-creates the read-only views and routines with `SQL SECURITY INVOKER` per the [account model](/decisions/database-naming-convention.md).
 
 # Indexing
 Upstream indexes are kept: primary keys, `idx_*` secondary keys, foreign keys with `ON DELETE RESTRICT ON UPDATE CASCADE`, the spatial index and the fulltext index.

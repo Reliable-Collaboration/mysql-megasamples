@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Full-Text Search Functions"
-description: "FULLTEXT on InnoDB/MyISAM CHAR, VARCHAR, TEXT columns; three search modes; load data first then create the index."
+description: FULLTEXT on InnoDB/MyISAM CHAR, VARCHAR, TEXT columns; three search modes; load data first then create the index.
 resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-search.html
-tags: [mysql, docs, fulltext]
+tags:
+- mysql
+- docs
+- fulltext
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-search.html
-    title: "MySQL 9.7 Reference Manual: Full-Text Search Functions"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 14.9"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-search.html
+  title: "MySQL 9.7 Reference Manual: Full-Text Search Functions"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 14.9
 ---
 
 # What was read

@@ -3,16 +3,23 @@ type: Source
 title: MediaWiki XML export schema 0.11 (export-0.11.xsd)
 description: The XSD that defines the pages-articles dump structure — page, revision, contributor, text and slot elements.
 resource: https://www.mediawiki.org/xml/export-0.11.xsd
-tags: [source, mediawiki, xml, schema]
+tags:
+- source
+- mediawiki
+- xml
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.mediawiki.org/xml/export-0.11.xsd
-    title: export-0.11.xsd (11,677 bytes)
-    accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/xml/export-0.11.xsd
+  title: export-0.11.xsd (11,677 bytes)
+  accessed: "2026-09-02"
 ---
 
 # What was read

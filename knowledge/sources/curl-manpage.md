@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "curl manual page: -4/-6, -I, -s/-S, --connect-timeout, -L, --retry"
-description: "Option semantics used by the IPv6 diagnostics."
+description: Option semantics used by the IPv6 diagnostics.
 resource: https://curl.se/docs/manpage.html
-tags: [curl, ipv6, cli]
+tags:
+- curl
+- ipv6
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://curl.se/docs/manpage.html
-    title: "curl manual page: -4/-6, -I, -s/-S, --connect-timeout, -L, --retry"
-    accessed: "2026-09-02"
+- resource: https://curl.se/docs/manpage.html
+  title: "curl manual page: -4/-6, -I, -s/-S, --connect-timeout, -L, --retry"
+  accessed: "2026-09-02"
 ---
 
 # What was read

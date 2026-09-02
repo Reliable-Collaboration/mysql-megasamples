@@ -3,20 +3,26 @@ type: Source
 title: Citi Bike S3 tripdata bucket listing and archive inspection
 description: The full S3 index of the tripdata bucket with sizes, plus the CSV headers of one old-schema and one new-schema archive read over range requests.
 resource: https://s3.amazonaws.com/tripdata/
-tags: [citibike, download, measurement]
+tags:
+- citibike
+- download
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://s3.amazonaws.com/tripdata/
-    title: S3 ListBucket XML for the tripdata bucket
-    accessed: "2026-09-02"
-    version: 174 keys, IsTruncated=false
-  - resource: https://s3.amazonaws.com/tripdata/JC-202602-citibike-tripdata.csv.zip
-    title: JC-202602 archive (central directory + first CSV block)
-    accessed: "2026-09-02"
+- resource: https://s3.amazonaws.com/tripdata/
+  title: S3 ListBucket XML for the tripdata bucket
+  accessed: "2026-09-02"
+  version: 174 keys, IsTruncated=false
+- resource: https://s3.amazonaws.com/tripdata/JC-202602-citibike-tripdata.csv.zip
+  title: JC-202602 archive (central directory + first CSV block)
+  accessed: "2026-09-02"
 stale_after: "2026-12-01"
 ---
 

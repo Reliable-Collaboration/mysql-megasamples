@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "PyPI: sqlglot"
-description: "Latest sqlglot release, license, dialects and the transpiler caveat."
+description: Latest sqlglot release, license, dialects and the transpiler caveat.
 resource: https://pypi.org/project/sqlglot/
-tags: [python, pypi, tools]
+tags:
+- python
+- pypi
+- tools
 status: stable
 trust: verified
 stale_after: "2026-12-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 sources:
-  - resource: https://pypi.org/project/sqlglot/
-    title: "PyPI: sqlglot"
-    accessed: "2026-09-02"
+- resource: https://pypi.org/project/sqlglot/
+  title: "PyPI: sqlglot"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://pypi.org/project/sqlglot/, “PyPI: sqlglot”, accessed 2026-09-02

@@ -1,27 +1,33 @@
 ---
 type: Tool
-title: "archive.org as a secondary mirror for upstream artifacts and release bundles"
-description: "The ia CLI / IAS3 API let the project upload redistributable upstream archives and its own bundles to archive.org items; uploads must be non-infringing (Terms of Use not readable this session); throughput and availability are undocumented, so archive.org is a fallback URL in the manifest, never the only source."
+title: archive.org as a secondary mirror for upstream artifacts and release bundles
+description: The ia CLI / IAS3 API let the project upload redistributable upstream archives and its own bundles to archive.org items; uploads must be non-infringing (Terms of Use not readable this session); throughput and availability are undocumented, so archive.org is a fallback URL in the manifest, never the only source.
 resource: https://archive.org/developers/internetarchive/
-tags: [tool, archive-org, mirroring, downloads]
+tags:
+- tool
+- archive-org
+- mirroring
+- downloads
 status: stable
 trust: inferred
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:49:47Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:49:47Z"
 sources:
-  - resource: https://archive.org/developers/internetarchive/
-    accessed: "2026-09-02"
-  - resource: https://archive.org/developers/internetarchive/cli.html
-    accessed: "2026-09-02"
-  - resource: https://archive.org/developers/ias3.html
-    accessed: "2026-09-02"
-  - resource: https://help.archive.org/help/rights/
-    accessed: "2026-09-02"
-  - resource: https://help.archive.org/help/uploading-a-basic-guide/
-    accessed: "2026-09-02"
-  - resource: /sources/build-machine-environment-2026-09-02.md
-    title: "Environment survey (archive.org has no AAAA record)"
-    accessed: "2026-09-02"
+- resource: https://archive.org/developers/internetarchive/
+  accessed: "2026-09-02"
+- resource: https://archive.org/developers/internetarchive/cli.html
+  accessed: "2026-09-02"
+- resource: https://archive.org/developers/ias3.html
+  accessed: "2026-09-02"
+- resource: https://help.archive.org/help/rights/
+  accessed: "2026-09-02"
+- resource: https://help.archive.org/help/uploading-a-basic-guide/
+  accessed: "2026-09-02"
+- resource: /sources/build-machine-environment-2026-09-02.md
+  title: Environment survey (archive.org has no AAAA record)
+  accessed: "2026-09-02"
 ---
 
 # Facts

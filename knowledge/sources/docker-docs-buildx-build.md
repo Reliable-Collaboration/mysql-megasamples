@@ -3,16 +3,22 @@ type: Source
 title: "Docker Docs: docker buildx build reference"
 description: "--network, --build-arg, --secret, --target, --cache-from/--cache-to, --output type=local, --allow network.host entitlement."
 resource: https://docs.docker.com/reference/cli/docker/buildx/build/
-tags: [docker, build, buildx]
+tags:
+- docker
+- build
+- buildx
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/reference/cli/docker/buildx/build/
-    title: "Docker Docs: docker buildx build reference"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/reference/cli/docker/buildx/build/
+  title: "Docker Docs: docker buildx build reference"
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,19 +3,25 @@ type: Source
 title: ds3/ds3_Documentation.txt (DS3 documentation, 5/15/15)
 description: Full DS3 documentation - what is new in 3, Perl-based data generation (InstallDVDStore.pl), driver usage; states the kit is open source and that Small load data is included.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_Documentation.txt
-tags: [dvdstore, ds3, documentation]
+tags:
+- dvdstore
+- ds3
+- documentation
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_Documentation.txt
-    title: ds3_Documentation.txt (Dave Jaffe, Todd Muirhead; DS2.1 features by Girish Khadke)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_faq.txt
-    title: ds3_faq.txt
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_Documentation.txt
+  title: ds3_Documentation.txt (Dave Jaffe, Todd Muirhead; DS2.1 features by Girish Khadke)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_faq.txt
+  title: ds3_faq.txt
+  accessed: "2026-09-02"
 ---
 
 # What was read

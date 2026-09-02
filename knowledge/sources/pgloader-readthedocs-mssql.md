@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "pgloader documentation: Migrating a MS SQL Database to PostgreSQL"
-description: "mssql:// source syntax; the 'latest' docs describe v4 (JDBC mssql-jdbc, no FreeTDS) while a later section on the same page still documents the FreeTDS/freetds.conf setup of v3; default casting rules."
+description: mssql:// source syntax; the 'latest' docs describe v4 (JDBC mssql-jdbc, no FreeTDS) while a later section on the same page still documents the FreeTDS/freetds.conf setup of v3; default casting rules.
 resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
-tags: [pgloader, mssql]
+tags:
+- pgloader
+- mssql
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
-    title: "pgloader documentation: Migrating a MS SQL Database to PostgreSQL"
-    accessed: "2026-09-02"
-    version: "readthedocs 'latest', read 2026-09-02"
+- resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
+  title: "pgloader documentation: Migrating a MS SQL Database to PostgreSQL"
+  accessed: "2026-09-02"
+  version: readthedocs 'latest', read 2026-09-02
 ---
 
 # What was read

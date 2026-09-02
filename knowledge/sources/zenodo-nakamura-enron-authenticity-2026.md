@@ -3,19 +3,25 @@ type: Source
 title: Zenodo 10.5281/zenodo.19425640 and 19447717 — 2026 technical reports questioning Enron corpus authenticity
 description: Two CC BY 4.0 reports (Nakamura, April 2026) linked from the CMU page; they argue some messages could have been impersonated. Recorded so the README can point to them; they do not change the data.
 resource: https://doi.org/10.5281/zenodo.19425640
-tags: [source, enron, provenance]
+tags:
+- source
+- enron
+- provenance
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://zenodo.org/api/records/19425640
-    title: Technical Report — Serious Doubt on the Authenticity of the Enron Email Corpus (2026-04-05)
-    accessed: "2026-09-02"
-  - resource: https://zenodo.org/api/records/19447717
-    title: Further Evidence on the Authenticity and Integrity of the Enron Email Corpus (2026-04-07)
-    accessed: "2026-09-02"
+- resource: https://zenodo.org/api/records/19425640
+  title: Technical Report — Serious Doubt on the Authenticity of the Enron Email Corpus (2026-04-05)
+  accessed: "2026-09-02"
+- resource: https://zenodo.org/api/records/19447717
+  title: Further Evidence on the Authenticity and Integrity of the Enron Email Corpus (2026-04-07)
+  accessed: "2026-09-02"
 ---
 
 # What was read

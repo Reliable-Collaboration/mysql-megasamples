@@ -1,36 +1,45 @@
 ---
 type: Tool
-title: "GitHub, GitHub Actions, ghcr.io and Docker Hub limits"
+title: GitHub, GitHub Actions, ghcr.io and Docker Hub limits
 description: "Hard numbers that size the repository, the release assets, the CI build and the registry image: 100 MiB file block, < 1 GB repo guidance, 2 GiB per release asset with no total, LFS 10 GiB/month bandwidth then metered, 4 vCPU/16 GB/14 GB SSD runners with 6-hour jobs, 10 GB ghcr layers, Docker Hub 100 anonymous pulls per 6 hours."
 resource: https://docs.github.com/
-tags: [tool, github, limits, ci, registry, docker-hub]
+tags:
+- tool
+- github
+- limits
+- ci
+- registry
+- docker-hub
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:49:47Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:49:47Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:49:47Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:49:47Z"
 sources:
-  - resource: https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
-    accessed: "2026-09-02"
-  - resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
-    accessed: "2026-09-02"
-  - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
-    accessed: "2026-09-02"
-  - resource: https://docs.github.com/en/actions/reference/limits
-    accessed: "2026-09-02"
-  - resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
-    accessed: "2026-09-02"
-  - resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
-    accessed: "2026-09-02"
-  - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/docker-hub/usage/
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/docker-hub/usage/pulls/
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-large-files-on-github
+  accessed: "2026-09-02"
+- resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
+  accessed: "2026-09-02"
+- resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-git-large-file-storage/about-billing-for-git-large-file-storage
+  accessed: "2026-09-02"
+- resource: https://docs.github.com/en/actions/reference/limits
+  accessed: "2026-09-02"
+- resource: https://docs.github.com/en/actions/reference/runners/github-hosted-runners
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
+  accessed: "2026-09-02"
+- resource: https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry
+  accessed: "2026-09-02"
+- resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/docker-hub/usage/
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/docker-hub/usage/pulls/
+  accessed: "2026-09-02"
 ---
 
 # Facts

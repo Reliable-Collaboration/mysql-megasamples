@@ -1,19 +1,25 @@
 ---
 type: Source
 title: test_db objects.sql (optional functions, procedures, views)
-description: Four functions, two procedures and two views layered on the employees schema; not loaded by employees.sql.
+description: Five functions, two procedures and two views layered on the employees schema; not loaded by employees.sql.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/objects.sql
-tags: [employees, routines, views]
+tags:
+- employees
+- routines
+- views
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/objects.sql
-    title: objects.sql
-    accessed: "2026-09-02"
-    version: master @ e324b56
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/objects.sql
+  title: objects.sql
+  accessed: "2026-09-02"
+  version: master @ e324b56
 ---
 
 # What was read

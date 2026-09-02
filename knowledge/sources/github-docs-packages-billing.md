@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "GitHub Docs: GitHub Packages billing"
-description: "Public packages are free; private-package quotas per plan; Actions downloads with GITHUB_TOKEN do not count."
+description: Public packages are free; private-package quotas per plan; Actions downloads with GITHUB_TOKEN do not count.
 resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
-tags: [github, ghcr, billing]
+tags:
+- github
+- ghcr
+- billing
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
-    title: "GitHub Docs: GitHub Packages billing"
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-packages/about-billing-for-github-packages
+  title: "GitHub Docs: GitHub Packages billing"
+  accessed: "2026-09-02"
 ---
 
 # What was read

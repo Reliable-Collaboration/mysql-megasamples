@@ -1,19 +1,25 @@
 ---
 type: Source
-title: "tobymao/sqlglot README and dialect list"
+title: tobymao/sqlglot README and dialect list
 description: "SQLGlot claims: no-dependency parser/transpiler for 30+ dialects, lenient parser (not a validator), best-effort transpilation with warnings, dialect list includes tsql, oracle, mysql, postgres, sqlite, duckdb."
 resource: https://raw.githubusercontent.com/tobymao/sqlglot/main/README.md
-tags: [python, sql, transpiler]
+tags:
+- python
+- sql
+- transpiler
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://raw.githubusercontent.com/tobymao/sqlglot/main/README.md
-    title: "tobymao/sqlglot README and dialect list"
-    accessed: "2026-09-02"
-    version: "main branch, read 2026-09-02; repo license MIT; latest PyPI 30.17.0"
+- resource: https://raw.githubusercontent.com/tobymao/sqlglot/main/README.md
+  title: tobymao/sqlglot README and dialect list
+  accessed: "2026-09-02"
+  version: main branch, read 2026-09-02; repo license MIT; latest PyPI 30.17.0
 ---
 
 # What was read

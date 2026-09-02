@@ -3,23 +3,29 @@ type: Source
 title: Chicago "Crimes - 2001 to Present" - portal metadata and SODA measurements
 description: The dataset's Socrata metadata, live row count, per-column null counts, export header and date format, read directly from the portal API.
 resource: https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2
-tags: [chicago, socrata, measurement]
+tags:
+- chicago
+- socrata
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
-    title: Socrata view metadata for ijzp-q8t2
-    accessed: "2026-09-02"
-    version: rowsUpdatedAt 1788349026 = 2026-09-02; X-SODA2-Truth-Last-Modified Wed, 02 Sep 2026 11:37:15 GMT
-  - resource: https://data.cityofchicago.org/resource/ijzp-q8t2.json
-    title: SODA 2.1 endpoint (count, group-by-year, distinct case_number)
-    accessed: "2026-09-02"
-  - resource: https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD
-    title: CSV export (headers and first ~3 MB)
-    accessed: "2026-09-02"
+- resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
+  title: Socrata view metadata for ijzp-q8t2
+  accessed: "2026-09-02"
+  version: rowsUpdatedAt 1788349026 = 2026-09-02; X-SODA2-Truth-Last-Modified Wed, 02 Sep 2026 11:37:15 GMT
+- resource: https://data.cityofchicago.org/resource/ijzp-q8t2.json
+  title: SODA 2.1 endpoint (count, group-by-year, distinct case_number)
+  accessed: "2026-09-02"
+- resource: https://data.cityofchicago.org/api/views/ijzp-q8t2/rows.csv?accessType=DOWNLOAD
+  title: CSV export (headers and first ~3 MB)
+  accessed: "2026-09-02"
 stale_after: "2026-12-01"
 ---
 

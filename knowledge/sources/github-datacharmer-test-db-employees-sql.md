@@ -3,23 +3,28 @@ type: Source
 title: test_db employees.sql (schema and loader driver)
 description: DDL for the six tables, two views, the `source` commands that pull in the dump files, and a `flush binary logs` statement.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
-tags: [employees, ddl]
+tags:
+- employees
+- ddl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
-    title: employees.sql
-    accessed: "2026-09-02"
-    version: master @ e324b56
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees_partitioned.sql
-    title: employees_partitioned.sql (grep only)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/load_departments.dump
-    title: load_departments.dump (full) and load_employees.dump (head + non-ASCII scan)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees.sql
+  title: employees.sql
+  accessed: "2026-09-02"
+  version: master @ e324b56
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/employees_partitioned.sql
+  title: employees_partitioned.sql (grep only)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/load_departments.dump
+  title: load_departments.dump (full) and load_employees.dump (head + non-ASCII scan)
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,16 +3,23 @@ type: Source
 title: MySQL "Other MySQL Documentation" page - Example Databases table
 description: Official download links and sizes for sakila, world, employee (GitHub), airportdb and menagerie example databases.
 resource: https://dev.mysql.com/doc/index-other.html
-tags: [mysql, downloads, sakila, employees]
+tags:
+- mysql
+- downloads
+- sakila
+- employees
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/index-other.html
-    title: Other MySQL Documentation - Example Databases
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/index-other.html
+  title: Other MySQL Documentation - Example Databases
+  accessed: "2026-09-02"
 ---
 
 # What was read

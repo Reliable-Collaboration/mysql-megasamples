@@ -3,16 +3,21 @@ type: Source
 title: CC BY-SA 3.0 Unported legal code
 description: Section 4 (Restrictions) subsections (a), (b), (c) of the Attribution-ShareAlike 3.0 Unported license, read for Employees and Lahman.
 resource: https://creativecommons.org/licenses/by-sa/3.0/legalcode
-tags: [license, cc-by-sa-3-0]
+tags:
+- license
+- cc-by-sa-3-0
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://creativecommons.org/licenses/by-sa/3.0/legalcode
-    title: Attribution-ShareAlike 3.0 Unported
-    accessed: "2026-09-02"
+- resource: https://creativecommons.org/licenses/by-sa/3.0/legalcode
+  title: Attribution-ShareAlike 3.0 Unported
+  accessed: "2026-09-02"
 ---
 
 # What was read

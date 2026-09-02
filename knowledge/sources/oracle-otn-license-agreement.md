@@ -3,16 +3,22 @@ type: Source
 title: Oracle Technology Network License Agreement (standard-license.html), linked from the SQLcl download page
 description: The click-through developer license for OTN downloads such as SQLcl; internal development/testing use only, no production or data-processing use.
 resource: https://www.oracle.com/downloads/licenses/standard-license.html
-tags: [oracle, license, sqlcl]
+tags:
+- oracle
+- license
+- sqlcl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.oracle.com/downloads/licenses/standard-license.html
-    title: Oracle Technology Network License Agreement
-    accessed: "2026-09-02"
+- resource: https://www.oracle.com/downloads/licenses/standard-license.html
+  title: Oracle Technology Network License Agreement
+  accessed: "2026-09-02"
 ---
 
 # What was read

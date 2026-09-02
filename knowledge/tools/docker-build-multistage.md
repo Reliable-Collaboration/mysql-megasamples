@@ -3,27 +3,34 @@ type: Tool
 title: Docker multi-stage build, BuildKit mounts, and the pre-populated data directory path
 description: How the final image is assembled from a builder stage that runs mysqld, what the official entrypoint does with an existing datadir, and the VOLUME/anonymous-volume cost to measure.
 resource: https://docs.docker.com/build/building/multi-stage/
-tags: [docker, buildkit, image, entrypoint]
+tags:
+- docker
+- buildkit
+- image
+- entrypoint
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T21:00:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T21:00:18Z"
 sources:
-  - resource: /sources/docker-docs-multi-stage.md
-    accessed: "2026-09-02"
-  - resource: /sources/docker-docs-dockerfile-reference.md
-    accessed: "2026-09-02"
-  - resource: /sources/docker-docs-volumes.md
-    accessed: "2026-09-02"
-  - resource: /sources/docker-library-mysql-9-7-docker-entrypoint.md
-    accessed: "2026-09-02"
-  - resource: /sources/docker-library-mysql-9-7-dockerfile-oracle.md
-    accessed: "2026-09-02"
-  - resource: /sources/docker-docs-compose-profiles.md
-    accessed: "2026-09-02"
-  - resource: /sources/docker-docs-buildx-build.md
-    accessed: "2026-09-02"
+- resource: /sources/docker-docs-multi-stage.md
+  accessed: "2026-09-02"
+- resource: /sources/docker-docs-dockerfile-reference.md
+  accessed: "2026-09-02"
+- resource: /sources/docker-docs-volumes.md
+  accessed: "2026-09-02"
+- resource: /sources/docker-library-mysql-9-7-docker-entrypoint.md
+  accessed: "2026-09-02"
+- resource: /sources/docker-library-mysql-9-7-dockerfile-oracle.md
+  accessed: "2026-09-02"
+- resource: /sources/docker-docs-compose-profiles.md
+  accessed: "2026-09-02"
+- resource: /sources/docker-docs-buildx-build.md
+  accessed: "2026-09-02"
 ---
 
 # Facts

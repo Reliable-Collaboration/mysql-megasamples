@@ -3,14 +3,19 @@ type: Open Question
 title: Northwind Categories.Picture / Employees.Photo - strip the OLE wrapper or keep raw bytes?
 description: All 17 image literals in instnwnd.sql begin with 151C2F00020000000D000E00 rather than a BMP/GIF signature; this is believed (not verified) to be the 78-byte Access OLE Object header around a Windows bitmap.
 resource: /questions/mssql-northwind-picture-ole-header.md
-tags: [open-question, northwind, binary]
+tags:
+- open-question
+- northwind
+- binary
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
-    title: instnwnd.sql (hex literal prefixes measured)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
+  title: instnwnd.sql (hex literal prefixes measured)
+  accessed: "2026-09-02"
 ---
 
 # Question

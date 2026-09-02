@@ -3,16 +3,21 @@ type: Source
 title: USA.gov - copyright status of U.S. government works
 description: The federal government's own plain-language statement that its works are generally uncopyrighted, with the exceptions that matter for reuse.
 resource: https://www.usa.gov/government-copyright
-tags: [license, public-domain]
+tags:
+- license
+- public-domain
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.usa.gov/government-copyright
-    title: Copyright and other rights to government works
-    accessed: "2026-09-02"
+- resource: https://www.usa.gov/government-copyright
+  title: Copyright and other rights to government works
+  accessed: "2026-09-02"
 ---
 
 # What was read

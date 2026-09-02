@@ -1,23 +1,29 @@
 ---
 type: Open Question
-title: "Is there an OKF v0.2 validator we can run in CI?"
-description: "Neither GoogleCloudPlatform/open-knowledge-format nor knowledge-catalog ships a validator (only the reference agent has an OKFDocument.validate that requires a `type`); the PyPI `okf` package is an unrelated stub; the repository owns its own checker, scripts/okf_check.py."
+title: Is there an OKF v0.2 validator we can run in CI?
+description: Neither GoogleCloudPlatform/open-knowledge-format nor knowledge-catalog ships a validator (only the reference agent has an OKFDocument.validate that requires a `type`); the PyPI `okf` package is an unrelated stub; the repository owns its own checker, scripts/okf_check.py.
 resource: /questions/okf-validator-availability.md
-tags: [okf, validator, ci, process]
+tags:
+- okf
+- validator
+- ci
+- process
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:51:18Z"
 sources:
-  - resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
-    title: "open-knowledge-format repository tree, pyproject.toml, src/reference_agent/bundle/document.py and index.py"
-    accessed: "2026-09-02"
-  - resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
-    title: "knowledge-catalog repository tree (okf/, toolbox/)"
-    accessed: "2026-09-02"
-  - resource: https://pypi.org/pypi/okf/json
-    accessed: "2026-09-02"
-  - resource: /sources/okf-spec-v0-2.md
-    accessed: "2026-09-02"
+- resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
+  title: open-knowledge-format repository tree, pyproject.toml, src/reference_agent/bundle/document.py and index.py
+  accessed: "2026-09-02"
+- resource: https://github.com/GoogleCloudPlatform/knowledge-catalog
+  title: knowledge-catalog repository tree (okf/, toolbox/)
+  accessed: "2026-09-02"
+- resource: https://pypi.org/pypi/okf/json
+  accessed: "2026-09-02"
+- resource: /sources/okf-spec-v0-2.md
+  accessed: "2026-09-02"
 ---
 
 # Question

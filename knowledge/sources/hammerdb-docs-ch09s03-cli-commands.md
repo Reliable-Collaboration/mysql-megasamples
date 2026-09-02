@@ -3,16 +3,21 @@ type: Source
 title: HammerDB docs 9.3 — CLI commands (dbset, diset, buildschema, vuset)
 description: The CLI verbs needed to script a MySQL TPROC-C schema build without the GUI.
 resource: https://www.hammerdb.com/docs/ch09s03.html
-tags: [hammerdb, cli]
+tags:
+- hammerdb
+- cli
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.hammerdb.com/docs/ch09s03.html
-    title: CLI Commands
-    accessed: "2026-09-02"
+- resource: https://www.hammerdb.com/docs/ch09s03.html
+  title: CLI Commands
+  accessed: "2026-09-02"
 ---
 
 # What was read

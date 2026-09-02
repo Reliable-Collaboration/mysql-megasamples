@@ -3,15 +3,21 @@ type: Open Question
 title: Exactly which of the 22 qgen-generated TPC-H queries need MySQL edits, and does utf8mb4_bin reproduce the reference ordering?
 description: Community ports show Q1 needs the interval precision "(3)" removed; the rest is inferred to run unchanged with the POSTGRESQL dialect's "limit N".
 resource: /questions/mysql-tpch-query-port-syntax.md
-tags: [question, tpc-h, mysql, sql]
+tags:
+- question
+- tpc-h
+- mysql
+- sql
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/catarinaribeir0/queries-tpch-dbgen-mysql
-    accessed: "2026-09-02"
-  - resource: https://github.com/gregrahn/tpch-kit
-    accessed: "2026-09-02"
+- resource: https://github.com/catarinaribeir0/queries-tpch-dbgen-mysql
+  accessed: "2026-09-02"
+- resource: https://github.com/gregrahn/tpch-kit
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,21 +3,29 @@ type: Decision
 title: Stack Exchange — build from the archive.org 2024-04-02 snapshot with an own streaming XML loader
 description: Choose the last click-through-free public dump and a purpose-written MySQL loader over the profile-page dumps and the Postgres converter.
 resource: /decisions/stackexchange-conversion-path.md
-tags: [decision, stackexchange, conversion-path, licensing-finding, text-group]
+tags:
+- decision
+- stackexchange
+- conversion-path
+- licensing-finding
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.org/metadata/stackexchange
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
-    accessed: "2026-09-02"
-  - resource: https://stackoverflow.com/help/data-dumps
-    accessed: "2026-09-02"
-  - resource: https://github.com/Networks-Learning/stackexchange-dump-to-postgres
-    accessed: "2026-09-02"
+- resource: https://archive.org/metadata/stackexchange
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
+  accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/data-dumps
+  accessed: "2026-09-02"
+- resource: https://github.com/Networks-Learning/stackexchange-dump-to-postgres
+  accessed: "2026-09-02"
 ---
 
 # Question

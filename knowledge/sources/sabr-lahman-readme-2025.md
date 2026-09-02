@@ -3,17 +3,24 @@ type: Source
 title: SABR Lahman Baseball Database 1871-2025 readme (readme2025.txt)
 description: The release readme - copyright/CC BY-SA 3.0 notice, file list of the CSV version (27 tables), table descriptions and column definitions, revision history, Negro Leagues notes.
 resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
-tags: [lahman, readme, license, schema]
+tags:
+- lahman
+- readme
+- license
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
-    title: readme (47,982 bytes; md5 56e80e2c9bd5e27a73891321bf04cc14; CRLF, no BOM)
-    accessed: "2026-09-02"
-    version: "Release Date: Dec 10, 2025"
+- resource: https://sabr.app.box.com/public/static/qtgh1olzcaauz5x234wqx8huixizff8l.txt
+  title: readme (47,982 bytes; md5 56e80e2c9bd5e27a73891321bf04cc14; CRLF, no BOM)
+  accessed: "2026-09-02"
+  version: "Release Date: Dec 10, 2025"
 ---
 
 # What was read

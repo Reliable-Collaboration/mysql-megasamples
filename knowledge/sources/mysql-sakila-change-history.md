@@ -3,17 +3,22 @@ type: Source
 title: Sakila Change History (manual chapter 11)
 description: Version-by-version change list for Sakila 0.2 through 1.5; establishes utf8mb4, SRID 0, InnoDB FULLTEXT, and the removal of five payment rows.
 resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
-tags: [sakila, changelog]
+tags:
+- sakila
+- changelog
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
-    title: 11 Sakila Change History
-    accessed: "2026-09-02"
-    version: manual revision 84779; latest entry Version 1.5
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-news.html
+  title: 11 Sakila Change History
+  accessed: "2026-09-02"
+  version: manual revision 84779; latest entry Version 1.5
 ---
 
 # What was read

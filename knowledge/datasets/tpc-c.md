@@ -3,41 +3,48 @@ type: Dataset
 title: TPC-C (derived) — tpcc
 description: The nine-table order-entry OLTP schema of TPC Benchmark C populated for W warehouses by an open-source "TPC-C-like" loader (sysbench-tpcc, with HammerDB TPROC-C as the reference/fallback); no TPC software exists for TPC-C and no data is shipped.
 resource: https://www.tpc.org/tpcc/
-tags: [tier-generated, generated, tpc, oltp]
+tags:
+- tier-generated
+- generated
+- tpc
+- oltp
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
-    title: TPC-C spec 5.11 (cardinalities, population rules, trademark notice)
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/tpc_documents_current_versions/current_specifications5.asp
-    title: "TPC current specifications (TPC-C v5.11.0; Source Code n/a)"
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
-    title: TPC Fair Use quick reference
-    accessed: "2026-09-02"
-  - resource: https://github.com/Percona-Lab/sysbench-tpcc
-    title: sysbench-tpcc @ f110afa (Apache-2.0)
-    accessed: "2026-09-02"
-  - resource: https://github.com/akopytov/sysbench
-    title: sysbench (GPL-2.0, --rand-seed)
-    accessed: "2026-09-02"
-  - resource: https://github.com/TPC-Council/HammerDB
-    title: HammerDB v6.0 (GPL-3.0, TPROC-C)
-    accessed: "2026-09-02"
-  - resource: https://www.hammerdb.com/docs/ch03s02.html
-    title: HammerDB TPROC-C naming and disclaimer
-    accessed: "2026-09-02"
-  - resource: https://github.com/Percona-Lab/tpcc-mysql
-    title: tpcc-mysql (archived, unlicensed)
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/keywords.html
-    title: MySQL reserved words (ORDER)
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/tpc-c_v5.11.0.pdf
+  title: TPC-C spec 5.11 (cardinalities, population rules, trademark notice)
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/tpc_documents_current_versions/current_specifications5.asp
+  title: TPC current specifications (TPC-C v5.11.0; Source Code n/a)
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/Fair_Use_Quick_Reference_v1.0.0.pdf
+  title: TPC Fair Use quick reference
+  accessed: "2026-09-02"
+- resource: https://github.com/Percona-Lab/sysbench-tpcc
+  title: sysbench-tpcc @ f110afa (Apache-2.0)
+  accessed: "2026-09-02"
+- resource: https://github.com/akopytov/sysbench
+  title: sysbench (GPL-2.0, --rand-seed)
+  accessed: "2026-09-02"
+- resource: https://github.com/TPC-Council/HammerDB
+  title: HammerDB v6.0 (GPL-3.0, TPROC-C)
+  accessed: "2026-09-02"
+- resource: https://www.hammerdb.com/docs/ch03s02.html
+  title: HammerDB TPROC-C naming and disclaimer
+  accessed: "2026-09-02"
+- resource: https://github.com/Percona-Lab/tpcc-mysql
+  title: tpcc-mysql (archived, unlicensed)
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/keywords.html
+  title: MySQL reserved words (ORDER)
+  accessed: "2026-09-02"
 ---
 
 # Identity

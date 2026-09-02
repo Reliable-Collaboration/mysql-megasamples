@@ -3,16 +3,23 @@ type: Source
 title: angel-hernandez91/enron-emails README — independent 517,401 count and ASCII observation
 description: Second independent third-party count of the 2015 corpus (517,401) plus the observation that the files are ASCII-encoded.
 resource: https://github.com/angel-hernandez91/enron-emails
-tags: [source, enron, row-counts, charset]
+tags:
+- source
+- enron
+- row-counts
+- charset
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
-    title: README.md at master
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
+  title: README.md at master
+  accessed: "2026-09-02"
 ---
 
 # What was read

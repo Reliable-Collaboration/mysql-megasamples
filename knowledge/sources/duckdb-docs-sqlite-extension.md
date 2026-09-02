@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "DuckDB documentation: SQLite Extension"
-description: "ATTACH 'file.db' (TYPE sqlite); type affinity mapping (integers→BIGINT, text→VARCHAR, blob/unspecified→BLOB), sqlite_all_varchar override; read/write; single writer."
+description: ATTACH 'file.db' (TYPE sqlite); type affinity mapping (integers→BIGINT, text→VARCHAR, blob/unspecified→BLOB), sqlite_all_varchar override; read/write; single writer.
 resource: https://duckdb.org/docs/current/core_extensions/sqlite
-tags: [duckdb, sqlite, extension]
+tags:
+- duckdb
+- sqlite
+- extension
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/sqlite
-    title: "DuckDB documentation: SQLite Extension"
-    accessed: "2026-09-02"
-    version: "docs 'current' (DuckDB 1.5.5), read 2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/sqlite
+  title: "DuckDB documentation: SQLite Extension"
+  accessed: "2026-09-02"
+  version: docs 'current' (DuckDB 1.5.5), read 2026-09-02
 ---
 
 # What was read

@@ -3,17 +3,23 @@ type: Source
 title: "MySQL 9.7 Reference Manual: What Is New in MySQL 9.7"
 description: "The 9.7 change list is small: innodb_log_writer_threads default logic, binlog_transaction_dependency_history_size default, SCRAM-SHA-1 deprecation, two variables removed."
 resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
-tags: [mysql, docs, release]
+tags:
+- mysql
+- docs
+- release
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
-    title: "MySQL 9.7 Reference Manual: What Is New in MySQL 9.7"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 1.4"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
+  title: "MySQL 9.7 Reference Manual: What Is New in MySQL 9.7"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 1.4
 ---
 
 # What was read

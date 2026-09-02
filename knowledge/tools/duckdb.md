@@ -3,20 +3,26 @@ type: Tool
 title: DuckDB (Parquet/CSV reader and MySQL writer)
 description: Single-binary analytical engine used to read TLC Parquet and the bike/BTS CSVs, reshape them, and emit MySQL-ready CSV; its MySQL extension can also write straight into MySQL.
 resource: https://duckdb.org/docs/stable/core_extensions/mysql
-tags: [tool, duckdb, parquet, etl]
+tags:
+- tool
+- duckdb
+- parquet
+- etl
 status: draft
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-    title: MySQL Extension - DuckDB documentation
-    accessed: "2026-09-02"
-  - resource: /sources/duckdb-mysql-extension-docs.md
-    title: What the MySQL extension docs actually say
-    accessed: "2026-09-02"
-  - resource: /sources/nyc-tlc-parquet-footer-inspection.md
-    title: Parquet files DuckDB would have to read
-    accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/mysql.html
+  title: MySQL Extension - DuckDB documentation
+  accessed: "2026-09-02"
+- resource: /sources/duckdb-mysql-extension-docs.md
+  title: What the MySQL extension docs actually say
+  accessed: "2026-09-02"
+- resource: /sources/nyc-tlc-parquet-footer-inspection.md
+  title: Parquet files DuckDB would have to read
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

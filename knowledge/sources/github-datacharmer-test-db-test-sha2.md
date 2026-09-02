@@ -3,17 +3,24 @@ type: Source
 title: test_db test_employees_sha2.sql (SHA-256 integrity test)
 description: Expected row counts and chained SHA-256 checksums per table, plus the exact ORDER BY / CONCAT_WS recipe that produces them.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
-tags: [employees, checksum, sha256, test]
+tags:
+- employees
+- checksum
+- sha256
+- test
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
-    title: test_employees_sha2.sql
-    accessed: "2026-09-02"
-    version: master @ e324b56
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha2.sql
+  title: test_employees_sha2.sql
+  accessed: "2026-09-02"
+  version: master @ e324b56
 ---
 
 # What was read

@@ -1,18 +1,23 @@
 ---
 type: Source
 title: "Docker Docs: Change your Docker Desktop settings"
-description: "Docker Engine settings tab edits a daemon.json at $HOME/.docker/daemon.json; Windows network tab caveats."
+description: Docker Engine settings tab edits a daemon.json at $HOME/.docker/daemon.json; Windows network tab caveats.
 resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
-tags: [docker, docker-desktop]
+tags:
+- docker
+- docker-desktop
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
-    title: "Docker Docs: Change your Docker Desktop settings"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
+  title: "Docker Docs: Change your Docker Desktop settings"
+  accessed: "2026-09-02"
 ---
 
 # What was read

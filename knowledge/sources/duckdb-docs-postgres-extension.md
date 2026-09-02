@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "DuckDB documentation: PostgreSQL Extension"
-description: "ATTACH TYPE postgres / READ_ONLY / SCHEMA; COPY to and from PostgreSQL uses the binary wire encoding; COPY FROM DATABASE; settings pg_use_binary_copy, pg_pages_per_task, pg_use_ctid_scan, pg_array_as_varchar."
+description: ATTACH TYPE postgres / READ_ONLY / SCHEMA; COPY to and from PostgreSQL uses the binary wire encoding; COPY FROM DATABASE; settings pg_use_binary_copy, pg_pages_per_task, pg_use_ctid_scan, pg_array_as_varchar.
 resource: https://duckdb.org/docs/current/core_extensions/postgres/overview
-tags: [duckdb, postgresql, extension]
+tags:
+- duckdb
+- postgresql
+- extension
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/postgres/overview
-    title: "DuckDB documentation: PostgreSQL Extension"
-    accessed: "2026-09-02"
-    version: "docs 'current' (DuckDB 1.5.5), read 2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/postgres/overview
+  title: "DuckDB documentation: PostgreSQL Extension"
+  accessed: "2026-09-02"
+  version: docs 'current' (DuckDB 1.5.5), read 2026-09-02
 ---
 
 # What was read

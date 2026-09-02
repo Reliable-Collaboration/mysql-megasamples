@@ -3,20 +3,26 @@ type: Source
 title: sql-bi/Contoso-Data-Generator-V2 README
 description: Overview of the V2 generator - output formats (Parquet, Delta, CSV, CSV multi-file, gz, SQL Server bulk-insert script), required inputs (config.json, data.xlsx, output and cache folders), static files downloaded from a SQLBI repository.
 resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
-tags: [contoso, generator, readme]
+tags:
+- contoso
+- generator
+- readme
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
-    title: README.md (1,704 bytes)
-    accessed: "2026-09-02"
-    version: main (pushed 2025-07-02); latest release 2.0.1 (2025-01-17)
-  - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2
-    title: repository metadata (MIT) and releases/latest
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
+  title: README.md (1,704 bytes)
+  accessed: "2026-09-02"
+  version: main (pushed 2025-07-02); latest release 2.0.1 (2025-01-17)
+- resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2
+  title: repository metadata (MIT) and releases/latest
+  accessed: "2026-09-02"
 ---
 
 # What was read

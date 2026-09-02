@@ -1,19 +1,24 @@
 ---
 type: Source
-title: "GoogleCloudPlatform/open-knowledge-format repository tree and reference agent code"
-description: "The repo ships SPEC.md, samples, bundles and a reference agent (Apache-2.0 header, google-adk dependency); the only validation is OKFDocument.validate() requiring `type`; no standalone validator CLI or PyPI package."
+title: GoogleCloudPlatform/open-knowledge-format repository tree and reference agent code
+description: The repo ships SPEC.md, samples, bundles and a reference agent (Apache-2.0 header, google-adk dependency); the only validation is OKFDocument.validate() requiring `type`; no standalone validator CLI or PyPI package.
 resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
-tags: [okf, validator]
+tags:
+- okf
+- validator
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
-    title: "GoogleCloudPlatform/open-knowledge-format repository tree and reference agent code"
-    accessed: "2026-09-02"
-    version: "main branch, read via GitHub API and raw files on 2026-09-02"
+- resource: https://github.com/GoogleCloudPlatform/open-knowledge-format
+  title: GoogleCloudPlatform/open-knowledge-format repository tree and reference agent code
+  accessed: "2026-09-02"
+  version: main branch, read via GitHub API and raw files on 2026-09-02
 ---
 
 # What was read

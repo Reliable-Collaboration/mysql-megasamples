@@ -3,19 +3,26 @@ type: Source
 title: ds3/mysqlds3/build/mysqlds3_create_sp.sql (MySQL stored procedures)
 description: Only four procedures exist in the MySQL kit - NEW_CUSTOMER, NEW_MEMBER, NEW_PROD_REVIEW, NEW_REVIEW_HELPFULNESS; the browse/login/purchase logic lives in the PHP pages and the Oracle kit.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_sp.sql
-tags: [dvdstore, ds3, mysql, procedures]
+tags:
+- dvdstore
+- ds3
+- mysql
+- procedures
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_sp.sql
-    title: mysqlds3_create_sp.sql (5/27/15)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_trigger2.sql
-    title: mysqlds3_create_trigger2.sql
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_sp.sql
+  title: mysqlds3_create_sp.sql (5/27/15)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_trigger2.sql
+  title: mysqlds3_create_trigger2.sql
+  accessed: "2026-09-02"
 ---
 
 # What was read

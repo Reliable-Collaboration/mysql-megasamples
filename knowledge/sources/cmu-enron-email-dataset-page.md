@@ -3,17 +3,22 @@ type: Source
 title: Enron Email Dataset page (William W. Cohen, CMU)
 description: The canonical distribution page for the CMU Enron corpus; states provenance, cleaning, redactions, the May 7, 2015 tarball and the absence of any license.
 resource: https://www.cs.cmu.edu/~enron/
-tags: [source, enron]
+tags:
+- source
+- enron
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.cs.cmu.edu/~enron/
-    title: Enron Email Dataset
-    accessed: "2026-09-02"
-    version: page links enron_mail_20150507.tar.gz (May 7, 2015 version)
+- resource: https://www.cs.cmu.edu/~enron/
+  title: Enron Email Dataset
+  accessed: "2026-09-02"
+  version: page links enron_mail_20150507.tar.gz (May 7, 2015 version)
 ---
 
 # What was read

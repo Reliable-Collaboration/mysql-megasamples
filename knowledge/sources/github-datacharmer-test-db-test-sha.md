@@ -3,17 +3,24 @@ type: Source
 title: test_db test_employees_sha.sql (SHA-1 integrity test, MySQL 8.0-9.5 only)
 description: Same expected counts and SHA-1 checksums as the md5 file's crc_sha column, computed with sha(); unusable on 9.6+ without classic_hashing.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha.sql
-tags: [employees, checksum, sha1, test]
+tags:
+- employees
+- checksum
+- sha1
+- test
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha.sql
-    title: test_employees_sha.sql
-    accessed: "2026-09-02"
-    version: master @ e324b56
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/test_employees_sha.sql
+  title: test_employees_sha.sql
+  accessed: "2026-09-02"
+  version: master @ e324b56
 ---
 
 # What was read

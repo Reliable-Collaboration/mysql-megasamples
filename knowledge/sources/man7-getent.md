@@ -1,18 +1,24 @@
 ---
 type: Source
-title: "getent(1) Linux manual page"
-description: "getent ahosts/ahostsv4/ahostsv6 call getaddrinfo with AF_UNSPEC/AF_INET/AF_INET6 and list every address."
+title: getent(1) Linux manual page
+description: getent ahosts/ahostsv4/ahostsv6 call getaddrinfo with AF_UNSPEC/AF_INET/AF_INET6 and list every address.
 resource: https://man7.org/linux/man-pages/man1/getent.1.html
-tags: [ipv6, glibc, dns]
+tags:
+- ipv6
+- glibc
+- dns
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://man7.org/linux/man-pages/man1/getent.1.html
-    title: "getent(1) Linux manual page"
-    accessed: "2026-09-02"
+- resource: https://man7.org/linux/man-pages/man1/getent.1.html
+  title: getent(1) Linux manual page
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - Generate data in WideWorldImporters
 description: Documents that the released databases contain data from 2013-01-01 to the generation date and how DataLoadSimulation.PopulateDataToCurrentDate and Application.Configuration_PopulateLargeSaleTable extend it (randomised, non-deterministic).
 resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-generate-data
-tags: [wideworldimporters, docs, data-generation]
+tags:
+- wideworldimporters
+- docs
+- data-generation
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-generate-data
-    title: Generate data in SQL samples WideWorldImporters - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2020-10-23, updated_at 2025-05-30, git commit 67ebe15c092655bcc23eeca30a2effef022a6ed6
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-generate-data
+  title: Generate data in SQL samples WideWorldImporters - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2020-10-23, updated_at 2025-05-30, git commit 67ebe15c092655bcc23eeca30a2effef022a6ed6
 ---
 
 # What was read

@@ -1,19 +1,25 @@
 ---
 type: Source
-title: "actions/runner-images README"
-description: "ubuntu-latest currently maps to Ubuntu 24.04 (x64); 22.04 and arm64 images exist."
+title: actions/runner-images README
+description: ubuntu-latest currently maps to Ubuntu 24.04 (x64); 22.04 and arm64 images exist.
 resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
-tags: [github, actions, runners]
+tags:
+- github
+- actions
+- runners
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
-    title: "actions/runner-images README"
-    accessed: "2026-09-02"
-    version: "main branch, read 2026-09-02"
+- resource: https://raw.githubusercontent.com/actions/runner-images/main/README.md
+  title: actions/runner-images README
+  accessed: "2026-09-02"
+  version: main branch, read 2026-09-02
 ---
 
 # What was read

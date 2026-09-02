@@ -3,17 +3,24 @@ type: Source
 title: Microsoft Learn - ODBC Driver for SQL Server on Linux/macOS programming guidelines (character set support)
 description: The ODBC driver (which bcp and ODBC sqlcmd use) encodes narrow-character data in the process locale's encoding and defaults to UTF-8 (including in the "C" locale); SQLWCHAR is UTF-16LE.
 resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
-tags: [odbc, encoding, bcp, docs]
+tags:
+- odbc
+- encoding
+- bcp
+- docs
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
-    title: Programming guidelines - ODBC Driver for SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2022-02-17, updated_at 2026-08-24, git commit b327fa345801101e505260268af60a60ca2ab4bb
+- resource: https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/programming-guidelines
+  title: Programming guidelines - ODBC Driver for SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2022-02-17, updated_at 2026-08-24, git commit b327fa345801101e505260268af60a60ca2ab4bb
 ---
 
 # What was read

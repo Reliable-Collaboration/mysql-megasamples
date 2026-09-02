@@ -3,15 +3,20 @@ type: Open Question
 title: Is dbgen 2.17.3 (tpch-kit, DuckDB) output identical to the official TPC-H_Tools_v3.0.1 dbgen output?
 description: The 3.0.0/3.0.1 revision notes list only pricing/metric clauses, suggesting the data generator did not change, but this is inferred.
 resource: /questions/tpch-dbgen-version-output-identity.md
-tags: [question, tpc-h, generator]
+tags:
+- question
+- tpc-h
+- generator
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-    accessed: "2026-09-02"
-  - resource: https://github.com/gregrahn/tpch-kit
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
+  accessed: "2026-09-02"
+- resource: https://github.com/gregrahn/tpch-kit
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,15 +3,23 @@ type: Open Question
 title: Do the MariaDB-generated simplewiki .sql.gz dumps load unchanged into MySQL 9.7?
 description: Four constructs in the dump headers are MariaDB-isms or deprecated MySQL syntax; each needs a one-minute test on the target server before the build script is written.
 resource: /questions/mediawiki-sql-dump-ddl-compatibility-mysql-9-7.md
-tags: [question, wikipedia, mediawiki, ddl, mysql-9-7, text-group]
+tags:
+- question
+- wikipedia
+- mediawiki
+- ddl
+- mysql-9-7
+- text-group
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-redirect.sql.gz
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
+  accessed: "2026-09-02"
 ---
 
 # Question

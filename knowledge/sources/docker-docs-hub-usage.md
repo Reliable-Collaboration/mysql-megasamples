@@ -3,16 +3,22 @@ type: Source
 title: "Docker Docs: Docker Hub usage and limits"
 description: "Pull limits: unauthenticated 100 per 6 hours per IPv4 address or IPv6 /64, Personal 200 per 6 hours, Pro/Team/Business unlimited; 429 on abuse limit."
 resource: https://docs.docker.com/docker-hub/usage/
-tags: [docker, docker-hub, limits]
+tags:
+- docker
+- docker-hub
+- limits
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/docker-hub/usage/
-    title: "Docker Docs: Docker Hub usage and limits"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/docker-hub/usage/
+  title: "Docker Docs: Docker Hub usage and limits"
+  accessed: "2026-09-02"
 ---
 
 # What was read

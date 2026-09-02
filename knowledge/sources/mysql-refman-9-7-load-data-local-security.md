@@ -1,19 +1,26 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Security Considerations for LOAD DATA LOCAL"
-description: "local_infile is disabled by default on the server; the client library default is also disabled; both sides must enable LOCAL loading."
+description: local_infile is disabled by default on the server; the client library default is also disabled; both sides must enable LOCAL loading.
 resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
-tags: [mysql, docs, load-data, security]
+tags:
+- mysql
+- docs
+- load-data
+- security
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
-    title: "MySQL 9.7 Reference Manual: Security Considerations for LOAD DATA LOCAL"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 8.1.6"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/load-data-local-security.html
+  title: "MySQL 9.7 Reference Manual: Security Considerations for LOAD DATA LOCAL"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 8.1.6
 ---
 
 # What was read

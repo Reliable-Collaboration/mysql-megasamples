@@ -1,19 +1,24 @@
 ---
 type: Source
 title: "DuckDB documentation: CSV Import (data/csv/overview)"
-description: "read_csv with sniffer auto-detection and the parameter table (delim, quote, escape, header, nullstr, encoding utf-8/utf-16/latin-1, dateformat, timestampformat, columns/types, sample_size 20480, ignore_errors, store_rejects, all_varchar, compression auto, strict_mode, max_line_size)."
+description: read_csv with sniffer auto-detection and the parameter table (delim, quote, escape, header, nullstr, encoding utf-8/utf-16/latin-1, dateformat, timestampformat, columns/types, sample_size 20480, ignore_errors, store_rejects, all_varchar, compression auto, strict_mode, max_line_size).
 resource: https://duckdb.org/docs/current/data/csv/overview
-tags: [duckdb, csv]
+tags:
+- duckdb
+- csv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://duckdb.org/docs/current/data/csv/overview
-    title: "DuckDB documentation: CSV Import (data/csv/overview)"
-    accessed: "2026-09-02"
-    version: "docs 'current' (DuckDB 1.5.5), read 2026-09-02"
+- resource: https://duckdb.org/docs/current/data/csv/overview
+  title: "DuckDB documentation: CSV Import (data/csv/overview)"
+  accessed: "2026-09-02"
+  version: docs 'current' (DuckDB 1.5.5), read 2026-09-02
 ---
 
 # What was read

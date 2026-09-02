@@ -3,19 +3,27 @@ type: License
 title: Microsoft SQL Server Developer edition EULA (Linux container, ACCEPT_EULA)
 description: Proprietary end-user terms accepted by ACCEPT_EULA=Y for mcr.microsoft.com/mssql/server; permits design/develop/test/demonstrate use and forbids production use; governs build-time use only, nothing licensed under it is redistributed.
 resource: https://go.microsoft.com/fwlink/?linkid=857698
-tags: [license, eula, proprietary, sql-server, build-time-only]
+tags:
+- license
+- eula
+- proprietary
+- sql-server
+- build-time-only
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://download.microsoft.com/download/4/F/7/4F7E81B0-7CEB-401D-BCFA-BF8BF73D868C/EULAs/License_Dev_Linux.rtf
-    title: License_Dev_Linux.rtf (redirect target of fwlink 857698), 132,035 bytes
-    accessed: "2026-09-02"
-  - resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
-    title: MCR catalog text naming this link as the End-User Licensing Agreement and listing MSSQL_PID editions with "no production use rights"
-    accessed: "2026-09-02"
+- resource: https://download.microsoft.com/download/4/F/7/4F7E81B0-7CEB-401D-BCFA-BF8BF73D868C/EULAs/License_Dev_Linux.rtf
+  title: License_Dev_Linux.rtf (redirect target of fwlink 857698), 132,035 bytes
+  accessed: "2026-09-02"
+- resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
+  title: MCR catalog text naming this link as the End-User Licensing Agreement and listing MSSQL_PID editions with "no production use rights"
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

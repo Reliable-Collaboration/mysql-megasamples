@@ -3,16 +3,23 @@ type: Source
 title: ds3/mysqlds3/build/mysqlds3_create_db.sql (MySQL DDL)
 description: The MySQL build script - CREATE DATABASE DS3 and 11 tables with engines and types; PRODUCTS is MyISAM; CATEGORIES seeded with 16 rows.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
-tags: [dvdstore, ds3, mysql, ddl]
+tags:
+- dvdstore
+- ds3
+- mysql
+- ddl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
-    title: mysqlds3_create_db.sql ("Last updated 5/27/15")
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_db.sql
+  title: mysqlds3_create_db.sql ("Last updated 5/27/15")
+  accessed: "2026-09-02"
 ---
 
 # What was read

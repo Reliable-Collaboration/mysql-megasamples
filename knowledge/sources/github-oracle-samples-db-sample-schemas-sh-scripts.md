@@ -3,41 +3,48 @@ type: Source
 title: SH schema scripts and CSV data files at v23.3 (sh_install.sql, sh_create.sql, sh_populate.sql, *.csv, README.md)
 description: Partitioned DDL, SQLcl LOAD-based population from six CSV files, bitmap/Text indexes, materialized views, dimensions, and the verification row counts of the Sales History schema; plus byte-level samples of the CSV files.
 resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/sales_history
-tags: [oracle, sh, scripts, csv]
+tags:
+- oracle
+- sh
+- scripts
+- csv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sh_install.sql
-    title: sh_install.sql (8,412 B)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sh_create.sql
-    title: sh_create.sql (25,051 B)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sh_populate.sql
-    title: sh_populate.sql (41,072 B)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sales.csv
-    title: sales.csv (74,426,366 B; only HTTP Range samples read)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/customers.csv
-    title: customers.csv (12,615,719 B; header + three 64 KB Range samples read)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/promotions.csv
-    title: promotions.csv (56,158 B; read fully)
-    accessed: "2026-09-02"
-    version: v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/README.md
-    title: sales_history/README.md (2,433 B)
-    accessed: "2026-09-02"
-    version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sh_install.sql
+  title: sh_install.sql (8,412 B)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sh_create.sql
+  title: sh_create.sql (25,051 B)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sh_populate.sql
+  title: sh_populate.sql (41,072 B)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/sales.csv
+  title: sales.csv (74,426,366 B; only HTTP Range samples read)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/customers.csv
+  title: customers.csv (12,615,719 B; header + three 64 KB Range samples read)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/promotions.csv
+  title: promotions.csv (56,158 B; read fully)
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/sales_history/README.md
+  title: sales_history/README.md (2,433 B)
+  accessed: "2026-09-02"
+  version: v23.3
 ---
 
 # What was read

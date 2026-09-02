@@ -1,48 +1,56 @@
 ---
 type: Tool
-title: "MySQL Workbench Migration Wizard (8.0.47)"
-description: "GUI wizard for ODBC-reachable sources (SQL Server, PostgreSQL, Sybase ASE, SQLite, Access, SQL Anywhere, generic ODBC); copies data with the bundled wbcopytables helper; rejected for the unattended build because schema conversion is interactive and non-MySQL programmable objects are only copied as comments."
+title: MySQL Workbench Migration Wizard (8.0.47)
+description: GUI wizard for ODBC-reachable sources (SQL Server, PostgreSQL, Sybase ASE, SQLite, Access, SQL Anywhere, generic ODBC); copies data with the bundled wbcopytables helper; rejected for the unattended build because schema conversion is interactive and non-MySQL programmable objects are only copied as comments.
 resource: https://dev.mysql.com/doc/workbench/en/wb-migration.html
-tags: [tool, workbench, migration, gui, rejected]
+tags:
+- tool
+- workbench
+- migration
+- gui
+- rejected
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:43:49Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:43:49Z"
 sources:
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration.html
-    title: "Chapter 10 Database Migration Wizard"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview.html
-    title: "10.2 Migration Overview"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview-supported.html
-    title: "10.2.2 Migrating from Supported Databases"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard.html
-    title: "10.8 Using the MySQL Workbench Migration Wizard"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-setup.html
-    title: "10.8.10 Data Transfer and Migration Setup"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-transfer.html
-    title: "10.8.11 Bulk Data Transfer"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
-    title: "10.5.4 Microsoft SQL Server Type Mapping"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-preface.html
-    title: "Preface and Legal Notices"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/
-    title: "MySQL Workbench Manual (8.0 through 8.0.47)"
-    accessed: "2026-09-02"
-    version: "8.0.47"
-  - resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
-    title: "mysql/mysql-workbench plugins/migration sources and License.txt"
-    accessed: "2026-09-02"
-    version: "8.0.47"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration.html
+  title: Chapter 10 Database Migration Wizard
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview.html
+  title: 10.2 Migration Overview
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-overview-supported.html
+  title: 10.2.2 Migrating from Supported Databases
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard.html
+  title: 10.8 Using the MySQL Workbench Migration Wizard
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-setup.html
+  title: 10.8.10 Data Transfer and Migration Setup
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-wizard-data-migration-transfer.html
+  title: 10.8.11 Bulk Data Transfer
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
+  title: 10.5.4 Microsoft SQL Server Type Mapping
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-preface.html
+  title: Preface and Legal Notices
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/
+  title: MySQL Workbench Manual (8.0 through 8.0.47)
+  accessed: "2026-09-02"
+  version: 8.0.47
+- resource: https://github.com/mysql/mysql-workbench/tree/8.0.47/plugins/migration
+  title: mysql/mysql-workbench plugins/migration sources and License.txt
+  accessed: "2026-09-02"
+  version: 8.0.47
 ---
 
 # Facts

@@ -3,17 +3,22 @@ type: Source
 title: sql-server-samples adventure-works README.md
 description: Upstream readme describing the AdventureWorks install scripts versus version-specific .bak files, the 2012-2022 "no significant changes" statement and the 2025 changes (Query Store, ADR, optimized locking, adjusted dates).
 resource: https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/adventure-works
-tags: [adventureworks, sql-server-samples]
+tags:
+- adventureworks
+- sql-server-samples
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
-    title: README.md (adventure-works)
-    accessed: "2026-09-02"
-    version: master, 7,158 bytes; directory last substantively changed by commit b47eadc852 "AdventureWorks 2025 updates" 2025-11-14
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
+  title: README.md (adventure-works)
+  accessed: "2026-09-02"
+  version: master, 7,158 bytes; directory last substantively changed by commit b47eadc852 "AdventureWorks 2025 updates" 2025-11-14
 ---
 
 # What was read

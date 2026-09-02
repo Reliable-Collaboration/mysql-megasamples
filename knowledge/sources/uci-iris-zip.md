@@ -3,16 +3,23 @@ type: Source
 title: UCI iris.zip (iris.data, bezdekIris.data, iris.names) - inspection
 description: The 3,738-byte UCI archive; iris.data carries the two historical errors, bezdekIris.data is the corrected file (differs exactly at rows 35 and 38); iris.names documents the discrepancy.
 resource: https://archive.ics.uci.edu/static/public/53/iris.zip
-tags: [iris, uci, artifact, measurement]
+tags:
+- iris
+- uci
+- artifact
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.ics.uci.edu/static/public/53/iris.zip
-    title: iris.zip (3,738 bytes; md5 7a07b2b4163b650dc451aca467d4fb58)
-    accessed: "2026-09-02"
+- resource: https://archive.ics.uci.edu/static/public/53/iris.zip
+  title: iris.zip (3,738 bytes; md5 7a07b2b4163b650dc451aca467d4fb58)
+  accessed: "2026-09-02"
 ---
 
 # What was read

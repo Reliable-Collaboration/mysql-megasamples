@@ -3,30 +3,39 @@ type: Tool
 title: Stack Exchange data dump XML parsing (streaming iterparse; own MySQL loader)
 description: How the per-site 7z archives of `<row .../>` XML files are read and loaded into MySQL, and what existing converters teach us.
 resource: https://github.com/Networks-Learning/stackexchange-dump-to-postgres
-tags: [tool, stackexchange, xml, python, mysql-load, text-group]
+tags:
+- tool
+- stackexchange
+- xml
+- python
+- mysql-load
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://github.com/Networks-Learning/stackexchange-dump-to-postgres
-    title: stackexchange-dump-to-postgres README and GitHub API repo metadata
-    accessed: "2026-09-02"
-    version: master, pushed 2026-04-21, MIT, 92 stars
-  - resource: https://archive.org/download/stackexchange/readme.txt
-    title: readme.txt in the archive.org dump item
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede/2678#2678
-    title: Database schema documentation for the public data dump and SEDE (answer 2678, last edited 2026-03-23)
-    accessed: "2026-09-02"
-    version: read via api.stackexchange.com /answers/2678?filter=withbody
-  - resource: https://meta.stackexchange.com/questions/402153/latest-data-dump-has-invalid-xml-and-invalid-characters
-    title: Latest Data Dump has invalid XML and invalid characters (2024-08-14)
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/402501/data-dumps-updates-and-bug-fixes
-    title: Data Dumps - updates and bug fixes (2024-08-29)
-    accessed: "2026-09-02"
+- resource: https://github.com/Networks-Learning/stackexchange-dump-to-postgres
+  title: stackexchange-dump-to-postgres README and GitHub API repo metadata
+  accessed: "2026-09-02"
+  version: master, pushed 2026-04-21, MIT, 92 stars
+- resource: https://archive.org/download/stackexchange/readme.txt
+  title: readme.txt in the archive.org dump item
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede/2678#2678
+  title: Database schema documentation for the public data dump and SEDE (answer 2678, last edited 2026-03-23)
+  accessed: "2026-09-02"
+  version: read via api.stackexchange.com /answers/2678?filter=withbody
+- resource: https://meta.stackexchange.com/questions/402153/latest-data-dump-has-invalid-xml-and-invalid-characters
+  title: Latest Data Dump has invalid XML and invalid characters (2024-08-14)
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/402501/data-dumps-updates-and-bug-fixes
+  title: Data Dumps - updates and bug fixes (2024-08-29)
+  accessed: "2026-09-02"
 ---
 
 # Facts

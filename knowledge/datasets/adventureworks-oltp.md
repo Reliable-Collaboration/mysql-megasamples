@@ -3,32 +3,40 @@ type: Dataset
 title: AdventureWorks (OLTP)
 description: Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer); available as version-specific .bak files and as a SQLCMD install script plus 69 UTF-8 CSV files (~95 MB) that need no SQL Server to read; MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/adventure-works/oltp-install-script
-tags: [tier-core-medium, mssql-origin, csv-load, mit, multi-schema]
+tags:
+- tier-core-medium
+- mssql-origin
+- csv-load
+- mit
+- multi-schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
-    title: instawdb.sql (Updated November 14, 2025)
-    accessed: "2026-09-02"
-    version: master, commit b47eadc852 (2025-11-14)
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
-    title: directory listing with CSV sizes; 46 small CSVs read in full, 5 large ones sampled by HTTP range
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
-    title: release assets (.bak sizes, AdventureWorks-oltp-install-script.zip 17,486,641 bytes)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
-    title: adventure-works README.md
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
-    title: AdventureWorks sample databases (Learn)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: license.txt (MIT)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
+  title: instawdb.sql (Updated November 14, 2025)
+  accessed: "2026-09-02"
+  version: master, commit b47eadc852 (2025-11-14)
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
+  title: directory listing with CSV sizes; 46 small CSVs read in full, 5 large ones sampled by HTTP range
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
+  title: release assets (.bak sizes, AdventureWorks-oltp-install-script.zip 17,486,641 bytes)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
+  title: adventure-works README.md
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
+  title: AdventureWorks sample databases (Learn)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: license.txt (MIT)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

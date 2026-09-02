@@ -3,17 +3,23 @@ type: Source
 title: "MySQL 9.7 Reference Manual: mysql Client Options"
 description: "--default-character-set, --local-infile (default FALSE), --binary-mode and --get-server-public-key for the mysql command-line client."
 resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-command-options.html
-tags: [mysql, docs, client]
+tags:
+- mysql
+- docs
+- client
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-command-options.html
-    title: "MySQL 9.7 Reference Manual: mysql Client Options"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 6.5.1.1"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-command-options.html
+  title: "MySQL 9.7 Reference Manual: mysql Client Options"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 6.5.1.1
 ---
 
 # What was read

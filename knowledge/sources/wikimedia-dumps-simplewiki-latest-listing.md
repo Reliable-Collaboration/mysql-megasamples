@@ -3,23 +3,29 @@ type: Source
 title: dumps.wikimedia.org/simplewiki/latest/ directory listing (snapshot 20260901)
 description: Exact file names, sizes and dates of the current Simple English Wikipedia dump, including every published .sql.gz table.
 resource: https://dumps.wikimedia.org/simplewiki/latest/
-tags: [source, wikipedia, size-evidence]
+tags:
+- source
+- wikipedia
+- size-evidence
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2026-10-05"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/
-    title: latest/ listing (symlinks to 20260901)
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/
-    title: "simplewiki/ dated directories (monthly: 20260101 ... 20260901, latest/ dated 02-Sep-2026 01:53)"
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-pages-articles.xml.bz2
-    title: HEAD request — Content-Length 356186307, Last-Modified Tue, 01 Sep 2026 20:27:10 GMT
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/
+  title: latest/ listing (symlinks to 20260901)
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/
+  title: "simplewiki/ dated directories (monthly: 20260101 ... 20260901, latest/ dated 02-Sep-2026 01:53)"
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-pages-articles.xml.bz2
+  title: HEAD request — Content-Length 356186307, Last-Modified Tue, 01 Sep 2026 20:27:10 GMT
+  accessed: "2026-09-02"
 ---
 
 # What was read

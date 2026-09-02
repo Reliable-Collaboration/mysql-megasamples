@@ -3,22 +3,28 @@ type: Source
 title: Contoso V2 scripts/sql (CreateTablesCommon.sql, CreateTablesSales.sql, CreateTablesOrders.sql)
 description: SQL Server DDL for the eight generated tables with exact column types, keys and dbo views - the reference for the MySQL schema.
 resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
-tags: [contoso, ddl, sql-server]
+tags:
+- contoso
+- ddl
+- sql-server
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
-    title: CreateTablesCommon.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesSales.sql
-    title: CreateTablesSales.sql
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesOrders.sql
-    title: CreateTablesOrders.sql
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
+  title: CreateTablesCommon.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesSales.sql
+  title: CreateTablesSales.sql
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesOrders.sql
+  title: CreateTablesOrders.sql
+  accessed: "2026-09-02"
 ---
 
 # What was read

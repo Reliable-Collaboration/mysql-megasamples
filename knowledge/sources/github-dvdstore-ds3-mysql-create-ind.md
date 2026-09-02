@@ -3,16 +3,23 @@ type: Source
 title: ds3/mysqlds3/build/mysqlds3_create_ind.sql (indexes and foreign keys)
 description: Index/FK script for the MySQL DS3 build, including two FULLTEXT indexes on PRODUCTS.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_ind.sql
-tags: [dvdstore, ds3, mysql, indexes]
+tags:
+- dvdstore
+- ds3
+- mysql
+- indexes
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_ind.sql
-    title: mysqlds3_create_ind.sql (5/27/15)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/mysqlds3/build/mysqlds3_create_ind.sql
+  title: mysqlds3_create_ind.sql (5/27/15)
+  accessed: "2026-09-02"
 ---
 
 # What was read

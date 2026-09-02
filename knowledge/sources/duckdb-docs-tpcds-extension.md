@@ -3,17 +3,23 @@ type: Source
 title: DuckDB documentation — TPC-DS extension
 description: How DuckDB's built-in dsdgen generates TPC-DS tables, its parameters, stored answers, pre-generated datasets and the notice about TPC-DS v4 compatibility in DuckDB 2.0.
 resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
-tags: [duckdb, tpc-ds, dsdgen]
+tags:
+- duckdb
+- tpc-ds
+- dsdgen
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
-    title: TPC-DS Extension (docs/stable/extensions/tpcds redirects here)
-    accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/tpcds.html
+  title: TPC-DS Extension (docs/stable/extensions/tpcds redirects here)
+  accessed: "2026-09-02"
 ---
 
 # What was read

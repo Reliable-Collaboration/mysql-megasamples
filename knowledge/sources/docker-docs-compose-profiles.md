@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Docker Docs: Using profiles with Compose"
-description: "profiles attribute, services without profiles always enabled, --profile / COMPOSE_PROFILES, depends_on caveat."
+description: profiles attribute, services without profiles always enabled, --profile / COMPOSE_PROFILES, depends_on caveat.
 resource: https://docs.docker.com/compose/how-tos/profiles/
-tags: [docker, compose, profiles]
+tags:
+- docker
+- compose
+- profiles
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.docker.com/compose/how-tos/profiles/
-    title: "Docker Docs: Using profiles with Compose"
-    accessed: "2026-09-02"
+- resource: https://docs.docker.com/compose/how-tos/profiles/
+  title: "Docker Docs: Using profiles with Compose"
+  accessed: "2026-09-02"
 ---
 
 # What was read

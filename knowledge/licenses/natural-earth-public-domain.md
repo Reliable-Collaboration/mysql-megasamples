@@ -3,19 +3,25 @@ type: License
 title: Natural Earth public domain terms
 description: Natural Earth vector/raster map data is public domain with no attribution requirement; relevant because WideWorldImporters embeds country/state borders and city locations derived from Natural Earth (and data.gov).
 resource: https://www.naturalearthdata.com/about/terms-of-use/
-tags: [license, public-domain, geodata]
+tags:
+- license
+- public-domain
+- geodata
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://www.naturalearthdata.com/about/terms-of-use/
-    title: Natural Earth » Terms of Use
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is
-    title: WWI "Terms of use" section naming data.gov and Natural Earth as the public data sources
-    accessed: "2026-09-02"
+- resource: https://www.naturalearthdata.com/about/terms-of-use/
+  title: Natural Earth » Terms of Use
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is
+  title: WWI "Terms of use" section naming data.gov and Natural Earth as the public data sources
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

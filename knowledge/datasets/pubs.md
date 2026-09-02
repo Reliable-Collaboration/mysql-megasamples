@@ -3,20 +3,27 @@ type: Dataset
 title: pubs
 description: Microsoft's tiny 11-table publishers/authors sample (SQL Server 2000 era) shipped as a 126 KB T-SQL script with inline data; MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/blob/master/samples/databases/northwind-pubs/instpubs.sql
-tags: [tier-core, mssql-origin, script-translation, mit]
+tags:
+- tier-core
+- mssql-origin
+- script-translation
+- mit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
-    title: instpubs.sql (blob d887fd48cb06436a9aa2e988d00ba7b036dfd6d4)
-    accessed: "2026-09-02"
-    version: master, 125,718 bytes
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: sql-server-samples license.txt (MIT)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
+  title: instpubs.sql (blob d887fd48cb06436a9aa2e988d00ba7b036dfd6d4)
+  accessed: "2026-09-02"
+  version: master, 125,718 bytes
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: sql-server-samples license.txt (MIT)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

@@ -3,17 +3,24 @@ type: Source
 title: Chinook_MySql.sql v1.4.5 (inspection of the release asset)
 description: Encoding, DDL types, FK/index inventory, per-table row counts and non-ASCII samples measured on the MySQL script.
 resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
-tags: [chinook, artifact, measurement, mysql]
+tags:
+- chinook
+- artifact
+- measurement
+- mysql
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
-    title: Chinook_MySql.sql (release asset)
-    accessed: "2026-09-02"
-    version: "v1.4.5; md5 75acf33f91aebf8bf0d79f4458d43b79"
+- resource: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
+  title: Chinook_MySql.sql (release asset)
+  accessed: "2026-09-02"
+  version: v1.4.5; md5 75acf33f91aebf8bf0d79f4458d43b79
 ---
 
 # What was read

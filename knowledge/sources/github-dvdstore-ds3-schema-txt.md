@@ -3,16 +3,22 @@ type: Source
 title: ds3/ds3_schema.txt (logical schema and stored-procedure narrative)
 description: Column lists of the 11 DS3 tables with Large-size row counts, plus the description of the 17 stored procedures used by the drivers.
 resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_schema.txt
-tags: [dvdstore, ds3, schema]
+tags:
+- dvdstore
+- ds3
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_schema.txt
-    title: ds3_schema.txt
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dvdstore/ds3/master/ds3/ds3_schema.txt
+  title: ds3_schema.txt
+  accessed: "2026-09-02"
 ---
 
 # What was read

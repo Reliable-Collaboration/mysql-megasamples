@@ -3,17 +3,23 @@ type: Source
 title: lerocha/chinook-database release v1.4.5 (GitHub API)
 description: Latest release (2024-02-12) with 16 assets including Chinook_MySql.sql (616,450 B) and Chinook_MySql_AutoIncrementPKs.sql (578,950 B); master is 23 commits ahead with tooling changes only.
 resource: https://github.com/lerocha/chinook-database/releases/tag/v1.4.5
-tags: [chinook, release, github-api]
+tags:
+- chinook
+- release
+- github-api
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/lerocha/chinook-database/releases/latest
-    title: releases/latest, /releases, /compare/v1.4.5...master, /contents/ChinookDatabase/DataSources
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/lerocha/chinook-database/releases/latest
+  title: releases/latest, /releases, /compare/v1.4.5...master, /contents/ChinookDatabase/DataSources
+  accessed: "2026-09-02"
 ---
 
 # What was read

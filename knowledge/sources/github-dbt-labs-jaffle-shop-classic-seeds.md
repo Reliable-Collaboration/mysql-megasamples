@@ -3,22 +3,28 @@ type: Source
 title: jaffle-shop-classic seeds (raw_customers.csv, raw_orders.csv, raw_payments.csv) - inspection
 description: Sizes, row counts, headers and sample rows of the three classic seed files.
 resource: https://github.com/dbt-labs/jaffle-shop-classic/tree/main/seeds
-tags: [jaffle-shop, csv, measurement]
+tags:
+- jaffle-shop
+- csv
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_customers.csv
-    title: raw_customers.csv (md5 c07b5acaaab79acc27a00ad489ab4150)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_orders.csv
-    title: raw_orders.csv (md5 7deaec91356accb3cf8908934a8af81c)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_payments.csv
-    title: raw_payments.csv (md5 8e525f53c0858fba7660598144549edf)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_customers.csv
+  title: raw_customers.csv (md5 c07b5acaaab79acc27a00ad489ab4150)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_orders.csv
+  title: raw_orders.csv (md5 7deaec91356accb3cf8908934a8af81c)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/seeds/raw_payments.csv
+  title: raw_payments.csv (md5 8e525f53c0858fba7660598144549edf)
+  accessed: "2026-09-02"
 ---
 
 # What was read

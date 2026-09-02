@@ -3,16 +3,21 @@ type: Source
 title: NYC Open Data overview page - Terms of Use section
 description: The portal's Terms of Use section, which incorporates the NYC.gov Terms of Use by reference and disclaims all warranties.
 resource: https://opendata.cityofnewyork.us/overview/
-tags: [license, nyc-open-data]
+tags:
+- license
+- nyc-open-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://opendata.cityofnewyork.us/overview/
-    title: NYC Open Data - Overview (Terms of Use anchor)
-    accessed: "2026-09-02"
+- resource: https://opendata.cityofnewyork.us/overview/
+  title: NYC Open Data - Overview (Terms of Use anchor)
+  accessed: "2026-09-02"
 ---
 
 # What was read

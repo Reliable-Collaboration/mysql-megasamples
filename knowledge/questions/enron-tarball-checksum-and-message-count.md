@@ -3,15 +3,22 @@ type: Open Question
 title: What are the sha256 of enron_mail_20150507.tar.gz and the exact file count?
 description: CMU publishes no checksum and says only "about 0.5M messages"; two third-party READMEs say 517,401 files.
 resource: /questions/enron-tarball-checksum-and-message-count.md
-tags: [question, enron, checksum, row-counts, text-group]
+tags:
+- question
+- enron
+- checksum
+- row-counts
+- text-group
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.cs.cmu.edu/~enron/
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
-    accessed: "2026-09-02"
+- resource: https://www.cs.cmu.edu/~enron/
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
+  accessed: "2026-09-02"
 ---
 
 # Question

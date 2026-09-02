@@ -1,19 +1,24 @@
 ---
 type: Source
-title: "MySQL Workbench Manual front page"
-description: "The manual documents Workbench Community and Commercial 8.0 through 8.0.47; Community release is a free download."
+title: MySQL Workbench Manual front page
+description: The manual documents Workbench Community and Commercial 8.0 through 8.0.47; Community release is a free download.
 resource: https://dev.mysql.com/doc/workbench/en/
-tags: [workbench, version]
+tags:
+- workbench
+- version
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:41:13Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:41:13Z"
 sources:
-  - resource: https://dev.mysql.com/doc/workbench/en/
-    title: "MySQL Workbench Manual front page"
-    accessed: "2026-09-02"
-    version: "8.0.47"
+- resource: https://dev.mysql.com/doc/workbench/en/
+  title: MySQL Workbench Manual front page
+  accessed: "2026-09-02"
+  version: 8.0.47
 ---
 
 # What was read

@@ -3,27 +3,34 @@ type: Source
 title: oracle-samples/db-sample-schemas README.md (main and v23.3) and LICENSE.txt
 description: Which schemas are current versus archived, the install procedure, and the verbatim license text of the repository.
 resource: https://github.com/oracle-samples/db-sample-schemas/blob/main/README.md
-tags: [oracle, sample-schemas, readme, license]
+tags:
+- oracle
+- sample-schemas
+- readme
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/main/README.md
-    title: README.md at main (6,420 bytes)
-    accessed: "2026-09-02"
-    version: commit 6660bad (2025-06-25)
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/README.md
-    title: README.md at v23.3 (3,784 bytes)
-    accessed: "2026-09-02"
-    version: tag v23.3
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/LICENSE.txt
-    title: LICENSE.txt (1,094 bytes; identical content at main)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v19.2/README.md
-    title: README.md at v19.2 (schema list for the pre-restructure layout)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/main/README.md
+  title: README.md at main (6,420 bytes)
+  accessed: "2026-09-02"
+  version: commit 6660bad (2025-06-25)
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/README.md
+  title: README.md at v23.3 (3,784 bytes)
+  accessed: "2026-09-02"
+  version: tag v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/LICENSE.txt
+  title: LICENSE.txt (1,094 bytes; identical content at main)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v19.2/README.md
+  title: README.md at v19.2 (schema list for the pre-restructure layout)
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -1,72 +1,80 @@
 ---
 type: Tool
-title: "MySQL 9.7 behaviour notes for conversions"
+title: MySQL 9.7 behaviour notes for conversions
 description: "Verified server behaviours that shape every schema port: utf8mb4/utf8mb4_0900_ai_ci defaults, caching_sha2_password only, spatial SRID rules, JSON, CHECK constraints, generated columns, identifier limits and case sensitivity, sql_mode, temporal/decimal/bit ranges, no UUID or datetimeoffset type, FULLTEXT tuning, invisible columns/indexes, partitioning limits, size and integrity statements, and what changed in 9.x."
 resource: https://dev.mysql.com/doc/refman/9.7/en/
-tags: [tool, mysql, type-mapping, behaviour, reference]
+tags:
+- tool
+- mysql
+- type-mapping
+- behaviour
+- reference
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:47:28Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:47:28Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:47:28Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:47:28Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/charset-server.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/caching-sha2-pluggable-authentication.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/creating-spatial-indexes.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-generated-columns.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-length.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-case-sensitivity.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/fixed-point-types.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/miscellaneous-functions.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-search.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-fine-tuning.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-indexes.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/check-table.html
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/charset-server.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/caching-sha2-pluggable-authentication.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/relnotes/mysql/9.0/en/news-9-0-0.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysql-nutshell.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/8.4/en/mysql-nutshell.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/spatial-type-overview.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/gis-wkt-functions.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/creating-spatial-indexes.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/json.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-check-constraints.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/8.0/en/create-table-check-constraints.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/create-table-generated-columns.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-length.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/identifier-case-sensitivity.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/fixed-point-types.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/miscellaneous-functions.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-search.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-fine-tuning.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-columns.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/invisible-indexes.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/partitioning-limitations.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/information-schema-tables-table.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/checksum-table.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/check-table.html
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/workbench/en/wb-migration-database-mssql-typemapping.html
+  accessed: "2026-09-02"
 ---
 
 # Facts
@@ -102,7 +110,7 @@ sources:
 
 ## Temporal, decimal, bit
 * DATETIME '1000-01-01 00:00:00' to '9999-12-31 23:59:59[.499999]'; TIMESTAMP '1970-01-01 00:00:01' to '2038-01-19 03:14:07' UTC (no extension in 9.7); DATE '1000-01-01'..'9999-12-31'; 6 fractional digits; TIMESTAMP converts through the session time zone, DATETIME does not; invalid values become the zero date under permissive modes ([datetime](/sources/mysql-refman-9-7-datetime.md)). Hazards: SQL Server temporal-table end date `9999-12-31 23:59:59.9999999` must be truncated (not rounded) to `.999999`; `datetime2`/Oracle `DATE` values before year 1000 (e.g. `0001-01-01` sentinels) have no representation — dataset records choose NULL or a documented sentinel; never use TIMESTAMP for source values past 2038.
-* DECIMAL max 65 digits, defaults (10,0), excess scale truncated ([fixed-point](/sources/mysql-refman-9-7-fixed-point-types.md)); BIT(M) 1..64 with `b'...'` literals ([bit](/sources/mysql-refman-9-7-bit-type.md)).
+* DECIMAL max 65 digits, scale ≤ 30 and ≤ precision, defaults (10,0), excess fractional digits rounded on load ([fixed-point](/sources/mysql-refman-9-7-fixed-point-types.md)); BIT(M) 1..64 with `b'...'` literals ([bit](/sources/mysql-refman-9-7-bit-type.md)).
 
 ## No UUID type, no datetimeoffset
 * `UUID_TO_BIN(str[, swap])` returns VARBINARY(16); swapping helps only version-1 UUIDs; `BIN_TO_UUID` inverts; `IS_UUID` accepts dashed/undashed/braced text ([misc functions](/sources/mysql-refman-9-7-miscellaneous-functions-uuid.md)). Mapping: `uniqueidentifier` → `BINARY(16)` loaded with `UUID_TO_BIN(@v)` (no swap), with a `BIN_TO_UUID` view column for readability; CHAR(36) only where the dataset's canonical queries compare against literal GUID strings.

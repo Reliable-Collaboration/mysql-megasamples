@@ -1,22 +1,28 @@
 ---
 type: Decision
 title: Mapping SQL Server multi-schema databases (AdventureWorks, WideWorldImporters) into MySQL
-description: "MySQL has no schema level below the database; AdventureWorks (5 schemas) and WideWorldImporters (4 data schemas) map to one database per dataset with lower-cased schema-prefixed table names (option A, accepted)."
+description: MySQL has no schema level below the database; AdventureWorks (5 schemas) and WideWorldImporters (4 data schemas) map to one database per dataset with lower-cased schema-prefixed table names (option A, accepted).
 resource: /decisions/schema-to-database-mapping.md
-tags: [decision, naming, adventureworks, wideworldimporters]
+tags:
+- decision
+- naming
+- adventureworks
+- wideworldimporters
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
-    title: instawdb.sql (schemas HumanResources, Person, Production, Purchasing, Sales; 68 tables)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
-    title: WWI OLTP catalog (Application, Purchasing, Sales, Warehouse, Website, Reports, PowerBI, Integration, Sequences)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
-    title: WWI DW catalog (Dimension, Fact, Integration)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
+  title: instawdb.sql (schemas HumanResources, Person, Production, Purchasing, Sales; 68 tables)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
+  title: WWI OLTP catalog (Application, Purchasing, Sales, Warehouse, Website, Reports, PowerBI, Integration, Sequences)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
+  title: WWI DW catalog (Dimension, Fact, Integration)
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,14 +3,19 @@ type: Decision
 title: Two distribution tiers, core and extended, and the opt-in mechanism
 description: Core datasets are baked into the image; extended datasets are fetched or generated on demand through Compose profiles and make targets.
 resource: /decisions/tier-model.md
-tags: [decision, tiers, distribution]
+tags:
+- decision
+- tiers
+- distribution
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:17:31Z"
 sources:
-  - resource: /sources/docker-library-mysql-readme.md
-    title: initdb behaviour
-    accessed: "2026-09-02"
+- resource: /sources/docker-library-mysql-readme.md
+  title: initdb behaviour
+  accessed: "2026-09-02"
 ---
 
 # Question

@@ -3,17 +3,24 @@ type: Source
 title: instawdbdw.sql (AdventureWorksDW install script) - file analysis
 description: "Analysis of the current AdventureWorksDW install script (updated 2025-11-14): 31 tables in dbo, 29 pipe-delimited UTF-8 BULK INSERTs, views and functions."
 resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
-tags: [adventureworks-dw, script-analysis, tsql, bulk-insert]
+tags:
+- adventureworks-dw
+- script-analysis
+- tsql
+- bulk-insert
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
-    title: instawdbdw.sql at master
-    accessed: "2026-09-02"
-    version: 'master, 54,095 bytes; header "Date: October 26, 2017 / Updated: November 14, 2025"; commit b47eadc852'
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/data-warehouse-install-script/instawdbdw.sql
+  title: instawdbdw.sql at master
+  accessed: "2026-09-02"
+  version: "master, 54,095 bytes; header \"Date: October 26, 2017 / Updated: November 14, 2025\"; commit b47eadc852"
 ---
 
 # What was read

@@ -3,47 +3,55 @@ type: Dataset
 title: TPC-H (derived) — tpch
 description: The eight-table decision-support schema of TPC Benchmark H, generated at a chosen scale factor by dbgen 2.17.3 (DuckDB port, cross-checked with tpch-kit), loaded from pipe-delimited files, with the 22 validation queries ported to MySQL; no pre-generated data is shipped.
 resource: https://www.tpc.org/tpch/
-tags: [tier-generated, generated, tpc, tpc-eula, olap]
+tags:
+- tier-generated
+- generated
+- tpc
+- tpc-eula
+- olap
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/tpc_documents_current_versions/current_specifications5.asp
-    title: TPC current specifications (TPC-H v3.0.1)
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
-    title: TPC-H spec 3.0.1
-    accessed: "2026-09-02"
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-    title: TPC EULA 2.2
-    accessed: "2026-09-02"
-  - resource: https://github.com/gregrahn/tpch-kit
-    title: tpch-kit @ 852ad0a
-    accessed: "2026-09-02"
-  - resource: https://duckdb.org/docs/current/core_extensions/tpch.html
-    title: DuckDB tpch extension
-    accessed: "2026-09-02"
-  - resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
-    title: DuckDB dbgen port source (2.17.3, TPC EULA)
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
-    title: MySQL LOAD DATA
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/date-and-time-literals.html
-    title: MySQL date literals
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/string-functions.html
-    title: MySQL SUBSTRING forms
-    accessed: "2026-09-02"
-  - resource: https://github.com/dhuny/tpch
-    title: dhuny/tpch LOAD DATA script
-    accessed: "2026-09-02"
-  - resource: https://github.com/catarinaribeir0/queries-tpch-dbgen-mysql
-    title: Community MySQL port of the 22 queries
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/tpc_documents_current_versions/current_specifications5.asp
+  title: TPC current specifications (TPC-H v3.0.1)
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/pdf/TPC-H_v3.0.1.pdf
+  title: TPC-H spec 3.0.1
+  accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
+  title: TPC EULA 2.2
+  accessed: "2026-09-02"
+- resource: https://github.com/gregrahn/tpch-kit
+  title: tpch-kit @ 852ad0a
+  accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/tpch.html
+  title: DuckDB tpch extension
+  accessed: "2026-09-02"
+- resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
+  title: DuckDB dbgen port source (2.17.3, TPC EULA)
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/load-data.html
+  title: MySQL LOAD DATA
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/date-and-time-literals.html
+  title: MySQL date literals
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/string-functions.html
+  title: MySQL SUBSTRING forms
+  accessed: "2026-09-02"
+- resource: https://github.com/dhuny/tpch
+  title: dhuny/tpch LOAD DATA script
+  accessed: "2026-09-02"
+- resource: https://github.com/catarinaribeir0/queries-tpch-dbgen-mysql
+  title: Community MySQL port of the 22 queries
+  accessed: "2026-09-02"
 ---
 
 # Identity

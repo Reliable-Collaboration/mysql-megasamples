@@ -3,18 +3,25 @@ type: Source
 title: PyPI JSON metadata for mwxml
 description: Current release 0.3.8 (uploaded 2026-04-08), MIT, dependencies mwtypes/mwcli/para/jsonschema, no requires_python.
 resource: https://pypi.org/pypi/mwxml/json
-tags: [source, tool, python, version-pin]
+tags:
+- source
+- tool
+- python
+- version-pin
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2027-03-01"
 sources:
-  - resource: https://pypi.org/pypi/mwxml/json
-    title: PyPI JSON API
-    accessed: "2026-09-02"
-    version: 0.3.8
+- resource: https://pypi.org/pypi/mwxml/json
+  title: PyPI JSON API
+  accessed: "2026-09-02"
+  version: 0.3.8
 ---
 
 # What was read

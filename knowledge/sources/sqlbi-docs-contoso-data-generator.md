@@ -3,28 +3,34 @@ type: Source
 title: docs.sqlbi.com - Contoso Data Generator documentation (index, details, config-json, formats, sqlscripts)
 description: SQLBI's documentation site for the generator - generated entities, config parameter definitions, output-format options, SQL Server import scripts; no seed or row-count tables.
 resource: https://docs.sqlbi.com/contoso-data-generator/
-tags: [contoso, documentation, sqlbi]
+tags:
+- contoso
+- documentation
+- sqlbi
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://docs.sqlbi.com/contoso-data-generator/
-    title: Contoso Data Generator (index)
-    accessed: "2026-09-02"
-  - resource: https://docs.sqlbi.com/contoso-data-generator/details
-    title: Details
-    accessed: "2026-09-02"
-  - resource: https://docs.sqlbi.com/contoso-data-generator/config-json
-    title: Configuration file (config.json)
-    accessed: "2026-09-02"
-  - resource: https://docs.sqlbi.com/contoso-data-generator/formats
-    title: Output formats and related parameters
-    accessed: "2026-09-02"
-  - resource: https://docs.sqlbi.com/contoso-data-generator/sqlscripts
-    title: SQL Scripts
-    accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/
+  title: Contoso Data Generator (index)
+  accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/details
+  title: Details
+  accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/config-json
+  title: Configuration file (config.json)
+  accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/formats
+  title: Output formats and related parameters
+  accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/sqlscripts
+  title: SQL Scripts
+  accessed: "2026-09-02"
 ---
 
 # What was read

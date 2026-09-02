@@ -1,18 +1,24 @@
 ---
 type: Source
 title: "Internet Archive Help Center: Rights"
-description: "Users use the collections at their own risk and must ensure non-infringing use; the Archive removes infringing content per its Copyright Policy; no guarantee of copyright status of items."
+description: Users use the collections at their own risk and must ensure non-infringing use; the Archive removes infringing content per its Copyright Policy; no guarantee of copyright status of items.
 resource: https://help.archive.org/help/rights/
-tags: [archive-org, license, terms]
+tags:
+- archive-org
+- license
+- terms
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://help.archive.org/help/rights/
-    title: "Internet Archive Help Center: Rights"
-    accessed: "2026-09-02"
+- resource: https://help.archive.org/help/rights/
+  title: "Internet Archive Help Center: Rights"
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,17 +3,22 @@ type: Source
 title: TLC High Volume FHV Trip Records data dictionary (PDF)
 description: Field definitions for the HVFHV (Uber/Lyft/Via/Juno) Parquet files, including the licence-number code list and the driver-pay columns.
 resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf
-tags: [nyc-tlc, data-dictionary]
+tags:
+- nyc-tlc
+- data-dictionary
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf
-    title: Data Dictionary - High Volume FHV Trip Records
-    accessed: "2026-09-02"
-    version: document date "March 18, 2025"; 117,347 bytes
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/data_dictionary_trip_records_hvfhs.pdf
+  title: Data Dictionary - High Volume FHV Trip Records
+  accessed: "2026-09-02"
+  version: document date "March 18, 2025"; 117,347 bytes
 ---
 
 # What was read

@@ -3,16 +3,22 @@ type: Source
 title: "GitHub Docs: About releases"
 description: "Release assets: up to 1000 per release, each under 2 GiB, no total size or bandwidth limit."
 resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
-tags: [github, limits, releases]
+tags:
+- github
+- limits
+- releases
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:37:05Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
 sources:
-  - resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
-    title: "GitHub Docs: About releases"
-    accessed: "2026-09-02"
+- resource: https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases
+  title: "GitHub Docs: About releases"
+  accessed: "2026-09-02"
 ---
 
 # What was read

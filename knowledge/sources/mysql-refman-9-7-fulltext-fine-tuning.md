@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Fine-Tuning MySQL Full-Text Search"
-description: "innodb_ft_min_token_size default 3, innodb_ft_max_token_size default 84, ft_min_word_len 4 (MyISAM); stopword variables; indexes must be rebuilt after changes."
+description: innodb_ft_min_token_size default 3, innodb_ft_max_token_size default 84, ft_min_word_len 4 (MyISAM); stopword variables; indexes must be rebuilt after changes.
 resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-fine-tuning.html
-tags: [mysql, docs, fulltext]
+tags:
+- mysql
+- docs
+- fulltext
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-fine-tuning.html
-    title: "MySQL 9.7 Reference Manual: Fine-Tuning MySQL Full-Text Search"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 14.9.6"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/fulltext-fine-tuning.html
+  title: "MySQL 9.7 Reference Manual: Fine-Tuning MySQL Full-Text Search"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 14.9.6
 ---
 
 # What was read

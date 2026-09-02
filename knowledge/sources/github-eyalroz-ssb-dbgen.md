@@ -3,24 +3,30 @@ type: Source
 title: eyalroz/ssb-dbgen (unified, CMake-built Star Schema Benchmark data generator)
 description: Read README, CMakeLists.txt options, doc/ssb.ddl, doc/ssb.ri, src/driver.c header, repository listing and metadata; no LICENSE file exists.
 resource: https://github.com/eyalroz/ssb-dbgen
-tags: [ssb, dbgen, github]
+tags:
+- ssb
+- dbgen
+- github
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/eyalroz/ssb-dbgen/master/README.md
-    title: README.md
-    accessed: "2026-09-02"
-    version: master @ ae1e254aa4d603d8ef1f44078e5abed011634b23 (2025-04-26, latest commit); GitHub license null; no tags; 38 stars
-  - resource: https://raw.githubusercontent.com/eyalroz/ssb-dbgen/master/CMakeLists.txt
-    title: CMakeLists.txt
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/eyalroz/ssb-dbgen/master/doc/ssb.ddl
-    title: doc/ssb.ddl (+ doc/ssb.ri)
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/eyalroz/ssb-dbgen/master/README.md
+  title: README.md
+  accessed: "2026-09-02"
+  version: master @ ae1e254aa4d603d8ef1f44078e5abed011634b23 (2025-04-26, latest commit); GitHub license null; no tags; 38 stars
+- resource: https://raw.githubusercontent.com/eyalroz/ssb-dbgen/master/CMakeLists.txt
+  title: CMakeLists.txt
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/eyalroz/ssb-dbgen/master/doc/ssb.ddl
+  title: doc/ssb.ddl (+ doc/ssb.ri)
+  accessed: "2026-09-02"
 ---
 
 # What was read

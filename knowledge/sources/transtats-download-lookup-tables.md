@@ -3,16 +3,22 @@ type: Source
 title: TranStats Download_Lookup.asp lookup-table endpoints
 description: The obfuscated-parameter endpoints that serve the L_AIRLINE_ID, L_AIRPORT and L_UNIQUE_CARRIERS dimension CSVs; verified by HEAD.
 resource: https://www.transtats.bts.gov/Download_Lookup.asp?Y11x72=Y_haVdhR_PNeeVRef
-tags: [bts, lookup, download]
+tags:
+- bts
+- lookup
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.transtats.bts.gov/Download_Lookup.asp?Y11x72=Y_haVdhR_PNeeVRef
-    title: Download_Lookup.asp - L_UNIQUE_CARRIERS.csv
-    accessed: "2026-09-02"
+- resource: https://www.transtats.bts.gov/Download_Lookup.asp?Y11x72=Y_haVdhR_PNeeVRef
+  title: Download_Lookup.asp - L_UNIQUE_CARRIERS.csv
+  accessed: "2026-09-02"
 ---
 
 # What was read

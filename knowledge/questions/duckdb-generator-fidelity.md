@@ -3,15 +3,21 @@ type: Open Question
 title: Do DuckDB's dbgen/dsdgen ports produce byte-identical rows to the C tools, and how fast is ATTACH-mysql insert versus LOAD DATA?
 description: The chosen generator path relies on DuckDB's ports; identity with the reference C output and the NULL/DECIMAL/CHAR export behaviour are unverified.
 resource: /questions/duckdb-generator-fidelity.md
-tags: [question, duckdb, tpc-h, tpc-ds]
+tags:
+- question
+- duckdb
+- tpc-h
+- tpc-ds
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
-    accessed: "2026-09-02"
-  - resource: https://duckdb.org/docs/current/core_extensions/mysql.html
-    accessed: "2026-09-02"
+- resource: https://github.com/duckdb/duckdb/tree/main/extension/tpch
+  accessed: "2026-09-02"
+- resource: https://duckdb.org/docs/current/core_extensions/mysql.html
+  accessed: "2026-09-02"
 ---
 
 # Question

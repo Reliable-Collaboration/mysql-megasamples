@@ -3,21 +3,26 @@ type: Decision
 title: Indexing strategy and order of operations
 description: Carry upstream keys and indexes faithfully; derive indexes for index-less sources from key candidates, join columns, and range columns; load first, index second, constrain last; verify with information_schema and EXPLAIN.
 resource: /decisions/indexing-strategy.md
-tags: [decision, indexing, innodb]
+tags:
+- decision
+- indexing
+- innodb
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:40:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:40:00Z"
 sources:
-  - resource: /sources/mysql-refman-9-7-explain-output.md
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-information-schema-statistics.md
-    accessed: "2026-09-02"
-  - resource: /tools/load-data-infile.md
-    title: bulk-load recommendations (tools agent)
-    accessed: "2026-09-02"
-  - resource: /tools/mysql-9x-behaviour-notes.md
-    title: partitioning and FULLTEXT limits (tools agent)
-    accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-explain-output.md
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-information-schema-statistics.md
+  accessed: "2026-09-02"
+- resource: /tools/load-data-infile.md
+  title: bulk-load recommendations (tools agent)
+  accessed: "2026-09-02"
+- resource: /tools/mysql-9x-behaviour-notes.md
+  title: partitioning and FULLTEXT limits (tools agent)
+  accessed: "2026-09-02"
 ---
 
 # Question

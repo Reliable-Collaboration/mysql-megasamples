@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - WideWorldImporters OLAP (DW) database catalog
 description: "Official schema catalog for WideWorldImportersDW: Dimension, Fact, Integration schemas; 8 dimension tables, 6 fact tables; configuration procedures for columnstore, in-memory, PolyBase and the large Fact.Sale generator."
 resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
-tags: [wideworldimporters-dw, docs, schema]
+tags:
+- wideworldimporters-dw
+- docs
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
-    title: WideWorldImporters OLAP database catalog - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2018-08-04, updated_at 2026-07-20, git commit 2ceb7c07640735a9c49dbb6ff1de511aceead449
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-dw-database-catalog
+  title: WideWorldImporters OLAP database catalog - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2018-08-04, updated_at 2026-07-20, git commit 2ceb7c07640735a9c49dbb6ff1de511aceead449
 ---
 
 # What was read

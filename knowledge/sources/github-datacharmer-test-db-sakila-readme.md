@@ -3,16 +3,22 @@ type: Source
 title: test_db sakila/README.md
 description: States that the Sakila copy inside test_db is derived from the MySQL "Sakila-spatial" download with conditional FULLTEXT/GEOMETRY.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/sakila/README.md
-tags: [sakila, employees, test_db]
+tags:
+- sakila
+- employees
+- test_db
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/sakila/README.md
-    title: sakila/README.md
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/sakila/README.md
+  title: sakila/README.md
+  accessed: "2026-09-02"
 ---
 
 # What was read

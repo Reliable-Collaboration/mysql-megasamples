@@ -3,21 +3,29 @@ type: Decision
 title: Simple English Wikipedia — load the MediaWiki .sql.gz tables directly and synthesize revision/text from pages-articles XML, keeping the binary schema
 description: Choose direct SQL loading with DDL fix-ups plus a streaming XML parse, and keep MediaWiki's varbinary/binary columns with utf8mb4 views rather than converting in place.
 resource: /decisions/wikipedia-simple-conversion-path.md
-tags: [decision, wikipedia, mediawiki, conversion-path, text-group]
+tags:
+- decision
+- wikipedia
+- mediawiki
+- conversion-path
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/
-    accessed: "2026-09-02"
-  - resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
-    accessed: "2026-09-02"
-  - resource: https://www.mediawiki.org/wiki/Manual:Page_table
-    accessed: "2026-09-02"
-  - resource: https://github.com/mediawiki-utilities/python-mwxml
-    accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/
+  accessed: "2026-09-02"
+- resource: https://dumps.wikimedia.org/simplewiki/latest/simplewiki-latest-page.sql.gz
+  accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/wiki/Manual:Page_table
+  accessed: "2026-09-02"
+- resource: https://github.com/mediawiki-utilities/python-mwxml
+  accessed: "2026-09-02"
 ---
 
 # Question

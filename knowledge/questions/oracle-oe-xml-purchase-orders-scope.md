@@ -3,17 +3,24 @@ type: Open Question
 title: OE extras — carry the 132 XML purchase orders, add POINT SRID 4326 columns, flatten categories_tab?
 description: Three optional enrichments of oracle_oe whose value depends on cheap checks (XML structure, MySQL 4326 axis order, OC category data) not performed during research.
 resource: /questions/oracle-oe-xml-purchase-orders-scope.md
-tags: [question, oracle, oe, xml, spatial]
+tags:
+- question
+- oracle
+- oe
+- xml
+- spatial
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
-    title: OE/OC scripts, XML loading
-    accessed: "2026-09-02"
-  - resource: /sources/mysql-refman-9-7-spatial-type-overview.md
-    title: MySQL SRID attribute (axis order not covered)
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
+  title: OE/OC scripts, XML loading
+  accessed: "2026-09-02"
+- resource: /sources/mysql-refman-9-7-spatial-type-overview.md
+  title: MySQL SRID attribute (axis order not covered)
+  accessed: "2026-09-02"
 ---
 
 # Question

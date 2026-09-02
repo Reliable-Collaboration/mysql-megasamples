@@ -3,22 +3,31 @@ type: Tool
 title: MySQL classic_hashing component (MD5/SHA1 on 9.6+)
 description: Since MySQL 9.6.0 MD5() and SHA1() live in an optional component; upstream checksum scripts that call MD5()/SHA() fail on the 9.7 image unless the component is installed or the scripts are rewritten to SHA2().
 resource: https://dev.mysql.com/doc/refman/9.7/en/legacy-hashing-component.html
-tags: [mysql, "9.7", checksum, md5, sha1, test-design]
+tags:
+- mysql
+- "9.7"
+- checksum
+- md5
+- sha1
+- test-design
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/relnotes/mysql/9.6/en/news-9-6-0.html
-    title: "MySQL 9.6.0 release notes (WL #16956)"
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/encryption-functions.html
-    title: 9.7 encryption functions table
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
-    title: test_db README (MySQL 9.6 note)
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/relnotes/mysql/9.6/en/news-9-6-0.html
+  title: "MySQL 9.6.0 release notes (WL #16956)"
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/encryption-functions.html
+  title: 9.7 encryption functions table
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
+  title: test_db README (MySQL 9.6 note)
+  accessed: "2026-09-02"
 ---
 
 # Facts

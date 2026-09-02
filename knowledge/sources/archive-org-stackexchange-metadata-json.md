@@ -3,17 +3,24 @@ type: Source
 title: archive.org metadata API — stackexchange item file list with sizes, md5 and mtimes
 description: Machine-readable listing used for exact byte sizes, md5 checksums and the last-upload date of the public Stack Exchange dumps.
 resource: https://archive.org/metadata/stackexchange
-tags: [source, stackexchange, checksums, size-evidence]
+tags:
+- source
+- stackexchange
+- checksums
+- size-evidence
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2027-03-01"
 sources:
-  - resource: https://archive.org/metadata/stackexchange
-    title: metadata JSON (116,026 bytes)
-    accessed: "2026-09-02"
+- resource: https://archive.org/metadata/stackexchange
+  title: metadata JSON (116,026 bytes)
+  accessed: "2026-09-02"
 ---
 
 # What was read

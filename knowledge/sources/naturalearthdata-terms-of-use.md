@@ -3,17 +3,23 @@ type: Source
 title: Natural Earth - Terms of Use
 description: Natural Earth map data (used for WideWorldImporters country/state borders and city locations) is public domain; no attribution required.
 resource: https://www.naturalearthdata.com/about/terms-of-use/
-tags: [license, public-domain, wideworldimporters]
+tags:
+- license
+- public-domain
+- wideworldimporters
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://www.naturalearthdata.com/about/terms-of-use/
-    title: Natural Earth » Terms of Use
-    accessed: "2026-09-02"
-    version: page footer "© 2009 - 2026. Natural Earth."
+- resource: https://www.naturalearthdata.com/about/terms-of-use/
+  title: Natural Earth » Terms of Use
+  accessed: "2026-09-02"
+  version: page footer "© 2009 - 2026. Natural Earth."
 ---
 
 # What was read

@@ -3,16 +3,21 @@ type: Source
 title: OSI page for The MIT License
 description: Canonical MIT template text, read to confirm the Chinook and Contoso license files reproduce it.
 resource: https://opensource.org/license/mit
-tags: [license, mit]
+tags:
+- license
+- mit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://opensource.org/license/mit
-    title: The MIT License
-    accessed: "2026-09-02"
+- resource: https://opensource.org/license/mit
+  title: The MIT License
+  accessed: "2026-09-02"
 ---
 
 # What was read

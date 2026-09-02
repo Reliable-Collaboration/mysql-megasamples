@@ -3,19 +3,24 @@ type: Source
 title: Chicago IUCR code lookup dataset (c7ck-438e)
 description: The 434-row IUCR dimension table that the crimes dataset's IUCR column references.
 resource: https://data.cityofchicago.org/Public-Safety/Chicago-Police-Department-Illinois-Uniform-Crime-R/c7ck-438e
-tags: [chicago, lookup]
+tags:
+- chicago
+- lookup
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://data.cityofchicago.org/api/views/c7ck-438e.json
-    title: Socrata view metadata for c7ck-438e
-    accessed: "2026-09-02"
-  - resource: https://data.cityofchicago.org/resource/c7ck-438e.csv
-    title: SODA endpoint for the IUCR codes
-    accessed: "2026-09-02"
+- resource: https://data.cityofchicago.org/api/views/c7ck-438e.json
+  title: Socrata view metadata for c7ck-438e
+  accessed: "2026-09-02"
+- resource: https://data.cityofchicago.org/resource/c7ck-438e.csv
+  title: SODA endpoint for the IUCR codes
+  accessed: "2026-09-02"
 ---
 
 # What was read

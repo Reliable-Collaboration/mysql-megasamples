@@ -3,16 +3,22 @@ type: Source
 title: TranStats field descriptions for the On-Time table
 description: "The per-field description page; establishes that all six clock columns are \"local time: hhmm\" and all delay columns are minutes."
 resource: https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ
-tags: [bts, ontime, data-dictionary]
+tags:
+- bts
+- ontime
+- data-dictionary
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ
-    title: TranStats - Field Descriptions
-    accessed: "2026-09-02"
+- resource: https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ
+  title: TranStats - Field Descriptions
+  accessed: "2026-09-02"
 ---
 
 # What was read

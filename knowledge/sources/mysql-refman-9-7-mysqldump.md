@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: mysqldump"
-description: "mysqldump options that matter for exports and re-imports, its utf8mb4 default, and the manual's pointer to MySQL Shell dump utilities."
+description: mysqldump options that matter for exports and re-imports, its utf8mb4 default, and the manual's pointer to MySQL Shell dump utilities.
 resource: https://dev.mysql.com/doc/refman/9.7/en/mysqldump.html
-tags: [mysql, docs, mysqldump]
+tags:
+- mysql
+- docs
+- mysqldump
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/mysqldump.html
-    title: "MySQL 9.7 Reference Manual: mysqldump"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 6.5.4"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/mysqldump.html
+  title: "MySQL 9.7 Reference Manual: mysqldump"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 6.5.4
 ---
 
 # What was read

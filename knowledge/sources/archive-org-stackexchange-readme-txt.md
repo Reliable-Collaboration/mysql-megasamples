@@ -3,16 +3,22 @@ type: Source
 title: readme.txt in the archive.org Stack Exchange dump (2024-04-01)
 description: The dump's own column list per XML file, including the PostHistoryTypeId enumeration and example values.
 resource: https://archive.org/download/stackexchange/readme.txt
-tags: [source, stackexchange, schema]
+tags:
+- source
+- stackexchange
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://archive.org/download/stackexchange/readme.txt
-    title: readme.txt (5,856 bytes, UTF-8 with BOM)
-    accessed: "2026-09-02"
+- resource: https://archive.org/download/stackexchange/readme.txt
+  title: readme.txt (5,856 bytes, UTF-8 with BOM)
+  accessed: "2026-09-02"
 ---
 
 # What was read

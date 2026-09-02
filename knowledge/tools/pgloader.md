@@ -1,29 +1,36 @@
 ---
 type: Tool
-title: "pgloader (v3.6.x SBCL, v4 Clojure rewrite in progress)"
-description: "Loads CSV/fixed/dBase/IXF/archives and MySQL/SQLite/MS SQL Server/PostgreSQL/Redshift into PostgreSQL only; PostgreSQL-licensed; rejected for this project because MySQL is never a target and DuckDB/bcp cover the MSSQL-to-CSV step directly."
+title: pgloader (v3.6.x SBCL, v4 Clojure rewrite in progress)
+description: Loads CSV/fixed/dBase/IXF/archives and MySQL/SQLite/MS SQL Server/PostgreSQL/Redshift into PostgreSQL only; PostgreSQL-licensed; rejected for this project because MySQL is never a target and DuckDB/bcp cover the MSSQL-to-CSV step directly.
 resource: https://pgloader.readthedocs.io/
-tags: [tool, pgloader, postgresql, rejected]
+tags:
+- tool
+- pgloader
+- postgresql
+- rejected
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:43:49Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:43:49Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:43:49Z"
 sources:
-  - resource: https://pgloader.readthedocs.io/en/latest/
-    title: "pgloader documentation index"
-    accessed: "2026-09-02"
-  - resource: https://pgloader.readthedocs.io/en/latest/intro.html
-    title: "pgloader Introduction"
-    accessed: "2026-09-02"
-  - resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
-    title: "Migrating a MS SQL Database to PostgreSQL"
-    accessed: "2026-09-02"
-  - resource: https://github.com/dimitri/pgloader
-    title: "dimitri/pgloader README, LICENSE, releases and tags"
-    accessed: "2026-09-02"
-    version: "latest release v3.6.9 (2022-10-24); tag v4-dev; master pushed 2026-07-24"
+- resource: https://pgloader.readthedocs.io/en/latest/
+  title: pgloader documentation index
+  accessed: "2026-09-02"
+- resource: https://pgloader.readthedocs.io/en/latest/intro.html
+  title: pgloader Introduction
+  accessed: "2026-09-02"
+- resource: https://pgloader.readthedocs.io/en/latest/ref/mssql.html
+  title: Migrating a MS SQL Database to PostgreSQL
+  accessed: "2026-09-02"
+- resource: https://github.com/dimitri/pgloader
+  title: dimitri/pgloader README, LICENSE, releases and tags
+  accessed: "2026-09-02"
+  version: latest release v3.6.9 (2022-10-24); tag v4-dev; master pushed 2026-07-24
 ---
 
 # Facts

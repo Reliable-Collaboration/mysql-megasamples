@@ -3,15 +3,20 @@ type: Open Question
 title: Exact ssb-dbgen row counts at SF=1 (lineorder, date), fractional SF behaviour, and lo_commitdate range
 description: The paper gives SF×6,000,000, SF×30,000, SF×2,000, 200,000×(1+log2 SF) and "7 years of days"; exact generated counts (6,001,215? 2,556?) are inferred.
 resource: /questions/ssb-sf1-row-counts.md
-tags: [question, ssb, generator]
+tags:
+- question
+- ssb
+- generator
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://github.com/eyalroz/ssb-dbgen
-    accessed: "2026-09-02"
-  - resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
-    accessed: "2026-09-02"
+- resource: https://github.com/eyalroz/ssb-dbgen
+  accessed: "2026-09-02"
+- resource: https://www.cs.umb.edu/~poneil/StarSchemaB.PDF
+  accessed: "2026-09-02"
 ---
 
 # Question

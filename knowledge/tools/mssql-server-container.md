@@ -3,25 +3,33 @@ type: Tool
 title: SQL Server Linux container (mcr.microsoft.com/mssql/server)
 description: Microsoft's official Ubuntu-based SQL Server image, used only at build time to restore WideWorldImporters .bak files (and optionally AdventureWorks .bak) before exporting to MySQL; Developer edition by default, EULA acceptance required, amd64 only, 2 GB RAM minimum.
 resource: https://mcr.microsoft.com/en-us/artifact/mar/mssql/server/about
-tags: [tool, sql-server, container, build-time-only, proprietary]
+tags:
+- tool
+- sql-server
+- container
+- build-time-only
+- proprietary
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
-    title: MCR catalog "About" text, tags list and manifests (see source record)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
-    title: Deploy and connect to SQL Server Linux containers (Learn)
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver17
-    title: "Quickstart: run SQL Server Linux container images with Docker (Learn)"
-    accessed: "2026-09-02"
-  - resource: https://go.microsoft.com/fwlink/?linkid=857698
-    title: End-User License Agreement (License_Dev_Linux.rtf)
-    accessed: "2026-09-02"
+- resource: https://mcr.microsoft.com/api/v1/catalog/mssql/server/details?reg=mar
+  title: MCR catalog "About" text, tags list and manifests (see source record)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/linux/sql-server-linux-docker-container-deployment
+  title: Deploy and connect to SQL Server Linux containers (Learn)
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker?view=sql-server-ver17
+  title: "Quickstart: run SQL Server Linux container images with Docker (Learn)"
+  accessed: "2026-09-02"
+- resource: https://go.microsoft.com/fwlink/?linkid=857698
+  title: End-User License Agreement (License_Dev_Linux.rtf)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

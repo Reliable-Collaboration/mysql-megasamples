@@ -3,16 +3,22 @@ type: Source
 title: Stack Overflow Help Center — "What is the data dump?"
 description: The current official description of the quarterly per-site dump behind the account "Data dump access" page and the LLM-training checkbox.
 resource: https://stackoverflow.com/help/data-dumps
-tags: [source, stackexchange, click-through]
+tags:
+- source
+- stackexchange
+- click-through
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://stackoverflow.com/help/data-dumps
-    title: What is the data dump? How often is an updated version posted?
-    accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/data-dumps
+  title: What is the data dump? How often is an updated version posted?
+  accessed: "2026-09-02"
 ---
 
 # What was read

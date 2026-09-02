@@ -3,15 +3,21 @@ type: Open Question
 title: Row counts per XML file in dba.stackexchange.com.7z (2024-04-02 snapshot) and the small core site
 description: Only live 2026 totals exist; the exact April 2024 counts must be measured once and pinned as the test baseline.
 resource: /questions/stackexchange-dump-row-counts-2024-04.md
-tags: [question, stackexchange, row-counts, text-group]
+tags:
+- question
+- stackexchange
+- row-counts
+- text-group
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.stackexchange.com/2.3/info?site=dba
-    accessed: "2026-09-02"
-  - resource: https://archive.org/metadata/stackexchange
-    accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/info?site=dba
+  accessed: "2026-09-02"
+- resource: https://archive.org/metadata/stackexchange
+  accessed: "2026-09-02"
 ---
 
 # Question

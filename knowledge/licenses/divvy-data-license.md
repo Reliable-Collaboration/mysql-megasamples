@@ -3,19 +3,25 @@ type: License
 title: Divvy Data License Agreement
 description: Lyft Bikes and Scooters' licence for City-of-Chicago-owned Divvy data; grant and restrictions are word-for-word the Citi Bike policy, including the stand-alone-dataset prohibition.
 resource: https://divvybikes.com/data-license-agreement
-tags: [license, divvy, redistribution-blocked]
+tags:
+- license
+- divvy
+- redistribution-blocked
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://divvybikes.com/data-license-agreement
-    title: Divvy Data License Agreement (full text)
-    accessed: "2026-09-02"
-  - resource: https://divvybikes.com/system-data
-    title: Divvy System Data (links to the agreement)
-    accessed: "2026-09-02"
+- resource: https://divvybikes.com/data-license-agreement
+  title: Divvy Data License Agreement (full text)
+  accessed: "2026-09-02"
+- resource: https://divvybikes.com/system-data
+  title: Divvy System Data (links to the agreement)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

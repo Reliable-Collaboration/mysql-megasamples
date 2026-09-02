@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Server SQL Modes"
-description: "Default sql_mode, strict mode and LOAD DATA, ANSI_QUOTES, PIPES_AS_CONCAT, NO_BACKSLASH_ESCAPES."
+description: Default sql_mode, strict mode and LOAD DATA, ANSI_QUOTES, PIPES_AS_CONCAT, NO_BACKSLASH_ESCAPES.
 resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
-tags: [mysql, docs, sql-mode]
+tags:
+- mysql
+- docs
+- sql-mode
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
-    title: "MySQL 9.7 Reference Manual: Server SQL Modes"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 7.1.11"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/sql-mode.html
+  title: "MySQL 9.7 Reference Manual: Server SQL Modes"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 7.1.11
 ---
 
 # What was read

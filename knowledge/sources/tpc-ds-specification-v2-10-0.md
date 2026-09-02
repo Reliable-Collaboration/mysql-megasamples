@@ -3,17 +3,22 @@ type: Source
 title: TPC Benchmark DS Standard Specification Version 2.10.0 (as shipped in tpcds-kit)
 description: The TPC-DS spec version that tpcds-kit and DuckDB's dsdgen implement; read for the 24-table row counts at 1 GB, scale factors and the minor query modification list.
 resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
-tags: [tpc-ds, specification]
+tags:
+- tpc-ds
+- specification
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
-    title: TPC BENCHMARK DS Standard Specification Version 2.10.0, September 2018
-    accessed: "2026-09-02"
-    version: 2.10.0, 3.4 MB PDF (text extracted locally)
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/specification/TPC-DS_v2.10.0.pdf
+  title: TPC BENCHMARK DS Standard Specification Version 2.10.0, September 2018
+  accessed: "2026-09-02"
+  version: 2.10.0, 3.4 MB PDF (text extracted locally)
 ---
 
 # What was read

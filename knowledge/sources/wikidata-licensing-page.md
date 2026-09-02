@@ -3,16 +3,22 @@ type: Source
 title: Wikidata:Licensing
 description: States that structured data in the main, Property and Lexeme (and EntitySchema) namespaces is CC0, and text elsewhere is CC BY-SA 4.0.
 resource: https://www.wikidata.org/wiki/Wikidata:Licensing
-tags: [source, wikidata, license]
+tags:
+- source
+- wikidata
+- license
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.wikidata.org/wiki/Wikidata:Licensing
-    title: Wikidata:Licensing
-    accessed: "2026-09-02"
+- resource: https://www.wikidata.org/wiki/Wikidata:Licensing
+  title: Wikidata:Licensing
+  accessed: "2026-09-02"
 ---
 
 # What was read

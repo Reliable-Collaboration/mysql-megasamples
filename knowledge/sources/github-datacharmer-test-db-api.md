@@ -3,17 +3,24 @@ type: Source
 title: datacharmer/test_db repository metadata (GitHub API)
 description: Release v1.0.7 asset, file sizes of the SQL dumps, sakila subdirectory, latest commit, as returned by the GitHub REST API.
 resource: https://api.github.com/repos/datacharmer/test_db
-tags: [employees, test_db, github-api, sizes]
+tags:
+- employees
+- test_db
+- github-api
+- sizes
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/datacharmer/test_db
-    title: repos/datacharmer/test_db, /releases/latest, /contents, /contents/sakila, /commits/master
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/datacharmer/test_db
+  title: repos/datacharmer/test_db, /releases/latest, /contents, /contents/sakila, /commits/master
+  accessed: "2026-09-02"
 ---
 
 # What was read

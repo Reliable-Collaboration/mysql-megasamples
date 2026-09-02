@@ -3,25 +3,31 @@ type: License
 title: MIT License
 description: Permissive license requiring only that the copyright notice and permission notice accompany copies; used by Chinook and the Contoso Data Generator V2 (tool and data).
 resource: https://opensource.org/license/mit
-tags: [license, mit, permissive]
+tags:
+- license
+- mit
+- permissive
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://opensource.org/license/mit
-    title: The MIT License (OSI)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/LICENSE.md
-    title: Chinook LICENSE.md
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/LICENSE
-    title: Contoso-Data-Generator-V2 LICENSE
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/LICENSE
-    title: Contoso-Data-Generator-V2-Data LICENSE
-    accessed: "2026-09-02"
+- resource: https://opensource.org/license/mit
+  title: The MIT License (OSI)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/lerocha/chinook-database/master/LICENSE.md
+  title: Chinook LICENSE.md
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/LICENSE
+  title: Contoso-Data-Generator-V2 LICENSE
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/LICENSE
+  title: Contoso-Data-Generator-V2-Data LICENSE
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

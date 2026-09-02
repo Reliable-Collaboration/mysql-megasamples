@@ -3,16 +3,22 @@ type: Source
 title: ah-ruhe.de "Enron Data" — repaired Shetty/Adibi MySQL dump
 description: The page (formerly ahschulz.de) that redistributes a repaired copy of the ISI Shetty and Adibi MySQL 4 dump of the Enron corpus with employeelist, message, recipientinfo and referenceinfo tables.
 resource: https://www.ah-ruhe.de/enron-email-data/
-tags: [source, enron, relational-versions]
+tags:
+- source
+- enron
+- relational-versions
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.ah-ruhe.de/enron-email-data/
-    title: Enron Data (redirect target of http://www.ahschulz.de/enron-email-data/)
-    accessed: "2026-09-02"
+- resource: https://www.ah-ruhe.de/enron-email-data/
+  title: Enron Data (redirect target of http://www.ahschulz.de/enron-email-data/)
+  accessed: "2026-09-02"
 ---
 
 # What was read

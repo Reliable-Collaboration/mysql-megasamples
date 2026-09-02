@@ -3,16 +3,22 @@ type: Source
 title: MediaWiki Manual:Text table
 description: The text table (old_id, old_text mediumblob, old_flags) and its flag semantics; basis for our utf8mb4 MEDIUMTEXT variant.
 resource: https://www.mediawiki.org/wiki/Manual:Text_table
-tags: [source, mediawiki, schema]
+tags:
+- source
+- mediawiki
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.mediawiki.org/wiki/Manual:Text_table
-    title: Manual:Text table
-    accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/wiki/Manual:Text_table
+  title: Manual:Text table
+  accessed: "2026-09-02"
 ---
 
 # What was read

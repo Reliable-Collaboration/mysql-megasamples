@@ -3,17 +3,23 @@ type: Source
 title: SABR "Lahman Baseball Database" page
 description: The current home of the Lahman database - Version 2025 (released Jan 2, 2026; BOM update Feb 18, 2026), Box download links for SQL, Access and CSV, Seamheads Negro Leagues note.
 resource: https://sabr.org/lahman-database/
-tags: [lahman, sabr, download]
+tags:
+- lahman
+- sabr
+- download
 status: stable
 trust: verified
 stale_after: "2027-01-15"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://sabr.org/lahman-database/
-    title: Lahman Baseball Database - Society for American Baseball Research
-    accessed: "2026-09-02"
+- resource: https://sabr.org/lahman-database/
+  title: Lahman Baseball Database - Society for American Baseball Research
+  accessed: "2026-09-02"
 ---
 
 # What was read

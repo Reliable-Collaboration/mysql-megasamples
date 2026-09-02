@@ -3,19 +3,24 @@ type: Source
 title: MySQL "Employees Sample Database" manual (dev.mysql.com)
 description: Oracle-hosted guide for the employees database; installation and validation chapters; its printed dept_emp checksums are older than the repository's.
 resource: https://dev.mysql.com/doc/employee/en/
-tags: [employees, manual]
+tags:
+- employees
+- manual
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/employee/en/employees-installation.html
-    title: 3 Installation
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/employee/en/employees-validation.html
-    title: 4 Validating the Employee Data
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/employee/en/employees-installation.html
+  title: 3 Installation
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/employee/en/employees-validation.html
+  title: 4 Validating the Employee Data
+  accessed: "2026-09-02"
 ---
 
 # What was read

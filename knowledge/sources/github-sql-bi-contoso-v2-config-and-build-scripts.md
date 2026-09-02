@@ -3,22 +3,28 @@ type: Source
 title: Contoso V2 scripts/build_data (config.json, build_single.cmd, build_all.cmd)
 description: The exact parameters SQLBI used to build the ready-to-use sizes - OrdersCount 10k..100M, CustomerPercentage, StartDT 2015-01-01, YearsCount 10, cut dates - and the full config.json defaults.
 resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
-tags: [contoso, generator, config]
+tags:
+- contoso
+- generator
+- config
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/config.json
-    title: config.json
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
-    title: build_single.cmd
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_all.cmd
-    title: build_all.cmd
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/config.json
+  title: config.json
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
+  title: build_single.cmd
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_all.cmd
+  title: build_all.cmd
+  accessed: "2026-09-02"
 ---
 
 # What was read

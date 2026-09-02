@@ -3,26 +3,34 @@ type: Dataset
 title: Chicago crimes 2001 to present
 description: The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup; a single year (2024, 259,267 rows) is proposed for the core tier.
 resource: https://data.cityofchicago.org/Public-Safety/Crimes-2001-to-Present/ijzp-q8t2
-tags: [tier-core, tier-extended, csv, socrata, chicago]
+tags:
+- tier-core
+- tier-extended
+- csv
+- socrata
+- chicago
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
-    title: Socrata view metadata for ijzp-q8t2
-    accessed: "2026-09-02"
-    version: truth last modified Wed, 02 Sep 2026 11:37:15 GMT; 8,627,693 rows
-  - resource: /sources/chicago-crimes-socrata-metadata.md
-    title: Portal metadata and SODA measurements
-    accessed: "2026-09-02"
-  - resource: /sources/chicago-iucr-codes-dataset.md
-    title: IUCR code lookup (c7ck-438e)
-    accessed: "2026-09-02"
-  - resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
-    title: City of Chicago Data Terms of Use
-    accessed: "2026-09-02"
+- resource: https://data.cityofchicago.org/api/views/ijzp-q8t2.json
+  title: Socrata view metadata for ijzp-q8t2
+  accessed: "2026-09-02"
+  version: truth last modified Wed, 02 Sep 2026 11:37:15 GMT; 8,627,693 rows
+- resource: /sources/chicago-crimes-socrata-metadata.md
+  title: Portal metadata and SODA measurements
+  accessed: "2026-09-02"
+- resource: /sources/chicago-iucr-codes-dataset.md
+  title: IUCR code lookup (c7ck-438e)
+  accessed: "2026-09-02"
+- resource: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
+  title: City of Chicago Data Terms of Use
+  accessed: "2026-09-02"
 stale_after: "2026-12-01"
 ---
 
@@ -79,10 +87,10 @@ None upstream. This project adds a view `v_crime_iucr` joining `crimes` to `iucr
 * No unique index on `Case Number` (proven non-unique).
 
 # Tests and expected values
-* Core subset: `SELECT COUNT(*) FROM crimes` -> **259,267** for `Year = 2024` (verified count on 2026-09-02; it can still change because CPD amends old records, so the executor records the count and the fetch date together).
+* Core subset: `SELECT COUNT(*) FROM crimes` -> **259,267** for `year = 2024` (verified count on 2026-09-02; it can still change because CPD amends old records, so the executor records the count and the fetch date together).
 * `SELECT COUNT(*) FROM iucr` -> **434**.
-* `SELECT COUNT(*) FROM crimes WHERE Latitude IS NULL` -> non-zero (proves hazard 6 survived the load).
-* `SELECT COUNT(DISTINCT ID) = COUNT(*)` -> true.
+* `SELECT COUNT(*) FROM crimes WHERE latitude IS NULL` -> non-zero (proves hazard 6 survived the load).
+* `SELECT COUNT(DISTINCT id) = COUNT(*)` -> true.
 * Full extract (extended): 8,627,693 rows as of 2026-09-02 - a moving target, so the test asserts a floor rather than equality.
 
 # Tier assignment

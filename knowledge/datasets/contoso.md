@@ -3,33 +3,43 @@ type: Dataset
 title: Contoso (SQLBI Contoso Data Generator V2)
 description: SQLBI's synthetic Contoso retail star schema V2 - customer, product, store, date, currencyexchange, sales, orders, orderrows - published as ready-to-use CSV sets of 10K to 100M orders under MIT; csv-100k (9.8 MB 7z) for core.
 resource: https://github.com/sql-bi/Contoso-Data-Generator-V2-Data
-tags: [tier-core, tier-extended, csv, contoso, mit, generator, star-schema]
+tags:
+- tier-core
+- tier-extended
+- csv
+- contoso
+- mit
+- generator
+- star-schema
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:48:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:48:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
-    title: ready-to-use-data release assets
-    accessed: "2026-09-02"
-    version: release ready-to-use-data (2025-09-21)
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
-    title: generator README (2.0.1)
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
-    title: build parameters and config.json
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
-    title: SQL Server DDL
-    accessed: "2026-09-02"
-  - resource: https://docs.sqlbi.com/contoso-data-generator/
-    title: SQLBI docs
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/LICENSE
-    title: MIT LICENSE (data)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/sql-bi/Contoso-Data-Generator-V2-Data/releases
+  title: ready-to-use-data release assets
+  accessed: "2026-09-02"
+  version: release ready-to-use-data (2025-09-21)
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/README.md
+  title: generator README (2.0.1)
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/build_data/build_single.cmd
+  title: build parameters and config.json
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/main/scripts/sql/CreateTablesCommon.sql
+  title: SQL Server DDL
+  accessed: "2026-09-02"
+- resource: https://docs.sqlbi.com/contoso-data-generator/
+  title: SQLBI docs
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2-Data/main/LICENSE
+  title: MIT LICENSE (data)
+  accessed: "2026-09-02"
 ---
 
 # Identity
@@ -64,7 +74,7 @@ None in the data; SQLBI's `dbo.*` views (renamed columns) are optional - port as
 From the SQL Server DDL: PKs, FK indexes on CustomerKey, ProductKey, StoreKey, OrderKey. Create after load.
 
 # Tests and expected values
-`SELECT COUNT(*) FROM orders` = 100000 (100k set); counts of other tables recorded at first load; `SELECT MIN(OrderDate), MAX(OrderDate) FROM sales` within 2015-01-01 .. 2024-04-20 (from CutDateAfter) - **Inferred**; `SELECT COUNT(DISTINCT CurrencyCode) FROM sales` = 5; sha256 of the 7z pinned.
+`SELECT COUNT(*) FROM orders` = 100000 (100k set); counts of other tables recorded at first load; `SELECT MIN(orderdate), MAX(orderdate) FROM sales` within 2015-01-01 .. 2024-04-20 (from CutDateAfter) - **Inferred**; `SELECT COUNT(DISTINCT currencycode) FROM sales` = 5; sha256 of the 7z pinned.
 
 # Tier assignment
 core: csv-100k (9.8 MB archive; inferred 60-120 MB loaded - if the budget is tight, ship csv-10k at 5.4 MB instead). extended: csv-1m (48.9 MB archive) and csv-10m (512 MB). Evidence: [release sizes](/sources/github-sql-bi-contoso-v2-data-releases.md).

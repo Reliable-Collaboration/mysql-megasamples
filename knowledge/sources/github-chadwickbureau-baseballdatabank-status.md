@@ -3,17 +3,24 @@ type: Source
 title: Status of github.com/chadwickbureau/baseballdatabank (GitHub API, 2026-09-02)
 description: The historical GitHub mirror of the Lahman data returns 404 from the API; the chadwickbureau org lists chadwick, register, retrosheet, retrosplits, data-boxscores only; third-party mirrors exist.
 resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
-tags: [lahman, baseballdatabank, chadwick, mirror]
+tags:
+- lahman
+- baseballdatabank
+- chadwick
+- mirror
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
-    title: repos/chadwickbureau/baseballdatabank (HTTP 404), users/chadwickbureau/repos, search/repositories?q=baseballdatabank
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
+  title: repos/chadwickbureau/baseballdatabank (HTTP 404), users/chadwickbureau/repos, search/repositories?q=baseballdatabank
+  accessed: "2026-09-02"
 ---
 
 # What was read

@@ -3,16 +3,22 @@ type: Source
 title: HammerDB docs 3.2 — What is the TPC and the TPROC-C workload derived from TPC-C?
 description: HammerDB's own statement of the "derived from" naming and the non-comparability disclaimer.
 resource: https://www.hammerdb.com/docs/ch03s02.html
-tags: [hammerdb, tpc-c, fair-use]
+tags:
+- hammerdb
+- tpc-c
+- fair-use
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.hammerdb.com/docs/ch03s02.html
-    title: What is the TPC and the TPROC-C workload derived from TPC-C?
-    accessed: "2026-09-02"
+- resource: https://www.hammerdb.com/docs/ch03s02.html
+  title: What is the TPC and the TPROC-C workload derived from TPC-C?
+  accessed: "2026-09-02"
 ---
 
 # What was read

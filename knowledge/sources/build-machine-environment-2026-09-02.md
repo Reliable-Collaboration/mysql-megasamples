@@ -3,17 +3,24 @@ type: Source
 title: Build machine environment survey, 2026-09-02
 description: Read-only observations of the machine that will execute the plan; Docker Desktop on WSL2, tool inventory, IPv6 posture, registry reachability, and which mysql tags exist.
 resource: file:///home/mattc/wsldev/mysql-megasamples
-tags: [environment, docker, ipv6, wsl2]
+tags:
+- environment
+- docker
+- ipv6
+- wsl2
 status: stable
 trust: verified
 stale_after: "2026-10-02"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:17:31Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:17:31Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:17:31Z"
 sources:
-  - resource: "shell: docker info; docker --version; id -nG; cat /proc/net/if_inet6; getent ahosts*; curl -4/-6; docker manifest inspect; df; free; nproc"
-    title: Commands run on the build machine
-    accessed: "2026-09-02"
+- resource: "shell: docker info; docker --version; id -nG; cat /proc/net/if_inet6; getent ahosts*; curl -4/-6; docker manifest inspect; df; free; nproc"
+  title: Commands run on the build machine
+  accessed: "2026-09-02"
 ---
 # What was read
 * shell: docker info; docker --version; id -nG; cat /proc/net/if_inet6; getent ahosts*; curl -4/-6; docker manifest inspect; df; free; nproc, “Commands run on the build machine”, accessed 2026-09-02

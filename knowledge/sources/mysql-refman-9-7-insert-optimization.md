@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Optimizing INSERT Statements"
-description: "LOAD DATA is usually 20 times faster than INSERT; multi-row INSERT; bulk_insert_buffer_size applies to nonempty tables (MyISAM context)."
+description: LOAD DATA is usually 20 times faster than INSERT; multi-row INSERT; bulk_insert_buffer_size applies to nonempty tables (MyISAM context).
 resource: https://dev.mysql.com/doc/refman/9.7/en/insert-optimization.html
-tags: [mysql, docs, performance]
+tags:
+- mysql
+- docs
+- performance
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/insert-optimization.html
-    title: "MySQL 9.7 Reference Manual: Optimizing INSERT Statements"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 10.2.5.1"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/insert-optimization.html
+  title: "MySQL 9.7 Reference Manual: Optimizing INSERT Statements"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 10.2.5.1
 ---
 
 # What was read

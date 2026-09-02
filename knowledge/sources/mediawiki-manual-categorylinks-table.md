@@ -3,16 +3,22 @@ type: Source
 title: MediaWiki Manual:Categorylinks table
 description: Confirms cl_target_id → linktarget.lt_id (introduced 1.44) and the removal of cl_to in 1.45, matching the 20260901 dump.
 resource: https://www.mediawiki.org/wiki/Manual:Categorylinks_table
-tags: [source, mediawiki, schema]
+tags:
+- source
+- mediawiki
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://www.mediawiki.org/wiki/Manual:Categorylinks_table
-    title: Manual:Categorylinks table
-    accessed: "2026-09-02"
+- resource: https://www.mediawiki.org/wiki/Manual:Categorylinks_table
+  title: Manual:Categorylinks table
+  accessed: "2026-09-02"
 ---
 
 # What was read

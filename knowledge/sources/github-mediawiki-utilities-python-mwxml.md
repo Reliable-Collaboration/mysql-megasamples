@@ -3,19 +3,26 @@ type: Source
 title: mediawiki-utilities/python-mwxml README and repo metadata
 description: MIT-licensed streaming reader for MediaWiki XML dumps; README example and license read; repo pushed 2026-04-09.
 resource: https://github.com/mediawiki-utilities/python-mwxml
-tags: [source, tool, mediawiki, python]
+tags:
+- source
+- tool
+- mediawiki
+- python
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://github.com/mediawiki-utilities/python-mwxml
-    title: README (WebFetch)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/mediawiki-utilities/python-mwxml
-    title: GitHub API repo metadata (pushed_at 2026-04-09T20:39Z, license MIT, 63 stars, not archived, default branch master)
-    accessed: "2026-09-02"
+- resource: https://github.com/mediawiki-utilities/python-mwxml
+  title: README (WebFetch)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/mediawiki-utilities/python-mwxml
+  title: GitHub API repo metadata (pushed_at 2026-04-09T20:39Z, license MIT, 63 stars, not archived, default branch master)
+  accessed: "2026-09-02"
 ---
 
 # What was read

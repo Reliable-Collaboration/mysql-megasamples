@@ -3,16 +3,23 @@ type: Source
 title: EnronData.org — EDRM Enron Email Datasets page
 description: States that EDRM withdrew its v1 and v2 sets because of remaining PII and now provides only a cleansed v1.
 resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
-tags: [source, enron, edrm, personal-data]
+tags:
+- source
+- enron
+- edrm
+- personal-data
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
-    title: EDRM Enron Email Datasets
-    accessed: "2026-09-02"
+- resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
+  title: EDRM Enron Email Datasets
+  accessed: "2026-09-02"
 ---
 
 # What was read

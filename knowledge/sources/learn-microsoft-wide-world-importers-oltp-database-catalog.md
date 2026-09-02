@@ -3,17 +3,23 @@ type: Source
 title: Microsoft Learn - WideWorldImporters OLTP database catalog
 description: Official schema and table catalog for WideWorldImporters (Application, Purchasing, Sales, Warehouse data schemas; Website, Reports, PowerBI, Integration, Sequences, DataLoadSimulation), design notes and the stored-procedure inventory.
 resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
-tags: [wideworldimporters, docs, schema]
+tags:
+- wideworldimporters
+- docs
+- schema
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
-    title: WideWorldImporters OLTP database catalog - SQL Server | Microsoft Learn
-    accessed: "2026-09-02"
-    version: ms.date 2018-04-04, updated_at 2026-01-23, git commit f6b13d333be03651dafb8f1c24ac816d53f1f877
+- resource: https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-oltp-database-catalog
+  title: WideWorldImporters OLTP database catalog - SQL Server | Microsoft Learn
+  accessed: "2026-09-02"
+  version: ms.date 2018-04-04, updated_at 2026-01-23, git commit f6b13d333be03651dafb8f1c24ac816d53f1f877
 ---
 
 # What was read

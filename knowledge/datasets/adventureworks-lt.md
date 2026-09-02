@@ -3,28 +3,35 @@ type: Dataset
 title: AdventureWorksLT
 description: The lightweight 12-table AdventureWorks (SalesLT schema); shipped as small version-specific .bak files (1.7-14 MB) and, only for the 2012/2008R2 releases, as a script + CSV zip (937 KB) that needs no SQL Server; MIT licensed.
 resource: https://github.com/microsoft/sql-server-samples/releases/tag/adventureworks
-tags: [tier-core, mssql-origin, csv-load, mit]
+tags:
+- tier-core
+- mssql-origin
+- csv-load
+- mit
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
-    title: release assets AdventureWorksLT2012..2025.bak
-    accessed: "2026-09-02"
-  - resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
-    title: adventure-works-2012-oltp-lt-script.zip (937,314 bytes) - listed and inspected
-    accessed: "2026-09-02"
-  - resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
-    title: AdventureWorks sample databases (Learn) - "Lightweight (LT) data is a lightweight and pared down version of the OLTP sample"
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
-    title: adventure-works README.md
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
-    title: license.txt (MIT)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
+  title: release assets AdventureWorksLT2012..2025.bak
+  accessed: "2026-09-02"
+- resource: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
+  title: adventure-works-2012-oltp-lt-script.zip (937,314 bytes) - listed and inspected
+  accessed: "2026-09-02"
+- resource: https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure
+  title: AdventureWorks sample databases (Learn) - "Lightweight (LT) data is a lightweight and pared down version of the OLTP sample"
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/README.md
+  title: adventure-works README.md
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/license.txt
+  title: license.txt (MIT)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

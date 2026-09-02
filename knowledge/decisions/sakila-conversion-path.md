@@ -3,19 +3,25 @@ type: Decision
 title: Sakila conversion path - load the upstream scripts unmodified
 description: Sakila is MySQL-native; run sakila-schema.sql then sakila-data.sql through the mysql client with no transformation; pin inner-file checksums.
 resource: /decisions/sakila-conversion-path.md
-tags: [sakila, decision, mysql-native]
+tags:
+- sakila
+- decision
+- mysql-native
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://downloads.mysql.com/docs/sakila-db.zip
-    title: sakila-db.zip inspection
-    accessed: "2026-09-02"
-  - resource: https://dev.mysql.com/doc/sakila/en/sakila-installation.html
-    title: Sakila installation chapter
-    accessed: "2026-09-02"
+- resource: https://downloads.mysql.com/docs/sakila-db.zip
+  title: sakila-db.zip inspection
+  accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-installation.html
+  title: Sakila installation chapter
+  accessed: "2026-09-02"
 ---
 
 # Question

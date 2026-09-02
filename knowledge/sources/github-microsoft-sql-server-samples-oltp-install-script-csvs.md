@@ -3,20 +3,27 @@ type: Source
 title: AdventureWorks oltp-install-script CSV files - sampling and row counts
 description: Direct inspection of 46 small CSV data files (about 1 MB total) and ranged reads of the large ones to establish encoding, terminators, binary/XML/hierarchyid/geography serialisation and exact row counts for the small tables.
 resource: https://github.com/microsoft/sql-server-samples/tree/master/samples/databases/adventure-works/oltp-install-script
-tags: [adventureworks, csv, encoding, row-counts]
+tags:
+- adventureworks
+- csv
+- encoding
+- row-counts
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
-    title: GitHub contents listing (70 files with sizes)
-    accessed: "2026-09-02"
-    version: master, commit b47eadc852 (2025-11-14)
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/AWBuildVersion.csv
-    title: AWBuildVersion.csv and 45 other small CSVs (full reads); Address.csv, Person.csv, ProductPhoto.csv, Document.csv, SalesOrderHeader.csv (HTTP range 0-1500 bytes only)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/contents/samples/databases/adventure-works/oltp-install-script
+  title: GitHub contents listing (70 files with sizes)
+  accessed: "2026-09-02"
+  version: master, commit b47eadc852 (2025-11-14)
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/AWBuildVersion.csv
+  title: AWBuildVersion.csv and 45 other small CSVs (full reads); Address.csv, Person.csv, ProductPhoto.csv, Document.csv, SalesOrderHeader.csv (HTTP range 0-1500 bytes only)
+  accessed: "2026-09-02"
 ---
 
 # What was read

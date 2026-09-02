@@ -3,20 +3,26 @@ type: Source
 title: dbt-labs/jaffle-shop-classic README
 description: The archived classic Jaffle Shop dbt project - seeds for customers, orders, payments loaded with `dbt seed`; superseded by dbt-labs/jaffle-shop and jaffle_shop_duckdb.
 resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/README.md
-tags: [jaffle-shop, dbt, readme]
+tags:
+- jaffle-shop
+- dbt
+- readme
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/README.md
-    title: README.md
-    accessed: "2026-09-02"
-    version: main @ fd7bfac (2024-04-18); repository archived
-  - resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/dbt_project.yml
-    title: dbt_project.yml
-    accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/README.md
+  title: README.md
+  accessed: "2026-09-02"
+  version: main @ fd7bfac (2024-04-18); repository archived
+- resource: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/main/dbt_project.yml
+  title: dbt_project.yml
+  accessed: "2026-09-02"
 ---
 
 # What was read

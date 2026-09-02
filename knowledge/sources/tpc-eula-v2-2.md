@@ -3,30 +3,36 @@ type: Source
 title: TPC End User License Agreement, Version 2.2 (full text)
 description: The license that governs dbgen, qgen, dsdgen, dsqgen and every derivative of them; read in full from tpc.org and compared with the copies shipped in tpch-kit, tpcds-kit and DuckDB.
 resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-tags: [tpc, license, eula]
+tags:
+- tpc
+- license
+- eula
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
-    title: END USER LICENSE AGREEMENT VERSION 2.2
-    accessed: "2026-09-02"
-    version: 2.2 (18,323 bytes; HTTP 200)
-  - resource: https://tpc.org/TPC_Documents_Current_Versions/txt/eula.txt
-    title: eula.txt linked from the download form
-    accessed: "2026-09-02"
-    version: same text, Version 2.2
-  - resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/EULA.txt
-    title: EULA.txt in tpch-kit
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/EULA.txt
-    title: EULA.txt in tpcds-kit
-    accessed: "2026-09-02"
-  - resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/LICENSE
-    title: LICENSE bundled with DuckDB's dbgen port
-    accessed: "2026-09-02"
+- resource: https://www.tpc.org/TPC_Documents_Current_Versions/txt/EULA_v2.2.0.txt
+  title: END USER LICENSE AGREEMENT VERSION 2.2
+  accessed: "2026-09-02"
+  version: 2.2 (18,323 bytes; HTTP 200)
+- resource: https://tpc.org/TPC_Documents_Current_Versions/txt/eula.txt
+  title: eula.txt linked from the download form
+  accessed: "2026-09-02"
+  version: same text, Version 2.2
+- resource: https://raw.githubusercontent.com/gregrahn/tpch-kit/master/EULA.txt
+  title: EULA.txt in tpch-kit
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/gregrahn/tpcds-kit/master/EULA.txt
+  title: EULA.txt in tpcds-kit
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/duckdb/duckdb/main/extension/tpch/dbgen/LICENSE
+  title: LICENSE bundled with DuckDB's dbgen port
+  accessed: "2026-09-02"
 ---
 
 # What was read

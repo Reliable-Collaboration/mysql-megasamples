@@ -3,22 +3,28 @@ type: Source
 title: GitHub release "AdventureWorks sample databases" (tag adventureworks) and older tags
 description: Asset list with exact byte sizes for the adventureworks, adventureworks2012 and adventureworks2008r2 release tags, read through the GitHub releases API.
 resource: https://github.com/microsoft/sql-server-samples/releases/tag/adventureworks
-tags: [adventureworks, release, download]
+tags:
+- adventureworks
+- release
+- download
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
-    title: releases/tags/adventureworks (published 2017-12-12, assets updated since)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks2012
-    title: releases/tags/adventureworks2012 (published 2018-02-28)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks2008r2
-    title: releases/tags/adventureworks2008r2 (published 2017-09-22)
-    accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks
+  title: releases/tags/adventureworks (published 2017-12-12, assets updated since)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks2012
+  title: releases/tags/adventureworks2012 (published 2018-02-28)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/microsoft/sql-server-samples/releases/tags/adventureworks2008r2
+  title: releases/tags/adventureworks2008r2 (published 2017-09-22)
+  accessed: "2026-09-02"
 stale_after: "2027-03-01"
 ---
 

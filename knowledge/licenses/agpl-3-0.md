@@ -1,18 +1,24 @@
 ---
 type: License
-title: "GNU AGPL v3 (internetarchive Python library / ia CLI)"
-description: "Strong copyleft licence of the maintainer-side upload tool; never shipped in the image and never linked by project code, so no obligation attaches to the repository or the image."
+title: GNU AGPL v3 (internetarchive Python library / ia CLI)
+description: Strong copyleft licence of the maintainer-side upload tool; never shipped in the image and never linked by project code, so no obligation attaches to the repository or the image.
 resource: https://www.gnu.org/licenses/agpl-3.0.html
-tags: [license, copyleft, agpl]
+tags:
+- license
+- copyleft
+- agpl
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:51:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:51:18Z"
 sources:
-  - resource: https://archive.org/developers/internetarchive/
-    title: "internetarchive library documentation (states AGPL-3 licensing)"
-    accessed: "2026-09-02"
+- resource: https://archive.org/developers/internetarchive/
+  title: internetarchive library documentation (states AGPL-3 licensing)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

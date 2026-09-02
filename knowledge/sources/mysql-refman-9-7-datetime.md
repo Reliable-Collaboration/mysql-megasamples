@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: The DATE, DATETIME, and TIMESTAMP Types"
-description: "DATETIME 1000-01-01 to 9999-12-31, TIMESTAMP 1970-01-01 00:00:01 to 2038-01-19 03:14:07 UTC (unchanged in 9.7), 6 fractional digits, TIMESTAMP time-zone conversion."
+description: DATETIME 1000-01-01 to 9999-12-31, TIMESTAMP 1970-01-01 00:00:01 to 2038-01-19 03:14:07 UTC (unchanged in 9.7), 6 fractional digits, TIMESTAMP time-zone conversion.
 resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
-tags: [mysql, docs, temporal]
+tags:
+- mysql
+- docs
+- temporal
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
-    title: "MySQL 9.7 Reference Manual: The DATE, DATETIME, and TIMESTAMP Types"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 13.2.2"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/datetime.html
+  title: "MySQL 9.7 Reference Manual: The DATE, DATETIME, and TIMESTAMP Types"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 13.2.2
 ---
 
 # What was read

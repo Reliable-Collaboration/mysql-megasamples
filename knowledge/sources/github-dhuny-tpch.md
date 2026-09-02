@@ -3,17 +3,25 @@ type: Source
 title: "dhuny/tpch (TPC-H helper for MySQL and MariaDB: DDL + LOAD DATA script)"
 description: A small community repo whose tpch_to_mariadb.sql shows the LOAD DATA LOCAL INFILE ... LINES TERMINATED BY '|\n' trick for dbgen's trailing pipe and a MySQL DDL with PK/FK.
 resource: https://github.com/dhuny/tpch
-tags: [tpc-h, mysql, mariadb, community, github]
+tags:
+- tpc-h
+- mysql
+- mariadb
+- community
+- github
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/dhuny/tpch/master/README.md
-    title: README.md (+ tpch_to_mariadb.sql)
-    accessed: "2026-09-02"
-    version: master; pushed_at 2024-06-08; license null; 6 stars
+- resource: https://raw.githubusercontent.com/dhuny/tpch/master/README.md
+  title: README.md (+ tpch_to_mariadb.sql)
+  accessed: "2026-09-02"
+  version: master; pushed_at 2024-06-08; license null; 6 stars
 ---
 # What was read
 * https://raw.githubusercontent.com/dhuny/tpch/master/README.md, “README.md (+ tpch_to_mariadb.sql)”, accessed 2026-09-02, version master; pushed_at 2024-06-08; license null; 6 stars

@@ -3,39 +3,50 @@ type: Dataset
 title: Stack Exchange data dump (per-site; dba.stackexchange.com primary)
 description: CC BY-SA XML dump of a Stack Exchange Q&A site (Posts, Users, Comments, Votes, Badges, Tags, PostLinks, PostHistory) converted to MySQL with FULLTEXT; sourced from the last public archive.org snapshot (2024-04-02) to avoid the 2024 click-through.
 resource: https://archive.org/details/stackexchange
-tags: [tier-core, tier-extended, dataset, text-corpus, qa, cc-by-sa, licensing-finding, text-group]
+tags:
+- tier-core
+- tier-extended
+- dataset
+- text-corpus
+- qa
+- cc-by-sa
+- licensing-finding
+- text-group
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 stale_after: "2027-03-01"
 sources:
-  - resource: https://archive.org/details/stackexchange
-    title: Stack Exchange Data Dump item
-    accessed: "2026-09-02"
-  - resource: https://archive.org/metadata/stackexchange
-    title: item metadata (sizes, md5, mtimes)
-    accessed: "2026-09-02"
-    version: snapshot 2024-04-02, files 2024-04-06/07
-  - resource: https://archive.org/download/stackexchange/readme.txt
-    title: dump readme.txt
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede/2678#2678
-    title: schema documentation answer (edited 2026-03-23)
-    accessed: "2026-09-02"
-  - resource: https://stackoverflow.com/help/data-dumps
-    title: Help Center data dumps
-    accessed: "2026-09-02"
-  - resource: https://stackoverflow.com/help/licensing
-    title: Help Center licensing
-    accessed: "2026-09-02"
-  - resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
-    title: 2024 process-change announcement
-    accessed: "2026-09-02"
-  - resource: https://api.stackexchange.com/2.3/info?site=dba
-    title: live totals for dba / datascience
-    accessed: "2026-09-02"
+- resource: https://archive.org/details/stackexchange
+  title: Stack Exchange Data Dump item
+  accessed: "2026-09-02"
+- resource: https://archive.org/metadata/stackexchange
+  title: item metadata (sizes, md5, mtimes)
+  accessed: "2026-09-02"
+  version: snapshot 2024-04-02, files 2024-04-06/07
+- resource: https://archive.org/download/stackexchange/readme.txt
+  title: dump readme.txt
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/2677/database-schema-documentation-for-the-public-data-dump-and-sede/2678#2678
+  title: schema documentation answer (edited 2026-03-23)
+  accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/data-dumps
+  title: Help Center data dumps
+  accessed: "2026-09-02"
+- resource: https://stackoverflow.com/help/licensing
+  title: Help Center licensing
+  accessed: "2026-09-02"
+- resource: https://meta.stackexchange.com/questions/401324/announcing-a-change-to-the-data-dump-process
+  title: 2024 process-change announcement
+  accessed: "2026-09-02"
+- resource: https://api.stackexchange.com/2.3/info?site=dba
+  title: live totals for dba / datascience
+  accessed: "2026-09-02"
 ---
 
 # Identity
@@ -86,8 +97,8 @@ PKs on Id; `posts(ParentId)`, `posts(OwnerUserId)`, `posts(PostTypeId, CreationD
 # Tests and expected values
 * md5 of each downloaded `.7z` equals the archive.org value above.
 * Per table `COUNT(*)` = `<row` count of the XML file (recorded baseline).
-* Every `posts.ParentId` points to a `PostTypeId=1` row; every `AcceptedAnswerId` points to a row whose `ParentId` is the question; `MAX(Id) < 1000000000`.
-* `SELECT DISTINCT ContentLicense` ⊆ {'CC BY-SA 2.5','CC BY-SA 3.0','CC BY-SA 4.0'}.
+* Every `posts.parentid` points to a `posttypeid=1` row; every `acceptedanswerid` points to a row whose `parentid` is the question; `MAX(id) < 1000000000`.
+* `SELECT DISTINCT contentlicense` ⊆ {'CC BY-SA 2.5','CC BY-SA 3.0','CC BY-SA 4.0'}.
 
 # Tier assignment
 * `stackexchange_dba`: **extended** — 319 MB 7z; **Inferred:** ~2.2-2.8 GB of XML and 2-3 GB in InnoDB with FULLTEXT (bzip2 on XML ≈ 7-8×).

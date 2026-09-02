@@ -1,41 +1,49 @@
 ---
 type: Runbook
 title: "IPv6 hangs and privileged changes: diagnose, then stop and ask"
-description: "Checklist for the classic symptom (docker pull or curl hangs on a host with AAAA records but no IPv6 route), the diagnostics that need no privileges, the fixes that do (daemon.json ipv6=false, gai.conf precedence, sysctl disable_ipv6), and the request-to-user template; on this WSL2 + Docker Desktop machine the daemon file lives on the Windows side and needs a Desktop restart."
+description: Checklist for the classic symptom (docker pull or curl hangs on a host with AAAA records but no IPv6 route), the diagnostics that need no privileges, the fixes that do (daemon.json ipv6=false, gai.conf precedence, sysctl disable_ipv6), and the request-to-user template; on this WSL2 + Docker Desktop machine the daemon file lives on the Windows side and needs a Desktop restart.
 resource: /runbooks/ipv6-and-privileges.md
-tags: [runbook, ipv6, docker, privileges, troubleshooting]
+tags:
+- runbook
+- ipv6
+- docker
+- privileges
+- troubleshooting
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:51:18Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:51:18Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:51:18Z"
 sources:
-  - resource: https://man7.org/linux/man-pages/man1/getent.1.html
-    accessed: "2026-09-02"
-  - resource: https://bind9.readthedocs.io/en/latest/manpages.html
-    accessed: "2026-09-02"
-  - resource: https://curl.se/docs/manpage.html
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/engine/daemon/ipv6/
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/engine/daemon/
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/reference/cli/docker/buildx/build/
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/reference/cli/docker/network/inspect/
-    accessed: "2026-09-02"
-  - resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
-    accessed: "2026-09-02"
-  - resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
-    accessed: "2026-09-02"
-  - resource: https://docs.docker.com/docker-hub/usage/pulls/
-    accessed: "2026-09-02"
-  - resource: /sources/build-machine-environment-2026-09-02.md
-    accessed: "2026-09-02"
-  - resource: /runbooks/executor-discipline.md
-    accessed: "2026-09-02"
+- resource: https://man7.org/linux/man-pages/man1/getent.1.html
+  accessed: "2026-09-02"
+- resource: https://bind9.readthedocs.io/en/latest/manpages.html
+  accessed: "2026-09-02"
+- resource: https://curl.se/docs/manpage.html
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/engine/daemon/ipv6/
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/engine/daemon/
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/desktop/settings-and-maintenance/settings/
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/reference/cli/docker/buildx/build/
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/reference/cli/docker/network/inspect/
+  accessed: "2026-09-02"
+- resource: https://man7.org/linux/man-pages/man5/gai.conf.5.html
+  accessed: "2026-09-02"
+- resource: https://www.kernel.org/doc/Documentation/networking/ip-sysctl.txt
+  accessed: "2026-09-02"
+- resource: https://docs.docker.com/docker-hub/usage/pulls/
+  accessed: "2026-09-02"
+- resource: /sources/build-machine-environment-2026-09-02.md
+  accessed: "2026-09-02"
+- resource: /runbooks/executor-discipline.md
+  accessed: "2026-09-02"
 ---
 
 # 0. The rule
@@ -57,7 +65,7 @@ Observed on this machine on 2026-09-02: only link-local IPv6, `disable_ipv6=0`, 
 
 # 2. Work around without privileges (allowed, in this order)
 1. Per-command IPv4: `curl -4`, `wget --inet4-only` (**Inferred** wget flag; verify with `wget --help`), Python `requests` via `urllib3.util.connection.HAS_IPV6 = False` (**Inferred**).
-2. `scripts/fetch.py` resolves the host itself and connects to the A record (**Inferred** design), and prefers hosts without AAAA (GitHub release assets, archive.org) as mirrors ([mirroring](/tools/internet-archive-mirroring.md)).
+2. `scripts/fetch.py` passes `curl -4` for manifest entries flagged `ipv4_first` (hosts with AAAA records that hang) and prefers hosts without AAAA (GitHub release assets, archive.org) as mirrors ([mirroring](/tools/internet-archive-mirroring.md)).
 3. Build-time: `docker buildx build --network=host --allow network.host` or `--add-host host:ipv4` for a single stubborn host ([buildx build](/sources/docker-docs-buildx-build.md)); `RUN --network=host` per instruction.
 4. Registry: pull the base image once via a proxy/mirror that resolves IPv4 (e.g. a ghcr.io copy), or `docker login` to rule out rate limiting.
 If the step still fails, go to section 3.

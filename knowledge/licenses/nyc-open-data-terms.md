@@ -3,25 +3,31 @@ type: License
 title: NYC Open Data Terms of Use
 description: The terms governing NYC Open Data (and therefore TLC trip records) - the FAQ says there are no use restrictions, while the incorporated NYC.gov terms reserve the City's rights; no attribution or share-alike is required.
 resource: https://opendata.cityofnewyork.us/overview/#termsofuse
-tags: [license, nyc-open-data, permissive]
+tags:
+- license
+- nyc-open-data
+- permissive
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://opendata.cityofnewyork.us/overview/
-    title: NYC Open Data - Terms of Use section
-    accessed: "2026-09-02"
-  - resource: https://opendata.cityofnewyork.us/faq/
-    title: NYC Open Data FAQ
-    accessed: "2026-09-02"
-  - resource: https://www.nyc.gov/home/terms-of-use.page
-    title: NYC.gov Terms of Use
-    accessed: "2026-09-02"
-  - resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
-    title: TLC Trip Record Data (accuracy disclaimer)
-    accessed: "2026-09-02"
+- resource: https://opendata.cityofnewyork.us/overview/
+  title: NYC Open Data - Terms of Use section
+  accessed: "2026-09-02"
+- resource: https://opendata.cityofnewyork.us/faq/
+  title: NYC Open Data FAQ
+  accessed: "2026-09-02"
+- resource: https://www.nyc.gov/home/terms-of-use.page
+  title: NYC.gov Terms of Use
+  accessed: "2026-09-02"
+- resource: https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page
+  title: TLC Trip Record Data (accuracy disclaimer)
+  accessed: "2026-09-02"
 ---
 
 # Where the text lives

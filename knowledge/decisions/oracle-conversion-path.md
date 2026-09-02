@@ -3,32 +3,38 @@ type: Decision
 title: Oracle sample schemas — convert from the plain scripts/CSVs with a Python converter; Oracle Database Free only as an optional verification profile
 description: For HR, CO, SH and OE the upstream artifacts are plain INSERT scripts and RFC-4180 CSV files, so no Oracle product is needed; an opt-in build-oracle Compose profile (Oracle Database Free + python-oracledb) is reserved for cross-checking row counts and checksums.
 resource: /decisions/oracle-conversion-path.md
-tags: [decision, oracle, conversion-path, oracle-group]
+tags:
+- decision
+- oracle
+- conversion-path
+- oracle-group
 status: stable
 trust: inferred
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-hr-scripts.md
-    title: HR scripts
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
-    title: CO scripts
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
-    title: SH scripts and CSV samples
-    accessed: "2026-09-02"
-  - resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
-    title: OE/PM/IX scripts
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-container-registry-database-free-api-probe.md
-    title: Oracle Free image sizes and anonymous pull
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-free-use-terms-and-conditions.md
-    title: Oracle Free Use Terms
-    accessed: "2026-09-02"
-  - resource: /sources/oracle-otn-license-agreement.md
-    title: OTN license (SQLcl)
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-hr-scripts.md
+  title: HR scripts
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-co-scripts.md
+  title: CO scripts
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
+  title: SH scripts and CSV samples
+  accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-oe-pm-ix-scripts.md
+  title: OE/PM/IX scripts
+  accessed: "2026-09-02"
+- resource: /sources/oracle-container-registry-database-free-api-probe.md
+  title: Oracle Free image sizes and anonymous pull
+  accessed: "2026-09-02"
+- resource: /sources/oracle-free-use-terms-and-conditions.md
+  title: Oracle Free Use Terms
+  accessed: "2026-09-02"
+- resource: /sources/oracle-otn-license-agreement.md
+  title: OTN license (SQLcl)
+  accessed: "2026-09-02"
 ---
 
 # Question

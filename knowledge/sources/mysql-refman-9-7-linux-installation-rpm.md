@@ -3,17 +3,24 @@ type: Source
 title: "MySQL 9.7 Reference Manual: Installing MySQL on Linux Using RPM Packages from Oracle"
 description: "Installation layout table for Oracle RPM packages: /etc/my.cnf, /var/lib/mysql, secure_file_priv=/var/lib/mysql-files."
 resource: https://dev.mysql.com/doc/refman/9.7/en/linux-installation-rpm.html
-tags: [mysql, docs, rpm, secure-file-priv]
+tags:
+- mysql
+- docs
+- rpm
+- secure-file-priv
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/linux-installation-rpm.html
-    title: "MySQL 9.7 Reference Manual: Installing MySQL on Linux Using RPM Packages from Oracle"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 2.5.4, Table 2.13"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/linux-installation-rpm.html
+  title: "MySQL 9.7 Reference Manual: Installing MySQL on Linux Using RPM Packages from Oracle"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 2.5.4, Table 2.13
 ---
 
 # What was read

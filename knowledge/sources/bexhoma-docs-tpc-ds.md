@@ -3,16 +3,23 @@ type: Source
 title: "Bexhoma documentation — Benchmark: TPC-DS (MySQL/MariaDB query adaptations)"
 description: An independent project that ran the 99 TPC-DS queries on several engines and lists the MySQL/MariaDB changes it needed.
 resource: https://bexhoma.readthedocs.io/en/latest/Example-TPC-DS.html
-tags: [tpc-ds, mysql, mariadb, community]
+tags:
+- tpc-ds
+- mysql
+- mariadb
+- community
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://bexhoma.readthedocs.io/en/latest/Example-TPC-DS.html
-    title: "Benchmark: TPC-DS — Bexhoma documentation"
-    accessed: "2026-09-02"
+- resource: https://bexhoma.readthedocs.io/en/latest/Example-TPC-DS.html
+  title: "Benchmark: TPC-DS — Bexhoma documentation"
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://bexhoma.readthedocs.io/en/latest/Example-TPC-DS.html, “Benchmark: TPC-DS — Bexhoma documentation”, accessed 2026-09-02

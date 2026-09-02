@@ -3,16 +3,23 @@ type: Source
 title: "MySQL 9.7 Reference Manual: Privileges Provided by MySQL"
 description: Definitions of SELECT, SHOW VIEW, EXECUTE, PROCESS, SHOW DATABASES, USAGE, ALL and CREATE USER used by the account grants.
 resource: https://dev.mysql.com/doc/refman/9.7/en/privileges-provided.html
-tags: [mysql, docs, security, accounts]
+tags:
+- mysql
+- docs
+- security
+- accounts
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:24:01Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:24:01Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:24:01Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:24:01Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/privileges-provided.html
-    title: Privileges Provided by MySQL
-    accessed: "2026-09-02"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/privileges-provided.html
+  title: Privileges Provided by MySQL
+  accessed: "2026-09-02"
 ---
 # What was read
 * https://dev.mysql.com/doc/refman/9.7/en/privileges-provided.html, “Privileges Provided by MySQL”, accessed 2026-09-02

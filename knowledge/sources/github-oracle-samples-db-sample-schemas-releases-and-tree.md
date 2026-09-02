@@ -3,29 +3,36 @@ type: Source
 title: oracle-samples/db-sample-schemas releases, tags, and file trees (GitHub API)
 description: Release list, tag-to-commit mapping, per-file sizes for v23.3 / v19.2 / main, and the v23.3..main diff, read through the GitHub REST API.
 resource: https://api.github.com/repos/oracle-samples/db-sample-schemas
-tags: [oracle, sample-schemas, github, versions]
+tags:
+- oracle
+- sample-schemas
+- github
+- versions
 status: stable
 trust: verified
 stale_after: "2027-03-01"
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/releases
-    title: Releases (gh api)
-    accessed: "2026-09-02"
-  - resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/git/trees/v23.3?recursive=1
-    title: Tree at tag v23.3 (gh api)
-    accessed: "2026-09-02"
-    version: v23.3 = commit e3325a83e56c516815844025418a96ecaf219751 (2024-03-28)
-  - resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/git/trees/v19.2?recursive=1
-    title: Tree at tag v19.2 (gh api)
-    accessed: "2026-09-02"
-    version: v19.2 = commit 5d236bf4178322716963f173f4b8f6a0c987a0dd (2019-08-23)
-  - resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/compare/v23.3...main
-    title: Compare v23.3...main (gh api)
-    accessed: "2026-09-02"
-    version: main = commit 6660bad68c07bd143430ace58565b3f727e17263 (2025-06-25)
+- resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/releases
+  title: Releases (gh api)
+  accessed: "2026-09-02"
+- resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/git/trees/v23.3?recursive=1
+  title: Tree at tag v23.3 (gh api)
+  accessed: "2026-09-02"
+  version: v23.3 = commit e3325a83e56c516815844025418a96ecaf219751 (2024-03-28)
+- resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/git/trees/v19.2?recursive=1
+  title: Tree at tag v19.2 (gh api)
+  accessed: "2026-09-02"
+  version: v19.2 = commit 5d236bf4178322716963f173f4b8f6a0c987a0dd (2019-08-23)
+- resource: https://api.github.com/repos/oracle-samples/db-sample-schemas/compare/v23.3...main
+  title: Compare v23.3...main (gh api)
+  accessed: "2026-09-02"
+  version: main = commit 6660bad68c07bd143430ace58565b3f727e17263 (2025-06-25)
 ---
 
 # What was read

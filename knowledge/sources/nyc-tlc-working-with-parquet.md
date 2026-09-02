@@ -3,17 +3,22 @@ type: Source
 title: TLC "Working With PARQUET Format" (PDF)
 description: The TLC's own note explaining that it moved raw trip data from CSV to Parquet; the note gives no switch date.
 resource: https://www.nyc.gov/assets/tlc/downloads/pdf/working_parquet_format.pdf
-tags: [nyc-tlc, parquet]
+tags:
+- nyc-tlc
+- parquet
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:30:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:30:00Z"
 sources:
-  - resource: https://www.nyc.gov/assets/tlc/downloads/pdf/working_parquet_format.pdf
-    title: Working With Parquet Format
-    accessed: "2026-09-02"
-    version: 81,043 bytes, 1 page
+- resource: https://www.nyc.gov/assets/tlc/downloads/pdf/working_parquet_format.pdf
+  title: Working With Parquet Format
+  accessed: "2026-09-02"
+  version: 81,043 bytes, 1 page
 ---
 
 # What was read

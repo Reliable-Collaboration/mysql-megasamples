@@ -1,19 +1,25 @@
 ---
 type: Source
 title: "MySQL 9.7 Reference Manual: Bit-Value Type - BIT"
-description: "BIT(M) with M 1..64, b'value' literals, left zero padding."
+description: BIT(M) with M 1..64, b'value' literals, left zero padding.
 resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
-tags: [mysql, docs, numeric]
+tags:
+- mysql
+- docs
+- numeric
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:33:59Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:33:59Z"
 sources:
-  - resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
-    title: "MySQL 9.7 Reference Manual: Bit-Value Type - BIT"
-    accessed: "2026-09-02"
-    version: "MySQL 9.7 manual, section 13.1.5"
+- resource: https://dev.mysql.com/doc/refman/9.7/en/bit-type.html
+  title: "MySQL 9.7 Reference Manual: Bit-Value Type - BIT"
+  accessed: "2026-09-02"
+  version: MySQL 9.7 manual, section 13.1.5
 ---
 
 # What was read

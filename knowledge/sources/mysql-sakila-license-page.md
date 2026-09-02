@@ -3,17 +3,23 @@ type: Source
 title: License for the Sakila Sample Database (manual chapter 9)
 description: The page that states which Sakila files are under the New BSD license and that the other distributed materials are not open-licensed.
 resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
-tags: [sakila, license, bsd]
+tags:
+- sakila
+- license
+- bsd
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
-    title: 9 License for the Sakila Sample Database
-    accessed: "2026-09-02"
-    version: manual revision 84779 (2026-08-04)
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
+  title: 9 License for the Sakila Sample Database
+  accessed: "2026-09-02"
+  version: manual revision 84779 (2026-08-04)
 ---
 
 # What was read

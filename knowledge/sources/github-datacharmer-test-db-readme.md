@@ -3,17 +3,23 @@ type: Source
 title: datacharmer/test_db README (master, 2026-04-10)
 description: README of the MySQL Employees sample database repository - origin, license, install and test instructions, MD5/SHA removal note for MySQL 9.6+.
 resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
-tags: [employees, test_db, readme]
+tags:
+- employees
+- test_db
+- readme
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
-    title: README.md
-    accessed: "2026-09-02"
-    version: master @ e324b56 (2026-04-10)
+- resource: https://raw.githubusercontent.com/datacharmer/test_db/master/README.md
+  title: README.md
+  accessed: "2026-09-02"
+  version: master @ e324b56 (2026-04-10)
 ---
 
 # What was read

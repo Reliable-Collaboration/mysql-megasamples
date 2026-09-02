@@ -3,14 +3,20 @@ type: Open Question
 title: Do the SH CSV files reproduce the published row counts, and does LOAD DATA need the padding/NULL pre-pass?
 description: 918,843 sales rows and the other counts are published inside sh_install.sql but the CSVs were not downloaded during research; sales.csv is space-padded to 80 columns and NULL strings appear as "".
 resource: /questions/oracle-sh-csv-row-counts-and-padding.md
-tags: [question, oracle, sh, csv]
+tags:
+- question
+- oracle
+- sh
+- csv
 status: draft
 trust: open
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
-    title: SH scripts and CSV samples
-    accessed: "2026-09-02"
+- resource: /sources/github-oracle-samples-db-sample-schemas-sh-scripts.md
+  title: SH scripts and CSV samples
+  accessed: "2026-09-02"
 ---
 
 # Question

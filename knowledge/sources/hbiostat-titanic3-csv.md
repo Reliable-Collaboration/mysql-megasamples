@@ -3,19 +3,25 @@ type: Source
 title: hbiostat.org/data/repo/titanic3.csv (inspection)
 description: 1,309 passenger rows, 14 columns, 116,752 bytes, pure ASCII, LF; header and sample rows; checksums.
 resource: https://hbiostat.org/data/repo/titanic3.csv
-tags: [titanic, csv, measurement]
+tags:
+- titanic
+- csv
+- measurement
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:25:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
 sources:
-  - resource: https://hbiostat.org/data/repo/titanic3.csv
-    title: titanic3.csv (md5 01b027be0a49ab8538efbd60a8c43288; sha256 db6df9666818c69a753cd85d743e01502c8518b00579b6aada0d4fc5a66ccb9d)
-    accessed: "2026-09-02"
-  - resource: https://hbiostat.org/data/repo/titanic5.html
-    title: titanic5 notes (David Beltran del Rio, March 2016) and titanic5.csv HEAD (199,639 bytes)
-    accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/repo/titanic3.csv
+  title: titanic3.csv (md5 01b027be0a49ab8538efbd60a8c43288; sha256 db6df9666818c69a753cd85d743e01502c8518b00579b6aada0d4fc5a66ccb9d)
+  accessed: "2026-09-02"
+- resource: https://hbiostat.org/data/repo/titanic5.html
+  title: titanic5 notes (David Beltran del Rio, March 2016) and titanic5.csv HEAD (199,639 bytes)
+  accessed: "2026-09-02"
 ---
 
 # What was read

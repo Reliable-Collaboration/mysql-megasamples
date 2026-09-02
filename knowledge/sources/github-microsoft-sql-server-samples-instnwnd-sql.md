@@ -3,17 +3,23 @@ type: Source
 title: instnwnd.sql (Northwind install script) - file analysis
 description: Byte-level and structural analysis of the Northwind T-SQL install script performed in this session (encoding, tables, insert counts, objects, T-SQL constructs).
 resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
-tags: [northwind, script-analysis, tsql]
+tags:
+- northwind
+- script-analysis
+- tsql
 status: stable
 trust: verified
-generated: { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 verified:
-  - { by: "claude-code/claude-fable-5-1", at: "2026-09-02T20:20:00Z" }
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
 sources:
-  - resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
-    title: instnwnd.sql at master
-    accessed: "2026-09-02"
-    version: blob ae61e5631d7f03029ec15213ce672b45ceb7e629, 1,049,720 bytes
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
+  title: instnwnd.sql at master
+  accessed: "2026-09-02"
+  version: blob ae61e5631d7f03029ec15213ce672b45ceb7e629, 1,049,720 bytes
 ---
 
 # What was read
