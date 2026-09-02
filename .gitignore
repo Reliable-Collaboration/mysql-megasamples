@@ -1,0 +1,12 @@
+# Downloaded upstream artifacts and build outputs (see PLAN.md section 2.5)
+downloads/
+datasets/*/build/
+docker/context/
+*.bak
+*.7z
+*.parquet
+*.zst
+*.tsv
+.venv/
+work/
+__pycache__/
