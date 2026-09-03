@@ -28,6 +28,14 @@ Build automation needs a URL. Box shared folders can be downloaded via the Box "
 1. In a browser, download the CSV folder once from https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd, record per-file sizes, sha256 and whether files start with a UTF-8 BOM (SABR's page says BOMs were "updated" 2026-02-18).
 2. Vendor the CSVs into the repository (CC BY-SA 3.0 permits redistribution with attribution and share-alike; see [license](/licenses/cc-by-sa-3-0.md)), which removes the download problem entirely. Also try `curl -sI` on the SQL-version share to see if SABR later exposes a static link.
 
+# Partial answer (2026-09-03)
+The inferred folder-zip endpoint was tried:
+`https://app.box.com/index.php?rm=box_v2_zip_shared_folder&shared_name=y1prhc795jk8zvmelfd3jq7tl389y6cd`
+returns HTTP 200 with the body `{"use_zpdl":"true","result":"failure"}`, and the share page itself
+301s. So the endpoint exists but refuses this share, and there is **no static URL** — option 2
+(a one-off browser download, then vendor the CSVs under CC BY-SA 3.0 with attribution) is the way in.
+That is a maintainer action, so the dataset stays unbuilt until the files are supplied.
+
 # Related
 [Lahman](/datasets/lahman.md), [decision](/decisions/lahman-conversion-path.md).
 

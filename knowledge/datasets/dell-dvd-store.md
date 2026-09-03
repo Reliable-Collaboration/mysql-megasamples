@@ -18,6 +18,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:48:59Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 sources:
@@ -72,13 +74,16 @@ Native = MySQL DDL scripts + header-less CSV files loaded with `LOAD DATA LOCAL 
 | REVIEWS | 200,000 | reviews.csv (101.4 MB) |
 | REVIEWS_HELPFULNESS | 4,106,382 | review_helpfulness.csv (89.2 MB) |
 
+**Built and measured 2026-09-03** (core: everything but the two review tables): all nine row counts above reproduced exactly on the first load — customers 20,000, cust_hist 60,350, categories 16, inventory 10,000, membership 2,000, orderlines 60,350, orders 12,000, products 10,000, reorder 0 — **16.3 MB** in InnoDB, loading in 1.7 s, 4 foreign keys with 0 orphans. Both hazards the record marked **Inferred** are confirmed: MySQL's `LOAD DATA` does accept `2013/01/27` into a `DATE` column, and `00000` lands in `ZIP INT` as 0 for all 10,000 US customers. `CREDITCARDEXPIRATION` stays text (`2019/03`). This is the only dataset here whose upstream scripts are already MySQL, so the converter only renames the database, lower-cases identifiers outside string literals, moves `PRODUCTS` from MyISAM to InnoDB and repoints the loads; both stored procedures port unchanged.
+
 Upstream's "Small = 10 MB" label predates the review tables; the DS2-part CSVs total about 6.5 MB, the review CSVs 190 MB. Encoding: all sampled files pure ASCII, LF, no header, no quotes needed (names are random uppercase letters, e-mails `X@dell.com`, dates `YYYY/MM/DD`). No encoding canary exists in this dataset. **Inferred:** loaded InnoDB size about 15-25 MB without reviews, 300-400 MB with reviews and their indexes.
 
 # Conversion path
 Upstream DDL (InnoDB/utf8mb4-adjusted) + build-time CSV-to-SQL conversion; reviews deferred to the extended tier ([decision](/decisions/dvdstore-conversion-path.md)). Generic CSV loading notes: [tool note](/tools/smallcsv-load-data-infile.md).
 
 # Type-mapping hazards
-* `PRODUCTS ... ENGINE = MyISAM` with two FULLTEXT indexes - switch to InnoDB (FULLTEXT supported).
+* `PRODUCTS ... ENGINE = MyISAM` with two FULLTEXT indexes - switched to InnoDB; the FULLTEXT indexes come across and `MATCH(title) AGAINST('academy')` works.
+* The `RESTOCK` trigger is dropped: upstream ships it with the comment "Doesn't work yet!!!" and its body inserts hard-coded values (`VALUES(60, CURDATE(), 8)`) regardless of the row.
 * Dates in CSV are `2013/01/27` (DATE) and `2019/03` (VARCHAR expiry) - **Inferred:** MySQL accepts `/` as a date delimiter in LOAD DATA; verify one row.
 * `ZIP INT` receives `00000` (row_cust) -> 0; `CUSTOMERID` explicit in CSV although AUTO_INCREMENT; `ORDERS.CUSTOMERID` nullable with FK `ON DELETE SET NULL`.
 * No character set on `CREATE DATABASE DS3`; all identifiers uppercase (`CUSTOMERS`, `CUST_HIST`) - case-sensitive on Linux; the project lower-cases them (`customers`, `cust_hist`, `reviews_helpfulness`) per the [naming convention](/decisions/database-naming-convention.md), so the upstream PHP/C# drivers would need the same rename if ever run against this image (documented deviation).

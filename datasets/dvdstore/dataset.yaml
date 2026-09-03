@@ -1,0 +1,10 @@
+name: dvdstore
+database: dvdstore
+tier: core
+record: knowledge/datasets/dell-dvd-store.md
+licenses: [gpl-2-0]
+artifacts: [dvdstore/mysqlds3_create_db.sql, dvdstore/mysqlds3_create_ind.sql,
+            dvdstore/mysqlds3_create_sp.sql]
+converter: none
+load:
+  - dvdstore.sql

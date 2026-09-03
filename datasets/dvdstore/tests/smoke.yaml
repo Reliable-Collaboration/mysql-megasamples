@@ -1,0 +1,49 @@
+- name: slash_dates_parsed
+  query: 'SELECT MIN(orderdate), MAX(orderdate), COUNT(DISTINCT orderdate) FROM orders
+
+    '
+- name: orders_by_month
+  query: 'SELECT MONTH(orderdate), COUNT(*) FROM orders GROUP BY MONTH(orderdate)
+
+    ORDER BY MONTH(orderdate)
+
+    '
+- name: order_totals_add_up
+  query: 'SELECT COUNT(*) FROM orders WHERE ROUND(netamount + tax, 2) <> ROUND(totalamount, 2)
+
+    '
+- name: zip_with_leading_zeros
+  query: SELECT COUNT(*) FROM customers WHERE zip = 0
+- name: expiry_stays_text
+  query: SELECT creditcardexpiration FROM customers WHERE customerid = 1
+- name: products_on_innodb
+  query: 'SELECT engine FROM information_schema.tables
+
+    WHERE table_schema = ''dvdstore'' AND table_name = ''products''
+
+    '
+- name: fulltext_on_products
+  query: 'SELECT COUNT(*) FROM products WHERE MATCH(title) AGAINST(''academy'' IN NATURAL LANGUAGE MODE)
+
+    '
+- name: top_categories_by_lines
+  query: 'SELECT c.categoryname, COUNT(*) FROM orderlines ol
+
+    JOIN products p ON p.prod_id = ol.prod_id
+
+    JOIN categories c ON c.category = p.category
+
+    GROUP BY c.category, c.categoryname ORDER BY COUNT(*) DESC, c.categoryname LIMIT 5
+
+    '
+- name: inventory_matches_products
+  query: 'SELECT COUNT(*) FROM inventory i LEFT JOIN products p ON p.prod_id = i.prod_id
+
+    WHERE p.prod_id IS NULL
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='dvdstore')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='dvdstore')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='dvdstore') AS triggers\n"

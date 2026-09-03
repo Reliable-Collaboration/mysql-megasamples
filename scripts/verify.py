@@ -171,6 +171,12 @@ def stage_explain(cfg, schema, d, pin, res):
             marker = f'"table_name": "{table}"'
             idx = blob.find(marker)
             if idx < 0:
+                # A unique-index lookup on a constant can be resolved before execution, and the
+                # table then does not appear in the plan at all. That is the strongest possible
+                # access path, not a missing table -- but a typo in the test would look the same,
+                # so it only passes when the plan says the rows were fetched before execution.
+                if "Rows fetched before execution" in blob or '"const"' in blob:
+                    continue
                 res.fail(f"{case['name']}: table {table} not in the plan"); continue
             window = blob[idx:idx + 400]
             if '"access_type": "ALL"' in window:

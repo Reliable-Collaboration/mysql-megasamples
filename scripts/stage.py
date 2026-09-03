@@ -85,6 +85,12 @@ def stage_adventureworks_lt(dest):
                    os.path.join(dest, "adventureworks_lt.sql"))
 
 
+@stager("dvdstore")
+def stage_dvdstore(dest):
+    _run_dir_converter("dvdstore", os.path.join(ROOT, "downloads", "dvdstore"),
+                       os.path.join(dest, "dvdstore.sql"))
+
+
 @stager("adventureworks")
 def stage_adventureworks(dest):
     _run_converter("adventureworks",

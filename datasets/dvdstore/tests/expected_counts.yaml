@@ -1,0 +1,11 @@
+# The Small-size counts recorded during research (knowledge/datasets/dell-dvd-store.md), all
+# reproduced exactly on the first load. reviews and reviews_helpfulness are extended-tier and absent.
+customers: 20000
+cust_hist: 60350
+categories: 16
+inventory: 10000
+membership: 2000
+orderlines: 60350
+orders: 12000
+products: 10000
+reorder: 0

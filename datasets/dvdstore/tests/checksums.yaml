@@ -1,0 +1,112 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+categories:
+  columns:
+  - category
+  - categoryname
+  excluded: []
+  n: 16
+  s: 3222191747449880545
+  x: 1360040875988663949
+cust_hist:
+  columns:
+  - customerid
+  - orderid
+  - prod_id
+  excluded: []
+  n: 60350
+  s: 13342836165199668252
+  x: 8932665856358721360
+customers:
+  columns:
+  - customerid
+  - firstname
+  - lastname
+  - address1
+  - address2
+  - city
+  - state
+  - zip
+  - country
+  - region
+  - email
+  - phone
+  - creditcardtype
+  - creditcard
+  - creditcardexpiration
+  - username
+  - password
+  - age
+  - income
+  - gender
+  excluded: []
+  n: 20000
+  s: 16072171584016288201
+  x: 8762271897612881889
+inventory:
+  columns:
+  - prod_id
+  - quan_in_stock
+  - sales
+  excluded: []
+  n: 10000
+  s: 471042183344988533
+  x: 17960709476170490875
+membership:
+  columns:
+  - customerid
+  - membershiptype
+  - expiredate
+  excluded: []
+  n: 2000
+  s: 4577143920344136923
+  x: 9199617406709058159
+orderlines:
+  columns:
+  - orderlineid
+  - orderid
+  - prod_id
+  - quantity
+  - orderdate
+  excluded: []
+  n: 60350
+  s: 4820129511723585759
+  x: 15538167116610755811
+orders:
+  columns:
+  - orderid
+  - orderdate
+  - customerid
+  - netamount
+  - tax
+  - totalamount
+  excluded: []
+  n: 12000
+  s: 10853199295453697008
+  x: 9501322191149873998
+products:
+  columns:
+  - prod_id
+  - category
+  - title
+  - actor
+  - price
+  - special
+  - common_prod_id
+  - membership_item
+  excluded: []
+  n: 10000
+  s: 14831562814486612728
+  x: 8071993922396402328
+reorder:
+  columns:
+  - prod_id
+  - date_low
+  - quan_low
+  - date_reordered
+  - quan_reordered
+  - date_expected
+  excluded: []
+  n: 0
+  s: 0
+  x: 0

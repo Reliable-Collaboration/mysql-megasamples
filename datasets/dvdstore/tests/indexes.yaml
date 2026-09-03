@@ -1,0 +1,98 @@
+# S6: every index that must exist after load.
+categories:
+  PRIMARY:
+    columns:
+    - category
+    type: BTREE
+    unique: true
+cust_hist:
+  ix_cust_hist_customerid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  ix_cust_hist_customerid_prodid:
+    columns:
+    - customerid
+    - prod_id
+    type: BTREE
+    unique: false
+customers:
+  PRIMARY:
+    columns:
+    - customerid
+    type: BTREE
+    unique: true
+  ix_cust_username:
+    columns:
+    - username
+    type: BTREE
+    unique: true
+inventory:
+  PRIMARY:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: true
+membership:
+  fk_membership_custid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+orderlines:
+  ix_orderlines_orderid:
+    columns:
+    - orderid
+    - orderlineid
+    type: BTREE
+    unique: true
+orders:
+  PRIMARY:
+    columns:
+    - orderid
+    type: BTREE
+    unique: true
+  ix_order_custid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+products:
+  PRIMARY:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: true
+  ix_prod_actor:
+    columns:
+    - actor
+    type: FULLTEXT
+    unique: false
+  ix_prod_category:
+    columns:
+    - category
+    type: BTREE
+    unique: false
+  ix_prod_prodid_common:
+    columns:
+    - prod_id
+    - common_prod_id
+    type: BTREE
+    unique: false
+  ix_prod_special:
+    columns:
+    - special
+    type: BTREE
+    unique: false
+  ix_prod_title:
+    columns:
+    - title
+    type: FULLTEXT
+    unique: false
+reorder:
+  ix_reorder_prodid:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: false

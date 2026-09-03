@@ -1,0 +1,10 @@
+# the indexes mysqlds3_create_ind.sql creates
+- name: customer_by_username
+  query: SELECT customerid FROM customers WHERE username = 'user1'
+  must_not_full_scan: [customers]
+- name: orders_by_customer
+  query: SELECT COUNT(*) FROM orders WHERE customerid = 7888
+  must_not_full_scan: [orders]
+- name: history_by_customer
+  query: SELECT COUNT(*) FROM cust_hist WHERE customerid = 7888
+  must_not_full_scan: [cust_hist]
