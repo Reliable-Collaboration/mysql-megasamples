@@ -1,0 +1,101 @@
+# S6: every index that must exist after load.
+customers:
+  PRIMARY:
+    columns:
+    - customer_id
+    type: BTREE
+    unique: true
+  customers_email_u:
+    columns:
+    - email_address
+    type: BTREE
+    unique: true
+  customers_name_i:
+    columns:
+    - full_name
+    type: BTREE
+    unique: false
+inventory:
+  PRIMARY:
+    columns:
+    - inventory_id
+    type: BTREE
+    unique: true
+  inventory_product_id_i:
+    columns:
+    - product_id
+    type: BTREE
+    unique: false
+  inventory_store_product_u:
+    columns:
+    - store_id
+    - product_id
+    type: BTREE
+    unique: true
+order_items:
+  PRIMARY:
+    columns:
+    - order_id
+    - line_item_id
+    type: BTREE
+    unique: true
+  order_items_product_u:
+    columns:
+    - product_id
+    - order_id
+    type: BTREE
+    unique: true
+  order_items_shipment_id_i:
+    columns:
+    - shipment_id
+    type: BTREE
+    unique: false
+orders:
+  PRIMARY:
+    columns:
+    - order_id
+    type: BTREE
+    unique: true
+  orders_customer_id_i:
+    columns:
+    - customer_id
+    type: BTREE
+    unique: false
+  orders_store_id_i:
+    columns:
+    - store_id
+    type: BTREE
+    unique: false
+products:
+  PRIMARY:
+    columns:
+    - product_id
+    type: BTREE
+    unique: true
+shipments:
+  PRIMARY:
+    columns:
+    - shipment_id
+    type: BTREE
+    unique: true
+  shipments_customer_id_i:
+    columns:
+    - customer_id
+    type: BTREE
+    unique: false
+  shipments_store_id_i:
+    columns:
+    - store_id
+    type: BTREE
+    unique: false
+stores:
+  PRIMARY:
+    columns:
+    - store_id
+    type: BTREE
+    unique: true
+  store_name_u:
+    columns:
+    - store_name
+    type: BTREE
+    unique: true

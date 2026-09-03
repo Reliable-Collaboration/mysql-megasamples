@@ -1,0 +1,8 @@
+- name: order_status_distribution
+  query: SELECT status, COUNT(*) FROM raw_orders GROUP BY status ORDER BY status
+- name: total_payment_cents
+  query: SELECT SUM(amount) FROM raw_payments
+- name: payment_methods
+  query: SELECT payment_method, COUNT(*) FROM raw_payments GROUP BY payment_method ORDER BY payment_method
+- name: customers_with_orders
+  query: SELECT COUNT(DISTINCT user_id) FROM raw_orders

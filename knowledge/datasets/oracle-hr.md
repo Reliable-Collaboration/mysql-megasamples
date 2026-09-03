@@ -91,6 +91,9 @@ Python script parser → MySQL DDL + `INSERT` (path (a) in [the decision](/decis
 Recreate the 11 secondary indexes and the unique index on `email`; FKs as declared (`dept_mgr_fk` ↔ `emp_dept_fk` are mutually referencing: create employees and departments first, add both FKs afterwards with `SET foreign_key_checks=0` during load, as `hr_populate.sql` itself disables `dept_mgr_fk`).
 
 # Tests and expected values
+**S-05 result (2026-09-02): green.** All 7 counts match, including `regions` = 5 (this record's correction to the older documentation's 4). 10 foreign keys with 0 orphans. Probes confirmed exactly as recorded: employee 100 is `Steven King`, `AD_PRES`, salary 24000, hired 2013-06-17, department 90; and `commission_pct IS NOT NULL` is **35**, the figure this record had only inferred.
+Four PL/SQL objects (`secure_dml`, `add_job_history`, `update_job_history`, `secure_employees`) are reported unported rather than guessed at: their bodies use `DECLARE`/`EXCEPTION`/`RAISE_APPLICATION_ERROR`, which is a semantic rewrite. 35 column comments are dropped because MySQL can only set one by restating the whole column definition; the 7 table comments are kept.
+
 * Row counts as in the Shape table (from `hr_install.sql`'s verification block).
 * Spot checks: `SELECT COUNT(*) FROM employees WHERE commission_pct IS NOT NULL` = 35 (**inferred**, compute from script); `employee_id 100` is `Steven King`, `AD_PRES`, salary 24000, hire_date 2013-06-17, department 90 (verified from the populate script).
 * Checksums: executor computes `CHECKSUM TABLE` and an order-independent per-table sha256 over `SELECT * ORDER BY pk` at build time and stores them in `build/baseline.json`.

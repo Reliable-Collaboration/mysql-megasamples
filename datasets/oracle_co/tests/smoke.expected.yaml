@@ -1,0 +1,9 @@
+# S7: canonical query results, tab-separated as the client prints them.
+only_one_store_has_a_web_address: '1'
+order_1_timestamp_truncated_to_6_digits: '2021-02-04 13:20:22.245676'
+orders_by_status: "CANCELLED\t35\nCOMPLETE\t1892\nREFUNDED\t23"
+product_2_review_count: '9'
+product_details_is_valid_json: '46'
+revenue_by_store_top5: "Online\t217354.64\nNew Dehli\t5291.76\nSan Francisco\t4941.73\n\
+  Mumbai\t4678.59\nSydney\t4605.82"
+store_18_is_sao_paulo: São Paulo

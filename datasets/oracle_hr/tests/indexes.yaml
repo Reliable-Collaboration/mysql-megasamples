@@ -1,0 +1,146 @@
+# S6: every index that must exist after load.
+countries:
+  PRIMARY:
+    columns:
+    - country_id
+    type: BTREE
+    unique: true
+  countr_reg_fk:
+    columns:
+    - region_id
+    type: BTREE
+    unique: false
+departments:
+  PRIMARY:
+    columns:
+    - department_id
+    type: BTREE
+    unique: true
+  dept_id_pk:
+    columns:
+    - department_id
+    type: BTREE
+    unique: true
+  dept_location_ix:
+    columns:
+    - location_id
+    type: BTREE
+    unique: false
+  dept_mgr_fk:
+    columns:
+    - manager_id
+    type: BTREE
+    unique: false
+employees:
+  PRIMARY:
+    columns:
+    - employee_id
+    type: BTREE
+    unique: true
+  emp_department_ix:
+    columns:
+    - department_id
+    type: BTREE
+    unique: false
+  emp_email_uk:
+    columns:
+    - email
+    type: BTREE
+    unique: true
+  emp_emp_id_pk:
+    columns:
+    - employee_id
+    type: BTREE
+    unique: true
+  emp_job_ix:
+    columns:
+    - job_id
+    type: BTREE
+    unique: false
+  emp_manager_ix:
+    columns:
+    - manager_id
+    type: BTREE
+    unique: false
+  emp_name_ix:
+    columns:
+    - last_name
+    - first_name
+    type: BTREE
+    unique: false
+job_history:
+  PRIMARY:
+    columns:
+    - employee_id
+    - start_date
+    type: BTREE
+    unique: true
+  jhist_department_ix:
+    columns:
+    - department_id
+    type: BTREE
+    unique: false
+  jhist_emp_id_st_date_pk:
+    columns:
+    - employee_id
+    - start_date
+    type: BTREE
+    unique: true
+  jhist_employee_ix:
+    columns:
+    - employee_id
+    type: BTREE
+    unique: false
+  jhist_job_ix:
+    columns:
+    - job_id
+    type: BTREE
+    unique: false
+jobs:
+  PRIMARY:
+    columns:
+    - job_id
+    type: BTREE
+    unique: true
+  job_id_pk:
+    columns:
+    - job_id
+    type: BTREE
+    unique: true
+locations:
+  PRIMARY:
+    columns:
+    - location_id
+    type: BTREE
+    unique: true
+  loc_city_ix:
+    columns:
+    - city
+    type: BTREE
+    unique: false
+  loc_country_ix:
+    columns:
+    - country_id
+    type: BTREE
+    unique: false
+  loc_id_pk:
+    columns:
+    - location_id
+    type: BTREE
+    unique: true
+  loc_state_province_ix:
+    columns:
+    - state_province
+    type: BTREE
+    unique: false
+regions:
+  PRIMARY:
+    columns:
+    - region_id
+    type: BTREE
+    unique: true
+  reg_id_pk:
+    columns:
+    - region_id
+    type: BTREE
+    unique: true

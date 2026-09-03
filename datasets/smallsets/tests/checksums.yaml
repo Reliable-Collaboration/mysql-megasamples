@@ -1,0 +1,74 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+iris:
+  columns:
+  - iris_id
+  - sepal_length
+  - sepal_width
+  - petal_length
+  - petal_width
+  - species
+  excluded: []
+  n: 150
+  s: 1738665140844691453
+  x: 3381161182106403385
+penguins:
+  columns:
+  - penguins_id
+  - species
+  - island
+  - bill_length_mm
+  - bill_depth_mm
+  - flipper_length_mm
+  - body_mass_g
+  - sex
+  - year
+  excluded: []
+  n: 344
+  s: 16664036265122465932
+  x: 8393152680604601484
+penguins_raw:
+  columns:
+  - penguins_raw_id
+  - study_name
+  - sample_number
+  - species
+  - region
+  - island
+  - stage
+  - individual_id
+  - clutch_completion
+  - date_egg
+  - culmen_length_mm
+  - culmen_depth_mm
+  - flipper_length_mm
+  - body_mass_g
+  - sex
+  - delta_15_n
+  - delta_13_c
+  - comments
+  excluded: []
+  n: 344
+  s: 12262198349084059159
+  x: 5118820133399950697
+titanic:
+  columns:
+  - titanic_id
+  - pclass
+  - survived
+  - name
+  - sex
+  - age
+  - sibsp
+  - parch
+  - ticket
+  - fare
+  - cabin
+  - embarked
+  - boat
+  - body
+  - home_dest
+  excluded: []
+  n: 1309
+  s: 8508633950103367875
+  x: 14845705904106652613

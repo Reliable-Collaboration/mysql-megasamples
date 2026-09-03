@@ -46,3 +46,100 @@ artifacts:
     size_bytes: 125718
     license: mit
     ipv4_first: false
+
+  - id: smallsets/titanic3.csv
+    dataset: smallsets
+    url: https://hbiostat.org/data/repo/titanic3.csv
+    mirrors: []
+    sha256: "db6df9666818c69a753cd85d743e01502c8518b00579b6aada0d4fc5a66ccb9d"
+    size_bytes: 116752
+    license: hbiostat-data-permission
+    ipv4_first: false
+  - id: smallsets/iris.csv
+    dataset: smallsets
+    url: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
+    mirrors: []
+    sha256: "f13ffa8fdd56fd8e6c8d16d4081a3fbd3114bcd0aae4256c43205169cd9d1449"
+    size_bytes: 0
+    license: cc-by-4-0
+    ipv4_first: false
+  - id: smallsets/penguins.csv
+    dataset: smallsets
+    url: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/8957207b78d6ccd1b4654a9dd9c9041b657478ab/inst/extdata/penguins.csv
+    mirrors: []
+    sha256: "f204db2c753b0937caac3cb35258562c14f073e4bbc76be24b4c51ce22767a93"
+    size_bytes: 15241
+    license: cc0-1-0
+    ipv4_first: false
+  - id: smallsets/penguins_raw.csv
+    dataset: smallsets
+    url: https://raw.githubusercontent.com/allisonhorst/palmerpenguins/8957207b78d6ccd1b4654a9dd9c9041b657478ab/inst/extdata/penguins_raw.csv
+    mirrors: []
+    sha256: "144f623143c9360fd77322a4f86acb06dc198814dbd2669724c63e6457b907bd"
+    size_bytes: 53098
+    license: cc0-1-0
+    ipv4_first: false
+  - id: jaffle_shop/raw_customers.csv
+    dataset: jaffle_shop
+    url: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/fd7bfacae4f497ff044a6a0275268676bf1b64c3/seeds/raw_customers.csv
+    mirrors: []
+    sha256: "24579b4b26098d43265376f3c50be8b10faf8e8fd95f5508074f10f76a12671d"
+    size_bytes: 0
+    license: apache-2-0
+    ipv4_first: false
+  - id: jaffle_shop/raw_orders.csv
+    dataset: jaffle_shop
+    url: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/fd7bfacae4f497ff044a6a0275268676bf1b64c3/seeds/raw_orders.csv
+    mirrors: []
+    sha256: "ee6c68d1639ec2b23a4495ec12475e09b8ed4b61e23ab0411ea7ec76648356f7"
+    size_bytes: 0
+    license: apache-2-0
+    ipv4_first: false
+  - id: jaffle_shop/raw_payments.csv
+    dataset: jaffle_shop
+    url: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/fd7bfacae4f497ff044a6a0275268676bf1b64c3/seeds/raw_payments.csv
+    mirrors: []
+    sha256: "03fd407f3135f84456431a923f22fc185a2154079e210c20b690e3ab11687d11"
+    size_bytes: 0
+    license: apache-2-0
+    ipv4_first: false
+  - id: oracle_hr/hr_create.sql
+    dataset: oracle_hr
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/human_resources/hr_create.sql
+    mirrors: []
+    sha256: "7d5b1e75a450f4e96a2efb23d9bac81963d8331974a72feacee712464091dd47"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_hr/hr_populate.sql
+    dataset: oracle_hr
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/human_resources/hr_populate.sql
+    mirrors: []
+    sha256: "420375c58700178b74949ccfc1a7b22bc2fd305c486fc558fca43f8ce3ddc4df"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_hr/hr_code.sql
+    dataset: oracle_hr
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/human_resources/hr_code.sql
+    mirrors: []
+    sha256: "5604aae0d47585bba996a90eecc43f494d4c63de19b2b9db7afe5007d6f669f5"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_co/co_create.sql
+    dataset: oracle_co
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/customer_orders/co_create.sql
+    mirrors: []
+    sha256: "8ce42790ec255840bcaf22ff8bc4f53e53996ccecb318410a0b3a36a4c3d6cc1"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_co/co_populate.sql
+    dataset: oracle_co
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/customer_orders/co_populate.sql
+    mirrors: []
+    sha256: "e636942e49d9f7cb586f779122ffa2b4da95b07cc7f314c0ef1dae60a5f0cefa"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false

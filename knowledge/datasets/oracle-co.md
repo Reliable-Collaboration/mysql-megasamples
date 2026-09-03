@@ -91,6 +91,10 @@ Python script parser → MySQL (path (a) in [the decision](/decisions/oracle-con
 7 secondary indexes as declared plus PK/UNIQUE/FK indexes. JSON: optionally add a generated column `brand VARCHAR(50) AS (product_details->>'$.brand')` with an index to demonstrate JSON indexing (nice-to-have, not upstream).
 
 # Tests and expected values
+**S-05 result (2026-09-02): green.** All 7 counts match and the converter emits 8,783 INSERT statements, exactly the row total this record gives. 9 foreign keys with 0 orphans. Probes confirmed: one store has a `web_address` (Online), store 18 is `São Paulo` with its accent intact, product 2 carries 9 reviews, and `order_id` 1 has `order_tms` = **2021-02-04 13:20:22.245676** — precisely the truncation this record predicted from the upstream 9-digit literal. All 46 products hold valid JSON.
+`product_details` is a real MySQL `JSON` column. The schema declares it as `BLOB` and marks it JSON with a separate `ALTER TABLE ... CHECK (product_details IS JSON)`, so the converter pre-scans every file for those checks before rewriting any `CREATE TABLE`; without that the column stays `LONGBLOB` and every JSON function fails with "Cannot create a JSON value from a string with CHARACTER SET 'binary'".
+The `store_orders` view is reported unported: it uses `GROUPING SETS`, which P-02 verified is HeatWave-only on 9.7 (`ERROR 3889`). `customer_order_products` is ported with `LISTAGG` rewritten to `GROUP_CONCAT`.
+
 * Row counts as in Shape (from `co_install.sql` verification block and counted INSERTs).
 * `SELECT COUNT(*) FROM stores WHERE web_address IS NOT NULL` = 1 (`Online`); `store_id 18` name `São Paulo` (UTF-8 check); `JSON_LENGTH(product_details->'$.reviews')` for product 2 ≥ 3 (verified from the script excerpt); `order_id 1` `order_tms` = `2021-02-04 13:20:22.245676` after truncation.
 * Baseline checksums computed at build time; JSON columns are excluded from the SQL row digest and compared as parsed objects by `verify.py` (key order differs between the source text and MySQL's binary storage) — [checksum method](/decisions/test-checksum-method.md).

@@ -22,9 +22,9 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,sakila chinook northwind pubs,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co,$(eval $(call DATASET_RULE,$(d))))
 
-CORE_FAST := sakila chinook northwind pubs
+CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co
 
 core-fast: $(CORE_FAST)
 

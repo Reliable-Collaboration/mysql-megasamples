@@ -1,0 +1,29 @@
+# S6: every index that must exist after load.
+raw_customers:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+raw_orders:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  user_id:
+    columns:
+    - user_id
+    type: BTREE
+    unique: false
+raw_payments:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  order_id:
+    columns:
+    - order_id
+    type: BTREE
+    unique: false

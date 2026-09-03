@@ -1,0 +1,16 @@
+name: smallsets
+database: smallsets
+tier: core
+record: knowledge/decisions/smallsets-database-layout.md
+converter: none
+load:
+- smallsets.sql
+licenses:
+- hbiostat-data-permission
+- cc-by-4-0
+- cc0-1-0
+artifacts:
+- smallsets/titanic3.csv
+- smallsets/iris.csv
+- smallsets/penguins.csv
+- smallsets/penguins_raw.csv

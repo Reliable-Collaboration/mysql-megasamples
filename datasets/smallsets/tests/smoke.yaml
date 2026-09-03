@@ -1,0 +1,21 @@
+# Values the dataset records predict; several were marked inferred there and are confirmed here.
+- name: titanic_survivors
+  query: SELECT SUM(survived) FROM titanic
+- name: titanic_missing_ages
+  query: SELECT COUNT(*) FROM titanic WHERE age IS NULL
+- name: titanic_first_passenger
+  query: SELECT name FROM titanic WHERE titanic_id = 1
+- name: titanic_by_class
+  query: SELECT pclass, COUNT(*), SUM(survived) FROM titanic GROUP BY pclass ORDER BY pclass
+- name: iris_species_counts
+  query: SELECT species, COUNT(*) FROM iris GROUP BY species ORDER BY species
+- name: iris_corrected_rows_35_and_38
+  query: SELECT iris_id, sepal_length, sepal_width, petal_length, petal_width FROM iris WHERE iris_id IN (35,38) ORDER BY iris_id
+- name: iris_sepal_length_mean
+  query: SELECT ROUND(AVG(sepal_length),2) FROM iris
+- name: penguins_species_counts
+  query: SELECT species, COUNT(*) FROM penguins GROUP BY species ORDER BY species
+- name: penguins_rows_with_any_null
+  query: SELECT COUNT(*) FROM penguins WHERE bill_length_mm IS NULL OR sex IS NULL
+- name: penguins_raw_date_parsed
+  query: SELECT MIN(date_egg), MAX(date_egg) FROM penguins_raw

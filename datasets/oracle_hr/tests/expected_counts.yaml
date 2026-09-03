@@ -1,0 +1,9 @@
+# S3: row counts from the verification block in hr_install.sql, quoted in
+# knowledge/datasets/oracle-hr.md. Note regions is 5 in v23.3, not the 4 older docs give.
+countries: 25
+departments: 27
+employees: 107
+job_history: 10
+jobs: 19
+locations: 23
+regions: 5

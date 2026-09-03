@@ -1,0 +1,5 @@
+# S3: row counts from the dataset records (titanic 1309, iris 150, penguins 344 in both forms).
+iris: 150
+penguins: 344
+penguins_raw: 344
+titanic: 1309

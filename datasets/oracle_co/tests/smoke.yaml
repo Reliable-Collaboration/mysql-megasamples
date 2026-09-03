@@ -1,0 +1,19 @@
+# Probes named in knowledge/datasets/oracle-co.md.
+- name: only_one_store_has_a_web_address
+  query: SELECT COUNT(*) FROM stores WHERE web_address IS NOT NULL
+- name: store_18_is_sao_paulo
+  query: SELECT store_name FROM stores WHERE store_id = 18
+- name: product_2_review_count
+  query: SELECT JSON_LENGTH(product_details, '$.reviews') FROM products WHERE product_id = 2
+- name: order_1_timestamp_truncated_to_6_digits
+  query: SELECT order_tms FROM orders WHERE order_id = 1
+- name: product_details_is_valid_json
+  query: SELECT COUNT(*) FROM products WHERE JSON_VALID(product_details)
+- name: orders_by_status
+  query: SELECT order_status, COUNT(*) FROM orders GROUP BY order_status ORDER BY order_status
+- name: revenue_by_store_top5
+  query: |
+    SELECT s.store_name, ROUND(SUM(oi.unit_price * oi.quantity), 2) AS revenue
+    FROM order_items oi JOIN orders o ON o.order_id = oi.order_id
+    JOIN stores s ON s.store_id = o.store_id
+    GROUP BY s.store_id, s.store_name ORDER BY revenue DESC, s.store_name LIMIT 5

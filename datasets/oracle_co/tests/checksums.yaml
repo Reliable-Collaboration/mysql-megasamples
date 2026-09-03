@@ -1,0 +1,87 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+customers:
+  columns:
+  - customer_id
+  - email_address
+  - full_name
+  excluded: []
+  n: 392
+  s: 8097775170847733512
+  x: 4420371728390214926
+inventory:
+  columns:
+  - inventory_id
+  - store_id
+  - product_id
+  - product_inventory
+  excluded: []
+  n: 566
+  s: 17067926485080414160
+  x: 3221947795342617232
+order_items:
+  columns:
+  - order_id
+  - line_item_id
+  - product_id
+  - unit_price
+  - quantity
+  - shipment_id
+  excluded: []
+  n: 3914
+  s: 14025059196356484003
+  x: 6639157847078226835
+orders:
+  columns:
+  - order_id
+  - order_tms
+  - customer_id
+  - order_status
+  - store_id
+  excluded: []
+  n: 1950
+  s: 16174255604409273238
+  x: 10794720146508323564
+products:
+  columns:
+  - product_id
+  - product_name
+  - unit_price
+  - product_image
+  - image_mime_type
+  - image_filename
+  - image_charset
+  - image_last_updated
+  excluded:
+  - product_details
+  n: 46
+  s: 2780656166669774640
+  x: 17575947276092153420
+shipments:
+  columns:
+  - shipment_id
+  - store_id
+  - customer_id
+  - delivery_address
+  - shipment_status
+  excluded: []
+  n: 1892
+  s: 15969241744930902507
+  x: 9486280193211676075
+stores:
+  columns:
+  - store_id
+  - store_name
+  - web_address
+  - physical_address
+  - latitude
+  - longitude
+  - logo
+  - logo_mime_type
+  - logo_filename
+  - logo_charset
+  - logo_last_updated
+  excluded: []
+  n: 23
+  s: 4871726802538028623
+  x: 3433678181768564101

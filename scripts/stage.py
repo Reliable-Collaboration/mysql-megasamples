@@ -47,6 +47,38 @@ def stage_pubs(dest):
                    os.path.join(dest, "pubs.sql"))
 
 
+@stager("smallsets")
+def stage_smallsets(dest):
+    _run_dir_converter("smallsets", os.path.join(ROOT, "downloads", "smallsets"),
+                       os.path.join(dest, "smallsets.sql"))
+
+
+@stager("jaffle_shop")
+def stage_jaffle_shop(dest):
+    _run_dir_converter("jaffle_shop", os.path.join(ROOT, "downloads", "jaffle_shop"),
+                       os.path.join(dest, "jaffle_shop.sql"))
+
+
+@stager("oracle_hr")
+def stage_oracle_hr(dest):
+    _run_dir_converter("oracle_hr", os.path.join(ROOT, "downloads", "oracle_hr"),
+                       os.path.join(dest, "oracle_hr.sql"))
+
+
+@stager("oracle_co")
+def stage_oracle_co(dest):
+    _run_dir_converter("oracle_co", os.path.join(ROOT, "downloads", "oracle_co"),
+                       os.path.join(dest, "oracle_co.sql"))
+
+
+def _run_dir_converter(name, src_dir, out):
+    """Converters that read a directory of files rather than a single artifact."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", name, "convert.py")
+    if subprocess.run([sys.executable, conv, src_dir, out], text=True).returncode != 0:
+        sys.exit(f"{name} conversion failed")
+
+
 def _run_converter(name, src, out):
     import subprocess
     conv = os.path.join(ROOT, "datasets", name, "convert.py")

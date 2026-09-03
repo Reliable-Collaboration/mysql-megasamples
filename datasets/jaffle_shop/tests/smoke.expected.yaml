@@ -1,0 +1,6 @@
+# S7: canonical query results, tab-separated as the client prints them.
+customers_with_orders: '62'
+order_status_distribution: "completed\t67\nplaced\t13\nreturn_pending\t2\nreturned\t\
+  4\nshipped\t13"
+payment_methods: "bank_transfer\t33\ncoupon\t13\ncredit_card\t55\ngift_card\t12"
+total_payment_cents: '167200'

@@ -1,0 +1,11 @@
+# S7: canonical query results, tab-separated as the client prints them.
+iris_corrected_rows_35_and_38: "35\t4.9\t3.1\t1.5\t0.2\n38\t4.9\t3.6\t1.4\t0.1"
+iris_sepal_length_mean: '5.84'
+iris_species_counts: "setosa\t50\nversicolor\t50\nvirginica\t50"
+penguins_raw_date_parsed: "2007-11-09\t2009-12-01"
+penguins_rows_with_any_null: '11'
+penguins_species_counts: "Adelie\t152\nChinstrap\t68\nGentoo\t124"
+titanic_by_class: "1\t323\t200\n2\t277\t119\n3\t709\t181"
+titanic_first_passenger: Allen, Miss. Elisabeth Walton
+titanic_missing_ages: '263'
+titanic_survivors: '500'

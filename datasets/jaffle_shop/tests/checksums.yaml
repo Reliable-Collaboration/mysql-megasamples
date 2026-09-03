@@ -1,0 +1,31 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+raw_customers:
+  columns:
+  - id
+  - first_name
+  - last_name
+  excluded: []
+  n: 100
+  s: 12069169429527482813
+  x: 11386213334462023797
+raw_orders:
+  columns:
+  - id
+  - user_id
+  - order_date
+  - status
+  excluded: []
+  n: 99
+  s: 6316253637241688883
+  x: 10638223345295476015
+raw_payments:
+  columns:
+  - id
+  - order_id
+  - payment_method
+  - amount
+  excluded: []
+  n: 113
+  s: 13195222834834364511
+  x: 14057291176306866853

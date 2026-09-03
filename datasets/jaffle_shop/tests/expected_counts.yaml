@@ -1,0 +1,4 @@
+# S3: row counts from knowledge/datasets/jaffle-shop.md.
+raw_customers: 100
+raw_orders: 99
+raw_payments: 113

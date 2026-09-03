@@ -1,0 +1,13 @@
+name: jaffle_shop
+database: jaffle_shop
+tier: core
+record: knowledge/datasets/jaffle-shop.md
+converter: none
+load:
+- jaffle_shop.sql
+licenses:
+- apache-2-0
+artifacts:
+- jaffle_shop/raw_customers.csv
+- jaffle_shop/raw_orders.csv
+- jaffle_shop/raw_payments.csv

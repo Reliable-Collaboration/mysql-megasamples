@@ -1,0 +1,9 @@
+name: oracle_co
+database: oracle_co
+tier: core
+record: knowledge/datasets/oracle-co.md
+licenses: [mit]
+artifacts: [oracle_co/co_create.sql, oracle_co/co_populate.sql]
+converter: none
+load:
+  - oracle_co.sql

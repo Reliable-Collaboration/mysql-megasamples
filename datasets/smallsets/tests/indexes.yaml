@@ -1,0 +1,25 @@
+# S6: every index that must exist after load.
+iris:
+  PRIMARY:
+    columns:
+    - iris_id
+    type: BTREE
+    unique: true
+penguins:
+  PRIMARY:
+    columns:
+    - penguins_id
+    type: BTREE
+    unique: true
+penguins_raw:
+  PRIMARY:
+    columns:
+    - penguins_raw_id
+    type: BTREE
+    unique: true
+titanic:
+  PRIMARY:
+    columns:
+    - titanic_id
+    type: BTREE
+    unique: true

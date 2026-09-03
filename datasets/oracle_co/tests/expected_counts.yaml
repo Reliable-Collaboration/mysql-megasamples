@@ -1,0 +1,9 @@
+# S3: row counts from the verification block in co_install.sql, quoted in
+# knowledge/datasets/oracle-co.md. They total 8,783, the number of INSERT statements upstream.
+customers: 392
+inventory: 566
+order_items: 3914
+orders: 1950
+products: 46
+shipments: 1892
+stores: 23

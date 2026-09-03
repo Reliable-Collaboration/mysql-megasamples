@@ -1,0 +1,9 @@
+# S7: canonical query results, tab-separated as the client prints them.
+employee_100_is_steven_king: "Steven\tKing\tAD_PRES\t24000.00\t2013-06-17 00:00:00\t\
+  90"
+employees_with_commission: '35'
+headcount_by_department_top5: "Shipping\t45\nSales\t34\nFinance\t6\nPurchasing\t6\n\
+  IT\t5"
+regions: "10\tEurope\n20\tAmericas\n30\tAsia\n40\tOceania\n50\tAfrica"
+salary_range: "2100.00\t24000.00\t6461.83"
+view_exists: '1'

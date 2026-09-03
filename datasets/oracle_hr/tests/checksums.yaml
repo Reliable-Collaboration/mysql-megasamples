@@ -1,0 +1,79 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+countries:
+  columns:
+  - country_id
+  - country_name
+  - region_id
+  excluded: []
+  n: 25
+  s: 10801637714503580669
+  x: 5688377744046044591
+departments:
+  columns:
+  - department_id
+  - department_name
+  - manager_id
+  - location_id
+  excluded: []
+  n: 27
+  s: 11797562806848952401
+  x: 5892095177529798263
+employees:
+  columns:
+  - employee_id
+  - first_name
+  - last_name
+  - email
+  - phone_number
+  - hire_date
+  - job_id
+  - salary
+  - commission_pct
+  - manager_id
+  - department_id
+  excluded: []
+  n: 107
+  s: 1456947634033246784
+  x: 11025859468479411574
+job_history:
+  columns:
+  - employee_id
+  - start_date
+  - end_date
+  - job_id
+  - department_id
+  excluded: []
+  n: 10
+  s: 18158830901555711150
+  x: 17582595913736684802
+jobs:
+  columns:
+  - job_id
+  - job_title
+  - min_salary
+  - max_salary
+  excluded: []
+  n: 19
+  s: 7963865704661930009
+  x: 16047268960486659715
+locations:
+  columns:
+  - location_id
+  - street_address
+  - postal_code
+  - city
+  - state_province
+  - country_id
+  excluded: []
+  n: 23
+  s: 16961491335130962043
+  x: 614494076099748159
+regions:
+  columns:
+  - region_id
+  - region_name
+  excluded: []
+  n: 5
+  s: 3054982158817248716
+  x: 963696874883427428

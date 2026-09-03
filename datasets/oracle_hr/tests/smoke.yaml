@@ -1,0 +1,16 @@
+# Probes named in knowledge/datasets/oracle-hr.md.
+- name: employee_100_is_steven_king
+  query: SELECT first_name, last_name, job_id, salary, hire_date, department_id FROM employees WHERE employee_id = 100
+- name: employees_with_commission
+  query: SELECT COUNT(*) FROM employees WHERE commission_pct IS NOT NULL
+- name: headcount_by_department_top5
+  query: |
+    SELECT d.department_name, COUNT(*) AS n FROM employees e
+    JOIN departments d ON d.department_id = e.department_id
+    GROUP BY d.department_id, d.department_name ORDER BY n DESC, d.department_name LIMIT 5
+- name: salary_range
+  query: SELECT MIN(salary), MAX(salary), ROUND(AVG(salary),2) FROM employees
+- name: regions
+  query: SELECT region_id, region_name FROM regions ORDER BY region_id
+- name: view_exists
+  query: SELECT COUNT(*) FROM information_schema.views WHERE table_schema = 'oracle_hr'
