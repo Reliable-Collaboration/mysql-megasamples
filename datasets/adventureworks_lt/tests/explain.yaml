@@ -1,0 +1,18 @@
+# The tables the script indexes explicitly: the optimizer should use those indexes rather than
+# scanning, which is what catches an index that failed to translate.
+- name: order_lines_by_order
+  query: SELECT COUNT(*) FROM salesorderdetail WHERE salesorderid = 71774
+  must_not_full_scan: [salesorderdetail]
+- name: orders_by_customer
+  query: SELECT COUNT(*) FROM salesorderheader WHERE customerid = 29847
+  must_not_full_scan: [salesorderheader]
+- name: descriptions_for_a_model
+  query: 'SELECT productdescriptionid FROM productmodelproductdescription
+
+    WHERE productmodelid = 19
+
+    '
+  must_not_full_scan: [productmodelproductdescription]
+- name: customer_by_email
+  query: SELECT customerid FROM customer WHERE emailaddress = 'orlando0@adventure-works.com'
+  must_not_full_scan: [customer]

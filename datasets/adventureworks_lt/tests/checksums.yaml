@@ -1,0 +1,183 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+address:
+  columns:
+  - addressid
+  - addressline1
+  - addressline2
+  - city
+  - stateprovince
+  - countryregion
+  - postalcode
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 450
+  s: 3269485497186060495
+  x: 7371387680450422185
+buildversion:
+  columns:
+  - systeminformationid
+  - database_version
+  - versiondate
+  - modifieddate
+  excluded: []
+  n: 1
+  s: 6119132154586861614
+  x: 6119132154586861614
+customer:
+  columns:
+  - customerid
+  - namestyle
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - companyname
+  - salesperson
+  - emailaddress
+  - phone
+  - passwordhash
+  - passwordsalt
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 847
+  s: 1559832056855917879
+  x: 15948344116367251867
+customeraddress:
+  columns:
+  - customerid
+  - addressid
+  - addresstype
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 417
+  s: 6742799936032845450
+  x: 8955713423549935456
+errorlog:
+  columns:
+  - errorlogid
+  - errortime
+  - username
+  - errornumber
+  - errorseverity
+  - errorstate
+  - errorprocedure
+  - errorline
+  - errormessage
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+product:
+  columns:
+  - productid
+  - name
+  - productnumber
+  - color
+  - standardcost
+  - listprice
+  - size
+  - weight
+  - productcategoryid
+  - productmodelid
+  - sellstartdate
+  - sellenddate
+  - discontinueddate
+  - thumbnailphoto
+  - thumbnailphotofilename
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 295
+  s: 14254890932226672581
+  x: 7052163895469985425
+productcategory:
+  columns:
+  - productcategoryid
+  - parentproductcategoryid
+  - name
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 41
+  s: 8020559004622075710
+  x: 13494653592245472260
+productdescription:
+  columns:
+  - productdescriptionid
+  - description
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 762
+  s: 6267873205146636627
+  x: 12267010809922865973
+productmodel:
+  columns:
+  - productmodelid
+  - name
+  - catalogdescription
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 128
+  s: 13553702931538765546
+  x: 6629376323031932466
+productmodelproductdescription:
+  columns:
+  - productmodelid
+  - productdescriptionid
+  - culture
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 762
+  s: 8439111195911333569
+  x: 13817661655465599775
+salesorderdetail:
+  columns:
+  - salesorderid
+  - salesorderdetailid
+  - orderqty
+  - productid
+  - unitprice
+  - unitpricediscount
+  - linetotal
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 542
+  s: 17108112713566138759
+  x: 15029850844014289205
+salesorderheader:
+  columns:
+  - salesorderid
+  - revisionnumber
+  - orderdate
+  - duedate
+  - shipdate
+  - status
+  - onlineorderflag
+  - salesordernumber
+  - purchaseordernumber
+  - accountnumber
+  - customerid
+  - shiptoaddressid
+  - billtoaddressid
+  - shipmethod
+  - creditcardapprovalcode
+  - subtotal
+  - taxamt
+  - freight
+  - totaldue
+  - comment
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 32
+  s: 15777986237274900573
+  x: 14706626848756800591

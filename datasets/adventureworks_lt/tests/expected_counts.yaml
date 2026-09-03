@@ -1,0 +1,15 @@
+# S3: row counts verified from the 2012 zip's CSVs and recorded in
+# knowledge/datasets/adventureworks-lt.md. Table names are lower-cased; the SalesLT and dbo
+# schemas both collapse into this one database, which has no name collisions.
+address: 450
+buildversion: 1
+customer: 847
+customeraddress: 417
+errorlog: 0
+product: 295
+productcategory: 41
+productdescription: 762
+productmodel: 128
+productmodelproductdescription: 762
+salesorderdetail: 542
+salesorderheader: 32

@@ -13,7 +13,7 @@
 
     JOIN authors a ON a.au_id = ta.au_id
 
-    GROUP BY a.au_id, a.au_lname, a.au_fname ORDER BY n DESC, a.au_lname LIMIT 5
+    GROUP BY a.au_id, a.au_lname, a.au_fname ORDER BY n DESC, a.au_lname, a.au_fname LIMIT 5
 
     '
 - name: phone_check_regexp_accepts_real_data

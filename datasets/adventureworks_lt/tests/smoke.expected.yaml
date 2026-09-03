@@ -1,0 +1,16 @@
+# S7: canonical query results, tab-separated as the client prints them.
+first_customer_company: A Bike Store
+french_description_keeps_accents: Acier chromé.
+generated_line_total: '356.898000'
+generated_sales_order_number: SO71774
+non_ascii_descriptions: '122'
+objects_created: "3\t1\t4"
+product_and_description_view: '1764'
+recursive_category_view: "Bikes\tMountain Bikes\nBikes\tRoad Bikes\nBikes\tTouring\
+  \ Bikes"
+status_text_function: "Shipped\t** Invalid **"
+thumbnail_photo_is_binary: '2154'
+total_due_across_orders: '956303.5949'
+windows_1252_round_trip: "205\tMart¡nez\n506\tFerrier\n654\tHernandez"
+xml_catalog_view: "19\tAdventureWorks\t3 years\n23\tAdventureWorks\t1 year\n25\tAdventureWorks\t\
+  4 years"

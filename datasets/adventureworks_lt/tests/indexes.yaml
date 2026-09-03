@@ -1,0 +1,222 @@
+# S6: every index that must exist after load.
+address:
+  PRIMARY:
+    columns:
+    - addressid
+    type: BTREE
+    unique: true
+  ix_address_addressline1_addressline2_city_stateprovince_4eb9021d:
+    columns:
+    - addressline1
+    - addressline2
+    - city
+    - stateprovince
+    - postalcode
+    - countryregion
+    type: BTREE
+    unique: false
+  ix_address_stateprovince:
+    columns:
+    - stateprovince
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+buildversion:
+  PRIMARY:
+    columns:
+    - systeminformationid
+    type: BTREE
+    unique: true
+customer:
+  PRIMARY:
+    columns:
+    - customerid
+    type: BTREE
+    unique: true
+  ix_customer_emailaddress:
+    columns:
+    - emailaddress
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+customeraddress:
+  PRIMARY:
+    columns:
+    - customerid
+    - addressid
+    type: BTREE
+    unique: true
+  fk_customeraddress_address_addressid:
+    columns:
+    - addressid
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+errorlog:
+  PRIMARY:
+    columns:
+    - errorlogid
+    type: BTREE
+    unique: true
+product:
+  PRIMARY:
+    columns:
+    - productid
+    type: BTREE
+    unique: true
+  fk_product_productcategory_productcategoryid:
+    columns:
+    - productcategoryid
+    type: BTREE
+    unique: false
+  fk_product_productmodel_productmodelid:
+    columns:
+    - productmodelid
+    type: BTREE
+    unique: false
+  name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  productnumber:
+    columns:
+    - productnumber
+    type: BTREE
+    unique: true
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+productcategory:
+  PRIMARY:
+    columns:
+    - productcategoryid
+    type: BTREE
+    unique: true
+  fk_productcategory_productcategory_parentproductcategor_173fc88d:
+    columns:
+    - parentproductcategoryid
+    type: BTREE
+    unique: false
+  name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+productdescription:
+  PRIMARY:
+    columns:
+    - productdescriptionid
+    type: BTREE
+    unique: true
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+productmodel:
+  PRIMARY:
+    columns:
+    - productmodelid
+    type: BTREE
+    unique: true
+  name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+productmodelproductdescription:
+  PRIMARY:
+    columns:
+    - productmodelid
+    - productdescriptionid
+    - culture
+    type: BTREE
+    unique: true
+  fk_productmodelproductdescription_productdescription_pr_d98d5cca:
+    columns:
+    - productdescriptionid
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+salesorderdetail:
+  PRIMARY:
+    columns:
+    - salesorderid
+    - salesorderdetailid
+    type: BTREE
+    unique: true
+  ix_salesorderdetail_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  salesorderdetailid:
+    columns:
+    - salesorderdetailid
+    type: BTREE
+    unique: false
+salesorderheader:
+  PRIMARY:
+    columns:
+    - salesorderid
+    type: BTREE
+    unique: true
+  fk_salesorderheader_address_billto_addressid:
+    columns:
+    - billtoaddressid
+    type: BTREE
+    unique: false
+  fk_salesorderheader_address_shipto_addressid:
+    columns:
+    - shiptoaddressid
+    type: BTREE
+    unique: false
+  ix_salesorderheader_customerid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  salesordernumber:
+    columns:
+    - salesordernumber
+    type: BTREE
+    unique: true

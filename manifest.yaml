@@ -232,3 +232,12 @@ artifacts:
     size_bytes: 0
     license: cc-by-sa-3-0
     ipv4_first: false
+
+  - id: adventureworks_lt/adventure-works-2012-oltp-lt-script.zip
+    dataset: adventureworks_lt
+    url: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks2012/adventure-works-2012-oltp-lt-script.zip
+    mirrors: []
+    sha256: "03115743f5a4e3741ceffa259efe3260ee309036e717c1e0759ba08cb7b71b3d"
+    size_bytes: 937314
+    license: mit
+    ipv4_first: false

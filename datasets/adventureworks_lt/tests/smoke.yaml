@@ -1,0 +1,44 @@
+- name: total_due_across_orders
+  query: SELECT SUM(totaldue) FROM salesorderheader
+- name: first_customer_company
+  query: SELECT companyname FROM customer WHERE customerid = 1
+- name: french_description_keeps_accents
+  query: SELECT description FROM productdescription WHERE productdescriptionid = 1484
+- name: non_ascii_descriptions
+  query: SELECT COUNT(*) FROM productdescription WHERE description REGEXP '[^ -~]'
+- name: thumbnail_photo_is_binary
+  query: SELECT LENGTH(thumbnailphoto) FROM product WHERE productid = 680
+- name: generated_line_total
+  query: 'SELECT linetotal FROM salesorderdetail WHERE salesorderid = 71774 AND salesorderdetailid
+    = 110562
+
+    '
+- name: generated_sales_order_number
+  query: SELECT salesordernumber FROM salesorderheader WHERE salesorderid = 71774
+- name: status_text_function
+  query: SELECT ufngetsalesorderstatustext(5), ufngetsalesorderstatustext(9)
+- name: recursive_category_view
+  query: 'SELECT parentproductcategoryname, productcategoryname FROM vgetallcategories
+
+    ORDER BY productcategoryid LIMIT 3
+
+    '
+- name: xml_catalog_view
+  query: 'SELECT productmodelid, manufacturer, warrantyperiod FROM vproductmodelcatalogdescription
+
+    ORDER BY productmodelid LIMIT 3
+
+    '
+- name: product_and_description_view
+  query: SELECT COUNT(*) FROM vproductanddescription
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='adventureworks_lt')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='adventureworks_lt')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='adventureworks_lt') AS triggers\n"
+- name: windows_1252_round_trip
+  query: 'SELECT customerid, lastname FROM customer
+
+    WHERE CONCAT(firstname, lastname) REGEXP ''[^ -~]'' ORDER BY customerid LIMIT 3
+
+    '

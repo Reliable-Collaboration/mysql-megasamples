@@ -10,7 +10,10 @@ words like `int` inside customer names.
 What it does NOT attempt: rewriting T-SQL procedural bodies. Objects whose body uses constructs with
 no mechanical MySQL equivalent are reported by name so the caller can decide to port or drop them.
 """
+import hashlib
 import re
+
+from ddlutil import inline_identity_pk
 
 TYPE_MAP = {
     "int": "INT", "smallint": "SMALLINT", "bigint": "BIGINT",
@@ -19,7 +22,9 @@ TYPE_MAP = {
     "tinyint": "TINYINT UNSIGNED",
     "bit": "TINYINT(1)", "money": "DECIMAL(19,4)", "smallmoney": "DECIMAL(10,4)",
     "datetime": "DATETIME", "smalldatetime": "DATETIME", "float": "DOUBLE", "real": "FLOAT",
-    "ntext": "TEXT", "text": "TEXT", "image": "MEDIUMBLOB", "uniqueidentifier": "BINARY(16)",
+    "ntext": "TEXT", "text": "TEXT", "image": "MEDIUMBLOB", "uniqueidentifier": "CHAR(36)",
+    "sysname": "VARCHAR(128)", "xml": "TEXT", "date": "DATE", "time": "TIME",
+    "datetime2": "DATETIME(6)", "datetimeoffset": "DATETIME(6)", "hierarchyid": "VARCHAR(255)",
 }
 SIZED = {"nvarchar": "VARCHAR", "varchar": "VARCHAR", "nchar": "CHAR", "char": "CHAR",
          "decimal": "DECIMAL", "numeric": "DECIMAL", "binary": "BINARY", "varbinary": "VARBINARY"}
@@ -30,12 +35,24 @@ SKIP_BATCH = re.compile(
     # server maintenance and messaging with no MySQL equivalent; the pipeline runs its own
     # ANALYZE TABLE after loading, so UPDATE STATISTICS is redundant rather than lost
     r"|update\s+statistics\b|dbcc\b|raiserror\b|print\b|checkpoint\b"
-    r"|exec(ute)?\s+sp_)", re.I)
+    r"|exec(ute)?\s+sp_|create\s+type\b)", re.I)
+
+
+MAX_IDENT = 64          # MySQL's limit; SQL Server allows 128
 
 
 def ident(name):
-    """Upstream identifier -> MySQL identifier: lower case, spaces to underscores."""
-    return name.strip().lower().replace(" ", "_")
+    """Upstream identifier -> MySQL identifier: lower case, spaces to underscores.
+
+    A name over MySQL's 64-character limit is truncated and given a hash of the full original, so
+    the result is deterministic across builds and two long names that share a prefix stay distinct.
+    AdventureWorks LT has a six-column index whose name runs to 82 characters.
+    """
+    out = name.strip().lower().replace(" ", "_")
+    if len(out) > MAX_IDENT:
+        digest = hashlib.sha256(out.encode()).hexdigest()[:8]
+        out = out[:MAX_IDENT - 9] + "_" + digest
+    return out
 
 
 def split_batches(sql):
@@ -97,8 +114,15 @@ def split_statements(batch):
 
 
 def scan_replace(sql, on_dquote=None, on_word=None):
-    """Walk sql outside string literals and comments, rewriting double-quoted names and bare words."""
+    """Walk sql outside string literals and comments, rewriting quoted names and bare words.
+
+    `on_dquote` is called with (name, in_type_position). A quoted token sits in type position when
+    the previous emitted token was itself an identifier, which is how a column definition reads:
+    `[Col] [Type]`. Deciding by name alone is not enough -- AdventureWorks has a column named
+    NameStyle whose type is also NameStyle, and treating the first one as a type eats the name.
+    """
     out, i, n = [], 0, len(sql)
+    prev_ident = False
     while i < n:
         ch = sql[i]
         if ch == "'":                                  # string literal: copy verbatim
@@ -120,34 +144,37 @@ def scan_replace(sql, on_dquote=None, on_word=None):
         if sql.startswith("/*", i):
             end = sql.find("*/", i + 2); end = n if end < 0 else end + 2
             out.append(sql[i:end]); i = end; continue
-        if ch == '"' and on_dquote:                    # "quoted" identifier
-            end = sql.find('"', i + 1)
+        if ch in '"[' and on_dquote:                   # "quoted" or [bracketed] identifier
+            end = sql.find('"' if ch == '"' else "]", i + 1)
             if end > 0:
-                out.append(on_dquote(sql[i + 1:end])); i = end + 1; continue
-        if ch == "[" and on_dquote:                    # [bracketed] identifier (the other T-SQL style)
-            end = sql.find("]", i + 1)
-            if end > 0:
-                out.append(on_dquote(sql[i + 1:end])); i = end + 1; continue
+                emitted = on_dquote(sql[i + 1:end], prev_ident)
+                out.append(emitted)
+                prev_ident = emitted.endswith("`")
+                i = end + 1
+                continue
         if on_word and (ch.isalpha() or ch == "_"):    # bare word
             m = re.match(r"[A-Za-z_][A-Za-z0-9_]*", sql[i:])
             word = m.group(0)
-            out.append(on_word(word)); i += len(word); continue
+            out.append(on_word(word)); i += len(word); prev_ident = False; continue
+        if not ch.isspace():
+            prev_ident = False
         out.append(ch); i += 1
     return "".join(out)
 
 
 CAST_TYPES = {"money": "DECIMAL(19,4)", "smallmoney": "DECIMAL(10,4)", "int": "SIGNED",
               "bigint": "SIGNED", "smallint": "SIGNED", "tinyint": "SIGNED", "bit": "SIGNED",
-              "float": "DOUBLE", "real": "DOUBLE", "datetime": "DATETIME", "date": "DATE"}
+              "float": "DOUBLE", "real": "DOUBLE", "datetime": "DATETIME", "date": "DATE",
+              "varchar": "CHAR", "nvarchar": "CHAR", "char": "CHAR", "nchar": "CHAR"}
 
 
 def _cast_type(tsql_type):
-    """Map a T-SQL type used as a CONVERT/CAST target to a MySQL CAST target type."""
+    """Map a T-SQL type used as a CONVERT/CAST target to a MySQL CAST target type.
+
+    MySQL's CAST accepts a much shorter list of types than a column declaration does: VARCHAR is not
+    among them, so a character target of any width becomes CHAR(n)."""
     t = tsql_type.strip()
-    m = re.match(r"(?i)^(n?varchar)\s*\(\s*(\d+)\s*\)$", t)
-    if m:
-        return f"VARCHAR({m.group(2)})"
-    m = re.match(r"(?i)^(n?char)\s*\(\s*(\d+)\s*\)$", t)
+    m = re.match(r"(?i)^(n?(?:var)?char)\s*\(\s*(\d+)\s*\)$", t)
     if m:
         return f"CHAR({m.group(2)})"
     m = re.match(r"(?i)^(decimal|numeric)\s*\((\s*\d+\s*(?:,\s*\d+\s*)?)\)$", t)
@@ -222,20 +249,201 @@ def convert_like_classes(sql):
     return LIKE_CLASS.sub(repl, sql)
 
 
+NULLABILITY = re.compile(r"(?i)\s*\b(NOT\s+NULL|NULL)\s*$")
+
+
+def split_alias(definition):
+    """`nvarchar(50) NULL` -> ('VARCHAR(50)', 'NULL'), with the base type already mapped to MySQL."""
+    definition = convert_types(definition.strip().rstrip(";").strip())
+    m = NULLABILITY.search(definition)
+    if not m:
+        return definition, ""
+    return definition[:m.start()].strip(), " ".join(m.group(1).split()).upper()
+
+
+DECLARED_PK = re.compile(r"(?is)ALTER\s+TABLE\s+(?:\[?\w+\]?\s*\.\s*)*\[?(\w+)\]?\s+"
+                         r"(?:WITH\s+\w+\s+)?ADD\s+(?:CONSTRAINT\s+\[?\w+\]?\s+)?"
+                         r"PRIMARY\s+KEY[^(]*\(([^)]*)\)")
+
+
+def collect_declared_pks(sql):
+    """Primary keys the script adds with ALTER TABLE, as {table: [column, ...]}.
+
+    An identity column has to be keyed the moment it is declared, and what key it should get depends
+    on the primary key that arrives later, so that has to be known before the tables are emitted.
+    """
+    pks = {}
+    for m in DECLARED_PK.finditer(sql):
+        columns = [c.lower() for c in re.findall(r"\[?(\w+)\]?", m.group(2))
+                   if c.upper() not in ("ASC", "DESC")]
+        pks[ident(m.group(1))] = columns
+    return pks
+
+
+def collect_tsql_types(sql):
+    """`CREATE TYPE [dbo].[Name] FROM nvarchar(50) NULL` -> {name: ('VARCHAR(50)', 'NULL')}."""
+    types = {}
+    for m in re.finditer(r"(?im)^\s*CREATE\s+TYPE\s+(?:\[?\w+\]?\s*\.\s*)?\[?(\w+)\]?\s+FROM\s+([^;\n]+)", sql):
+        types[m.group(1).lower()] = split_alias(m.group(2))
+    return types
+
+
+def column_tail(sql, pos):
+    """The rest of the column definition starting at pos: up to the comma that ends it."""
+    depth = 0
+    for i in range(pos, len(sql)):
+        ch = sql[i]
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            if depth == 0:
+                return sql[pos:i]
+            depth -= 1
+        elif ch == "," and depth == 0:
+            return sql[pos:i]
+    return sql[pos:]
+
+
+def split_top(text, sep):
+    """Split at `sep` where it is outside both parentheses and string literals."""
+    parts, depth, start, i, n = [], 0, 0, 0, len(text)
+    while i < n:
+        ch = text[i]
+        if ch == "'":
+            i += 1
+            while i < n:
+                if text[i] == "'":
+                    if i + 1 < n and text[i + 1] == "'":
+                        i += 2; continue
+                    break
+                i += 1
+        elif ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        elif ch == sep and depth == 0:
+            parts.append(text[start:i]); start = i + 1
+        i += 1
+    parts.append(text[start:])
+    return parts
+
+
+def has_top_literal(text):
+    """True when a string literal appears at the top nesting level, so a `+` here concatenates."""
+    depth = 0
+    for ch in text:
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        elif ch == "'" and depth == 0:
+            return True
+    return False
+
+
+def top_groups(text):
+    """(open, close) index pairs of the outermost parenthesised groups, ignoring literals."""
+    groups, depth, start, i, n = [], 0, None, 0, len(text)
+    while i < n:
+        ch = text[i]
+        if ch == "'":
+            i += 1
+            while i < n and text[i] != "'":
+                i += 1
+        elif ch == "(":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+            if depth == 0:
+                groups.append((start, i))
+        i += 1
+    return groups
+
+
+def convert_concat(expr):
+    """T-SQL overloads `+` for string concatenation; MySQL's `+` is always arithmetic.
+
+    An operand tells the two apart: `N'SO' + CONVERT(...)` has a string literal at the top level of
+    the expression and concatenates, while `[SubTotal] + [TaxAmt]` does not and stays as it is.
+    Left alone, `'SO' + 71774` would silently evaluate to 71774 in MySQL rather than 'SO71774'.
+    """
+    parts = split_top(expr, "+")
+    if len(parts) > 1 and any(has_top_literal(p) for p in parts):
+        return "CONCAT(" + ", ".join(convert_concat(p.strip()) for p in parts) + ")"
+    out, i = [], 0
+    for start, end in top_groups(expr):
+        out.append(expr[i:start + 1])
+        out.append(", ".join(convert_concat(a.strip()) for a in split_top(expr[start + 1:end], ",")))
+        out.append(")")
+        i = end + 1
+    out.append(expr[i:])
+    return "".join(out)
+
+
+COMPUTED = re.compile(r"(?i)(?:^|,)\s*`(\w+)`\s+AS\s+")
+
+
+def convert_computed(body, computed_types, materialize=()):
+    """`[LineTotal] AS ISNULL(...)` -> `` `linetotal` DECIMAL(38,6) AS (IFNULL(...)) STORED ``.
+
+    T-SQL infers a computed column's type; MySQL requires one to be declared, so the caller supplies
+    it per `table.column` from the dataset record. Returns the body and the generated column names,
+    which the caller must leave out of INSERT column lists.
+
+    A column named in `materialize` becomes an ordinary column instead, for expressions MySQL will
+    not generate -- it rejects a generated column that reads an AUTO_INCREMENT column. Its value
+    then has to come from the data, so it stays in the INSERT column list.
+    """
+    table = re.search(r"(?is)^\s*CREATE\s+TABLE\s+`([^`]+)`", body)
+    if not table:
+        return body, []
+    generated, out, pos = [], [], 0
+    for m in COMPUTED.finditer(body):
+        column = m.group(1)
+        key = f"{table.group(1)}.{column}".lower()
+        if key not in computed_types:
+            raise SystemExit(f"computed column {key} has no declared MySQL type")
+        expression = column_tail(body, m.end()).strip()
+        out.append(body[pos:m.start(1) - 1])
+        pos = m.end() + len(column_tail(body, m.end()))
+        if key in materialize:
+            out.append(f"`{column}` {computed_types[key]}")
+            continue
+        # N'x' is a national-character literal; MySQL's utf8mb4 columns make the prefix redundant
+        expression = re.sub(r"(?<![A-Za-z0-9_])N'", "'", expression)
+        expression = convert_concat(convert_functions(convert_tsql_convert(expression)))
+        out.append(f"`{column}` {computed_types[key]} AS ({expression}) STORED")
+        generated.append(column)
+    out.append(body[pos:])
+    return "".join(out), generated
+
+
+def expand_alias_types(sql, types):
+    """Replace a user-defined type used as a column type with its base definition.
+
+    T-SQL lets the column override the alias's nullability, so the alias only supplies NULL/NOT NULL
+    when the column declares none. Emitting both produces `VARCHAR(50) NULL NOT NULL`, which MySQL
+    rejects -- AdventureWorks LT's [Name] alias hits this on nearly every table.
+    """
+    for name, (base, nullability) in types.items():
+        def repl(m, base=base, nullability=nullability):
+            tail = column_tail(sql, m.end())
+            if nullability and not re.search(r"(?i)\bNULL\b", tail):
+                return f"{m.group(1)}{base} {nullability}"
+            return m.group(1) + base
+        sql = re.sub(rf"(?i)(`\w+`\s+)(?:`dbo`\s*\.\s*)?{name}(?![A-Za-z0-9_(])", repl, sql)
+    return sql
+
+
 def collect_udts(sql):
-    """`execute sp_addtype name, 'basetype', 'NOT NULL'` -> {name: 'BASETYPE NOT NULL'}."""
+    """`execute sp_addtype name, 'basetype', 'NOT NULL'` -> {name: ('BASETYPE', 'NOT NULL')}."""
     udts = {}
     for m in re.finditer(r"(?im)^\s*exec(?:ute)?\s+sp_addtype\s+(\w+)\s*,\s*'([^']+)'\s*(?:,\s*'([^']*)')?", sql):
         name, base, nullability = m.group(1), m.group(2), (m.group(3) or "")
-        udts[name.lower()] = f"{base.strip()} {nullability.strip()}".strip()
+        udts[name.lower()] = split_alias(f"{base.strip()} {nullability.strip()}".strip())
     return udts
-
-
-def expand_udts(sql, udts):
-    """Replace a user-defined type used as a column type with its base type."""
-    for name, expansion in udts.items():
-        sql = re.sub(rf"(?i)(`\w+`\s+){name}(?![A-Za-z0-9_(])", rf"\g<1>{expansion}", sql)
-    return sql
 
 
 def convert_functions(sql):
@@ -248,6 +456,60 @@ def convert_functions(sql):
     sql = re.sub(r"(?i)\bISNULL\s*\(", "IFNULL(", sql)
     sql = re.sub(r"(?i)\bLEN\s*\(", "CHAR_LENGTH(", sql)
     return sql
+
+
+CTE_HEAD = re.compile(r"(?i)\bWITH\s+(`?\w+`?)\s*(?:\([^()]*\))?\s+AS\s*\(")
+
+
+def convert_recursive_cte(sql):
+    """MySQL needs WITH RECURSIVE where T-SQL just writes WITH.
+
+    Without it a self-referencing CTE fails with "table doesn't exist" on its own name, which is how
+    AdventureWorks LT's vGetAllCategories reads the product category tree.
+    """
+    m = CTE_HEAD.search(sql)
+    if not m:
+        return sql
+    name, depth, i = m.group(1).strip("`"), 1, m.end()
+    while i < len(sql) and depth:
+        depth += {"(": 1, ")": -1}.get(sql[i], 0)
+        i += 1
+    if not re.search(rf"(?i)\b{re.escape(name)}\b", sql[m.end():i - 1]):
+        return sql
+    return sql[:m.start()] + re.sub(r"(?i)^WITH\b", "WITH RECURSIVE", sql[m.start():], count=1)
+
+
+XML_VALUE = re.compile(r"(?is)(`?\w+`?)\.value\s*\(\s*N?'((?:[^']|'')*)'\s*,\s*'([^']*)'\s*\)")
+XML_METHOD = re.compile(r"(?i)`?\w+`?\.(query|exist|nodes|modify)\s*\(")
+DECLARE_NS = re.compile(r'(?is)\s*declare\s+namespace\s+[\w-]+\s*=\s*"[^"]*"\s*;')
+
+
+def convert_xml_value(sql):
+    """SQL Server's `col.value('xquery', 'type')` -> MySQL's `ExtractValue(col, 'xpath')`.
+
+    MySQL has no XQuery and its XPath subset has no namespace support -- `local-name()` is not in the
+    grammar. It does match a prefixed element name literally, though, and AdventureWorks' catalog
+    documents use the same prefixes the queries declare (p1, wm, wf, html), so dropping the
+    `declare namespace` preamble and keeping the path as written selects the same nodes. The
+    `(path)[1]` form becomes `path[1]`, which MySQL's grammar does accept, and a sized result type
+    becomes a CAST so the column is truncated the way SQL Server truncates it.
+    """
+    bad = XML_METHOD.search(sql)
+    if bad:
+        raise SystemExit(f"XML method .{bad.group(1)}() has no MySQL equivalent")
+
+    def one(m):
+        column, xquery, result = m.group(1), m.group(2), m.group(3).strip()
+        path = DECLARE_NS.sub("", xquery).strip()
+        outer = re.match(r"^\((.*)\)(\[\d+\])$", path, re.S)
+        if outer:
+            path = outer.group(1).strip() + outer.group(2)
+        path = " ".join(path.split())
+        expression = f"ExtractValue({column}, '{path}')"
+        size = re.match(r"(?i)^n?(?:var)?char\s*\(\s*(\d+)\s*\)$", result)
+        return f"CAST({expression} AS CHAR({size.group(1)}))" if size else expression
+
+    return XML_VALUE.sub(one, sql)
 
 
 INLINE_REF = re.compile(r"(?i)\s+REFERENCES\s+(`?\w+`?)\s*\(\s*(`?\w+`?)\s*\)")
@@ -358,13 +620,28 @@ def terminate(sql):
     return "\n".join(lines) + "\n"
 
 
-def strip_dbo(sql):
-    """Remove the dbo schema prefix in either quoting style."""
-    return re.sub(r'(?i)(["\[]?)\bdbo\1?["\]]?\s*\.\s*', "", sql)
+def strip_schemas(sql, schemas=("dbo",)):
+    """Remove a schema prefix in either T-SQL quoting style.
+
+    MySQL has no schema level below the database, so a prefix either disappears (a single-schema
+    dataset such as AdventureWorks LT, where SalesLT and dbo do not collide) or is folded into the
+    table name by the caller. Left in place it becomes a database reference and the load fails with
+    "Unknown database".
+    """
+    for schema in schemas:
+        sql = re.sub(rf'(?i)(["\[]?)\b{re.escape(schema)}\1?["\]]?\s*\.\s*', "", sql)
+    return sql
 
 
 def convert_types(sql):
     """Map SQL Server column types. Types may appear double-quoted (`"int"`), already unquoted here."""
+    # SQL Server's MAX length (2 GB) has no size argument in MySQL; LONGTEXT/LONGBLOB are the
+    # closest equivalents. AdventureWorks LT uses varbinary(max) for product photos.
+    sql = re.sub(r"(?i)\b(?:n?varchar|n?text)\s*\(\s*max\s*\)", "LONGTEXT", sql)
+    sql = re.sub(r"(?i)\b(?:var)?binary\s*\(\s*max\s*\)", "LONGBLOB", sql)
+    # MySQL has no XML type. A typed XML column names its schema collection, which goes with it.
+    sql = re.sub(r"(?i)\bxml\s*\(\s*`?[\w.`]+`?\s*\)", "LONGTEXT", sql)
+
     def sized(m):
         return f"{SIZED[m.group(1).lower()]}({m.group(2)})"
     sql = re.sub(r"(?i)\b(" + "|".join(SIZED) + r")\s*\(\s*([0-9]+(?:\s*,\s*[0-9]+)?)\s*\)", sized, sql)
@@ -394,20 +671,29 @@ def convert_dates_mdy(sql):
     return DATE_MDY.sub(iso, sql)
 
 
-def translate(sql, drop_checks=(), keep_objects=True, dateformat=None):
+def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=("dbo",),
+              computed_types=None, materialize=()):
     """Return (statements, name_map, notes). `drop_checks` names CHECK constraints to omit."""
     name_map, notes, statements = {}, [], []
+    identity_pk = {}     # table -> column that already carries PRIMARY KEY with its identity
     udts = collect_udts(sql)
+    declared_pk = collect_declared_pks(sql)
+    tsql_types = collect_tsql_types(sql)
+
+    if tsql_types:
+        notes.append(f"expanded CREATE TYPE aliases: {', '.join(sorted(tsql_types))}")
     if udts:
         notes.append(f"expanded user-defined types: {', '.join(sorted(udts))}")
     tables = {}          # lower-cased upstream table name -> MySQL identifier
     table_columns = {}   # lower-cased table name -> (columns, identity column)
 
-    TYPE_WORDS = set(TYPE_MAP) | set(SIZED)
+    # a double-quoted or bracketed token naming a type is a type, not an identifier -- including
+    # the script's own CREATE TYPE aliases, which are collected before the scan for this reason
+    TYPE_WORDS = set(TYPE_MAP) | set(SIZED) | set(tsql_types)
 
-    def dq(name):
-        if name.strip().lower() in TYPE_WORDS:
-            return name.strip().lower()      # `"int"` is a type name, not an identifier
+    def dq(name, in_type_position=False):
+        if in_type_position and name.strip().lower() in TYPE_WORDS:
+            return name.strip().lower()      # `[Col] [int]`: the second token is the type
         mapped = ident(name)
         if name != mapped:
             name_map[name] = mapped
@@ -420,7 +706,7 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None):
             continue
         if re.match(r"(?i)^\s*alter\s+table\s+.*\b(no)?check\s+constraint\s+all", head, re.S):
             continue                                    # constraint disabling has no MySQL analogue
-        body = strip_dbo(batch)
+        body = strip_schemas(batch, schemas)
         # classify on the first real statement: several batches open with a block comment
         lead = re.sub(r"(?s)^\s*(?:/\*.*?\*/|--[^\n]*\n)\s*", "", body)
         kind = "other"
@@ -428,6 +714,7 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None):
         elif re.match(r"(?i)^\s*create\s+view", lead): kind = "view"
         elif re.match(r"(?i)^\s*create\s+proc", lead): kind = "procedure"
         elif re.match(r"(?i)^\s*create\s+trigger", lead): kind = "trigger"
+        elif re.match(r"(?i)^\s*create\s+function", lead): kind = "function"
         elif re.match(r"(?i)^\s*alter\s+table", lead): kind = "constraint"
         elif re.match(r"(?i)^\s*(insert|update|delete)", lead): kind = "dml"
 
@@ -440,27 +727,43 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None):
         if kind in ("view", "procedure", "constraint", "dml"):
             # bare (unquoted) references to a table must be lower-cased too
             body = scan_replace(body, on_word=lambda w: f"`{tables[w.lower()]}`" if w.lower() in tables else w)
+        # filegroup placement and index-organisation keywords have no MySQL equivalent, and they
+        # appear on CREATE INDEX as well as on tables and constraints
+        body = re.sub(r"(?i)\s+ON\s+`primary`", "", body)
+        body = re.sub(r"(?i)\b(?:NON)?CLUSTERED\s+(?=INDEX\b)", "", body)
+        body = re.sub(r"(?i)\b(PRIMARY\s+KEY|UNIQUE)\s+(?:NON)?CLUSTERED", r"\1", body)
         if kind in ("table", "constraint"):
             body = convert_types(body)
             body = re.sub(r"(?i)\bIDENTITY\s*\(\s*\d+\s*,\s*\d+\s*\)", "AUTO_INCREMENT", body)
             body = re.sub(r"(?i)\bAUTO_INCREMENT\s+(NOT\s+NULL|NULL)", r"\1 AUTO_INCREMENT", body)
-            body = re.sub(r"(?i)\b(PRIMARY\s+KEY|UNIQUE)\s+(CLUSTERED|NONCLUSTERED)", r"\1", body)
-            body = re.sub(r"(?i)\bWITH\s+NOCHECK\b", "", body)
-            body = re.sub(r"(?i)\s+ON\s+`primary`", "", body)      # filegroup placement
+            body = re.sub(r"(?i)\bWITH\s+(?:NO)?CHECK\b(?!\s+OPTION)", "", body)
             # T-SQL parenthesises column defaults and lets them be named constraints;
             # MySQL supports neither: CONSTRAINT `df_x` DEFAULT (0) -> DEFAULT 0
             body = re.sub(r"(?i)\bDEFAULT\s*\(\s*([^()]+?)\s*\)", r"DEFAULT \1", body)
             body = re.sub(r"(?i)\bCONSTRAINT\s+`[^`]+`\s+(?=DEFAULT\b)", "", body)
             # MySQL cannot name a column-level PRIMARY KEY/UNIQUE constraint
             body = re.sub(r"(?i)\bCONSTRAINT\s+`?\w+`?\s+(?=(PRIMARY\s+KEY|UNIQUE)\b)", "", body)
-            body = expand_udts(body, udts)
+            body = expand_alias_types(body, udts)          # sp_addtype (pubs)
+            body = expand_alias_types(body, tsql_types)    # CREATE TYPE ... FROM (AdventureWorks)
             body = convert_like_classes(body)
             body = convert_functions(body)
             if kind == "table":
+                body, generated = convert_computed(body, computed_types or {}, materialize)
+                # AdventureWorks LT's scripts end several column lists with a trailing comma
+                body = re.sub(r",(\s*\)\s*;?)$", r"\1", body.rstrip())
+                # only now does IDENTITY(1,1) exist as AUTO_INCREMENT
+                body, identity = inline_identity_pk(body, declared_pk)
+                if identity:
+                    identity_pk[identity[0]] = identity[1]
                 body, n_fk = hoist_inline_references(body)
                 if n_fk:
                     notes.append(f"hoisted {n_fk} inline REFERENCES to table-level FOREIGN KEYs")
             body = re.sub(r"(?i)\bNOT\s+FOR\s+REPLICATION\b", "", body)
+            body = re.sub(r"(?i)\s+\bROWGUIDCOL\b", "", body)          # a marker attribute only
+            # NEWID()/NEWSEQUENTIALID() defaults: the data files supply every rowguid, and MySQL
+            # cannot default a CHAR column to a generated UUID anyway
+            body = re.sub(r"(?i)\s+DEFAULT\s*\(?\s*NEWSEQUENTIALID\s*\(\s*\)\s*\)?", "", body)
+            body = re.sub(r"(?i)\s+DEFAULT\s*\(?\s*NEWID\s*\(\s*\)\s*\)?", "", body)
             for name in drop_checks:                     # CHECKs MySQL cannot express
                 body = re.sub(rf"(?is),?\s*CONSTRAINT\s+`{re.escape(ident(name))}`\s+CHECK\s*\((?:[^()]|\([^()]*\))*\)",
                               "", body)
@@ -481,10 +784,46 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None):
             m = re.search(r"(?i)CREATE\s+TABLE\s+(?:`([^`]+)`|(\w+))", body)
             if m:
                 table_columns[(m.group(1) or m.group(2)).lower()] = parse_columns(body)
+        if kind == "constraint":
+            # T-SQL takes several clauses under one ADD; MySQL wants ADD on each of them. Splitting
+            # them also lets a primary key already declared with an identity column be dropped on
+            # its own, without losing the other clauses of the same statement.
+            head = re.match(r"(?is)^(\s*ALTER\s+TABLE\s+`?(\w+)`?\s+)ADD\s+(.*?);?\s*$", body.strip())
+            if head:
+                clauses = []
+                for clause in split_top(head.group(3), ","):
+                    clause = clause.strip()
+                    dup = re.match(r"(?is)^(?:CONSTRAINT\s+`?\w+`?\s+)?PRIMARY\s+KEY\s*"
+                                   r"\(\s*`?(\w+)`?\s*\)$", clause)
+                    if dup and identity_pk.get(head.group(2).lower()) == dup.group(1).lower():
+                        notes.append("dropped a PRIMARY KEY already declared with its identity column")
+                        continue
+                    clauses.append(clause)
+                if not clauses:
+                    continue
+                body = head.group(1) + ", ".join("ADD " + c for c in clauses)
+        if kind == "view":
+            # view attributes: SCHEMABINDING ties a view to its tables' schema, VIEW_METADATA
+            # changes what the client driver reports. Neither has a MySQL equivalent.
+            body = re.sub(r"(?i)\s+WITH\s+(SCHEMABINDING|VIEW_METADATA|ENCRYPTION)"
+                          r"(\s*,\s*(SCHEMABINDING|VIEW_METADATA|ENCRYPTION))*", "", body)
         if kind in ("view", "procedure", "trigger"):
-            body = convert_functions(convert_tsql_convert(body))
+            body = convert_functions(convert_tsql_convert(convert_xml_value(body)))
+            body = convert_recursive_cte(body)
         if kind in ("view", "procedure") and not keep_objects:
             notes.append(f"skipped {kind}")
             continue
-        statements.append({"kind": kind, "sql": body.strip()})
-    return statements, name_map, notes
+        statements.append({"kind": kind, "sql": body.strip(),
+                           "generated": generated if kind == "table" else []})
+    # SQL Server can index a view; MySQL has no materialised views, so those indexes go away
+    views = {m.group(1) for st in statements if st["kind"] == "view"
+             for m in [re.search(r"(?is)^\s*CREATE\s+VIEW\s+`([^`]+)`", st["sql"])] if m}
+    on_view = re.compile(r"(?is)^\s*CREATE\s+(?:UNIQUE\s+)?INDEX\s+`[^`]+`\s+ON\s+`([^`]+)`")
+    kept = []
+    for st in statements:
+        m = on_view.match(st["sql"])
+        if m and m.group(1) in views:
+            notes.append(f"dropped an index on view {m.group(1)}: MySQL has no indexed views")
+            continue
+        kept.append(st)
+    return kept, name_map, notes

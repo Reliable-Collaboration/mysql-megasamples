@@ -5,6 +5,12 @@ authors:
     - au_id
     type: BTREE
     unique: true
+  aunmind:
+    columns:
+    - au_lname
+    - au_fname
+    type: BTREE
+    unique: false
 discounts:
   stor_id:
     columns:
@@ -17,6 +23,13 @@ employee:
     - emp_id
     type: BTREE
     unique: true
+  employee_ind:
+    columns:
+    - lname
+    - fname
+    - minit
+    type: BTREE
+    unique: false
   job_id:
     columns:
     - job_id
@@ -46,7 +59,7 @@ publishers:
     type: BTREE
     unique: true
 roysched:
-  title_id:
+  titleidind:
     columns:
     - title_id
     type: BTREE
@@ -59,7 +72,7 @@ sales:
     - title_id
     type: BTREE
     unique: true
-  title_id:
+  titleidind:
     columns:
     - title_id
     type: BTREE
@@ -77,7 +90,12 @@ titleauthor:
     - title_id
     type: BTREE
     unique: true
-  title_id:
+  auidind:
+    columns:
+    - au_id
+    type: BTREE
+    unique: false
+  titleidind:
     columns:
     - title_id
     type: BTREE
@@ -91,5 +109,10 @@ titles:
   pub_id:
     columns:
     - pub_id
+    type: BTREE
+    unique: false
+  titleind:
+    columns:
+    - title
     type: BTREE
     unique: false

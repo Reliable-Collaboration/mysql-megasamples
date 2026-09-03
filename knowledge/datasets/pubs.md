@@ -55,7 +55,7 @@ Script translation without SQL Server, together with Northwind: [decision](/deci
 * Procedures `byroyalty`, `reptq1`, `reptq2`, `reptq3` -> port (`reptq*` use `COMPUTE`/`compute by`? **Inferred** - the SQL Server 2000 versions use `COMPUTE BY` which has no MySQL equivalent; if so, stub them as plain grouped selects and note the deviation).
 
 # Indexing
-PKs on all tables (composite on titleauthor, sales, roysched? roysched has none - keep as in script), FKs as in script (`REFERENCES` inline), nonclustered indexes `auidind`, `titleidind` on titleauthor.
+PKs on all tables (composite on titleauthor, sales; roysched has none - keep as in script), FKs as in script (`REFERENCES` inline). **Measured**: the script's index section creates seven named indexes, not two — `employee_ind` (clustered, on employee), `aunmind` (authors), `titleind` (titles), `auidind` (titleauthor), and `titleidind` three times over, on sales, titleauthor and roysched. All seven are now present; MySQL reuses `titleidind` for the foreign key on each of those three tables instead of creating an index of its own.
 
 # Tests and expected values
 **S-03 result (2026-09-02): green.** All 11 documented row counts matched, and the translator emitted exactly 255 INSERT statements — the row total this record states. `SUM(qty)` = **493**, the value this record predicted as inferred. The `LIKE '[0-9][0-9][0-9] [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]'` CHECK became a REGEXP that all 23 author rows satisfy, and `pub_info.logo` holds 643 bytes of GIF for publisher 0736.

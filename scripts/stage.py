@@ -77,6 +77,14 @@ def stage_employees(dest):
                        os.path.join(dest, "employees.sql"))
 
 
+@stager("adventureworks_lt")
+def stage_adventureworks_lt(dest):
+    _run_converter("adventureworks_lt",
+                   os.path.join(ROOT, "downloads", "adventureworks_lt",
+                                "adventure-works-2012-oltp-lt-script.zip"),
+                   os.path.join(dest, "adventureworks_lt.sql"))
+
+
 def _run_dir_converter(name, src_dir, out):
     """Converters that read a directory of files rather than a single artifact."""
     import subprocess
