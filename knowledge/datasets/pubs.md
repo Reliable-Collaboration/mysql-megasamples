@@ -58,6 +58,11 @@ Script translation without SQL Server, together with Northwind: [decision](/deci
 PKs on all tables (composite on titleauthor, sales, roysched? roysched has none - keep as in script), FKs as in script (`REFERENCES` inline), nonclustered indexes `auidind`, `titleidind` on titleauthor.
 
 # Tests and expected values
+**S-03 result (2026-09-02): green.** All 11 documented row counts matched, and the translator emitted exactly 255 INSERT statements — the row total this record states. `SUM(qty)` = **493**, the value this record predicted as inferred. The `LIKE '[0-9][0-9][0-9] [0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]'` CHECK became a REGEXP that all 23 author rows satisfy, and `pub_info.logo` holds 643 bytes of GIF for publisher 0736.
+**Ten foreign keys were recovered that would otherwise have been lost.** pubs declares every foreign key inline on the column and has no `ALTER TABLE` at all; MySQL parses inline `REFERENCES` and then ignores it, so a naive translation produces a database with no foreign keys whatsoever. The converter hoists them into table-level `FOREIGN KEY` clauses, and all ten validate with 0 orphans.
+The trigger `employee_insupd` is **not ported**: T-SQL statement-level triggers read the `inserted`/`deleted` pseudo-tables, which MySQL has no equivalent for. It is emitted as commented text naming the reason, and the converter's completeness check fails the build if any upstream object is neither emitted nor reported.
+`titles.pubdate` is excluded from the row digest: two rows omit it upstream, so `DEFAULT GETDATE()` stamps them with the build time. That is faithful to SQL Server rather than a conversion defect; the reason is recorded in `datasets/pubs/tests/digest_exclude.yaml`.
+
 Row counts above; `SELECT COUNT(*) FROM sales` = 21; `SELECT SUM(qty) FROM sales` = 493 (**inferred**, verify); `SELECT LENGTH(logo) FROM pub_info WHERE pub_id='0736'` equals the hex literal length/2 from the script; trigger test: inserting an employee with `job_lvl` outside the job's range must fail.
 
 # Tier assignment

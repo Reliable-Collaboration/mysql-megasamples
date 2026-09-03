@@ -1,0 +1,4 @@
+# pubs is tiny (255 rows); only roysched is big enough for the optimizer to prefer an index.
+- name: roysched_by_title
+  query: SELECT COUNT(*) FROM roysched WHERE title_id = 'BU1032'
+  must_not_full_scan: [roysched]

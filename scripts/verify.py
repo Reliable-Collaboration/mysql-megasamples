@@ -74,9 +74,14 @@ def stage_counts(cfg, schema, d, pin, res):
 
 def stage_digests(cfg, schema, d, pin, res):
     path = os.path.join(d, "tests", "checksums.yaml")
+    # Columns whose value is not reproducible across builds (a DEFAULT CURRENT_TIMESTAMP that the
+    # upstream data leaves unset, for instance) are excluded from the digest and listed with a
+    # reason, so the exclusion is visible rather than hidden inside a passing test.
+    excluded = load_yaml(os.path.join(d, "tests", "digest_exclude.yaml"), {}) or {}
     observed = {}
     for table in base_tables(schema):
-        cols = columns_of(schema, table)
+        cols = [c for c in columns_of(schema, table)
+                if c[0] not in (excluded.get(table, {}) or {})]
         row = db.rows(canon.fingerprint_sql(schema, table, cols))[0]
         observed[table] = {"n": int(row[0]), "x": int(row[1]), "s": int(row[2]),
                            "columns": [c for c, t in cols if t.lower() not in canon.EXCLUDED],

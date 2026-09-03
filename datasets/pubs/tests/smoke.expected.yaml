@@ -1,0 +1,13 @@
+# S7: canonical query results, tab-separated as the client prints them.
+authors_with_most_titles: "Green\tMarjorie\t2\nLocksley\tCharlene\t2\nMacFeather\t\
+  Stearns\t2\nO'Leary\tMichael\t2\nRinger\tAnne\t2"
+books_per_publisher: "Algodata Infosystems\t6\nBinnet & Hardley\t7\nFive Lakes Publishing\t\
+  0\nGGG&G\t0\nLucerne Publishing\t0\nNew Moon Books\t5\nRamona Publishers\t0\nScootney\
+  \ Books\t0"
+logo_is_binary: '643'
+max_job_level: '250'
+objects_created: "1\t4\t0"
+phone_check_regexp_accepts_real_data: '23'
+pubdate_is_set: '18'
+titles_with_fixed_pubdate: '16'
+total_sales_qty: '493'

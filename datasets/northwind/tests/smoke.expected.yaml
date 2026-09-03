@@ -1,0 +1,15 @@
+# S7: canonical query results, tab-separated as the client prints them.
+accented_city_probe: Luleå
+accented_company_probe: Königlich Essen
+category_picture_length: '10746'
+earliest_employee_birthdate: '1937-09-19 00:00:00'
+objects_created: "16\t5"
+order_details_grand_total: '1265793.04'
+sales_by_category: "Beverages\t267868.18\nCondiments\t106047.08\nConfections\t167357.22\n\
+  Dairy Products\t234507.28\nGrains/Cereals\t95744.59\nMeat/Poultry\t163022.36\nProduce\t\
+  99984.58\nSeafood\t131261.74"
+top_10_customers_by_order_value: "QUICK\tQUICK-Stop\t110277.3\nERNSH\tErnst Handel\t\
+  104874.98\nSAVEA\tSave-a-lot Markets\t104361.95\nRATTC\tRattlesnake Canyon Grocery\t\
+  51097.8\nHUNGO\tHungry Owl All-Night Grocers\t49979.9\nHANAR\tHanari Carnes\t32841.37\n\
+  KOENE\tKöniglich Essen\t30908.38\nFOLKO\tFolk och fä HB\t29567.56\nMEREP\tMère Paillarde\t\
+  28872.19\nWHITC\tWhite Clover Markets\t27363.6"

@@ -1,0 +1,33 @@
+- name: books_per_publisher
+  query: 'SELECT p.pub_name, COUNT(t.title_id) AS titles FROM publishers p
+
+    LEFT JOIN titles t ON t.pub_id = p.pub_id
+
+    GROUP BY p.pub_id, p.pub_name ORDER BY p.pub_name
+
+    '
+- name: total_sales_qty
+  query: SELECT SUM(qty) FROM sales
+- name: authors_with_most_titles
+  query: 'SELECT a.au_lname, a.au_fname, COUNT(*) AS n FROM titleauthor ta
+
+    JOIN authors a ON a.au_id = ta.au_id
+
+    GROUP BY a.au_id, a.au_lname, a.au_fname ORDER BY n DESC, a.au_lname LIMIT 5
+
+    '
+- name: phone_check_regexp_accepts_real_data
+  query: SELECT COUNT(*) FROM authors WHERE phone REGEXP '^[0-9]{3} [0-9]{3}-[0-9]{4}$'
+- name: logo_is_binary
+  query: SELECT LENGTH(logo) FROM pub_info WHERE pub_id = '0736'
+- name: max_job_level
+  query: SELECT MAX(max_lvl) FROM jobs
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='pubs')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='pubs')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='pubs') AS triggers\n"
+- name: pubdate_is_set
+  query: SELECT COUNT(*) FROM titles WHERE pubdate IS NOT NULL
+- name: titles_with_fixed_pubdate
+  query: SELECT COUNT(*) FROM titles WHERE pubdate < '2000-01-01'

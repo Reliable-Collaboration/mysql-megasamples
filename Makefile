@@ -22,9 +22,9 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,sakila chinook,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,sakila chinook northwind pubs,$(eval $(call DATASET_RULE,$(d))))
 
-core-fast: sakila chinook
+core-fast: sakila chinook northwind pubs
 
 build-server:
 	@$(PY) scripts/db.py start

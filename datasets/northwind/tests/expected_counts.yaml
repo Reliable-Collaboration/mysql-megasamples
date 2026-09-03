@@ -1,0 +1,16 @@
+# S3: row counts from knowledge/datasets/northwind.md, counted from the INSERT statements in the
+# upstream script and re-verified against the downloaded file. Table names are lower-cased, and
+# "Order Details" becomes order_details per the naming convention.
+categories: 8
+customercustomerdemo: 0
+customerdemographics: 0
+customers: 91
+employees: 9
+employeeterritories: 49
+order_details: 2155
+orders: 830
+products: 77
+region: 4
+shippers: 3
+suppliers: 29
+territories: 53

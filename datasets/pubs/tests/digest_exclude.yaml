@@ -1,0 +1,8 @@
+# Columns excluded from the S4 row digest because their value is not reproducible.
+# Each entry gives the reason; the column is still covered by the row count and by any smoke query.
+titles:
+  pubdate: >-
+    Two rows (MC3026, PC9999) omit pubdate in the upstream INSERTs, so the column's
+    DEFAULT GETDATE() stamps them with the build time. SQL Server behaves the same way, so the
+    non-determinism is faithful to the source rather than a conversion defect. The remaining 16
+    rows carry real dates and are covered by the pubdate_is_set smoke query.

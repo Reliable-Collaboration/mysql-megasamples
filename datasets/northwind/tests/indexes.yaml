@@ -1,0 +1,232 @@
+# S6: every index that must exist after load.
+categories:
+  PRIMARY:
+    columns:
+    - categoryid
+    type: BTREE
+    unique: true
+  categoryname:
+    columns:
+    - categoryname
+    type: BTREE
+    unique: false
+customercustomerdemo:
+  PRIMARY:
+    columns:
+    - customerid
+    - customertypeid
+    type: BTREE
+    unique: true
+  fk_customercustomerdemo:
+    columns:
+    - customertypeid
+    type: BTREE
+    unique: false
+customerdemographics:
+  PRIMARY:
+    columns:
+    - customertypeid
+    type: BTREE
+    unique: true
+customers:
+  PRIMARY:
+    columns:
+    - customerid
+    type: BTREE
+    unique: true
+  city:
+    columns:
+    - city
+    type: BTREE
+    unique: false
+  companyname:
+    columns:
+    - companyname
+    type: BTREE
+    unique: false
+  postalcode:
+    columns:
+    - postalcode
+    type: BTREE
+    unique: false
+  region:
+    columns:
+    - region
+    type: BTREE
+    unique: false
+employees:
+  PRIMARY:
+    columns:
+    - employeeid
+    type: BTREE
+    unique: true
+  fk_employees_employees:
+    columns:
+    - reportsto
+    type: BTREE
+    unique: false
+  lastname:
+    columns:
+    - lastname
+    type: BTREE
+    unique: false
+  postalcode:
+    columns:
+    - postalcode
+    type: BTREE
+    unique: false
+employeeterritories:
+  PRIMARY:
+    columns:
+    - employeeid
+    - territoryid
+    type: BTREE
+    unique: true
+  fk_employeeterritories_territories:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: false
+order_details:
+  PRIMARY:
+    columns:
+    - orderid
+    - productid
+    type: BTREE
+    unique: true
+  orderid:
+    columns:
+    - orderid
+    type: BTREE
+    unique: false
+  ordersorder_details:
+    columns:
+    - orderid
+    type: BTREE
+    unique: false
+  productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  productsorder_details:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+orders:
+  PRIMARY:
+    columns:
+    - orderid
+    type: BTREE
+    unique: true
+  customerid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  customersorders:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  employeeid:
+    columns:
+    - employeeid
+    type: BTREE
+    unique: false
+  employeesorders:
+    columns:
+    - employeeid
+    type: BTREE
+    unique: false
+  orderdate:
+    columns:
+    - orderdate
+    type: BTREE
+    unique: false
+  shippeddate:
+    columns:
+    - shippeddate
+    type: BTREE
+    unique: false
+  shippersorders:
+    columns:
+    - shipvia
+    type: BTREE
+    unique: false
+  shippostalcode:
+    columns:
+    - shippostalcode
+    type: BTREE
+    unique: false
+products:
+  PRIMARY:
+    columns:
+    - productid
+    type: BTREE
+    unique: true
+  categoriesproducts:
+    columns:
+    - categoryid
+    type: BTREE
+    unique: false
+  categoryid:
+    columns:
+    - categoryid
+    type: BTREE
+    unique: false
+  productname:
+    columns:
+    - productname
+    type: BTREE
+    unique: false
+  supplierid:
+    columns:
+    - supplierid
+    type: BTREE
+    unique: false
+  suppliersproducts:
+    columns:
+    - supplierid
+    type: BTREE
+    unique: false
+region:
+  PRIMARY:
+    columns:
+    - regionid
+    type: BTREE
+    unique: true
+shippers:
+  PRIMARY:
+    columns:
+    - shipperid
+    type: BTREE
+    unique: true
+suppliers:
+  PRIMARY:
+    columns:
+    - supplierid
+    type: BTREE
+    unique: true
+  companyname:
+    columns:
+    - companyname
+    type: BTREE
+    unique: false
+  postalcode:
+    columns:
+    - postalcode
+    type: BTREE
+    unique: false
+territories:
+  PRIMARY:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: true
+  fk_territories_region:
+    columns:
+    - regionid
+    type: BTREE
+    unique: false

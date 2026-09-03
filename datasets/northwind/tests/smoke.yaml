@@ -1,0 +1,26 @@
+- name: top_10_customers_by_order_value
+  query: |
+    SELECT c.customerid, c.companyname, ROUND(SUM(od.unitprice*od.quantity*(1-od.discount)),2) AS value
+    FROM orders o JOIN order_details od ON od.orderid = o.orderid
+    JOIN customers c ON c.customerid = o.customerid
+    GROUP BY c.customerid, c.companyname ORDER BY value DESC, c.customerid LIMIT 10
+- name: order_details_grand_total
+  query: SELECT ROUND(SUM(unitprice*quantity*(1-discount)),2) FROM order_details
+- name: sales_by_category
+  query: |
+    SELECT c.categoryname, ROUND(SUM(od.unitprice*od.quantity*(1-od.discount)),2) AS sales
+    FROM order_details od JOIN products p ON p.productid = od.productid
+    JOIN categories c ON c.categoryid = p.categoryid
+    GROUP BY c.categoryid, c.categoryname ORDER BY c.categoryname
+- name: accented_company_probe
+  query: SELECT companyname FROM customers WHERE customerid = 'KOENE'
+- name: accented_city_probe
+  query: SELECT city FROM customers WHERE customerid = 'BERGS'
+- name: category_picture_length
+  query: SELECT LENGTH(picture) FROM categories WHERE categoryid = 1
+- name: earliest_employee_birthdate
+  query: SELECT MIN(birthdate) FROM employees
+- name: objects_created
+  query: |
+    SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='northwind') AS views,
+           (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='northwind') AS routines

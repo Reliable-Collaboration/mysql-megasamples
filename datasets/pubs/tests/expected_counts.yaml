@@ -1,0 +1,12 @@
+# S3: row counts from knowledge/datasets/pubs.md (counted from the INSERT statements upstream).
+authors: 23
+discounts: 3
+employee: 43
+jobs: 14
+pub_info: 8
+publishers: 8
+roysched: 86
+sales: 21
+stores: 6
+titleauthor: 25
+titles: 18

@@ -31,14 +31,28 @@ def stage_sakila(dest):
 @stager("chinook")
 def stage_chinook(dest):
     """Run the dataset's own converter; it owns every Chinook-specific rewrite."""
+    _run_converter("chinook", os.path.join(ROOT, "downloads", "chinook", "Chinook_MySql.sql"),
+                   os.path.join(dest, "chinook.sql"))
+
+
+@stager("northwind")
+def stage_northwind(dest):
+    _run_converter("northwind", os.path.join(ROOT, "downloads", "northwind", "instnwnd.sql"),
+                   os.path.join(dest, "northwind.sql"))
+
+
+@stager("pubs")
+def stage_pubs(dest):
+    _run_converter("pubs", os.path.join(ROOT, "downloads", "pubs", "instpubs.sql"),
+                   os.path.join(dest, "pubs.sql"))
+
+
+def _run_converter(name, src, out):
     import subprocess
-    src = os.path.join(ROOT, "downloads", "chinook", "Chinook_MySql.sql")
-    out = os.path.join(dest, "chinook.sql")
-    conv = os.path.join(ROOT, "datasets", "chinook", "convert.py")
-    name_map = os.path.join(ROOT, "datasets", "chinook", "name_map.yaml")
-    p = subprocess.run([sys.executable, conv, src, out, name_map], text=True)
-    if p.returncode != 0:
-        sys.exit("chinook conversion failed")
+    conv = os.path.join(ROOT, "datasets", name, "convert.py")
+    name_map = os.path.join(ROOT, "datasets", name, "name_map.yaml")
+    if subprocess.run([sys.executable, conv, src, out, name_map], text=True).returncode != 0:
+        sys.exit(f"{name} conversion failed")
 
 
 def main():

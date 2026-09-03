@@ -1,0 +1,11 @@
+# Northwind: Microsoft's classic sample (13 tables), translated from T-SQL.
+# Record: knowledge/datasets/northwind.md
+name: northwind
+database: northwind
+tier: core
+record: knowledge/datasets/northwind.md
+licenses: [mit]
+artifacts: [northwind/instnwnd.sql]
+converter: none          # convert.py runs at stage time and emits a plain .sql file
+load:
+  - northwind.sql

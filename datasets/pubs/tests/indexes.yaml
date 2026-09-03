@@ -1,0 +1,95 @@
+# S6: every index that must exist after load.
+authors:
+  PRIMARY:
+    columns:
+    - au_id
+    type: BTREE
+    unique: true
+discounts:
+  stor_id:
+    columns:
+    - stor_id
+    type: BTREE
+    unique: false
+employee:
+  PRIMARY:
+    columns:
+    - emp_id
+    type: BTREE
+    unique: true
+  job_id:
+    columns:
+    - job_id
+    type: BTREE
+    unique: false
+  pub_id:
+    columns:
+    - pub_id
+    type: BTREE
+    unique: false
+jobs:
+  PRIMARY:
+    columns:
+    - job_id
+    type: BTREE
+    unique: true
+pub_info:
+  PRIMARY:
+    columns:
+    - pub_id
+    type: BTREE
+    unique: true
+publishers:
+  PRIMARY:
+    columns:
+    - pub_id
+    type: BTREE
+    unique: true
+roysched:
+  title_id:
+    columns:
+    - title_id
+    type: BTREE
+    unique: false
+sales:
+  PRIMARY:
+    columns:
+    - stor_id
+    - ord_num
+    - title_id
+    type: BTREE
+    unique: true
+  title_id:
+    columns:
+    - title_id
+    type: BTREE
+    unique: false
+stores:
+  PRIMARY:
+    columns:
+    - stor_id
+    type: BTREE
+    unique: true
+titleauthor:
+  PRIMARY:
+    columns:
+    - au_id
+    - title_id
+    type: BTREE
+    unique: true
+  title_id:
+    columns:
+    - title_id
+    type: BTREE
+    unique: false
+titles:
+  PRIMARY:
+    columns:
+    - title_id
+    type: BTREE
+    unique: true
+  pub_id:
+    columns:
+    - pub_id
+    type: BTREE
+    unique: false

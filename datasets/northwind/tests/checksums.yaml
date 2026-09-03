@@ -1,0 +1,168 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+categories:
+  columns:
+  - categoryid
+  - categoryname
+  - description
+  - picture
+  excluded: []
+  n: 8
+  s: 731460121433238037
+  x: 930623204141203491
+customercustomerdemo:
+  columns:
+  - customerid
+  - customertypeid
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+customerdemographics:
+  columns:
+  - customertypeid
+  - customerdesc
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+customers:
+  columns:
+  - customerid
+  - companyname
+  - contactname
+  - contacttitle
+  - address
+  - city
+  - region
+  - postalcode
+  - country
+  - phone
+  - fax
+  excluded: []
+  n: 91
+  s: 1818863720681090581
+  x: 13596712325844325225
+employees:
+  columns:
+  - employeeid
+  - lastname
+  - firstname
+  - title
+  - titleofcourtesy
+  - birthdate
+  - hiredate
+  - address
+  - city
+  - region
+  - postalcode
+  - country
+  - homephone
+  - extension
+  - photo
+  - notes
+  - reportsto
+  - photopath
+  excluded: []
+  n: 9
+  s: 11425245861166242194
+  x: 16187323947415053236
+employeeterritories:
+  columns:
+  - employeeid
+  - territoryid
+  excluded: []
+  n: 49
+  s: 18174380944543674854
+  x: 14303379592168661514
+order_details:
+  columns:
+  - orderid
+  - productid
+  - unitprice
+  - quantity
+  excluded:
+  - discount
+  n: 2155
+  s: 11851617061165528629
+  x: 9833722642871391749
+orders:
+  columns:
+  - orderid
+  - customerid
+  - employeeid
+  - orderdate
+  - requireddate
+  - shippeddate
+  - shipvia
+  - freight
+  - shipname
+  - shipaddress
+  - shipcity
+  - shipregion
+  - shippostalcode
+  - shipcountry
+  excluded: []
+  n: 830
+  s: 13027270536072847070
+  x: 14054252205210928906
+products:
+  columns:
+  - productid
+  - productname
+  - supplierid
+  - categoryid
+  - quantityperunit
+  - unitprice
+  - unitsinstock
+  - unitsonorder
+  - reorderlevel
+  - discontinued
+  excluded: []
+  n: 77
+  s: 9691939627379378415
+  x: 10177423146668504861
+region:
+  columns:
+  - regionid
+  - regiondescription
+  excluded: []
+  n: 4
+  s: 3498141957629063148
+  x: 3501801287568482838
+shippers:
+  columns:
+  - shipperid
+  - companyname
+  - phone
+  excluded: []
+  n: 3
+  s: 12342302525651462060
+  x: 14751533149833353298
+suppliers:
+  columns:
+  - supplierid
+  - companyname
+  - contactname
+  - contacttitle
+  - address
+  - city
+  - region
+  - postalcode
+  - country
+  - phone
+  - fax
+  - homepage
+  excluded: []
+  n: 29
+  s: 2049762195838410656
+  x: 1070514273955493330
+territories:
+  columns:
+  - territoryid
+  - territorydescription
+  - regionid
+  excluded: []
+  n: 53
+  s: 11738767221393347840
+  x: 3742659830306190476

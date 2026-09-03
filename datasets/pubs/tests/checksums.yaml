@@ -1,0 +1,131 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+authors:
+  columns:
+  - au_id
+  - au_lname
+  - au_fname
+  - phone
+  - address
+  - city
+  - state
+  - zip
+  - contract
+  excluded: []
+  n: 23
+  s: 11679154448564016518
+  x: 5167042211764255214
+discounts:
+  columns:
+  - discounttype
+  - stor_id
+  - lowqty
+  - highqty
+  - discount
+  excluded: []
+  n: 3
+  s: 15715561839559775827
+  x: 2712837979954129069
+employee:
+  columns:
+  - emp_id
+  - fname
+  - minit
+  - lname
+  - job_id
+  - job_lvl
+  - pub_id
+  - hire_date
+  excluded: []
+  n: 43
+  s: 14164890100999636757
+  x: 7854665691050544039
+jobs:
+  columns:
+  - job_id
+  - job_desc
+  - min_lvl
+  - max_lvl
+  excluded: []
+  n: 14
+  s: 6764220645197399578
+  x: 9721152588836864612
+pub_info:
+  columns:
+  - pub_id
+  - logo
+  - pr_info
+  excluded: []
+  n: 8
+  s: 17916416112464363041
+  x: 15850783413331629993
+publishers:
+  columns:
+  - pub_id
+  - pub_name
+  - city
+  - state
+  - country
+  excluded: []
+  n: 8
+  s: 5568555797625596714
+  x: 9688245394438682562
+roysched:
+  columns:
+  - title_id
+  - lorange
+  - hirange
+  - royalty
+  excluded: []
+  n: 86
+  s: 18033237924145913045
+  x: 9663296041386248167
+sales:
+  columns:
+  - stor_id
+  - ord_num
+  - ord_date
+  - qty
+  - payterms
+  - title_id
+  excluded: []
+  n: 21
+  s: 3067367313127766889
+  x: 16297393132562360153
+stores:
+  columns:
+  - stor_id
+  - stor_name
+  - stor_address
+  - city
+  - state
+  - zip
+  excluded: []
+  n: 6
+  s: 16778538039627177127
+  x: 10750874523057750083
+titleauthor:
+  columns:
+  - au_id
+  - title_id
+  - au_ord
+  - royaltyper
+  excluded: []
+  n: 25
+  s: 7721563440114384207
+  x: 14692659634468166943
+titles:
+  columns:
+  - title_id
+  - title
+  - type
+  - pub_id
+  - price
+  - advance
+  - royalty
+  - ytd_sales
+  - notes
+  excluded: []
+  n: 18
+  s: 823597860438106936
+  x: 7408335882840764642

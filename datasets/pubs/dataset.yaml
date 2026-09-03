@@ -1,0 +1,11 @@
+# pubs: Microsoft's other classic sample (11 tables, 255 rows), translated from T-SQL.
+# Record: knowledge/datasets/pubs.md
+name: pubs
+database: pubs
+tier: core
+record: knowledge/datasets/pubs.md
+licenses: [mit]
+artifacts: [pubs/instpubs.sql]
+converter: none          # convert.py runs at stage time and emits a plain .sql file
+load:
+  - pubs.sql
