@@ -84,6 +84,29 @@ def main():
                       if "OK" not in q(f"CHECK TABLE `{t}`", database=schema).stdout]
             c.expect(not broken, f"{schema}: CHECK TABLE passes for {len(check)} tables")
 
+            # A foreign key into another database is only resolved when both are present, and the
+            # image loads each dataset from its own dump, so this is where it could quietly be lost.
+            external = q("SELECT CONCAT(rc.constraint_name, ' ', kcu.referenced_table_schema, '.', "
+                         "rc.referenced_table_name, ' ', kcu.column_name, ' ', "
+                         "kcu.referenced_column_name, ' ', rc.table_name) "
+                         "FROM information_schema.referential_constraints rc "
+                         "JOIN information_schema.key_column_usage kcu "
+                         "USING (constraint_schema, constraint_name) "
+                         f"WHERE rc.constraint_schema='{schema}' "
+                         f"AND kcu.referenced_table_schema<>'{schema}'").stdout.split("\n")
+            external = [line.split() for line in external if line.strip()]
+            if external:
+                orphaned = []
+                for name, target, col, rcol, table in external:
+                    rschema, rtable = target.split(".")
+                    n = q(f"SELECT COUNT(*) FROM `{schema}`.`{table}` c "
+                          f"LEFT JOIN `{rschema}`.`{rtable}` p ON c.`{col}` = p.`{rcol}` "
+                          f"WHERE c.`{col}` IS NOT NULL AND p.`{rcol}` IS NULL").stdout.strip()
+                    if n != "0":
+                        orphaned.append(f"{name} has {n} orphans")
+                c.expect(not orphaned, f"{schema}: {len(external)} cross-database foreign key(s) "
+                                       f"present with no orphans" + (f" -- {orphaned}" if orphaned else ""))
+
         c.expect(q("SELECT 1", user="demo", pw="demo").returncode == 0, "demo can connect")
         c.expect(q("SELECT COUNT(*) FROM sakila.actor", user="demo", pw="demo").returncode == 0,
                  "demo can read")
