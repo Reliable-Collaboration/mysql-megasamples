@@ -1,0 +1,9 @@
+name: enron
+database: enron
+tier: core
+record: knowledge/datasets/enron.md
+licenses: [enron-public-record]
+artifacts: [enron/enron_mail_20150507.tar.gz]
+converter: none
+load:
+  - enron.sql

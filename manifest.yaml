@@ -1221,3 +1221,82 @@ artifacts:
     size_bytes: 42207356
     license: cc-by-sa-3-0
     ipv4_first: false
+
+  # Enron: the CMU 2015-05-07 corpus, the smallest attachment-free version with a published removal
+  # history. No checksum is published upstream; the digest below was pinned at first download.
+  - id: enron/enron_mail_20150507.tar.gz
+    dataset: enron
+    url: https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz
+    mirrors: []
+    sha256: "b3da1b3fe0369ec3140bb4fbce94702c33b7da810ec15d718b3fadf5cd748ca7"
+    size_bytes: 443254787
+    license: enron-public-record
+    ipv4_first: false
+
+  # Simple English Wikipedia, dump run 20260901. Dated URLs, not `latest/`, which rotates.
+  # Wikimedia publishes md5 and sha1; the sha256 below is pinned at first download and the
+  # published sizes are asserted on every fetch.
+  - id: wikipedia_simple/simplewiki-20260901-pages-articles.xml.bz2
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-pages-articles.xml.bz2
+    mirrors: []
+    sha256: "6832fd106ae0e4734a349d6351709fc219ccebad5850234214a57e653f7812f8"
+    size_bytes: 356186307
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-page.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-page.sql.gz
+    mirrors: []
+    sha256: "8e6e48a2ea20fab45e2478ca08429deaa9185fc9d6e6400b6ef8e6d65923de0b"
+    size_bytes: 33064269
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-categorylinks.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-categorylinks.sql.gz
+    mirrors: []
+    sha256: "1ff87577c208177ead0295134e7fd4d728cd0c257a619a9601d1a96e698712b5"
+    size_bytes: 28305762
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-pagelinks.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-pagelinks.sql.gz
+    mirrors: []
+    sha256: "26897fe06e9d883684371204f1c431f917258df086e98e1c50297e9c0ba7ed0d"
+    size_bytes: 82424067
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-linktarget.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-linktarget.sql.gz
+    mirrors: []
+    sha256: "1793587eeb634c9efd65d4be102864980f02c840caf14762ef607851c96b7896"
+    size_bytes: 37519370
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-redirect.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-redirect.sql.gz
+    mirrors: []
+    sha256: "bf6f37a15c68f76bf0490ae392d9b6bbe2c19393896f94837da5cd6d7a02c47d"
+    size_bytes: 1463928
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-category.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-category.sql.gz
+    mirrors: []
+    sha256: "66ac8266aa78ae431c361ad43cdb608e8dd4daa88b5bc7e2697846e1f545545a"
+    size_bytes: 1199048
+    license: cc-by-sa-4-0
+    ipv4_first: false
+  - id: wikipedia_simple/simplewiki-20260901-site_stats.sql.gz
+    dataset: wikipedia_simple
+    url: https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-site_stats.sql.gz
+    mirrors: []
+    sha256: "a411142b28874bc1e1549ef2bf3c4db48f51068807a5a8bfaa9b7a19b5f6cdbf"
+    size_bytes: 862
+    license: cc-by-sa-4-0
+    ipv4_first: false

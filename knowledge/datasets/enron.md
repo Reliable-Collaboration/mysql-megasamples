@@ -18,6 +18,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 stale_after: "2027-09-01"
@@ -54,6 +56,15 @@ Enron Email Dataset, "May 7, 2015 Version", prepared by the CALO project (SRI) a
 * No auth, no click-through. **No checksum is published** anywhere on the page; the executor computes and pins `sha256` on first download ([open question](/questions/enron-tarball-checksum-and-message-count.md)).
 * Older versions (2004, 2009, 2011) are withdrawn and "you are requested to replace it with the newer version" — never build from them; the 2015 version already excludes the 30 files listed in [DELETIONS.txt](/sources/cmu-enron-deletions-txt.md).
 * Known other versions, not used: (a) ISI/USC Shetty and Adibi 2004 MySQL dump — page offline (Cloudflare 403; a 2013 Wayback snapshot exists, [evidence](/sources/wayback-isi-adibi-enron-availability.md)); a "repaired" copy of that MySQL 4 dump (tables `employeelist`, `message`, `recipientinfo`, `referenceinfo`) is redistributed at [ah-ruhe.de](/sources/ah-ruhe-enron-email-data.md) without a license statement; (b) EDRM/ZL "Enron Email Data Set v2" — PST/MIME/EDRM XML **with attachments**, 149 custodians, 79 GB on [archive.org](/sources/archive-org-edrm-enron-v2-xml-metadata.md); EDRM withdrew v1/v2 for remaining PII ([EnronData.org](/sources/enrondata-readthedocs-edrm-datasets.md)). We use CMU: smallest, attachment-free, has the removal history.
+
+# Built and measured (2026-09-03)
+The tarball is **443,254,787 bytes**, sha256 `b3da1b3fe0369ec3140bb4fbce94702c33b7da810ec15d718b3fadf5cd748ca7` (CMU publishes none), holding **517,401 message files in 150 mailboxes** — confirming the two third-party counts — and **1,421,183,736** uncompressed message bytes, which supports the record's inference that the page's "about 1.7Gb" is the extracted tree rather than the download. None of the `DELETIONS.txt` paths is present, and the converter asserts that on every build.
+
+**The tar's member order is not alphabetical**, so the subset rule cannot be applied by reading until full: the converter takes the member list in one streaming pass, chooses from it, and reads the chosen members in a second pass. Neither pass extracts the archive.
+
+**Core subset as built**: the alphabetically first mailboxes under 40 MB are `allen-p`, `arnold-j`, `arora-h`, `badeer-r`, `bailey-s` — 5 of 150, 23,750,767 bytes, **9,941 messages and 38,832 recipients**, loading in 4.4 s at **36.5 MB** in InnoDB.
+
+**The corpus is much cleaner than expected.** Parsing all 517,401 messages (not a sample): **0** bodies need the cp1252 fallback, **0** messages lack a `Date` or carry an unparseable one, and **0** `Message-ID` values repeat across 517,401 distinct ones. Only 30 messages carry any `email` header defect. Declared charsets are `us-ascii` (479,286), `ansi_x3.4-1968` (38,086 — an ASCII alias) and absent (29). Because uniqueness was measured rather than assumed, `message` declares `UNIQUE(message_id)`, which the plan had deferred. See the [header question](/questions/enron-header-anomalies-charset-dates-message-id.md) and the [checksum question](/questions/enron-tarball-checksum-and-message-count.md), both now answered.
 
 # Native format and friendlier forms
 A directory tree `maildir/<custodian>/<folder>/<n>.`, one RFC 822 message per file, no attachments (CMU page). It is not a real Maildir (no `cur/new`), so Python's `mailbox` module needs restructuring; a plain file walk + `email.parser` is simpler ([tool](/tools/text-enron-maildir-parsing.md)). CMU publishes no CSV/SQL form.

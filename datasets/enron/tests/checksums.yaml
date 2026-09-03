@@ -1,0 +1,48 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+mailbox:
+  columns:
+  - mailbox_id
+  - name
+  excluded: []
+  n: 5
+  s: 2363886725499825690
+  x: 9150767390466712984
+message:
+  columns:
+  - id
+  - mailbox_id
+  - folder
+  - path
+  - message_id
+  - date_utc
+  - date_raw
+  - from_address
+  - from_raw
+  - subject
+  - body
+  - body_sha1
+  - x_from
+  - x_to
+  - x_cc
+  - x_bcc
+  - x_folder
+  - x_origin
+  - x_filename
+  - charset_fallback
+  - header_defects
+  excluded: []
+  n: 9941
+  s: 11177894842910744916
+  x: 5582727622914862518
+recipient:
+  columns:
+  - message_id
+  - kind
+  - position
+  - address
+  - display_name
+  excluded: []
+  n: 38832
+  s: 3151198430946078555
+  x: 2027892934107677583

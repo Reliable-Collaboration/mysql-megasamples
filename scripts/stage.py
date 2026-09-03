@@ -85,6 +85,12 @@ def stage_adventureworks_lt(dest):
                    os.path.join(dest, "adventureworks_lt.sql"))
 
 
+@stager("enron")
+def stage_enron(dest):
+    _run_dir_converter("enron", os.path.join(ROOT, "downloads", "enron"),
+                       os.path.join(dest, "enron.sql"))
+
+
 @stager("lahman")
 def stage_lahman(dest):
     _run_dir_converter("lahman", os.path.join(ROOT, "downloads", "lahman"),

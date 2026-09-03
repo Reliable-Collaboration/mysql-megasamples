@@ -1,0 +1,51 @@
+- name: subset_is_the_documented_rule
+  query: SELECT GROUP_CONCAT(name ORDER BY mailbox_id) FROM mailbox
+- name: first_path_present
+  query: SELECT COUNT(*) FROM message WHERE path = 'maildir/allen-p/inbox/1.'
+- name: withdrawn_messages_absent
+  query: 'SELECT COUNT(*) FROM message WHERE path IN
+
+    (''maildir/richey-c/inbox/10.'', ''maildir/skilling-j/1584.'', ''maildir/gay-r/sent/12.'')
+
+    '
+- name: no_replacement_characters_in_bodies
+  query: 'SELECT SUM(charset_fallback), SUM(body LIKE CONCAT(''%'', CHAR(0xEFBFBD USING utf8mb4), ''%''))
+
+    FROM message
+
+    '
+- name: date_range
+  query: SELECT MIN(date_utc), MAX(date_utc), SUM(date_utc IS NULL) FROM message
+- name: top_senders
+  query: 'SELECT from_address, COUNT(*) FROM message
+
+    GROUP BY from_address ORDER BY COUNT(*) DESC, from_address LIMIT 5
+
+    '
+- name: recipients_by_kind
+  query: SELECT kind, COUNT(*) FROM recipient GROUP BY kind ORDER BY kind
+- name: messages_per_mailbox
+  query: 'SELECT b.name, COUNT(*) FROM message m JOIN mailbox b ON b.mailbox_id = m.mailbox_id
+
+    GROUP BY b.mailbox_id, b.name ORDER BY b.mailbox_id
+
+    '
+- name: fulltext_search
+  query: 'SELECT COUNT(*) FROM message
+
+    WHERE MATCH(subject, body) AGAINST(''california'' IN NATURAL LANGUAGE MODE)
+
+    '
+- name: duplicate_bodies_detected
+  query: 'SELECT COUNT(*) FROM (SELECT body_sha1 FROM message
+
+    GROUP BY body_sha1 HAVING COUNT(*) > 1) d
+
+    '
+- name: header_defects_recorded
+  query: SELECT SUM(header_defects > 0), MAX(header_defects) FROM message
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='enron')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='enron')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='enron') AS triggers\n"

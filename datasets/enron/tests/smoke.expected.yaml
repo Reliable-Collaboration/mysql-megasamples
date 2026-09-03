@@ -1,0 +1,15 @@
+# S7: canonical query results, tab-separated as the client prints them.
+date_range: "1979-12-31 18:00:00\t2002-03-21 12:48:12\t0"
+duplicate_bodies_detected: '2192'
+first_path_present: '1'
+fulltext_search: '551'
+header_defects_recorded: "0\t0"
+messages_per_mailbox: "allen-p\t3034\narnold-j\t4898\narora-h\t654\nbadeer-r\t877\n\
+  bailey-s\t478"
+no_replacement_characters_in_bodies: "0\t0"
+objects_created: "1\t0\t0"
+recipients_by_kind: "to\t31268\ncc\t3782\nbcc\t3782"
+subset_is_the_documented_rule: allen-p,arnold-j,arora-h,badeer-r,bailey-s
+top_senders: "john.arnold@enron.com\t3491\nphillip.allen@enron.com\t2125\nk..allen@enron.com\t\
+  297\nrobert.badeer@enron.com\t193\nsusan.bailey@enron.com\t143"
+withdrawn_messages_absent: '0'

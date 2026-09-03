@@ -1,0 +1,9 @@
+- name: messages_of_a_mailbox_folder
+  query: SELECT COUNT(*) FROM message WHERE mailbox_id = 1 AND folder = 'inbox'
+  must_not_full_scan: [message]
+- name: messages_from_a_sender
+  query: SELECT COUNT(*) FROM message WHERE from_address = 'phillip.allen@enron.com'
+  must_not_full_scan: [message]
+- name: recipients_of_an_address
+  query: SELECT COUNT(*) FROM recipient WHERE address = 'phillip.allen@enron.com'
+  must_not_full_scan: [recipient]

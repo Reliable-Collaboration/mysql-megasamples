@@ -1,0 +1,68 @@
+# S6: every index that must exist after load.
+mailbox:
+  PRIMARY:
+    columns:
+    - mailbox_id
+    type: BTREE
+    unique: true
+  uq_mailbox_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+message:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ft_message:
+    columns:
+    - subject
+    - body
+    type: FULLTEXT
+    unique: false
+  ix_message_body_sha1:
+    columns:
+    - body_sha1
+    type: BTREE
+    unique: false
+  ix_message_date:
+    columns:
+    - date_utc
+    type: BTREE
+    unique: false
+  ix_message_from:
+    columns:
+    - from_address
+    type: BTREE
+    unique: false
+  ix_message_mailbox_folder:
+    columns:
+    - mailbox_id
+    - folder
+    type: BTREE
+    unique: false
+  uq_message_message_id:
+    columns:
+    - message_id
+    type: BTREE
+    unique: true
+  uq_message_path:
+    columns:
+    - path
+    type: BTREE
+    unique: true
+recipient:
+  PRIMARY:
+    columns:
+    - message_id
+    - kind
+    - position
+    type: BTREE
+    unique: true
+  ix_recipient_address:
+    columns:
+    - address
+    type: BTREE
+    unique: false

@@ -1,0 +1,7 @@
+# The deterministic core subset: the alphabetically first mailboxes whose cumulative size stays
+# under 40 MB, which for this tarball is allen-p, arnold-j, arora-h, badeer-r and bailey-s
+# (23,750,767 of the corpus's 1,421,183,736 bytes). The whole corpus is 150 mailboxes and
+# 517,401 messages; the same converter loads it.
+mailbox: 5
+message: 9941
+recipient: 38832
