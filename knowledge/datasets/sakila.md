@@ -65,7 +65,7 @@ Native MySQL SQL scripts (schema + multi-row INSERT data); nothing friendlier is
 
 Total 46,268 inserted rows (counted from the data file). Note payment is 16,044, not the historical 16,049: Version 1.3 "Removed five rows in the payment table that had a null rental_id value" ([change history](/sources/mysql-sakila-change-history.md)). **Inferred:** film_text ends with 1,000 rows because `ins_film` copies every film row.
 * Encoding: `sakila-data.sql` is UTF-8 without BOM, LF; `SET NAMES utf8mb4` at the top of both files. 161 lines contain non-ASCII, all in `address` (94), `city` (66), `country` (1) - e.g. `Inegöl`, `Salé`, `A Coruña (La Coruña)`, `Córdoba`, `São Paulo`. Films, actors, categories and language names are ASCII. Good encoding canary: `SELECT city FROM city WHERE city_id=...` values with accents must round-trip.
-* Size: 3.4 MB of SQL. **Inferred:** loaded InnoDB footprint under 10 MB.
+* Size: 3.4 MB of SQL. **Measured 2026-09-02 (P-03): 25 MB** as an InnoDB data directory (the earlier inference of "under 10 MB" was low). For image budgeting note that a baked data directory also carries about 210 MB of fixed InnoDB overhead regardless of content, dominated by the 101 MB default redo-log capacity.
 
 # Conversion path
 Run the two upstream files unchanged through the mysql client against the `mysql-build` service during `make sakila`, schema then data; the loaded database is dumped with `util.dumpSchemas` and baked into the image like every other core dataset (no init-directory files) ([decision](/decisions/sakila-conversion-path.md)). No conversion tool.
