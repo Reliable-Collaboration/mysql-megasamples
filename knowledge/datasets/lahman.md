@@ -27,9 +27,6 @@ sources:
 - resource: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
   title: Box share for the CSV version (probe only)
   accessed: "2026-09-02"
-- resource: https://api.github.com/repos/chadwickbureau/baseballdatabank
-  title: former GitHub mirror (404)
-  accessed: "2026-09-02"
 ---
 
 # Identity
@@ -52,7 +49,7 @@ CSV with header rows is the native "friendly" form; the .bak/.mdb are convenienc
 Vendor the CSVs, strip BOMs, load into explicit DDL ([decision](/decisions/lahman-conversion-path.md)); CSV handling notes in [tool note](/tools/smallcsv-load-data-infile.md).
 
 # Type-mapping hazards
-* Column names starting with digits (`2B`, `3B`) need backticks; `Rank` and `name` are fine. Tables and columns are lower-cased per the [naming convention](/decisions/database-naming-convention.md) (`people`, `batting`, `playerid`, `yearid`).
+* Column names starting with digits (`2b`, `3b`) need backticks, and so does `rank` (`teams.rank`, `teamshalf.rank`): `RANK` became a reserved word in MySQL 8.0.2 with the window functions, so unquoted use is a syntax error ([keywords](/sources/mysql-refman-9-7-keywords.md), [naming convention](/decisions/database-naming-convention.md)); `name` is not reserved. Tables and columns are lower-cased per the [naming convention](/decisions/database-naming-convention.md) (`people`, `batting`, `playerid`, `yearid`).
 * Many empty cells for early years (e.g. SO, CS, IBB, HBP, SF, GIDP not recorded) -> NULL, not 0; use `NULLIF(@col,'')` in LOAD DATA.
 * `debut`/`finalGame` dates; `ERA`, `FP`, `BPF/PPF` decimals; `DivWin/WCWin/LgWin/WSWin` are Y/N.
 * `stint` composite keys; Fielding has `POS`; HallOfFame has `yearid, votedBy` keys (**Inferred**).

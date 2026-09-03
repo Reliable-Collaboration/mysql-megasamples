@@ -78,7 +78,7 @@ Custom Python loader (`email` stdlib → TSV → `LOAD DATA LOCAL INFILE`), dete
 * CMU's placeholder addresses `user@enron.com` / `no_address@enron.com` are data, not errors.
 
 # Programmable objects
-None upstream. We add read-only views: `v_message_with_recipients` (GROUP_CONCAT of `to`), `v_mailbox_folder_counts`. No triggers/procedures.
+None upstream. We add read-only views: `v_message_with_recipients` (`JSON_ARRAYAGG` of the `to` addresses — **not** `GROUP_CONCAT`, which silently truncates at `group_concat_max_len` = 1024 bytes and would cut exactly the broadcast mails this record calls out; the same reason it was rejected for checksums, see [checksum method](/decisions/test-checksum-method.md)), `v_mailbox_folder_counts`. No triggers/procedures.
 
 # Indexing
 PK `message.id`; `UNIQUE(path)`; `INDEX(mailbox_id, folder)`; `INDEX(date_utc)`; `INDEX(from_address)`; `INDEX(body_sha1)`; `FULLTEXT(subject, body)`; `recipient`: `PK(message_id, kind, position)`, `INDEX(address)`.

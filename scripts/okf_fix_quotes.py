@@ -1,87 +1,78 @@
 #!/usr/bin/env python3
-"""Canonicalize OKF frontmatter so that PyYAML implicit typing cannot change a value's type.
+"""Quote OKF frontmatter scalars whose YAML type would otherwise depend on the parser.
 
-Usage: python3 scripts/okf_fix_quotes.py [bundle_dir] [--check]
+Usage: python3 scripts/okf_fix_quotes.py [--bundle knowledge] [--check]
 
-The frontmatter is parsed with PyYAML (so block scalars, flow mappings, comments and list items are all
-understood), then normalized and re-emitted:
-  * dates and datetimes become quoted ISO 8601 strings (YAML 1.1 parsers would otherwise type them, YAML 1.2
-    parsers would not, which makes a field's type parser-dependent);
-  * `tags` become strings; `title`, `description`, `resource`, `version`, `accessed`, `id`, `note`, `by`, `at`,
-    `stale_after` become strings wherever they occur (top level or inside lists and mappings);
-  * key order is preserved; the body is untouched except that CRLF line endings and a UTF-8 BOM are removed.
-Comments inside frontmatter are not preserved (the bundle keeps none). A file whose frontmatter is missing,
-unterminated or unparseable is reported and left untouched; with --check the tool only reports files that
-would change. Exit status: 0 nothing to do or changed successfully, 1 files skipped or (with --check) not canonical.
+A field that a YAML 1.1 parser types (PyYAML turns `2026-09-02` into a date, `9.7` into a float, `yes` into
+True, `010` into 8, `12:30` into 750) but a YAML 1.2 core-schema parser leaves as a string makes a record's
+type parser-dependent, which defeats OKF's "consume without an SDK" promise. This tool adds double quotes
+around exactly those scalars, for the keys that must always be strings and for every `tags` entry.
+
+It works by splicing quotes into the raw frontmatter text at the positions PyYAML's composer reports, so the
+author's token is preserved verbatim (`version: 1.10` becomes `version: "1.10"`, never `"1.1"`), and comments,
+key order, block scalars and formatting are untouched. Nothing else in the file is rewritten.
+
+`--check` reports files that are not canonical and changes nothing. A file whose frontmatter is missing,
+unterminated or unparseable is reported and left untouched.
+Exit status: 0 clean, 1 files changed/not canonical or files skipped, 2 usage or environment problem.
 """
-import datetime, os, sys
+import argparse, os, sys
 import yaml
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from okf_check import split_frontmatter, RESERVED  # noqa: E402
 
 STRING_KEYS = {"title", "description", "resource", "version", "accessed", "last_modified", "id", "note",
                "by", "at", "stale_after", "type", "status", "trust", "okf_version", "bundle_status"}
+STR_TAG, NULL_TAG = "tag:yaml.org,2002:str", "tag:yaml.org,2002:null"
 
 
-def to_iso(v):
-    if isinstance(v, datetime.datetime):
-        s = v.isoformat()
-        return s.replace("+00:00", "Z") if v.tzinfo else s
-    return v.isoformat()
+def spans_to_quote(head):
+    """[(start, end)] of plain scalars whose resolved type is not str, under a string-typed key."""
+    spans = []
 
+    def walk(node, key):
+        if isinstance(node, yaml.MappingNode):
+            for k, v in node.value:
+                walk(v, k.value if isinstance(k, yaml.ScalarNode) else key)
+        elif isinstance(node, yaml.SequenceNode):
+            for item in node.value:
+                walk(item, key)
+        elif isinstance(node, yaml.ScalarNode):
+            if node.style is None and node.tag not in (STR_TAG, NULL_TAG) and node.value != "" \
+                    and (key in STRING_KEYS or key == "tags"):
+                spans.append((node.start_mark.index, node.end_mark.index))
 
-def normalize(node, key=None):
-    if isinstance(node, dict):
-        return {k: normalize(v, k) for k, v in node.items()}
-    if isinstance(node, list):
-        return [normalize(v, key) for v in node]
-    if isinstance(node, (datetime.date, datetime.datetime)):
-        return to_iso(node)
-    if key == "tags":
-        return str(node)
-    if key in STRING_KEYS and node is not None and not isinstance(node, str):
-        return str(node)
-    return node
-
-
-class Dumper(yaml.SafeDumper):
-    pass
-
-
-def _str_presenter(dumper, data):
-    style = '"' if (data == "" or data[0] in "-?:,[]{}#&*!|>'\"%@`" or ": " in data or " #" in data
-                    or data.strip() != data or data.lower() in {"true", "false", "null", "yes", "no", "on", "off", "~"}
-                    or _looks_typed(data)) else None
-    return dumper.represent_scalar("tag:yaml.org,2002:str", data, style=style)
-
-
-def _looks_typed(s):
-    try:
-        v = yaml.safe_load(s)
-    except yaml.YAMLError:
-        return True
-    return not isinstance(v, str)
-
-
-Dumper.add_representer(str, _str_presenter)
+    root = yaml.compose(head)
+    if root is not None:
+        walk(root, None)
+    return spans
 
 
 def canonical(head):
-    data = yaml.safe_load(head)
-    if not isinstance(data, dict):
-        raise ValueError("frontmatter is not a mapping")
-    return yaml.dump(normalize(data), Dumper=Dumper, sort_keys=False, allow_unicode=True, width=10000).rstrip("\n")
+    """Return the frontmatter text with the offending scalars quoted, verbatim otherwise."""
+    for start, end in sorted(spans_to_quote(head), reverse=True):
+        raw = head[start:end].rstrip()
+        end = start + len(raw)
+        head = head[:start] + '"' + raw.replace("\\", "\\\\").replace('"', '\\"') + '"' + head[end:]
+    yaml.safe_load(head)  # must still parse
+    return head
 
 
 def main():
-    args = [a for a in sys.argv[1:] if not a.startswith("--")]
-    check = "--check" in sys.argv
-    bundle = args[0] if args else "knowledge"
-    changed, skipped, would = 0, [], []
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("bundle", nargs="?", default="knowledge", help="bundle directory (default: knowledge)")
+    ap.add_argument("--bundle", dest="bundle_opt", help=argparse.SUPPRESS)
+    ap.add_argument("--check", action="store_true", help="report non-canonical files, change nothing")
+    a = ap.parse_args()
+    bundle = a.bundle_opt or a.bundle
+    if not os.path.isdir(bundle):
+        print(f"ERROR bundle directory does not exist: {bundle}"); sys.exit(2)
+    changed, skipped, would, seen = 0, [], [], 0
     for root, _, files in os.walk(bundle):
-        for f in files:
+        for f in sorted(files):
             if not f.endswith(".md") or f in RESERVED:
                 continue
+            seen += 1
             path = os.path.join(root, f)
             raw = open(path, encoding="utf-8").read()
             head, body, err = split_frontmatter(raw)
@@ -91,18 +82,17 @@ def main():
                 new_head = canonical(head)
             except (yaml.YAMLError, ValueError) as e:
                 skipped.append(f"{path}: {str(e).splitlines()[0]}"); continue
-            new_text = "---\n" + new_head + "\n---\n" + body
-            if new_text != raw:
-                if check:
+            if new_head != head:
+                if a.check:
                     would.append(path)
                 else:
-                    open(path, "w", encoding="utf-8").write(new_text); changed += 1
-    if check:
-        print(f"{len(would)} files not canonical"); [print("  " + p) for p in would]
-    else:
-        print(f"canonicalized {changed} files")
-    for s in skipped:
-        print("SKIPPED (not modified):", s)
+                    open(path, "w", encoding="utf-8").write("---\n" + new_head + "\n---\n" + body)
+                    changed += 1
+    if not seen:
+        print(f"ERROR no concept files under {bundle}"); sys.exit(2)
+    print(f"{len(would)} of {seen} files not canonical" if a.check else f"quoted {changed} of {seen} files")
+    for p in would: print("  " + p)
+    for s in skipped: print("SKIPPED (not modified):", s)
     sys.exit(1 if skipped or would else 0)
 
 

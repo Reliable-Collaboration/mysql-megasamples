@@ -58,7 +58,7 @@ Run the upstream script through the mysql client after a build-time rewrite of `
 
 # Type-mapping hazards
 * `NVARCHAR(n)` columns -> utf8mb3 in 9.7 with a deprecation warning ([manual](/sources/mysql-refman-9-7-charset-national.md)); rewrite to utf8mb4. `N'...'` literals are utf8mb3 introducers - keep (lossless for this data) or strip the `N`.
-* `NUMERIC(10,2)` -> DECIMAL(10,2) (MySQL synonym); `DATETIME` literals written as `'2021/1/1'` - **Inferred:** accepted by MySQL's permissive date parsing; assert `SELECT MIN(InvoiceDate) FROM Invoice` = `2021-01-01 00:00:00`.
+* `NUMERIC(10,2)` -> DECIMAL(10,2) (MySQL synonym); `DATETIME` literals written as `'2021/1/1'` - **Inferred:** accepted by MySQL's permissive date parsing; assert `SELECT MIN(invoicedate) FROM invoice` = `2021-01-01 00:00:00`.
 * `CREATE DATABASE \`Chinook\`` has no charset; on Linux the name is case-sensitive - project proposes `chinook`.
 * Mixed-case table/column names (`InvoiceLine`, `PlaylistTrack`) are case-sensitive with `lower_case_table_names=0`; the project lower-cases them ([naming convention](/decisions/database-naming-convention.md)) - the rewrite must cover CREATE TABLE, ALTER TABLE, CREATE INDEX and every INSERT column list consistently.
 * Non-AUTO_INCREMENT integer PKs (explicit ids in INSERTs).

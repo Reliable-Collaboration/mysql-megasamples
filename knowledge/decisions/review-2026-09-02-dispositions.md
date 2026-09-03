@@ -83,5 +83,33 @@ The finding texts are recorded in the PR; the sweeps that sized each class are i
 | C5 | `okf` package conclusion unsupported (Copilot) | valid | reworded to what the metadata shows (no documented interface; not inspected) |
 | C6 | stale sqlparse dependency (Copilot) | valid | sqlparse recorded as evaluated and rejected; converters own their `GO`/`DELIMITER` splitting |
 
+# Outcome, third review (same day, commit 21c9829)
+
+The review coordinator was cut off by a rate limit after dispatching its verifiers, so this round is not a
+complete 15-finding set: six verifiers and one finder angle returned, the rest did not. Everything that came
+back was validated here (each tooling claim reproduced locally before it was fixed) and is listed below; the
+unreturned candidates are unknown and a further review pass is worth running.
+
+| # | Finding | Verdict | Class and resolution |
+|---|---|---|---|
+| 1 | `okf_fix_quotes.py` re-serialised PyYAML's *parsed* value, so it silently rewrote the author's token: `version: 1.10` → `"1.1"`, `title: yes` → `"True"`, `id: 010` → `"8"`, `stale_after: 12:30` → `"750"`, `100.00` → `"100.0"` | valid, data-loss defect | rewritten: it now composes the frontmatter, finds the plain scalars whose resolved type is not a string, and splices quotes into the raw text at the composer's marks, so the token is preserved verbatim and comments, key order and block scalars are untouched. All five probes now round-trip exactly |
+| 2 | The same tool turned an empty `tags:` into the string `None`, and `[a, null]` into a `None` tag | valid | null-tagged and empty scalars are never touched |
+| 3 | Its CLI dropped every `--flag`, so `--chekc` (or any typo) silently rewrote 526 records and exited 0; a missing bundle directory reported success | valid | argparse; unknown flags exit 2, a missing or empty bundle exits 2, `--check` is the only read-only mode and is now unmissable |
+| 4 | `strip_code` paired an opening fence with any later line starting with the same characters, so a four-backtick block exposed `# X` inside it as a section | valid | replaced with a fence state machine following CommonMark closing rules (same character, at least as long); an unclosed fence swallows the rest of the file |
+| 5 | Mixed-case identifiers remained in PLAN §3 count lists, `chinook.md`'s literal `SELECT MIN(InvoiceDate) FROM Invoice` and one WWI line | valid, and the earlier sweep's blind spot | the runnable SQL is lower-cased; the count lists keep the upstream names on purpose (they are the CSV filenames on disk) and each affected subsection now says so and points at `name_map.yaml`, which removes the contradiction without breaking traceability |
+| 6 | No reserved-word rule anywhere, and `lahman.md` asserted "`Rank` ... fine" although `RANK` became reserved in MySQL 8.0.2 | valid | rule added to the [naming convention](/decisions/database-naming-convention.md) (backtick reserved identifiers everywhere, mark them in `name_map.yaml`, known instances `teams.rank`, `teamshalf.rank`, `sales_salesterritory.group`, digit-leading `2b`/`3b`); the Lahman statement corrected |
+| 7 | The entrypoint wrapper writes a root-owned `mktemp` file but mysqld runs as uid 999 via `gosu`, and passwords were not escaped | valid | the wrapper creates the file with `install -m 0400 -o mysql -g mysql`, single-quotes each password with `\` and `'` doubled, and removes it on a trap |
+| 8 | `mysqlsh -u root` without `--no-password` prompts, which cannot succeed in a non-interactive build | valid | `--no-password` added to the builder's load loop |
+| 9 | The planned Enron view used `GROUP_CONCAT`, which truncates at 1024 bytes — the same reason it was rejected for checksums — on exactly the broadcast mails the record calls out | valid | the view uses `JSON_ARRAYAGG` |
+| 10 | `docker/init/10-registry.sql` is generated into a git-tracked path, absent from the tree and `.gitignore` | valid (the CI-failure mechanism claimed alongside it was wrong) | listed in the tree and ignored |
+| 11 | `# Applied to` was checked for omissions but never for stale entries | valid | the checker now compares both directions, with an asymmetric rule: any mention counts against omission, only a bullet's subject link counts as an assertion, and negative or aside bullets are exempt. Five genuine one-way references were found and the missing back-links added (`internet-archive-mirroring`→AGPL, `python-conversion-stack`→BSD, `iris`→BSD, `wikidata`→CC BY-SA 4.0, `tpc-h`→MIT) |
+| 12 | The license-coverage check re-scanned every Dataset and Tool body once per License (1,488 pairs, ~63 ms) | valid, efficiency | each record's resolved link targets are cached once during its own check; behaviour verified identical |
+| 13 | `dir_has_md` counted a directory holding only a stale `index.md` | valid | only non-reserved files count |
+| 14 | `lahman.md` listed a 404 probe under `sources` although nothing was read from it | valid | entry removed (a properly documented source record already covers the probe); the conventions now say when a failed probe *is* a legitimate source |
+| 15 | CORE_FAST excluded `dvdstore` "until its release asset exists", but its CSVs are committed | valid | rationale corrected to conversion time |
+| 16 | `ipv4_first` is a hand-set flag with no fallback | plausible; every current instance is correctly flagged | `fetch.py` now retries once with `-4` after a connect timeout regardless of the flag, so a newly hanging host needs no manifest edit |
+| 17 | "accepted (pending X)" in five decisions is an unhandled status | **refuted** | the count was wrong (5, not 16) and the pattern is the documented convention: the Decision records the choice, a linked Open Question tracks the outstanding measurement. No change |
+| 18 | Lahman's release asset would not exist when CI must be green | **refuted** | M-04 publishes it and the DAG puts M-04 before E-01 before R-01. No change |
+
 # Status
 accepted

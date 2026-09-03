@@ -71,7 +71,7 @@ stale_after: "2027-03-01"          # optional; version pins and download URLs
 * `trust: inferred`: the record's central claim or outcome rests on reasoning, memory or estimation rather than on a read source. No `verified` key.
 * `trust: open`: the record is a question; `status: draft`. Used for `Open Question` records and for a `Decision` whose outcome is still pending.
 * Unmarked hedges: the phrase "from memory" may appear in a `trust: verified` record only inside an **Inferred:**-marked sentence **[checked]**. Prefer replacing it with a link to the record that verifies the fact.
-* `sources[]` lists only documents that were opened; a document that could not be read is mentioned in the body, never under `sources`. A `sources[].title` containing "not read" is rejected **[checked]**.
+* `sources[]` lists only documents that were opened. A failed probe (404, 403, a block page) belongs there only when its response body was actually read and is quoted in the record — the transaction is then a real source; a URL that was never fetched, or whose response was not read, is mentioned in the body instead. A `sources[].title` containing "not read" is rejected **[checked]**; the rest of this rule is a human one.
 * A from-memory fact the plan depends on gets an open question; a from-memory fact that is merely explanatory stays an **Inferred:** aside.
 
 # Source record granularity

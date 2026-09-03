@@ -41,7 +41,7 @@ sources:
 | `PyMySQL[rsa]` | 1.2.0 | MIT | client for verify.py and loaders; `[rsa]` extra is required for `caching_sha2_password` ([PyPI](/sources/pypi-pymysql.md)) |
 | `duckdb` | see [PyPI duckdb](/sources/pypi-duckdb.md) | MIT | Parquet/CSV normalisation, TPC-H/TPC-DS generators ([DuckDB record](/tools/duckdb.md)) |
 | `pyarrow` | 25.0.1 | Apache-2.0 | Parquet footer/schema inspection only (DuckDB does the heavy lifting) |
-| `lxml` | 6.1.3 | BSD-3-Clause | Stack Exchange XML (`iterparse`), AdventureWorks XML columns validation |
+| `lxml` | 6.1.3 | [BSD-3-Clause](/licenses/bsd-3-clause.md) | Stack Exchange XML (`iterparse`), AdventureWorks XML columns validation |
 | `sqlglot` | 30.17.0 | MIT | first-pass DDL/query transpilation T-SQL/Oracle → MySQL for TPC-DS queries and AdventureWorks views; output is always reviewed and tested because "SQLGlot is a transpiler, not a validator" ([PyPI](/sources/pypi-sqlglot.md)) |
 | `mwxml` | 0.3.8 (see [mediawiki parsing](/tools/mediawiki-xml-dump-parsing.md)) | MIT | Wikipedia XML |
 | `PyYAML` | latest | MIT (**Inferred**, not read) | manifest and test files |

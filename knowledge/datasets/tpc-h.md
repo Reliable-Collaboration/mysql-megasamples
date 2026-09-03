@@ -131,6 +131,7 @@ Per [indexing strategy](/decisions/indexing-strategy.md) rule 1 (declared keys c
 
 # License and attribution
 * Tools and any query/DDL text derived from them: [TPC EULA v2.2](/licenses/tpc-eula.md) — the repo clones/installs at build time and vendors nothing; `datasets/tpch/LICENSE` carries the EULA copy plus the legend "THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC." for any TPC-derived text we do ship (our DDL is written from the spec's Clause 1.4 table definitions, which the spec permits copying "for the primary purpose of disseminating TPC material" with the copyright notice, title and date).
+* Generator wrapper: DuckDB itself is [MIT](/licenses/mit.md); only its `extension/tpch/dbgen` subtree carries the TPC EULA, so the loader image ships both notices.
 * Generated rows: not addressed by the EULA → we ship none ([question](/questions/tpc-eula-generated-data-redistribution.md)); if a user publishes a dump, the README says the data was produced with TPC dbgen 2.17.3 and carries the disclaimer.
 * Attribution string: "Derived from the TPC Benchmark™ H Standard Specification Revision 3.0.1 (© 1993–2022 Transaction Processing Performance Council); data generated with TPC dbgen 2.17.3. TPC Benchmark and TPC-H are trademarks of the Transaction Processing Performance Council. This database is derived from TPC-H and as such is not comparable to published TPC-H results, as it does not comply with the TPC-H Specification."
 

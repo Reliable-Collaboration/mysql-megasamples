@@ -82,7 +82,7 @@ Restore `WideWorldImporters-Standard.bak` in the SQL Server 2022 Developer conta
 PKs, FKs (every FK has a supporting nonclustered index named `FK_<schema>_<table>_<col>` - port them), unique keys; drop columnstore; spatial index on Cities.Location only if made NOT NULL.
 
 # Tests and expected values
-Per-table counts measured in SQL Server before export and re-checked in MySQL; `SUM(extendedprice)` over `sales_invoicelines` and `MAX(recordedwhen)` of `warehouse_coldroomtemperatures` pinned at export; temporal probe: `sales_customers` + `sales_customers_archive` row totals; geography probe: `ST_AsText(location)` for `cityid` 1 (Aaronsburg, PA) ~ `POINT(-77.45 40.9)` (**Inferred** from the seed script's hex `0xe6100000010c07e11b542c73444087c09140035d53c0`); JSON probe `JSON_EXTRACT(UserPreferences,'$.theme')` = `defaultblue` for PersonID 1.
+Per-table counts measured in SQL Server before export and re-checked in MySQL; `SUM(extendedprice)` over `sales_invoicelines` and `MAX(recordedwhen)` of `warehouse_coldroomtemperatures` pinned at export; temporal probe: `sales_customers` + `sales_customers_archive` row totals; geography probe: `ST_AsText(location)` for `cityid` 1 (Aaronsburg, PA) ~ `POINT(-77.45 40.9)` (**Inferred** from the seed script's hex `0xe6100000010c07e11b542c73444087c09140035d53c0`); JSON probe `JSON_EXTRACT(userpreferences,'$.theme')` = `defaultblue` for PersonID 1.
 
 # Tier assignment
 **extended** (built once with SQL Server, artifact cached; loaded size **Inferred** 600-900 MB, dominated by ColdRoomTemperatures + archive). A trimmed variant without the sensor tables would be ~150 MB - coordinator option.

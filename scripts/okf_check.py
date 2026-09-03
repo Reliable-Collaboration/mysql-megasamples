@@ -15,7 +15,7 @@ knowledge/runbooks/knowledge-bundle-conventions.md:
      (accepted / pending / superseded-by)
   5. a trust: verified record says "from memory" only inside an **Inferred:**-marked paragraph or a `# Inferred`
      section (title and description included in the scan)
-  6. every License record's `# Applied to` links every Dataset or Tool record that links the license
+  6. every License record's `# Applied to` lists exactly the Dataset and Tool records that link it
   7. every markdown link (concepts, index.md, log.md) and every bundle-path `resource` resolves; broken links are
      warnings while root index.md says `bundle_status: draft`, errors when it says `stable` or with --strict-links
   8. log.md: only ISO-date `##` headings, descending; every bullet (`*` or `-`) starts with an allowed bold verb
@@ -85,8 +85,27 @@ def is_iso(value):
 
 
 def strip_code(text):
-    text = re.sub(r"^(```|~~~).*?^\1", "", text, flags=re.S | re.M)
-    return re.sub(r"`[^`\n]*`", "", text)
+    """Blank out fenced code blocks and inline code so prose scans cannot see code content.
+
+    A fence opens with three or more backticks or tildes and closes only with the same character and at
+    least as many of them; an unclosed fence swallows the rest of the file (the safe reading).
+    """
+    out, fence = [], None
+    for line in text.split("\n"):
+        stripped = line.strip()
+        m = re.match(r"^(`{3,}|~{3,})(.*)$", stripped)
+        if fence is None:
+            if m:
+                fence = m.group(1)
+                out.append("")
+                continue
+        else:
+            if m and m.group(1)[0] == fence[0] and len(m.group(1)) >= len(fence) and not m.group(2).strip():
+                fence = None
+            out.append("")
+            continue
+        out.append(line)
+    return re.sub(r"`[^`\n]*`", "", "\n".join(out))
 
 
 def headings(body):
@@ -124,6 +143,7 @@ class Checker:
         self.errors, self.warnings = [], []
         self.concepts = {}   # rel -> frontmatter
         self.bodies = {}     # rel -> body
+        self.links = {}      # rel -> set of bundle-relative link targets
         self.bundle_status = "draft"
 
     def err(self, rel, msg): self.errors.append(f"{rel}: {msg}")
@@ -229,9 +249,11 @@ class Checker:
             self.err(rel, "License record has an empty `# Attribution` section")
         if tr == "verified" and not hedge_ok(body, fm.get("title", ""), fm.get("description", "")):
             self.err(rel, "verified record says 'from memory' outside an **Inferred:** paragraph or `# Inferred` section")
-        for target in LINK_RE.findall(strip_code(body)):
+        targets = LINK_RE.findall(strip_code(body))
+        for target in targets:
             self.resolve(rel, root, target)
         self.bodies[rel] = body
+        self.links[rel] = {bl for bl in (self.bundle_rel(root, t) for t in targets) if bl}
         return fm
 
     def check_log(self, rel, text):
@@ -253,28 +275,44 @@ class Checker:
             self.resolve(rel, self.bundle, target)
 
     def check_license_coverage(self):
-        """Every record linking /licenses/<x>.md must be listed in that license's `# Applied to`."""
+        """Each License's `# Applied to` lists exactly the Dataset and Tool records that link it."""
+        applies = {"Dataset", "Tool"}
         for lic_rel, fm in self.concepts.items():
             if fm.get("type") != "License":
                 continue
             lic_link = "/" + lic_rel.replace(os.sep, "/")
+            lic_root = os.path.join(self.bundle, os.path.dirname(lic_rel))
             applied = section_text(self.bodies[lic_rel], "Applied to")
-            listed = set()
-            for t in LINK_RE.findall(applied):
-                bl = self.bundle_rel(os.path.join(self.bundle, os.path.dirname(lic_rel)), t)
-                if bl: listed.add(bl)
-            for other_rel, body in self.bodies.items():
-                if other_rel == lic_rel or self.concepts[other_rel].get("type") not in ("Dataset", "Tool"):
-                    continue  # only records that *apply* the license must be listed; sources/questions merely cite it
-                other_link = "/" + other_rel.replace(os.sep, "/")
-                links = {self.bundle_rel(os.path.join(self.bundle, os.path.dirname(other_rel)), t) for t in LINK_RE.findall(strip_code(body))}
-                if lic_link in links and other_link not in listed:
-                    self.err(lic_rel, f"`# Applied to` omits {other_link}, which links this license")
+            # omissions: any mention in the section counts as listed (generous, so only a record the
+            # license never mentions is reported); stale entries: only a bullet's subject link is an
+            # assertion that the license applies (conservative, so asides and negatives are not reported).
+            mentioned = {bl for bl in (self.bundle_rel(lic_root, t) for t in LINK_RE.findall(applied)) if bl}
+            subjects = set()
+            for line in applied.splitlines():
+                if not re.match(r"^\s*[*-] ", line):
+                    continue
+                text = re.sub(r"^\s*[*-] ", "", line)
+                if re.match(r"(\*\*)?(not applied|see also|related|note)\b", text, re.I):
+                    continue
+                first = LINK_RE.search(text)
+                if first:
+                    bl = self.bundle_rel(lic_root, first.group(1))
+                    if bl:
+                        subjects.add(bl)
+            linkers = {"/" + rel.replace(os.sep, "/") for rel, links in self.links.items()
+                       if lic_link in links and self.concepts[rel].get("type") in applies}
+            for link in sorted(linkers - mentioned):
+                self.err(lic_rel, f"`# Applied to` omits {link}, which links this license")
+            for link in sorted(subjects - linkers):
+                rel = os.path.normpath(link.lstrip("/"))
+                if rel in self.concepts and self.concepts[rel].get("type") in applies:
+                    self.err(lic_rel, f"`# Applied to` lists {link}, which does not link this license")
 
     # ---- index generation -------------------------------------------------
     def dir_has_md(self, d):
+        """True when the tree holds at least one concept file (a stale index.md alone does not count)."""
         for r, _, fs in os.walk(d):
-            if any(f.endswith(".md") for f in fs):
+            if any(f.endswith(".md") and f not in RESERVED for f in fs):
                 return True
         return False
 

@@ -40,7 +40,7 @@ R. A. Fisher's 1936 iris measurements (Anderson's data): 50 samples each of Iris
 
 # Source artifact
 * UCI: https://archive.ics.uci.edu/static/public/53/iris.zip - 3,738 bytes (md5 `7a07b2b4163b650dc451aca467d4fb58`), containing `iris.data` (historical, two wrong values; md5 `42615765a885ddf54427f12c34a0a070`), `bezdekIris.data` (corrected; md5 `7352471c39afdf2dad640df6dd867b72`), `iris.names` ([zip inspection](/sources/uci-iris-zip.md)). No auth. DOI 10.24432/C56C76.
-* scikit-learn: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv - corrected data, md5 `d69a16ea6136ccb02a7c37c66375ebba`, BSD-3-Clause ([files](/sources/scikit-learn-iris-files.md)).
+* scikit-learn ([BSD-3-Clause](/licenses/bsd-3-clause.md)): https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv - corrected data, md5 `d69a16ea6136ccb02a7c37c66375ebba`, BSD-3-Clause ([files](/sources/scikit-learn-iris-files.md)).
 * Chosen: the corrected values (= `bezdekIris.data` = scikit-learn = R), vendored as a 150-row CSV in the repository.
 
 # Native format and friendlier forms

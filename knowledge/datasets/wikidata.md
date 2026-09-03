@@ -76,7 +76,7 @@ n/a until a path is chosen; a Lexeme/subset build would test entity count agains
 **None (not shipped).** Evidence: smallest general entity dump 43 GB; recommended JSON dump 103 GB. If option 5 is built: extended, opt-in.
 
 # License and attribution
-[CC0 1.0](/licenses/cc0-1-0.md): "All structured data in the main, property and lexeme namespaces is made available under the Creative Commons CC0 License" ([Wikidata:Licensing](/sources/wikidata-licensing-page.md)); text in other namespaces CC BY-SA 4.0. No attribution required; README courtesy line: "Data from Wikidata (https://www.wikidata.org/), CC0 1.0."
+[CC0 1.0](/licenses/cc0-1-0.md) for entity data, [CC BY-SA 4.0](/licenses/cc-by-sa-4-0.md) for text in other namespaces: "All structured data in the main, property and lexeme namespaces is made available under the Creative Commons CC0 License" ([Wikidata:Licensing](/sources/wikidata-licensing-page.md)); text in other namespaces CC BY-SA 4.0. No attribution required; README courtesy line: "Data from Wikidata (https://www.wikidata.org/), CC0 1.0."
 
 # Open questions
 * Whether the coordinator wants an "extended-large" Wikidata subset at all — see [decision](/decisions/wikidata-vs-wikipedia-simple.md). No cheaper experiment than building option 5 once and timing it.
