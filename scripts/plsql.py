@@ -124,7 +124,13 @@ def strip_directives(statement):
     return body
 
 
-def convert_types(sql):
+def convert_types(sql, date_type="DATETIME"):
+    """Map Oracle column types to MySQL.
+
+    Oracle's DATE always carries a time, so it maps to DATETIME by default. A schema whose date
+    values are verified to have no time component can pass `date_type="DATE"` -- Sales History does,
+    because `times.time_id` is a calendar dimension keyed by day and a DATETIME key reads wrong.
+    """
     def number(m):
         precision, scale = m.group(1), m.group(2)
         if scale:
@@ -141,7 +147,7 @@ def convert_types(sql):
     sql = re.sub(r"(?i)\bTIMESTAMP\s*(?:\(\s*\d+\s*\))?(\s+WITH(\s+LOCAL)?\s+TIME\s+ZONE)?", "DATETIME(6)", sql)
     sql = re.sub(r"(?i)\bCLOB\b", "LONGTEXT", sql)
     sql = re.sub(r"(?i)\bBLOB\b", "LONGBLOB", sql)
-    sql = re.sub(r"(?i)\bDATE\b(?!\s*\()", "DATETIME", sql)
+    sql = re.sub(r"(?i)\bDATE\b(?!\s*\()", date_type, sql)
     return sql
 
 
@@ -170,7 +176,55 @@ def convert_ddl(sql, json_cols=()):
     sql = re.sub(r"(?i)\s+ENABLE(?=\s*[,)\n;]|\s*$)", "", sql)
     sql = re.sub(r"(?i)\s+USING\s+INDEX\b", "", sql)
     sql = re.sub(r"(?i)\s+ORGANIZATION\s+INDEX\b", "", sql)
+    sql = strip_partitioning(sql)
+    # a bitmap index is a storage choice, not a different index; MySQL has one kind
+    sql = re.sub(r"(?i)^(\s*CREATE\s+)BITMAP(\s+INDEX\b)", r"\1\2", sql)
+    # An Oracle Text index is the nearest thing Oracle has to a full-text index; InnoDB FULLTEXT is
+    # the MySQL equivalent, with different ranking and tokenisation (recorded in the dataset record).
+    if re.search(r"(?i)\bINDEXTYPE\s+IS\s+ctxsys\.context\b", sql):
+        sql = re.sub(r"(?is)\s*INDEXTYPE\s+IS\s+ctxsys\.context\s*"
+                     r"(PARAMETERS\s*\(\s*'[^']*'\s*\))?", "", sql)
+        sql = re.sub(r"(?i)^(\s*CREATE\s+)(INDEX\b)", r"\1FULLTEXT \2", sql)
+    # Storage and placement clauses, which may follow one another ("LOCAL NOLOGGING"), so strip
+    # repeatedly until nothing more comes off rather than assuming an order.
+    trailing = re.compile(r"(?i)\s+(LOCAL|NOLOGGING|LOGGING|NOCOMPRESS|COMPRESS(\s+FOR\s+\w+"
+                          r"(\s+\w+)?)?|PARALLEL|NOPARALLEL|PCTFREE\s+\d+|INITRANS\s+\d+"
+                          r"|TABLESPACE\s+\w+)(?=\s*[,)\n;]|\s*$)")
+    while True:
+        stripped = trailing.sub("", sql)
+        if stripped == sql:
+            break
+        sql = stripped
     return sql
+
+
+def strip_partitioning(sql):
+    """Remove an Oracle PARTITION BY clause and its partition list.
+
+    InnoDB cannot combine partitioning with foreign keys, and Sales History's two partitioned tables
+    are the ones carrying the foreign keys, so the keys are kept and the partitioning goes. The
+    caller records how many partitions were dropped so the table comment can say so.
+    """
+    m = re.search(r"(?i)\bPARTITION\s+BY\s+(RANGE|LIST|HASH)\s*\(", sql)
+    if not m:
+        return sql
+    i, depth = m.end(), 1
+    while i < len(sql) and depth:                       # the partitioning key list
+        depth += {"(": 1, ")": -1}.get(sql[i], 0)
+        i += 1
+    rest = sql[i:]
+    opening = re.match(r"\s*\(", rest)
+    if opening:                                         # the partition definitions
+        j, depth = i + opening.end(), 1
+        while j < len(sql) and depth:
+            depth += {"(": 1, ")": -1}.get(sql[j], 0)
+            j += 1
+        i = j
+    return sql[:m.start()].rstrip() + sql[i:]
+
+
+def count_partitions(sql):
+    return len(re.findall(r"(?i)\bPARTITION\s+\w+\s+VALUES\b", sql))
 
 
 LISTAGG = re.compile(r"(?is)\bLISTAGG\s*\(")
@@ -227,6 +281,24 @@ def close_function_spaces(sql):
     for fn in BUILTINS:
         sql = re.sub(rf"(?i)(?<![\w.]){fn}\s+\(", f"{fn}(", sql)
     return sql
+
+
+def convert_materialized_view(sql):
+    """`CREATE MATERIALIZED VIEW x <options> AS SELECT ...` -> `CREATE VIEW x AS SELECT ...`.
+
+    MySQL has no materialized view. A plain view returns the same rows; what is lost is the stored
+    result and the query rewrite that used it, which the dataset record notes.
+    """
+    if not re.match(r"(?is)^\s*CREATE\s+MATERIALIZED\s+VIEW\b", sql):
+        return sql
+    sql = re.sub(r"(?is)^(\s*CREATE\s+)MATERIALIZED\s+(VIEW\b)", r"\1\2", sql)
+    # the options sit between the name and the AS that introduces the query
+    return re.sub(r"(?is)^(\s*CREATE\s+VIEW\s+\w+\s+).*?\bAS\b", r"\1AS", sql, count=1)
+
+
+def strip_schema_prefix(sql, schema):
+    """Remove `owner.` qualifiers: the MySQL database is the owner."""
+    return re.sub(rf"(?i)(?<![\w.]){re.escape(schema)}\s*\.\s*(?=\w)", "", sql)
 
 
 def convert_view(sql):
@@ -289,7 +361,32 @@ def convert_values(sql):
     # paren behind and break the statement.
     sql = unwrap_call(sql, "UTL_RAW.CAST_TO_RAW")
     sql = re.sub(r"(?is)\bSYSDATE\b", "CURRENT_TIMESTAMP", sql)
+    sql = empty_string_to_null(sql)
     return sql
+
+
+def empty_string_to_null(sql):
+    """Oracle's `''` is NULL, MySQL's is an empty string.
+
+    Sales History writes `''` for missing values of integer and date columns, which MySQL rejects
+    outright under strict mode. The replacement has to parse literals rather than match text: `''`
+    inside a literal is an escaped quote, so `'it''s'` must be left alone.
+    """
+    out, i, n = [], 0, len(sql)
+    while i < n:
+        if sql[i] != "'":
+            out.append(sql[i]); i += 1; continue
+        j = i + 1
+        while j < n:
+            if sql[j] == "'":
+                if j + 1 < n and sql[j + 1] == "'":
+                    j += 2; continue
+                break
+            j += 1
+        literal = sql[i:j + 1]
+        out.append("NULL" if literal == "''" else literal)
+        i = j + 1
+    return "".join(out)
 
 
 MONTHS = {m: i + 1 for i, m in enumerate(
@@ -404,11 +501,18 @@ def convert_alter(statement, primary_keys):
 
 def classify(statement):
     s = strip_directives(statement).strip()
-    # MySQL has no constraint enable/disable; these statements have no equivalent at all
-    if re.match(r"(?is)^alter\s+table\s+\w+\s+(disable|enable)\s+constraint", s):
+    # MySQL has no constraint enable/disable, in either Oracle spelling. Sales History brackets its
+    # bulk load with symmetric DISABLE/ENABLE NOVALIDATE pairs; the generated SQL brackets the whole
+    # load with foreign_key_checks instead, which is the same thing.
+    if re.match(r"(?is)^alter\s+table\s+\w+\s+((disable|enable)\s+constraint"
+                r"|modify\s+constraint\s+\w+\s+(disable|enable))", s):
         return "skip", s
+    # Oracle-only object kinds with no MySQL counterpart at all
+    if re.match(r"(?i)^create\s+dimension\b", s):
+        return "dimension", s
     for pattern, kind in [(r"(?i)^create\s+table", "table"),
-                          (r"(?i)^create\s+(unique\s+)?index", "index"),
+                          (r"(?i)^create\s+(unique\s+)?(bitmap\s+)?index", "index"),
+                          (r"(?i)^create\s+materialized\s+view", "view"),
                           (r"(?i)^create\s+sequence", "sequence"),
                           (r"(?i)^create\s+(or\s+replace\s+)?view", "view"),
                           (r"(?i)^create\s+(or\s+replace\s+)?(procedure|function|trigger|package)", "routine"),

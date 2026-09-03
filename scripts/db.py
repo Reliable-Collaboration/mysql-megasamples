@@ -65,7 +65,7 @@ def stop():
 
 def sql(statement, database=None, table=False, check=True):
     cmd = ["docker", "exec", "-i", NAME, "mysql", f"-p{PW}", "-uroot",
-           "--default-character-set=utf8mb4"]
+           "--default-character-set=utf8mb4", "--local-infile=1"]
     if not table:
         cmd += ["-N", "--batch", "--raw"]
     else:
@@ -80,7 +80,10 @@ def sql(statement, database=None, table=False, check=True):
 
 def sql_file(path, database=None):
     """Stream a .sql file into the server (files can be large; never read them into argv)."""
-    cmd = ["docker", "exec", "-i", NAME, "mysql", f"-p{PW}", "-uroot", "--default-character-set=utf8mb4"]
+    # --local-infile: the client is the one that reads a LOAD DATA LOCAL INFILE path, and it runs
+    # inside the container, so those paths are the container's (/context is the staged input mount)
+    cmd = ["docker", "exec", "-i", NAME, "mysql", f"-p{PW}", "-uroot",
+           "--default-character-set=utf8mb4", "--local-infile=1"]
     if database:
         cmd += ["-D", database]
     with open(path, "rb") as fh:

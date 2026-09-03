@@ -1,0 +1,17 @@
+# S7: canonical query results, tab-separated as the client prints them.
+cal_month_sales_mv_as_view: "2019-01\t2277420.49\n2019-02\t2372690.87\n2019-03\t1830572.64"
+costs_date_range: "2019-01-01\t2022-12-31"
+date_columns_have_no_time: date
+empty_string_is_null: "17506\t0"
+first_sales_csv_row_present: '1'
+fulltext_replaces_oracle_text: "4295\t4500\t1969"
+fweek_pscat_sales_mv_as_view: '10512'
+objects_created: "3\t0\t0"
+partitioning_recorded_in_comment: "costs\t1\nsales\t1"
+profits_view: "916039\t77717281.38"
+promo_999_exists: "999\tNO PROMOTION #"
+sales_by_channel: "Partners\t258025\t26346342.32\nDirect Sales\t540328\t57875260.60\n\
+  Internet\t118416\t13706802.03\nTele Sales\t2074\t277426.26"
+sales_date_range: "2019-01-01\t2022-12-31"
+times_dimension_is_complete: "2019-01-01\t2023-12-31\t1826\t1826"
+total_amount_sold: "98205831.21\t918843"

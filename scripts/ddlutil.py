@@ -8,6 +8,29 @@ translator.
 import re
 
 
+def without_literals(sql):
+    """The statement with the contents of string literals blanked out.
+
+    Keyword searches over DDL have to ignore literals: Oracle's own column comments say things like
+    "primary key column", and once those are attached as MySQL COMMENT text a plain search for
+    PRIMARY KEY finds one in a table that has none.
+    """
+    out, i, n = [], 0, len(sql)
+    while i < n:
+        if sql[i] != "'":
+            out.append(sql[i]); i += 1; continue
+        j = i + 1
+        while j < n:
+            if sql[j] == "'":
+                if j + 1 < n and sql[j + 1] == "'":
+                    j += 2; continue
+                break
+            j += 1
+        out.append("'" + " " * (j - i - 1) + "'")
+        i = j + 1
+    return "".join(out)
+
+
 # the column may be bare (Oracle) or backticked (T-SQL, after identifier mapping), and other
 # attributes such as NOT NULL may sit between the type and AUTO_INCREMENT
 IDENTITY_COL = re.compile(r"(?im)^\s*,?\s*`?(\w+)`?\s+[^,\n]*?\bAUTO_INCREMENT\b")
@@ -31,18 +54,19 @@ def inline_identity_pk(create_table, declared_pk=None):
       lead *some* index, and the real primary key still arrives with the ALTER;
     * nothing declared -> PRIMARY KEY, as before.
     """
-    table = re.search(r"(?i)CREATE\s+TABLE\s+`?(\w+)`?", create_table)
-    if not table or "AUTO_INCREMENT" not in create_table.upper():
+    bare = without_literals(create_table)
+    table = re.search(r"(?i)CREATE\s+TABLE\s+`?(\w+)`?", bare)
+    if not table or "AUTO_INCREMENT" not in bare.upper():
         return create_table, None
-    col = IDENTITY_COL.search(create_table)
+    col = IDENTITY_COL.search(bare)
     if not col:
         return create_table, None
     name, column = table.group(1).lower(), col.group(1).lower()
-    if re.search(r"(?i)PRIMARY\s+KEY", create_table):
+    if re.search(r"(?i)PRIMARY\s+KEY", bare):
         return create_table, (name, column)                          # already keyed
     pk = (declared_pk or {}).get(name)
     key = "PRIMARY KEY" if pk is None or pk == [column] else "KEY"
-    close = create_table.rfind(")")
+    close = bare.rfind(")")
     head = create_table[:close].rstrip().rstrip(",")
     return (head + f",\n  {key} (`{col.group(1)}`)\n" + create_table[close:],
             (name, column) if key == "PRIMARY KEY" else None)

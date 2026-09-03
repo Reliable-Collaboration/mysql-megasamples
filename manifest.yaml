@@ -613,3 +613,79 @@ artifacts:
     size_bytes: 0
     license: mit
     ipv4_first: false
+
+  # Oracle Sales History: the install scripts plus the CSVs they load. sales.csv is 74 MB.
+  # The 2024-03-28 commit that moved the v23.3 tag changed the demographics data, so the
+  # commit SHA is pinned rather than the tag.
+  - id: oracle_sh/sh_install.sql
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sh_install.sql
+    mirrors: []
+    sha256: "fec44618ff24ae4ffcf117978b753014fd25e7072b0346846564e0b3c4e25378"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/sh_create.sql
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sh_create.sql
+    mirrors: []
+    sha256: "739357c74c101fb043b1cf20897829392902e8a1506fcdc1e7ff8adfac67b190"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/sh_populate.sql
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sh_populate.sql
+    mirrors: []
+    sha256: "1581dabda1e0b482f0ec37c9ca5d2cb6968926b84df4f62a6e639d44cc9a3bcd"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/promotions.csv
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/promotions.csv
+    mirrors: []
+    sha256: "db0b579e3a5b6a29f326af2d75913c3e8ec38a0cb4da3ac101180ee9be81474c"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/times.csv
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/times.csv
+    mirrors: []
+    sha256: "69382c241c84780c78ca4a5b621ab6b35e70f1378a81a3f002cda040ebab0577"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/supplementary_demographics.csv
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/supplementary_demographics.csv
+    mirrors: []
+    sha256: "7a8d9f1a24e6187f42ca9264721c71621f55ddec4168d9a6132bf178bc2a151b"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/costs.csv
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/costs.csv
+    mirrors: []
+    sha256: "85e8e912a04e1454a39b23d9a067564bdaa82727732d1cf0b5761045e73f3daa"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/customers.csv
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/customers.csv
+    mirrors: []
+    sha256: "664d9426ba42132fab4383140d2caa9be24960911448bec9f4db8ad2f6d676be"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_sh/sales.csv
+    dataset: oracle_sh
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sales.csv
+    mirrors: []
+    sha256: "484699e0e239858d59dbef9d5ce3e91c93dab3010ea17f99c7e0221db5c36187"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false

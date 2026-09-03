@@ -17,6 +17,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 sources:
@@ -66,6 +68,8 @@ Oracle "SH" — sales fact table with costs, customers (+ supplementary demograp
 | costs | 82,112 | 6 cols; FKs; 20 `COMPRESS` range partitions up to 2024-01-01 |
 | supplementary_demographics | 4,500 | 14 cols; `cust_id NUMBER` PK; `comments VARCHAR2(4000)` free text with an Oracle Text index |
 
+**Measured on load**: all nine counts reproduced exactly, **168.7 MB** in InnoDB, 10.5 s, 10 foreign keys with 0 orphans. `SUM(amount_sold)` = **98,205,831.21** over 918,843 units; `sales` and `costs` both span 2019-01-01…2022-12-31 (the record's "costs to 2023-12-31" was wrong — only the `times` dimension reaches 2023-12-31, and it is a complete 1,826-day calendar with no gaps). `promo_id` 999 does exist in `promotions` ('NO PROMOTION #'), which is why the never-validated upstream foreign keys validate here. `customers` has 17,506 NULL `cust_marital_status` and 0 empty strings.
+
 Total ≈ 1.06 M rows. Loaded InnoDB size **inferred** ≈ 150–250 MB (sales ≈ 918 k × ~30 B data + 5 secondary indexes; customers ≈ 15 MB) — must be measured (task for the executor); dump compressed with zstd is expected to be ≈ 20–30 MB (**inferred** from 74 MB of highly repetitive padded CSV).
 Encoding: no non-ASCII bytes seen in three 64 KB samples of `customers.csv`, the whole `promotions.csv`, the CSV heads/tails, or `sh_populate.sql`; treat as ASCII/UTF-8 (full-file verification is a one-line `grep -P` at build time).
 
@@ -74,17 +78,18 @@ Path (a): Python converter emits MySQL DDL, inserts the three small dimensions f
 
 # Type-mapping hazards
 * Unconstrained `NUMBER` keys (`cust_id`, `country_id`, `channel_id`, `*_id` hierarchy ids, `cust_credit_limit`, `yrs_residence`, `days_in_*`) → `INT` after the converter asserts every value is integral (all sampled values are); `NUMBER(6)`/`NUMBER(4)`/`NUMBER(3)`/`NUMBER(1)`/`NUMBER(2)` → `INT`/`SMALLINT`/`TINYINT`; `NUMBER(10,2)`/`NUMBER(8,2)` → `DECIMAL(10,2)`/`DECIMAL(8,2)`; `NUMBER(10)` flags → `INT` (values 0/1).
-* `DATE` columns → `DATE` (no time component in any CSV value or script literal); `time_id` stays `DATE` so `times` remains a proper calendar dimension.
+* `DATE` columns → `DATE` (no time component in any CSV value or script literal); `time_id` stays `DATE` so `times` remains a proper calendar dimension. **Verified before relying on it**: scanning all 1.06 M rows of all six CSVs for `\d{4}-\d{2}-\d{2}[ T]\d` finds zero matches, and the 72 `to_date` literals in the script are all midnight. Oracle's DATE otherwise maps to DATETIME, so this is a per-dataset choice the converter passes in, not a change to the shared translator.
 * `CHAR(1)`/`CHAR(2)`/`CHAR(7)` → `CHAR(n)`; values are always full length so MySQL's trailing-space stripping ([CHAR semantics](/sources/mysql-refman-9-7-char.md)) has no visible effect.
 * `VARCHAR2(4000)` → `VARCHAR(4000)` (utf8mb4: 16,000 bytes, under the 65,535-byte row limit but `products` has two of them plus `VARCHAR2(2000)`×2 → row max ≈ 40 KB, still under the limit; alternatively `TEXT`). Keep `VARCHAR`.
 * `sales` has **no primary key** upstream ("all rows are uniquely identified by the combination of all foreign keys" — the comment even admits duplicates are possible). InnoDB works without a PK (hidden row id) but `mysqlsh util.dumpTables`/`loadDump` chunking and replication prefer one; add an invisible `sales_id BIGINT AUTO_INCREMENT INVISIBLE PRIMARY KEY`? **Recommendation (inferred, invisible-column syntax unverified):** add `INVISIBLE` surrogate PK columns to `sales` and `costs` (does not change `SELECT *`), document it.
-* **Partitioning:** Verified: "Partitioned tables using the InnoDB storage engine do not support foreign keys" ([partitioning limitations](/sources/mysql-refman-9-7-partitioning-limitations.md)); keep the FKs and **drop partitioning** (document the original 15/20 range partitions in the table COMMENT). `COMPRESS` → nothing (or `ROW_FORMAT=COMPRESSED`, not recommended).
+* **Partitioning: confirmed on the target server**, not just in the manual — `CREATE TABLE ... FOREIGN KEY ... PARTITION BY RANGE (TO_DAYS(d))` fails with `ERROR 1506 (HY000): Foreign keys are not yet supported in conjunction with partitioning`. 15 partitions on `sales` and 20 on `costs` are dropped and recorded in each table's MySQL `COMMENT`. Verified: "Partitioned tables using the InnoDB storage engine do not support foreign keys" ([partitioning limitations](/sources/mysql-refman-9-7-partitioning-limitations.md)); keep the FKs and **drop partitioning** (document the original 15/20 range partitions in the table COMMENT). `COMPRESS` → nothing (or `ROW_FORMAT=COMPRESSED`, not recommended).
 * **Bitmap indexes** (sales ×5, costs ×2, products, customers ×3) → ordinary B-tree indexes on the same columns (the FK columns get them anyway).
 * **Oracle Text** `sup_text_idx` (`INDEXTYPE IS ctxsys.context`) → `FULLTEXT INDEX (comments)` (InnoDB FULLTEXT; behaviour differs from Oracle Text, documented).
 * **Materialized views** `cal_month_sales_mv`, `fweek_pscat_sales_mv` (+ their bitmap indexes) → create as ordinary `VIEW`s with the same names (query rewrite is lost; documented).
 * **Dimensions** (`CREATE DIMENSION customers_dim, products_dim, times_dim, channels_dim, promotions_dim`) → dropped; no MySQL equivalent; hierarchies are implicit in the `*_id` columns.
 * `dbms_stats.gather_schema_stats` → `ANALYZE TABLE`.
-* Constraint enable/disable NOVALIDATE choreography → `SET foreign_key_checks=0` during load, then `1`; the executor must verify the FK checks pass afterwards (the upstream `NOVALIDATE` hints that upstream never validated them; `promo_id` 999 appears in sales/costs and must exist in promotions — check).
+* Constraint enable/disable NOVALIDATE choreography → `SET foreign_key_checks=0` during load, then `1`. **Checked**: all 10 foreign keys validate with 0 orphans, and `promo_id` 999 is a real promotions row.
+* **As built**, one more type reconciliation was needed than the record anticipated: `sales.channel_id` is `NUMBER(1)` while `channels.channel_id` is an unconstrained `NUMBER`, and MySQL refuses a foreign key whose two sides differ, so the child column takes the referenced key's type (`TINYINT` → `INT`). The converter now does this for every foreign key rather than for this one column.
 
 # Programmable objects
 | object | action |
@@ -94,7 +99,7 @@ Path (a): Python converter emits MySQL DDL, inserts the three small dimensions f
 | dimensions ×5 | drop (documented) |
 | Oracle Text index | replace with FULLTEXT |
 | partitions, bitmap/LOCAL indexes, COMPRESS, NOLOGGING | drop/replace as above |
-| `COMMENT ON` | port |
+| `COMMENT ON` | ported — 7 table comments and **81 of 81** column comments, attached inline in the CREATE TABLE. MySQL can only set a column comment as part of a column definition, which is why the conversion has to know them before it writes the table |
 
 # Indexing
 PK/FK indexes; B-tree replacements for the bitmap indexes; `products(prod_subcategory)`, `products(prod_category)`; FULLTEXT on `supplementary_demographics(comments)`. Load order: dimensions, then `costs`, `sales` with FK checks off, then `ALTER TABLE ... ADD INDEX` after bulk load for speed (**inferred** best practice).
@@ -102,14 +107,16 @@ PK/FK indexes; B-tree replacements for the bitmap indexes; `products(prod_subcat
 # Tests and expected values
 * Row counts from `sh_install.sql`: channels 5, costs 82,112, countries 35, customers 55,500, products 72, promotions 503, **sales 918,843**, times 1,826, supplementary_demographics 4,500. `wc -l` minus header on each CSV must reproduce the CSV-loaded counts (`promotions.csv` = 503 data rows verified).
 * `SELECT MIN(time_id), MAX(time_id) FROM sales` within 2019-01-01 … 2022-12-31 (partition bounds) and `costs` within 2019-01-01 … 2023-12-31; `SELECT COUNT(*) FROM times` = 1826 = 2019-01-01..2023-12-31.
-* `SELECT SUM(amount_sold) FROM sales` — record at build time as the baseline (no upstream figure). First `sales.csv` row is `(13, 987, 2019-01-10, 3, 999, 1, 1232.16)`.
-* NULL semantics: `SELECT COUNT(*) FROM customers WHERE cust_marital_status IS NULL` must be > 0 and `... = ''` must be 0.
+* `SELECT SUM(amount_sold) FROM sales` = **98,205,831.21** (measured; no upstream figure). The first `sales.csv` row `(13, 987, 2019-01-10, 3, 999, 1, 1232.16)` is present.
+* NULL semantics, **measured**: 17,506 NULL `cust_marital_status`, 0 empty strings.
+* The Oracle Text index became InnoDB FULLTEXT: 4,295 of 4,500 rows carry `comments`, and `MATCH ... AGAINST('affinity card')` matches 1,969 of them.
+* 15 smoke queries and 5 plan tests pinned under `datasets/oracle_sh/tests/`; the counts file carries the figures `sh_install.sql` publishes rather than values pinned from a load.
 
 # Tier assignment
-**core (medium)** — ≈ 1.06 M rows, 91 MB CSV, estimated 150–250 MB InnoDB: within the "medium core" band of the [tier model](/decisions/tier-model.md) (Employees-class). Downgrade to extended only if the measured loaded size exceeds the band; the compressed dump (~25 MB inferred) is cheap to bake.
+**core (medium)**, confirmed at **168.7 MB** measured — ≈ 1.06 M rows, 91 MB CSV, estimated 150–250 MB InnoDB: within the "medium core" band of the [tier model](/decisions/tier-model.md) (Employees-class). Downgrade to extended only if the measured loaded size exceeds the band; the compressed dump (~25 MB inferred) is cheap to bake.
 
 # License and attribution
 MIT — [MIT record](/licenses/mit.md). The CSVs carry no license header; the per-schema README and the repo LICENSE.txt cover them.
 
 # Open questions
-* [SH CSV row counts, padding and NULL handling](/questions/oracle-sh-csv-row-counts-and-padding.md): confirm 918,843 lines, whether `LOAD DATA` tolerates the 80-column padding without pre-processing, and the measured InnoDB size.
+* ~~[SH CSV row counts, padding and NULL handling](/questions/oracle-sh-csv-row-counts-and-padding.md)~~ — **answered 2026-09-03**: every count matches, `LOAD DATA` does tolerate the padding (the converter strips it anyway, and that strip touches exactly the 918,843 padded fields and nothing else), `''` must be mapped to NULL everywhere rather than only in the two named columns, the loaded size is 168.7 MB, no CSV holds a non-ASCII byte, and partitioning with a foreign key is refused by the server with error 1506.

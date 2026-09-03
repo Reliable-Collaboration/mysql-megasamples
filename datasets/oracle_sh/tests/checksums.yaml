@@ -1,0 +1,192 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+channels:
+  columns:
+  - channel_id
+  - channel_desc
+  - channel_class
+  - channel_class_id
+  - channel_total
+  - channel_total_id
+  excluded: []
+  n: 5
+  s: 11938626132304800820
+  x: 9968286315023658244
+costs:
+  columns:
+  - prod_id
+  - time_id
+  - promo_id
+  - channel_id
+  - unit_cost
+  - unit_price
+  excluded: []
+  n: 82112
+  s: 10059002129206254796
+  x: 10354083833853359864
+countries:
+  columns:
+  - country_id
+  - country_iso_code
+  - country_name
+  - country_subregion
+  - country_subregion_id
+  - country_region
+  - country_region_id
+  - country_total
+  - country_total_id
+  excluded: []
+  n: 35
+  s: 16800027139625344758
+  x: 15964708035568692210
+customers:
+  columns:
+  - cust_id
+  - cust_first_name
+  - cust_last_name
+  - cust_gender
+  - cust_year_of_birth
+  - cust_marital_status
+  - cust_street_address
+  - cust_postal_code
+  - cust_city
+  - cust_city_id
+  - cust_state_province
+  - cust_state_province_id
+  - country_id
+  - cust_main_phone_number
+  - cust_income_level
+  - cust_credit_limit
+  - cust_email
+  - cust_total
+  - cust_total_id
+  - cust_src_id
+  - cust_eff_from
+  - cust_eff_to
+  - cust_valid
+  excluded: []
+  n: 55500
+  s: 6359991280608447448
+  x: 11804108138248553118
+products:
+  columns:
+  - prod_id
+  - prod_name
+  - prod_desc
+  - prod_subcategory
+  - prod_subcategory_id
+  - prod_subcategory_desc
+  - prod_category
+  - prod_category_id
+  - prod_category_desc
+  - prod_weight_class
+  - prod_unit_of_measure
+  - prod_pack_size
+  - supplier_id
+  - prod_status
+  - prod_list_price
+  - prod_min_price
+  - prod_total
+  - prod_total_id
+  - prod_src_id
+  - prod_eff_from
+  - prod_eff_to
+  - prod_valid
+  excluded: []
+  n: 72
+  s: 12655596494580729046
+  x: 741441152230297256
+promotions:
+  columns:
+  - promo_id
+  - promo_name
+  - promo_subcategory
+  - promo_subcategory_id
+  - promo_category
+  - promo_category_id
+  - promo_cost
+  - promo_begin_date
+  - promo_end_date
+  - promo_total
+  - promo_total_id
+  excluded: []
+  n: 503
+  s: 5054895981389397802
+  x: 11834805166654958698
+sales:
+  columns:
+  - prod_id
+  - cust_id
+  - time_id
+  - channel_id
+  - promo_id
+  - quantity_sold
+  - amount_sold
+  excluded: []
+  n: 918843
+  s: 15457851796949326715
+  x: 14178013323528989451
+supplementary_demographics:
+  columns:
+  - cust_id
+  - education
+  - occupation
+  - household_size
+  - yrs_residence
+  - affinity_card
+  - cricket
+  - baseball
+  - tennis
+  - soccer
+  - golf
+  - unknown
+  - misc
+  - comments
+  excluded: []
+  n: 4500
+  s: 8151111609408752067
+  x: 16460892933632312949
+times:
+  columns:
+  - time_id
+  - day_name
+  - day_number_in_week
+  - day_number_in_month
+  - calendar_week_number
+  - fiscal_week_number
+  - week_ending_day
+  - week_ending_day_id
+  - calendar_month_number
+  - fiscal_month_number
+  - calendar_month_desc
+  - calendar_month_id
+  - fiscal_month_desc
+  - fiscal_month_id
+  - days_in_cal_month
+  - days_in_fis_month
+  - end_of_cal_month
+  - end_of_fis_month
+  - calendar_month_name
+  - fiscal_month_name
+  - calendar_quarter_desc
+  - calendar_quarter_id
+  - fiscal_quarter_desc
+  - fiscal_quarter_id
+  - days_in_cal_quarter
+  - days_in_fis_quarter
+  - end_of_cal_quarter
+  - end_of_fis_quarter
+  - calendar_quarter_number
+  - fiscal_quarter_number
+  - calendar_year
+  - calendar_year_id
+  - fiscal_year
+  - fiscal_year_id
+  - days_in_cal_year
+  - days_in_fis_year
+  - end_of_cal_year
+  - end_of_fis_year
+  excluded: []
+  n: 1826
+  s: 12360524092875233256
+  x: 17099894567927898738

@@ -1,0 +1,67 @@
+- name: first_sales_csv_row_present
+  query: 'SELECT COUNT(*) FROM sales WHERE prod_id = 13 AND cust_id = 987
+
+    AND time_id = ''2019-01-10'' AND channel_id = 3 AND promo_id = 999
+
+    AND quantity_sold = 1 AND amount_sold = 1232.16
+
+    '
+- name: total_amount_sold
+  query: SELECT ROUND(SUM(amount_sold), 2), ROUND(SUM(quantity_sold), 0) FROM sales
+- name: sales_date_range
+  query: SELECT MIN(time_id), MAX(time_id) FROM sales
+- name: costs_date_range
+  query: SELECT MIN(time_id), MAX(time_id) FROM costs
+- name: times_dimension_is_complete
+  query: 'SELECT MIN(time_id), MAX(time_id), COUNT(*), DATEDIFF(MAX(time_id), MIN(time_id)) + 1
+
+    FROM times
+
+    '
+- name: empty_string_is_null
+  query: 'SELECT SUM(cust_marital_status IS NULL) AS nulls,
+
+    SUM(cust_marital_status = '''') AS empties FROM customers
+
+    '
+- name: sales_by_channel
+  query: 'SELECT c.channel_desc, COUNT(*), ROUND(SUM(s.amount_sold), 2) FROM sales s
+
+    JOIN channels c ON c.channel_id = s.channel_id GROUP BY c.channel_id, c.channel_desc
+
+    ORDER BY c.channel_id
+
+    '
+- name: promo_999_exists
+  query: SELECT promo_id, promo_name FROM promotions WHERE promo_id = 999
+- name: profits_view
+  query: 'SELECT COUNT(*), ROUND(SUM(total_cost), 2) FROM profits
+
+    '
+- name: cal_month_sales_mv_as_view
+  query: 'SELECT calendar_month_desc, ROUND(dollars, 2) FROM cal_month_sales_mv
+
+    ORDER BY calendar_month_desc LIMIT 3
+
+    '
+- name: fweek_pscat_sales_mv_as_view
+  query: SELECT COUNT(*) FROM fweek_pscat_sales_mv
+- name: date_columns_have_no_time
+  query: 'SELECT data_type FROM information_schema.columns
+
+    WHERE table_schema = ''oracle_sh'' AND column_name = ''time_id'' AND table_name = ''times''
+
+    '
+- name: fulltext_replaces_oracle_text
+  query: "SELECT COUNT(comments) AS with_text, COUNT(*) AS rows_total,\n(SELECT COUNT(*) FROM supplementary_demographics\n\
+    \ WHERE MATCH(comments) AGAINST('affinity card' IN NATURAL LANGUAGE MODE)) AS matched\nFROM supplementary_demographics\n"
+- name: partitioning_recorded_in_comment
+  query: 'SELECT table_name, table_comment <> '''' FROM information_schema.tables
+
+    WHERE table_schema = ''oracle_sh'' AND table_name IN (''sales'', ''costs'') ORDER BY table_name
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='oracle_sh') AS views,\n\
+    \       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='oracle_sh') AS routines,\n\
+    \       (SELECT COUNT(*) FROM information_schema.triggers WHERE trigger_schema='oracle_sh') AS triggers\n"

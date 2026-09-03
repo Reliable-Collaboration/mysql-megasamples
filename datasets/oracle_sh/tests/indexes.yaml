@@ -1,0 +1,130 @@
+# S6: every index that must exist after load.
+channels:
+  PRIMARY:
+    columns:
+    - channel_id
+    type: BTREE
+    unique: true
+costs:
+  costs_channel_fk:
+    columns:
+    - channel_id
+    type: BTREE
+    unique: false
+  costs_prod_bix:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: false
+  costs_promo_fk:
+    columns:
+    - promo_id
+    type: BTREE
+    unique: false
+  costs_time_bix:
+    columns:
+    - time_id
+    type: BTREE
+    unique: false
+countries:
+  PRIMARY:
+    columns:
+    - country_id
+    type: BTREE
+    unique: true
+customers:
+  PRIMARY:
+    columns:
+    - cust_id
+    type: BTREE
+    unique: true
+  customers_country_fk:
+    columns:
+    - country_id
+    type: BTREE
+    unique: false
+  customers_gender_bix:
+    columns:
+    - cust_gender
+    type: BTREE
+    unique: false
+  customers_marital_bix:
+    columns:
+    - cust_marital_status
+    type: BTREE
+    unique: false
+  customers_yob_bix:
+    columns:
+    - cust_year_of_birth
+    type: BTREE
+    unique: false
+products:
+  PRIMARY:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: true
+  products_prod_cat_ix:
+    columns:
+    - prod_category
+    type: BTREE
+    unique: false
+  products_prod_status_bix:
+    columns:
+    - prod_status
+    type: BTREE
+    unique: false
+  products_prod_subcat_ix:
+    columns:
+    - prod_subcategory
+    type: BTREE
+    unique: false
+promotions:
+  PRIMARY:
+    columns:
+    - promo_id
+    type: BTREE
+    unique: true
+sales:
+  sales_channel_bix:
+    columns:
+    - channel_id
+    type: BTREE
+    unique: false
+  sales_cust_bix:
+    columns:
+    - cust_id
+    type: BTREE
+    unique: false
+  sales_prod_bix:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: false
+  sales_promo_bix:
+    columns:
+    - promo_id
+    type: BTREE
+    unique: false
+  sales_time_bix:
+    columns:
+    - time_id
+    type: BTREE
+    unique: false
+supplementary_demographics:
+  PRIMARY:
+    columns:
+    - cust_id
+    type: BTREE
+    unique: true
+  sup_text_idx:
+    columns:
+    - comments
+    type: FULLTEXT
+    unique: false
+times:
+  PRIMARY:
+    columns:
+    - time_id
+    type: BTREE
+    unique: true

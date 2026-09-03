@@ -1,0 +1,17 @@
+# The B-tree replacements for the upstream bitmap indexes: with 918,843 sales rows the optimizer
+# should use them rather than scan.
+- name: sales_by_product
+  query: SELECT COUNT(*) FROM sales WHERE prod_id = 13
+  must_not_full_scan: [sales]
+- name: sales_by_customer
+  query: SELECT COUNT(*) FROM sales WHERE cust_id = 987
+  must_not_full_scan: [sales]
+- name: sales_by_date
+  query: SELECT COUNT(*) FROM sales WHERE time_id = '2019-01-10'
+  must_not_full_scan: [sales]
+- name: costs_by_product
+  query: SELECT COUNT(*) FROM costs WHERE prod_id = 13
+  must_not_full_scan: [costs]
+- name: customers_by_year_of_birth
+  query: SELECT COUNT(*) FROM customers WHERE cust_year_of_birth = 1976
+  must_not_full_scan: [customers]

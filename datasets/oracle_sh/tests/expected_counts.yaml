@@ -1,0 +1,11 @@
+# The counts sh_install.sql publishes for itself, verified against `wc -l` on each CSV during
+# research. Pinned from upstream rather than from a load, so a conversion that drops rows fails.
+channels: 5
+countries: 35
+costs: 82112
+customers: 55500
+products: 72
+promotions: 503
+sales: 918843
+times: 1826
+supplementary_demographics: 4500

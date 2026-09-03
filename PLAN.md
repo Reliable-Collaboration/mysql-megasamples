@@ -498,7 +498,7 @@ All loaded sizes are inferred from source sizes and row counts (see each dataset
 | pubs | 0.1 MB | 1 | 0.1 | core |
 | employees | 172 MB | 200 | 35 | core |
 | oracle_hr / oracle_co / oracle_oe | 0.08 / 1.3 / 3.6 MB | 0.5 / 1.6 / 4.4 (measured) | <2 each (measured) | core |
-| oracle_sh | 91 MB CSV | 200 | 25 | core |
+| oracle_sh | 91 MB CSV | 168.7 (measured) | 10.5 (measured) | core |
 | adventureworks | 95 MB CSV | 220 | 25 | core |
 | adventureworks_lt | 0.9 MB | 4.1 (measured) | 1.2 (measured) | core |
 | contoso (100k) | 9.8 MB 7z | 90 | 10 | core |
@@ -683,7 +683,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | S-07 ✅ | adventureworks_lt (iconv + converter v1 for `instaw*.sql` grammar) | S-03 | done — record updated; parity question still open |
 | M-01 ✅ | employees (172 MB download, SHA-2 test) | S-04 | update [employees](knowledge/datasets/employees.md) |
 | **E-02** | `make bench-index-order DATASET=employees`: load with indexes pre-created versus load-then-index; record both timings | M-01 | update [employees](knowledge/datasets/employees.md), [indexing-strategy](knowledge/decisions/indexing-strategy.md) |
-| M-02 | oracle_sh (CSV pre-pass, partitions dropped, FULLTEXT) | S-05 | update [oracle-sh](knowledge/datasets/oracle-sh.md); close [padding question](knowledge/questions/oracle-sh-csv-row-counts-and-padding.md) |
+| M-02 ✅ | oracle_sh (CSV pre-pass, partitions dropped, FULLTEXT) | S-05 | done — record updated, [padding question](knowledge/questions/oracle-sh-csv-row-counts-and-padding.md) answered and closed |
 | M-03 | adventureworks OLTP (converter v2: two terminator families, hierarchyid/geography decoders, computed columns, triggers, views) — resolve risk 5 first | S-07 | update [adventureworks-oltp](knowledge/datasets/adventureworks-oltp.md), close [row-count question](knowledge/questions/mssql-adventureworks-row-counts.md) |
 | M-04 | contoso 100k, dvdstore DS2 tables, lahman (maintainer downloads the CSV zip once → release asset) | S-04 | update the three records; close [Lahman question](knowledge/questions/lahman-box-direct-download.md) |
 | M-05 | nyc_taxi green + zones (DuckDB path v1), chicago_crimes 2024 subset (SODA path) | P-04 | update [nyc-tlc](knowledge/datasets/nyc-tlc.md), [chicago-crimes](knowledge/datasets/chicago-crimes.md), [large-tabular-conversion-path](knowledge/decisions/large-tabular-conversion-path.md) |
