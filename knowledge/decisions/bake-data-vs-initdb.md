@@ -44,5 +44,8 @@ Build a throwaway image whose builder stage runs `mysqld --initialize-insecure`,
 # Outcome
 Option 1 (pre-populated datadir). Option 2 remains the documented fallback if P-03 fails on ownership or startup budget.
 
+# Readiness probe (measured 2026-09-02)
+`mysqladmin ping` answers "alive" even when the credentials are wrong or the entrypoint is still setting users up, so it must not be used as the S8 readiness gate. The image test waits for a real statement (`mysql -uroot -p… -N -e 'SELECT 1'`) to succeed; on the probe container that was 1 s after the socket appeared and about 6 s after `docker run`.
+
 # Status
 accepted (P-03 measures first-start time and chooses between datadir designs A and B)

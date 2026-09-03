@@ -45,7 +45,7 @@ How do we prove, for every table, that what landed in MySQL equals what the sour
 * [CHECKSUM TABLE](/sources/mysql-refman-9-7-checksum-table.md), [TABLES](/sources/mysql-refman-9-7-information-schema-tables.md).
 
 # Canonical row form (`scripts/canon.py` and the generated SQL must agree byte-for-byte)
-Columns in DDL order, joined by `\x1f` (unit separator), with each value rendered as:
+Columns in DDL order, joined by the unit separator U+001F, with each value rendered as below. **The separator must be written as `CHAR(31)` (or `0x1F`) in SQL and `\x1f` in Python — never as `'\x1f'` in a MySQL string literal**: MySQL drops the backslash before an unrecognised escape, so `'a\x1fb'` is the six characters `ax1fb` (`HEX()` = `6178316662`), silently producing a digest that can never match the Python baseline. Verified 2026-09-02 on `mysql:9.7.2`: `SHA2(CONCAT('a',CHAR(31),'b'),256)` and Python `hashlib.sha256(b"a\x1fb")` both give `17315457580335015581` after the CONV/CAST reduction.
 
 | Source type class | Canonical text | MySQL expression |
 |---|---|---|
@@ -80,6 +80,11 @@ Adopted as the S3–S4 test contract for every dataset (see PLAN.md §4), with t
 
 # Row counts
 Always `SELECT COUNT(*)`; `information_schema.TABLES.TABLE_ROWS` is an estimate that "may vary ... by as much as 40% to 50%" ([doc](/sources/mysql-refman-9-7-information-schema-tables.md)).
+
+# Verified on the target server (2026-09-02, `mysql:9.7.2`)
+* `SUM(CONV(...))` without the cast returns `1.8446744073709552e19` for two digests near 2^63 while `SUM(CAST(CONV(...) AS UNSIGNED))` returns `18446744073709551620`, exactly the Python value — the defect the first code review found, and the cast that fixes it.
+* Over an empty table `SUM(...)` is `NULL` and `COALESCE(SUM(...), 0)` is `0` — the third review's finding, confirmed; Northwind ships two empty tables, so the `COALESCE` is load-bearing.
+* `SHA2()` is available (the image is an SSL build); `MD5()` and `SHA1()` are **not** (`FUNCTION probe.MD5 does not exist`), confirming they moved into the optional `classic_hashing` component in 9.6.
 
 # Status
 accepted

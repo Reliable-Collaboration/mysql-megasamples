@@ -80,7 +80,7 @@ Python script parser → MySQL (path (a) in [the decision](/decisions/oracle-con
 | object | action | reason |
 |---|---|---|
 | view `customer_order_products` | port with change | `LISTAGG(... ON OVERFLOW TRUNCATE '...' WITH COUNT) WITHIN GROUP (ORDER BY line_item_id)` → `GROUP_CONCAT(product_name ORDER BY line_item_id SEPARATOR ', ')`; overflow behaviour differs (MySQL silently cuts at `group_concat_max_len`, default 1024 — set 65535 in the session or accept; longest order has few items) |
-| view `store_orders` | port with change | `GROUP BY GROUPING SETS (...)` + `grouping_id()`: MySQL supports `WITH ROLLUP` and `GROUPING()`; whether 9.7 supports `GROUPING SETS` was **not verified** → port with `ROLLUP` and a `CASE` on `GROUPING(store_name), GROUPING(order_status)`; the row set (store totals, status totals, grand total) can be reproduced with a `UNION ALL` if needed |
+| view `store_orders` | port with change | `GROUP BY GROUPING SETS (...)` + `grouping_id()`: **verified 2026-09-02 on `mysql:9.7.2`** — `GROUPING SETS` parses but is rejected at execution with `ERROR 3889 (HY000): Secondary engine operation failed`, i.e. it is a HeatWave-only feature and unusable on community MySQL. `WITH ROLLUP` + `GROUPING()` works (verified). So: port with `ROLLUP` and a `CASE` on `GROUPING(store_name), GROUPING(order_status)`; the row set (store totals, status totals, grand total) can be reproduced with a `UNION ALL` if needed |
 | view `product_reviews` | port | `JSON_TABLE` + `AVG() OVER (PARTITION BY ...)` (**Inferred:** both supported in 8.0+/9.x, verify) |
 | view `product_orders` | port | plain aggregate |
 | CHECK constraints (5) | port | including `store_at_least_one_address_c` (**Inferred:** enforced CHECK since 8.0.16) |
