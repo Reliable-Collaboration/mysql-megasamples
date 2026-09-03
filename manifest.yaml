@@ -1119,3 +1119,40 @@ artifacts:
     size_bytes: 0
     license: gpl-2-0
     ipv4_first: false
+
+  # Contoso V2, the 100k-order ready-to-use CSV set. 7-zip format, read with py7zr so the build
+  # needs no system 7-zip.
+  - id: contoso/csv-100k.7z
+    dataset: contoso
+    url: https://github.com/sql-bi/Contoso-Data-Generator-V2-Data/releases/download/ready-to-use-data/csv-100k.7z
+    mirrors: []
+    sha256: "f05a4a9010e6bb0f52845e7850cc114b5cd8df24dec623b475f74c702057944b"
+    size_bytes: 9786343
+    license: mit
+    ipv4_first: false
+
+  # Contoso's SQL Server DDL, pinned at generator release 2.0.1, for column order and types.
+  - id: contoso/CreateTablesCommon.sql
+    dataset: contoso
+    url: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/fd606c50c560b03a5add9c5f526d0b9f5f188dbf/scripts/sql/CreateTablesCommon.sql
+    mirrors: []
+    sha256: "46e8d39530f3d984c0fb13a5f3c398cf45f94c90ead462ca32c45c0153b224f3"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: contoso/CreateTablesSales.sql
+    dataset: contoso
+    url: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/fd606c50c560b03a5add9c5f526d0b9f5f188dbf/scripts/sql/CreateTablesSales.sql
+    mirrors: []
+    sha256: "dc344238e0dd5ec18a05f95b134b2102db6f1ac47a5ee63f16f67a2472032e52"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: contoso/CreateTablesOrders.sql
+    dataset: contoso
+    url: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/fd606c50c560b03a5add9c5f526d0b9f5f188dbf/scripts/sql/CreateTablesOrders.sql
+    mirrors: []
+    sha256: "d82ef30a2b8faba85ee4510fc1cffb08b1b50c6f7d9f6e1cde5080bca4e425d8"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false

@@ -1,0 +1,63 @@
+- name: sales_totals
+  query: 'SELECT COUNT(*), ROUND(SUM(quantity * netprice), 2), ROUND(SUM(quantity * unitcost), 2)
+
+    FROM sales
+
+    '
+- name: sales_matches_orderrows
+  query: 'SELECT (SELECT COUNT(*) FROM sales), (SELECT COUNT(*) FROM orderrows),
+
+    (SELECT COUNT(*) FROM sales s JOIN orderrows r
+
+    ON r.orderkey = s.orderkey AND r.linenumber = s.linenumber)
+
+    '
+- name: date_dimension_span
+  query: 'SELECT MIN(date), MAX(date), COUNT(*), DATEDIFF(MAX(date), MIN(date)) + 1 FROM `date`
+
+    '
+- name: currencies_and_countries
+  query: 'SELECT (SELECT COUNT(DISTINCT tocurrency) FROM currencyexchange) AS currencies,
+
+    (SELECT COUNT(DISTINCT countrycode) FROM store) AS store_countries,
+
+    (SELECT COUNT(DISTINCT country) FROM customer) AS customer_countries
+
+    '
+- name: revenue_by_year
+  query: 'SELECT YEAR(orderdate), COUNT(*), ROUND(SUM(quantity * netprice), 2) FROM sales
+
+    GROUP BY YEAR(orderdate) ORDER BY YEAR(orderdate)
+
+    '
+- name: top_stores
+  query: 'SELECT st.storecode, st.countrycode, COUNT(*) FROM sales s
+
+    JOIN store st ON st.storekey = s.storekey
+
+    GROUP BY st.storekey, st.storecode, st.countrycode ORDER BY COUNT(*) DESC, st.storekey LIMIT 5
+
+    '
+- name: non_ascii_customers
+  query: 'SELECT COUNT(*) FROM customer
+
+    WHERE CONCAT(givenname, surname, city) REGEXP ''[^ -~]''
+
+    '
+- name: accented_customer_example
+  query: 'SELECT givenname, surname, city, countryfull FROM customer
+
+    WHERE CONCAT(givenname, surname, city) REGEXP ''[^ -~]'' ORDER BY customerkey LIMIT 3
+
+    '
+- name: exchange_rates_present
+  query: 'SELECT fromcurrency, tocurrency, ROUND(AVG(exchange), 4) FROM currencyexchange
+
+    GROUP BY fromcurrency, tocurrency ORDER BY fromcurrency, tocurrency LIMIT 5
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='contoso')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='contoso')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='contoso') AS triggers\n"

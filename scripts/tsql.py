@@ -644,6 +644,30 @@ def drop_nondeterministic_checks(sql):
     return "".join(out), dropped
 
 
+CONSTRAINT_LINE = re.compile(r"(?i)^\s*(CONSTRAINT|PRIMARY\s+KEY|FOREIGN\s+KEY|UNIQUE|CHECK)\b")
+
+
+def comma_before_constraints(create_table):
+    """Put back a comma the upstream script omits before a table-level constraint.
+
+    Contoso's own DDL writes `[CurrencyCode] [nvarchar](5) NOT NULL` and then, with no comma,
+    `CONSTRAINT [PK_Orders] PRIMARY KEY ...`. MySQL will not have it.
+
+    Opt-in, because the same shape is legitimate elsewhere: pubs writes a column-level PRIMARY KEY on
+    its own line as a continuation of the column above it, where a comma would break the statement.
+    """
+    lines, out = create_table.split("\n"), []
+    for line in lines:
+        if CONSTRAINT_LINE.match(line):
+            previous = next((i for i in range(len(out) - 1, -1, -1) if out[i].strip()), None)
+            if previous is not None:
+                text = out[previous].rstrip()
+                if text and text[-1] not in ",(":
+                    out[previous] = text + ","
+        out.append(line)
+    return "\n".join(out)
+
+
 def hoist_inline_references(create_table):
     """Turn column-level `REFERENCES t(c)` into table-level FOREIGN KEY clauses.
 
@@ -832,7 +856,7 @@ def convert_dates_mdy(sql):
 
 
 def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=("dbo",),
-              computed_types=None, materialize=()):
+              computed_types=None, materialize=(), fix_missing_commas=False):
     """Return (statements, name_map, notes). `drop_checks` names CHECK constraints to omit."""
     name_map, notes, statements = {}, [], []
     identity_pk = {}     # table -> column that already carries PRIMARY KEY with its identity
@@ -867,8 +891,12 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
         head = batch.strip()
         if SKIP_BATCH.match(head) or not re.sub(r"(?s)/\*.*?\*/|--[^\n]*", "", head).strip():
             continue
-        if re.match(r"(?i)^\s*alter\s+table\s+.*\b(no)?check\s+constraint\s+all", head, re.S):
-            continue                                    # constraint disabling has no MySQL analogue
+        # enabling or disabling a constraint, by name or with ALL, has no MySQL analogue: the
+        # constraint either exists or it does not
+        # the table name may be quoted and contain spaces ("Order Details"), so the span between
+        # it and the keyword is matched loosely but bounded
+        if re.match(r"(?i)^\s*alter\s+table\s+.{0,80}?\b(no)?check\s+constraint\b", head, re.S):
+            continue
         # PRINT is progress messaging. It is skipped as a statement of its own, but AdventureWorks
         # also puts one directly after a statement in the same batch, where it would be emitted.
         batch = re.sub(r"(?im)^[ \t]*PRINT\s+[^;]*;[ \t]*$", "", batch)
@@ -902,6 +930,11 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
         # a covering index: MySQL has no INCLUDE, and an InnoDB secondary index already carries the
         # primary key, so the clause goes rather than the included columns joining the key
         body = re.sub(r"(?is)\s+INCLUDE\s*\([^)]*\)", "", body)
+        # index storage options (PAD_INDEX, ALLOW_PAGE_LOCKS, FILLFACTOR ...): none has a MySQL
+        # equivalent, and they appear on both CREATE INDEX and inline PRIMARY KEY/UNIQUE clauses
+        body = re.sub(r"(?is)\s*WITH\s*\(\s*(?:PAD_INDEX|STATISTICS_NORECOMPUTE|IGNORE_DUP_KEY"
+                      r"|ALLOW_ROW_LOCKS|ALLOW_PAGE_LOCKS|OPTIMIZE_FOR_SEQUENTIAL_KEY|FILLFACTOR"
+                      r"|SORT_IN_TEMPDB|ONLINE|DROP_EXISTING|DATA_COMPRESSION)\b[^)]*\)", "", body)
         if kind in ("table", "constraint"):
             body = convert_types(body)
             body = re.sub(r"(?i)\bIDENTITY\s*\(\s*\d+\s*,\s*\d+\s*\)", "AUTO_INCREMENT", body)
@@ -921,6 +954,8 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             for name in dropped_checks:
                 notes.append(f"dropped CHECK {name}: MySQL allows no non-deterministic function")
             if kind == "table":
+                if fix_missing_commas:
+                    body = comma_before_constraints(body)
                 body, generated = convert_computed(body, computed_types or {}, materialize)
                 # AdventureWorks LT's scripts end several column lists with a trailing comma
                 body = re.sub(r",(\s*\)\s*;?)$", r"\1", body.rstrip())

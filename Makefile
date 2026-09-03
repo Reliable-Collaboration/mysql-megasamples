@@ -1,11 +1,12 @@
 # megasamples build orchestration. Every target is a thin shim over a script in scripts/, so the
 # pipeline is testable without make. Target list and rationale: PLAN.md section 2.4.
-PY      ?= python3
+# the project venv when uv has created one (duckdb, lxml and py7zr live there), else system python
+PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo python3)
 DATASET ?=
 SF      ?= 1
 
 .PHONY: help core-fast image test-image okf-check provenance build-server build-server-stop clean-context dump
-.PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore
+.PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso
 
 help:
 	@echo "make <dataset>        fetch, stage, load, test one dataset (see CORE_FAST below)"
@@ -22,9 +23,9 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso,$(eval $(call DATASET_RULE,$(d))))
 
-CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore
+CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso
 
 core-fast: $(CORE_FAST)
 

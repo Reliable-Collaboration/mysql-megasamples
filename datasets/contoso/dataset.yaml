@@ -1,0 +1,10 @@
+name: contoso
+database: contoso
+tier: core
+record: knowledge/datasets/contoso.md
+licenses: [mit]
+artifacts: [contoso/csv-100k.7z, contoso/CreateTablesCommon.sql, contoso/CreateTablesSales.sql,
+            contoso/CreateTablesOrders.sql]
+converter: none
+load:
+  - contoso.sql

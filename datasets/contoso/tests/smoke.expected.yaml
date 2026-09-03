@@ -1,0 +1,16 @@
+# S7: canonical query results, tab-separated as the client prints them.
+accented_customer_example: "Nicole\tGersten\tStuttgart Dürrlewang\tGermany\nMathias\t\
+  Maier\tSchönwalde\tGermany\nGabriele\tAbendroth\tMönchengladbach Großheide\tGermany"
+currencies_and_countries: "5\t9\t8"
+date_dimension_span: "2016-01-01\t2026-12-31\t4018\t4018"
+exchange_rates_present: "AUD\tAUD\t1\nAUD\tCAD\t0.9303\nAUD\tEUR\t0.6368\nAUD\tGBP\t\
+  0.5501\nAUD\tUSD\t0.7071"
+non_ascii_customers: '6142'
+objects_created: "0\t0\t0"
+revenue_by_year: "2016\t4999\t5678106.37\n2017\t8461\t10182548.76\n2018\t11338\t13784590.12\n\
+  2019\t22268\t25815538.89\n2020\t15457\t17743747.83\n2021\t15968\t16366682.46\n2022\t\
+  23589\t24495022.75\n2023\t46077\t43831054.54\n2024\t38109\t31639690.92\n2025\t37708\t\
+  29277489.59"
+sales_matches_orderrows: "223974\t223974\t223974"
+sales_totals: "223974\t218814472.24\t96482260.42"
+top_stores: "-1\t--\t93550\n50\tUS\t3631\n45\tUS\t3587\n10\tCA\t3547\n8\tCA\t3458"

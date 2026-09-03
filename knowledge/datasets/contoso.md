@@ -18,6 +18,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:48:59Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 sources:
@@ -54,6 +56,16 @@ Native = CSV (also Parquet/Delta) produced by the generator; SQLBI's SQL Server 
 
 # Shape
 Eight tables (from the SQL Server DDL, [source](/sources/github-sql-bi-contoso-v2-sql-scripts.md)): customer (24 cols: name, address, geo, birthday, occupation, lat/long), date (17 cols), product (14 cols: code, name, manufacturer, brand, color, weight, cost, price, category/subcategory), store (11 cols), currencyexchange (date, from, to, rate), sales (13 cols, PK OrderKey+LineNumber), orders (6 cols), orderrows (7 cols). Currencies AUD, CAD, EUR, GBP, USD; countries AU, CA, DE, FR, IT, NL, GB/UK, US.
+**Built and measured 2026-09-03** (100k set): 8 tables, **753,467 rows**, **103.3 MB** in InnoDB (the record inferred 60–120 MB, so no need to drop either fact table), loading in 4.8 s, 7 foreign keys with 0 orphans. Counts: currencyexchange 100,450; customer 104,990; date 4,018; orderrows 223,974; **orders 93,470**; product 2,517; sales 223,974; store 74.
+
+Two inferences are corrected. **orders is 93,470, not 100,000** — `OrdersCount` is what the generator is asked for, but the build then cuts orders outside its date window (`CutDateBefore` 2014-05-18, `CutDateAfter` 2024-04-20), so the shipped set is smaller. And sales/orderrows are **223,974**, a ratio of 2.40 rather than the inferred 2.43. `sales` and `orderrows` hold the same 223,974 rows and join one-to-one on (orderkey, linenumber).
+
+**CSV dialect (was undocumented, now measured)**: comma-delimited, one header row of column names in DDL order, no quoting needed, ISO `YYYY-MM-DD` dates, empty field = NULL, UTF-8 without BOM. The converter checks each header against the pinned SQL Server DDL before writing a row, because the load is positional.
+
+**Encoding** confirmed non-ASCII as inferred: 6,142 of 104,990 customers carry non-ASCII text in their name or city — `Stuttgart Dürrlewang`, `Schönwalde`, `Mönchengladbach Großheide`.
+
+**7-zip without 7-zip**: the archive is read with `py7zr`, a pure-Python reader added to the project's dependencies, so neither the build machine nor CI needs a system 7-zip.
+
 * Row counts (100k set): orders = 100,000 by definition ("OrdersCount ... Total number of orders"); **Inferred:** sales/orderrows about 2.4 x orders (OrderRowsWeights [12,9,7,4,1,1,1] -> mean 2.43 lines) i.e. about 243,000; customers = 5% of the static customer pool (pool size unknown; measure); date = 10 years about 3,650 rows; currencyexchange = days x currency pairs. Executor records exact counts from the CSVs.
 * Encoding: **Inferred** UTF-8 (customer names from multi-country fake-name files, e.g. DE/FR/IT with accents - expect non-ASCII in customer.GivenName/Surname/City; verify with a grep on the CSV). Loaded size for 100k: **Inferred** 60-120 MB InnoDB (sales + orderrows duplicate the fact data); consider loading only `sales` or only `orders`+`orderrows` in core to halve it.
 

@@ -1,0 +1,10 @@
+# Measured from the 100k CSV set; the record could only infer these. Note orders is 93,470, not the
+# generator's OrdersCount of 100,000: the build cuts orders outside its date window.
+currencyexchange: 100450
+customer: 104990
+date: 4018
+orderrows: 223974
+orders: 93470
+product: 2517
+sales: 223974
+store: 74
