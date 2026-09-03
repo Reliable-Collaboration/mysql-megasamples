@@ -79,6 +79,11 @@ sources:
 
 # Facts
 
+## Measured on `mysql:9.7.2` (2026-09-02, task P-02)
+`mysqld --verbose --help` and a running server confirm every default the records assumed: `character_set_server=utf8mb4`, `collation_server=utf8mb4_0900_ai_ci`, `local_infile=FALSE`, `secure_file_priv=/var/lib/mysql-files`, `lower_case_table_names=0`, `innodb_autoinc_lock_mode=2`, `log_bin=binlog` (binary logging on), `--init-file` accepted, `group_concat_max_len=1024`, and `sql_mode=ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION`. Image size 270,916,394 bytes, amd64, digest `sha256:257388ed…`; bundled `mysqlsh` 9.7.1 and `mysql` client 9.7.2.
+Two results that were open questions: **`@@explain_format` defaults to `TREE`**, so every EXPLAIN test must ask for `FORMAT=JSON` explicitly (the plan already does); and `CAST('2021/1/1' AS DATETIME)` yields `2021-01-01 00:00:00` under the strict default, so Chinook's slashed date literals load without rewriting.
+**`GROUPING SETS` is not usable**: it parses and then fails with `ERROR 3889 Secondary engine operation failed`, a HeatWave-only feature; `WITH ROLLUP` + `GROUPING()` is the portable form.
+
 ## Character set and collation
 * "By default, these are utf8mb4 and utf8mb4_0900_ai_ci" ([charset-server](/sources/mysql-refman-9-7-charset-server.md)). `_ai_ci` = accent- and case-insensitive comparisons: `'resume' = 'résumé'` is true, so uniqueness constraints and `DISTINCT` behave differently from SQL Server `_CS_AS`/binary collations and Oracle's case-sensitive default. Converters declare `CHARACTER SET utf8mb4` explicitly and choose `utf8mb4_0900_as_cs` or `utf8mb4_bin` per column only where the source semantics demand it (dataset records list those columns).
 
