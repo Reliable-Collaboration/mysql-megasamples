@@ -1,0 +1,16 @@
+# the indexes cidx_v3.sql creates; a translation that lost one shows up as a full scan
+- name: orders_by_customer
+  query: SELECT COUNT(*) FROM orders WHERE customer_id = 101
+  must_not_full_scan: [orders]
+- name: order_items_by_order
+  query: SELECT COUNT(*) FROM order_items WHERE order_id = 2458
+  must_not_full_scan: [order_items]
+- name: inventories_by_product
+  query: SELECT COUNT(*) FROM inventories WHERE product_id = 1726
+  must_not_full_scan: [inventories]
+- name: descriptions_by_translated_name
+  query: SELECT product_id FROM product_descriptions WHERE translated_name = 'LCD Monitor 11/PM'
+  must_not_full_scan: [product_descriptions]
+- name: customers_by_last_name
+  query: SELECT customer_id FROM customers WHERE cust_last_name = 'Welles'
+  must_not_full_scan: [customers]

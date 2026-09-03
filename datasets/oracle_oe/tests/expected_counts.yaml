@@ -1,0 +1,11 @@
+# Row counts verified from the populate scripts during research (knowledge/datasets/oracle-oe-pm-ix.md),
+# not pinned from a load, so a conversion that silently drops rows fails here.
+customers: 319
+customer_phone_numbers: 378
+warehouses: 9
+product_information: 288
+product_descriptions: 8640
+inventories: 1112
+orders: 105
+order_items: 665
+promotions: 2

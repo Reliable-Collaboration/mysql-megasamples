@@ -241,3 +241,375 @@ artifacts:
     size_bytes: 937314
     license: mit
     ipv4_first: false
+
+  # Oracle Order Entry: exactly the files the installer reaches, in install order.
+  # oe_main.sql -> coe_v3 (DDL) -> loe_v3 (data) -> poe_v3 (views, comments, indexes).
+  # Note cidx_v3.sql, not the legacy oe_idx.sql, is what the installer runs.
+  - id: oracle_oe/coe_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/coe_v3.sql
+    mirrors: []
+    sha256: "fa409c0e84d1779a194c376423b5c0cada7366bfba7e84a54438b9e804913bed"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/ccus_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/ccus_v3.sql
+    mirrors: []
+    sha256: "55ab9f2645de0b258e6cfad936ac72cd2ca13e93a130b405d88e38c62b5db792"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/cwhs_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cwhs_v3.sql
+    mirrors: []
+    sha256: "15413237e4b21067cde2f7a2cccf6f149bd0e42ca6f8b8c3911ef3773b792302"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/cord_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cord_v3.sql
+    mirrors: []
+    sha256: "009a83bb18efbbdf2300e075235fb954973be505025e08e06beb591435d4774b"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/loe_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/loe_v3.sql
+    mirrors: []
+    sha256: "a585f1730dd3ef1662f6e9bab6e304ca23230b3d85de4ac70c3756e8f5358a4c"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_pi.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pi.sql
+    mirrors: []
+    sha256: "eb071ecb2bd8b7ef6dc48b41d2bc75dfb59fa9f4347d350a35f7f6ab0ba945b6"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_pd.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pd.sql
+    mirrors: []
+    sha256: "30a8e1e3aac8cf7bcc62e6130dc8d4e27a4ce45b667c50eb82af2642a970e114"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_us.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_us.sql
+    mirrors: []
+    sha256: "a6351f539d84854c5a647a469970106da53ff41e57d71384a9297a79c9bca6ad"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ar.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ar.sql
+    mirrors: []
+    sha256: "3cffeb4758efc4832a1690fc16e9f1a5286998d02ece4706b98a0bdf18958ba7"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ca.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ca.sql
+    mirrors: []
+    sha256: "267fe927c11dfd900937d6363697babc5e98937e760e7a80318297cd588e9907"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_cs.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_cs.sql
+    mirrors: []
+    sha256: "d9f716b4a83e90b38e45cb581877ddb82684804b325c68d32e018be06a5ff5bf"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_d.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_d.sql
+    mirrors: []
+    sha256: "ae4fbbb9f857bbcbd09453fd3a21733bce21e1d5e0e891cccb69c98170427403"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_dk.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_dk.sql
+    mirrors: []
+    sha256: "e3ca344557418f10ad78e7e073503271c52bdea305a9fc780ab118ced02307fd"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_e.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_e.sql
+    mirrors: []
+    sha256: "9e2c753cb14c913c71354c6c93b4ea896edff28dec2aec873929d7d62b2fb697"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_el.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_el.sql
+    mirrors: []
+    sha256: "7d07a0a36bdee991c3b8466391530c4e853399172c9ed6ec7f1713a18e92deb0"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_esa.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_esa.sql
+    mirrors: []
+    sha256: "644a73d9cf5dc10742f529c5df7409853075d17f1c231ac06d2c6856c6390cb2"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_f.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_f.sql
+    mirrors: []
+    sha256: "94073d512ccf866a8495bb883798124a77ac324ca85a4f0da750cc791d4ebd51"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_frc.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_frc.sql
+    mirrors: []
+    sha256: "67d79e4d86b2571bf90c3892c008803175226a2bb606ddedec3c0785524788ab"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_hu.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_hu.sql
+    mirrors: []
+    sha256: "74410406c0bc288d908cc452290725936bfafa3b96205898f47ab57e85b0fa49"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_i.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_i.sql
+    mirrors: []
+    sha256: "bf3a45caafcd0deee3749d976f11e7d91ff81eda876980d16feb3e9773489b96"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_iw.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_iw.sql
+    mirrors: []
+    sha256: "5f883ffeb245dd516c93bcc7f22dcef129032c418bb6bc5f8054d65c23191199"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ja.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ja.sql
+    mirrors: []
+    sha256: "993243a5b8c379ffbe904a7b19cf11eb52c1d124e9a69c9a2caf79b4c2656972"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ko.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ko.sql
+    mirrors: []
+    sha256: "424e145b0461eebc45f70d57128f8ec6aee20add54125baae72bbce3f222d109"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_n.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_n.sql
+    mirrors: []
+    sha256: "a7fb10a9adae7c6bed4e0cd140ff7743766a47ef869e678ec366051454369472"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_nl.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_nl.sql
+    mirrors: []
+    sha256: "9e7f5112cc89e984f588e14fc08d6b25b7bf64b4d2cc236817e28a38ee99cca0"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_pl.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pl.sql
+    mirrors: []
+    sha256: "468b89739bd9a500465b0f0603ae7a3fe214c414a4e6cfb32cd079693c883fc0"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_pt.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pt.sql
+    mirrors: []
+    sha256: "a556aab6aa9fac4ad91af1492860c4d84eba1d083a6dbff62ca6a8befc369935"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ptb.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ptb.sql
+    mirrors: []
+    sha256: "b59f7f6385faae7f9516acfb19d4c2e7ad2aaf924f1d18b01235a988e094c71f"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ro.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ro.sql
+    mirrors: []
+    sha256: "9173efd95cd65880fd0ae5a5e492b5596310531292c8336c65ebe40347fbf0d0"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_ru.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ru.sql
+    mirrors: []
+    sha256: "a37e8be49fa977724f2064a595bae5df0140bec46bb71cb503b5c8016c096142"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_s.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_s.sql
+    mirrors: []
+    sha256: "28d86b3a9fb01ed65c996ab48976d3eeb556dc6d6581673f0dce362a09f5d74f"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_sf.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_sf.sql
+    mirrors: []
+    sha256: "1a68531b1658aa543b0b5eb919ab8fac838558517cc3d4ef1577939e924dbfd2"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_sk.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_sk.sql
+    mirrors: []
+    sha256: "3e8de8c491b21f3f1e06054f3a919dea316dc82439d02960a7db05d01d30db0f"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_th.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_th.sql
+    mirrors: []
+    sha256: "a4b276a1ec86808eccb40a3cfc8d48720d71d50dcfe4ea255f01565b527c0dce"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_tr.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_tr.sql
+    mirrors: []
+    sha256: "7658df201f0e4d7861c0f1e9e1c9732b8759023ead6ebf7404d6dccbd9c392b0"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_zhs.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_zhs.sql
+    mirrors: []
+    sha256: "daaf74de2dc4b295f9db81c015cf3bbe1ef8175e9e46f0d2cfdf90d32200249c"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_zht.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_zht.sql
+    mirrors: []
+    sha256: "29b2086f3c4ebd9ae112db7e24a9b2e24f7807d0ffe44c7d4e69977610cd64e5"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/pwhs_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/pwhs_v3.sql
+    mirrors: []
+    sha256: "dec4034c8311c29c089abe8ce77381a83567a1aad6377dff632fe5563de3bfc0"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/pcus_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/pcus_v3.sql
+    mirrors: []
+    sha256: "e78b56cec1e50d07a084b99e569fed1b78adec5d461173d185150376d693de12"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/pord_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/pord_v3.sql
+    mirrors: []
+    sha256: "5e2af78d93b760760e3d9f598540a4ce3bbff2a1adc510b07ae662a70e66b50a"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_itm.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_itm.sql
+    mirrors: []
+    sha256: "4975d17803beb1da7a463c8edeafc8df525eb57b0cff71a5a1338aa39050ddec"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_p_inv.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_inv.sql
+    mirrors: []
+    sha256: "b684c6b54fcb07d373d7f5429184a5a9bd3259372915e80aed11e161f74d14f3"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/poe_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/poe_v3.sql
+    mirrors: []
+    sha256: "fc6c7e06aff9752e8398ff657365cad34e019f021341197f198545388b6919d4"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/oe_views.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_views.sql
+    mirrors: []
+    sha256: "bad5ef1cd07ab713c3081686eb602daf9b94c5719baaaacca8fb06150350e015"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/cmnt_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cmnt_v3.sql
+    mirrors: []
+    sha256: "69565a0cf6f2c25594ae950d0a45aa7399ba5b7c28df4e6c3c5b613197b5c0d9"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false
+  - id: oracle_oe/cidx_v3.sql
+    dataset: oracle_oe
+    url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cidx_v3.sql
+    mirrors: []
+    sha256: "9e5e204ccf14890889358cc11d7e27a051bc9df5ae26712c6814a2cfc046a095"
+    size_bytes: 0
+    license: mit
+    ipv4_first: false

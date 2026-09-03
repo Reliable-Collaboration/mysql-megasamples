@@ -1,0 +1,125 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+customer_phone_numbers:
+  columns:
+  - customer_id
+  - phone_seq
+  - phone_number
+  excluded: []
+  n: 378
+  s: 17048173534320332016
+  x: 7306835533087136690
+customers:
+  columns:
+  - customer_id
+  - cust_first_name
+  - cust_last_name
+  - cust_street_address
+  - cust_postal_code
+  - cust_city
+  - cust_state_province
+  - cust_country_id
+  - nls_language
+  - nls_territory
+  - credit_limit
+  - cust_email
+  - account_mgr_id
+  - geo_longitude
+  - geo_latitude
+  - date_of_birth
+  - marital_status
+  - gender
+  - income_level
+  excluded: []
+  n: 319
+  s: 6831822056288026102
+  x: 6210238866606274340
+inventories:
+  columns:
+  - product_id
+  - warehouse_id
+  - quantity_on_hand
+  excluded: []
+  n: 1112
+  s: 4380430066927441528
+  x: 8414863952204297210
+order_items:
+  columns:
+  - order_id
+  - line_item_id
+  - product_id
+  - unit_price
+  - quantity
+  excluded: []
+  n: 665
+  s: 4054114361538791106
+  x: 14013624044961828862
+orders:
+  columns:
+  - order_id
+  - order_date
+  - order_mode
+  - customer_id
+  - order_status
+  - order_total
+  - sales_rep_id
+  - promotion_id
+  excluded: []
+  n: 105
+  s: 8701973438068001957
+  x: 9688969287599048359
+product_descriptions:
+  columns:
+  - product_id
+  - language_id
+  - translated_name
+  - translated_description
+  excluded: []
+  n: 8640
+  s: 11005280935640636314
+  x: 15940554024714898946
+product_information:
+  columns:
+  - product_id
+  - product_name
+  - product_description
+  - category_id
+  - weight_class
+  - warranty_months
+  - supplier_id
+  - product_status
+  - list_price
+  - min_price
+  - catalog_url
+  excluded: []
+  n: 288
+  s: 14713781505522101542
+  x: 4468848589399050164
+promotions:
+  columns:
+  - promo_id
+  - promo_name
+  excluded: []
+  n: 2
+  s: 10776693639258971497
+  x: 10542153923341162561
+warehouses:
+  columns:
+  - warehouse_id
+  - warehouse_name
+  - location_id
+  - geo_longitude
+  - geo_latitude
+  - warehouse_spec_xml
+  - building
+  - area
+  - docks
+  - dock_type
+  - water_access
+  - rail_access
+  - parking
+  - v_clearance
+  excluded: []
+  n: 9
+  s: 10729604962031288169
+  x: 15618761487647653505

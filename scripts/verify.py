@@ -107,21 +107,27 @@ def stage_digests(cfg, schema, d, pin, res):
 
 
 def stage_fks(cfg, schema, d, pin, res):
+    # kcu.referenced_table_schema, not the constraint's own schema: Oracle OE's orders and
+    # customers reference oracle_hr, and joining against the wrong database finds no table at all
     fks = db.rows(
-        "SELECT rc.constraint_name, rc.table_name, kcu.column_name, rc.referenced_table_name, "
+        "SELECT rc.constraint_name, rc.table_name, kcu.column_name, "
+        "kcu.referenced_table_schema, rc.referenced_table_name, "
         "kcu.referenced_column_name FROM information_schema.referential_constraints rc "
         "JOIN information_schema.key_column_usage kcu ON kcu.constraint_name=rc.constraint_name "
         "AND kcu.constraint_schema=rc.constraint_schema "
         f"WHERE rc.constraint_schema='{schema}' ORDER BY 1,3")
-    orphans = 0
-    for name, table, col, rtable, rcol in fks:
+    orphans, external = 0, 0
+    for name, table, col, rschema, rtable, rcol in fks:
+        external += rschema != schema
         n = int(db.rows(
-            f"SELECT COUNT(*) FROM `{schema}`.`{table}` c LEFT JOIN `{schema}`.`{rtable}` p "
+            f"SELECT COUNT(*) FROM `{schema}`.`{table}` c LEFT JOIN `{rschema}`.`{rtable}` p "
             f"ON c.`{col}` = p.`{rcol}` WHERE c.`{col}` IS NOT NULL AND p.`{rcol}` IS NULL")[0][0])
         if n:
-            res.fail(f"foreign key {name} ({table}.{col} -> {rtable}.{rcol}) has {n} orphan rows")
+            res.fail(f"foreign key {name} ({table}.{col} -> {rschema}.{rtable}.{rcol}) "
+                     f"has {n} orphan rows")
             orphans += n
-    res.note(f"{len(fks)} foreign keys validated, {orphans} orphans")
+    across = f" ({external} across databases)" if external else ""
+    res.note(f"{len(fks)} foreign keys validated{across}, {orphans} orphans")
 
 
 def stage_indexes(cfg, schema, d, pin, res):

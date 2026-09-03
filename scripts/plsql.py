@@ -299,7 +299,10 @@ MONTHS = {m: i + 1 for i, m in enumerate(
 TOKENS = [("YYYY", r"(?P<Y>\d{4})"), ("RRRR", r"(?P<Y>\d{4})"), ("MON", r"(?P<b>[A-Za-z]{3})"),
           ("MONTH", r"(?P<B>[A-Za-z]+)"), ("DD", r"(?P<d>\d{1,2})"), ("MM", r"(?P<m>\d{1,2})"),
           ("HH24", r"(?P<H>\d{1,2})"), ("HH", r"(?P<H>\d{1,2})"), ("MI", r"(?P<M>\d{1,2})"),
-          ("SS", r"(?P<S>\d{1,2})"), ("YY", r"(?P<y>\d{2})"), ("RR", r"(?P<y>\d{2})")]
+          ("SS", r"(?P<S>\d{1,2})"), ("YY", r"(?P<y>\d{2})"), ("RR", r"(?P<y>\d{2})"),
+          # meridian indicator: the mask writes AM or A.M. whichever the value carries
+          ("A.M.", r"(?P<p>[AP]\.M\.)"), ("AM", r"(?P<p>[AP]M)"),
+          ("P.M.", r"(?P<p>[AP]\.M\.)"), ("PM", r"(?P<p>[AP]M)")]
 
 
 def mask_to_regex(mask):
@@ -338,7 +341,11 @@ def oracle_date_literal(value, mask):
     if month is None and g.get("B"):
         month = MONTHS.get(g["B"][:3].upper())
     day = g.get("d") or "1"
-    time = f"{int(g.get('H') or 0):02d}:{int(g.get('M') or 0):02d}:{int(g.get('S') or 0):02d}"
+    hour = int(g.get("H") or 0)
+    if g.get("p"):                                     # 12-hour clock: 12 AM is 00, 12 PM stays 12
+        meridian = g["p"].replace(".", "").upper()
+        hour = (hour % 12) + (12 if meridian == "PM" else 0)
+    time = f"{hour:02d}:{int(g.get('M') or 0):02d}:{int(g.get('S') or 0):02d}"
     frac = (g.get("f") or "")[:6]                      # MySQL keeps at most 6 fractional digits
     return f"{year}-{int(month):02d}-{int(day):02d} {time}" + (f".{frac}" if frac else "")
 

@@ -1,0 +1,122 @@
+- name: japanese_unistr_canary
+  query: 'SELECT translated_name FROM product_descriptions WHERE product_id = 1726
+
+    AND language_id = ''JA''
+
+    '
+- name: languages_present
+  query: SELECT COUNT(DISTINCT language_id), COUNT(*) FROM product_descriptions
+- name: non_ascii_scripts
+  query: 'SELECT language_id, COUNT(*) FROM product_descriptions
+
+    WHERE language_id IN (''AR'', ''EL'', ''IW'', ''JA'', ''KO'', ''RU'', ''TH'', ''ZHS'')
+    AND translated_description REGEXP ''[^ -~]''
+
+    GROUP BY language_id ORDER BY language_id
+
+    '
+- name: german_umlauts
+  query: 'SELECT translated_description LIKE ''%Auflösung für optimale Bildqualität%''
+
+    FROM product_descriptions WHERE product_id = 1726 AND language_id = ''D''
+
+    '
+- name: order_2458
+  query: 'SELECT order_date, customer_id, order_total, sales_rep_id FROM orders
+
+    WHERE order_id = 2458
+
+    '
+- name: flattened_address_and_point
+  query: 'SELECT cust_first_name, cust_last_name, cust_street_address, cust_city,
+
+    cust_state_province, cust_country_id, geo_longitude, geo_latitude
+
+    FROM customers WHERE customer_id = 101
+
+    '
+- name: phone_varray_flattened
+  query: 'SELECT customer_id, phone_seq, phone_number FROM customer_phone_numbers
+
+    WHERE customer_id IN (SELECT customer_id FROM customer_phone_numbers
+
+    GROUP BY customer_id HAVING COUNT(*) = 2) ORDER BY customer_id, phone_seq LIMIT 4
+
+    '
+- name: warehouse_xml_flattened
+  query: 'SELECT warehouse_name, building, area, docks, dock_type, water_access, parking,
+
+    v_clearance FROM warehouses WHERE warehouse_id = 1
+
+    '
+- name: warehouse_xml_still_queryable
+  query: 'SELECT ExtractValue(warehouse_spec_xml, ''/Warehouse/Area'') FROM warehouses
+
+    WHERE warehouse_id = 2
+
+    '
+- name: warranty_interval_as_months
+  query: 'SELECT warranty_months, COUNT(*) FROM product_information
+
+    GROUP BY warranty_months ORDER BY warranty_months
+
+    '
+- name: order_total_matches_line_items
+  query: 'SELECT COUNT(*) FROM orders o WHERE o.order_total <>
+
+    (SELECT COALESCE(SUM(unit_price * quantity), 0) FROM order_items i
+
+    WHERE i.order_id = o.order_id)
+
+    '
+- name: online_orders_have_no_sales_rep
+  query: 'SELECT order_mode, COUNT(*), COUNT(sales_rep_id) FROM orders
+
+    GROUP BY order_mode ORDER BY order_mode
+
+    '
+- name: account_manager_update_applied
+  query: 'SELECT account_mgr_id, COUNT(*) FROM customers
+
+    GROUP BY account_mgr_id ORDER BY account_mgr_id
+
+    '
+- name: products_view_falls_back_to_english
+  query: SELECT COUNT(*), COUNT(language_id) FROM products
+- name: toronto_inventory_view
+  query: SELECT COUNT(*), SUM(quantity_on_hand) FROM toronto_inventory
+- name: customers_view_phone_columns
+  query: 'SELECT customer_id, country_name, primary_phone_number, phone_number_2
+
+    FROM customers_view WHERE customer_id = 101
+
+    '
+- name: account_managers_rollup
+  query: SELECT COUNT(*) FROM account_managers
+- name: cross_database_sales_reps
+  query: 'SELECT COUNT(DISTINCT o.sales_rep_id) FROM orders o
+
+    JOIN oracle_hr.employees e ON e.employee_id = o.sales_rep_id
+
+    '
+- name: fulltext_across_languages
+  query: 'SELECT
+
+    (SELECT COUNT(*) FROM product_descriptions
+
+    WHERE MATCH(translated_description) AGAINST(''monitor'' IN NATURAL LANGUAGE MODE)) AS english,
+
+    (SELECT COUNT(*) FROM product_descriptions
+
+    WHERE MATCH(translated_description) AGAINST(''Auflösung'' IN NATURAL LANGUAGE MODE)) AS german,
+
+    (SELECT COUNT(*) FROM product_descriptions
+
+    WHERE MATCH(translated_description) AGAINST(''モニター'' IN NATURAL LANGUAGE MODE)) AS japanese
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='oracle_oe')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='oracle_oe')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='oracle_oe') AS triggers\n"

@@ -5,7 +5,7 @@ DATASET ?=
 SF      ?= 1
 
 .PHONY: help core-fast image test-image okf-check provenance build-server build-server-stop clean-context dump
-.PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co employees adventureworks_lt
+.PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe employees adventureworks_lt
 
 help:
 	@echo "make <dataset>        fetch, stage, load, test one dataset (see CORE_FAST below)"
@@ -22,9 +22,9 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co employees adventureworks_lt,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe employees adventureworks_lt,$(eval $(call DATASET_RULE,$(d))))
 
-CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co employees adventureworks_lt
+CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe employees adventureworks_lt
 
 core-fast: $(CORE_FAST)
 

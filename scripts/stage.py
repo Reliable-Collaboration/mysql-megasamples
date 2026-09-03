@@ -85,6 +85,12 @@ def stage_adventureworks_lt(dest):
                    os.path.join(dest, "adventureworks_lt.sql"))
 
 
+@stager("oracle_oe")
+def stage_oracle_oe(dest):
+    _run_dir_converter("oracle_oe", os.path.join(ROOT, "downloads", "oracle_oe"),
+                       os.path.join(dest, "oracle_oe.sql"))
+
+
 def _run_dir_converter(name, src_dir, out):
     """Converters that read a directory of files rather than a single artifact."""
     import subprocess

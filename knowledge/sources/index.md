@@ -300,6 +300,7 @@
 * [TLC Taxi Zone Lookup Table (CSV)](nyc-tlc-taxi-zone-lookup-csv.md) - The 265-row zone dimension table that PULocationID/DOLocationID reference; downloaded and counted.
 * [TLC "Working With PARQUET Format" (PDF)](nyc-tlc-working-with-parquet.md) - The TLC's own note explaining that it moved raw trip data from CSV to Parquet; the note gives no switch date.
 * [TLC Yellow Taxi Trip Records data dictionary (PDF)](nyc-tlc-yellow-data-dictionary.md) - Field-by-field definitions for the yellow taxi Parquet files, including the 2025 cbd_congestion_fee column and the code lists for VendorID, RatecodeID and payment_type.
+* [An independent export of Oracle OE product_information](oe-independent-export-sql-problems.md) - A third-party copy of the OE sample data, exported from a live Oracle database with the SQL*Plus continuations already resolved; used as ground truth for the continuation rule.
 * [okf.md annotated guide to OKF](okf-md-annotated-guide.md) - Third-party annotated guide at okf.md/spec that restates OKF v0.1 with v0.2 additions; used as an entry point, superseded by the GitHub SPEC.md.
 * [Open Knowledge Format SPEC.md v0.2 (GitHub)](okf-spec-v0-2.md) - Authoritative OKF specification text, version 0.2, read from the GoogleCloudPlatform/open-knowledge-format repository.
 * [OSI page for the BSD 3-Clause "New" or "Revised" License](opensource-org-bsd-3-clause.md) - The canonical BSD-3-Clause template text, read to confirm the Sakila file headers reproduce it.
@@ -334,6 +335,7 @@
 * [scikit-learn iris copy (sklearn/datasets/data/iris.csv, descr/iris.rst, COPYING) and load_iris docs](scikit-learn-iris-files.md) - scikit-learn ships a corrected Iris (same as R, not as UCI) under BSD-3-Clause; 150 rows with numeric class codes 0/1/2.
 * [Simple English Wikipedia Special:Statistics (live, 2026-09-02)](simple-wikipedia-special-statistics.md) - Live counters for cross-checking the dump's site_stats row.
 * [docs.sqlbi.com - Contoso Data Generator documentation (index, details, config-json, formats, sqlscripts)](sqlbi-docs-contoso-data-generator.md) - SQLBI's documentation site for the generator - generated entities, config parameter definitions, output-format options, SQL Server import scripts; no seed or row-count tables.
+* [SQL*Plus User's Guide — Continuing a Long Command on Additional Lines](sqlplus-user-guide-continuation-character.md) - A hyphen at the end of a line is a continuation character; SQL*Plus joins the lines and removes the hyphen before the statement is parsed as SQL.
 * [Stack Exchange API /info for dba and datascience (live totals on 2026-09-02)](stackexchange-api-info-dba-datascience.md) - Live site totals used as an upper bound for the 2024-04-02 dump row counts.
 * [Stack Overflow blog, "Attribution Required" (2009-06-25)](stackoverflow-blog-attribution-required-2009.md) - The original statement of the four attribution rules for republishing Stack Exchange content.
 * [Stack Overflow Help Center — "What is the data dump?"](stackoverflow-help-data-dumps.md) - The current official description of the quarterly per-site dump behind the account "Data dump access" page and the LLM-training checkbox.

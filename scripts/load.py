@@ -29,6 +29,26 @@ def main():
 
     db.start(fresh=a.fresh)
     print(f"  . build server ready")
+    for needed in cfg.get("depends", []):
+        # a cross-database foreign key needs its target to exist before the ALTER runs
+        if not db.rows("SELECT schema_name FROM information_schema.schemata "
+                       f"WHERE schema_name = '{needed}'"):
+            sys.exit(f"{a.dataset} depends on {needed}, which is not loaded; "
+                     f"run: make {needed}")
+    # A cross-database foreign key blocks DROP DATABASE on the referenced side, and a key left
+    # dangling also stops the referenced tables being recreated -- MySQL re-resolves it while the
+    # new table still has no unique key. So the dependent keys go first and their database is
+    # reloaded afterwards, which is what `depends` in dataset.yaml orders.
+    inbound = db.rows(
+        "SELECT DISTINCT rc.constraint_schema, rc.table_name, rc.constraint_name "
+        "FROM information_schema.referential_constraints rc "
+        "JOIN information_schema.key_column_usage kcu USING (constraint_schema, constraint_name) "
+        f"WHERE kcu.referenced_table_schema = '{schema}' AND rc.constraint_schema <> '{schema}'")
+    for other, table, constraint in inbound:
+        db.sql(f"ALTER TABLE `{other}`.`{table}` DROP FOREIGN KEY `{constraint}`")
+    if inbound:
+        print(f"  ! dropped {len(inbound)} foreign key(s) into {schema} from "
+              f"{', '.join(sorted({r[0] for r in inbound}))}; reload those datasets")
     db.sql(f"DROP DATABASE IF EXISTS `{schema}`")
     started = time.time()
     for filename in cfg["load"]:

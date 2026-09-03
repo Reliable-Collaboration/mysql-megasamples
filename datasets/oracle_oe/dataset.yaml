@@ -1,0 +1,11 @@
+name: oracle_oe
+database: oracle_oe
+tier: core
+record: knowledge/datasets/oracle-oe-pm-ix.md
+licenses: [mit]
+# the cross-database foreign keys mean oracle_hr must already be loaded
+depends: [oracle_hr]
+artifacts: [oracle_oe/coe_v3.sql, oracle_oe/ccus_v3.sql, oracle_oe/cwhs_v3.sql, oracle_oe/cord_v3.sql, oracle_oe/loe_v3.sql, oracle_oe/oe_p_pi.sql, oracle_oe/oe_p_pd.sql, oracle_oe/pwhs_v3.sql, oracle_oe/pcus_v3.sql, oracle_oe/pord_v3.sql, oracle_oe/oe_p_itm.sql, oracle_oe/oe_p_inv.sql, oracle_oe/poe_v3.sql, oracle_oe/oe_views.sql, oracle_oe/cmnt_v3.sql, oracle_oe/cidx_v3.sql, oracle_oe/oe_p_us.sql, oracle_oe/oe_p_ar.sql, oracle_oe/oe_p_ca.sql, oracle_oe/oe_p_cs.sql, oracle_oe/oe_p_d.sql, oracle_oe/oe_p_dk.sql, oracle_oe/oe_p_e.sql, oracle_oe/oe_p_el.sql, oracle_oe/oe_p_esa.sql, oracle_oe/oe_p_f.sql, oracle_oe/oe_p_frc.sql, oracle_oe/oe_p_hu.sql, oracle_oe/oe_p_i.sql, oracle_oe/oe_p_iw.sql, oracle_oe/oe_p_ja.sql, oracle_oe/oe_p_ko.sql, oracle_oe/oe_p_n.sql, oracle_oe/oe_p_nl.sql, oracle_oe/oe_p_pl.sql, oracle_oe/oe_p_pt.sql, oracle_oe/oe_p_ptb.sql, oracle_oe/oe_p_ro.sql, oracle_oe/oe_p_ru.sql, oracle_oe/oe_p_s.sql, oracle_oe/oe_p_sf.sql, oracle_oe/oe_p_sk.sql, oracle_oe/oe_p_th.sql, oracle_oe/oe_p_tr.sql, oracle_oe/oe_p_zhs.sql, oracle_oe/oe_p_zht.sql]
+converter: none
+load:
+  - oracle_oe.sql

@@ -23,6 +23,8 @@ generated:
 verified:
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 sources:
 - resource: /sources/github-oracle-samples-db-sample-schemas-releases-and-tree.md
   title: Releases, tags, tree sizes (where the archived schemas live)
@@ -45,6 +47,12 @@ sources:
 - resource: /sources/mysql-refman-9-7-fractional-seconds.md
   title: MySQL fractional seconds
   accessed: "2026-09-02"
+- resource: /sources/sqlplus-user-guide-continuation-character.md
+  title: SQL*Plus continuation character
+  accessed: "2026-09-03"
+- resource: /sources/oe-independent-export-sql-problems.md
+  title: An independent export, used to settle the continuation rule
+  accessed: "2026-09-03"
 ---
 
 # Identity
@@ -75,6 +83,8 @@ SQL*Plus scripts written for the pre-v23 `oe_main.sql` driver: 9 positional para
 
 Total ≈ 11,140 rows + phone rows; loaded size < 10 MB (**inferred**; scripts ≈ 3.6 MB of which ≈ 2.9 MB are the descriptions). Source files are pure ASCII (non-Latin text is escaped), so no file-encoding hazard; the *output* is heavily non-ASCII.
 
+**Measured on load**: every count above reproduced exactly — customers 319, warehouses 9, orders 105, order_items 665, product_information 288, product_descriptions 8,640, inventories 1,112, promotions 2 — plus **378** phone rows (260 customers with one number, 59 with two; the record inferred 319–400). 11,518 rows in all, **4.4 MB** in InnoDB, loading in 1.2 s.
+
 # What is dropped and why
 * **OC**: object types (`customer_typ`, `order_typ`, `category_typ` hierarchy, …), object table `categories_tab` (22 rows with nested `product_ref_list`/`subcategory_ref_list`) and object views `oc_customers`, `oc_orders`, `oc_inventories`, `oc_product_information`, `oc_corporate_customers` with `INSTEAD OF` triggers — they are alternative object views over the same relational rows; no MySQL equivalent. Optional later: flatten `categories_tab` into `categories(category_id, category_name, category_description, category_type)`, `category_products`, `category_subcategories` (22 + ≈ 300 rows) — cheap but not needed for v1.
 * **XML purchase orders** (`purchaseorder` XMLType table, 132 XML files, `xdbpo_*` types, XDB repository folders, `PurchaseOrders.dmp`, `POList.json`): dropped in v1; see [question](/questions/oracle-oe-xml-purchase-orders-scope.md) for an optional `purchase_orders(reference, requestor, ..., xml_doc LONGTEXT, json_doc JSON)` table built directly from the 132 files.
@@ -86,6 +96,22 @@ Total ≈ 11,140 rows + phone rows; loaded size < 10 MB (**inferred**; scripts �
 # Conversion path
 Path (a): Python parser over the populate scripts listed above (see [decision](/decisions/oracle-conversion-path.md)); Oracle is **not** required, and the archived scripts might not even run on 26ai Free (they target "19c and lower" and need `xdbadmin`, `sqlldr`, `perl` path substitution) — so path (b) is *less* reliable here, not more.
 
+**The files the installer actually reaches** (`oe_main.sql` → `coe_v3` → `ccus_v3`/`cwhs_v3`/`cord_v3`; → `loe_v3` → `oe_p_pi`, `oe_p_pd` → 30 `oe_p_<lang>`, `pwhs_v3`, `pcus_v3`, `pord_v3`, `oe_p_itm`, `oe_p_inv`; → `poe_v3` → `oe_views`, `cmnt_v3`, `cidx_v3`) are 46 of the directory's 70 `.sql` files. `oe_p_cus.sql`, `oe_p_ord.sql`, `oe_p_whs.sql` and `oe_idx.sql` are legacy near-duplicates that nothing calls, and taking an index list from `oe_idx.sql` gets it wrong (see Indexing).
+
+## SQL*Plus line continuation — the one thing that had to be verified, not inferred
+Every OE script keeps its lines under 80 bytes by ending them with `-`, SQL*Plus's continuation
+character: **76,831 of them**, including *inside string literals*, so how the join is performed decides
+what 11,140 rows of text say. The [SQL*Plus guide](/sources/sqlplus-user-guide-continuation-character.md)
+establishes that the hyphen is consumed and the lines joined before the statement is parsed, but not
+whether anything takes its place — and not one of those 76,831 continuations has a space before the
+hyphen. Joining with nothing runs 264 pairs of words together in the English descriptions alone
+(`...productivity that-` + `a small monitor...` → `thata small monitor`).
+
+Settled against [an independent export of the same schema](/sources/oe-independent-export-sql-problems.md):
+the continuation and its line break become **one space**, and the following line is kept exactly as
+written. 283 of 288 English descriptions then reassemble byte for byte, and all five remaining
+differences are that copy's own typographic edits, each checked back against the Oracle source.
+
 # Type-mapping hazards
 * `NUMBER(12)` order_id → `BIGINT`; `NUMBER(6)`/`NUMBER(3)`/`NUMBER(2)`/`NUMBER(1)` → `INT`/`SMALLINT`/`TINYINT`; `NUMBER(8,2)`/`NUMBER(9,2)` → `DECIMAL`.
 * `TIMESTAMP WITH LOCAL TIME ZONE`: Oracle normalises to the DB zone and renders in the session zone ([data types](/sources/oracle-docs-sql-language-reference-23-data-types.md)); the literals carry no zone, so the converter stores them verbatim as `DATETIME(6)` and documents "wall-clock as written in the script (2007–2008 dates)". `orders_view` (which casts to DATE) ports as `DATE(order_date)`.
@@ -95,32 +121,43 @@ Path (a): Python parser over the populate scripts listed above (see [decision](/
 * `XMLType` → `TEXT` + scalar columns (above).
 * VARRAY → child table; `get_phone_number_f(n, phone_numbers)` → `SELECT phone_number FROM customer_phone_numbers WHERE customer_id=? AND phone_seq=n`; `customers_view` ports with LEFT JOINs to phone_seq 1..5.
 * Function-based index `cust_upper_name_ix ON customers (UPPER(cust_last_name), UPPER(cust_first_name))` → functional index `((UPPER(cust_last_name)), (UPPER(cust_first_name)))` (**Inferred:** supported since MySQL 8.0.13 — from memory, verify) or simply an index on the case-insensitive collated columns (redundant under `utf8mb4_0900_ai_ci`) — recommend the plain composite index and note the difference.
-* `sequence orders_seq START WITH 1000` while existing order_ids go up to 2458 → `AUTO_INCREMENT` continues from 2459 (upstream would collide; documented quirk).
+* `sequence orders_seq START WITH 1000` while existing order_ids go up to 2458 → `AUTO_INCREMENT` continues from 2459 (upstream would collide; documented quirk). **As built** `orders.order_id` is a plain `INT` primary key: the sequence is not part of the installed scripts' table definition, and the data supplies every id.
+* **As built** `warehouses.location_id` is `SMALLINT`, not `INT`. It carries a foreign key to `oracle_hr.locations`, whose key is `SMALLINT`, and MySQL requires both sides of a foreign key to have the same type.
+* **As built** `TO_TIMESTAMP(..., 'DD-MON-RR HH.MI.SS.FF AM')` needed meridian support in the shared mask parser: without `AM`/`PM` in the token table the mask failed to match and the literal was passed through untouched, which MySQL then rejected. 12 AM is hour 0 and 12 PM is hour 12.
 * Cross-database FKs to `oracle_hr` (`orders.sales_rep_id`, `customers.account_mgr_id`, `warehouses.location_id` with `ON DELETE SET NULL`): MySQL allows them; keep them (both databases are core, HR must load first) with a documented fallback of index-only if the coordinator prefers database independence ([naming decision](/decisions/database-naming-convention.md) notes tooling displays them poorly).
 * `products` view uses `sys_context('USERENV','LANG')` and `TRANSLATE(... USING NCHAR_CS)` → port as a view fixed to `language_id = 'US'` falling back to `product_information` names (or parameterise with `@lang` session variable defaulting to 'US').
 
 # Programmable objects
-| object | action |
+All 18 objects the installed scripts create are accounted for, and `datasets/oracle_oe/convert.py` fails the build if that list changes upstream.
+
+| object | action, as built |
 |---|---|
-| views `sydney_inventory`, `bombay_inventory`, `toronto_inventory`, `product_prices`, `orders_view`, `account_managers` (ROLLUP over flattened address columns), `customers_view` (flattened), `products` (fixed language) | port |
-| function `get_phone_number_f` | drop (replaced by child table) or trivial re-implementation |
-| trigger `insert_ord_line` | port (`BEFORE INSERT` sets `line_item_id = COALESCE(MAX)+1`) |
-| triggers `orders_trg`, `orders_items_trg` (INSTEAD OF on object views) | drop with OC |
-| CHECK constraints (`order_mode_lov`, `order_total_min`, `product_status_lov`, `customer_credit_limit_max`, `customer_id_min`) | port |
-| `COMMENT ON` (cmnt_v3.sql, oe_comnt.sql) | port |
-| object types, OC views, XML schema, XDB resources, AQ queues, PM LOB tables | drop |
+| all 8 views: `products`, `sydney_inventory`, `bombay_inventory`, `toronto_inventory`, `product_prices`, `orders_view`, `customers_view`, `account_managers` | **ported**, hand-written in `datasets/oracle_oe/objects.sql`. `(+)` → LEFT JOIN; `GROUP BY ROLLUP(...)` → `GROUP BY ... WITH ROLLUP` (43 rows); `sys_context('USERENV','LANG')` has no MySQL equivalent so `products` is fixed to `'US'` and falls back to the untranslated columns, as the Oracle view does for a missing language; `TRANSLATE(x USING NCHAR_CS)` dropped, every column is already utf8mb4 |
+| function `get_phone_number_f` | dropped; `customers_view` reaches the five phone positions by LEFT JOIN on `customer_phone_numbers` instead |
+| trigger `insert_ord_line` | **ported** verbatim in effect: MySQL lets a BEFORE trigger read its own table and write `NEW`. Created after the load, or it would renumber the 665 shipped rows |
+| CHECK constraints (`order_mode_lov`, `order_total_min`, `product_status_lov`, `customer_credit_limit_max`, `customer_id_min`) | ported |
+| `COMMENT ON` (cmnt_v3.sql) | ported — all 43 (11 table, 32 column), attached inline in the CREATE TABLE rather than dropped as they are for HR and CO |
+| the 6 `CREATE SYNONYM`s for HR tables | dropped; the views name `oracle_hr` directly |
+| object types `cust_address_typ`, `phone_list_typ` | flattened (see Shape) |
+| OC views, XML schema, XDB resources, AQ queues, PM LOB tables | dropped, as researched |
 
 # Indexing
-`oe_idx.sql` indexes (whs_location_ix, inv_product_ix, inv_warehouse_ix, item_order_ix, item_product_ix, ord_sales_rep_ix, ord_customer_ix, ord_order_date_ix, cust_account_manager_ix, cust_lname_ix, cust_email_ix, prod_name_ix on translated_name, prod_supplier_ix) plus the composite name index; PK/UNIQUE as declared.
+**Corrected**: the installer runs `cidx_v3.sql`, not `oe_idx.sql`. The two are otherwise identical, but `cidx_v3.sql` has **`inv_warehouse_ix` commented out**, so there are **13** named indexes, not 14: whs_location_ix, inv_product_ix, item_order_ix, item_product_ix, ord_sales_rep_ix, ord_customer_ix, ord_order_date_ix, cust_account_manager_ix, cust_lname_ix, cust_email_ix, prod_name_ix (on translated_name), prod_supplier_ix, cust_upper_name_ix. Plus PK/UNIQUE as declared and `inventory_ix` from `coe_v3.sql`. `cust_upper_name_ix` is built on the columns rather than on `UPPER(...)`: under MySQL's default accent- and case-insensitive collation the plain composite serves the same queries.
 
 # Tests and expected values
-* Row counts: customers 319, warehouses 9, orders 105, order_items 665, product_information 288, product_descriptions 8,640 (288 per language × 30), inventories 1,112, promotions 2; phone rows = number of VARRAY elements (computed by the converter and stored in the baseline).
-* Encoding canaries: `SELECT translated_name FROM product_descriptions WHERE product_id=1726 AND language_id='JA'` = `LCDモニター11/PM` (decoded from `UNISTR('LCD\30e2\30cb\30bf\30fc11/PM')`); `language_id='D'` description contains `Auflösung für optimale Bildqualität` (from `\00f6`, `\00fc`, `\00e4`).
-* `order_id 2458`: order_date `2007-08-16 14:34:12.234359`, customer 101, total 78279.6, sales_rep 153.
-* Cross-DB FK: every `orders.sales_rep_id` exists in `oracle_hr.employees`.
+All **measured** and pinned under `datasets/oracle_oe/tests/` (19 smoke queries, 5 plan tests, per-table digests):
+* Row counts as above, plus 378 phone rows. The counts file carries the values verified from the scripts during research rather than values pinned from a load, so a conversion that quietly drops rows fails.
+* Encoding canaries, both confirmed: `product_id=1726, language_id='JA'` → `LCDモニター11/PM` (from `UNISTR('LCD\30e2\30cb\30bf\30fc11/PM')`); the `'D'` description contains `Auflösung für optimale Bildqualität`. 8 of the 8 non-Latin languages carry non-ASCII text in all 288 descriptions except Hebrew, which has 286.
+* `order_id 2458`: order_date `2007-08-16 14:34:12.234359`, customer 101, total 78279.60, sales_rep 153 — all four exactly as researched.
+* Every order's `order_total` equals the sum of its line items (0 exceptions), and the post-load `UPDATE orders SET sales_rep_id = NULL WHERE order_mode = 'online'` shows as 32 online orders with no rep against 73 direct orders with 70.
+* Cross-DB FKs: 10 foreign keys validate with 0 orphans, 3 of them into `oracle_hr`.
+* `ExtractValue(warehouse_spec_xml, '/Warehouse/Area')` still works on the kept XML, and the 8 elements are also flattened into columns.
 
 # Tier assignment
-**core** — < 10 MB loaded (**inferred** from 3.6 MB of scripts; [tier model](/decisions/tier-model.md)). PM media (2.7 MB) and XML (0.5 MB) are not shipped.
+**core**, confirmed: **4.4 MB** loaded, 1.2 s ([tier model](/decisions/tier-model.md)). PM media (2.7 MB) and XML (0.5 MB) are not shipped.
+
+# Build-order consequence of the cross-database foreign keys
+Keeping the three foreign keys into `oracle_hr` costs something the naming decision only hinted at: `oracle_hr` can no longer be rebuilt on its own. `DROP DATABASE` is refused while they exist, and dropping with the checks off is worse — MySQL re-resolves the dangling key while the recreated `locations` table still has no unique index, and the reload fails outright. `scripts/load.py` therefore drops inbound foreign keys before dropping a referenced database and says which datasets need reloading; `dataset.yaml` carries `depends: [oracle_hr]` so the build orders them.
 
 # License and attribution
 MIT — [MIT record](/licenses/mit.md); archived scripts carry "Copyright (c) 2001, 2018, Oracle" headers with the same MIT text.
