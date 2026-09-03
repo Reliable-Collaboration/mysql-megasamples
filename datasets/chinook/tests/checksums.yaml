@@ -1,0 +1,132 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+album:
+  columns:
+  - albumid
+  - title
+  - artistid
+  excluded: []
+  n: 347
+  s: 17759932359215337518
+  x: 6274334650005726958
+artist:
+  columns:
+  - artistid
+  - name
+  excluded: []
+  n: 275
+  s: 17719089320923093126
+  x: 6376407377808891690
+customer:
+  columns:
+  - customerid
+  - firstname
+  - lastname
+  - company
+  - address
+  - city
+  - state
+  - country
+  - postalcode
+  - phone
+  - fax
+  - email
+  - supportrepid
+  excluded: []
+  n: 59
+  s: 7549610121898556414
+  x: 12754673074628187390
+employee:
+  columns:
+  - employeeid
+  - lastname
+  - firstname
+  - title
+  - reportsto
+  - birthdate
+  - hiredate
+  - address
+  - city
+  - state
+  - country
+  - postalcode
+  - phone
+  - fax
+  - email
+  excluded: []
+  n: 8
+  s: 594461166521885503
+  x: 12779125562762735815
+genre:
+  columns:
+  - genreid
+  - name
+  excluded: []
+  n: 25
+  s: 8329031099796391274
+  x: 6606323632163348314
+invoice:
+  columns:
+  - invoiceid
+  - customerid
+  - invoicedate
+  - billingaddress
+  - billingcity
+  - billingstate
+  - billingcountry
+  - billingpostalcode
+  - total
+  excluded: []
+  n: 412
+  s: 9478572537987854875
+  x: 9243382334557110199
+invoiceline:
+  columns:
+  - invoicelineid
+  - invoiceid
+  - trackid
+  - unitprice
+  - quantity
+  excluded: []
+  n: 2240
+  s: 8527672412772085243
+  x: 4028103207863107553
+mediatype:
+  columns:
+  - mediatypeid
+  - name
+  excluded: []
+  n: 5
+  s: 4414912382426690898
+  x: 3113928544419859836
+playlist:
+  columns:
+  - playlistid
+  - name
+  excluded: []
+  n: 18
+  s: 4146407319385466319
+  x: 1700195173463241959
+playlisttrack:
+  columns:
+  - playlistid
+  - trackid
+  excluded: []
+  n: 8715
+  s: 15268730988155539333
+  x: 152552535807179685
+track:
+  columns:
+  - trackid
+  - name
+  - albumid
+  - mediatypeid
+  - genreid
+  - composer
+  - milliseconds
+  - bytes
+  - unitprice
+  excluded: []
+  n: 3503
+  s: 15222978734234071559
+  x: 15723725463204881753

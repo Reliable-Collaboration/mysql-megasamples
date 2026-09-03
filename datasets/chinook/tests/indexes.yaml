@@ -1,0 +1,123 @@
+# S6: every index that must exist after load.
+album:
+  PRIMARY:
+    columns:
+    - albumid
+    type: BTREE
+    unique: true
+  ifk_albumartistid:
+    columns:
+    - artistid
+    type: BTREE
+    unique: false
+artist:
+  PRIMARY:
+    columns:
+    - artistid
+    type: BTREE
+    unique: true
+customer:
+  PRIMARY:
+    columns:
+    - customerid
+    type: BTREE
+    unique: true
+  ifk_customersupportrepid:
+    columns:
+    - supportrepid
+    type: BTREE
+    unique: false
+employee:
+  PRIMARY:
+    columns:
+    - employeeid
+    type: BTREE
+    unique: true
+  ifk_employeereportsto:
+    columns:
+    - reportsto
+    type: BTREE
+    unique: false
+genre:
+  PRIMARY:
+    columns:
+    - genreid
+    type: BTREE
+    unique: true
+invoice:
+  PRIMARY:
+    columns:
+    - invoiceid
+    type: BTREE
+    unique: true
+  ifk_invoicecustomerid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+invoiceline:
+  PRIMARY:
+    columns:
+    - invoicelineid
+    type: BTREE
+    unique: true
+  ifk_invoicelineinvoiceid:
+    columns:
+    - invoiceid
+    type: BTREE
+    unique: false
+  ifk_invoicelinetrackid:
+    columns:
+    - trackid
+    type: BTREE
+    unique: false
+mediatype:
+  PRIMARY:
+    columns:
+    - mediatypeid
+    type: BTREE
+    unique: true
+playlist:
+  PRIMARY:
+    columns:
+    - playlistid
+    type: BTREE
+    unique: true
+playlisttrack:
+  PRIMARY:
+    columns:
+    - playlistid
+    - trackid
+    type: BTREE
+    unique: true
+  ifk_playlisttrackplaylistid:
+    columns:
+    - playlistid
+    type: BTREE
+    unique: false
+  ifk_playlisttracktrackid:
+    columns:
+    - trackid
+    type: BTREE
+    unique: false
+track:
+  PRIMARY:
+    columns:
+    - trackid
+    type: BTREE
+    unique: true
+  ifk_trackalbumid:
+    columns:
+    - albumid
+    type: BTREE
+    unique: false
+  ifk_trackgenreid:
+    columns:
+    - genreid
+    type: BTREE
+    unique: false
+  ifk_trackmediatypeid:
+    columns:
+    - mediatypeid
+    type: BTREE
+    unique: false

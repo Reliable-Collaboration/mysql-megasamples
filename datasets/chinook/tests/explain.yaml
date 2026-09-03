@@ -1,0 +1,6 @@
+- name: invoiceline_by_track
+  query: SELECT COUNT(*) FROM invoiceline WHERE trackid = 1
+  must_not_full_scan: [invoiceline]
+- name: track_by_album
+  query: SELECT COUNT(*) FROM track WHERE albumid = 1
+  must_not_full_scan: [track]

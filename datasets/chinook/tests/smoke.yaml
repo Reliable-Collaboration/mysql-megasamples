@@ -1,0 +1,19 @@
+- name: top_5_customers_by_spend
+  query: |
+    SELECT c.customerid, CONCAT(c.firstname,' ',c.lastname) AS name, ROUND(SUM(i.total),2) AS spent
+    FROM invoice i JOIN customer c ON c.customerid = i.customerid
+    GROUP BY c.customerid, name ORDER BY spent DESC, c.customerid LIMIT 5
+- name: revenue_by_genre_top5
+  query: |
+    SELECT g.name, ROUND(SUM(il.unitprice * il.quantity),2) AS revenue
+    FROM invoiceline il JOIN track t ON t.trackid = il.trackid
+    JOIN genre g ON g.genreid = t.genreid
+    GROUP BY g.genreid, g.name ORDER BY revenue DESC, g.name LIMIT 5
+- name: accented_customer_probe
+  query: SELECT firstname, lastname FROM customer WHERE customerid = 1
+- name: curly_apostrophe_playlist
+  query: SELECT COUNT(*) FROM playlist WHERE name LIKE '90%Music'
+- name: charset_is_utf8mb4
+  query: |
+    SELECT DISTINCT character_set_name FROM information_schema.columns
+    WHERE table_schema='chinook' AND character_set_name IS NOT NULL

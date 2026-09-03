@@ -1,0 +1,8 @@
+# S7: canonical query results, tab-separated as the client prints them.
+accented_customer_probe: "Luís\tGonçalves"
+charset_is_utf8mb4: utf8mb4
+curly_apostrophe_playlist: '1'
+revenue_by_genre_top5: "Rock\t826.65\nLatin\t382.14\nMetal\t261.36\nAlternative &\
+  \ Punk\t241.56\nTV Shows\t93.53"
+top_5_customers_by_spend: "6\tHelena Holý\t49.62\n26\tRichard Cunningham\t47.62\n\
+  57\tLuis Rojas\t46.62\n45\tLadislav Kovács\t45.62\n46\tHugh O'Reilly\t45.62"

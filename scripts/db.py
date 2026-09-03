@@ -44,11 +44,12 @@ def start(fresh=False):
              "-e", f"MYSQL_ROOT_PASSWORD={PW}",
              "-v", f"{os.path.join(ROOT, 'docker', 'my.cnf')}:/etc/mysql/conf.d/megasamples.cnf:ro",
              "-v", f"{os.path.join(ROOT, 'datasets')}:/datasets:ro",
-             # read-write: the entrypoint chowns the secure_file_priv directory (P-04 finding)
-             "-v", f"{os.path.join(ROOT, 'docker', 'context')}:/context",
+             # read-only: staged inputs are produced on the host. The context must NOT be the
+             # secure_file_priv directory -- the entrypoint chowns that one to uid 999 at every
+             # start, which takes it away from the host user (found at S-02).
+             "-v", f"{os.path.join(ROOT, 'docker', 'context')}:/context:ro",
              IMAGE, "mysqld",
-             "--local-infile=1", "--skip-log-bin",
-             "--secure-file-priv=/context"])
+             "--local-infile=1", "--skip-log-bin"])
     if p.returncode != 0:
         sys.exit(f"could not start the build server: {p.stderr.strip()}")
     if not ready():

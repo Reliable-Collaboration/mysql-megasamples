@@ -1,0 +1,12 @@
+# Chinook: a digital media store (11 tables). Native MySQL script, rewritten for 9.7 and the
+# project naming convention by convert.py.
+# Record: knowledge/datasets/chinook.md   Decision: knowledge/decisions/chinook-conversion-path.md
+name: chinook
+database: chinook
+tier: core
+record: knowledge/datasets/chinook.md
+licenses: [mit]
+artifacts: [chinook/Chinook_MySql.sql]
+converter: none          # convert.py runs at stage time and emits a plain .sql file
+load:
+  - chinook.sql

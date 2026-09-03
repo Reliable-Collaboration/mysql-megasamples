@@ -1,0 +1,13 @@
+# S3: row counts from knowledge/datasets/chinook.md (counted from the upstream multi-row INSERTs,
+# which put one tuple per line). Table names are the lower-cased forms of the upstream names.
+album: 347
+artist: 275
+customer: 59
+employee: 8
+genre: 25
+invoice: 412
+invoiceline: 2240
+mediatype: 5
+playlist: 18
+playlisttrack: 8715
+track: 3503

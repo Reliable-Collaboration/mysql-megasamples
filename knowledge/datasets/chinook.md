@@ -70,6 +70,8 @@ None upstream (no views, routines, triggers). 11 foreign keys `ON DELETE NO ACTI
 Primary keys `PK_*`, secondary `IFK_*` on every FK column. Keep.
 
 # Tests and expected values
+**S-02 result (2026-09-02): green on the first attempt.** All 11 documented row counts matched the load exactly; 11 foreign keys, 0 orphans; every column is `utf8mb4` and no `NVARCHAR` survives; the 84 mixed-case identifiers are lower-cased with the map in `datasets/chinook/name_map.yaml`. Verified probes: customer 1 is `Luís` / `Gonçalves`, the playlist `90’s Music` keeps its curly apostrophe, and the upstream literal `'1962/2/18'` lands as `1962-02-18 00:00:00`. Baselines pinned in `datasets/chinook/tests/`; a from-scratch rebuild reproduces every fingerprint.
+
 Row counts above; `SELECT firstname, lastname FROM customer WHERE customerid=1` = `Luís`, `Gonçalves`; `SELECT name FROM playlist WHERE playlistid=...` contains `90’s Music`; `SELECT CHARACTER_SET_NAME FROM information_schema.COLUMNS WHERE TABLE_SCHEMA='chinook' AND COLUMN_NAME='name' AND TABLE_NAME='track'` = `utf8mb4` after the rewrite; `SELECT SUM(total) FROM invoice` recorded at first load (no upstream checksum). Script md5 pinned.
 
 # Tier assignment

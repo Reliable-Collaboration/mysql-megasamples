@@ -28,6 +28,19 @@ def stage_sakila(dest):
     # sakila.mwb is a Workbench model and is NOT under the BSD licence: never stage or ship it.
 
 
+@stager("chinook")
+def stage_chinook(dest):
+    """Run the dataset's own converter; it owns every Chinook-specific rewrite."""
+    import subprocess
+    src = os.path.join(ROOT, "downloads", "chinook", "Chinook_MySql.sql")
+    out = os.path.join(dest, "chinook.sql")
+    conv = os.path.join(ROOT, "datasets", "chinook", "convert.py")
+    name_map = os.path.join(ROOT, "datasets", "chinook", "name_map.yaml")
+    p = subprocess.run([sys.executable, conv, src, out, name_map], text=True)
+    if p.returncode != 0:
+        sys.exit("chinook conversion failed")
+
+
 def main():
     if len(sys.argv) != 2 or sys.argv[1] not in STAGERS:
         sys.exit(f"usage: stage.py <{'|'.join(sorted(STAGERS))}>")
