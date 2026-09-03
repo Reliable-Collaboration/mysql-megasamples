@@ -1,0 +1,33 @@
+# S6: every index that must exist after load.
+green_trips:
+  PRIMARY:
+    columns:
+    - trip_id
+    type: BTREE
+    unique: true
+  ix_green_trips_do:
+    columns:
+    - dolocationid
+    type: BTREE
+    unique: false
+  ix_green_trips_pickup:
+    columns:
+    - pickup_datetime
+    type: BTREE
+    unique: false
+  ix_green_trips_pu:
+    columns:
+    - pulocationid
+    type: BTREE
+    unique: false
+taxi_zone:
+  PRIMARY:
+    columns:
+    - locationid
+    type: BTREE
+    unique: true
+  ix_taxi_zone_borough:
+    columns:
+    - borough
+    type: BTREE
+    unique: false

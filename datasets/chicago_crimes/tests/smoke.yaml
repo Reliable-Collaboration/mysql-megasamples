@@ -1,0 +1,48 @@
+- name: id_is_unique_case_number_is_not
+  query: 'SELECT COUNT(*), COUNT(DISTINCT id), COUNT(DISTINCT case_number) FROM crimes
+
+    '
+- name: every_row_is_2024
+  query: 'SELECT MIN(date), MAX(date), COUNT(DISTINCT year) FROM crimes
+
+    '
+- name: missing_coordinates_are_null
+  query: 'SELECT SUM(latitude IS NULL), SUM(longitude IS NULL), SUM(location_description IS NULL)
+
+    FROM crimes
+
+    '
+- name: top_primary_types
+  query: 'SELECT primary_type, COUNT(*) FROM crimes
+
+    GROUP BY primary_type ORDER BY COUNT(*) DESC, primary_type LIMIT 10
+
+    '
+- name: arrest_and_domestic_rates
+  query: 'SELECT SUM(arrest), SUM(domestic), COUNT(*) FROM crimes
+
+    '
+- name: crimes_by_month
+  query: 'SELECT MONTH(date), COUNT(*) FROM crimes GROUP BY MONTH(date) ORDER BY MONTH(date)
+
+    '
+- name: iucr_join_is_complete
+  query: 'SELECT COUNT(*) FROM crimes c LEFT JOIN iucr i ON i.iucr = c.iucr WHERE i.iucr IS NULL
+
+    '
+- name: iucr_lookup_shape
+  query: 'SELECT COUNT(*), SUM(active), COUNT(DISTINCT primary_description) FROM iucr
+
+    '
+- name: block_is_truncated_to_hundred_block
+  query: 'SELECT COUNT(*) FROM crimes WHERE block REGEXP ''^[0-9]+X+ ''
+
+    '
+- name: disclaimer_is_carried_in_the_schema
+  query: 'SELECT table_comment LIKE ''%makes no claims as to the content, accuracy, timeliness%''
+
+    FROM information_schema.tables
+
+    WHERE table_schema = ''chicago_crimes'' AND table_name = ''crimes''
+
+    '

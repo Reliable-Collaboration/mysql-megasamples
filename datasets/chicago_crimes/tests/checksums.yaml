@@ -1,0 +1,40 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+crimes:
+  columns:
+  - id
+  - case_number
+  - date
+  - block
+  - iucr
+  - primary_type
+  - description
+  - location_description
+  - arrest
+  - domestic
+  - beat
+  - district
+  - ward
+  - community_area
+  - fbi_code
+  - x_coordinate
+  - y_coordinate
+  - year
+  - updated_on
+  - latitude
+  - longitude
+  excluded: []
+  n: 259268
+  s: 14334995588997413115
+  x: 4516678393857253349
+iucr:
+  columns:
+  - iucr
+  - primary_description
+  - secondary_description
+  - index_code
+  - active
+  excluded: []
+  n: 434
+  s: 18184588873499535226
+  x: 6090004196267356228

@@ -85,6 +85,18 @@ def stage_adventureworks_lt(dest):
                    os.path.join(dest, "adventureworks_lt.sql"))
 
 
+@stager("chicago_crimes")
+def stage_chicago_crimes(dest):
+    _run_dir_converter("chicago_crimes", os.path.join(ROOT, "downloads", "chicago_crimes"),
+                       os.path.join(dest, "chicago_crimes.sql"))
+
+
+@stager("nyc_taxi")
+def stage_nyc_taxi(dest):
+    _run_dir_converter("nyc_taxi", os.path.join(ROOT, "downloads", "nyc_taxi"),
+                       os.path.join(dest, "nyc_taxi.sql"))
+
+
 @stager("contoso")
 def stage_contoso(dest):
     _run_dir_converter("contoso", os.path.join(ROOT, "downloads", "contoso"),

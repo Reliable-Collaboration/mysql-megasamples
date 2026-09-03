@@ -1,0 +1,14 @@
+# S7: canonical query results, tab-separated as the client prints them.
+arrest_and_domestic_rates: "35882\t47634\t259268"
+block_is_truncated_to_hundred_block: '259267'
+crimes_by_month: "1\t19672\n2\t19956\n3\t20922\n4\t20501\n5\t22999\n6\t23217\n7\t\
+  24116\n8\t23021\n9\t22995\n10\t22502\n11\t19746\n12\t19621"
+disclaimer_is_carried_in_the_schema: '1'
+every_row_is_2024: "2024-01-01 00:00:00\t2024-12-31 23:58:00\t1"
+id_is_unique_case_number_is_not: "259268\t259268\t259239"
+iucr_join_is_complete: '0'
+iucr_lookup_shape: "434\t424\t33"
+missing_coordinates_are_null: "1744\t1744\t1167"
+top_primary_types: "THEFT\t60551\nBATTERY\t46157\nCRIMINAL DAMAGE\t28555\nASSAULT\t\
+  23483\nMOTOR VEHICLE THEFT\t21713\nOTHER OFFENSE\t17141\nDECEPTIVE PRACTICE\t16406\n\
+  ROBBERY\t9110\nBURGLARY\t8437\nWEAPONS VIOLATION\t7839"

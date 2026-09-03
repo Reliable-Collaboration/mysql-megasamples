@@ -1,0 +1,4 @@
+# green_trips is the row count the record verified from the upstream Parquet (48,326); taxi_zone is
+# the full published lookup, 1..265.
+green_trips: 48326
+taxi_zone: 265

@@ -15,6 +15,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:30:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:30:00Z"
 sources:
@@ -81,6 +83,15 @@ Parquet needs a Parquet reader; there is no SQL script and no CSV upstream. The 
 [DuckDB reader -> typed CSV -> `util.importTable`](/decisions/large-tabular-conversion-path.md). `taxi_zone` (265 rows) goes straight in through the DuckDB MySQL extension.
 
 Target DDL sketch: `VendorID` -> `TINYINT UNSIGNED NULL`, datetimes -> `DATETIME(6) NULL` (**no timezone conversion** - the source is local wall-clock), `passenger_count` -> `TINYINT UNSIGNED NULL`, `RatecodeID`/`payment_type` -> `TINYINT UNSIGNED NULL`, `store_and_fwd_flag` -> `CHAR(1) NULL`, `PULocationID`/`DOLocationID` -> `SMALLINT UNSIGNED NULL`, `trip_distance` -> `DECIMAL(8,2)`, every money column -> `DECIMAL(10,2)`. Add a surrogate `trip_id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY`.
+
+# Built and measured (2026-09-03, core subset)
+`green_tripdata_2025-01.parquet` loads **48,326** rows — the count the record predicted — alongside the full **265**-row zone lookup, in 0.7 s at **11.1 MB** in InnoDB. Three checks were run rather than assumed:
+
+* **The DOUBLE -> DECIMAL(10,2) narrowing is lossless here.** DuckDB's sums over the Parquet and MySQL's sums over the loaded table agree exactly: total_amount 1,093,822.36, fare_amount 810,062.91, trip_distance 1,040,575.25.
+* **No trip carries a zone id outside the lookup** (hazard 8's precondition), so the two foreign keys onto `taxi_zone` are declared rather than left as bare indexes.
+* **The dirty rows are real and are kept.** 3,447 of 48,326 trips (7.1%) are suspect by at least one measure, and the pickup timestamps run from 2024-12-25 to 2025-02-05 — 38 distinct dates in a 31-day month, which is the "pickup dates outside the file's month" hazard, measured. A `v_suspect_trips` view names them instead of deleting them.
+
+Timestamps are `DATETIME(6)`, never `TIMESTAMP`, because the Parquet says `isAdjustedToUTC=false`. Views: `v_trip_zone`, `v_green_daily`, `v_suspect_trips`, all `SQL SECURITY INVOKER`.
 
 # Type-mapping hazards
 1. **Cross-year schema drift** (the big one). `VendorID`/`PULocationID`/`DOLocationID` are INT64 in 2015-2022 files and INT32 in 2025+; `passenger_count`/`RatecodeID` are INT64 (2015-16), DOUBLE (2019-2022), INT64 again (2025+). Any multi-year read needs `union_by_name := true` and explicit casts.

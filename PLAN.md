@@ -505,8 +505,8 @@ All loaded sizes are inferred from source sizes and row counts (see each dataset
 | dvdstore (DS2 tables) | 6.5 MB | 16.3 (measured) | 1.7 (measured) | core |
 | jaffle_shop, smallsets | < 0.2 MB | 2 | <1 | core |
 | lahman | ~40 MB CSV | 50 | 8 | core (measure) |
-| nyc_taxi (green 2025-01 + zones) | 1.2 MB Parquet | 10 | 2 | core |
-| chicago_crimes (2024) | ~50 MB CSV | 75 | 12 | core |
+| nyc_taxi (green 2025-01 + zones) | 1.2 MB Parquet | 11.1 (measured) | 0.7 (measured) | core |
+| chicago_crimes (2024) | 74.8 MB CSV | 75.7 (measured) | 3.3 (measured) | core |
 | enron (subset) | ~40 MB text | 40 | 10 | core |
 | stackexchange_beer | 4.3 MB 7z | 35 | 6 | core |
 | wikipedia_simple (sample) | ~30 MB | 45 | 10 | core |
@@ -686,7 +686,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | M-02 ✅ | oracle_sh (CSV pre-pass, partitions dropped, FULLTEXT) | S-05 | done — record updated, [padding question](knowledge/questions/oracle-sh-csv-row-counts-and-padding.md) answered and closed |
 | M-03 ◐ | adventureworks OLTP (converter v2: two terminator families, hierarchyid/geography decoders, computed columns, triggers, views) — risk 5 retired first | S-07 | **tables, data, indexes, constraints and 13 of 20 views done**: 69 tables, 759,240 rows, 162 MB, 91 foreign keys with 0 orphans, all 45 researched counts exact. [Row-count question](knowledge/questions/mssql-adventureworks-row-counts.md) answered for OLTP. **Remaining**: the 10 procedures, 11 functions and 8 triggers need a T-SQL routine translator |
 | M-04 ◐ | contoso 100k, dvdstore DS2 tables, lahman (maintainer downloads the CSV zip once → release asset) | S-04 | **dvdstore done** (9 tables, 174,716 rows, 16.3 MB) and **contoso done** (8 tables, 753,467 rows, 103.3 MB), both with every count and hazard checked. contoso needs no system 7-zip: the archive is read with `py7zr` from the project venv. **lahman still needs the maintainer** — the Box folder-zip endpoint returns `{"result":"failure"}`, so there is no static URL ([question](knowledge/questions/lahman-box-direct-download.md)) |
-| M-05 | nyc_taxi green + zones (DuckDB path v1), chicago_crimes 2024 subset (SODA path) | P-04 | update [nyc-tlc](knowledge/datasets/nyc-tlc.md), [chicago-crimes](knowledge/datasets/chicago-crimes.md), [large-tabular-conversion-path](knowledge/decisions/large-tabular-conversion-path.md) |
+| M-05 ✅ | nyc_taxi green + zones (DuckDB path v1), chicago_crimes 2024 subset (SODA path) | P-04 | done without the loader image: DuckDB reads the Parquet from the project venv. nyc_taxi 48,326 trips + 265 zones, 11.1 MB, sums checked against the source; chicago_crimes 259,268 + 434, 75.7 MB, snapshot identity recorded |
 | M-06 | stackexchange_beer (XML loader v1), enron core subset (maildir parser v1), wikipedia_simple sample (SQL fix-up + mwxml) — run the MediaWiki 5-minute test first | P-04 | update the three records; close [MediaWiki DDL question](knowledge/questions/mediawiki-sql-dump-ddl-compatibility-mysql-9-7.md), [Enron header question](knowledge/questions/enron-header-anomalies-charset-dates-message-id.md) |
 | **E-01** | `make core` + `make image`; measure every core database size, datadir, image size, start time; rewrite §7 and [tier-assignments](knowledge/decisions/tier-assignments.md); apply the overflow rule if needed | M-01…M-06 | update [tier-assignments](knowledge/decisions/tier-assignments.md), [tier-model](knowledge/decisions/tier-model.md) |
 | R-01 | `ci.yaml` (core-fast subset + image test) green on GitHub Actions; `okf.yaml` green; `make provenance` output committed | E-01 | log Verification |

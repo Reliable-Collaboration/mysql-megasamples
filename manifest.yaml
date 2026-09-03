@@ -1156,3 +1156,43 @@ artifacts:
     size_bytes: 0
     license: mit
     ipv4_first: false
+
+  # NYC TLC: the green (boro taxi) trips for January 2025 plus the zone lookup. Yellow, and the
+  # other months, belong to the extended tier.
+  - id: nyc_taxi/green_tripdata_2025-01.parquet
+    dataset: nyc_taxi
+    url: https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2025-01.parquet
+    mirrors: []
+    sha256: "84f3a121667157efcbf012c3566a6065df6f8e0312c678cb2f29cd72cc9c0f10"
+    size_bytes: 1178451
+    license: nyc-open-data-terms
+    ipv4_first: false
+  - id: nyc_taxi/taxi_zone_lookup.csv
+    dataset: nyc_taxi
+    url: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
+    mirrors: []
+    sha256: "1a99e105092230f8620f301edcca7f80d3080642ff404d28ed957d3fa222c8ed"
+    size_bytes: 0
+    license: nyc-open-data-terms
+    ipv4_first: false
+
+  # Chicago crimes, calendar year 2024, via SODA with $order=id (mandatory for stable paging).
+  # The source changes daily, so the sha256 pins this snapshot only; its identity is the digest
+  # together with the row count and X-SODA2-Truth-Last-Modified recorded in the dataset record.
+  # R-02 publishes the subset as a release asset so the image stays reproducible.
+  - id: chicago_crimes/crimes_2024.csv
+    dataset: chicago_crimes
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2024&$order=id&$limit=300000"
+    mirrors: []
+    sha256: "243fb805b601e958ce12461f32746187fe9588da21146e96ffdfe11bbac736b6"
+    size_bytes: 0
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/iucr.csv
+    dataset: chicago_crimes
+    url: "https://data.cityofchicago.org/api/views/c7ck-438e/rows.csv?accessType=DOWNLOAD"
+    mirrors: []
+    sha256: "257503d02bfbf487b8679c0aa1dfb45217fcd1867c909e2ed41cfdbf7e46f370"
+    size_bytes: 0
+    license: chicago-data-portal-terms
+    ipv4_first: false

@@ -15,6 +15,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:30:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:30:00Z"
 sources:
@@ -45,6 +47,15 @@ stale_after: "2026-12-01"
 * **Lookup:** IUCR codes `https://data.cityofchicago.org/api/views/c7ck-438e/rows.csv?accessType=DOWNLOAD` - **434 rows**.
 * **Auth / click-through:** none. An app token is optional for SODA and only raises throttling limits.
 * **Checksums:** none published. Record `sha256` plus the row count and `X-SODA2-Truth-Last-Modified` at fetch time - the underlying data changes daily, so a checksum only pins *your* snapshot.
+
+# Built and measured (2026-09-03, core subset)
+The 2024 subset loads **259,268** crimes and the **434**-row IUCR lookup in 3.3 s at **75.7 MB** in InnoDB, with 10 smoke queries and 3 plan tests pinned.
+
+**The snapshot moved while this was being built.** Research counted 259,267 rows on 2026-09-02; the fetch on 2026-09-03 returned 259,268, with `X-SODA2-Truth-Last-Modified: Thu, 03 Sep 2026 11:00:44 GMT`. That is the documented behaviour, not an error, and it is why the snapshot's identity is the sha256, the row count and that header together. Until R-02 publishes the subset as a release asset, a rebuild on a later day will legitimately differ.
+
+Two things the plan left conditional are now settled by measurement: `case_number` is **not** unique (259,239 distinct values across 259,268 rows), so it is not a key; and **no crime carries an IUCR code missing from the lookup**, so the foreign key onto `iucr` is declared. 1,744 rows have NULL latitude and longitude, and 259,267 of 259,268 blocks are truncated to the hundred block, which is the address-derivation prohibition visible in the data.
+
+The City's mandatory disclaimer is carried in the generated SQL header **and** in the `crimes` table comment, so it travels with the schema rather than only with a licence file; a smoke test asserts it is there.
 
 # Native format and friendlier forms
 Already CSV. The API form is friendlier for a bounded subset: one `$where=year=2024` request stream is 259,267 rows instead of 8.6 million.

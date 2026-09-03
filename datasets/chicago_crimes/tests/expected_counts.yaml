@@ -1,0 +1,6 @@
+# The 2024 subset as fetched on 2026-09-03 (X-SODA2-Truth-Last-Modified: Thu, 03 Sep 2026 11:00:44
+# GMT). The source is amended daily -- research counted 259,267 on 2026-09-02, one fewer -- so this
+# figure identifies the snapshot rather than the dataset. R-02 publishes the subset as a release
+# asset, after which the count is fixed for good.
+crimes: 259268
+iucr: 434

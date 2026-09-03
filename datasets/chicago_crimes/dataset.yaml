@@ -1,0 +1,9 @@
+name: chicago_crimes
+database: chicago_crimes
+tier: core
+record: knowledge/datasets/chicago-crimes.md
+licenses: [chicago-data-portal-terms]
+artifacts: [chicago_crimes/crimes_2024.csv, chicago_crimes/iucr.csv]
+converter: none
+load:
+  - chicago_crimes.sql

@@ -1,0 +1,11 @@
+# the indexes the record asks for: the pickup range predicate and the two zone columns
+- name: trips_in_a_pickup_window
+  query: 'SELECT COUNT(*) FROM green_trips
+    WHERE pickup_datetime >= ''2025-01-15'' AND pickup_datetime < ''2025-01-16'''
+  must_not_full_scan: [green_trips]
+- name: trips_from_a_zone
+  query: SELECT COUNT(*) FROM green_trips WHERE pulocationid = 74
+  must_not_full_scan: [green_trips]
+- name: zone_by_id
+  query: SELECT zone FROM taxi_zone WHERE locationid = 74
+  must_not_full_scan: [taxi_zone]

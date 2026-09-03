@@ -1,0 +1,40 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+green_trips:
+  columns:
+  - trip_id
+  - vendorid
+  - pickup_datetime
+  - dropoff_datetime
+  - store_and_fwd_flag
+  - ratecodeid
+  - pulocationid
+  - dolocationid
+  - passenger_count
+  - fare_amount
+  - extra
+  - mta_tax
+  - tip_amount
+  - tolls_amount
+  - ehail_fee
+  - improvement_surcharge
+  - total_amount
+  - payment_type
+  - trip_type
+  - congestion_surcharge
+  - cbd_congestion_fee
+  excluded:
+  - trip_distance
+  n: 48326
+  s: 5171612489112687805
+  x: 6824230691171955671
+taxi_zone:
+  columns:
+  - locationid
+  - borough
+  - zone
+  - service_zone
+  excluded: []
+  n: 265
+  s: 12550529378397817731
+  x: 14133384609561209483

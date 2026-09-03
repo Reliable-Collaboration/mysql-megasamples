@@ -1,0 +1,59 @@
+- name: sums_match_the_parquet_source
+  query: 'SELECT ROUND(SUM(total_amount), 2), ROUND(SUM(fare_amount), 2),
+
+    ROUND(SUM(trip_distance), 2) FROM green_trips
+
+    '
+- name: wall_clock_timestamps
+  query: 'SELECT data_type FROM information_schema.columns
+
+    WHERE table_schema = ''nyc_taxi'' AND table_name = ''green_trips''
+
+    AND column_name = ''pickup_datetime''
+
+    '
+- name: pickup_range_spills_the_month
+  query: 'SELECT MIN(pickup_datetime), MAX(pickup_datetime), COUNT(DISTINCT DATE(pickup_datetime))
+
+    FROM green_trips
+
+    '
+- name: dirty_rows_are_kept
+  query: 'SELECT (SELECT COUNT(*) FROM v_suspect_trips) AS suspect,
+
+    (SELECT COUNT(*) FROM green_trips WHERE passenger_count = 0) AS no_passengers,
+
+    (SELECT COUNT(*) FROM green_trips WHERE total_amount <= 0) AS not_positive
+
+    '
+- name: trips_by_borough
+  query: 'SELECT pickup_borough, COUNT(*) FROM v_trip_zone
+
+    GROUP BY pickup_borough ORDER BY COUNT(*) DESC, pickup_borough
+
+    '
+- name: busiest_days
+  query: 'SELECT trip_date, trips, revenue FROM v_green_daily
+
+    ORDER BY trips DESC, trip_date LIMIT 3
+
+    '
+- name: payment_type_mix
+  query: 'SELECT payment_type, COUNT(*) FROM green_trips
+
+    GROUP BY payment_type ORDER BY payment_type
+
+    '
+- name: cbd_fee_present_in_2025
+  query: 'SELECT COUNT(cbd_congestion_fee), ROUND(SUM(cbd_congestion_fee), 2) FROM green_trips
+
+    '
+- name: zone_lookup_is_complete
+  query: 'SELECT MIN(locationid), MAX(locationid), COUNT(*), COUNT(DISTINCT borough) FROM taxi_zone
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='nyc_taxi')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='nyc_taxi')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='nyc_taxi') AS triggers\n"
