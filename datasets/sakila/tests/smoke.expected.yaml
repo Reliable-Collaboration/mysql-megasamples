@@ -1,0 +1,10 @@
+# S7: canonical query results, tab-separated as the client prints them.
+accented_address_probe: 1566 Inegöl Manor
+films_per_category: "Action\t64\nAnimation\t66\nChildren\t60\nClassics\t57\nComedy\t\
+  58\nDocumentary\t68\nDrama\t62\nFamily\t69\nForeign\t73\nGames\t61\nHorror\t56\n\
+  Music\t51\nNew\t63\nSci-Fi\t61\nSports\t74\nTravel\t57"
+fulltext_dinosaur: '3'
+rental_revenue_by_store: "1\t33482.50\n2\t33924.06"
+spatial_srid: '0'
+top_5_films_by_rentals: "BUCKET BROTHERHOOD\t34\nROCKETEER MOTHER\t33\nFORWARD TEMPLE\t\
+  32\nGRIT CLOCKWORK\t32\nJUGGLER HARDLY\t32"

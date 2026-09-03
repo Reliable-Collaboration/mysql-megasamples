@@ -1,0 +1,188 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+actor:
+  columns:
+  - actor_id
+  - first_name
+  - last_name
+  - last_update
+  excluded: []
+  n: 200
+  s: 3720597801230483768
+  x: 15601032681348106256
+address:
+  columns:
+  - address_id
+  - address
+  - address2
+  - district
+  - city_id
+  - postal_code
+  - phone
+  - location
+  - last_update
+  excluded: []
+  n: 603
+  s: 4375044728264768620
+  x: 13499595503629366604
+category:
+  columns:
+  - category_id
+  - name
+  - last_update
+  excluded: []
+  n: 16
+  s: 14437469040209655908
+  x: 10290484017652768766
+city:
+  columns:
+  - city_id
+  - city
+  - country_id
+  - last_update
+  excluded: []
+  n: 600
+  s: 14551475010661484477
+  x: 16486715173659396487
+country:
+  columns:
+  - country_id
+  - country
+  - last_update
+  excluded: []
+  n: 109
+  s: 2298655921944369540
+  x: 10220670479202886334
+customer:
+  columns:
+  - customer_id
+  - store_id
+  - first_name
+  - last_name
+  - email
+  - address_id
+  - active
+  - create_date
+  - last_update
+  excluded: []
+  n: 599
+  s: 16922916815189547029
+  x: 5507893079401375867
+film:
+  columns:
+  - film_id
+  - title
+  - description
+  - release_year
+  - language_id
+  - original_language_id
+  - rental_duration
+  - rental_rate
+  - length
+  - replacement_cost
+  - rating
+  - special_features
+  - last_update
+  excluded: []
+  n: 1000
+  s: 12589362553875776629
+  x: 11659280353386608049
+film_actor:
+  columns:
+  - actor_id
+  - film_id
+  - last_update
+  excluded: []
+  n: 5462
+  s: 718715598870173615
+  x: 428532589991626143
+film_category:
+  columns:
+  - film_id
+  - category_id
+  - last_update
+  excluded: []
+  n: 1000
+  s: 1755758446656233590
+  x: 6647803968884065334
+film_text:
+  columns:
+  - film_id
+  - title
+  - description
+  excluded: []
+  n: 1000
+  s: 14508069586637582902
+  x: 6819964265673677820
+inventory:
+  columns:
+  - inventory_id
+  - film_id
+  - store_id
+  - last_update
+  excluded: []
+  n: 4581
+  s: 4831733963385940819
+  x: 8656072581249285785
+language:
+  columns:
+  - language_id
+  - name
+  - last_update
+  excluded: []
+  n: 6
+  s: 10797569161634319239
+  x: 15461823124118082333
+payment:
+  columns:
+  - payment_id
+  - customer_id
+  - staff_id
+  - rental_id
+  - amount
+  - payment_date
+  - last_update
+  excluded: []
+  n: 16044
+  s: 2554542287490128614
+  x: 474654464928144072
+rental:
+  columns:
+  - rental_id
+  - rental_date
+  - inventory_id
+  - customer_id
+  - return_date
+  - staff_id
+  - last_update
+  excluded: []
+  n: 16044
+  s: 4688678120916723910
+  x: 7705444793529263788
+staff:
+  columns:
+  - staff_id
+  - first_name
+  - last_name
+  - address_id
+  - picture
+  - email
+  - store_id
+  - active
+  - username
+  - password
+  - last_update
+  excluded: []
+  n: 2
+  s: 3832360356901468960
+  x: 3651898470138460382
+store:
+  columns:
+  - store_id
+  - manager_staff_id
+  - address_id
+  - last_update
+  excluded: []
+  n: 2
+  s: 17738902529500572742
+  x: 17665578274972271542

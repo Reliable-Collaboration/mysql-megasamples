@@ -1,0 +1,11 @@
+# S6: plans that must use an index. A table under ~100 rows is exempt (the optimizer legitimately
+# scans it), so only the large tables are asserted here.
+- name: rental_by_customer
+  query: SELECT COUNT(*) FROM rental WHERE customer_id = 1
+  must_not_full_scan: [rental]
+- name: payment_by_customer
+  query: SELECT SUM(amount) FROM payment WHERE customer_id = 1
+  must_not_full_scan: [payment]
+- name: film_by_title
+  query: SELECT film_id FROM film WHERE title = 'ACADEMY DINOSAUR'
+  must_not_full_scan: [film]

@@ -1,0 +1,20 @@
+# S3: row count per table, taken from knowledge/datasets/sakila.md (the upstream documentation and a
+# count of the INSERT statements in sakila-data.sql), NOT from a load. If a load disagrees with these,
+# either the upstream file changed or the load is wrong -- both are worth stopping for.
+# Note payment is 16044, not the historical 16049: Sakila 1.3 removed five rows with a null rental_id.
+actor: 200
+address: 603
+category: 16
+city: 600
+country: 109
+customer: 599
+film: 1000
+film_actor: 5462
+film_category: 1000
+film_text: 1000
+inventory: 4581
+language: 6
+payment: 16044
+rental: 16044
+staff: 2
+store: 2

@@ -49,7 +49,7 @@ Columns in DDL order, joined by the unit separator U+001F, with each value rende
 
 | Source type class | Canonical text | MySQL expression |
 |---|---|---|
-| NULL | `\N` | `COALESCE(<expr>, '\\N')` wrapping each expression below |
+| NULL | `CHAR(0)` (U+0000). **Not** `\N`: MySQL strips the backslash before an unrecognised escape, so `'\N'` in a SQL literal is the single character `N` and collides with a real `N` value — the same trap as the separator. Python uses `"\x00"` | `COALESCE(<expr>, '\\N')` wrapping each expression below |
 | integer, BIT, BOOLEAN | decimal digits, `-` sign | `CAST(col AS CHAR)` |
 | DECIMAL(p,s) / money / NUMBER(p,s) | fixed `s` decimals, no thousands separators | `CAST(col AS CHAR)` (MySQL prints declared scale) |
 | FLOAT/DOUBLE/unconstrained NUMBER | **excluded from the row digest**; compared per column through `COUNT`, `MIN`, `MAX`, `SUM` with 1e-9 relative tolerance, and in the deterministic samples with Python `math.isclose(rel_tol=1e-9)`; `ROUND` on DOUBLE is C-library dependent ([doc](/sources/mysql-refman-9-7-mathematical-functions.md)), so no in-database rounding is used | not part of `row_text` |

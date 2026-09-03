@@ -1,0 +1,23 @@
+# S7: canonical queries a user would actually run against this database.
+- name: rental_revenue_by_store
+  query: |
+    SELECT s.store_id, ROUND(SUM(p.amount), 2) AS revenue
+    FROM payment p JOIN staff s ON s.staff_id = p.staff_id
+    GROUP BY s.store_id ORDER BY s.store_id
+- name: top_5_films_by_rentals
+  query: |
+    SELECT f.title, COUNT(*) AS rentals
+    FROM rental r JOIN inventory i ON i.inventory_id = r.inventory_id
+    JOIN film f ON f.film_id = i.film_id
+    GROUP BY f.film_id, f.title ORDER BY rentals DESC, f.title LIMIT 5
+- name: films_per_category
+  query: |
+    SELECT c.name, COUNT(*) AS films FROM film_category fc
+    JOIN category c ON c.category_id = fc.category_id
+    GROUP BY c.category_id, c.name ORDER BY c.name
+- name: accented_address_probe
+  query: SELECT address FROM address WHERE address_id = 8
+- name: fulltext_dinosaur
+  query: SELECT COUNT(*) FROM film_text WHERE MATCH(title, description) AGAINST ('dinosaur')
+- name: spatial_srid
+  query: SELECT ST_SRID(location) FROM address WHERE address_id = 1

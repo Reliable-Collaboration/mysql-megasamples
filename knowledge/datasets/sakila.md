@@ -93,7 +93,9 @@ Upstream indexes are kept: primary keys, `idx_*` secondary keys, foreign keys wi
 * Spatial: `SELECT ST_SRID(location) FROM address LIMIT 1` = 0; `SHOW INDEX FROM address` includes `idx_location` type SPATIAL.
 * Fulltext: `SELECT COUNT(*) FROM film_text WHERE MATCH(title,description) AGAINST('dinosaur')` > 0 (inferred; ACADEMY DINOSAUR exists).
 * Encoding: `SELECT address FROM address WHERE address_id=8` = `1566 Inegöl Manor`.
-* Checksums: none published; the executor records `CHECKSUM TABLE` output after the first verified load. Do not use `MD5()` in tests on 9.6+ ([classic_hashing note](/tools/mysql-classic-hashing-component.md)).
+* **S-01 result (2026-09-02): the pipeline is green and reproducible.** All 16 documented row counts matched a real load exactly, on the first attempt, with no adjustment to the record. 22 foreign keys validated with 0 orphans; 42 indexes present including the `SPATIAL` `idx_location`; 7 views, 6 routines and 6 triggers created; `film_text` reaches 1,000 rows purely through the `ins_film` trigger. Load takes 1.5–1.8 s and reports 6.5 MB via `information_schema` (25 MB on disk, per P-03, the difference being per-tablespace overhead).
+* Pinned test baselines now live in `datasets/sakila/tests/`: `expected_counts.yaml` (from this record, not from a load), plus `checksums.yaml`, `indexes.yaml` and `smoke.expected.yaml` pinned from the first verified load per the native-SQL exception in the [checksum method](/decisions/test-checksum-method.md). Determinism was confirmed by destroying the build server and reloading from scratch: every per-table fingerprint reproduced identically.
+* Smoke values now pinned: rental revenue by store = 33,482.50 / 33,924.06; top film `BUCKET BROTHERHOOD` with 34 rentals; `MATCH ... AGAINST ('dinosaur')` = 3 rows; `ST_SRID(location)` = 0; `address_id=8` = `1566 Inegöl Manor`. Do not use `MD5()` in tests on 9.6+ ([classic_hashing note](/tools/mysql-classic-hashing-component.md)).
 
 # Tier assignment
 core - 3.4 MB of SQL, the canonical MySQL sample; evidence: [zip inspection](/sources/mysql-sakila-db-zip.md).

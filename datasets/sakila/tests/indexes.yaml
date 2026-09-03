@@ -1,0 +1,233 @@
+# S6: every index that must exist after load.
+actor:
+  PRIMARY:
+    columns:
+    - actor_id
+    type: BTREE
+    unique: true
+  idx_actor_last_name:
+    columns:
+    - last_name
+    type: BTREE
+    unique: false
+address:
+  PRIMARY:
+    columns:
+    - address_id
+    type: BTREE
+    unique: true
+  idx_fk_city_id:
+    columns:
+    - city_id
+    type: BTREE
+    unique: false
+  idx_location:
+    columns:
+    - location
+    type: SPATIAL
+    unique: false
+category:
+  PRIMARY:
+    columns:
+    - category_id
+    type: BTREE
+    unique: true
+city:
+  PRIMARY:
+    columns:
+    - city_id
+    type: BTREE
+    unique: true
+  idx_fk_country_id:
+    columns:
+    - country_id
+    type: BTREE
+    unique: false
+country:
+  PRIMARY:
+    columns:
+    - country_id
+    type: BTREE
+    unique: true
+customer:
+  PRIMARY:
+    columns:
+    - customer_id
+    type: BTREE
+    unique: true
+  idx_fk_address_id:
+    columns:
+    - address_id
+    type: BTREE
+    unique: false
+  idx_fk_store_id:
+    columns:
+    - store_id
+    type: BTREE
+    unique: false
+  idx_last_name:
+    columns:
+    - last_name
+    type: BTREE
+    unique: false
+film:
+  PRIMARY:
+    columns:
+    - film_id
+    type: BTREE
+    unique: true
+  idx_fk_language_id:
+    columns:
+    - language_id
+    type: BTREE
+    unique: false
+  idx_fk_original_language_id:
+    columns:
+    - original_language_id
+    type: BTREE
+    unique: false
+  idx_title:
+    columns:
+    - title
+    type: BTREE
+    unique: false
+film_actor:
+  PRIMARY:
+    columns:
+    - actor_id
+    - film_id
+    type: BTREE
+    unique: true
+  idx_fk_film_id:
+    columns:
+    - film_id
+    type: BTREE
+    unique: false
+film_category:
+  PRIMARY:
+    columns:
+    - film_id
+    - category_id
+    type: BTREE
+    unique: true
+  fk_film_category_category:
+    columns:
+    - category_id
+    type: BTREE
+    unique: false
+film_text:
+  PRIMARY:
+    columns:
+    - film_id
+    type: BTREE
+    unique: true
+  idx_title_description:
+    columns:
+    - title
+    - description
+    type: FULLTEXT
+    unique: false
+inventory:
+  PRIMARY:
+    columns:
+    - inventory_id
+    type: BTREE
+    unique: true
+  idx_fk_film_id:
+    columns:
+    - film_id
+    type: BTREE
+    unique: false
+  idx_store_id_film_id:
+    columns:
+    - store_id
+    - film_id
+    type: BTREE
+    unique: false
+language:
+  PRIMARY:
+    columns:
+    - language_id
+    type: BTREE
+    unique: true
+payment:
+  PRIMARY:
+    columns:
+    - payment_id
+    type: BTREE
+    unique: true
+  fk_payment_rental:
+    columns:
+    - rental_id
+    type: BTREE
+    unique: false
+  idx_fk_customer_id:
+    columns:
+    - customer_id
+    type: BTREE
+    unique: false
+  idx_fk_staff_id:
+    columns:
+    - staff_id
+    type: BTREE
+    unique: false
+rental:
+  PRIMARY:
+    columns:
+    - rental_id
+    type: BTREE
+    unique: true
+  idx_fk_customer_id:
+    columns:
+    - customer_id
+    type: BTREE
+    unique: false
+  idx_fk_inventory_id:
+    columns:
+    - inventory_id
+    type: BTREE
+    unique: false
+  idx_fk_staff_id:
+    columns:
+    - staff_id
+    type: BTREE
+    unique: false
+  rental_date:
+    columns:
+    - rental_date
+    - inventory_id
+    - customer_id
+    type: BTREE
+    unique: true
+staff:
+  PRIMARY:
+    columns:
+    - staff_id
+    type: BTREE
+    unique: true
+  idx_fk_address_id:
+    columns:
+    - address_id
+    type: BTREE
+    unique: false
+  idx_fk_store_id:
+    columns:
+    - store_id
+    type: BTREE
+    unique: false
+store:
+  PRIMARY:
+    columns:
+    - store_id
+    type: BTREE
+    unique: true
+  idx_fk_address_id:
+    columns:
+    - address_id
+    type: BTREE
+    unique: false
+  idx_unique_manager:
+    columns:
+    - manager_staff_id
+    type: BTREE
+    unique: true
