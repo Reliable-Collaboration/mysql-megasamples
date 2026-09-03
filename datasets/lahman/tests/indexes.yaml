@@ -1,0 +1,193 @@
+# S6: every index that must exist after load.
+appearances:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - teamid
+    type: BTREE
+    unique: true
+  ix_appearances_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+awardsplayers:
+  ix_awardsplayers_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+batting:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - stint
+    type: BTREE
+    unique: true
+  ix_batting_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+  ix_batting_team:
+    columns:
+    - teamid
+    - yearid
+    type: BTREE
+    unique: false
+battingpost:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - round
+    type: BTREE
+    unique: true
+collegeplaying:
+  PRIMARY:
+    columns:
+    - playerid
+    - schoolid
+    - yearid
+    type: BTREE
+    unique: true
+fielding:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - stint
+    - pos
+    type: BTREE
+    unique: true
+  ix_fielding_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+halloffame:
+  ix_halloffame_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+homegames:
+  PRIMARY:
+    columns:
+    - yearkey
+    - teamkey
+    - parkkey
+    type: BTREE
+    unique: true
+managers:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - teamid
+    - inseason
+    type: BTREE
+    unique: true
+managershalf:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - teamid
+    - half
+    type: BTREE
+    unique: true
+parks:
+  PRIMARY:
+    columns:
+    - parkkey
+    type: BTREE
+    unique: true
+people:
+  PRIMARY:
+    columns:
+    - playerid
+    type: BTREE
+    unique: true
+  ix_people_name:
+    columns:
+    - namelast
+    - namefirst
+    type: BTREE
+    unique: false
+pitching:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - stint
+    type: BTREE
+    unique: true
+  ix_pitching_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+pitchingpost:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - round
+    type: BTREE
+    unique: true
+salaries:
+  PRIMARY:
+    columns:
+    - playerid
+    - yearid
+    - teamid
+    - lgid
+    type: BTREE
+    unique: true
+  ix_salaries_player:
+    columns:
+    - playerid
+    type: BTREE
+    unique: false
+schools:
+  PRIMARY:
+    columns:
+    - schoolid
+    type: BTREE
+    unique: true
+seriespost:
+  PRIMARY:
+    columns:
+    - yearid
+    - round
+    type: BTREE
+    unique: true
+teams:
+  PRIMARY:
+    columns:
+    - yearid
+    - teamid
+    type: BTREE
+    unique: true
+  ix_teams_franchise:
+    columns:
+    - franchid
+    type: BTREE
+    unique: false
+teamsfranchises:
+  PRIMARY:
+    columns:
+    - franchid
+    type: BTREE
+    unique: true
+teamshalf:
+  PRIMARY:
+    columns:
+    - yearid
+    - teamid
+    - half
+    type: BTREE
+    unique: true

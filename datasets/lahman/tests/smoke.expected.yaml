@@ -1,0 +1,17 @@
+# S7: canonical query results, tab-separated as the client prints them.
+accented_birthplaces: '96'
+accented_example: "Winston\tAbreu\tCotuí\tD.R.\nDomingo\tAcevedo\tVilla de los Almácigos\t\
+  D.R.\nDariel\tAlvarez\tCamagüey\tCuba"
+babe_ruth: "ruthba01\tBabe\tRuth\t1914-07-11\t1935-05-30\tL\tL"
+batting_totals: "345710\t4342275\t16639215\t2008235"
+career_home_run_leaders: "Barry\tBonds\t762\nHank\tAaron\t755\nBabe\tRuth\t714\nAlbert\t\
+  Pujols\t703\nAlex\tRodriguez\t696"
+every_batting_row_has_a_player: '0'
+hall_of_fame_inductees: '353'
+inferred_numeric_types: "era\tdecimal(4,2)\nfp\tdecimal(4,3)\nw\ttinyint\nyearid\t\
+  smallint"
+negro_leagues_present: '19'
+objects_created: "0\t0\t0"
+season_span: "1871\t2025\t155"
+world_series_winners_recent: "2025\tLos Angeles Dodgers\n2024\tLos Angeles Dodgers\n\
+  2023\tTexas Rangers\n2022\tHouston Astros\n2021\tAtlanta Braves"

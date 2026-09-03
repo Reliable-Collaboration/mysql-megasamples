@@ -36,5 +36,15 @@ Which of SABR's three formats to use and how to bring it into MySQL.
 # Outcome
 Option 1. Because there is no stable download URL, vendor the CSVs (with readme2025.txt and the CC BY-SA notice) in the repository after a one-time manual download; record sha256 per file. DDL: derive column types from the readme (ints for counting stats, `DECIMAL(5,3)` for FP/ERA-like ratios, `VARCHAR` codes, `DATE` for debut/finalGame), composite primary keys Batting/Pitching (playerID, yearID, stint), Fielding (playerID, yearID, stint, POS) - **Inferred** for Fielding, Teams (yearID, teamID), People (playerID) with unique bbrefID/retroID where present. Load empty strings as NULL for numeric columns. Trust is `inferred` until the files are measured.
 
+# Amendment (2026-09-03, on building it)
+The outcome said "vendor the CSVs in the repository" because there is no stable download URL. In
+practice the same problem is solved without putting 42 MB into git: `manifest.yaml` gained a
+`manual: true` flag for artifacts no build can fetch, and `scripts/fetch.py` verifies a
+maintainer-placed file against its sha256 and size instead of downloading it, with a message naming
+the URL and the exact path if it is missing. That keeps the repository small (a plan constraint),
+still pins the exact bytes, and leaves R-02 to republish the set as a release asset under CC BY-SA
+3.0. The flag also covers the other artifacts nothing can fetch, such as the citibike and divvy
+downloads behind a licence gate.
+
 # Status
 accepted (pending size measurement)

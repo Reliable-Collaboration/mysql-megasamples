@@ -1,0 +1,10 @@
+# playerID links almost every table to people; these are the indexes that make that cheap
+- name: batting_of_a_player
+  query: SELECT COUNT(*) FROM batting WHERE playerid = 'ruthba01'
+  must_not_full_scan: [batting]
+- name: pitching_of_a_player
+  query: SELECT COUNT(*) FROM pitching WHERE playerid = 'ruthba01'
+  must_not_full_scan: [pitching]
+- name: people_by_name
+  query: SELECT playerid FROM people WHERE namelast = 'Ruth' AND namefirst = 'Babe'
+  must_not_full_scan: [people]

@@ -1,0 +1,59 @@
+- name: babe_ruth
+  query: 'SELECT playerid, namefirst, namelast, debut, finalgame, bats, throws
+
+    FROM people WHERE playerid = ''ruthba01''
+
+    '
+- name: career_home_run_leaders
+  query: 'SELECT p.namefirst, p.namelast, SUM(b.hr) AS hr FROM batting b
+
+    JOIN people p ON p.playerid = b.playerid
+
+    GROUP BY b.playerid, p.namefirst, p.namelast ORDER BY hr DESC, b.playerid LIMIT 5
+
+    '
+- name: batting_totals
+  query: SELECT SUM(hr), SUM(h), SUM(ab), SUM(rbi) FROM batting
+- name: every_batting_row_has_a_player
+  query: 'SELECT COUNT(*) FROM batting b LEFT JOIN people p ON p.playerid = b.playerid
+
+    WHERE p.playerid IS NULL
+
+    '
+- name: world_series_winners_recent
+  query: 'SELECT yearid, name FROM teams WHERE wswin = ''Y'' ORDER BY yearid DESC LIMIT 5
+
+    '
+- name: season_span
+  query: SELECT MIN(yearid), MAX(yearid), COUNT(DISTINCT yearid) FROM teams
+- name: accented_birthplaces
+  query: 'SELECT COUNT(*) FROM people WHERE birthcity REGEXP ''[^ -~]''
+
+    '
+- name: accented_example
+  query: 'SELECT namefirst, namelast, birthcity, birthcountry FROM people
+
+    WHERE birthcity REGEXP ''[^ -~]'' ORDER BY playerid LIMIT 3
+
+    '
+- name: inferred_numeric_types
+  query: 'SELECT column_name, column_type FROM information_schema.columns
+
+    WHERE table_schema = ''lahman'' AND table_name = ''teams''
+
+    AND column_name IN (''era'', ''fp'', ''yearid'', ''w'') ORDER BY column_name
+
+    '
+- name: hall_of_fame_inductees
+  query: 'SELECT COUNT(*) FROM halloffame WHERE inducted = ''Y''
+
+    '
+- name: negro_leagues_present
+  query: 'SELECT COUNT(DISTINCT lgid) FROM teams
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='lahman')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='lahman')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='lahman') AS triggers\n"

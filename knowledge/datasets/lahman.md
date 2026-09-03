@@ -45,6 +45,37 @@ CSV with header rows is the native "friendly" form; the .bak/.mdb are convenienc
 * Keys: `playerID` (People) links everything; Batting/Pitching rows are (playerID, yearID, stint); Teams rows are (yearID, teamID) with lgID/franchID; People also carries `ID` (numeric, "not used anywhere else"), `bbrefID`, `retroID`.
 * Encoding: **Inferred** UTF-8 with BOM (SABR explicitly updated "byte order markers" in Feb 2026; revision 2024.01 "Corrected extended characters in Access People table" implies accented names such as in birthCity/nameGiven). Verify with `head -c 3` and a non-ASCII grep on People.csv; BOM must be stripped or the first header column becomes `﻿playerID`.
 
+# Built and measured (2026-09-03)
+The maintainer downloaded the CSV folder once from the Box share (`lahman_1871-2025_csv.zip`,
+42,207,356 bytes, sha256 `2c293c7b4a4e3a86a494d5163c9f52958298d3e189c9ccea7dae507fcdb8de22`) and
+the build verifies rather than fetches it. **27 tables, 706,466 rows, 77.7 MB** in InnoDB, 4.2 s,
+12 smoke queries and 3 plan tests pinned. Per-table counts are in
+`datasets/lahman/tests/expected_counts.yaml`; upstream publishes none.
+
+**BOMs are inconsistent, not universal.** The record inferred "UTF-8 with BOM" from SABR's February
+2026 note; measured, **4 of the 27 CSVs carry one** — Parks, People, Schools and Teams — and the
+other 23 do not. The reader decodes every file as `utf-8-sig`, which handles both.
+
+**The readme does not match what research recorded**: this copy's `readme2025.txt` is 47,976 bytes,
+md5 `cc2efbc580751222be1d18bb7df37006`, against the 47,982 bytes / `56e80e2c9bd5e27a73891321bf04cc14`
+on the SABR page as read on 2026-09-02. The file has been revised in between, which is consistent
+with SABR revising the release in place; the zip's own sha256 is what pins this build.
+
+**Types were measured, not guessed.** Upstream publishes no SQL types, so each column was typed by
+reading all of its values and taking the narrowest type that holds them. That produced exactly what
+the [decision](/decisions/lahman-conversion-path.md) predicted — `teams.era` `DECIMAL(4,2)`,
+`teams.fp` `DECIMAL(4,3)`, `yearID` `SMALLINT`, `teams.w` `TINYINT` — and every one of the 18
+declared primary keys was verified unique before being declared; none had to fall back to an index.
+
+**Two 2025-release changes** the record's schema notes do not mention: `People.csv` and `Parks.csv`
+now lead with a surrogate `ID` column, with `playerID` and `parkkey` as the business keys.
+
+Content checks: 24,270 people; every `batting` row's player exists in `people`; seasons 1871–2025
+(155 distinct); 19 distinct league ids, so the SABR-recognised Negro Leagues are present; 353 Hall of
+Fame inductees; the career home-run leaders come out as Bonds 762, Aaron 755, Ruth 714. 96 players
+have a non-ASCII birth city (`Cotuí`, `Villa de los Almácigos`, `Camagüey`), confirming the record's
+expectation of accented text.
+
 # Conversion path
 Vendor the CSVs, strip BOMs, load into explicit DDL ([decision](/decisions/lahman-conversion-path.md)); CSV handling notes in [tool note](/tools/smallcsv-load-data-infile.md).
 

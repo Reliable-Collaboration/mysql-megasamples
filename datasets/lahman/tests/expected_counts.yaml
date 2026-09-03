@@ -1,0 +1,29 @@
+# Row counts of the SABR Version 2025 CSV set, counted from the files. Upstream publishes none;
+# these were derived at vendoring time as the record asks, and the zip's sha256 pins the set.
+allstarfull: 6425
+appearances: 128512
+awardsmanagers: 232
+awardsplayers: 12667
+awardssharemanagers: 539
+awardsshareplayers: 7613
+batting: 128598
+battingpost: 18687
+collegeplaying: 17687
+fielding: 174332
+fieldingof: 12028
+fieldingofsplit: 45147
+fieldingpost: 17934
+halloffame: 6426
+homegames: 3303
+managers: 4410
+managershalf: 93
+parks: 345
+people: 24270
+pitching: 57630
+pitchingpost: 7474
+salaries: 26428
+schools: 1287
+seriespost: 440
+teams: 3614
+teamsfranchises: 203
+teamshalf: 142

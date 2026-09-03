@@ -1208,3 +1208,16 @@ artifacts:
     size_bytes: 4317770
     license: cc-by-sa-4-0
     ipv4_first: false
+
+  # Lahman: SABR publishes the CSV set only through a Box share with no static URL -- the folder-zip
+  # endpoint answers {"result":"failure"} -- so the maintainer downloads it once and the build
+  # verifies what they placed. R-02 republishes it as a release asset (CC BY-SA 3.0 permits it).
+  - id: lahman/lahman_1871-2025_csv.zip
+    dataset: lahman
+    url: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
+    mirrors: []
+    manual: true
+    sha256: "2c293c7b4a4e3a86a494d5163c9f52958298d3e189c9ccea7dae507fcdb8de22"
+    size_bytes: 42207356
+    license: cc-by-sa-3-0
+    ipv4_first: false

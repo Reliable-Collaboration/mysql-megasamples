@@ -1,0 +1,536 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+allstarfull:
+  columns:
+  - playerid
+  - yearid
+  - gamenum
+  - gameid
+  - teamid
+  - lgid
+  - gp
+  - startingpos
+  excluded: []
+  n: 6425
+  s: 16285843974963696577
+  x: 13704034296393473887
+appearances:
+  columns:
+  - yearid
+  - teamid
+  - lgid
+  - playerid
+  - g_all
+  - gs
+  - g_batting
+  - g_defense
+  - g_p
+  - g_c
+  - g_1b
+  - g_2b
+  - g_3b
+  - g_ss
+  - g_lf
+  - g_cf
+  - g_rf
+  - g_of
+  - g_dh
+  - g_ph
+  - g_pr
+  excluded: []
+  n: 128512
+  s: 5859115076024267279
+  x: 14811833165860728193
+awardsmanagers:
+  columns:
+  - playerid
+  - awardid
+  - yearid
+  - lgid
+  - tie
+  - notes
+  excluded: []
+  n: 232
+  s: 14153852855029226873
+  x: 14238638097476176205
+awardsplayers:
+  columns:
+  - playerid
+  - awardid
+  - yearid
+  - lgid
+  - tie
+  - notes
+  excluded: []
+  n: 12667
+  s: 3215058723479671104
+  x: 13248154022550021768
+awardssharemanagers:
+  columns:
+  - awardid
+  - yearid
+  - lgid
+  - playerid
+  - pointswon
+  - pointsmax
+  - votesfirst
+  excluded: []
+  n: 539
+  s: 1651752243838241484
+  x: 10153827486914049924
+awardsshareplayers:
+  columns:
+  - awardid
+  - yearid
+  - lgid
+  - playerid
+  - pointswon
+  - pointsmax
+  - votesfirst
+  excluded: []
+  n: 7613
+  s: 16863889475695021943
+  x: 16884469603929263609
+batting:
+  columns:
+  - playerid
+  - yearid
+  - stint
+  - teamid
+  - lgid
+  - g
+  - ab
+  - r
+  - h
+  - 2b
+  - 3b
+  - hr
+  - rbi
+  - sb
+  - cs
+  - bb
+  - so
+  - ibb
+  - hbp
+  - sh
+  - sf
+  - gidp
+  excluded: []
+  n: 128598
+  s: 13239856302337631065
+  x: 9816025461722783423
+battingpost:
+  columns:
+  - yearid
+  - round
+  - playerid
+  - teamid
+  - lgid
+  - g
+  - ab
+  - r
+  - h
+  - 2b
+  - 3b
+  - hr
+  - rbi
+  - sb
+  - cs
+  - bb
+  - so
+  - ibb
+  - hbp
+  - sh
+  - sf
+  - gidp
+  excluded: []
+  n: 18687
+  s: 105167795198822772
+  x: 9269293412130310234
+collegeplaying:
+  columns:
+  - playerid
+  - schoolid
+  - yearid
+  excluded: []
+  n: 17687
+  s: 1447786219676582216
+  x: 16041171805829472504
+fielding:
+  columns:
+  - playerid
+  - yearid
+  - stint
+  - teamid
+  - lgid
+  - pos
+  - g
+  - gs
+  - innouts
+  - po
+  - a
+  - e
+  - dp
+  - pb
+  - wp
+  - sb
+  - cs
+  - zr
+  excluded: []
+  n: 174332
+  s: 17524714621092841612
+  x: 469952576811488434
+fieldingof:
+  columns:
+  - playerid
+  - yearid
+  - stint
+  - glf
+  - gcf
+  - grf
+  excluded: []
+  n: 12028
+  s: 10970386846256935108
+  x: 14944609510903986446
+fieldingofsplit:
+  columns:
+  - playerid
+  - yearid
+  - stint
+  - teamid
+  - lgid
+  - pos
+  - g
+  - gs
+  - innouts
+  - po
+  - a
+  - e
+  - dp
+  - pb
+  - wp
+  - sb
+  - cs
+  - zr
+  excluded: []
+  n: 45147
+  s: 11551026709723905971
+  x: 14568091870010847525
+fieldingpost:
+  columns:
+  - playerid
+  - yearid
+  - teamid
+  - lgid
+  - round
+  - pos
+  - g
+  - gs
+  - innouts
+  - po
+  - a
+  - e
+  - dp
+  - tp
+  - pb
+  - sb
+  - cs
+  excluded: []
+  n: 17934
+  s: 10354081817483230667
+  x: 10251455434039661883
+halloffame:
+  columns:
+  - playerid
+  - yearid
+  - votedby
+  - ballots
+  - needed
+  - votes
+  - inducted
+  - category
+  - needed_note
+  excluded: []
+  n: 6426
+  s: 12639828198214076589
+  x: 15684654231710092987
+homegames:
+  columns:
+  - yearkey
+  - leaguekey
+  - teamkey
+  - parkkey
+  - spanfirst
+  - spanlast
+  - games
+  - openings
+  - attendance
+  excluded: []
+  n: 3303
+  s: 15963895816895698192
+  x: 2621652391419322538
+managers:
+  columns:
+  - playerid
+  - yearid
+  - teamid
+  - lgid
+  - inseason
+  - g
+  - w
+  - l
+  - rank
+  - plyrmgr
+  excluded: []
+  n: 4410
+  s: 8874224189666650069
+  x: 10174534158407697745
+managershalf:
+  columns:
+  - playerid
+  - yearid
+  - teamid
+  - lgid
+  - inseason
+  - half
+  - g
+  - w
+  - l
+  - rank
+  excluded: []
+  n: 93
+  s: 11543632317427336658
+  x: 4266830205173661632
+parks:
+  columns:
+  - id
+  - parkalias
+  - parkkey
+  - parkname
+  - city
+  - state
+  - country
+  excluded: []
+  n: 345
+  s: 14985229700831674623
+  x: 15039787574392749001
+people:
+  columns:
+  - id
+  - playerid
+  - birthyear
+  - birthmonth
+  - birthday
+  - birthcity
+  - birthcountry
+  - birthstate
+  - deathyear
+  - deathmonth
+  - deathday
+  - deathcountry
+  - deathstate
+  - deathcity
+  - namefirst
+  - namelast
+  - namegiven
+  - weight
+  - height
+  - bats
+  - throws
+  - debut
+  - bbrefid
+  - finalgame
+  - retroid
+  excluded: []
+  n: 24270
+  s: 2101944810363458766
+  x: 544336839115359622
+pitching:
+  columns:
+  - playerid
+  - yearid
+  - stint
+  - teamid
+  - lgid
+  - w
+  - l
+  - g
+  - gs
+  - cg
+  - sho
+  - sv
+  - ipouts
+  - h
+  - er
+  - hr
+  - bb
+  - so
+  - baopp
+  - era
+  - ibb
+  - wp
+  - hbp
+  - bk
+  - bfp
+  - gf
+  - r
+  - sh
+  - sf
+  - gidp
+  excluded: []
+  n: 57630
+  s: 15885939889567372645
+  x: 3422339129581884275
+pitchingpost:
+  columns:
+  - playerid
+  - yearid
+  - round
+  - teamid
+  - lgid
+  - w
+  - l
+  - g
+  - gs
+  - cg
+  - sho
+  - sv
+  - ipouts
+  - h
+  - er
+  - hr
+  - bb
+  - so
+  - baopp
+  - era
+  - ibb
+  - wp
+  - hbp
+  - bk
+  - bfp
+  - gf
+  - r
+  - sh
+  - sf
+  - gidp
+  excluded: []
+  n: 7474
+  s: 1719423584639888361
+  x: 12925169471993085761
+salaries:
+  columns:
+  - yearid
+  - teamid
+  - lgid
+  - playerid
+  - salary
+  excluded: []
+  n: 26428
+  s: 14250342749584676669
+  x: 4047246375446584625
+schools:
+  columns:
+  - schoolid
+  - name_full
+  - city
+  - state
+  - country
+  excluded: []
+  n: 1287
+  s: 1116103084822640174
+  x: 15907475570090236492
+seriespost:
+  columns:
+  - yearid
+  - round
+  - teamidwinner
+  - lgidwinner
+  - teamidloser
+  - lgidloser
+  - wins
+  - losses
+  - ties
+  excluded: []
+  n: 440
+  s: 16254838180881812121
+  x: 12757942359657340227
+teams:
+  columns:
+  - yearid
+  - lgid
+  - teamid
+  - franchid
+  - divid
+  - rank
+  - g
+  - ghome
+  - w
+  - l
+  - divwin
+  - wcwin
+  - lgwin
+  - wswin
+  - r
+  - ab
+  - h
+  - 2b
+  - 3b
+  - hr
+  - bb
+  - so
+  - sb
+  - cs
+  - hbp
+  - sf
+  - ra
+  - er
+  - era
+  - cg
+  - sho
+  - sv
+  - ipouts
+  - ha
+  - hra
+  - bba
+  - soa
+  - e
+  - dp
+  - fp
+  - name
+  - park
+  - attendance
+  - bpf
+  - ppf
+  - teamidbr
+  - teamidlahman45
+  - teamidretro
+  excluded: []
+  n: 3614
+  s: 17889139543981403381
+  x: 13172455934097021329
+teamsfranchises:
+  columns:
+  - franchid
+  - franchname
+  - active
+  - naassoc
+  excluded: []
+  n: 203
+  s: 8270562920887833940
+  x: 7925903421719265498
+teamshalf:
+  columns:
+  - yearid
+  - lgid
+  - teamid
+  - half
+  - divid
+  - divwin
+  - rank
+  - g
+  - w
+  - l
+  excluded: []
+  n: 142
+  s: 2643061817877713489
+  x: 13697301699064649803

@@ -7,8 +7,11 @@ tags:
 - lahman
 - download
 - build
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
@@ -28,7 +31,16 @@ Build automation needs a URL. Box shared folders can be downloaded via the Box "
 1. In a browser, download the CSV folder once from https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd, record per-file sizes, sha256 and whether files start with a UTF-8 BOM (SABR's page says BOMs were "updated" 2026-02-18).
 2. Vendor the CSVs into the repository (CC BY-SA 3.0 permits redistribution with attribution and share-alike; see [license](/licenses/cc-by-sa-3-0.md)), which removes the download problem entirely. Also try `curl -sI` on the SQL-version share to see if SABR later exposes a static link.
 
-# Partial answer (2026-09-03)
+# Answer (2026-09-03)
+There is no static URL, and the dataset is now built anyway.
+
+The maintainer downloaded the folder once and placed the zip; `manifest.yaml` gained `manual: true`
+for artifacts no build can fetch, so `scripts/fetch.py` verifies the placed file against its sha256
+and size rather than reaching the network, and says exactly where to put it when it is missing. The
+repository stays small and the bytes are still pinned. See the
+[decision's amendment](/decisions/lahman-conversion-path.md).
+
+# How that was established
 The inferred folder-zip endpoint was tried:
 `https://app.box.com/index.php?rm=box_v2_zip_shared_folder&shared_name=y1prhc795jk8zvmelfd3jq7tl389y6cd`
 returns HTTP 200 with the body `{"use_zpdl":"true","result":"failure"}`, and the share page itself

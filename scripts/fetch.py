@@ -101,6 +101,31 @@ def fetch_one(art, dest_root, manifest_path, trust_first):
             return "cached"
         print(f"  ! {art_id} cached digest {recorded[:12]} != manifest {expected[:12]}, refetching")
 
+    # An artifact behind a login, a click-through or a share link with no static URL cannot be
+    # fetched by a build. The maintainer supplies it once; this verifies what they supplied and
+    # never reaches the network. See PLAN.md section 2.5.
+    if art.get("manual"):
+        if not os.path.exists(dest):
+            raise RuntimeError(
+                f"{art_id} is maintainer-supplied and is not present.\n"
+                f"  Obtain it from: {art['url']}\n"
+                f"  Then put it at: {dest}")
+        digest, size = sha256_of(dest), os.path.getsize(dest)
+        want_size = art.get("size_bytes") or 0
+        if want_size and size != want_size:
+            raise RuntimeError(f"{art_id}: size {size} != manifest size_bytes {want_size}")
+        if expected and digest != expected:
+            raise RuntimeError(f"{art_id}: sha256 {digest} != manifest {expected}")
+        if not expected:
+            if not trust_first:
+                raise RuntimeError(f"{art_id}: manifest has no sha256; rerun with "
+                                   f"MEGASAMPLES_TRUST_FIRST_FETCH=1 to pin {digest}")
+            write_manifest_sha(manifest_path, art_id, digest)
+            print(f"  VERIFICATION for knowledge/log.md: {art_id} sha256 {digest} size {size}")
+        open(ok_marker, "w", encoding="utf-8").write(digest + "\n")
+        print(f"  = {art_id} (maintainer-supplied, {'verified' if expected else 'digest recorded'})")
+        return "manual"
+
     tmp = dest + ".part"
     if os.path.exists(tmp):
         os.remove(tmp)
