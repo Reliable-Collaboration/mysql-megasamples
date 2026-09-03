@@ -43,6 +43,7 @@ sources:
 | Host tools missing | make, jq, zstd, bzip2, 7z, aria2c, mysql client, mysqlsh, duckdb, git-lfs, pip3 |
 
 ## What it was used to decide
+* **Update 2026-09-02 (execution):** `docker pull` fails for any image larger than a few KB with `httpReadSeeker ... EOF` from `production.cloudfront.docker.com`, which has AAAA records. From WSL, `curl -4` fetches a 159 MB registry layer at 116 MB/s and `curl -6` fails instantly, so the network is healthy over IPv4 and the Docker Desktop VM is the component attempting IPv6. `hello-world` (15 KB) pulls; `alpine:3.21` (3.6 MB) does not. Daemon reports `HostNetworkingEnabled: true`, `ProxyHTTPMode: system`, `UseContainerdSnapshotter: true`, bridge `EnableIPv6=false`.
 * Docker Desktop engine settings are edited in the Docker Desktop GUI (Settings → Docker Engine) or the user-writable `daemon.json` above, and require a Docker Desktop restart on Windows; the executing agent cannot restart Docker Desktop, so any such change is handed to the user under the privilege rule even though the file itself is writable.
 * IPv6 exposure is inside the Docker Desktop VM, not the WSL distro: Docker pulls go through Docker Desktop's own network stack, so host-side `curl -4` success does not prove `docker pull` will succeed. See [IPv6 and privileges runbook](/runbooks/ipv6-and-privileges.md).
 * Missing host packages (`make jq zstd bzip2 p7zip-full`) need `sudo apt-get install`; per project rule the executor asks the user rather than working around it. Everything else runs inside containers.

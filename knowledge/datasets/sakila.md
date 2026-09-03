@@ -44,6 +44,7 @@ Sakila, Oracle's official MySQL sample database modelling a DVD rental chain (tw
 
 # Source artifact
 * URL: https://downloads.mysql.com/docs/sakila-db.zip (729,654 bytes; md5 `a80df38456f8d4f36903771b67a1129a`; sha256 `e27ed871082e76e9d32021c2df07f97ebf7696ace132f5995218557dd87d7046`) or https://downloads.mysql.com/docs/sakila-db.tar.gz (732,423 bytes). Advertised as 712 Kb / 715 Kb on the [download table](/sources/mysql-index-other-example-databases.md). No login or click-through; no upstream checksum.
+* **Verified 2026-09-02**: the download matches the pinned sha256 exactly, and the inner files match their recorded sizes and md5s (`sakila-schema.sql` 24,269 B / `fcf59afd…`, `sakila-data.sql` 3,351,749 B / `799d84da…`, `sakila.mwb` 40,093 B), version string 1.5, LF endings, 161 non-ASCII lines, 16 tables / 6 view statements / 6 triggers / 3 procedures / 3 functions.
 * Snapshot: HTTP Last-Modified 2026-08-31; inner file headers "Version 1.5", "Copyright (c) 2006, 2026, Oracle and/or its affiliates".
 * Contents ([inspection](/sources/mysql-sakila-db-zip.md)): `sakila-schema.sql` 24,269 B (md5 `fcf59afd9117470f6cd45f948a3e9dcb`), `sakila-data.sql` 3,351,749 B (md5 `799d84daf7137bc341770c3070013668`), `sakila.mwb` 40,093 B (Workbench model - not open-licensed, do not ship).
 

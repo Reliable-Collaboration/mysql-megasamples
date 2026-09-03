@@ -31,7 +31,7 @@ stale_after: "2027-03-01"
 `pubs`, the book-publisher sample from SQL Server 6.5-2000. Upstream: `samples/databases/northwind-pubs/instpubs.sql`. Proposed MySQL database name: **`pubs`**. Single `dbo` schema.
 
 # Source artifact
-* URL `https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql`, blob SHA `d887fd48cb06436a9aa2e988d00ba7b036dfd6d4`, 125,718 bytes, plain ASCII (no BOM, LF), no auth. No checksum published; record sha256 at download ([source record](/sources/github-microsoft-sql-server-samples-instpubs-sql.md)).
+* URL `https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql`, blob SHA `d887fd48cb06436a9aa2e988d00ba7b036dfd6d4`, 125,718 bytes, plain ASCII (no BOM, LF), no auth. No checksum published upstream. **Verified 2026-09-02** at first fetch: sha256 `c66479d429f482ef788290dd94bb315f2277327765f480b2b21be6f359eb4bad`, 125,718 bytes, pinned in `manifest.yaml` ([source record](/sources/github-microsoft-sql-server-samples-instpubs-sql.md)).
 
 # Native format and friendlier forms
 The T-SQL script is the only and friendliest form: it creates the database (`USE master`, `DROP`/`CREATE DATABASE pubs`), defines three UDTs with `sp_addtype`, creates 11 tables and inserts all rows inline. No SQL Server needed.

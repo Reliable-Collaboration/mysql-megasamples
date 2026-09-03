@@ -33,7 +33,7 @@ artifacts:
     dataset: northwind
     url: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
     mirrors: []
-    sha256: ""
+    sha256: "3cc62b3fca6d244a47dbde698b809331e4f85988a0685b2b370717d431e94871"
     size_bytes: 1049720
     license: mit
     ipv4_first: false
@@ -42,7 +42,7 @@ artifacts:
     dataset: pubs
     url: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
     mirrors: []
-    sha256: ""
+    sha256: "c66479d429f482ef788290dd94bb315f2277327765f480b2b21be6f359eb4bad"
     size_bytes: 125718
     license: mit
     ipv4_first: false
