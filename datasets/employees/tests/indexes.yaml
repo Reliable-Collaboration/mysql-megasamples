@@ -1,0 +1,57 @@
+# S6: every index that must exist after load.
+departments:
+  PRIMARY:
+    columns:
+    - dept_no
+    type: BTREE
+    unique: true
+  dept_name:
+    columns:
+    - dept_name
+    type: BTREE
+    unique: true
+dept_emp:
+  PRIMARY:
+    columns:
+    - emp_no
+    - dept_no
+    type: BTREE
+    unique: true
+  dept_no:
+    columns:
+    - dept_no
+    type: BTREE
+    unique: false
+dept_manager:
+  PRIMARY:
+    columns:
+    - emp_no
+    - dept_no
+    type: BTREE
+    unique: true
+  dept_no:
+    columns:
+    - dept_no
+    type: BTREE
+    unique: false
+employees:
+  PRIMARY:
+    columns:
+    - emp_no
+    type: BTREE
+    unique: true
+salaries:
+  PRIMARY:
+    columns:
+    - emp_no
+    - from_date
+    type: BTREE
+    unique: true
+titles:
+  PRIMARY:
+    columns:
+    - emp_no
+    - title
+    - from_date
+    type: BTREE
+    unique: true

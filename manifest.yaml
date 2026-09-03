@@ -143,3 +143,92 @@ artifacts:
     size_bytes: 0
     license: mit
     ipv4_first: false
+
+  - id: employees/employees.sql
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/employees.sql
+    mirrors: []
+    sha256: "cfe3f89f7b21326c516ba65d253e35e795877e9bb60c388520d915f348403a9a"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/objects.sql
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/objects.sql
+    mirrors: []
+    sha256: "80c4a5915c27a41d9dff05951d88e152137f15d62dc5852f54176a5b085d7ef0"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/test_employees_sha2.sql
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/test_employees_sha2.sql
+    mirrors: []
+    sha256: "a78e6b89ffbdb569239b070d5489ac8db83e7c027f9df7ea849982ab28459c66"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_departments.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_departments.dump
+    mirrors: []
+    sha256: "2271cfef20852e395ec72ce269a119b2c799a973a9277c971409ea53d5a17cfa"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_employees.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_employees.dump
+    mirrors: []
+    sha256: "ba004ebc5fcdad59544fd8ced262d1793ca02c7936c5d7668a355c6a683d6fa8"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_dept_emp.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_dept_emp.dump
+    mirrors: []
+    sha256: "52cc6dbc1b139254533264bd5d44a6012377f34ecf1eef693ddfb349aeb40ed6"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_dept_manager.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_dept_manager.dump
+    mirrors: []
+    sha256: "d9cff691f09f2399f5490e435deb8c932946246aaf483b8f1cbef0bc556aa1dc"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_titles.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_titles.dump
+    mirrors: []
+    sha256: "dcd382989c46719e1e216ffef4919483f0f71d52da517c37c22d39cdaf9bc044"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_salaries1.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_salaries1.dump
+    mirrors: []
+    sha256: "aa485ea7b1553f1660d6db5a93e9ede0a0c182cb923f9471a39594f7ca967c5b"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_salaries2.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_salaries2.dump
+    mirrors: []
+    sha256: "cad589bff736cb575358d7806e4e4a13e28a2e9c714c2fb51fbe4db74a5706fa"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false
+  - id: employees/load_salaries3.dump
+    dataset: employees
+    url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_salaries3.dump
+    mirrors: []
+    sha256: "75fc473d2472341fbfd635d6f4853c63645051829a9c7a1a18ee819fe5816f45"
+    size_bytes: 0
+    license: cc-by-sa-3-0
+    ipv4_first: false

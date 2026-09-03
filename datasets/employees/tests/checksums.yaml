@@ -1,0 +1,62 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+departments:
+  columns:
+  - dept_no
+  - dept_name
+  excluded: []
+  n: 9
+  s: 6220859952470631783
+  x: 3781814437983792015
+dept_emp:
+  columns:
+  - emp_no
+  - dept_no
+  - from_date
+  - to_date
+  excluded: []
+  n: 331603
+  s: 11595256916002088310
+  x: 2314207294540013308
+dept_manager:
+  columns:
+  - emp_no
+  - dept_no
+  - from_date
+  - to_date
+  excluded: []
+  n: 24
+  s: 14505164095508847944
+  x: 5867101672301776204
+employees:
+  columns:
+  - emp_no
+  - birth_date
+  - first_name
+  - last_name
+  - gender
+  - hire_date
+  excluded: []
+  n: 300024
+  s: 8051519542391049371
+  x: 3586912567432142309
+salaries:
+  columns:
+  - emp_no
+  - salary
+  - from_date
+  - to_date
+  excluded: []
+  n: 2844047
+  s: 10864634539864481515
+  x: 14648006182446560953
+titles:
+  columns:
+  - emp_no
+  - title
+  - from_date
+  - to_date
+  excluded: []
+  n: 443308
+  s: 10643427206291184320
+  x: 3013893912153650502

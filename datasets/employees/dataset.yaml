@@ -1,0 +1,19 @@
+name: employees
+database: employees
+tier: core-medium
+record: knowledge/datasets/employees.md
+licenses: [cc-by-sa-3-0]
+artifacts:
+  - employees/employees.sql
+  - employees/load_departments.dump
+  - employees/load_employees.dump
+  - employees/load_dept_emp.dump
+  - employees/load_dept_manager.dump
+  - employees/load_titles.dump
+  - employees/load_salaries1.dump
+  - employees/load_salaries2.dump
+  - employees/load_salaries3.dump
+  - employees/objects.sql
+converter: none
+load:
+  - employees.sql

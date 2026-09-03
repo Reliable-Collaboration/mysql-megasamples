@@ -1,0 +1,16 @@
+- name: avg_salary_by_department
+  query: |
+    SELECT d.dept_name, ROUND(AVG(s.salary)) AS avg_salary
+    FROM salaries s JOIN dept_emp de ON de.emp_no = s.emp_no
+    JOIN departments d ON d.dept_no = de.dept_no
+    GROUP BY d.dept_no, d.dept_name ORDER BY d.dept_name
+- name: current_department_managers
+  query: SELECT COUNT(*) FROM dept_manager WHERE to_date = '9999-01-01'
+- name: hire_date_range
+  query: SELECT MIN(hire_date), MAX(hire_date) FROM employees
+- name: salary_extremes
+  query: SELECT MIN(salary), MAX(salary) FROM salaries
+- name: employees_by_gender
+  query: SELECT gender, COUNT(*) FROM employees GROUP BY gender ORDER BY gender
+- name: views_from_objects_sql
+  query: SELECT COUNT(*) FROM information_schema.views WHERE table_schema = 'employees'

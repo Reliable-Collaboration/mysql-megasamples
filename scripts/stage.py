@@ -71,6 +71,12 @@ def stage_oracle_co(dest):
                        os.path.join(dest, "oracle_co.sql"))
 
 
+@stager("employees")
+def stage_employees(dest):
+    _run_dir_converter("employees", os.path.join(ROOT, "downloads", "employees"),
+                       os.path.join(dest, "employees.sql"))
+
+
 def _run_dir_converter(name, src_dir, out):
     """Converters that read a directory of files rather than a single artifact."""
     import subprocess

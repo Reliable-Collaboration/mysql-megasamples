@@ -1,0 +1,9 @@
+# S7: canonical query results, tab-separated as the client prints them.
+avg_salary_by_department: "Customer Service\t58770\nDevelopment\t59479\nFinance\t\
+  70489\nHuman Resources\t55575\nMarketing\t71913\nProduction\t59605\nQuality Management\t\
+  57251\nResearch\t59665\nSales\t80668"
+current_department_managers: '9'
+employees_by_gender: "M\t179973\nF\t120051"
+hire_date_range: "1985-01-01\t2000-01-28"
+salary_extremes: "38623\t158220"
+views_from_objects_sql: '4'

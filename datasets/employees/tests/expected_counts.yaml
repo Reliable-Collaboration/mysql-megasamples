@@ -1,0 +1,8 @@
+# S3: the row counts published upstream and quoted in knowledge/datasets/employees.md.
+# The same figures are asserted independently by the upstream test_employees_sha2.sql.
+departments: 9
+dept_emp: 331603
+dept_manager: 24
+employees: 300024
+salaries: 2844047
+titles: 443308
