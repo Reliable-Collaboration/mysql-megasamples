@@ -48,6 +48,8 @@ def start(fresh=False):
              # secure_file_priv directory -- the entrypoint chowns that one to uid 999 at every
              # start, which takes it away from the host user (found at S-02).
              "-v", f"{os.path.join(ROOT, 'docker', 'context')}:/context:ro",
+             # writable output for dumps; safe to mount rw because it is not secure_file_priv
+             "-v", f"{os.path.join(ROOT, 'build')}:/build",
              IMAGE, "mysqld",
              "--local-infile=1", "--skip-log-bin"])
     if p.returncode != 0:

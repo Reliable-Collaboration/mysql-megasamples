@@ -1,0 +1,6 @@
+# The build context needs only docker/ and build/dumps/; everything else is repository weight.
+*
+!docker/my.cnf
+!docker/init/
+!docker/entrypoint-wrapper.sh
+!build/dumps/

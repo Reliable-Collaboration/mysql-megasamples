@@ -60,5 +60,20 @@ Option 1 (pre-populated datadir). Option 2 remains the documented fallback if P-
 # Readiness probe (measured 2026-09-02)
 `mysqladmin ping` answers "alive" even when the credentials are wrong or the entrypoint is still setting users up, so it must not be used as the S8 readiness gate. The image test waits for a real statement (`mysql -uroot -p… -N -e 'SELECT 1'`) to succeed; on the probe container that was 1 s after the socket appeared and about 6 s after `docker run`.
 
+# S-04 result (2026-09-02): the image is built and passes every S8 check
+`make image` produces `mysql-megasamples:dev` from four datasets and `make test-image` reports 0
+failures: ready in 1.8 s, the entrypoint does not re-initialise, the registry lists exactly the
+built datasets, all 51 tables across the four databases match their pinned counts, `CHECK TABLE`
+passes for every one, `demo` can read and cannot CREATE/INSERT/UPDATE/DELETE/DROP or write through
+a routine, no account has an empty password, `CONVERT_TZ` and `SHA2` work, and
+`MYSQL_ROOT_PASSWORD`/`DEMO_PASSWORD` overrides take effect through the wrapper while the baked
+default stops working.
+
+Two builder requirements that the tool records had already predicted and that a first attempt still
+got wrong: `mysqlsh` must be given `--no-password`, or it prompts and a non-interactive build hangs
+indefinitely rather than failing; and the builder's mysqld must run with `--local-infile=1`, because
+`util.loadDump` uses `LOAD DATA LOCAL INFILE`. A `.dockerignore` keeps the build context to
+`docker/` and `build/dumps/` instead of the whole repository.
+
 # Status
 accepted (P-03 measures first-start time and chooses between datadir designs A and B)

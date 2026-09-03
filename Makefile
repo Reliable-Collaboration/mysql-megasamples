@@ -4,7 +4,7 @@ PY      ?= python3
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help core-fast image test-image okf-check provenance build-server build-server-stop clean-context
+.PHONY: help core-fast image test-image okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs
 
 help:
@@ -24,7 +24,21 @@ $(1):
 endef
 $(foreach d,sakila chinook northwind pubs,$(eval $(call DATASET_RULE,$(d))))
 
-core-fast: sakila chinook northwind pubs
+CORE_FAST := sakila chinook northwind pubs
+
+core-fast: $(CORE_FAST)
+
+# build the image from whatever datasets are named in DATASETS (default: the core-fast set)
+DATASETS ?= $(CORE_FAST)
+image: $(DATASETS)
+	@$(PY) scripts/db.py start
+	@for d in $(DATASETS); do $(PY) scripts/dump.py $$d; done
+	@$(PY) scripts/registry.py $(DATASETS)
+	@DOCKER_BUILDKIT=1 docker build -f docker/Dockerfile -t mysql-megasamples:dev .
+	@echo "built mysql-megasamples:dev with: $(DATASETS)"
+
+test-image:
+	@$(PY) tests/image_test.py $(DATASETS)
 
 build-server:
 	@$(PY) scripts/db.py start

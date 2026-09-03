@@ -11,3 +11,5 @@ docker/init/10-registry.sql
 .venv/
 work/
 __pycache__/
+build/
+docker/init/10-registry.sql
