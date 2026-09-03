@@ -1,0 +1,48 @@
+# Every downloadable artifact the build needs. scripts/fetch.py is the only reader.
+# Adding a mirror never requires editing build logic. See PLAN.md section 2.5.
+#
+#   id            unique key; also the filename under downloads/
+#   dataset       database name this artifact belongs to
+#   url           upstream location (authoritative)
+#   mirrors       tried in order after url
+#   sha256        "" until the first verified fetch; the build then refuses to
+#                 proceed unless MEGASAMPLES_TRUST_FIRST_FETCH=1, which writes it back
+#   size_bytes    0 when unknown; checked when non-zero
+#   license       id of a record in knowledge/licenses/
+#   ipv4_first    force curl -4 (hosts with AAAA records known to hang)
+artifacts:
+  - id: sakila/sakila-db.zip
+    dataset: sakila
+    url: https://downloads.mysql.com/docs/sakila-db.zip
+    mirrors: []
+    sha256: "e27ed871082e76e9d32021c2df07f97ebf7696ace132f5995218557dd87d7046"
+    size_bytes: 729654
+    license: bsd-3-clause-sakila
+    ipv4_first: false
+
+  - id: chinook/Chinook_MySql.sql
+    dataset: chinook
+    url: https://github.com/lerocha/chinook-database/releases/download/v1.4.5/Chinook_MySql.sql
+    mirrors: []
+    sha256: "02a1835417c3ea19bff64e1d1f22be738ce51b3f88b0473c24eebff9a3ccde4b"
+    size_bytes: 616450
+    license: mit
+    ipv4_first: false
+
+  - id: northwind/instnwnd.sql
+    dataset: northwind
+    url: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instnwnd.sql
+    mirrors: []
+    sha256: ""
+    size_bytes: 1049720
+    license: mit
+    ipv4_first: false
+
+  - id: pubs/instpubs.sql
+    dataset: pubs
+    url: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/northwind-pubs/instpubs.sql
+    mirrors: []
+    sha256: ""
+    size_bytes: 125718
+    license: mit
+    ipv4_first: false

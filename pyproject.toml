@@ -1,0 +1,18 @@
+[project]
+name = "mysql-megasamples"
+version = "0.1.0"
+description = "MySQL 9.7 LTS image preloaded with well-known sample and public databases"
+requires-python = ">=3.11"
+dependencies = [
+    "PyYAML>=6.0",
+    "PyMySQL[rsa]>=1.2.0",
+    "duckdb>=1.1",
+    "lxml>=5.0",
+    "sqlglot>=25.0",
+]
+
+[dependency-groups]
+dev = ["pytest>=8.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
