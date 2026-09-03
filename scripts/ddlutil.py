@@ -70,3 +70,34 @@ def inline_identity_pk(create_table, declared_pk=None):
     head = create_table[:close].rstrip().rstrip(",")
     return (head + f",\n  {key} (`{col.group(1)}`)\n" + create_table[close:],
             (name, column) if key == "PRIMARY KEY" else None)
+
+
+COLUMN_NAME = re.compile(r"^`(\w+)`")
+NOT_A_COLUMN = re.compile(r"(?i)^\s*(PRIMARY\s+KEY|FOREIGN\s+KEY|CONSTRAINT|UNIQUE|KEY|INDEX|CHECK)\b")
+
+
+def columns_of(create_table):
+    """Column names of a translated CREATE TABLE, in declaration order.
+
+    Comments are removed first: AdventureWorks documents its columns inline, and a comment such as
+    "-- A customer may either be a person, a store, or a person who works for a store" carries commas
+    that would otherwise split the column list and lose the columns after it.
+    """
+    body = create_table[create_table.index("(") + 1:create_table.rindex(")")]
+    body = re.sub(r"--[^\n]*", "", body)
+    body = re.sub(r"(?s)/\*.*?\*/", "", body)
+    names, depth, item = [], 0, []
+    for ch in body + ",":
+        if ch == "(":
+            depth += 1
+        elif ch == ")":
+            depth -= 1
+        if ch == "," and depth == 0:
+            text = "".join(item).strip()
+            m = COLUMN_NAME.match(text)
+            if m and not NOT_A_COLUMN.match(text):
+                names.append(m.group(1))
+            item = []
+        else:
+            item.append(ch)
+    return names

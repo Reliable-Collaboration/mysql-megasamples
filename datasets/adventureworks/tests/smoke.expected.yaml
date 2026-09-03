@@ -1,0 +1,18 @@
+# S7: canonical query results, tab-separated as the client prints them.
+build_version: "17.0.1000.3\t2025-11-14 00:00:00"
+employee_view: '290'
+generated_line_total: "109846381.40\t109846381.40"
+geography_all_in_range: "19614\t19614\t19614"
+geography_decoded: "47.7869921906598\t-122.164644615406\tBothell"
+hierarchyid_decoded: "1\t\t/\tNULL\n2\t58\t/1/\t1\n3\t5AC0\t/1/1/\t2"
+hierarchyid_tree_is_consistent: '0'
+non_ascii_product_descriptions: '622'
+objects_created: "13\t0\t0"
+order_totals: "43659\tSO43659\t20565.62\t23153.23\n43660\tSO43660\t1294.25\t1457.33"
+product_review_newlines_are_data: "1\t509\n2\t337\n3\t252\n4\t3782"
+revenue_by_territory: "Northwest\t4594\t18061660.37\nNortheast\t352\t7820209.63\n\
+  Central\t385\t8913299.25\nSouthwest\t6224\t27150594.59\nSoutheast\t486\t8884099.37\n\
+  Canada\t4067\t18398929.19\nFrance\t2672\t8119749.35\nGermany\t2623\t5479819.58\n\
+  Australia\t6843\t11814376.10\nUnited Kingdom\t3219\t8574048.71"
+store_demographics_view: "292\t800000\t13\n294\t800000\t14\n296\t800000\t15"
+xml_columns_are_text: "128\t6"

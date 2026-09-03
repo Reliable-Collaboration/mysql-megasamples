@@ -23,9 +23,13 @@ TYPE_MAP = {
     "bit": "TINYINT(1)", "money": "DECIMAL(19,4)", "smallmoney": "DECIMAL(10,4)",
     "datetime": "DATETIME", "smalldatetime": "DATETIME", "float": "DOUBLE", "real": "FLOAT",
     "ntext": "TEXT", "text": "TEXT", "image": "MEDIUMBLOB", "uniqueidentifier": "CHAR(36)",
-    "sysname": "VARCHAR(128)", "xml": "TEXT", "date": "DATE", "time": "TIME",
-    "datetime2": "DATETIME(6)", "datetimeoffset": "DATETIME(6)", "hierarchyid": "VARCHAR(255)",
+    "sysname": "VARCHAR(128)", "xml": "LONGTEXT", "date": "DATE", "time": "TIME",
+    # MySQL has neither: hierarchyid keeps its raw bytes (the converter adds a decoded path column
+    # beside it) and geography becomes a point in the same spatial reference system
+    "hierarchyid": "VARBINARY(892)", "geography": "POINT SRID 4326",
+    "datetime2": "DATETIME(6)", "datetimeoffset": "DATETIME(6)",
 }
+assert len(TYPE_MAP) == len(set(TYPE_MAP)), "duplicate key: the later one wins silently"
 SIZED = {"nvarchar": "VARCHAR", "varchar": "VARCHAR", "nchar": "CHAR", "char": "CHAR",
          "decimal": "DECIMAL", "numeric": "DECIMAL", "binary": "BINARY", "varbinary": "VARBINARY"}
 
@@ -38,6 +42,7 @@ SKIP_BATCH = re.compile(
     r"|exec(ute)?\s+sp_|create\s+type\b)", re.I)
 
 
+ASCII_WORD_START = frozenset("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_")
 MAX_IDENT = 64          # MySQL's limit; SQL Server allows 128
 
 
@@ -56,25 +61,38 @@ def ident(name):
 
 
 def split_batches(sql):
-    """Split on a line that is only GO (the batch separator), never inside a string literal."""
-    out, cur, i, n, in_str = [], [], 0, len(sql), False
+    """Split on a line that is only GO (the batch separator), never inside a string literal.
+
+    The literal tracking has to skip comments as well as quotes: AdventureWorks' script is full of
+    lines like `-- don't` and `PRINT 'Creating ...'`, and counting an apostrophe inside a comment
+    leaves the scanner believing it is inside a string, after which every GO to the next stray
+    apostrophe is missed. That turned 434 batches into 12.
+    """
+    out, cur, in_str, in_block = [], [], False, False
     for line in sql.splitlines():
-        stripped = line.strip()
-        if not in_str and re.fullmatch(r"(?i)go", stripped):
+        if not in_str and not in_block and re.fullmatch(r"(?i)go", line.strip()):
             out.append("\n".join(cur)); cur = []
             continue
         cur.append(line)
-        # track unterminated string literals across lines
-        q = 0
-        j = 0
-        while j < len(line):
-            if line[j] == "'":
-                if j + 1 < len(line) and line[j + 1] == "'":
-                    j += 2; continue
-                q += 1
-            j += 1
-        if q % 2:
-            in_str = not in_str
+        i, n = 0, len(line)
+        while i < n:
+            if in_block:
+                if line.startswith("*/", i):
+                    in_block = False; i += 2; continue
+                i += 1; continue
+            if in_str:
+                if line[i] == "'":
+                    if line.startswith("''", i):
+                        i += 2; continue
+                    in_str = False
+                i += 1; continue
+            if line.startswith("--", i):
+                break                      # rest of the line is a comment
+            if line.startswith("/*", i):
+                in_block = True; i += 2; continue
+            if line[i] == "'":
+                in_str = True
+            i += 1
     if cur:
         out.append("\n".join(cur))
     return [b for b in out if b.strip()]
@@ -152,9 +170,10 @@ def scan_replace(sql, on_dquote=None, on_word=None):
                 prev_ident = emitted.endswith("`")
                 i = end + 1
                 continue
-        if on_word and (ch.isalpha() or ch == "_"):    # bare word
-            m = re.match(r"[A-Za-z_][A-Za-z0-9_]*", sql[i:])
-            word = m.group(0)
+        # ASCII only: `ch.isalpha()` is true for accented letters in the data (AdventureWorks has
+        # French and Spanish text), which the identifier pattern would then fail to match
+        if on_word and (ch in ASCII_WORD_START):       # bare word
+            word = re.match(r"[A-Za-z_][A-Za-z0-9_]*", sql[i:]).group(0)
             out.append(on_word(word)); i += len(word); prev_ident = False; continue
         if not ch.isspace():
             prev_ident = False
@@ -406,6 +425,17 @@ def convert_computed(body, computed_types, materialize=()):
         if key not in computed_types:
             raise SystemExit(f"computed column {key} has no declared MySQL type")
         expression = column_tail(body, m.end()).strip()
+        # SQL Server writes the attributes after the expression: PERSISTED means stored, which these
+        # columns already are, and a nullability keyword belongs after STORED in MySQL
+        attributes = ""
+        while True:
+            trimmed = re.sub(r"(?i)\s+(PERSISTED|NOT\s+NULL|NULL)\s*$", "", expression)
+            if trimmed == expression:
+                break
+            keyword = expression[len(trimmed):].strip()
+            if keyword.upper() != "PERSISTED":
+                attributes = " " + " ".join(keyword.split()).upper() + attributes
+            expression = trimmed
         out.append(body[pos:m.start(1) - 1])
         pos = m.end() + len(column_tail(body, m.end()))
         if key in materialize:
@@ -414,7 +444,7 @@ def convert_computed(body, computed_types, materialize=()):
         # N'x' is a national-character literal; MySQL's utf8mb4 columns make the prefix redundant
         expression = re.sub(r"(?<![A-Za-z0-9_])N'", "'", expression)
         expression = convert_concat(convert_functions(convert_tsql_convert(expression)))
-        out.append(f"`{column}` {computed_types[key]} AS ({expression}) STORED")
+        out.append(f"`{column}` {computed_types[key]} AS ({expression}) STORED{attributes}")
         generated.append(column)
     out.append(body[pos:])
     return "".join(out), generated
@@ -458,6 +488,56 @@ def convert_functions(sql):
     return sql
 
 
+SELECT_ALIAS = re.compile(r"(?s)^\s*(?:`(\w+)`|\[(\w+)\]|\b(\w+)\b)\s*=\s*(?![=<>])(.+)$")
+
+
+def convert_select_aliases(sql):
+    """T-SQL's `Alias = expression` in a select list -> `expression AS Alias`.
+
+    MySQL has only the AS form, and reads `stateprovincename = sp.name` as a comparison, so the
+    column vanishes and the query fails on the missing name. Only the region between SELECT and its
+    FROM is rewritten, and only where the left side is a bare identifier.
+    """
+    out, pos = [], 0
+    for m in re.finditer(r"(?is)\bSELECT\b", sql):
+        if m.start() < pos:
+            continue
+        depth, i, end = 0, m.end(), None
+        while i < len(sql):
+            ch = sql[i]
+            if ch == "'":
+                i += 1
+                while i < len(sql) and sql[i] != "'":
+                    i += 1
+            elif ch == "(":
+                depth += 1
+            elif ch == ")":
+                if depth == 0:
+                    end = i
+                    break
+                depth -= 1
+            elif depth == 0 and re.match(r"(?i)\bFROM\b", sql[i:i + 4]) and not sql[i - 1].isalnum():
+                end = i
+                break
+            i += 1
+        if end is None:
+            break
+        items = split_top(sql[m.end():end], ",")
+        rewritten = []
+        for item in items:
+            a = SELECT_ALIAS.match(item)
+            if a:
+                name = a.group(1) or a.group(2) or a.group(3)
+                rewritten.append(f" {a.group(4).strip()} AS `{name}`")
+            else:
+                rewritten.append(item)
+        out.append(sql[pos:m.end()])
+        out.append(",".join(rewritten))
+        pos = end
+    out.append(sql[pos:])
+    return "".join(out)
+
+
 CTE_HEAD = re.compile(r"(?i)\bWITH\s+(`?\w+`?)\s*(?:\([^()]*\))?\s+AS\s*\(")
 
 
@@ -479,9 +559,32 @@ def convert_recursive_cte(sql):
     return sql[:m.start()] + re.sub(r"(?i)^WITH\b", "WITH RECURSIVE", sql[m.start():], count=1)
 
 
-XML_VALUE = re.compile(r"(?is)(`?\w+`?)\.value\s*\(\s*N?'((?:[^']|'')*)'\s*,\s*'([^']*)'\s*\)")
+# the column may carry a table alias: `s.[Demographics].value(...)`
+XML_VALUE = re.compile(r"(?is)((?:`?\w+`?\s*\.\s*)?`?\w+`?)\.value\s*\("
+                       r"\s*N?'((?:[^']|'')*)'\s*,\s*'([^']*)'\s*\)")
 XML_METHOD = re.compile(r"(?i)`?\w+`?\.(query|exist|nodes|modify)\s*\(")
-DECLARE_NS = re.compile(r'(?is)\s*declare\s+namespace\s+[\w-]+\s*=\s*"[^"]*"\s*;')
+
+
+# T-SQL constructs with no MySQL equivalent at all; a view or routine using one cannot be ported
+BLOCKERS = [(re.compile(r"(?i)\bPIVOT\s*\("), "PIVOT"),
+            (re.compile(r"(?i)\bUNPIVOT\s*\("), "UNPIVOT"),
+            (re.compile(r"(?i)\b(CROSS|OUTER)\s+APPLY\b"), "APPLY"),
+            (re.compile(r"(?i)\bFOR\s+XML\b"), "FOR XML"),
+            (re.compile(r"(?i)\bOPENXML\s*\("), "OPENXML"),
+            (re.compile(r"(?i)\bTABLESAMPLE\b"), "TABLESAMPLE")]
+
+
+def xml_blockers(sql):
+    """Constructs with no MySQL equivalent. XML `.value()` is handled; these are not.
+
+    Reported so the caller can drop the object with a reason rather than emit something that parses
+    but does not do what its name says.
+    """
+    found = {f".{m.group(1)}()" for m in XML_METHOD.finditer(sql)}
+    found |= {label for pattern, label in BLOCKERS if pattern.search(sql)}
+    return sorted(found)
+DECLARE_NS = re.compile(r'(?is)\s*declare\s+(?:default\s+element\s+namespace|namespace\s+[\w-]+)'
+                        r'\s*=?\s*"[^"]*"\s*;')
 
 
 def convert_xml_value(sql):
@@ -494,10 +597,6 @@ def convert_xml_value(sql):
     `(path)[1]` form becomes `path[1]`, which MySQL's grammar does accept, and a sized result type
     becomes a CAST so the column is truncated the way SQL Server truncates it.
     """
-    bad = XML_METHOD.search(sql)
-    if bad:
-        raise SystemExit(f"XML method .{bad.group(1)}() has no MySQL equivalent")
-
     def one(m):
         column, xquery, result = m.group(1), m.group(2), m.group(3).strip()
         path = DECLARE_NS.sub("", xquery).strip()
@@ -513,6 +612,36 @@ def convert_xml_value(sql):
 
 
 INLINE_REF = re.compile(r"(?i)\s+REFERENCES\s+(`?\w+`?)\s*\(\s*(`?\w+`?)\s*\)")
+
+
+NONDETERMINISTIC = re.compile(r"(?i)\b(CURRENT_TIMESTAMP|NOW|UTC_TIMESTAMP|CURDATE|CURTIME|RAND"
+                              r"|UUID|SYSDATE)\b")
+CHECK_CLAUSE = re.compile(r"(?is),?\s*(?:CONSTRAINT\s+`([^`]+)`\s+)?CHECK\s*\(")
+
+
+def drop_nondeterministic_checks(sql):
+    """Remove CHECK constraints whose expression is not deterministic.
+
+    MySQL rejects them outright ("contains disallowed function"), and AdventureWorks has several of
+    the form `BirthDate BETWEEN '1930-01-01' AND DATEADD(YEAR, -18, GETDATE())`. Returns the SQL and
+    the names dropped, so the caller can say what went.
+    """
+    dropped, out, pos = [], [], 0
+    for m in CHECK_CLAUSE.finditer(sql):
+        if m.start() < pos:
+            continue
+        depth, i = 1, m.end()
+        while i < len(sql) and depth:
+            depth += {"(": 1, ")": -1}.get(sql[i], 0)
+            i += 1
+        clause = sql[m.start():i]
+        if not NONDETERMINISTIC.search(clause):
+            continue
+        out.append(sql[pos:m.start()])
+        dropped.append(m.group(1) or "unnamed")
+        pos = i
+    out.append(sql[pos:])
+    return "".join(out), dropped
 
 
 def hoist_inline_references(create_table):
@@ -595,17 +724,33 @@ def add_column_list(insert_sql, columns, identity):
 def normalize_comments(sql):
     """MySQL needs whitespace after `--` to treat it as a comment; T-SQL does not.
 
-    An upstream line like `--ORDER BY City` is a comment in SQL Server and a syntax error in MySQL.
-    Only whole lines are rewritten, so data is never touched."""
-    out = []
-    for line in sql.split("\n"):
-        stripped = line.lstrip()
-        if stripped.startswith("--") and len(stripped) > 2 and stripped[2] not in " \t-":
-            indent = line[:len(line) - len(stripped)]
-            out.append(f"{indent}-- {stripped[2:]}")
-        else:
-            out.append(line)
-    return "\n".join(out)
+    An upstream `--ORDER BY City` is a comment in SQL Server and a syntax error in MySQL, and
+    AdventureWorks writes trailing ones too (`quotadate --,`), so this scans rather than working line
+    by line. String literals are skipped: a `--` inside one is data.
+    """
+    out, i, n = [], 0, len(sql)
+    while i < n:
+        ch = sql[i]
+        if ch == "'":                                   # string literal, copied verbatim
+            j = i + 1
+            while j < n:
+                if sql[j] == "'":
+                    if j + 1 < n and sql[j + 1] == "'":
+                        j += 2; continue
+                    break
+                j += 1
+            out.append(sql[i:j + 1]); i = j + 1; continue
+        if sql.startswith("/*", i):                     # block comment, copied verbatim
+            j = sql.find("*/", i + 2)
+            j = n if j < 0 else j + 2
+            out.append(sql[i:j]); i = j; continue
+        if sql.startswith("--", i):
+            rest = sql[i + 2:i + 3]
+            out.append("-- " if rest and rest not in " \t-" else "--")
+            i += 2
+            continue
+        out.append(ch); i += 1
+    return "".join(out)
 
 
 def terminate(sql):
@@ -621,15 +766,30 @@ def terminate(sql):
 
 
 def strip_schemas(sql, schemas=("dbo",)):
-    """Remove a schema prefix in either T-SQL quoting style.
+    """Fold a schema qualifier into the object name, in either T-SQL quoting style.
 
-    MySQL has no schema level below the database, so a prefix either disappears (a single-schema
-    dataset such as AdventureWorks LT, where SalesLT and dbo do not collide) or is folded into the
-    table name by the caller. Left in place it becomes a database reference and the load fails with
-    "Unknown database".
+    MySQL has no schema level below the database. `schemas` is either a sequence of schema names to
+    drop outright (a single-schema dataset such as AdventureWorks LT, where SalesLT and dbo do not
+    collide) or a mapping of schema name to the prefix its objects take -- `{"person": "person_",
+    "dbo": ""}` turns `[Person].[Address]` into `person_address` and leaves `dbo` tables unprefixed,
+    which is the naming decision for multi-schema databases. Left in place a qualifier becomes a
+    database reference and the load fails with "Unknown database".
     """
-    for schema in schemas:
-        sql = re.sub(rf'(?i)(["\[]?)\b{re.escape(schema)}\1?["\]]?\s*\.\s*', "", sql)
+    mapping = schemas if isinstance(schemas, dict) else {s: "" for s in schemas}
+    for schema, prefix in mapping.items():
+        # the object may be bare, "quoted" or [bracketed], and a quoted name may contain spaces
+        # ("dbo"."Order Details"), so its own quoting is preserved when the qualifier is dropped
+        pattern = (rf'(?i)(?:"{re.escape(schema)}"|\[{re.escape(schema)}\]|\b{re.escape(schema)}\b)'
+                   r'\s*\.\s*(?:"([^"]+)"|\[([^\]]+)\]|(\w+))')
+
+        def fold(m, prefix=prefix):
+            quoted, bracketed, bare = m.groups()
+            name = quoted or bracketed or bare
+            if not prefix:
+                return f'"{name}"' if quoted else (f"[{name}]" if bracketed else name)
+            return f"[{prefix}{name}]"
+
+        sql = re.sub(pattern, fold, sql)
     return sql
 
 
@@ -677,7 +837,10 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
     name_map, notes, statements = {}, [], []
     identity_pk = {}     # table -> column that already carries PRIMARY KEY with its identity
     udts = collect_udts(sql)
-    declared_pk = collect_declared_pks(sql)
+    # the schema qualifier is folded first: the primary keys are declared as `ALTER TABLE
+    # [Person].[EmailAddress]` while the table is created as `person_emailaddress`, and a lookup on
+    # the unfolded name silently finds nothing
+    declared_pk = collect_declared_pks(strip_schemas(sql, schemas))
     tsql_types = collect_tsql_types(sql)
 
     if tsql_types:
@@ -706,6 +869,9 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             continue
         if re.match(r"(?i)^\s*alter\s+table\s+.*\b(no)?check\s+constraint\s+all", head, re.S):
             continue                                    # constraint disabling has no MySQL analogue
+        # PRINT is progress messaging. It is skipped as a statement of its own, but AdventureWorks
+        # also puts one directly after a statement in the same batch, where it would be emitted.
+        batch = re.sub(r"(?im)^[ \t]*PRINT\s+[^;]*;[ \t]*$", "", batch)
         body = strip_schemas(batch, schemas)
         # classify on the first real statement: several batches open with a block comment
         lead = re.sub(r"(?s)^\s*(?:/\*.*?\*/|--[^\n]*\n)\s*", "", body)
@@ -724,14 +890,18 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             if m:
                 tname = m.group(1) or m.group(2)
                 tables[tname.lower()] = tname
-        if kind in ("view", "procedure", "constraint", "dml"):
-            # bare (unquoted) references to a table must be lower-cased too
+        if kind in ("view", "procedure", "constraint", "dml", "trigger", "function", "other"):
+            # bare (unquoted) references to a table must be lower-cased too -- CREATE INDEX names
+            # its table bare in the Northwind script, and its statements are classified "other"
             body = scan_replace(body, on_word=lambda w: f"`{tables[w.lower()]}`" if w.lower() in tables else w)
         # filegroup placement and index-organisation keywords have no MySQL equivalent, and they
         # appear on CREATE INDEX as well as on tables and constraints
         body = re.sub(r"(?i)\s+ON\s+`primary`", "", body)
         body = re.sub(r"(?i)\b(?:NON)?CLUSTERED\s+(?=INDEX\b)", "", body)
         body = re.sub(r"(?i)\b(PRIMARY\s+KEY|UNIQUE)\s+(?:NON)?CLUSTERED", r"\1", body)
+        # a covering index: MySQL has no INCLUDE, and an InnoDB secondary index already carries the
+        # primary key, so the clause goes rather than the included columns joining the key
+        body = re.sub(r"(?is)\s+INCLUDE\s*\([^)]*\)", "", body)
         if kind in ("table", "constraint"):
             body = convert_types(body)
             body = re.sub(r"(?i)\bIDENTITY\s*\(\s*\d+\s*,\s*\d+\s*\)", "AUTO_INCREMENT", body)
@@ -747,6 +917,9 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             body = expand_alias_types(body, tsql_types)    # CREATE TYPE ... FROM (AdventureWorks)
             body = convert_like_classes(body)
             body = convert_functions(body)
+            body, dropped_checks = drop_nondeterministic_checks(body)
+            for name in dropped_checks:
+                notes.append(f"dropped CHECK {name}: MySQL allows no non-deterministic function")
             if kind == "table":
                 body, generated = convert_computed(body, computed_types or {}, materialize)
                 # AdventureWorks LT's scripts end several column lists with a trailing comma
@@ -808,6 +981,7 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             body = re.sub(r"(?i)\s+WITH\s+(SCHEMABINDING|VIEW_METADATA|ENCRYPTION)"
                           r"(\s*,\s*(SCHEMABINDING|VIEW_METADATA|ENCRYPTION))*", "", body)
         if kind in ("view", "procedure", "trigger"):
+            body = convert_select_aliases(body)
             body = convert_functions(convert_tsql_convert(convert_xml_value(body)))
             body = convert_recursive_cte(body)
         if kind in ("view", "procedure") and not keep_objects:

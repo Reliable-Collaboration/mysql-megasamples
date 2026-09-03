@@ -1,0 +1,9 @@
+name: adventureworks
+database: adventureworks
+tier: core
+record: knowledge/datasets/adventureworks-oltp.md
+licenses: [mit]
+artifacts: [adventureworks/AdventureWorks-oltp-install-script.zip]
+converter: none
+load:
+  - adventureworks.sql

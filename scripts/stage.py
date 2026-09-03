@@ -85,6 +85,14 @@ def stage_adventureworks_lt(dest):
                    os.path.join(dest, "adventureworks_lt.sql"))
 
 
+@stager("adventureworks")
+def stage_adventureworks(dest):
+    _run_converter("adventureworks",
+                   os.path.join(ROOT, "downloads", "adventureworks",
+                                "AdventureWorks-oltp-install-script.zip"),
+                   os.path.join(dest, "adventureworks.sql"))
+
+
 @stager("oracle_sh")
 def stage_oracle_sh(dest):
     _run_dir_converter("oracle_sh", os.path.join(ROOT, "downloads", "oracle_sh"),

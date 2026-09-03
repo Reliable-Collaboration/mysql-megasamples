@@ -1,0 +1,16 @@
+# the big tables and the indexes the script creates on them
+- name: order_detail_by_order
+  query: SELECT COUNT(*) FROM sales_salesorderdetail WHERE salesorderid = 43659
+  must_not_full_scan: [sales_salesorderdetail]
+- name: order_header_by_customer
+  query: SELECT COUNT(*) FROM sales_salesorderheader WHERE customerid = 29825
+  must_not_full_scan: [sales_salesorderheader]
+- name: transaction_history_by_product
+  query: SELECT COUNT(*) FROM production_transactionhistory WHERE productid = 784
+  must_not_full_scan: [production_transactionhistory]
+- name: person_by_last_name
+  query: SELECT COUNT(*) FROM person_person WHERE lastname = 'Adams'
+  must_not_full_scan: [person_person]
+- name: address_by_state
+  query: SELECT COUNT(*) FROM person_address WHERE stateprovinceid = 79
+  must_not_full_scan: [person_address]

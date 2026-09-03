@@ -1,0 +1,888 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+awbuildversion:
+  columns:
+  - systeminformationid
+  - database_version
+  - versiondate
+  - modifieddate
+  excluded: []
+  n: 1
+  s: 11524635780082968895
+  x: 11524635780082968895
+humanresources_department:
+  columns:
+  - departmentid
+  - name
+  - groupname
+  - modifieddate
+  excluded: []
+  n: 16
+  s: 15480148930411324110
+  x: 6116398979751076142
+humanresources_employee:
+  columns:
+  - businessentityid
+  - nationalidnumber
+  - loginid
+  - organizationnode
+  - organizationnode_path
+  - organizationlevel
+  - jobtitle
+  - birthdate
+  - maritalstatus
+  - gender
+  - hiredate
+  - salariedflag
+  - vacationhours
+  - sickleavehours
+  - currentflag
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 290
+  s: 12289096301497187761
+  x: 16216708083264457283
+humanresources_employeedepartmenthistory:
+  columns:
+  - businessentityid
+  - departmentid
+  - shiftid
+  - startdate
+  - enddate
+  - modifieddate
+  excluded: []
+  n: 296
+  s: 11225559135201469211
+  x: 5163564308399753753
+humanresources_employeepayhistory:
+  columns:
+  - businessentityid
+  - ratechangedate
+  - rate
+  - payfrequency
+  - modifieddate
+  excluded: []
+  n: 316
+  s: 4820804390536668695
+  x: 10315159222181035351
+humanresources_jobcandidate:
+  columns:
+  - jobcandidateid
+  - businessentityid
+  - resume
+  - modifieddate
+  excluded: []
+  n: 13
+  s: 7830406290178723591
+  x: 4651874627919000065
+humanresources_shift:
+  columns:
+  - shiftid
+  - name
+  - starttime
+  - endtime
+  - modifieddate
+  excluded: []
+  n: 3
+  s: 2329790093858604100
+  x: 17269874370956600314
+person_address:
+  columns:
+  - addressid
+  - addressline1
+  - addressline2
+  - city
+  - stateprovinceid
+  - postalcode
+  - spatiallocation
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 19614
+  s: 6947430843658205068
+  x: 9426532576342562640
+person_addresstype:
+  columns:
+  - addresstypeid
+  - name
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 6
+  s: 1887029130152047913
+  x: 14453550280784751277
+person_businessentity:
+  columns:
+  - businessentityid
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 20777
+  s: 18085993333184524797
+  x: 7954586790634730149
+person_businessentityaddress:
+  columns:
+  - businessentityid
+  - addressid
+  - addresstypeid
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 19614
+  s: 15198130814992806985
+  x: 14628354245082717931
+person_businessentitycontact:
+  columns:
+  - businessentityid
+  - personid
+  - contacttypeid
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 909
+  s: 9587116581473289465
+  x: 18307847178554933173
+person_contacttype:
+  columns:
+  - contacttypeid
+  - name
+  - modifieddate
+  excluded: []
+  n: 20
+  s: 2277982781198504919
+  x: 15311457749531982079
+person_countryregion:
+  columns:
+  - countryregioncode
+  - name
+  - modifieddate
+  excluded: []
+  n: 238
+  s: 12967941206488556474
+  x: 7793069218640736796
+person_emailaddress:
+  columns:
+  - businessentityid
+  - emailaddressid
+  - emailaddress
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 19972
+  s: 16320035281732598858
+  x: 9819975394218303428
+person_password:
+  columns:
+  - businessentityid
+  - passwordhash
+  - passwordsalt
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 19972
+  s: 12851358223567039569
+  x: 6250795007505145533
+person_person:
+  columns:
+  - businessentityid
+  - persontype
+  - namestyle
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - emailpromotion
+  - additionalcontactinfo
+  - demographics
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 19972
+  s: 3574451729947665088
+  x: 14454561570465266918
+person_personphone:
+  columns:
+  - businessentityid
+  - phonenumber
+  - phonenumbertypeid
+  - modifieddate
+  excluded: []
+  n: 19972
+  s: 11681442490600361047
+  x: 9779852524188711131
+person_phonenumbertype:
+  columns:
+  - phonenumbertypeid
+  - name
+  - modifieddate
+  excluded: []
+  n: 3
+  s: 1106918316461738894
+  x: 16159891722028758504
+person_stateprovince:
+  columns:
+  - stateprovinceid
+  - stateprovincecode
+  - countryregioncode
+  - isonlystateprovinceflag
+  - name
+  - territoryid
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 181
+  s: 5504607114786427260
+  x: 11074974473830752874
+production_billofmaterials:
+  columns:
+  - billofmaterialsid
+  - productassemblyid
+  - componentid
+  - startdate
+  - enddate
+  - unitmeasurecode
+  - bomlevel
+  - perassemblyqty
+  - modifieddate
+  excluded: []
+  n: 2679
+  s: 10799920009536149326
+  x: 9952347028829687092
+production_culture:
+  columns:
+  - cultureid
+  - name
+  - modifieddate
+  excluded: []
+  n: 8
+  s: 5756827946210238837
+  x: 3214187245536848681
+production_document:
+  columns:
+  - documentnode
+  - documentnode_path
+  - documentlevel
+  - title
+  - owner
+  - folderflag
+  - filename
+  - fileextension
+  - revision
+  - changenumber
+  - status
+  - documentsummary
+  - document
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 12
+  s: 4578707783033263724
+  x: 10908441353814094062
+production_illustration:
+  columns:
+  - illustrationid
+  - diagram
+  - modifieddate
+  excluded: []
+  n: 5
+  s: 17675944436208636086
+  x: 16462804123016435918
+production_location:
+  columns:
+  - locationid
+  - name
+  - costrate
+  - availability
+  - modifieddate
+  excluded: []
+  n: 14
+  s: 12420817517674124636
+  x: 7658045644497291404
+production_product:
+  columns:
+  - productid
+  - name
+  - productnumber
+  - makeflag
+  - finishedgoodsflag
+  - color
+  - safetystocklevel
+  - reorderpoint
+  - standardcost
+  - listprice
+  - size
+  - sizeunitmeasurecode
+  - weightunitmeasurecode
+  - weight
+  - daystomanufacture
+  - productline
+  - class
+  - style
+  - productsubcategoryid
+  - productmodelid
+  - sellstartdate
+  - sellenddate
+  - discontinueddate
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 504
+  s: 14241494411855560123
+  x: 13140587107682215841
+production_productcategory:
+  columns:
+  - productcategoryid
+  - name
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 4
+  s: 10752537071479650338
+  x: 9171775738457395686
+production_productcosthistory:
+  columns:
+  - productid
+  - startdate
+  - enddate
+  - standardcost
+  - modifieddate
+  excluded: []
+  n: 395
+  s: 16426710158496497959
+  x: 69474900644871395
+production_productdescription:
+  columns:
+  - productdescriptionid
+  - description
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 762
+  s: 2545168716970074224
+  x: 4027427694223204640
+production_productdocument:
+  columns:
+  - productid
+  - documentnode
+  - documentnode_path
+  - modifieddate
+  excluded: []
+  n: 32
+  s: 2122581514426452464
+  x: 3058682605335236442
+production_productinventory:
+  columns:
+  - productid
+  - locationid
+  - shelf
+  - bin
+  - quantity
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 1069
+  s: 1845368631115516068
+  x: 2589097334687155584
+production_productlistpricehistory:
+  columns:
+  - productid
+  - startdate
+  - enddate
+  - listprice
+  - modifieddate
+  excluded: []
+  n: 395
+  s: 3872323529367162850
+  x: 553704602025179062
+production_productmodel:
+  columns:
+  - productmodelid
+  - name
+  - catalogdescription
+  - instructions
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 128
+  s: 9529500473064776457
+  x: 12568329879868580391
+production_productmodelillustration:
+  columns:
+  - productmodelid
+  - illustrationid
+  - modifieddate
+  excluded: []
+  n: 7
+  s: 1879319126669324018
+  x: 17253964446763102246
+production_productmodelproductdescriptionculture:
+  columns:
+  - productmodelid
+  - productdescriptionid
+  - cultureid
+  - modifieddate
+  excluded: []
+  n: 762
+  s: 12100479624117827914
+  x: 16212259436924348468
+production_productphoto:
+  columns:
+  - productphotoid
+  - thumbnailphoto
+  - thumbnailphotofilename
+  - largephoto
+  - largephotofilename
+  - modifieddate
+  excluded: []
+  n: 101
+  s: 12118932822116857407
+  x: 16671538990562632111
+production_productproductphoto:
+  columns:
+  - productid
+  - productphotoid
+  - primary
+  - modifieddate
+  excluded: []
+  n: 504
+  s: 18340516937388502876
+  x: 10196540122057047042
+production_productreview:
+  columns:
+  - productreviewid
+  - productid
+  - reviewername
+  - reviewdate
+  - emailaddress
+  - rating
+  - comments
+  - modifieddate
+  excluded: []
+  n: 4
+  s: 9223100550291594106
+  x: 10377174503191550844
+production_productsubcategory:
+  columns:
+  - productsubcategoryid
+  - productcategoryid
+  - name
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 37
+  s: 93787914634184148
+  x: 6155150492560063582
+production_scrapreason:
+  columns:
+  - scrapreasonid
+  - name
+  - modifieddate
+  excluded: []
+  n: 16
+  s: 11533767913759068753
+  x: 16417060852156711645
+production_transactionhistory:
+  columns:
+  - transactionid
+  - productid
+  - referenceorderid
+  - referenceorderlineid
+  - transactiondate
+  - transactiontype
+  - quantity
+  - actualcost
+  - modifieddate
+  excluded: []
+  n: 113443
+  s: 18342466375609835051
+  x: 12395312734991881277
+production_transactionhistoryarchive:
+  columns:
+  - transactionid
+  - productid
+  - referenceorderid
+  - referenceorderlineid
+  - transactiondate
+  - transactiontype
+  - quantity
+  - actualcost
+  - modifieddate
+  excluded: []
+  n: 89253
+  s: 4990445212880292763
+  x: 13702487262019566331
+production_unitmeasure:
+  columns:
+  - unitmeasurecode
+  - name
+  - modifieddate
+  excluded: []
+  n: 38
+  s: 1914424480752869972
+  x: 3766481076339746694
+production_workorder:
+  columns:
+  - workorderid
+  - productid
+  - orderqty
+  - stockedqty
+  - scrappedqty
+  - startdate
+  - enddate
+  - duedate
+  - scrapreasonid
+  - modifieddate
+  excluded: []
+  n: 72591
+  s: 10924649940239670892
+  x: 5886745410243860158
+production_workorderrouting:
+  columns:
+  - workorderid
+  - productid
+  - operationsequence
+  - locationid
+  - scheduledstartdate
+  - scheduledenddate
+  - actualstartdate
+  - actualenddate
+  - actualresourcehrs
+  - plannedcost
+  - actualcost
+  - modifieddate
+  excluded: []
+  n: 67131
+  s: 1292612578812947530
+  x: 5705101422572707498
+purchasing_productvendor:
+  columns:
+  - productid
+  - businessentityid
+  - averageleadtime
+  - standardprice
+  - lastreceiptcost
+  - lastreceiptdate
+  - minorderqty
+  - maxorderqty
+  - onorderqty
+  - unitmeasurecode
+  - modifieddate
+  excluded: []
+  n: 460
+  s: 15311440909614222681
+  x: 7188547045709361881
+purchasing_purchaseorderdetail:
+  columns:
+  - purchaseorderid
+  - purchaseorderdetailid
+  - duedate
+  - orderqty
+  - productid
+  - unitprice
+  - linetotal
+  - receivedqty
+  - rejectedqty
+  - stockedqty
+  - modifieddate
+  excluded: []
+  n: 8845
+  s: 4623571747001857254
+  x: 3825153688191656360
+purchasing_purchaseorderheader:
+  columns:
+  - purchaseorderid
+  - revisionnumber
+  - status
+  - employeeid
+  - vendorid
+  - shipmethodid
+  - orderdate
+  - shipdate
+  - subtotal
+  - taxamt
+  - freight
+  - totaldue
+  - modifieddate
+  excluded: []
+  n: 4012
+  s: 7538796343812105492
+  x: 8521461075951447672
+purchasing_shipmethod:
+  columns:
+  - shipmethodid
+  - name
+  - shipbase
+  - shiprate
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 5
+  s: 8423066868464583562
+  x: 4670870021195119516
+purchasing_vendor:
+  columns:
+  - businessentityid
+  - accountnumber
+  - name
+  - creditrating
+  - preferredvendorstatus
+  - activeflag
+  - purchasingwebserviceurl
+  - modifieddate
+  excluded: []
+  n: 104
+  s: 11426133661610791440
+  x: 9007223550748169718
+sales_countryregioncurrency:
+  columns:
+  - countryregioncode
+  - currencycode
+  - modifieddate
+  excluded: []
+  n: 109
+  s: 10745024207285971025
+  x: 4662128905950691961
+sales_creditcard:
+  columns:
+  - creditcardid
+  - cardtype
+  - cardnumber
+  - expmonth
+  - expyear
+  - modifieddate
+  excluded: []
+  n: 19118
+  s: 1634900926395611456
+  x: 17405872305126653806
+sales_currency:
+  columns:
+  - currencycode
+  - name
+  - modifieddate
+  excluded: []
+  n: 105
+  s: 11686639394419079559
+  x: 16536172637161511999
+sales_currencyrate:
+  columns:
+  - currencyrateid
+  - currencyratedate
+  - fromcurrencycode
+  - tocurrencycode
+  - averagerate
+  - endofdayrate
+  - modifieddate
+  excluded: []
+  n: 13532
+  s: 4234164755537385133
+  x: 1378945572040778323
+sales_customer:
+  columns:
+  - customerid
+  - personid
+  - storeid
+  - territoryid
+  - accountnumber
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 19820
+  s: 11124688257618127181
+  x: 5349571397531951615
+sales_personcreditcard:
+  columns:
+  - businessentityid
+  - creditcardid
+  - modifieddate
+  excluded: []
+  n: 19118
+  s: 12190042956265493416
+  x: 8006315654916084562
+sales_salesorderdetail:
+  columns:
+  - salesorderid
+  - salesorderdetailid
+  - carriertrackingnumber
+  - orderqty
+  - productid
+  - specialofferid
+  - unitprice
+  - unitpricediscount
+  - linetotal
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 121317
+  s: 1203903192639536181
+  x: 3585905946222285649
+sales_salesorderheader:
+  columns:
+  - salesorderid
+  - revisionnumber
+  - orderdate
+  - duedate
+  - shipdate
+  - status
+  - onlineorderflag
+  - salesordernumber
+  - purchaseordernumber
+  - accountnumber
+  - customerid
+  - salespersonid
+  - territoryid
+  - billtoaddressid
+  - shiptoaddressid
+  - shipmethodid
+  - creditcardid
+  - creditcardapprovalcode
+  - currencyrateid
+  - subtotal
+  - taxamt
+  - freight
+  - totaldue
+  - comment
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 31465
+  s: 16891648491322010843
+  x: 2600485698282083133
+sales_salesorderheadersalesreason:
+  columns:
+  - salesorderid
+  - salesreasonid
+  - modifieddate
+  excluded: []
+  n: 27647
+  s: 13470758283256232146
+  x: 12030005349702780244
+sales_salesperson:
+  columns:
+  - businessentityid
+  - territoryid
+  - salesquota
+  - bonus
+  - commissionpct
+  - salesytd
+  - saleslastyear
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 17
+  s: 7174847180962545251
+  x: 14554718255394518723
+sales_salespersonquotahistory:
+  columns:
+  - businessentityid
+  - quotadate
+  - salesquota
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 163
+  s: 17478773035713947996
+  x: 4849517037831502150
+sales_salesreason:
+  columns:
+  - salesreasonid
+  - name
+  - reasontype
+  - modifieddate
+  excluded: []
+  n: 10
+  s: 7596229852491316869
+  x: 1359075073422554827
+sales_salestaxrate:
+  columns:
+  - salestaxrateid
+  - stateprovinceid
+  - taxtype
+  - taxrate
+  - name
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 29
+  s: 5568920264817218013
+  x: 4778393957111276651
+sales_salesterritory:
+  columns:
+  - territoryid
+  - name
+  - countryregioncode
+  - group
+  - salesytd
+  - saleslastyear
+  - costytd
+  - costlastyear
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 10
+  s: 15099926538161869944
+  x: 12413237226055796936
+sales_salesterritoryhistory:
+  columns:
+  - businessentityid
+  - territoryid
+  - startdate
+  - enddate
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 17
+  s: 15846213498329146582
+  x: 7913275415249871014
+sales_shoppingcartitem:
+  columns:
+  - shoppingcartitemid
+  - shoppingcartid
+  - quantity
+  - productid
+  - datecreated
+  - modifieddate
+  excluded: []
+  n: 3
+  s: 3520951805455723212
+  x: 18168370805688480214
+sales_specialoffer:
+  columns:
+  - specialofferid
+  - description
+  - discountpct
+  - type
+  - category
+  - startdate
+  - enddate
+  - minqty
+  - maxqty
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 16
+  s: 11953472797209451994
+  x: 6687338019128366866
+sales_specialofferproduct:
+  columns:
+  - specialofferid
+  - productid
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 538
+  s: 2395854910884327190
+  x: 5499498851004883472
+sales_store:
+  columns:
+  - businessentityid
+  - name
+  - salespersonid
+  - demographics
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 701
+  s: 9437422592250769972
+  x: 14646835063214862094

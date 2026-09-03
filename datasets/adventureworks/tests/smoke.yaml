@@ -1,0 +1,76 @@
+- name: hierarchyid_decoded
+  query: 'SELECT businessentityid, HEX(organizationnode), organizationnode_path, organizationlevel
+
+    FROM humanresources_employee WHERE businessentityid IN (1, 2, 3) ORDER BY businessentityid
+
+    '
+- name: hierarchyid_tree_is_consistent
+  query: 'SELECT COUNT(*) FROM humanresources_employee e WHERE organizationlevel IS NOT NULL
+
+    AND organizationlevel <> LENGTH(organizationnode_path) - LENGTH(REPLACE(organizationnode_path,
+    ''/'', '''')) - 1
+
+    '
+- name: geography_decoded
+  query: 'SELECT ST_Latitude(spatiallocation), ST_Longitude(spatiallocation), city
+
+    FROM person_address WHERE addressid = 1
+
+    '
+- name: geography_all_in_range
+  query: 'SELECT COUNT(*), COUNT(spatiallocation),
+
+    SUM(ST_Latitude(spatiallocation) BETWEEN -90 AND 90) FROM person_address
+
+    '
+- name: build_version
+  query: SELECT database_version, versiondate FROM awbuildversion
+- name: product_review_newlines_are_data
+  query: 'SELECT productreviewid, LENGTH(comments) FROM production_productreview
+
+    ORDER BY productreviewid
+
+    '
+- name: generated_line_total
+  query: 'SELECT ROUND(SUM(linetotal), 2), ROUND(SUM(unitprice * (1 - unitpricediscount) * orderqty), 2)
+
+    FROM sales_salesorderdetail
+
+    '
+- name: order_totals
+  query: 'SELECT salesorderid, salesordernumber, ROUND(subtotal, 2), ROUND(totaldue, 2)
+
+    FROM sales_salesorderheader ORDER BY salesorderid LIMIT 2
+
+    '
+- name: revenue_by_territory
+  query: 'SELECT t.name, COUNT(*), ROUND(SUM(h.totaldue), 2) FROM sales_salesorderheader h
+
+    JOIN sales_salesterritory t ON t.territoryid = h.territoryid
+
+    GROUP BY t.territoryid, t.name ORDER BY t.territoryid
+
+    '
+- name: non_ascii_product_descriptions
+  query: 'SELECT COUNT(*) FROM production_productdescription WHERE description REGEXP ''[^ -~]''
+
+    '
+- name: xml_columns_are_text
+  query: 'SELECT COUNT(*), COUNT(catalogdescription) FROM production_productmodel
+
+    '
+- name: store_demographics_view
+  query: 'SELECT businessentityid, annualsales, numberemployees FROM sales_vstorewithdemographics
+
+    ORDER BY businessentityid LIMIT 3
+
+    '
+- name: employee_view
+  query: 'SELECT COUNT(*) FROM humanresources_vemployee
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='adventureworks')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='adventureworks')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='adventureworks') AS triggers\n"

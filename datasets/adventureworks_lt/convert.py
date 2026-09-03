@@ -11,7 +11,7 @@ Record: knowledge/datasets/adventureworks-lt.md
 """
 import os, re, sys, zipfile
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
-import tsql  # noqa: E402
+import tsql, ddlutil  # noqa: E402
 
 DATABASE = "adventureworks_lt"
 # T-SQL infers a computed column's type; MySQL makes you declare it. SalesOrderDetail.LineTotal is
@@ -66,30 +66,6 @@ def decode(raw):
     return raw.decode("cp1252"), "cp1252"
 
 
-COLUMN = re.compile(r"^`(\w+)`")
-NOT_A_COLUMN = re.compile(r"(?i)^\s*(PRIMARY\s+KEY|FOREIGN\s+KEY|CONSTRAINT|UNIQUE|KEY|INDEX|CHECK)\b")
-
-
-def columns_of(create_table):
-    """Column names in declaration order -- the order the data files are written in."""
-    body = create_table[create_table.index("(") + 1:create_table.rindex(")")]
-    names, depth, item = [], 0, []
-    for ch in body + ",":
-        if ch == "(":
-            depth += 1
-        elif ch == ")":
-            depth -= 1
-        if ch == "," and depth == 0:
-            text = "".join(item).strip()
-            m = COLUMN.match(text)
-            if m and not NOT_A_COLUMN.match(text):
-                names.append(m.group(1))
-            item = []
-        else:
-            item.append(ch)
-    return names
-
-
 def sql_value(value):
     if value == "":
         return "NULL"
@@ -125,7 +101,7 @@ USE `{DATABASE}`;
     for st in statements:
         if st["kind"] == "table":
             name = re.search(r"(?is)^\s*CREATE\s+TABLE\s+`([^`]+)`", st["sql"]).group(1)
-            columns[name] = columns_of(st["sql"])
+            columns[name] = ddlutil.columns_of(st["sql"])
             generated[name] = set(st["generated"])
     for sql in buckets["table"]:
         out.append(tsql.terminate(sql))

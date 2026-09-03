@@ -1,0 +1,1127 @@
+# S6: every index that must exist after load.
+awbuildversion:
+  PRIMARY:
+    columns:
+    - systeminformationid
+    type: BTREE
+    unique: true
+humanresources_department:
+  PRIMARY:
+    columns:
+    - departmentid
+    type: BTREE
+    unique: true
+  ak_department_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+humanresources_employee:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+  ak_employee_loginid:
+    columns:
+    - loginid
+    type: BTREE
+    unique: true
+  ak_employee_nationalidnumber:
+    columns:
+    - nationalidnumber
+    type: BTREE
+    unique: true
+  ak_employee_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_employee_organizationlevel_organizationnode:
+    columns:
+    - organizationlevel
+    - organizationnode
+    type: BTREE
+    unique: false
+  ix_employee_organizationnode:
+    columns:
+    - organizationnode
+    type: BTREE
+    unique: false
+humanresources_employeedepartmenthistory:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - startdate
+    - departmentid
+    - shiftid
+    type: BTREE
+    unique: true
+  ix_employeedepartmenthistory_departmentid:
+    columns:
+    - departmentid
+    type: BTREE
+    unique: false
+  ix_employeedepartmenthistory_shiftid:
+    columns:
+    - shiftid
+    type: BTREE
+    unique: false
+humanresources_employeepayhistory:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - ratechangedate
+    type: BTREE
+    unique: true
+humanresources_jobcandidate:
+  PRIMARY:
+    columns:
+    - jobcandidateid
+    type: BTREE
+    unique: true
+  ix_jobcandidate_businessentityid:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: false
+humanresources_shift:
+  PRIMARY:
+    columns:
+    - shiftid
+    type: BTREE
+    unique: true
+  ak_shift_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_shift_starttime_endtime:
+    columns:
+    - starttime
+    - endtime
+    type: BTREE
+    unique: true
+person_address:
+  PRIMARY:
+    columns:
+    - addressid
+    type: BTREE
+    unique: true
+  ak_address_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_address_addressline1_addressline2_city_stateprovince_8250604d:
+    columns:
+    - addressline1
+    - addressline2
+    - city
+    - stateprovinceid
+    - postalcode
+    type: BTREE
+    unique: true
+  ix_address_stateprovinceid:
+    columns:
+    - stateprovinceid
+    type: BTREE
+    unique: false
+person_addresstype:
+  PRIMARY:
+    columns:
+    - addresstypeid
+    type: BTREE
+    unique: true
+  ak_addresstype_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_addresstype_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+person_businessentity:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+  ak_businessentity_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+person_businessentityaddress:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - addressid
+    - addresstypeid
+    type: BTREE
+    unique: true
+  ak_businessentityaddress_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_businessentityaddress_addressid:
+    columns:
+    - addressid
+    type: BTREE
+    unique: false
+  ix_businessentityaddress_addresstypeid:
+    columns:
+    - addresstypeid
+    type: BTREE
+    unique: false
+person_businessentitycontact:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - personid
+    - contacttypeid
+    type: BTREE
+    unique: true
+  ak_businessentitycontact_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_businessentitycontact_contacttypeid:
+    columns:
+    - contacttypeid
+    type: BTREE
+    unique: false
+  ix_businessentitycontact_personid:
+    columns:
+    - personid
+    type: BTREE
+    unique: false
+person_contacttype:
+  PRIMARY:
+    columns:
+    - contacttypeid
+    type: BTREE
+    unique: true
+  ak_contacttype_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+person_countryregion:
+  PRIMARY:
+    columns:
+    - countryregioncode
+    type: BTREE
+    unique: true
+  ak_countryregion_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+person_emailaddress:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - emailaddressid
+    type: BTREE
+    unique: true
+  emailaddressid:
+    columns:
+    - emailaddressid
+    type: BTREE
+    unique: false
+  ix_emailaddress_emailaddress:
+    columns:
+    - emailaddress
+    type: BTREE
+    unique: false
+person_password:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+person_person:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+  ak_person_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_person_lastname_firstname_middlename:
+    columns:
+    - lastname
+    - firstname
+    - middlename
+    type: BTREE
+    unique: false
+person_personphone:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - phonenumber
+    - phonenumbertypeid
+    type: BTREE
+    unique: true
+  fk_personphone_phonenumbertype_phonenumbertypeid:
+    columns:
+    - phonenumbertypeid
+    type: BTREE
+    unique: false
+  ix_personphone_phonenumber:
+    columns:
+    - phonenumber
+    type: BTREE
+    unique: false
+person_phonenumbertype:
+  PRIMARY:
+    columns:
+    - phonenumbertypeid
+    type: BTREE
+    unique: true
+person_stateprovince:
+  PRIMARY:
+    columns:
+    - stateprovinceid
+    type: BTREE
+    unique: true
+  ak_stateprovince_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_stateprovince_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ak_stateprovince_stateprovincecode_countryregioncode:
+    columns:
+    - stateprovincecode
+    - countryregioncode
+    type: BTREE
+    unique: true
+  fk_stateprovince_countryregion_countryregioncode:
+    columns:
+    - countryregioncode
+    type: BTREE
+    unique: false
+  fk_stateprovince_salesterritory_territoryid:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: false
+production_billofmaterials:
+  PRIMARY:
+    columns:
+    - billofmaterialsid
+    type: BTREE
+    unique: true
+  ak_billofmaterials_productassemblyid_componentid_startdate:
+    columns:
+    - productassemblyid
+    - componentid
+    - startdate
+    type: BTREE
+    unique: true
+  fk_billofmaterials_product_componentid:
+    columns:
+    - componentid
+    type: BTREE
+    unique: false
+  ix_billofmaterials_unitmeasurecode:
+    columns:
+    - unitmeasurecode
+    type: BTREE
+    unique: false
+production_culture:
+  PRIMARY:
+    columns:
+    - cultureid
+    type: BTREE
+    unique: true
+  ak_culture_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+production_document:
+  PRIMARY:
+    columns:
+    - documentnode
+    type: BTREE
+    unique: true
+  ak_document_documentlevel_documentnode:
+    columns:
+    - documentlevel
+    - documentnode
+    type: BTREE
+    unique: true
+  ak_document_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_document_employee_owner:
+    columns:
+    - owner
+    type: BTREE
+    unique: false
+  ix_document_filename_revision:
+    columns:
+    - filename
+    - revision
+    type: BTREE
+    unique: false
+  rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+production_illustration:
+  PRIMARY:
+    columns:
+    - illustrationid
+    type: BTREE
+    unique: true
+production_location:
+  PRIMARY:
+    columns:
+    - locationid
+    type: BTREE
+    unique: true
+  ak_location_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+production_product:
+  PRIMARY:
+    columns:
+    - productid
+    type: BTREE
+    unique: true
+  ak_product_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_product_productnumber:
+    columns:
+    - productnumber
+    type: BTREE
+    unique: true
+  ak_product_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_product_productmodel_productmodelid:
+    columns:
+    - productmodelid
+    type: BTREE
+    unique: false
+  fk_product_productsubcategory_productsubcategoryid:
+    columns:
+    - productsubcategoryid
+    type: BTREE
+    unique: false
+  fk_product_unitmeasure_sizeunitmeasurecode:
+    columns:
+    - sizeunitmeasurecode
+    type: BTREE
+    unique: false
+  fk_product_unitmeasure_weightunitmeasurecode:
+    columns:
+    - weightunitmeasurecode
+    type: BTREE
+    unique: false
+production_productcategory:
+  PRIMARY:
+    columns:
+    - productcategoryid
+    type: BTREE
+    unique: true
+  ak_productcategory_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_productcategory_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+production_productcosthistory:
+  PRIMARY:
+    columns:
+    - productid
+    - startdate
+    type: BTREE
+    unique: true
+production_productdescription:
+  PRIMARY:
+    columns:
+    - productdescriptionid
+    type: BTREE
+    unique: true
+  ak_productdescription_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+production_productdocument:
+  PRIMARY:
+    columns:
+    - productid
+    - documentnode
+    type: BTREE
+    unique: true
+  fk_productdocument_document_documentnode:
+    columns:
+    - documentnode
+    type: BTREE
+    unique: false
+production_productinventory:
+  PRIMARY:
+    columns:
+    - productid
+    - locationid
+    type: BTREE
+    unique: true
+  fk_productinventory_location_locationid:
+    columns:
+    - locationid
+    type: BTREE
+    unique: false
+production_productlistpricehistory:
+  PRIMARY:
+    columns:
+    - productid
+    - startdate
+    type: BTREE
+    unique: true
+production_productmodel:
+  PRIMARY:
+    columns:
+    - productmodelid
+    type: BTREE
+    unique: true
+  ak_productmodel_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_productmodel_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+production_productmodelillustration:
+  PRIMARY:
+    columns:
+    - productmodelid
+    - illustrationid
+    type: BTREE
+    unique: true
+  fk_productmodelillustration_illustration_illustrationid:
+    columns:
+    - illustrationid
+    type: BTREE
+    unique: false
+production_productmodelproductdescriptionculture:
+  PRIMARY:
+    columns:
+    - productmodelid
+    - productdescriptionid
+    - cultureid
+    type: BTREE
+    unique: true
+  fk_productmodelproductdescriptionculture_culture_cultureid:
+    columns:
+    - cultureid
+    type: BTREE
+    unique: false
+  fk_productmodelproductdescriptionculture_productdescrip_f5ffc2f4:
+    columns:
+    - productdescriptionid
+    type: BTREE
+    unique: false
+production_productphoto:
+  PRIMARY:
+    columns:
+    - productphotoid
+    type: BTREE
+    unique: true
+production_productproductphoto:
+  PRIMARY:
+    columns:
+    - productid
+    - productphotoid
+    type: BTREE
+    unique: true
+  fk_productproductphoto_productphoto_productphotoid:
+    columns:
+    - productphotoid
+    type: BTREE
+    unique: false
+production_productreview:
+  PRIMARY:
+    columns:
+    - productreviewid
+    type: BTREE
+    unique: true
+  ix_productreview_productid_name:
+    columns:
+    - productid
+    - reviewername
+    type: BTREE
+    unique: false
+production_productsubcategory:
+  PRIMARY:
+    columns:
+    - productsubcategoryid
+    type: BTREE
+    unique: true
+  ak_productsubcategory_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_productsubcategory_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_productsubcategory_productcategory_productcategoryid:
+    columns:
+    - productcategoryid
+    type: BTREE
+    unique: false
+production_scrapreason:
+  PRIMARY:
+    columns:
+    - scrapreasonid
+    type: BTREE
+    unique: true
+  ak_scrapreason_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+production_transactionhistory:
+  PRIMARY:
+    columns:
+    - transactionid
+    type: BTREE
+    unique: true
+  ix_transactionhistory_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  ix_transactionhistory_referenceorderid_referenceorderlineid:
+    columns:
+    - referenceorderid
+    - referenceorderlineid
+    type: BTREE
+    unique: false
+production_transactionhistoryarchive:
+  PRIMARY:
+    columns:
+    - transactionid
+    type: BTREE
+    unique: true
+  ix_transactionhistoryarchive_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  ix_transactionhistoryarchive_referenceorderid_reference_ffedc4ca:
+    columns:
+    - referenceorderid
+    - referenceorderlineid
+    type: BTREE
+    unique: false
+production_unitmeasure:
+  PRIMARY:
+    columns:
+    - unitmeasurecode
+    type: BTREE
+    unique: true
+  ak_unitmeasure_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+production_workorder:
+  PRIMARY:
+    columns:
+    - workorderid
+    type: BTREE
+    unique: true
+  ix_workorder_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  ix_workorder_scrapreasonid:
+    columns:
+    - scrapreasonid
+    type: BTREE
+    unique: false
+production_workorderrouting:
+  PRIMARY:
+    columns:
+    - workorderid
+    - productid
+    - operationsequence
+    type: BTREE
+    unique: true
+  fk_workorderrouting_location_locationid:
+    columns:
+    - locationid
+    type: BTREE
+    unique: false
+  ix_workorderrouting_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+purchasing_productvendor:
+  PRIMARY:
+    columns:
+    - productid
+    - businessentityid
+    type: BTREE
+    unique: true
+  ix_productvendor_businessentityid:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: false
+  ix_productvendor_unitmeasurecode:
+    columns:
+    - unitmeasurecode
+    type: BTREE
+    unique: false
+purchasing_purchaseorderdetail:
+  PRIMARY:
+    columns:
+    - purchaseorderid
+    - purchaseorderdetailid
+    type: BTREE
+    unique: true
+  ix_purchaseorderdetail_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  purchaseorderdetailid:
+    columns:
+    - purchaseorderdetailid
+    type: BTREE
+    unique: false
+purchasing_purchaseorderheader:
+  PRIMARY:
+    columns:
+    - purchaseorderid
+    type: BTREE
+    unique: true
+  fk_purchaseorderheader_shipmethod_shipmethodid:
+    columns:
+    - shipmethodid
+    type: BTREE
+    unique: false
+  ix_purchaseorderheader_employeeid:
+    columns:
+    - employeeid
+    type: BTREE
+    unique: false
+  ix_purchaseorderheader_vendorid:
+    columns:
+    - vendorid
+    type: BTREE
+    unique: false
+purchasing_shipmethod:
+  PRIMARY:
+    columns:
+    - shipmethodid
+    type: BTREE
+    unique: true
+  ak_shipmethod_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_shipmethod_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+purchasing_vendor:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+  ak_vendor_accountnumber:
+    columns:
+    - accountnumber
+    type: BTREE
+    unique: true
+sales_countryregioncurrency:
+  PRIMARY:
+    columns:
+    - countryregioncode
+    - currencycode
+    type: BTREE
+    unique: true
+  ix_countryregioncurrency_currencycode:
+    columns:
+    - currencycode
+    type: BTREE
+    unique: false
+sales_creditcard:
+  PRIMARY:
+    columns:
+    - creditcardid
+    type: BTREE
+    unique: true
+  ak_creditcard_cardnumber:
+    columns:
+    - cardnumber
+    type: BTREE
+    unique: true
+sales_currency:
+  PRIMARY:
+    columns:
+    - currencycode
+    type: BTREE
+    unique: true
+  ak_currency_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+sales_currencyrate:
+  PRIMARY:
+    columns:
+    - currencyrateid
+    type: BTREE
+    unique: true
+  ak_currencyrate_currencyratedate_fromcurrencycode_tocurrencycode:
+    columns:
+    - currencyratedate
+    - fromcurrencycode
+    - tocurrencycode
+    type: BTREE
+    unique: true
+  fk_currencyrate_currency_fromcurrencycode:
+    columns:
+    - fromcurrencycode
+    type: BTREE
+    unique: false
+  fk_currencyrate_currency_tocurrencycode:
+    columns:
+    - tocurrencycode
+    type: BTREE
+    unique: false
+sales_customer:
+  PRIMARY:
+    columns:
+    - customerid
+    type: BTREE
+    unique: true
+  ak_customer_accountnumber:
+    columns:
+    - accountnumber
+    type: BTREE
+    unique: true
+  ak_customer_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_customer_person_personid:
+    columns:
+    - personid
+    type: BTREE
+    unique: false
+  fk_customer_store_storeid:
+    columns:
+    - storeid
+    type: BTREE
+    unique: false
+  ix_customer_territoryid:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: false
+sales_personcreditcard:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - creditcardid
+    type: BTREE
+    unique: true
+  fk_personcreditcard_creditcard_creditcardid:
+    columns:
+    - creditcardid
+    type: BTREE
+    unique: false
+sales_salesorderdetail:
+  PRIMARY:
+    columns:
+    - salesorderid
+    - salesorderdetailid
+    type: BTREE
+    unique: true
+  ak_salesorderdetail_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_salesorderdetail_specialofferproduct_specialofferidproductid:
+    columns:
+    - specialofferid
+    - productid
+    type: BTREE
+    unique: false
+  ix_salesorderdetail_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  salesorderdetailid:
+    columns:
+    - salesorderdetailid
+    type: BTREE
+    unique: false
+sales_salesorderheader:
+  PRIMARY:
+    columns:
+    - salesorderid
+    type: BTREE
+    unique: true
+  ak_salesorderheader_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ak_salesorderheader_salesordernumber:
+    columns:
+    - salesordernumber
+    type: BTREE
+    unique: true
+  fk_salesorderheader_address_billtoaddressid:
+    columns:
+    - billtoaddressid
+    type: BTREE
+    unique: false
+  fk_salesorderheader_address_shiptoaddressid:
+    columns:
+    - shiptoaddressid
+    type: BTREE
+    unique: false
+  fk_salesorderheader_creditcard_creditcardid:
+    columns:
+    - creditcardid
+    type: BTREE
+    unique: false
+  fk_salesorderheader_currencyrate_currencyrateid:
+    columns:
+    - currencyrateid
+    type: BTREE
+    unique: false
+  fk_salesorderheader_salesterritory_territoryid:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: false
+  fk_salesorderheader_shipmethod_shipmethodid:
+    columns:
+    - shipmethodid
+    type: BTREE
+    unique: false
+  ix_salesorderheader_customerid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  ix_salesorderheader_salespersonid:
+    columns:
+    - salespersonid
+    type: BTREE
+    unique: false
+sales_salesorderheadersalesreason:
+  PRIMARY:
+    columns:
+    - salesorderid
+    - salesreasonid
+    type: BTREE
+    unique: true
+  fk_salesorderheadersalesreason_salesreason_salesreasonid:
+    columns:
+    - salesreasonid
+    type: BTREE
+    unique: false
+sales_salesperson:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+  ak_salesperson_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_salesperson_salesterritory_territoryid:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: false
+sales_salespersonquotahistory:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - quotadate
+    type: BTREE
+    unique: true
+  ak_salespersonquotahistory_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+sales_salesreason:
+  PRIMARY:
+    columns:
+    - salesreasonid
+    type: BTREE
+    unique: true
+sales_salestaxrate:
+  PRIMARY:
+    columns:
+    - salestaxrateid
+    type: BTREE
+    unique: true
+  ak_salestaxrate_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ak_salestaxrate_stateprovinceid_taxtype:
+    columns:
+    - stateprovinceid
+    - taxtype
+    type: BTREE
+    unique: true
+sales_salesterritory:
+  PRIMARY:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: true
+  ak_salesterritory_name:
+    columns:
+    - name
+    type: BTREE
+    unique: true
+  ak_salesterritory_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_salesterritory_countryregion_countryregioncode:
+    columns:
+    - countryregioncode
+    type: BTREE
+    unique: false
+sales_salesterritoryhistory:
+  PRIMARY:
+    columns:
+    - businessentityid
+    - startdate
+    - territoryid
+    type: BTREE
+    unique: true
+  ak_salesterritoryhistory_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  fk_salesterritoryhistory_salesterritory_territoryid:
+    columns:
+    - territoryid
+    type: BTREE
+    unique: false
+sales_shoppingcartitem:
+  PRIMARY:
+    columns:
+    - shoppingcartitemid
+    type: BTREE
+    unique: true
+  fk_shoppingcartitem_product_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+  ix_shoppingcartitem_shoppingcartid_productid:
+    columns:
+    - shoppingcartid
+    - productid
+    type: BTREE
+    unique: false
+sales_specialoffer:
+  PRIMARY:
+    columns:
+    - specialofferid
+    type: BTREE
+    unique: true
+  ak_specialoffer_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+sales_specialofferproduct:
+  PRIMARY:
+    columns:
+    - specialofferid
+    - productid
+    type: BTREE
+    unique: true
+  ak_specialofferproduct_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_specialofferproduct_productid:
+    columns:
+    - productid
+    type: BTREE
+    unique: false
+sales_store:
+  PRIMARY:
+    columns:
+    - businessentityid
+    type: BTREE
+    unique: true
+  ak_store_rowguid:
+    columns:
+    - rowguid
+    type: BTREE
+    unique: true
+  ix_store_salespersonid:
+    columns:
+    - salespersonid
+    type: BTREE
+    unique: false

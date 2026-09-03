@@ -24,3 +24,5 @@
   query: |
     SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='northwind') AS views,
            (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='northwind') AS routines
+- name: custordersdetail_procedure
+  query: CALL custordersdetail(10248)

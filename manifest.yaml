@@ -689,3 +689,14 @@ artifacts:
     size_bytes: 0
     license: mit
     ipv4_first: false
+
+  # AdventureWorks OLTP: the release zip, verified byte-identical to the pinned commit
+  # b47eadc852 for the files checked, and holding exactly instawdb.sql plus 69 CSVs.
+  - id: adventureworks/AdventureWorks-oltp-install-script.zip
+    dataset: adventureworks
+    url: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks-oltp-install-script.zip
+    mirrors: []
+    sha256: "58962e94ea386ef7cd3d8a08211bfd42a79d9b81bdd68fd4b6b0051de6c5bd42"
+    size_bytes: 17486641
+    license: mit
+    ipv4_first: false
