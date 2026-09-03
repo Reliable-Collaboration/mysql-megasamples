@@ -212,6 +212,7 @@
 * [Microsoft SQL Server Developer (Linux) EULA - License_Dev_Linux.rtf](microsoft-sql-server-developer-linux-eula.md) - The End-User License Agreement that ACCEPT_EULA=Y accepts for the mssql/server container image (fwlink 857698); Developer edition may be used to design, develop, test and demonstrate only, not in a production environment.
 * [MySQL 8.4 Release Notes index](mysql-8-4-release-notes.md) - Release list for the 8.4 LTS series; latest 8.4.12 on 2026-08-18.
 * [MySQL 9.7 Release Notes index](mysql-9-7-release-notes.md) - Release list for the 9.7 series; 9.7.0 GA on 2026-04-21, latest 9.7.3 on 2026-08-18.
+* [MySQL 9.7 SRID 4326 axis order and hierarchyid/geography decoding, measured](mysql-9-7-srid-4326-axis-order-probe.md) - What mysql:9.7.2 does with POINT under SRID 4326, and the verification of pure-Python decoders for SQL Server's hierarchyid and geography binary formats.
 * [MySQL Connector/Python Developer Guide: Introduction](mysql-connector-python-introduction.md) - X DevAPI split into mysqlx-connector-python (8.3.0); supports MySQL Server 8.0 and higher features.
 * [MySQL Connector/Python manual preface](mysql-connector-python-preface.md) - The preface page documents only the documentation license, not the software license; the connector license must be read from its LICENSE.txt.
 * [MySQL "Employees Sample Database" manual (dev.mysql.com)](mysql-employee-manual.md) - Oracle-hosted guide for the employees database; installation and validation chapters; its printed dept_emp checksums are older than the repository's.

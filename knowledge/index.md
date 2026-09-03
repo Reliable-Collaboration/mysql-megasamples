@@ -15,5 +15,5 @@ MySQL LTS sample-database image: research trail and decisions. Read [runbooks/kn
 * [licenses/](licenses/index.md) - 24 concepts
 * [questions/](questions/index.md) - 37 concepts
 * [runbooks/](runbooks/index.md) - 3 concepts
-* [sources/](sources/index.md) - 370 concepts
+* [sources/](sources/index.md) - 371 concepts
 * [tools/](tools/index.md) - 28 concepts
