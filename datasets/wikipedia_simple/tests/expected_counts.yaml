@@ -1,0 +1,13 @@
+# The deterministic sample: the 5,000 lowest page_id non-redirect articles in namespace 0 (page_id
+# 1..15799 for dump run 20260901), their text, and the link rows among them. `category` and
+# `site_stats` are the wiki's own tables, kept whole. `redirect` is empty by construction -- the
+# sample excludes redirects.
+category: 104568
+categorylinks: 30551
+linktarget: 247257
+page: 5000
+pagelinks: 769735
+redirect: 0
+revision: 5000
+site_stats: 1
+text: 5000

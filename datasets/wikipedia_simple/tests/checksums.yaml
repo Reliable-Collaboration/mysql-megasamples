@@ -1,0 +1,113 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+category:
+  columns:
+  - cat_id
+  - cat_title
+  - cat_pages
+  - cat_subcats
+  - cat_files
+  excluded: []
+  n: 104568
+  s: 15629432177234048937
+  x: 6831553617374651363
+categorylinks:
+  columns:
+  - cl_from
+  - cl_sortkey
+  - cl_timestamp
+  - cl_sortkey_prefix
+  - cl_type
+  - cl_collation_id
+  - cl_target_id
+  excluded: []
+  n: 30551
+  s: 13420536558928631796
+  x: 4817494375600148760
+linktarget:
+  columns:
+  - lt_id
+  - lt_namespace
+  - lt_title
+  excluded: []
+  n: 247257
+  s: 11976070149066202360
+  x: 13893935409954001810
+page:
+  columns:
+  - page_id
+  - page_namespace
+  - page_title
+  - page_is_redirect
+  - page_is_new
+  - page_touched
+  - page_links_updated
+  - page_latest
+  - page_len
+  - page_content_model
+  - page_lang
+  excluded:
+  - page_random
+  n: 5000
+  s: 16102769524227138410
+  x: 4303808862086280932
+pagelinks:
+  columns:
+  - pl_from
+  - pl_from_namespace
+  - pl_target_id
+  excluded: []
+  n: 769735
+  s: 14400722787577633457
+  x: 821522931447105083
+redirect:
+  columns:
+  - rd_from
+  - rd_namespace
+  - rd_title
+  - rd_interwiki
+  - rd_fragment
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+revision:
+  columns:
+  - rev_id
+  - rev_page
+  - rev_parent_id
+  - rev_timestamp
+  - rev_minor_edit
+  - rev_len
+  - rev_sha1
+  - rev_user_id
+  - rev_user_text
+  - rev_comment
+  - rev_content_model
+  excluded: []
+  n: 5000
+  s: 778627293813513728
+  x: 8884802880985964136
+site_stats:
+  columns:
+  - ss_row_id
+  - ss_total_edits
+  - ss_good_articles
+  - ss_total_pages
+  - ss_users
+  - ss_images
+  - ss_active_users
+  - ss_temp_users
+  - ss_active_temp_users
+  excluded: []
+  n: 1
+  s: 15259371114223637930
+  x: 15259371114223637930
+text:
+  columns:
+  - old_id
+  - old_text
+  excluded: []
+  n: 5000
+  s: 7463004842532212883
+  x: 5927761172306497585

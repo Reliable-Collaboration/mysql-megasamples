@@ -19,6 +19,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 stale_after: "2026-12-01"
@@ -71,6 +73,39 @@ Base URL `https://dumps.wikimedia.org/simplewiki/20260901/simplewiki-20260901-<f
 | category.sql.gz | 1,199,048 | 073743f17b4d7391e98d34070b873be2 | c57b1f2b8d32e0a5ad1bf90ded1f0a87f7825dc5 |
 | site_stats.sql.gz | 862 | af0898a45c9e589153ac523030654fa3 | (in sha1sums) |
 Not carried: pages-meta-current (483 MB, adds talk/user pages), pages-meta-history (4.3 GB), templatelinks, imagelinks, externallinks (56 MB), langlinks (122 MB), iwlinks, change_tag*, geo_tags, page_props (10.7 MB — optional), page_restrictions, protected_titles, sites, user_groups, babel, wbc_entity_usage (9.9 MB — useful only for a Wikidata subset, see [Wikidata](/datasets/wikidata.md)).
+
+# Built and measured (2026-09-03, core sample)
+All eight files of dump run 20260901 match **Wikimedia's published md5 and byte size**, including the
+356,186,307-byte `pages-articles.xml.bz2`.
+
+The sample is the record's rule applied: the 5,000 lowest `page_id` non-redirect articles in
+namespace 0 (`page_id` 1..15,799), their text, and the link rows among them. Loaded: 9 tables,
+**160.9 MB** in InnoDB, 17.8 s, 12 smoke queries and 3 plan tests pinned. Filtered rows: page 5,000,
+categorylinks 30,551, pagelinks 769,735, linktarget 247,257, redirect 0 (by construction), category
+104,568, site_stats 1, revision 5,000, text 5,000.
+
+**The "< 50 MB" estimate was low; 160.9 MB is the measured figure**, and it is real content rather
+than overhead: 69.5 MB is the wikitext of the 5,000 articles and 77 MB is the two link tables with
+their indexes. That sits in the same band as employees (146.8 MB), adventureworks (162 MB) and
+oracle_sh (168.7 MB), so **core** still holds.
+
+**The MediaWiki dumps need no fix-up at all.** Every construct the
+[DDL question](/questions/mediawiki-sql-dump-ddl-compatibility-mysql-9-7.md) worried about is accepted
+by MySQL 9.7.2 — the MariaDB sandbox comment, `int(8) unsigned`, `double unsigned`,
+`ROW_FORMAT=COMPRESSED KEY_BLOCK_SIZE=8`, `CHARSET=binary` with `varbinary`, and the
+`timestamp DEFAULT current_timestamp() ON UPDATE current_timestamp()` — and COMPRESSED is honoured
+rather than silently downgraded. Each table's own `CREATE TABLE` is therefore used verbatim and only
+the rows are filtered. The dumps' `varbinary` columns hold bytes that are not valid UTF-8, so they are
+read and written with `surrogateescape` to reproduce the upstream bytes exactly.
+
+**A schema change the record predates**: `categorylinks` no longer carries the category name in
+`cl_to`. It points at `linktarget` through `cl_target_id`, so both link tables share that lookup and
+the sample must keep the targets of *both*. The `v_category_member` view joins through it.
+
+Every value the plan named as a test is confirmed: `page_id` 1 is namespace 0, `April`, `page_latest`
+10861257, `page_len` 22079; `site_stats.ss_good_articles` = 284,761 and `ss_total_pages` = 947,771
+(the whole wiki, matching the record's `page` count); `redirect.rd_from = 24` is `Catharism`; and
+`COUNT(revision) = COUNT(text) = 5,000`, one per sampled page.
 
 # Native format and friendlier forms
 * `pages-articles.xml.bz2`: MediaWiki export XML 0.11 ([XSD](/sources/mediawiki-xml-export-0-11-xsd.md)); **one (current) revision per page**, covering subject pages (articles, templates, categories, project pages) but **not talk pages** ("stub-articles: all subject pages (i.e. "articles", but not talk pages), current revisions only" — [What's available](/sources/meta-wikimedia-data-dumps-whats-available.md)). Full-history dumps are not used.

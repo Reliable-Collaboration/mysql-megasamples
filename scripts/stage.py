@@ -85,6 +85,13 @@ def stage_adventureworks_lt(dest):
                    os.path.join(dest, "adventureworks_lt.sql"))
 
 
+@stager("wikipedia_simple")
+def stage_wikipedia_simple(dest):
+    _run_dir_converter("wikipedia_simple",
+                       os.path.join(ROOT, "downloads", "wikipedia_simple"),
+                       os.path.join(dest, "wikipedia_simple.sql"))
+
+
 @stager("enron")
 def stage_enron(dest):
     _run_dir_converter("enron", os.path.join(ROOT, "downloads", "enron"),

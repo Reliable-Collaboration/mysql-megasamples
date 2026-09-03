@@ -1,0 +1,145 @@
+# S6: every index that must exist after load.
+category:
+  PRIMARY:
+    columns:
+    - cat_id
+    type: BTREE
+    unique: true
+  cat_pages:
+    columns:
+    - cat_pages
+    type: BTREE
+    unique: false
+  cat_title:
+    columns:
+    - cat_title
+    type: BTREE
+    unique: true
+categorylinks:
+  PRIMARY:
+    columns:
+    - cl_from
+    - cl_target_id
+    type: BTREE
+    unique: true
+  cl_sortkey_id:
+    columns:
+    - cl_target_id
+    - cl_type
+    - cl_sortkey
+    - cl_from
+    type: BTREE
+    unique: false
+  cl_timestamp_id:
+    columns:
+    - cl_target_id
+    - cl_timestamp
+    type: BTREE
+    unique: false
+linktarget:
+  PRIMARY:
+    columns:
+    - lt_id
+    type: BTREE
+    unique: true
+  lt_namespace_title:
+    columns:
+    - lt_namespace
+    - lt_title
+    type: BTREE
+    unique: true
+page:
+  PRIMARY:
+    columns:
+    - page_id
+    type: BTREE
+    unique: true
+  page_len:
+    columns:
+    - page_len
+    type: BTREE
+    unique: false
+  page_name_title:
+    columns:
+    - page_namespace
+    - page_title
+    type: BTREE
+    unique: true
+  page_random:
+    columns:
+    - page_random
+    type: BTREE
+    unique: false
+  page_redirect_namespace_len:
+    columns:
+    - page_is_redirect
+    - page_namespace
+    - page_len
+    type: BTREE
+    unique: false
+pagelinks:
+  PRIMARY:
+    columns:
+    - pl_from
+    - pl_target_id
+    type: BTREE
+    unique: true
+  pl_backlinks_namespace_target_id:
+    columns:
+    - pl_from_namespace
+    - pl_target_id
+    - pl_from
+    type: BTREE
+    unique: false
+  pl_target_id:
+    columns:
+    - pl_target_id
+    - pl_from
+    type: BTREE
+    unique: false
+redirect:
+  PRIMARY:
+    columns:
+    - rd_from
+    type: BTREE
+    unique: true
+  rd_ns_title:
+    columns:
+    - rd_namespace
+    - rd_title
+    - rd_from
+    type: BTREE
+    unique: false
+revision:
+  PRIMARY:
+    columns:
+    - rev_id
+    type: BTREE
+    unique: true
+  rev_page:
+    columns:
+    - rev_page
+    type: BTREE
+    unique: false
+  rev_timestamp:
+    columns:
+    - rev_timestamp
+    type: BTREE
+    unique: false
+site_stats:
+  PRIMARY:
+    columns:
+    - ss_row_id
+    type: BTREE
+    unique: true
+text:
+  PRIMARY:
+    columns:
+    - old_id
+    type: BTREE
+    unique: true
+  ft_old_text:
+    columns:
+    - old_text
+    type: FULLTEXT
+    unique: false
