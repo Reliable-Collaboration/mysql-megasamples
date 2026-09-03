@@ -1,0 +1,14 @@
+# Row counts of the archive.org 2024-04-02 beer.stackexchange.com dump, counted from the XML.
+# The upstream md5 (5da8bd0067af280aeb53ebfd6b5e650d) matches, so this snapshot is fixed for good --
+# unlike the live site, these numbers will not move.
+badges: 12901
+comments: 4007
+linktypes: 2
+postlinks: 152
+posthistory: 10423
+posts: 3924
+posttypes: 15
+tags: 152
+users: 10168
+votes: 20765
+votetypes: 14

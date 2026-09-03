@@ -1,0 +1,123 @@
+# S6: every index that must exist after load.
+badges:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ix_badges_user:
+    columns:
+    - userid
+    type: BTREE
+    unique: false
+comments:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ix_comments_post:
+    columns:
+    - postid
+    type: BTREE
+    unique: false
+  ix_comments_user:
+    columns:
+    - userid
+    type: BTREE
+    unique: false
+linktypes:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+posthistory:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ix_posthistory_post:
+    columns:
+    - postid
+    type: BTREE
+    unique: false
+postlinks:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+posts:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ft_posts_body:
+    columns:
+    - title
+    - body
+    type: FULLTEXT
+    unique: false
+  ix_posts_creation:
+    columns:
+    - creationdate
+    type: BTREE
+    unique: false
+  ix_posts_owner:
+    columns:
+    - owneruserid
+    type: BTREE
+    unique: false
+  ix_posts_parent:
+    columns:
+    - parentid
+    type: BTREE
+    unique: false
+  ix_posts_type:
+    columns:
+    - posttypeid
+    type: BTREE
+    unique: false
+posttypes:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+tags:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+users:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ix_users_reputation:
+    columns:
+    - reputation
+    type: BTREE
+    unique: false
+votes:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ix_votes_post:
+    columns:
+    - postid
+    type: BTREE
+    unique: false
+votetypes:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true

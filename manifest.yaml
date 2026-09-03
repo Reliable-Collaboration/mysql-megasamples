@@ -1196,3 +1196,15 @@ artifacts:
     size_bytes: 0
     license: chicago-data-portal-terms
     ipv4_first: false
+
+  # Stack Exchange: the beer.stackexchange.com site dump from the archive.org 2024-04-02 snapshot,
+  # the newest copy redistributable without accepting the later click-through. Upstream publishes an
+  # md5 (5da8bd0067af280aeb53ebfd6b5e650d), which the build cross-checks against this sha256.
+  - id: stackexchange_beer/beer.stackexchange.com.7z
+    dataset: stackexchange_beer
+    url: https://archive.org/download/stackexchange/beer.stackexchange.com.7z
+    mirrors: []
+    sha256: "29e057c640ad2792c8fc063d3ef52e6d2ce397db995a8ca5a06f1735a82d84c2"
+    size_bytes: 4317770
+    license: cc-by-sa-4-0
+    ipv4_first: false

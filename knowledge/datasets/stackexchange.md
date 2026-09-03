@@ -18,6 +18,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
 stale_after: "2027-03-01"
@@ -77,6 +79,15 @@ Columns per the [schema answer](/sources/meta-stackexchange-2678-schema-document
 * Lookup tables generated from the schema answer's enumerations: `posttypes`, `votetypes`, `posthistorytypes`, `linktypes`, `closereasontypes`.
 * Row counts for the 2024-04-02 dba dump are not published; live 2026-09-02 totals are upper bounds: questions 105,698; answers 142,723; users 321,367; comments 472,821; votes 823,419; badges 458,592 ([API](/sources/stackexchange-api-info-dba-datascience.md)). PostHistory is typically the largest table (several rows per post). Baseline = `grep -c "<row " <file>.xml` per file, recorded at first build ([question](/questions/stackexchange-dump-row-counts-2024-04.md)).
 * Encoding hazards: utf8mb4 required (DisplayName/Body contain emoji and CJK; some tags are non-ASCII — Meta 416467 title); HTML entities inside attribute values are XML-escaped (`&lt;p&gt;`); newlines inside `Body`. The 2024-Q2 profile dumps had invalid control-character references — not this snapshot, but the reader filters them anyway ([tool](/tools/stackexchange-xml-parsing.md)).
+
+# Built and measured (2026-09-03, beer.stackexchange.com)
+The **md5 published on archive.org matches the download** (`5da8bd0067af280aeb53ebfd6b5e650d`), so unlike the live-API datasets this snapshot is fixed for good. Loaded: 8 data tables and 3 generated lookup tables, **62,492 rows**, **21.5 MB** in InnoDB, in 2.1 s.
+
+Row counts, which the [open question](/questions/stackexchange-dump-row-counts-2024-04.md) asked for (beer, not dba): badges 12,901; comments 4,007; posthistory 10,423; postlinks 152; posts 3,924; tags 152; users 10,168; votes 20,765. Of the posts, 1,173 are questions and 2,580 answers, 704 of which are accepted; every answer's parent question is present.
+
+The attribute sets in the XML match the schema documentation exactly, with optional attributes simply absent — `EmailHash` and `ProfileImageUrl` never appear, as the record expected, and neither do `IsModeratorOnly`/`IsRequired` on tags. The converter takes its columns from the documentation rather than from the data (a dump would otherwise define a narrower table than the format allows) and **fails if the data carries an attribute the documentation does not list**.
+
+Encoding: confirmed non-ASCII in both directions — 223 of 10,168 display names and 3,809 of 3,924 post bodies. Per-row `ContentLicense` values are CC BY-SA 3.0 (2,692) and 4.0 (1,232), so the attribution requirement travels with each row rather than only in a licence file.
 
 # Conversion path
 Own Python streaming loader (`iterparse` → TSV → `LOAD DATA LOCAL INFILE`), modelled on but not reusing Networks-Learning/stackexchange-dump-to-postgres ([source](/sources/github-networks-learning-stackexchange-dump-to-postgres.md)). See [decision](/decisions/stackexchange-conversion-path.md).

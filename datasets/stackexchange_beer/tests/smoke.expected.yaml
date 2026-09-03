@@ -1,0 +1,15 @@
+# S7: canonical query results, tab-separated as the client prints them.
+badge_classes: "1\t146\n2\t1191\n3\t11564"
+community_user_is_minus_one: "-1\tCommunity\t1"
+content_license_travels_with_rows: "CC BY-SA 3.0\t2692\nCC BY-SA 4.0\t1232"
+every_answer_has_its_question: '0'
+fulltext_search: '314'
+highest_reputation_users: "Ken Graham\t10772\nfarmersteve\t7049\nmdma\t4863"
+non_ascii_content: "223\t3809"
+objects_created: "2\t0\t0"
+questions_and_answers: "1173\t2580\t704"
+top_tags: "wine\t144\ntaste\t121\nhistory\t88\nrecommendations\t80\nbrewing\t72"
+vote_types_present: "1\tAcceptedByOriginator\t711\n2\tUpMod\t17365\n3\tDownMod\t1381\n\
+  4\tOffensive\t9\n8\tBountyStart\t18\n9\tBountyClose\t18\n10\tDeletion\t391\n11\t\
+  Undeletion\t11\n12\tSpam\t53\n15\tModeratorReview\t359\n16\tApproveEditSuggestion\t\
+  449"

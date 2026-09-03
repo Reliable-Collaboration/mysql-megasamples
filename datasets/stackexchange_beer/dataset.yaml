@@ -1,0 +1,9 @@
+name: stackexchange_beer
+database: stackexchange_beer
+tier: core
+record: knowledge/datasets/stackexchange.md
+licenses: [cc-by-sa-4-0]
+artifacts: [stackexchange_beer/beer.stackexchange.com.7z]
+converter: none
+load:
+  - stackexchange_beer.sql
