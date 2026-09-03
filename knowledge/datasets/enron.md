@@ -1,0 +1,102 @@
+---
+type: Dataset
+title: Enron email corpus (CMU, May 7, 2015 version)
+description: About 517k real corporate emails from 150 Enron custodians, distributed by CMU as a maildir-style tree of RFC 822 files; converted to messages/recipients/mailbox tables with FULLTEXT.
+resource: https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz
+tags:
+- tier-core
+- tier-extended
+- dataset
+- text-corpus
+- email
+- personal-data
+- public-record
+- text-group
+status: stable
+trust: verified
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
+verified:
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
+stale_after: "2027-09-01"
+sources:
+- resource: https://www.cs.cmu.edu/~enron/
+  title: Enron Email Dataset (CMU)
+  accessed: "2026-09-02"
+  version: May 7, 2015
+- resource: https://www.cs.cmu.edu/~enron/DELETIONS.txt
+  title: DELETIONS.txt
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/lintool/Enron2mbox/master/README.md
+  title: Enron2mbox README
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/angel-hernandez91/enron-emails/master/README.md
+  title: enron-emails README
+  accessed: "2026-09-02"
+- resource: https://www.ah-ruhe.de/enron-email-data/
+  title: repaired Shetty/Adibi MySQL dump page
+  accessed: "2026-09-02"
+- resource: https://raw.githubusercontent.com/enrondata/enrondata/master/edrm-v2.0.0/README.md
+  title: EDRM v2 README
+  accessed: "2026-09-02"
+- resource: https://enrondata.readthedocs.io/en/latest/data/edrm-enron-email-datasets/
+  title: EnronData.org EDRM page
+  accessed: "2026-09-02"
+---
+
+# Identity
+Enron Email Dataset, "May 7, 2015 Version", prepared by the CALO project (SRI) and distributed by William W. Cohen at CMU ([source](/sources/cmu-enron-email-dataset-page.md)). Proposed MySQL database name: **`enron`**.
+
+# Source artifact
+* URL: https://www.cs.cmu.edu/~enron/enron_mail_20150507.tar.gz — `tar.gz`; observed `Content-Length: 443254787` (443.3 MB / 422.7 MiB), `Last-Modified: Thu, 07 May 2015 20:35:29 GMT`. The page text says "about 1.7Gb, tarred and gzipped", which does not match the download; **Inferred:** 1.7 GB is the extracted size (a third-party README reports a 1.4 GB `maildir`).
+* No auth, no click-through. **No checksum is published** anywhere on the page; the executor computes and pins `sha256` on first download ([open question](/questions/enron-tarball-checksum-and-message-count.md)).
+* Older versions (2004, 2009, 2011) are withdrawn and "you are requested to replace it with the newer version" — never build from them; the 2015 version already excludes the 30 files listed in [DELETIONS.txt](/sources/cmu-enron-deletions-txt.md).
+* Known other versions, not used: (a) ISI/USC Shetty and Adibi 2004 MySQL dump — page offline (Cloudflare 403; a 2013 Wayback snapshot exists, [evidence](/sources/wayback-isi-adibi-enron-availability.md)); a "repaired" copy of that MySQL 4 dump (tables `employeelist`, `message`, `recipientinfo`, `referenceinfo`) is redistributed at [ah-ruhe.de](/sources/ah-ruhe-enron-email-data.md) without a license statement; (b) EDRM/ZL "Enron Email Data Set v2" — PST/MIME/EDRM XML **with attachments**, 149 custodians, 79 GB on [archive.org](/sources/archive-org-edrm-enron-v2-xml-metadata.md); EDRM withdrew v1/v2 for remaining PII ([EnronData.org](/sources/enrondata-readthedocs-edrm-datasets.md)). We use CMU: smallest, attachment-free, has the removal history.
+
+# Native format and friendlier forms
+A directory tree `maildir/<custodian>/<folder>/<n>.`, one RFC 822 message per file, no attachments (CMU page). It is not a real Maildir (no `cur/new`), so Python's `mailbox` module needs restructuring; a plain file walk + `email.parser` is simpler ([tool](/tools/text-enron-maildir-parsing.md)). CMU publishes no CSV/SQL form.
+
+# Shape
+* 150 custodian directories (CMU: "about 150 users"); **517,401 message files** (two independent third-party counts: [Enron2mbox](/sources/github-lintool-enron2mbox-readme.md), [enron-emails](/sources/github-angel-hernandez91-enron-emails-readme.md)); ~3,311 custodian/folder combinations (Enron2mbox mbox count).
+* Proposed tables (all utf8mb4):
+  * `mailbox(mailbox_id SMALLINT PK, name VARCHAR(64) UNIQUE)` — 150 rows.
+  * `message(id INT PK, mailbox_id, folder VARCHAR(255), path VARCHAR(255) UNIQUE, message_id VARCHAR(255), date_utc DATETIME NULL, date_raw VARCHAR(64), from_address VARCHAR(255), from_raw VARCHAR(1000), subject TEXT, body MEDIUMTEXT, body_sha1 CHAR(40), x_from/x_to/x_cc/x_bcc TEXT, x_folder VARCHAR(255), x_origin VARCHAR(64), x_filename VARCHAR(255), charset_fallback TINYINT, header_defects SMALLINT)` — 517,401 rows.
+  * `recipient(message_id INT, kind ENUM('to','cc','bcc'), position SMALLINT, address VARCHAR(255), display_name VARCHAR(255))` — row count unknown; **Inferred:** 2-4 million (executor derives).
+  * Optional `address(address VARCHAR(255) PK, is_enron BOOL)` lookup — enron-emails reports 83% of mail from Enron addresses.
+* Encoding: files are predominantly 7-bit ASCII (enron-emails README); **Inferred:** a minority carry Latin-1/Windows-1252 bytes and quoted-printable; decode per declared charset, fall back to cp1252, flag the row ([question](/questions/enron-header-anomalies-charset-dates-message-id.md)). Non-ASCII content is therefore sparse — the encoding test is "no U+FFFD in bodies unless `charset_fallback=1`".
+
+# Conversion path
+Custom Python loader (`email` stdlib → TSV → `LOAD DATA LOCAL INFILE`), deterministic path order; see [decision](/decisions/enron-conversion-path.md) and [tool](/tools/text-enron-maildir-parsing.md). No off-the-shelf MySQL converter with a known license was found (ah-ruhe.de dump has none; converters on GitHub target SQLite/Mongo/Postgres).
+
+# Type-mapping hazards
+* `Date` headers carry numeric offsets with zone comments like `-0700 (PDT)` (**Inferred**); store UTC `DATETIME` plus `date_raw`; a handful of bogus years (1979/1980/2044) are expected — keep them, do not coerce (**Inferred**).
+* Recipient lists can run to thousands of addresses on broadcast mails; hence the child table rather than a `to` column.
+* `subject` may exceed 255 chars → `TEXT`. `message_id` is not declared UNIQUE until uniqueness is verified.
+* FULLTEXT on `message.subject, message.body` (InnoDB): build after load; `innodb_ft_min_token_size=3` default drops 1-2 letter tokens; document.
+* CMU's placeholder addresses `user@enron.com` / `no_address@enron.com` are data, not errors.
+
+# Programmable objects
+None upstream. We add read-only views: `v_message_with_recipients` (`JSON_ARRAYAGG` of the `to` addresses — **not** `GROUP_CONCAT`, which silently truncates at `group_concat_max_len` = 1024 bytes and would cut exactly the broadcast mails this record calls out; the same reason it was rejected for checksums, see [checksum method](/decisions/test-checksum-method.md)), `v_mailbox_folder_counts`. No triggers/procedures.
+
+# Indexing
+PK `message.id`; `UNIQUE(path)`; `INDEX(mailbox_id, folder)`; `INDEX(date_utc)`; `INDEX(from_address)`; `INDEX(body_sha1)`; `FULLTEXT(subject, body)`; `recipient`: `PK(message_id, kind, position)`, `INDEX(address)`.
+
+# Tests and expected values
+* `COUNT(*) FROM mailbox` = 150; `COUNT(*) FROM message` = number of files under `maildir/` (expected 517,401; the executor records the actual `find maildir -type f | wc -l`).
+* `SELECT COUNT(*) FROM message WHERE path IN ('richey-c/inbox/10.','skilling-j/1584.','gay-r/sent/12.')` = 0 (deleted files must be absent).
+* `message.path='allen-p/inbox/1.'` exists (**Inferred:** first custodian alphabetically).
+* Checksum of the tarball equals the pinned sha256 from the first build.
+
+# Tier assignment
+* Full corpus: **extended**. Evidence: 443 MB compressed download, ~1.4 GB extracted text ([enron-sqlite3 README](/sources/github-ftrain-enron-sqlite3-readme.md) reports a ~5 GB SQLite with FTS); **Inferred:** 2-3 GB in InnoDB with FULLTEXT.
+* Core option: a deterministic subset — e.g. the alphabetically first mailboxes whose cumulative extracted size stays under 40 MB — shipped as `enron` in the image, with the full corpus loadable at start via the same loader. Average mailbox ≈ 1.4 GB / 150 ≈ 9 MB (**Inferred**), so 3-5 mailboxes fit.
+
+# License and attribution
+[Enron public record](/licenses/enron-public-record.md) — no license text exists; FERC public record redistributed by CMU with a privacy request. README wording: "Enron Email Dataset (May 7, 2015 version), collected and prepared by the CALO Project (SRI International) and distributed by William W. Cohen, Carnegie Mellon University, https://www.cs.cmu.edu/~enron/. Originally made public by the U.S. Federal Energy Regulatory Commission. No license is stated; the data contains personal information of real people; please be sensitive to their privacy. Attachments are not included. Messages removed at the request of affected employees (see DELETIONS.txt) are not present. Provenance caveat: 2026 reports question the authenticity of some messages ([Zenodo](/sources/zenodo-nakamura-enron-authenticity-2026.md))."
+
+# Open questions
+* [Tarball checksum and exact message count](/questions/enron-tarball-checksum-and-message-count.md)
+* [Charset, date and Message-ID anomalies](/questions/enron-header-anomalies-charset-dates-message-id.md)
+* [ISI MySQL dump snapshot content](/questions/enron-isi-mysql-dump-availability.md)

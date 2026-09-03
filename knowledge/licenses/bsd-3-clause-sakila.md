@@ -1,0 +1,56 @@
+---
+type: License
+title: BSD 3-Clause ("New BSD") as applied to Sakila
+description: License of sakila-schema.sql and sakila-data.sql (Oracle); the manual and sakila.mwb are NOT under it.
+resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
+tags:
+- license
+- bsd-3-clause
+- sakila
+- permissive
+status: stable
+trust: verified
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
+verified:
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
+sources:
+- resource: https://dev.mysql.com/doc/sakila/en/sakila-license.html
+  title: 9 License for the Sakila Sample Database
+  accessed: "2026-09-02"
+- resource: https://downloads.mysql.com/docs/sakila-db.zip
+  title: sakila-db.zip file headers (Version 1.5)
+  accessed: "2026-09-02"
+- resource: https://opensource.org/license/bsd-3-clause
+  title: The 3-Clause BSD License (OSI)
+  accessed: "2026-09-02"
+---
+
+# Where the text lives
+* Upstream statement: "The contents of the sakila-schema.sql and sakila-data.sql files are licensed under the New BSD license." ([license page](/sources/mysql-sakila-license-page.md)).
+* Verbatim license text: the comment header of both .sql files ([zip inspection](/sources/mysql-sakila-db-zip.md)):
+
+> Copyright (c) 2006, 2026, Oracle and/or its affiliates.
+>
+> Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+> * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+> * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+> * Neither the name of Oracle nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+>
+> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+# Obligations
+* Keep the copyright line, the three conditions and the disclaimer with the redistributed scripts (source form) and in the image documentation (binary form - a loaded database counts as "binary form" in the conservative reading).
+* No endorsement using the Oracle name.
+* No share-alike; no attribution string beyond the notice above.
+
+# Scope warning
+Only the two .sql files are open-licensed. "The additional materials included in the Sakila distribution, including this documentation, are not licensed under an open license." Therefore do NOT redistribute `sakila.mwb` or the HTML/PDF manual in the public repository or image.
+
+# Attribution
+Reproduce the upstream notice verbatim in `datasets/sakila/LICENSE`: the Oracle copyright line ("Copyright (c) 2006, 2026, Oracle and/or its affiliates"), the three BSD conditions and the disclaimer paragraph, as found in the headers of `sakila-schema.sql` and `sakila-data.sql`. Wording used in NOTICE: "Sakila sample database © Oracle and/or its affiliates, New BSD License."
+
+# Applied to
+* [Sakila](/datasets/sakila.md) - `sakila-schema.sql`, `sakila-data.sql` (Version 1.5).

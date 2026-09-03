@@ -2,6 +2,7 @@
 downloads/
 datasets/*/build/
 docker/context/
+docker/init/10-registry.sql
 *.bak
 *.7z
 *.parquet

@@ -1,0 +1,43 @@
+---
+type: Source
+title: instawdb.sql (AdventureWorks OLTP install script) - file analysis
+description: Analysis of the current AdventureWorks OLTP install script (updated 2025-11-14) including BULK INSERT parameters per table, schemas, types, computed columns, UDTs, XML schema collections, views, functions, procedures, triggers and full-text objects.
+resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
+tags:
+- adventureworks
+- script-analysis
+- tsql
+- bulk-insert
+status: stable
+trust: verified
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
+verified:
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:20:00Z"
+sources:
+- resource: https://raw.githubusercontent.com/microsoft/sql-server-samples/master/samples/databases/adventure-works/oltp-install-script/instawdb.sql
+  title: instawdb.sql at master
+  accessed: "2026-09-02"
+  version: "master, 329,368 bytes; header \"Date: October 26, 2017 / Updated: November 14, 2025\"; commit b47eadc852"
+---
+
+# What was read
+The full script (329,368 bytes; UTF-8 **with BOM** `EF BB BF`, LF line endings), analysed with grep/awk.
+
+# Relevant excerpt
+* Runs in **SQLCMD mode**: `:setvar SqlSamplesSourceDataPath "C:\Samples\AdventureWorks\"`, `:setvar DatabaseName "AdventureWorks"`; requires full-text search; creates the database with `RECOVERY SIMPLE`, `ACCELERATED_DATABASE_RECOVERY = ON`, `OPTIMIZED_LOCKING = ON`, `QUERY_STORE = ON` (the SQL Server 2025 changes). References FILESTREAM in extended properties ("Required for FileStream").
+* **Schemas**: `HumanResources`, `Person`, `Production`, `Purchasing`, `Sales` (plus `dbo`).
+* **Tables**: 71 `CREATE TABLE` = 68 user tables in the five schemas + `dbo.AWBuildVersion`, `dbo.DatabaseLog`, `dbo.ErrorLog`. Full list: HumanResources.{Department, Employee, EmployeeDepartmentHistory, EmployeePayHistory, JobCandidate, Shift}; Person.{Address, AddressType, BusinessEntity, BusinessEntityAddress, BusinessEntityContact, ContactType, CountryRegion, EmailAddress, Password, Person, PersonPhone, PhoneNumberType, StateProvince}; Production.{BillOfMaterials, Culture, Document, Illustration, Location, Product, ProductCategory, ProductCostHistory, ProductDescription, ProductDocument, ProductInventory, ProductListPriceHistory, ProductModel, ProductModelIllustration, ProductModelProductDescriptionCulture, ProductPhoto, ProductProductPhoto, ProductReview, ProductSubcategory, ScrapReason, TransactionHistory, TransactionHistoryArchive, UnitMeasure, WorkOrder, WorkOrderRouting}; Purchasing.{ProductVendor, PurchaseOrderDetail, PurchaseOrderHeader, ShipMethod, Vendor}; Sales.{CountryRegionCurrency, CreditCard, Currency, CurrencyRate, Customer, PersonCreditCard, SalesOrderDetail, SalesOrderHeader, SalesOrderHeaderSalesReason, SalesPerson, SalesPersonQuotaHistory, SalesReason, SalesTaxRate, SalesTerritory, SalesTerritoryHistory, ShoppingCartItem, SpecialOffer, SpecialOfferProduct, Store}.
+* **68 BULK INSERT statements**, every one with `CODEPAGE = '65001'` and `DATAFILETYPE = 'char'` (i.e. **UTF-8 CSVs, not UTF-16**), `KEEPIDENTITY`, `TABLOCK`. Terminators:
+  * 51 tables: `FIELDTERMINATOR = '\t'` with `ROWTERMINATOR = '0x0a'` (49) or `'\n'` (Employee, CountryRegion, StateProvince, CountryRegionCurrency, ProductDescription).
+  * 14 tables use `FIELDTERMINATOR = '+|'` and `ROWTERMINATOR = '&|\n'` (multi-line/XML/binary content): HumanResources.JobCandidate, Person.BusinessEntity, Person.BusinessEntityAddress, Person.BusinessEntityContact, Person.EmailAddress, Person.Password, Person.Person, Person.PersonPhone, Person.PhoneNumberType, Production.Document, Production.Illustration, Production.ProductModel, Production.ProductPhoto, Sales.Store.
+* **UDTs**: `AccountNumber nvarchar(15)`, `Flag bit NOT NULL`, `NameStyle bit NOT NULL`, `Name nvarchar(50)`, `OrderNumber nvarchar(25)`, `Phone nvarchar(25)`.
+* **Special column types**: `hierarchyid` (HumanResources.Employee.OrganizationNode, Production.Document.DocumentNode), `xml` typed by 6 XML schema collections (Person.Person.AdditionalContactInfo and Demographics, HumanResources.JobCandidate.Resume, Production.ProductModel.CatalogDescription and Instructions, Sales.Store.Demographics) plus untyped xml (dbo.DatabaseLog.XmlEvent, Production.Illustration.Diagram), `geography` (Person.Address.SpatialLocation), 29 `uniqueidentifier` rowguid columns, 44 `money` + 4 `smallmoney` columns, `varbinary(max)` (Production.Document.Document, ProductPhoto thumbnails/large photos, Person.Password hashes), `bit`, `datetime`, `date`/`time` (Shift).
+* **Computed columns (10)**: Sales.Customer.AccountNumber `AS ISNULL('AW' + dbo.ufnLeadingZeros(CustomerID), '')`; Production.Document.DocumentLevel `AS DocumentNode.GetLevel()`; HumanResources.Employee.OrganizationLevel `AS OrganizationNode.GetLevel()`; Purchasing.PurchaseOrderDetail.LineTotal and StockedQty; Purchasing.PurchaseOrderHeader.TotalDue `... PERSISTED`; Sales.SalesOrderDetail.LineTotal `AS ISNULL(UnitPrice * (1.0 - UnitPriceDiscount) * OrderQty, 0.0)`; Sales.SalesOrderHeader.SalesOrderNumber `AS ISNULL(N'SO' + CONVERT(nvarchar(23), SalesOrderID), N'*** ERROR ***')` and TotalDue; Production.WorkOrder.StockedQty.
+* **Constraints/indexes**: 89 CHECK constraints, 170 FOREIGN KEY clauses, 59 unique indexes, 5 primary XML indexes, 538 `sp_addextendedproperty` calls (MS_Description documentation).
+* **Programmable objects**: 20 views (Person.vAdditionalContactInfo, HumanResources.vEmployee, vEmployeeDepartment, vEmployeeDepartmentHistory, Sales.vIndividualCustomer, Sales.vPersonDemographics, HumanResources.vJobCandidate, vJobCandidateEmployment, vJobCandidateEducation, Production.vProductAndDescription, vProductModelCatalogDescription, vProductModelInstructions, Sales.vSalesPerson, vSalesPersonSalesByFiscalYears, Person.vStateProvinceCountryRegion, Sales.vStoreWithDemographics, vStoreWithContacts, vStoreWithAddresses, Purchasing.vVendorWithContacts, vVendorWithAddresses); 11 functions (dbo.ufnLeadingZeros, ufnGetAccountingStartDate, ufnGetAccountingEndDate, ufnGetContactInformation, ufnGetProductDealerPrice, ufnGetProductListPrice, ufnGetProductStandardCost, ufnGetStock, ufnGetDocumentStatusText, ufnGetPurchaseOrderStatusText, ufnGetSalesOrderStatusText); 10 procedures (dbo.uspPrintError, uspLogError, uspGetBillOfMaterials, uspGetEmployeeManagers, uspGetManagerEmployees, uspGetWhereUsedProductID, HumanResources.uspUpdateEmployeeHireInfo, uspUpdateEmployeeLogin, uspUpdateEmployeePersonalInfo, dbo.uspSearchCandidateResumes); 11 triggers (HumanResources.dEmployee, Person.iuPerson, Purchasing.iPurchaseOrderDetail, uPurchaseOrderDetail, uPurchaseOrderHeader, dVendor, Sales.iduSalesOrderDetail, uSalesOrderHeader, Production.iWorkOrder, uWorkOrder, plus dbo.ddlDatabaseTriggerLog counted by the CREATE TRIGGER grep); full-text: `CREATE FULLTEXT CATALOG AW2025FullTextCatalog AS DEFAULT` and full-text indexes on Production.ProductReview(Comments), HumanResources.JobCandidate(Resume), Production.Document(Document TYPE COLUMN FileExtension, DocumentSummary).
+
+# What it was used to decide
+[AdventureWorks OLTP](/datasets/adventureworks-oltp.md); [conversion-path decision](/decisions/mssql-adventureworks-conversion-path.md).

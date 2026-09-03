@@ -1,0 +1,61 @@
+---
+type: Source
+title: Archived OE/OC/PM scripts at v23.3 and the IX scripts at v19.2
+description: Object types, XMLType/spatial/LOB columns, populate scripts and row counts of Order Entry, Online Catalog, Product Media, and the queue-only Information Exchange schema.
+resource: https://github.com/oracle-samples/db-sample-schemas/tree/v23.3/order_entry
+tags:
+- oracle
+- oe
+- oc
+- pm
+- ix
+- scripts
+- object-relational
+status: stable
+trust: verified
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
+verified:
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:25:00Z"
+sources:
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/order_entry/oe_main.sql
+  title: oe_main.sql, oe_cre.sql, ccus_v3.sql, cord_v3.sql, cwhs_v3.sql, oe_idx.sql, oe_views.sql, oe_drop.sql, loe_v3.sql, poe_v3.sql, README.md
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/order_entry/pcus_v3.sql
+  title: Populate scripts pcus_v3.sql, pord_v3.sql, pwhs_v3.sql, oe_p_pi.sql, oe_p_itm.sql, oe_p_inv.sql, oe_p_pd.sql and the 30 oe_p_<lang>.sql files
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/order_entry/oc_cre.sql
+  title: oc_cre.sql, oc_popul.sql, oc_main.sql, coe_xml.sql, xdb03usg.sql, createResources.sql, createFolders.sql, bi_oe_or.ctl
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v23.3/product_media/pm_cre.sql
+  title: pm_cre.sql, pm_main.sql, pm_p_lob.sql, pm_p_lob.ctl, pm_p_lob.dat, README.md
+  accessed: "2026-09-02"
+  version: v23.3
+- resource: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/v19.2/info_exchange/cix_v3.sql
+  title: info_exchange/cix_v3.sql (IX object creation) and sales_history/sh_sales.ctl, sh_cust.ctl, time_v3.ctl (old SQL*Loader control files)
+  accessed: "2026-09-02"
+  version: v19.2
+---
+
+# What was read
+The listed scripts were downloaded from the v23.3 tag (and v19.2 for IX and the old SQL*Loader control files) and read/grepped. All OE/PM scripts are ASCII (`LC_ALL=C grep -P '[\x80-\xFF]'` finds nothing; non-Latin text is encoded with `UNISTR('\XXXX')` escapes).
+
+# Relevant excerpt
+* order_entry/README.md: "Order Entry Sample Schema (ARCHIVED!)", "SUPPORTED with DB VERSIONS 19c and lower", install requires `perl -p -i.bak -e 's#__SUB__CWD__#'$(pwd)'#g' *.sql */*.sql */*.dat` then `oe_main.sql` with 9 positional parameters (OE password, tablespaces, **HR password**, **SYS password**, data path, log path, version `3`, connect string). product_media/README.md likewise archived; `pm_main.sql` needs the OE and SYS passwords and a directory object `media_dir`.
+* oe_main.sql: `GRANT REFERENCES, SELECT ON employees/countries/locations TO oe` from HR; runs `coe_v3` (create), `loe_v3` (load), `poe_v3` (post-load views/function), `oc_main` (OC subschema), `oe_analz`; recreates public synonyms `COE_*` as SYS.
+* DDL: `CREATE TYPE cust_address_typ AS OBJECT (street_address VARCHAR2(40), postal_code VARCHAR2(10), city VARCHAR2(30), state_province VARCHAR2(10), country_id CHAR(2))`; `CREATE TYPE phone_list_typ AS VARRAY(5) OF VARCHAR2(25)`; `customers(customer_id NUMBER(6) PK CHECK (>0), cust_first_name/cust_last_name VARCHAR2(20) NOT NULL, cust_address cust_address_typ, phone_numbers phone_list_typ, nls_language VARCHAR2(3), nls_territory VARCHAR2(30), credit_limit NUMBER(9,2) CHECK (<= 5000), cust_email VARCHAR2(40), account_mgr_id NUMBER(6) FK hr.employees ON DELETE SET NULL, cust_geo_location MDSYS.SDO_GEOMETRY)` plus, added by loe_v3.sql after load, `date_of_birth DATE, marital_status VARCHAR2(20), gender VARCHAR2(1), income_level VARCHAR2(20)` populated by 319 `UPDATE`s with `'20-FEB-72'`-style literals; `warehouses(warehouse_id NUMBER(3) PK, warehouse_spec SYS.XMLTYPE, warehouse_name VARCHAR2(35), location_id NUMBER(4) FK hr.locations, wh_geo_location MDSYS.SDO_GEOMETRY)`; `orders(order_id NUMBER(12) PK, order_date TIMESTAMP WITH LOCAL TIME ZONE NOT NULL, order_mode VARCHAR2(8) CHECK in ('direct','online'), customer_id NUMBER(6) NOT NULL FK ON DELETE SET NULL, order_status NUMBER(2), order_total NUMBER(8,2) CHECK (>= 0), sales_rep_id NUMBER(6) FK hr.employees, promotion_id NUMBER(6))`; `order_items(order_id NUMBER(12) FK ON DELETE CASCADE, line_item_id NUMBER(3), product_id NUMBER(6) FK, unit_price NUMBER(8,2), quantity NUMBER(8); PK (order_id, line_item_id); UNIQUE (order_id, product_id))` with `TRIGGER insert_ord_line BEFORE INSERT` assigning `line_item_id := max+1`; `inventories(product_id, warehouse_id NUMBER(3), quantity_on_hand NUMBER(8); PK (product_id, warehouse_id))`; `product_information(product_id NUMBER(6) PK, product_name VARCHAR2(50), product_description VARCHAR2(2000), category_id NUMBER(2), weight_class NUMBER(1), warranty_period INTERVAL YEAR TO MONTH, supplier_id NUMBER(6), product_status VARCHAR2(20) CHECK in ('orderable','planned','under development','obsolete'), list_price/min_price NUMBER(8,2), catalog_url VARCHAR2(50))`; `product_descriptions(product_id FK, language_id VARCHAR2(3), translated_name NVARCHAR2(50) NOT NULL, translated_description NVARCHAR2(2000) NOT NULL; PK (product_id, language_id))`; synonyms `countries, locations, departments, jobs, employees, job_history` → `hr.*`; `SEQUENCE orders_seq START WITH 1000`; indexes in oe_idx.sql incl. function-based `cust_upper_name_ix ON customers (UPPER(cust_last_name), UPPER(cust_first_name))`. Views (oe_views.sql/poe_v3.sql): `products` (`TRANSLATE(... USING NCHAR_CS)`, `sys_context('USERENV','LANG')`), `sydney_inventory`, `bombay_inventory`, `toronto_inventory`, `product_prices`, `account_managers` (`GROUP BY ROLLUP` over `c.cust_address.country_id`, `c.cust_address.state_province`), `customers_view` (flattens `cust_address.*`, `phone_numbers` via `get_phone_number_f(1..5, phone_numbers)`, `cust_geo_location.sdo_point.x/y`), `orders_view` (order_date cast to DATE). Function `get_phone_number_f(p_in INTEGER, p_phonelist phone_list_typ)`.
+* Populate scripts and counted INSERTs: `pcus_v3.sql` customers **319** (e.g. `(101,'Constantin','Welles',cust_address_typ('514 W Superior St','46901','Kokomo','IN','US'),PHONE_LIST_TYP('+1 317 123 4104'),'us','AMERICA','100','Constantin.Welles@ANHINGA.EXAMPLE.COM',149, MDSYS.SDO_GEOMETRY(2001, 8307, MDSYS.SDO_POINT_TYPE(-86.13631, 40.485424,NULL),NULL,NULL))`; the older `oe_p_cus.sql` also has 319 rows with `.COM` e-mails and is not called by loe_v3.sql); `pord_v3.sql` orders **105** (`TO_TIMESTAMP('16-AUG-07 02.34.12.234359 PM','DD-MON-RR HH.MI.SS.FF AM','NLS_DATE_LANGUAGE=American')`); `oe_p_itm.sql` order_items **665**; `oe_p_pi.sql` product_information **288** (`to_yminterval('+00-03')`); `oe_p_inv.sql` inventories **1,112**; `pwhs_v3.sql` warehouses **9** (4 with SDO point geometry, then `UPDATE warehouses SET warehouse_spec = sys.xmltype.createxml('<?xml version="1.0"?> <Warehouse> <Building>Owned</Building> <Area>25000</Area> <Docks>2</Docks> <DockType>Rear load</DockType> <WaterAccess>Y</WaterAccess> <RailAccess>N</RailAccess> <Parking>Street</Parking> <VClearance>10 ft</VClearance> </Warehouse>')` for several rows); `oe_p_pd.sql` runs 30 language files (`us ar ca cs d dk e el esa f frc hu i iw ja ko n nl pl pt ptb ro ru s sf sk th tr zhs zht`), each with **288** `INSERT INTO product_descriptions` → **8,640** rows, language_id values `US, AR, CA, CS, D, DK, E, EL, ESA, F, FRC, HU, I, IW, JA, KO, N, NL, PL, PT, PTB, RO, RU, S, SF, SK, TH, TR, ZHS, ZHT`, text as `UNISTR('LCD\30e2\30cb\30bf\30fc11/PM')`; `loe_v3.sql` inserts `promotions` **2** rows (`(1,'everyday low price')`, `(2,'blowout sale')`).
+* OC (oc_cre.sql/oc_popul.sql): object types `warehouse_typ, inventory_typ, inventory_list_typ (TABLE OF), product_information_typ, order_item_typ (REF product_information_typ), order_item_list_typ, customer_typ (NOT FINAL, cust_orders order_list_typ), order_typ (REF customer_typ), order_list_typ, category_typ (NOT INSTANTIABLE NOT FINAL, member function), subcategory_ref_list_typ (TABLE OF REF category_typ), product_ref_list_typ (TABLE OF number(6)), corporate_customer_typ UNDER customer_typ, leaf_category_typ, composite_category_typ, catalog_typ` with type bodies; object table `categories_tab OF category_typ ... NESTED TABLE ... STORE AS product_ref_list_nestedtab / subcategory_ref_list_nestedtab` (**22** inserts); object views `oc_inventories, oc_product_information, oc_customers, oc_corporate_customers, oc_orders` over the relational tables with `INSTEAD OF` triggers `orders_trg`, `orders_items_trg`.
+* XML: coe_xml.sql grants `xdbadmin` and runs xdb03usg.sql, which registers `purchaseOrder.xsd` with `DBMS_XMLSCHEMA.registerSchema(... TRUE, TRUE, FALSE, TRUE, TRUE)` (creating the schema-based `PURCHASEORDER` XMLType table, collection tables renamed to `LINEITEM_TABLE`/`ACTION_TABLE`) and uploads the **132** XML files under `order_entry/2002/<Mon>/` into the XDB repository folder `/home/OE/PurchaseOrders` via `COE_UTILITIES.uploadFiles('filelist.xml', 'SS_OE_XMLDIR', ...)`. `PurchaseOrders.dmp` (9.3 MB) and `POList.json` are not referenced by any of the read install scripts.
+* `bi_oe_or.ctl` (used by the removed BI schema): `LOAD DATA APPEND INTO TABLE orders FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\''`.
+* PM (pm_cre.sql): types `adheader_typ (header_name VARCHAR2(256), creation_date DATE, header_text VARCHAR2(1024), logo BLOB)`, `textdoc_typ (document_typ VARCHAR2(32), formatted_doc BLOB)`, `textdoc_tab AS TABLE OF textdoc_typ`; `print_media(product_id NUMBER(6), ad_id NUMBER(6), ad_composite BLOB, ad_sourcetext CLOB, ad_finaltext CLOB, ad_fltextn NCLOB, ad_textdocs_ntab textdoc_tab, ad_photo BLOB, ad_graphic BFILE, ad_header adheader_typ) NESTED TABLE ad_textdocs_ntab STORE AS textdocs_nestedtab`, PK (product_id, ad_id), FK `oe.product_information`. Header note: "Remove online_media table — Ordim desupported in 19c" (2018). Load: `HOST sqlldr pm/... control=pm_p_lob.ctl data=pm_p_lob.dat` where the control file uses `LOBFILE(...) TERMINATED BY EOF`, `BFILE (CONSTANT "MEDIA_DIR", ...)`, `CONTINUEIF NEXT(1) = '+'`, `creation_date DATE "mm-dd-yyyy"`; pm_p_lob.dat has **4** print_media records (`"P"`) and **12** nested textdoc records (`"T"`), all pointing at files such as `monitor_comp_ad.gif`, `monitor2056_source.txt`, `monitor_german.txt`.
+* IX (v19.2 cix_v3.sql): `CREATE OR REPLACE TYPE order_event_typ AS OBJECT (order_id NUMBER(12), product_id NUMBER(6), customer_id NUMBER(6), cust_first_name VARCHAR2(20), cust_last_name VARCHAR2(20), order_status NUMBER(2), delivery_date DATE)`; `dbms_aqadm.create_queue_table(queue_table => 'orders_queuetable', multiple_consumers => true, queue_payload_type => 'order_event_typ' ...)`; `create_queue('orders_queue')`; `start_queue`; `DBMS_STREAMS_ADM.SET_UP_QUEUE()`. No data rows.
+* Old v19.2 SQL*Loader control files: `sh_sales.ctl`: `LOAD DATA APPEND INTO TABLE sales FIELDS TERMINATED BY "|" (PROD_ID, CUST_ID, TIME_ID, CHANNEL_ID, PROMO_ID, QUANTITY_SOLD, AMOUNT_SOLD)`; `time_v3.ctl`: `FIELDS TERMINATED BY '|' OPTIONALLY ENCLOSED BY '"' (TIME_ID DATE(19) "YYYY-MM-DD-HH24-MI-SS", ...)`. These pipe-delimited `.dat` files were replaced by header-bearing `.csv` files in v23.
+
+# What it was used to decide
+[OE/PM/IX dataset record](/datasets/oracle-oe-pm-ix.md) (what to carry, flatten, or drop); [purchase-order XML scope question](/questions/oracle-oe-xml-purchase-orders-scope.md).

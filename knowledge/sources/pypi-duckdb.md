@@ -1,0 +1,33 @@
+---
+type: Source
+title: "PyPI JSON metadata: duckdb"
+description: 1.5.5 (2026-07-22), requires Python >=3.10.0, MIT classifier.
+resource: https://pypi.org/pypi/duckdb/json
+tags:
+- python
+- pypi
+- duckdb
+status: stable
+trust: verified
+stale_after: "2026-12-01"
+generated:
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
+verified:
+- by: claude-code/claude-fable-5-1
+  at: "2026-09-02T20:37:05Z"
+sources:
+- resource: https://pypi.org/pypi/duckdb/json
+  title: "PyPI JSON metadata: duckdb"
+  accessed: "2026-09-02"
+  version: 1.5.5
+---
+
+# What was read
+https://pypi.org/pypi/duckdb/json, accessed 2026-09-02; version: 1.5.5.
+
+# Relevant excerpt
+* `duckdb==1.5.5`, uploaded 2026-07-22, `requires_python >=3.10.0`, classifier `License :: OSI Approved :: MIT License`.
+
+# What it was used to decide
+[DuckDB record](/tools/duckdb.md); [Python conversion stack](/tools/python-conversion-stack.md).
