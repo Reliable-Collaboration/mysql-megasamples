@@ -1,0 +1,543 @@
+# S6: every index that must exist after load.
+call_center:
+  PRIMARY:
+    columns:
+    - cc_call_center_sk
+    type: BTREE
+    unique: true
+  ix_call_center_call_center_id:
+    columns:
+    - cc_call_center_id
+    type: BTREE
+    unique: false
+catalog_page:
+  PRIMARY:
+    columns:
+    - cp_catalog_page_sk
+    type: BTREE
+    unique: true
+catalog_returns:
+  PRIMARY:
+    columns:
+    - cr_item_sk
+    - cr_order_number
+    type: BTREE
+    unique: true
+  ix_catalog_returns_call_center_sk:
+    columns:
+    - cr_call_center_sk
+    type: BTREE
+    unique: false
+  ix_catalog_returns_catalog_page_sk:
+    columns:
+    - cr_catalog_page_sk
+    type: BTREE
+    unique: false
+  ix_catalog_returns_item_sk:
+    columns:
+    - cr_item_sk
+    type: BTREE
+    unique: false
+  ix_catalog_returns_returned_date_sk:
+    columns:
+    - cr_returned_date_sk
+    type: BTREE
+    unique: false
+  ix_catalog_returns_returning_customer_sk:
+    columns:
+    - cr_returning_customer_sk
+    type: BTREE
+    unique: false
+catalog_sales:
+  PRIMARY:
+    columns:
+    - cs_item_sk
+    - cs_order_number
+    type: BTREE
+    unique: true
+  ix_catalog_sales_bill_addr_sk:
+    columns:
+    - cs_bill_addr_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_bill_cdemo_sk:
+    columns:
+    - cs_bill_cdemo_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_bill_customer_sk:
+    columns:
+    - cs_bill_customer_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_call_center_sk:
+    columns:
+    - cs_call_center_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_item_sk:
+    columns:
+    - cs_item_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_promo_sk:
+    columns:
+    - cs_promo_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_ship_addr_sk:
+    columns:
+    - cs_ship_addr_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_sold_date_sk:
+    columns:
+    - cs_sold_date_sk
+    type: BTREE
+    unique: false
+  ix_catalog_sales_warehouse_sk:
+    columns:
+    - cs_warehouse_sk
+    type: BTREE
+    unique: false
+customer:
+  PRIMARY:
+    columns:
+    - c_customer_sk
+    type: BTREE
+    unique: true
+  ix_customer_birth_month:
+    columns:
+    - c_birth_month
+    type: BTREE
+    unique: false
+  ix_customer_current_addr_sk:
+    columns:
+    - c_current_addr_sk
+    type: BTREE
+    unique: false
+  ix_customer_current_cdemo_sk:
+    columns:
+    - c_current_cdemo_sk
+    type: BTREE
+    unique: false
+  ix_customer_current_hdemo_sk:
+    columns:
+    - c_current_hdemo_sk
+    type: BTREE
+    unique: false
+  ix_customer_customer_id:
+    columns:
+    - c_customer_id
+    type: BTREE
+    unique: false
+customer_address:
+  PRIMARY:
+    columns:
+    - ca_address_sk
+    type: BTREE
+    unique: true
+  ix_customer_address_city:
+    columns:
+    - ca_city
+    type: BTREE
+    unique: false
+  ix_customer_address_county:
+    columns:
+    - ca_county
+    type: BTREE
+    unique: false
+  ix_customer_address_gmt_offset:
+    columns:
+    - ca_gmt_offset
+    type: BTREE
+    unique: false
+  ix_customer_address_state:
+    columns:
+    - ca_state
+    type: BTREE
+    unique: false
+  ix_customer_address_zip:
+    columns:
+    - ca_zip
+    type: BTREE
+    unique: false
+customer_demographics:
+  PRIMARY:
+    columns:
+    - cd_demo_sk
+    type: BTREE
+    unique: true
+  ix_customer_demographics_demo_sk_dep_count:
+    columns:
+    - cd_demo_sk
+    - cd_dep_count
+    type: BTREE
+    unique: false
+  ix_customer_demographics_gender_marital_status_education_sta:
+    columns:
+    - cd_gender
+    - cd_marital_status
+    - cd_education_status
+    type: BTREE
+    unique: false
+date_dim:
+  PRIMARY:
+    columns:
+    - d_date_sk
+    type: BTREE
+    unique: true
+  ix_date_dim_date:
+    columns:
+    - d_date
+    type: BTREE
+    unique: false
+  ix_date_dim_month_seq:
+    columns:
+    - d_month_seq
+    type: BTREE
+    unique: false
+  ix_date_dim_qoy:
+    columns:
+    - d_qoy
+    type: BTREE
+    unique: false
+  ix_date_dim_week_seq:
+    columns:
+    - d_week_seq
+    type: BTREE
+    unique: false
+  ix_date_dim_year:
+    columns:
+    - d_year
+    type: BTREE
+    unique: false
+  ix_date_dim_year_moy:
+    columns:
+    - d_year
+    - d_moy
+    type: BTREE
+    unique: false
+household_demographics:
+  PRIMARY:
+    columns:
+    - hd_demo_sk
+    type: BTREE
+    unique: true
+  ix_household_demographics_buy_potential:
+    columns:
+    - hd_buy_potential
+    type: BTREE
+    unique: false
+  ix_household_demographics_income_band_sk:
+    columns:
+    - hd_income_band_sk
+    type: BTREE
+    unique: false
+income_band:
+  PRIMARY:
+    columns:
+    - ib_income_band_sk
+    type: BTREE
+    unique: true
+inventory:
+  PRIMARY:
+    columns:
+    - inv_date_sk
+    - inv_item_sk
+    - inv_warehouse_sk
+    type: BTREE
+    unique: true
+  ix_inventory_item_sk:
+    columns:
+    - inv_item_sk
+    type: BTREE
+    unique: false
+  ix_inventory_warehouse_sk:
+    columns:
+    - inv_warehouse_sk
+    type: BTREE
+    unique: false
+item:
+  PRIMARY:
+    columns:
+    - i_item_sk
+    type: BTREE
+    unique: true
+  ix_item_brand:
+    columns:
+    - i_brand
+    type: BTREE
+    unique: false
+  ix_item_category:
+    columns:
+    - i_category
+    type: BTREE
+    unique: false
+  ix_item_class:
+    columns:
+    - i_class
+    type: BTREE
+    unique: false
+  ix_item_item_id:
+    columns:
+    - i_item_id
+    type: BTREE
+    unique: false
+  ix_item_manager_id:
+    columns:
+    - i_manager_id
+    type: BTREE
+    unique: false
+  ix_item_manufact_id:
+    columns:
+    - i_manufact_id
+    type: BTREE
+    unique: false
+promotion:
+  PRIMARY:
+    columns:
+    - p_promo_sk
+    type: BTREE
+    unique: true
+  ix_promotion_channel_email_channel_event:
+    columns:
+    - p_channel_email
+    - p_channel_event
+    type: BTREE
+    unique: false
+reason:
+  PRIMARY:
+    columns:
+    - r_reason_sk
+    type: BTREE
+    unique: true
+ship_mode:
+  PRIMARY:
+    columns:
+    - sm_ship_mode_sk
+    type: BTREE
+    unique: true
+store:
+  PRIMARY:
+    columns:
+    - s_store_sk
+    type: BTREE
+    unique: true
+  ix_store_county:
+    columns:
+    - s_county
+    type: BTREE
+    unique: false
+  ix_store_gmt_offset:
+    columns:
+    - s_gmt_offset
+    type: BTREE
+    unique: false
+  ix_store_state:
+    columns:
+    - s_state
+    type: BTREE
+    unique: false
+  ix_store_store_id:
+    columns:
+    - s_store_id
+    type: BTREE
+    unique: false
+store_returns:
+  PRIMARY:
+    columns:
+    - sr_item_sk
+    - sr_ticket_number
+    type: BTREE
+    unique: true
+  ix_store_returns_customer_sk:
+    columns:
+    - sr_customer_sk
+    type: BTREE
+    unique: false
+  ix_store_returns_item_sk:
+    columns:
+    - sr_item_sk
+    type: BTREE
+    unique: false
+  ix_store_returns_reason_sk:
+    columns:
+    - sr_reason_sk
+    type: BTREE
+    unique: false
+  ix_store_returns_returned_date_sk:
+    columns:
+    - sr_returned_date_sk
+    type: BTREE
+    unique: false
+  ix_store_returns_store_sk:
+    columns:
+    - sr_store_sk
+    type: BTREE
+    unique: false
+store_sales:
+  PRIMARY:
+    columns:
+    - ss_item_sk
+    - ss_ticket_number
+    type: BTREE
+    unique: true
+  ix_store_sales_addr_sk:
+    columns:
+    - ss_addr_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_cdemo_sk:
+    columns:
+    - ss_cdemo_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_customer_sk:
+    columns:
+    - ss_customer_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_hdemo_sk:
+    columns:
+    - ss_hdemo_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_item_sk:
+    columns:
+    - ss_item_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_promo_sk:
+    columns:
+    - ss_promo_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_sold_date_sk:
+    columns:
+    - ss_sold_date_sk
+    type: BTREE
+    unique: false
+  ix_store_sales_store_sk:
+    columns:
+    - ss_store_sk
+    type: BTREE
+    unique: false
+time_dim:
+  PRIMARY:
+    columns:
+    - t_time_sk
+    type: BTREE
+    unique: true
+  ix_time_dim_hour:
+    columns:
+    - t_hour
+    type: BTREE
+    unique: false
+  ix_time_dim_meal_time:
+    columns:
+    - t_meal_time
+    type: BTREE
+    unique: false
+warehouse:
+  PRIMARY:
+    columns:
+    - w_warehouse_sk
+    type: BTREE
+    unique: true
+  ix_warehouse_warehouse_name:
+    columns:
+    - w_warehouse_name
+    type: BTREE
+    unique: false
+web_page:
+  PRIMARY:
+    columns:
+    - wp_web_page_sk
+    type: BTREE
+    unique: true
+  ix_web_page_char_count:
+    columns:
+    - wp_char_count
+    type: BTREE
+    unique: false
+web_returns:
+  PRIMARY:
+    columns:
+    - wr_item_sk
+    - wr_order_number
+    type: BTREE
+    unique: true
+  ix_web_returns_item_sk:
+    columns:
+    - wr_item_sk
+    type: BTREE
+    unique: false
+  ix_web_returns_returned_date_sk:
+    columns:
+    - wr_returned_date_sk
+    type: BTREE
+    unique: false
+  ix_web_returns_returning_customer_sk:
+    columns:
+    - wr_returning_customer_sk
+    type: BTREE
+    unique: false
+  ix_web_returns_web_page_sk:
+    columns:
+    - wr_web_page_sk
+    type: BTREE
+    unique: false
+web_sales:
+  PRIMARY:
+    columns:
+    - ws_item_sk
+    - ws_order_number
+    type: BTREE
+    unique: true
+  ix_web_sales_bill_customer_sk:
+    columns:
+    - ws_bill_customer_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_item_sk:
+    columns:
+    - ws_item_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_promo_sk:
+    columns:
+    - ws_promo_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_ship_addr_sk:
+    columns:
+    - ws_ship_addr_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_ship_customer_sk:
+    columns:
+    - ws_ship_customer_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_sold_date_sk:
+    columns:
+    - ws_sold_date_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_warehouse_sk:
+    columns:
+    - ws_warehouse_sk
+    type: BTREE
+    unique: false
+  ix_web_sales_web_site_sk:
+    columns:
+    - ws_web_site_sk
+    type: BTREE
+    unique: false
+web_site:
+  PRIMARY:
+    columns:
+    - web_site_sk
+    type: BTREE
+    unique: true

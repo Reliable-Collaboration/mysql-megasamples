@@ -1,0 +1,29 @@
+# S7: the shape of the generated warehouse. The 99-query check is a separate step,
+# `python3 scripts/tpc_check.py --database tpcds`, because it takes over an hour at SF 1.
+- name: scale_factor_counts
+  query: >
+    SELECT (SELECT COUNT(*) FROM store_sales), (SELECT COUNT(*) FROM catalog_sales),
+           (SELECT COUNT(*) FROM web_sales), (SELECT COUNT(*) FROM inventory),
+           (SELECT COUNT(*) FROM customer), (SELECT COUNT(*) FROM item),
+           (SELECT COUNT(*) FROM date_dim)
+- name: store_sales_totals
+  query: >
+    SELECT COUNT(*), ROUND(SUM(ss_quantity), 0), ROUND(SUM(ss_net_paid), 2),
+           ROUND(SUM(ss_net_profit), 2) FROM store_sales
+- name: date_dimension_span
+  query: SELECT MIN(d_date), MAX(d_date), COUNT(*), COUNT(DISTINCT d_year) FROM date_dim
+# dsdgen leaves optional foreign keys blank; they must be NULL, not the empty string, because the
+# queries test them with IS NULL.
+- name: optional_keys_are_null
+  query: >
+    SELECT SUM(ss_addr_sk IS NULL), SUM(ss_promo_sk IS NULL), SUM(ss_customer_sk IS NULL),
+           SUM(ss_addr_sk = '') FROM store_sales
+- name: sales_by_channel_and_year
+  query: >
+    SELECT d.d_year, COUNT(*), ROUND(SUM(s.ss_net_paid), 2) FROM store_sales s
+    JOIN date_dim d ON d.d_date_sk = s.ss_sold_date_sk
+    GROUP BY d.d_year ORDER BY d.d_year
+- name: collation_is_binary
+  query: >
+    SELECT DISTINCT table_collation FROM information_schema.tables
+    WHERE table_schema = 'tpcds' AND table_type = 'BASE TABLE'

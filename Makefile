@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -115,6 +115,13 @@ gen-tpch:
 	@SF=$(SF) $(PY) scripts/stage.py tpch
 	@$(PY) scripts/load.py  tpch
 	@$(PY) scripts/verify.py tpch
+
+# TPC-DS, generated on this machine. Same licence position as TPC-H: nothing TPC-authored is
+# shipped or committed.
+gen-tpcds:
+	@SF=$(SF) $(PY) scripts/stage.py tpcds
+	@$(PY) scripts/load.py  tpcds
+	@$(PY) scripts/verify.py tpcds
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

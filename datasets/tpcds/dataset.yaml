@@ -1,0 +1,10 @@
+name: tpcds
+database: tpcds
+tier: generated
+record: knowledge/datasets/tpc-ds.md
+licenses: [tpc-eula]
+# Nothing downloaded, nothing committed: rows and the 99 query texts are produced at build time.
+artifacts: []
+converter: none
+load:
+  - tpcds.sql

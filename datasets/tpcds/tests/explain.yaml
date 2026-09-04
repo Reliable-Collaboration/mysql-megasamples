@@ -1,0 +1,11 @@
+# S5: the secondary indexes must actually be reachable. They do not make MySQL fast enough for
+# every TPC-DS query -- 51 of the 99 still exceed a minute at SF 1 -- but the join columns index.
+- name: store_sales_by_item
+  query: SELECT COUNT(*) FROM store_sales WHERE ss_item_sk = 1000
+  must_not_full_scan: [store_sales]
+- name: store_sales_by_date
+  query: SELECT COUNT(*) FROM store_sales WHERE ss_sold_date_sk = 2451000
+  must_not_full_scan: [store_sales]
+- name: date_dim_by_year
+  query: SELECT COUNT(*) FROM date_dim WHERE d_year = 2001
+  must_not_full_scan: [date_dim]

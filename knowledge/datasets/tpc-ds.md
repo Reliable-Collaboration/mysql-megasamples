@@ -88,6 +88,41 @@ Total ≈ 19.6 M rows at SF=1 (the largest table is `inventory`, not a sales tab
 # Conversion path
 **Chosen:** `make gen-tpcds SF=1` runs DuckDB `CALL dsdgen(sf=$SF)`, exports 24 (+1) `.dat` files with `NULLSTR '\N'`, computes `baseline.json`, then MySQL `LOAD DATA LOCAL INFILE ... FIELDS TERMINATED BY '|'` dimensions first (date_dim, time_dim, …, customer), then facts; PKs pre-created; `indexes.sql`, `constraints.sql`, `ANALYZE`. Queries: 99 files generated at build time by tpcds-kit `dsqgen -DIALECT mysql -QUALIFY Y -SCALE 1` using a three-line `mysql.tpl` (`__LIMITC="limit %d"`), then a sed/py patch for the incompatibilities below (or from DuckDB `tpcds_queries()`, same edits). Decision: [tpcds-generator-path](/decisions/tpcds-generator-path.md). Fallback: tpcds-kit `dsdgen -SCALE 1 -TERMINATE N -DIR out` in a builder stage (flex/bison/byacc needed).
 
+# Built and measured (2026-09-04, task B-02)
+Generated at SF 1 by DuckDB's `tpcds` extension: **24 tables, 19,557,579 rows**, of which
+`inventory` is 11,745,000 and `store_sales` the specification's 2,880,404. In MySQL that is
+**5,292.7 MB** with 77 secondary indexes, loading in 156 s (2,926.2 MB and 70 s without them --
+the indexes nearly double the database).
+
+Unlike TPC-H, the DDL is derived from what the generator emitted rather than written out by hand,
+because the extension already produces the specification's types: `DECIMAL(7,2)` for money,
+`DECIMAL(5,2)` for rates, `DATE`, `BIGINT` surrogate keys. What dsdgen does *not* emit is any
+constraint at all, so the 24 primary keys come from the specification and are checked against the
+generated data -- for NULLs and for uniqueness -- before they are declared. All 24 hold at SF 1.
+
+## The queries: 48 of 99, and why the rest are not a correctness result
+**DuckDB 1.5.5 ships no usable TPC-DS answers.** `tpcds_answers()` reports "Don't have TPC-DS answers
+for SF 10.000000" whatever has been generated, so the specification's validation output is not
+available the way TPC-H's is. The 99 queries are therefore compared against **DuckDB's own results on
+the same generated rows** -- two independently written engines over identical data, which catches a
+mistranslation but is not the specification's answer set, and this record says so rather than
+implying otherwise.
+
+Against that reference, with a 60-second limit per query: **48 match exactly, 0 differ, and 51 exceed
+the limit.** The 51 are a fact about MySQL at this scale, not about the port: TPC-DS is
+join- and aggregation-heavy and MySQL executes it on one core.
+
+**Adding the 77 secondary indexes did not change that count, and the detail is more interesting than
+the total.** Before them, 51 queries were too slow; after them, 51 still were -- but not the same 51.
+Q09 became fast and Q31 became slow. The indexes are kept because they make the join columns
+reachable and the fact tables usable for teaching, not because they rescue the benchmark.
+
+Two comparison rules were needed, both because of representation rather than arithmetic:
+`AVG` over a `DECIMAL(7,2)` column returns `15.3333` in MySQL where DuckDB returns
+`15.333333333333334`, so values are compared at the precision of the less precise side; and an empty
+field from dsdgen must load as NULL rather than the empty string, because the queries test optional
+foreign keys with `IS NULL`.
+
 # Type-mapping hazards
 1. **NULLs**: dsdgen's `.dat` shows NULL as an empty field between pipes; `LOAD DATA` turns an empty field into `''`/0 for non-NULL-typed columns, not NULL (Bexhoma: "MySQL is excluded currently because the treatment of NULL during INSERT is complicated"). Mitigation: DuckDB export with `NULLSTR '\N'` (MySQL reads `\N` as NULL), or the kit path with `SET col = NULLIF(@col,'')` for every nullable column. Verify `SELECT COUNT(*) FROM store_sales WHERE ss_customer_sk IS NULL` > 0 after load.
 2. Trailing `|` from dsdgen (`-TERMINATE Y` default): use `-TERMINATE N` or `LINES TERMINATED BY '|\n'`; the kit's own `tests/mysql_setup.sh` just accepts the extra-field warnings.

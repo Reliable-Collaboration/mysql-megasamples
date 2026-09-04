@@ -1,0 +1,9 @@
+# S7: canonical query results, tab-separated as the client prints them.
+collation_is_binary: utf8mb4_bin
+date_dimension_span: "1900-01-02\t2100-01-01\t73049\t201"
+optional_keys_are_null: "129663\t129182\t129392\t0"
+sales_by_channel_and_year: "1998\t550407\t927771565.58\n1999\t544084\t912621579.19\n\
+  2000\t553970\t932928816.40\n2001\t546314\t917918948.37\n2002\t549739\t922846230.33\n\
+  2003\t6040\t10193234.44"
+scale_factor_counts: "2880404\t1441548\t719384\t11745000\t100000\t18000\t73049"
+store_sales_totals: "2880404\t138963631\t4736735182.53\t-2281616516.95"
