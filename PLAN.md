@@ -450,6 +450,8 @@ The sample is: the first 20 and the last 20 rows by primary key, plus every row 
 * `native.yaml` (manual `workflow_dispatch`, and automatically when a `.bak` sha256 or the export script changes): the SQL Server and Oracle conversions (AdventureWorks family, WideWorldImporters, Oracle SH/CO/OE); needs the 16 GB runner memory for SQL Server + MySQL and ~1.5 h.
 * `extended.yaml` (manual): `make extended` (every extended dataset that has a release asset: adventureworks_dw, wideworldimporters ×2, contoso 1m, dvdstore reviews, nyc_taxi yellow, bts_ontime month, chicago full, enron full, stackexchange_dba, wikipedia_simple full) followed by `make gen-tpch SF=0.1`, `gen-tpcds SF=0.1`, `gen-tpcc W=1`, `gen-ssb SF=0.1`; Citi Bike and Divvy are never run in CI because their loaders require the interactive `--accept-license` gate. Skipped by default because of download size and the 14 GB runner disk; runs on a self-hosted or larger runner when available and otherwise on the build machine.
 * All three publish `build/baseline.json` and test reports as workflow artifacts so a failed comparison can be diffed without rerunning.
+* **S10 — browsing console (task C-01, §12).** With the `console` Compose profile up, `curl -fsS` each of the five HTTP endpoints for a 200 and assert the generated landing page names every database in the `megasamples.datasets` registry. Deliberately shallow: it catches a withdrawn image tag or a console that no longer starts, and does not try to drive four web applications.
+
 ## 5. Indexing strategy
 
 Fixed in [indexing-strategy](knowledge/decisions/indexing-strategy.md); per-dataset index designs are in each §3 subsection and in `datasets/<name>/indexes.sql` + `tests/indexes.yaml`.
@@ -681,7 +683,7 @@ Decision record (`decisions/`): `# Question`, `# Options considered` (each with 
 If an official OKF validator exists at execution time it runs first (see [validator question](knowledge/questions/okf-validator-availability.md)); the script above remains as the project-specific check.
 ## 11. Execution sequence
 
-Tasks are ordered so the pipeline is proven on the smallest datasets first. Each task names the knowledge records it creates or updates (the executor also appends to `log.md` every session). IDs: P = platform, S = small/native, M = medium/core, E = measurement, X = extended, B = benchmark, V = optional verification, R = release.
+Tasks are ordered so the pipeline is proven on the smallest datasets first. Each task names the knowledge records it creates or updates (the executor also appends to `log.md` every session). IDs: P = platform, S = small/native, M = medium/core, E = measurement, X = extended, B = benchmark, V = optional verification, R = release, C = console.
 
 | ID | Task | Depends on | Knowledge records |
 |---|---|---|---|
@@ -717,6 +719,71 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | B-04 | ssb (build dbgen in loader, EULA in image) | B-01 | update [ssb](knowledge/datasets/ssb.md), [ssb-dbgen](knowledge/tools/ssb-dbgen.md) |
 | V-01 | optional `make verify-oracle` cross-check of HR/CO/SH converters | M-02 | update [oracle-conversion-path](knowledge/decisions/oracle-conversion-path.md), [oracle-database-free-container](knowledge/tools/oracle-database-free-container.md) |
 | **V-02** | **T-SQL routine translator**, then finish M-03's programmable objects. AdventureWorks OLTP leaves 10 procedures, 11 functions and 8 triggers unported, and Northwind still has one view (`salesbycategory`) and pubs one trigger (`employee_insupd`) for the same reason. Needs: `@parameter` declarations and `DECLARE @x type` locals → MySQL routine parameters and `DECLARE`; `RETURNS x AS BEGIN … RETURN` → `RETURNS x DETERMINISTIC BEGIN … RETURN`; `SET @x =` → `SET x =`; the `inserted`/`deleted` pseudo-tables → per-event row triggers on `NEW`/`OLD` (statement-level bodies that aggregate over them do not port and stay dropped); `RAISERROR`/`THROW` → `SIGNAL SQLSTATE '45000'`; `@@ROWCOUNT` → `ROW_COUNT()`; `ERROR_*()` and `XACT_STATE()` have no equivalent, so `uspLogError`/`uspPrintError` stay dropped; the four hierarchy procedures (`uspGetBillOfMaterials`, `uspGetWhereUsedProductID`, `uspGetEmployeeManagers`, `uspGetManagerEmployees`) become recursive CTEs against the decoded `*_path` columns. Each converter already names every object it skips, so the work is bounded and its completion is measurable: the unported list goes to zero or to a list with a stated reason | M-03 | update [adventureworks-oltp](knowledge/datasets/adventureworks-oltp.md), [northwind](knowledge/datasets/northwind.md), [pubs](knowledge/datasets/pubs.md); log Deviation for anything that stays dropped |
+| **C-01** | **Browsing console** (§12): a `console` Compose profile that starts the image plus phpMyAdmin, Adminer, DbGate and CloudBeaver, all preconfigured against it, behind a generated landing page. Answer the [preconfiguration question](knowledge/questions/console-preconfiguration-limits.md) first — a console that cannot start unattended is dropped rather than shipped with a manual step. Ports bind to loopback; the consoles connect as the read-only `demo` user; every image tag is pinned | E-01 | update [browsing-console-stack](knowledge/decisions/browsing-console-stack.md) (pending → accepted), close [preconfiguration question](knowledge/questions/console-preconfiguration-limits.md); log Creation |
 | R-02 | `native.yaml` and `extended.yaml` workflows; `data-v1` release with all assets and sha256 manifest; §8.3 checklist; README with per-dataset license table; mark the bundle `stable` and turn on `--strict-links` | X-*, B-* | log Verification; update [knowledge-bundle-conventions](knowledge/runbooks/knowledge-bundle-conventions.md) |
 
 Dependencies form a DAG suitable for a project board: P-00→P-01→P-02→{P-03, P-04}→S-01→{S-02, S-03, S-04, S-05}→… (the table's Depends-on column is authoritative); the first image with real content exists after S-04, which is the earliest point at which the user can evaluate the design.
+
+## 12. Browsing console
+
+Nine million rows in 249 tables are only as useful as the ability to look at them. This section
+specifies a **browsing console**: a landing page linking four database UIs, each already connected to
+the image, started by one command. It is task **C-01** and it is
+[a recorded decision](knowledge/decisions/browsing-console-stack.md) with
+[an open question](knowledge/questions/console-preconfiguration-limits.md) that must be answered
+first.
+
+### 12.1 Shape
+
+`docker compose --profile console up` starts six services. Without the profile, `docker compose up`
+starts only the database, exactly as it does today — **the console is opt-in and the published image
+is unchanged**. No UI is baked into `mysql-megasamples`; §2's description of the final image as
+"`mysql:9.7.2` plus data, `my.cnf` and a 20-line wrapper" still holds.
+
+| service | image (pinned) | container port | published on | preconfigured with |
+|---|---|---:|---|---|
+| `mysql` | `mysql-megasamples:<version>` | 3306 | `127.0.0.1:3306` | — |
+| `console` | `nginx:<pinned>-alpine` | 80 | `127.0.0.1:8080` | the generated landing page |
+| `phpmyadmin` | `phpmyadmin:5.2.3-apache` | 80 | `127.0.0.1:8081` | `PMA_HOST`, `PMA_PORT`, `PMA_USER`, `PMA_PASSWORD` — opens straight into the data |
+| `adminer` | `adminer:6.0.1-standalone` | 8080 | `127.0.0.1:8082` | `ADMINER_DEFAULT_SERVER`; **its login form remains**, so the landing page shows the credentials |
+| `dbgate` | `dbgate/dbgate:7.2.6-alpine` | 3000 | `127.0.0.1:8083` | `CONNECTIONS`, `LABEL_/SERVER_/USER_/PASSWORD_/PORT_/ENGINE_` — opens straight into the data |
+| `cloudbeaver` | `dbeaver/cloudbeaver:26.2.0` | 8978 | `127.0.0.1:8084` | a mounted `data-sources.json`; **ships only if it starts unattended** |
+
+Every port binds to `127.0.0.1` rather than `0.0.0.0`: an unauthenticated database UI should not
+appear on the network because someone opened a laptop in a café. Publishing them more widely is the
+user's deliberate edit.
+
+The consoles connect as **`demo`**, the read-only account from the
+[naming and accounts decision](knowledge/decisions/database-naming-convention.md) — a visitor cannot
+damage the data, and the read-only grant gets demonstrated rather than described. `compose.yaml`
+carries a commented `admin` block for those who want to write.
+
+### 12.2 The landing page is generated, not written
+
+`scripts/console_page.py` reads `megasamples.datasets` from the running image — the same registry
+`tests/image_test.py` asserts against — and writes `docker/console/index.html`. It therefore lists the
+databases that are *actually* in the image, with row counts, table counts, the upstream project and
+its licence, and cannot drift from what is running. A hand-written page would be wrong the first time
+a dataset moved tier.
+
+The page carries, beside the four links: the connection details for an external client
+(`127.0.0.1:3306`, user `demo`), a one-line "what is this" per database, the per-dataset licence with
+a link to its `PROVENANCE.md`, and the attribution notices §8 requires to travel with the data —
+including the City of Chicago paragraph and the CC BY-SA share-alike notices, which is the same
+obligation the table comments already carry.
+
+### 12.3 Testing
+
+S10, alongside the existing image tests: bring the profile up, `curl -fsS` each of the five HTTP
+endpoints for a 200, assert the landing page names every database in the registry, and tear it down.
+That is deliberately shallow — it catches a withdrawn image tag or a UI that no longer starts, which
+is what actually breaks over a year, and it does not try to drive four web applications.
+
+### 12.4 What is deliberately not done
+
+* **No UI inside the image.** Rejected in the decision: it would put a PHP or Node runtime and a web
+  server into the artifact people run in CI.
+* **No reverse proxy, no TLS, no auth in front.** This is a local exploration tool bound to loopback.
+  Adding a proxy would imply it is safe to expose, which it is not.
+* **No writes by default.** The `demo` user is read-only. A console that offered destructive
+  operations against sample data people are exploring would be a footgun with no upside.
