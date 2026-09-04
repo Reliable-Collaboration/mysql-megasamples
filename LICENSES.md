@@ -10,6 +10,7 @@ database keeps the licence of the project it came from, listed below, and each
 | database | licence |
 |---|---|
 | `adventureworks` | [mit](knowledge/licenses/mit.md) |
+| `adventureworks_dw` | [mit](knowledge/licenses/mit.md) |
 | `adventureworks_lt` | [mit](knowledge/licenses/mit.md) |
 | `chicago_crimes` | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) |
 | `chinook` | [mit](knowledge/licenses/mit.md) |
@@ -44,5 +45,5 @@ database keeps the licence of the project it came from, listed below, and each
 * **GNU Free Documentation License 1.3 (GFDL 1.3)** — `wikipedia_simple`
 * **GNU General Public License v2.0 (or later) - Dell DVD Store 3** — `dvdstore`
 * **Vanderbilt Biostatistics (hbiostat.org/data) permission statement** — `smallsets`
-* **MIT License** — `adventureworks`, `adventureworks_lt`, `chinook`, `contoso`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`
+* **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`
 * **NYC Open Data Terms of Use** — `nyc_taxi`
