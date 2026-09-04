@@ -1,0 +1,15 @@
+# S7: canonical query results, tab-separated as the client prints them.
+article_view: "1\tApril\t22079\t{{monththisyear|4}}\n'''April''' (Apr.) i"
+binary_charset_preserved: 'NULL'
+every_link_resolves_to_a_target: '0'
+fulltext_over_wikitext: '1279'
+links_out_of_april: '424'
+objects_created: "4\t0\t0"
+one_revision_and_text_per_page: "284749\t284749\t284749\t284749"
+page_one_is_april: "1\t0\tApril\t10861257\t22079"
+sample_bounds: "284737\t1\t1281212\t0\t1"
+site_stats_of_the_whole_wiki: "284761\t947771"
+titles_convert_to_utf8mb4: '20974'
+top_categories_in_the_sample: "Pages_using_gadget_WikiMiniAtlas\t39733\nLiving_people\t\
+  36224\nCoordinates_on_Wikidata\t34948\nWebarchive_template_wayback_links\t32962\n\
+  People_stubs\t23539"

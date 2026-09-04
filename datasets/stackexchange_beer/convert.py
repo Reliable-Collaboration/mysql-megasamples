@@ -14,9 +14,10 @@ import os, sys
 from lxml import etree
 import py7zr
 
-DATABASE = "stackexchange_beer"
-CONTEXT = "/context/stackexchange_beer"
-ARCHIVE = "beer.stackexchange.com.7z"
+# One site per database. The converter is site-agnostic -- every Stack Exchange dump has the same
+# eight XML files and the same attributes -- so `--site <slug>` is all that separates the core
+# `beer` set from the extended `dba` one.
+SITE = "beer"
 
 # table -> (xml file, [(attribute, MySQL type)]) in schema-documentation order
 TABLES = {
@@ -108,8 +109,12 @@ def write_table(source, dest, columns, table):
 
 def main():
     downloads, dest = sys.argv[1], sys.argv[2]
+    site = sys.argv[sys.argv.index("--site") + 1] if "--site" in sys.argv[3:] else SITE
+    database = f"stackexchange_{site}"
     context = os.path.dirname(os.path.abspath(dest))
-    with py7zr.SevenZipFile(os.path.join(downloads, ARCHIVE)) as archive:
+    inside = f"/context/{os.path.basename(context)}"
+    archive_name = f"{site}.stackexchange.com.7z"
+    with py7zr.SevenZipFile(os.path.join(downloads, archive_name)) as archive:
         archive.extractall(path=context)
 
     ddl, loads, counts = [], [], {}
@@ -120,7 +125,7 @@ def main():
         body = ",\n".join(f"  `{c.lower()}` {t}" for c, t in columns)
         ddl.append(f"CREATE TABLE `{table}` (\n{body},\n  PRIMARY KEY (`id`)\n);")
         names = ", ".join(f"`{c.lower()}`" for c, _ in columns)
-        loads.append(f"LOAD DATA LOCAL INFILE '{CONTEXT}/{table}.tsv' INTO TABLE `{table}`\n"
+        loads.append(f"LOAD DATA LOCAL INFILE '{inside}/{table}.tsv' INTO TABLE `{table}`\n"
                      f"  CHARACTER SET utf8mb4 ({names});")
 
     for name, values in LOOKUPS.items():
@@ -130,13 +135,13 @@ def main():
         loads.append(f"INSERT INTO `{name}` (`id`, `name`) VALUES {rows};")
 
     out = [f"""-- beer.stackexchange.com, archive.org snapshot 2024-04-02, prepared by
--- datasets/{DATABASE}/convert.py. Content is CC BY-SA 4.0; attribution travels with the data in
--- each row's content_license column. See datasets/{DATABASE}/LICENSE.
+-- datasets/stackexchange_beer/convert.py. Content is CC BY-SA 4.0; attribution travels with the data in
+-- each row's content_license column. See datasets/stackexchange_{site}/LICENSE.
 SET NAMES utf8mb4;
 SET SESSION foreign_key_checks = 0;
-DROP DATABASE IF EXISTS `{DATABASE}`;
-CREATE DATABASE `{DATABASE}` DEFAULT CHARACTER SET utf8mb4;
-USE `{DATABASE}`;
+DROP DATABASE IF EXISTS `{database}`;
+CREATE DATABASE `{database}` DEFAULT CHARACTER SET utf8mb4;
+USE `{database}`;
 """]
     out += ddl
     out.append(f"\n-- {'-' * 60}\n-- data\n")

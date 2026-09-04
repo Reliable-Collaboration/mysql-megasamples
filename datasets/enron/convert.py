@@ -14,11 +14,10 @@ all and kept verbatim either way.
 
 Record: knowledge/datasets/enron.md
 """
-import email, email.parser, email.utils, hashlib, os, re, sys, tarfile
+import email, email.header, email.parser, email.utils, hashlib, os, re, sys, tarfile
 from email import policy as email_policy
 
 DATABASE = "enron"
-CONTEXT = "/context/enron"
 ARCHIVE = "enron_mail_20150507.tar.gz"
 BUDGET = 40 * 1000 * 1000          # the record's rule: cumulative extracted size under 40 MB
 KINDS = (("to", "To"), ("cc", "Cc"), ("bcc", "Bcc"))
@@ -36,7 +35,7 @@ def tsv(value):
             .replace("\n", "\\n").replace("\r", "\\r"))
 
 
-def choose_mailboxes(path):
+def choose_mailboxes(path, budget=BUDGET):
     """The subset, and the whole corpus's shape, from one streaming pass over the member list."""
     sizes, counts, present = {}, {}, set()
     with tarfile.open(path, "r|gz") as tf:
@@ -55,7 +54,7 @@ def choose_mailboxes(path):
                  "this is not the 2015-05-07 version")
     chosen, cumulative = [], 0
     for box in sorted(sizes):
-        if cumulative + sizes[box] > BUDGET:
+        if budget is not None and cumulative + sizes[box] > budget:
             break
         chosen.append(box)
         cumulative += sizes[box]
@@ -77,8 +76,27 @@ def decode_body(message):
 ADDRESS = re.compile(r"[^\s,<>()\[\]]+@[^\s,<>()\[\]]+")
 
 
+def header_text(raw):
+    """A header as text, whatever compat32 handed back.
+
+    `Message[...]` usually returns a `str`, but for a header carrying an encoded word or raw 8-bit
+    bytes it returns an `email.header.Header` instead. None of the five core mailboxes contains one;
+    the full 150-mailbox corpus does, and the difference only surfaced as an AttributeError on
+    `.replace` deep inside recipient parsing.
+    """
+    if raw is None:
+        return None
+    if isinstance(raw, str):
+        return raw
+    try:
+        return str(email.header.make_header(email.header.decode_header(raw)))
+    except (UnicodeDecodeError, LookupError, ValueError):
+        return str(raw)
+
+
 def addresses(raw):
     """(display name, address) pairs from a header, tolerating the corpus's malformed lists."""
+    raw = header_text(raw)
     if not raw:
         return []
     out = []
@@ -91,10 +109,13 @@ def addresses(raw):
 
 def main():
     downloads, dest = sys.argv[1], sys.argv[2]
+    full = "--full" in sys.argv[3:]
+    database = "enron_full" if full else DATABASE
     context = os.path.dirname(os.path.abspath(dest))
+    inside = f"/context/{os.path.basename(context)}"
     archive = os.path.join(downloads, ARCHIVE)
 
-    chosen, cumulative, sizes, counts = choose_mailboxes(archive)
+    chosen, cumulative, sizes, counts = choose_mailboxes(archive, budget=None if full else BUDGET)
     wanted = set(chosen)
     mailbox_id = {box: i + 1 for i, box in enumerate(chosen)}
 
@@ -121,7 +142,7 @@ def main():
             fallbacks += fallback
             written += 1
 
-            raw_date = (msg.get("Date") or "").strip()
+            raw_date = (header_text(msg.get("Date")) or "").strip()
             parsed = email.utils.parsedate_to_datetime(raw_date) if raw_date else None
             if parsed is None:
                 undated += 1
@@ -129,17 +150,17 @@ def main():
             else:
                 date_utc = parsed.astimezone(tz=None).replace(tzinfo=None).isoformat(sep=" ")
 
-            message_id = (msg.get("Message-ID") or "").strip()[:255] or None
+            message_id = (header_text(msg.get("Message-ID")) or "").strip()[:255] or None
             if message_id:
                 duplicate_ids += message_id in seen_message_ids
                 seen_message_ids.add(message_id)
             sender = addresses(msg.get("From"))
             row = [written, mailbox_id[parts[1]], "/".join(parts[2:-1])[:255], m.name[:255],
                    message_id, date_utc, raw_date[:64],
-                   sender[0][1] if sender else None, (msg.get("From") or "")[:1000],
-                   msg.get("Subject"), body,
+                   sender[0][1] if sender else None, (header_text(msg.get("From")) or "")[:1000],
+                   header_text(msg.get("Subject")), body,
                    hashlib.sha1(body.encode("utf-8", "replace")).hexdigest()]
-            row += [msg.get(h) for h in X_HEADERS]
+            row += [header_text(msg.get(h)) for h in X_HEADERS]
             row += [fallback, len(msg.defects)]
             messages.write("\t".join(tsv(v) for v in row) + "\n")
 
@@ -154,19 +175,19 @@ def main():
                "`from_address`, `from_raw`, `subject`, `body`, `body_sha1`, `x_from`, `x_to`, "
                "`x_cc`, `x_bcc`, `x_folder`, `x_origin`, `x_filename`, `charset_fallback`, "
                "`header_defects`")
-    open(dest, "w", encoding="utf-8").write(f"""-- The CMU Enron email corpus (2015-05-07), core subset, prepared by datasets/{DATABASE}/convert.py.
+    open(dest, "w", encoding="utf-8").write(f"""-- The CMU Enron email corpus (2015-05-07), core subset, prepared by datasets/{database}/convert.py.
 --
 -- The subset is a rule, not a choice: the alphabetically first mailboxes whose cumulative size
 -- stays under {BUDGET // 1000000} MB. Here that is {len(chosen)} of 150 mailboxes
 -- ({cumulative:,} of {sum(sizes.values()):,} bytes). The full corpus loads with the same converter.
 --
 -- The corpus is public record from the FERC investigation; CMU's 2015 version excludes the messages
--- listed in its DELETIONS.txt. See datasets/{DATABASE}/LICENSE.
+-- listed in its DELETIONS.txt. See datasets/{database}/LICENSE.
 SET NAMES utf8mb4;
 SET SESSION foreign_key_checks = 0;
-DROP DATABASE IF EXISTS `{DATABASE}`;
-CREATE DATABASE `{DATABASE}` DEFAULT CHARACTER SET utf8mb4;
-USE `{DATABASE}`;
+DROP DATABASE IF EXISTS `{database}`;
+CREATE DATABASE `{database}` DEFAULT CHARACTER SET utf8mb4;
+USE `{database}`;
 
 CREATE TABLE `mailbox` (
   `mailbox_id` SMALLINT NOT NULL,
@@ -216,11 +237,11 @@ CREATE TABLE `recipient` (
 -- {'-' * 60}
 -- data
 
-LOAD DATA LOCAL INFILE '{CONTEXT}/mailbox.tsv' INTO TABLE `mailbox`
+LOAD DATA LOCAL INFILE '{inside}/mailbox.tsv' INTO TABLE `mailbox`
   CHARACTER SET utf8mb4 (`mailbox_id`, `name`);
-LOAD DATA LOCAL INFILE '{CONTEXT}/message.tsv' INTO TABLE `message`
+LOAD DATA LOCAL INFILE '{inside}/message.tsv' INTO TABLE `message`
   CHARACTER SET utf8mb4 ({columns});
-LOAD DATA LOCAL INFILE '{CONTEXT}/recipient.tsv' INTO TABLE `recipient`
+LOAD DATA LOCAL INFILE '{inside}/recipient.tsv' INTO TABLE `recipient`
   CHARACTER SET utf8mb4 (`message_id`, `kind`, `position`, `address`, `display_name`);
 
 -- {'-' * 60}
@@ -244,8 +265,11 @@ SET SESSION foreign_key_checks = 1;
 
     print(f"  . corpus: {len(sizes)} mailboxes, {sum(counts.values()):,} messages, "
           f"{sum(sizes.values()):,} bytes; none of the DELETIONS.txt paths present")
-    print(f"  . core subset: {len(chosen)} mailboxes under {BUDGET // 1000000} MB "
-          f"({cumulative:,} bytes) -> {', '.join(chosen)}")
+    if full:
+        print(f"  . whole corpus: all {len(chosen)} mailboxes ({cumulative:,} bytes)")
+    else:
+        print(f"  . core subset: {len(chosen)} mailboxes under {BUDGET // 1000000} MB "
+              f"({cumulative:,} bytes) -> {', '.join(chosen)}")
     print(f"  . parsed {written:,} messages and {recipient_rows:,} recipients; "
           f"{fallbacks} needed the cp1252 fallback, {undated} have no parseable Date, "
           f"{duplicate_ids} Message-ID values repeat")

@@ -1,0 +1,54 @@
+# S7: the same eleven queries the core `beer` site pins, against dba.stackexchange.com --
+# 49x the posts. Holding both makes the licence question concrete: beer's rows are one
+# CC BY-SA version, dba's span the 2011 and 2018 changes.
+- name: questions_and_answers
+  query: 'SELECT (SELECT COUNT(*) FROM v_questions) AS questions,
+
+    (SELECT COUNT(*) FROM v_answers) AS answers,
+
+    (SELECT COUNT(*) FROM v_answers WHERE is_accepted) AS accepted
+
+    '
+- name: every_answer_has_its_question
+  query: 'SELECT COUNT(*) FROM posts a LEFT JOIN posts q ON q.id = a.parentid
+
+    WHERE a.posttypeid = 2 AND q.id IS NULL
+
+    '
+- name: top_tags
+  query: SELECT tagname, count FROM tags ORDER BY count DESC, tagname LIMIT 5
+- name: highest_reputation_users
+  query: 'SELECT displayname, reputation FROM users ORDER BY reputation DESC, id LIMIT 3
+
+    '
+- name: community_user_is_minus_one
+  query: SELECT id, displayname, reputation FROM users WHERE id = -1
+- name: non_ascii_content
+  query: 'SELECT (SELECT COUNT(*) FROM users WHERE displayname REGEXP ''[^ -~]'') AS users,
+
+    (SELECT COUNT(*) FROM posts WHERE body REGEXP ''[^ -~]'') AS posts
+
+    '
+- name: fulltext_search
+  query: 'SELECT COUNT(*) FROM posts
+
+    WHERE MATCH(title, body) AGAINST(''brewing'' IN NATURAL LANGUAGE MODE)
+
+    '
+- name: badge_classes
+  query: SELECT class, COUNT(*) FROM badges GROUP BY class ORDER BY class
+- name: vote_types_present
+  query: 'SELECT v.votetypeid, t.name, COUNT(*) FROM votes v
+
+    JOIN votetypes t ON t.id = v.votetypeid GROUP BY v.votetypeid, t.name ORDER BY v.votetypeid
+
+    '
+- name: content_license_travels_with_rows
+  query: 'SELECT contentlicense, COUNT(*) FROM posts GROUP BY contentlicense ORDER BY contentlicense
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='stackexchange_dba')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='stackexchange_dba')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='stackexchange_dba') AS triggers\n"

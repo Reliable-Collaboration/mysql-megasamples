@@ -98,6 +98,30 @@ def stage_enron(dest):
                        os.path.join(dest, "enron.sql"))
 
 
+@stager("wikipedia_simple_full")
+def stage_wikipedia_simple_full(dest):
+    """Every ns0 article, in its own database; the core ships the 5,000 lowest page_ids."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "wikipedia_simple", "convert.py")
+    out = os.path.join(dest, "wikipedia_simple_full.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "wikipedia_simple"),
+                       out, "--full"], text=True).returncode != 0:
+        sys.exit("wikipedia_simple_full conversion failed")
+
+
+@stager("enron_full")
+def stage_enron_full(dest):
+    """The whole 150-mailbox corpus, in its own database; the core ships 5 mailboxes."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "enron", "convert.py")
+    out = os.path.join(dest, "enron_full.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "enron"), out,
+                       "--full"], text=True).returncode != 0:
+        sys.exit("enron_full conversion failed")
+
+
 @stager("lahman")
 def stage_lahman(dest):
     _run_dir_converter("lahman", os.path.join(ROOT, "downloads", "lahman"),
@@ -109,6 +133,18 @@ def stage_stackexchange_beer(dest):
     _run_dir_converter("stackexchange_beer",
                        os.path.join(ROOT, "downloads", "stackexchange_beer"),
                        os.path.join(dest, "stackexchange_beer.sql"))
+
+
+@stager("stackexchange_dba")
+def stage_stackexchange_dba(dest):
+    """The same converter, a different site: dba.stackexchange.com in its own database."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "stackexchange_beer", "convert.py")
+    out = os.path.join(dest, "stackexchange_dba.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "stackexchange_dba"),
+                       out, "--site", "dba"], text=True).returncode != 0:
+        sys.exit("stackexchange_dba conversion failed")
 
 
 @stager("chicago_crimes")

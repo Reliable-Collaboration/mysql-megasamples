@@ -147,6 +147,24 @@ Upstream keys as dumped (`page_name_title`, `page_random`, `page_len`, `page_red
 * `SELECT COUNT(*) FROM categorylinks c LEFT JOIN linktarget l ON l.lt_id=c.cl_target_id WHERE l.lt_id IS NULL` = 0.
 * File sha1 values equal the table above.
 
+# The full dump (2026-09-04, task X-05)
+Every ns0 article in its own database, `wikipedia_simple_full`: **9 tables, 23,438,218 rows,
+3,369.4 MB in InnoDB**, loading in 865 s. The core `wikipedia_simple` stays as it was -- the 5,000
+lowest page_ids -- because it is baked into the image. Same schema, more rows, so a separate database.
+
+**284,749 articles** against the core's 5,000, page_id 1..1,281,212. The link tables are where the
+scale really shows: **pagelinks 18,899,074** rows (the core keeps 769,735, the ones among its own
+5,000), linktarget 1,803,198, categorylinks 1,777,942. `category` and `site_stats` are identical in
+both, because neither is filtered by article.
+
+Loaded size is **3.37 GB**, a little above the 2.5-3 GB this record inferred. Almost all of the load
+time is one statement: the `text` table's 284,749 wikitext bodies and their FULLTEXT index took 14 of
+the 14.4 minutes. The generated SQL is 610 MB, which is why it is streamed into the client rather
+than read into memory.
+
+The sample rule's assumption still holds at full scale: the XML is in ascending `page_id` order, so
+the core's "first 5,000" is a deterministic prefix of this set rather than an arbitrary sample.
+
 # Tier assignment
 **Extended.** Evidence: 356 MB bz2 XML (**Inferred:** ~1.3 GB wikitext), 33 + 28 + 82 + 37.5 MB gz link tables (**Inferred:** ~0.8-1 GB InnoDB), plus FULLTEXT → ~2.5-3 GB loaded. Core option: a deterministic ns0 sample (e.g., the 5,000 lowest `page_id` non-redirect articles with their text and the link rows among them, **Inferred** < 50 MB) shipped as `wikipedia_simple`, with the full load at start.
 

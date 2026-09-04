@@ -1,0 +1,17 @@
+name: wikipedia_simple_full
+database: wikipedia_simple_full
+tier: extended
+record: knowledge/datasets/wikipedia-simple.md
+licenses: [cc-by-sa-4-0, gfdl-1-3]
+artifacts:
+  - wikipedia_simple/simplewiki-20260901-pages-articles.xml.bz2
+  - wikipedia_simple/simplewiki-20260901-page.sql.gz
+  - wikipedia_simple/simplewiki-20260901-categorylinks.sql.gz
+  - wikipedia_simple/simplewiki-20260901-pagelinks.sql.gz
+  - wikipedia_simple/simplewiki-20260901-linktarget.sql.gz
+  - wikipedia_simple/simplewiki-20260901-redirect.sql.gz
+  - wikipedia_simple/simplewiki-20260901-category.sql.gz
+  - wikipedia_simple/simplewiki-20260901-site_stats.sql.gz
+converter: none
+load:
+  - wikipedia_simple_full.sql

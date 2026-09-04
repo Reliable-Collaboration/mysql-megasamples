@@ -1,0 +1,113 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+category:
+  columns:
+  - cat_id
+  - cat_title
+  - cat_pages
+  - cat_subcats
+  - cat_files
+  excluded: []
+  n: 104568
+  s: 15629432177234048937
+  x: 6831553617374651363
+categorylinks:
+  columns:
+  - cl_from
+  - cl_sortkey
+  - cl_timestamp
+  - cl_sortkey_prefix
+  - cl_type
+  - cl_collation_id
+  - cl_target_id
+  excluded: []
+  n: 1777942
+  s: 705015533483825795
+  x: 6032471627474323275
+linktarget:
+  columns:
+  - lt_id
+  - lt_namespace
+  - lt_title
+  excluded: []
+  n: 1803198
+  s: 4990693958689945292
+  x: 4182996263019040522
+page:
+  columns:
+  - page_id
+  - page_namespace
+  - page_title
+  - page_is_redirect
+  - page_is_new
+  - page_touched
+  - page_links_updated
+  - page_latest
+  - page_len
+  - page_content_model
+  - page_lang
+  excluded:
+  - page_random
+  n: 284737
+  s: 6027809242560307152
+  x: 2222928673625608710
+pagelinks:
+  columns:
+  - pl_from
+  - pl_from_namespace
+  - pl_target_id
+  excluded: []
+  n: 18899074
+  s: 403901544341556501
+  x: 348356892671036491
+redirect:
+  columns:
+  - rd_from
+  - rd_namespace
+  - rd_title
+  - rd_interwiki
+  - rd_fragment
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+revision:
+  columns:
+  - rev_id
+  - rev_page
+  - rev_parent_id
+  - rev_timestamp
+  - rev_minor_edit
+  - rev_len
+  - rev_sha1
+  - rev_user_id
+  - rev_user_text
+  - rev_comment
+  - rev_content_model
+  excluded: []
+  n: 284749
+  s: 18097977321232706538
+  x: 540680387995546046
+site_stats:
+  columns:
+  - ss_row_id
+  - ss_total_edits
+  - ss_good_articles
+  - ss_total_pages
+  - ss_users
+  - ss_images
+  - ss_active_users
+  - ss_temp_users
+  - ss_active_temp_users
+  excluded: []
+  n: 1
+  s: 15259371114223637930
+  x: 15259371114223637930
+text:
+  columns:
+  - old_id
+  - old_text
+  excluded: []
+  n: 284749
+  s: 1345562160456159386
+  x: 16592095982503298374

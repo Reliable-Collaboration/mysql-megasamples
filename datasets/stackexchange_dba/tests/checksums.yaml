@@ -1,0 +1,152 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+badges:
+  columns:
+  - id
+  - userid
+  - name
+  - date
+  - class
+  - tagbased
+  excluded: []
+  n: 429421
+  s: 4751869603913474034
+  x: 16778711022956831886
+comments:
+  columns:
+  - id
+  - postid
+  - score
+  - text
+  - creationdate
+  - userdisplayname
+  - userid
+  - contentlicense
+  excluded: []
+  n: 347838
+  s: 9333081350532329533
+  x: 14907656148699505021
+linktypes:
+  columns:
+  - id
+  - name
+  excluded: []
+  n: 2
+  s: 7374108720529710758
+  x: 6143425080403713190
+posthistory:
+  columns:
+  - id
+  - posthistorytypeid
+  - postid
+  - revisionguid
+  - creationdate
+  - userid
+  - userdisplayname
+  - comment
+  - text
+  - contentlicense
+  excluded: []
+  n: 833657
+  s: 17636300637226149289
+  x: 1972700596341461319
+postlinks:
+  columns:
+  - id
+  - creationdate
+  - postid
+  - relatedpostid
+  - linktypeid
+  excluded: []
+  n: 20194
+  s: 14518398023898148056
+  x: 1565194672661801792
+posts:
+  columns:
+  - id
+  - posttypeid
+  - acceptedanswerid
+  - parentid
+  - creationdate
+  - score
+  - viewcount
+  - body
+  - owneruserid
+  - ownerdisplayname
+  - lasteditoruserid
+  - lasteditordisplayname
+  - lasteditdate
+  - lastactivitydate
+  - title
+  - tags
+  - answercount
+  - commentcount
+  - favoritecount
+  - closeddate
+  - communityowneddate
+  - contentlicense
+  excluded: []
+  n: 243410
+  s: 102586811378249817
+  x: 13433432419723791885
+posttypes:
+  columns:
+  - id
+  - name
+  excluded: []
+  n: 15
+  s: 14193234434070039457
+  x: 6672602315513066451
+tags:
+  columns:
+  - id
+  - tagname
+  - count
+  - excerptpostid
+  - wikipostid
+  - ismoderatoronly
+  - isrequired
+  excluded: []
+  n: 1242
+  s: 7439266897515031456
+  x: 8480691176607260116
+users:
+  columns:
+  - id
+  - reputation
+  - creationdate
+  - displayname
+  - lastaccessdate
+  - websiteurl
+  - location
+  - aboutme
+  - views
+  - upvotes
+  - downvotes
+  - profileimageurl
+  - emailhash
+  - accountid
+  excluded: []
+  n: 248141
+  s: 4628336967802424974
+  x: 10444258482994912626
+votes:
+  columns:
+  - id
+  - postid
+  - votetypeid
+  - userid
+  - creationdate
+  - bountyamount
+  excluded: []
+  n: 911783
+  s: 18286968342019022622
+  x: 15737024645052011018
+votetypes:
+  columns:
+  - id
+  - name
+  excluded: []
+  n: 14
+  s: 13155151807376210760
+  x: 17290633022422972610

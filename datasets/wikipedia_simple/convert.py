@@ -21,7 +21,6 @@ sys.path.insert(0, HERE)
 import sqldump  # noqa: E402
 
 DATABASE = "wikipedia_simple"
-CONTEXT = "/context/wikipedia_simple"
 PREFIX = "simplewiki-20260901-"
 SAMPLE = 5000
 MW = "{http://www.mediawiki.org/xml/export-0.11/}"
@@ -34,7 +33,7 @@ def tsv(value):
             .replace("\n", "\\n").replace("\r", "\\r"))
 
 
-def read_articles(path, context):
+def read_articles(path, context, sample=SAMPLE):
     """The sample, written straight out as revision and text rows; returns the page ids kept."""
     kept, previous, out_of_order = [], 0, 0
     revision = open(os.path.join(context, "revision.tsv"), "w", encoding="utf-8", newline="")
@@ -47,7 +46,7 @@ def read_articles(path, context):
             if page_id < previous:
                 out_of_order += 1
             previous = page_id
-            if ns == "0" and not redirect and len(kept) < SAMPLE:
+            if ns == "0" and not redirect and (sample is None or len(kept) < sample):
                 rev = page.find(f"{MW}revision")
                 body = rev.findtext(f"{MW}text") or ""
                 kept.append(page_id)
@@ -66,7 +65,7 @@ def read_articles(path, context):
             page.clear()
             while page.getprevious() is not None:
                 del page.getparent()[0]
-            if len(kept) >= SAMPLE:
+            if sample is not None and len(kept) >= sample:
                 break                      # the dump is in ascending page_id order (checked above)
     revision.close(); text.close()
     return kept, out_of_order
@@ -106,10 +105,14 @@ def filter_dump(downloads, context, name, table, key_index, keep, extra=None):
 
 def main():
     downloads, dest = sys.argv[1], sys.argv[2]
+    full = "--full" in sys.argv[3:]
+    database = "wikipedia_simple_full" if full else DATABASE
     context = os.path.dirname(os.path.abspath(dest))
+    inside = f"/context/{os.path.basename(context)}"
 
     ids, out_of_order = read_articles(
-        os.path.join(downloads, f"{PREFIX}pages-articles.xml.bz2"), context)
+        os.path.join(downloads, f"{PREFIX}pages-articles.xml.bz2"), context,
+        sample=None if full else SAMPLE)
     if out_of_order:
         sys.exit(f"the XML is not in ascending page_id order ({out_of_order} steps back); "
                  "the sample rule assumes it is")
@@ -130,21 +133,21 @@ def main():
     counts["site_stats"], _ = filter_dump(downloads, context, "site_stats", "site_stats", None, keep)
 
     parts = [f"""-- Simple English Wikipedia, dump run 20260901, prepared by
--- datasets/{DATABASE}/convert.py as the record's deterministic sample: the {SAMPLE:,} lowest
+-- datasets/{database}/convert.py as the record's deterministic sample: {'every article' if full else f'the {SAMPLE:,} lowest'}
 -- page_id non-redirect articles in namespace 0, their text, and the link rows among them.
 --
 -- Text is CC BY-SA 4.0 and GFDL 1.3 (Wikimedia Terms of Use section 7). Attribution is by hyperlink
 -- to the article and its history: https://simple.wikipedia.org/wiki/<page_title> and ?action=history
--- Images are not included. See datasets/{DATABASE}/LICENSE.
+-- Images are not included. See datasets/{database}/LICENSE.
 --
 -- The MediaWiki tables are the upstream dump's own CREATE TABLE, unaltered: MySQL 9.7 accepts the
 -- MariaDB output as it stands, including CHARSET=binary, varbinary titles, integer display widths
 -- and ROW_FORMAT=COMPRESSED. Titles are therefore binary; the v_* views convert them to utf8mb4.
 SET NAMES utf8mb4;
 SET SESSION foreign_key_checks = 0;
-DROP DATABASE IF EXISTS `{DATABASE}`;
-CREATE DATABASE `{DATABASE}` DEFAULT CHARACTER SET utf8mb4;
-USE `{DATABASE}`;
+DROP DATABASE IF EXISTS `{database}`;
+CREATE DATABASE `{database}` DEFAULT CHARACTER SET utf8mb4;
+USE `{database}`;
 """]
     # read straight into the output rather than substituting placeholders: "page" is a prefix of
     # "pagelinks", so a naive replace would splice the page dump into the pagelinks one
@@ -183,10 +186,10 @@ CREATE TABLE `text` (
   FULLTEXT KEY `ft_old_text` (`old_text`)
 );
 
-LOAD DATA LOCAL INFILE '{CONTEXT}/revision.tsv' INTO TABLE `revision`
+LOAD DATA LOCAL INFILE '{inside}/revision.tsv' INTO TABLE `revision`
   CHARACTER SET utf8mb4 (`rev_id`, `rev_page`, `rev_parent_id`, `rev_timestamp`, `rev_minor_edit`,
   `rev_len`, `rev_sha1`, `rev_user_id`, `rev_user_text`, `rev_comment`, `rev_content_model`);
-LOAD DATA LOCAL INFILE '{CONTEXT}/text.tsv' INTO TABLE `text`
+LOAD DATA LOCAL INFILE '{inside}/text.tsv' INTO TABLE `text`
   CHARACTER SET utf8mb4 (`old_id`, `old_text`);
 
 -- {'-' * 60}

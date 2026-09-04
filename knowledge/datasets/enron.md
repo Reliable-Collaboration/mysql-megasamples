@@ -100,6 +100,32 @@ PK `message.id`; `UNIQUE(path)`; `INDEX(mailbox_id, folder)`; `INDEX(date_utc)`;
 * `message.path='allen-p/inbox/1.'` exists (**Inferred:** first custodian alphabetically).
 * Checksum of the tarball equals the pinned sha256 from the first build.
 
+# The full corpus (2026-09-04, task X-05)
+All 150 mailboxes in their own database, `enron_full`: **517,401 messages and 4,254,342 recipients,
+2,373.8 MB in InnoDB**, loading in 129 s. The core `enron` stays as it was -- five mailboxes under
+40 MB -- because it is baked into the image. Same schema, more rows, so a separate database rather
+than an append.
+
+**The header-anomaly question, answered over the whole corpus rather than five mailboxes**:
+**0** messages need the cp1252 fallback, **0** have an unparseable `Date`, **0** `Message-ID` values
+repeat -- all 517,401 are distinct, so the `UNIQUE(message_id)` this record declares holds at full
+scale. 30 messages carry a header defect that `email` reports.
+
+Two things measured here that the five-mailbox subset could not show:
+
+* **`compat32` does not always return a string.** For a header carrying an encoded word or raw 8-bit
+  bytes it returns an `email.header.Header` instead, and the corpus has them. None of the five core
+  mailboxes does, so this surfaced only as an `AttributeError` on `.replace` deep inside recipient
+  parsing. Every header now goes through one coercion.
+* **Every message's Cc and Bcc address sets are identical** -- 0 exceptions in 517,401 messages, and
+  the counts match exactly at 562,364 each. That is a property of how CMU assembled the corpus, not
+  of the conversion, and it is worth knowing before anyone reads meaning into the Bcc column.
+
+**Dates run from 1979-12-31 to 2044-01-04**, and the raw headers say so: the 1979 rows carry
+`Mon, 31 Dec 1979 16:00:00 -0800 (PST)` verbatim. 1,042 of 517,401 messages fall outside 1998-2002.
+The record's "a few bogus years" is now a number. Largest mailboxes: kaminski-v 28,465,
+dasovich-j 28,234, kean-s 25,351.
+
 # Tier assignment
 * Full corpus: **extended**. Evidence: 443 MB compressed download, ~1.4 GB extracted text ([enron-sqlite3 README](/sources/github-ftrain-enron-sqlite3-readme.md) reports a ~5 GB SQLite with FTS); **Inferred:** 2-3 GB in InnoDB with FULLTEXT.
 * Core option: a deterministic subset — e.g. the alphabetically first mailboxes whose cumulative extracted size stays under 40 MB — shipped as `enron` in the image, with the full corpus loadable at start via the same loader. Average mailbox ≈ 1.4 GB / 150 ≈ 9 MB (**Inferred**), so 3-5 mailboxes fit.

@@ -1,0 +1,9 @@
+name: stackexchange_dba
+database: stackexchange_dba
+tier: extended
+record: knowledge/datasets/stackexchange.md
+licenses: [cc-by-sa-4-0]
+artifacts: [stackexchange_dba/dba.stackexchange.com.7z]
+converter: none
+load:
+  - stackexchange_dba.sql

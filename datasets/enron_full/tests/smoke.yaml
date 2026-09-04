@@ -1,0 +1,18 @@
+# S7: the whole corpus. The numbers in `header_anomalies` are the ones the record's open question
+# asked for, now measured over all 150 mailboxes rather than the core tier's five.
+- name: corpus_shape
+  query: >
+    SELECT (SELECT COUNT(*) FROM mailbox), (SELECT COUNT(*) FROM message),
+           (SELECT COUNT(*) FROM recipient), (SELECT COUNT(DISTINCT message_id) FROM message)
+- name: header_anomalies
+  query: >
+    SELECT SUM(charset_fallback), COUNT(*) - COUNT(date_utc), COUNT(*) - COUNT(message_id),
+           SUM(header_defects <> '') FROM message
+- name: date_range
+  query: SELECT MIN(date_utc), MAX(date_utc) FROM message
+- name: largest_mailboxes
+  query: >
+    SELECT b.name, COUNT(*) FROM message m JOIN mailbox b ON b.mailbox_id = m.mailbox_id
+    GROUP BY b.mailbox_id, b.name ORDER BY COUNT(*) DESC, b.name LIMIT 5
+- name: recipient_kinds
+  query: SELECT kind, COUNT(*) FROM recipient GROUP BY kind ORDER BY kind

@@ -1,0 +1,10 @@
+# the upstream MediaWiki keys, kept as dumped
+- name: page_by_id
+  query: SELECT page_len FROM page WHERE page_id = 1
+  must_not_full_scan: [page]
+- name: links_from_a_page
+  query: SELECT COUNT(*) FROM pagelinks WHERE pl_from = 1
+  must_not_full_scan: [pagelinks]
+- name: revision_of_a_page
+  query: SELECT rev_id FROM revision WHERE rev_page = 1
+  must_not_full_scan: [revision]

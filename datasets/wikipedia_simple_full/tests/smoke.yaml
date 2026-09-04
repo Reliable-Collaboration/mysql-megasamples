@@ -1,0 +1,68 @@
+# S7: the same queries the core 5,000-article sample pins, against every ns0 article.
+# Holding both is what shows which numbers are properties of the sample and which are
+# properties of Simple English Wikipedia.
+- name: page_one_is_april
+  query: 'SELECT page_id, page_namespace, CONVERT(page_title USING utf8mb4), page_latest, page_len
+
+    FROM page WHERE page_id = 1
+
+    '
+- name: site_stats_of_the_whole_wiki
+  query: SELECT ss_good_articles, ss_total_pages FROM site_stats
+- name: sample_bounds
+  query: 'SELECT COUNT(*), MIN(page_id), MAX(page_id), SUM(page_is_redirect),
+
+    COUNT(DISTINCT page_namespace) FROM page
+
+    '
+- name: one_revision_and_text_per_page
+  query: 'SELECT (SELECT COUNT(*) FROM revision) AS revisions,
+
+    (SELECT COUNT(DISTINCT rev_page) FROM revision) AS pages,
+
+    (SELECT COUNT(*) FROM text) AS texts,
+
+    (SELECT COUNT(*) FROM revision r JOIN text t ON t.old_id = r.rev_id) AS joined
+
+    '
+- name: article_view
+  query: 'SELECT page_id, title, page_len, LEFT(wikitext, 40) FROM v_article WHERE page_id = 1
+
+    '
+- name: titles_convert_to_utf8mb4
+  query: 'SELECT COUNT(*) FROM v_page WHERE page_title REGEXP ''[^ -~]''
+
+    '
+- name: top_categories_in_the_sample
+  query: 'SELECT category, COUNT(*) FROM v_category_member
+
+    GROUP BY category ORDER BY COUNT(*) DESC, category LIMIT 5
+
+    '
+- name: links_out_of_april
+  query: 'SELECT COUNT(*) FROM v_pagelink WHERE from_page_id = 1
+
+    '
+- name: every_link_resolves_to_a_target
+  query: 'SELECT COUNT(*) FROM pagelinks p LEFT JOIN linktarget l ON l.lt_id = p.pl_target_id
+
+    WHERE l.lt_id IS NULL
+
+    '
+- name: fulltext_over_wikitext
+  query: 'SELECT COUNT(*) FROM text WHERE MATCH(old_text) AGAINST(''astronomy'' IN NATURAL LANGUAGE MODE)
+
+    '
+- name: binary_charset_preserved
+  query: 'SELECT character_set_name FROM information_schema.columns
+
+    WHERE table_schema = ''wikipedia_simple_full'' AND table_name = ''page''
+
+    AND column_name = ''page_title''
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='wikipedia_simple_full')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='wikipedia_simple_full')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='wikipedia_simple_full') AS triggers\n"

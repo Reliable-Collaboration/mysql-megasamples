@@ -1,0 +1,29 @@
+Licence terms for the `enron_full` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+Enron email corpus — public record status and CMU distribution terms
+--------------------------------------------------------------------
+
+* "This data was originally made public, and posted to the web, by the Federal Energy Regulatory Commission during its investigation."
+* "The email dataset was later purchased by Leslie Kaelbling at MIT, and turned out to have a number of integrity problems. A number of folks at SRI, notably Melinda Gervasio, worked hard to correct these problems"
+* "The dataset here does not include attachments, and some messages have been deleted "as part of a redaction effort due to requests from affected employees". Invalid email addresses were converted to something of the form user@enron.com whenever possible"
+* "I am distributing this dataset as a resource for researchers who are interested in improving current email tools, or understanding how email is currently used. ... In using this dataset, please be sensitive to the privacy of the people involved (and remember that many of these people were certainly not involved in any of the actions which precipitated the investigation.)"
+* DELETIONS.txt: "For privacy reasons, my policy has been to remove emails from this collection when requested by the email's authors or recipients." It lists removals on 2009-08-21 (1 file), 2011-04-02 (6 files, gay-r), 2015-05-07 (23 files, richey-c).
+
+**There is no license statement, no copyright notice and no terms-of-use link on the page.** The word "license" does not occur.
+
+Attribution required:
+
+No license text exists; the README carries the provenance statement: "Enron Email Dataset (May 7, 2015 version), collected and prepared by the CALO Project (SRI International) and distributed by William W. Cohen, Carnegie Mellon University, https://www.cs.cmu.edu/~enron/. Originally made public by the U.S. Federal Energy Regulatory Commission during its investigation of Enron. This copy excludes the messages CMU removed at the request of affected individuals; requests for further removal are honoured as described in the README."
+
+Obligations:
+
+* The corpus contains real names, real email addresses, phone numbers and personal correspondence of about 150 named custodians plus thousands of third parties. Say so in the README.
+* Honour the CMU removals: build only from the 2015-05-07 tarball (which already excludes the DELETIONS.txt files) and never re-add earlier versions.
+* Provide a documented removal path: a `README` section saying that takedown requests received by the project are honoured by deleting the message from the build list, mirroring CMU's policy.
+* Exclude attachments — trivially satisfied because the CMU tarball has none. Do not switch to the EDRM/ZL sets: EnronData.org notes that EDRM withdrew its v1 and v2 sets "due to the presence of Personally Identifiable Information (PII) that remained in the dataset".
+* Do not add derived personal fields (e.g., inferred job titles beyond what the corpus contains).

@@ -1,0 +1,18 @@
+# S7: canonical query results, tab-separated as the client prints them.
+badge_classes: "1\t9745\n2\t53429\n3\t366247"
+community_user_is_minus_one: "-1\tCommunity\t1"
+content_license_travels_with_rows: "CC BY-SA 2.5\t1828\nCC BY-SA 3.0\t141720\nCC BY-SA\
+  \ 4.0\t99862"
+every_answer_has_its_question: '0'
+fulltext_search: '6'
+highest_reputation_users: "RolandoMySQLDBA\t182700\nAaron Bertrand\t180303\nErwin\
+  \ Brandstetter\t175982"
+non_ascii_content: "6672\t242286"
+objects_created: "2\t0\t0"
+questions_and_answers: "103026\t138650\t49822"
+top_tags: "sql-server\t34117\nmysql\t22387\npostgresql\t16860\noracle\t7754\nperformance\t\
+  6420"
+vote_types_present: "1\tAcceptedByOriginator\t50299\n2\tUpMod\t711944\n3\tDownMod\t\
+  75952\n4\tOffensive\t151\n5\tFavorite\t2\n6\tClose\t3094\n7\tReopen\t10\n8\tBountyStart\t\
+  1452\n9\tBountyClose\t1450\n10\tDeletion\t31361\n11\tUndeletion\t1729\n12\tSpam\t\
+  679\n15\tModeratorReview\t14222\n16\tApproveEditSuggestion\t19438"

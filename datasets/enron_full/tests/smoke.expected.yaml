@@ -1,0 +1,7 @@
+# S7: canonical query results, tab-separated as the client prints them.
+corpus_shape: "150\t517401\t4254342\t517401"
+date_range: "1979-12-31 18:00:00\t2044-01-04 16:48:58"
+header_anomalies: "0\t0\t0\t30"
+largest_mailboxes: "kaminski-v\t28465\ndasovich-j\t28234\nkean-s\t25351\nmann-k\t\
+  23381\njones-t\t19950"
+recipient_kinds: "to\t3129614\ncc\t562364\nbcc\t562364"

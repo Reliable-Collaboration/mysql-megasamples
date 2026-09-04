@@ -23,6 +23,7 @@ database keeps the licence of the project it came from, listed below, and each
 | `dvdstore_reviews` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
 | `employees` | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) |
 | `enron` | [enron-public-record](knowledge/licenses/enron-public-record.md) |
+| `enron_full` | [enron-public-record](knowledge/licenses/enron-public-record.md) |
 | `jaffle_shop` | [apache-2-0](knowledge/licenses/apache-2-0.md) |
 | `lahman` | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) |
 | `northwind` | [mit](knowledge/licenses/mit.md) |
@@ -36,9 +37,11 @@ database keeps the licence of the project it came from, listed below, and each
 | `sakila` | [bsd-3-clause-sakila](knowledge/licenses/bsd-3-clause-sakila.md) |
 | `smallsets` | [hbiostat-data-permission](knowledge/licenses/hbiostat-data-permission.md), [cc-by-4-0](knowledge/licenses/cc-by-4-0.md), [cc0-1-0](knowledge/licenses/cc0-1-0.md) |
 | `stackexchange_beer` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) |
+| `stackexchange_dba` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) |
 | `wideworldimporters` | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) |
 | `wideworldimporters_dw` | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) |
 | `wikipedia_simple` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) |
+| `wikipedia_simple_full` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) |
 
 ## Licences in use
 
@@ -46,11 +49,11 @@ database keeps the licence of the project it came from, listed below, and each
 * **BSD 3-Clause ("New BSD") as applied to Sakila** — `sakila`
 * **Creative Commons Attribution 4.0 International (CC BY 4.0) - UCI Iris** — `smallsets`
 * **Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)** — `employees`, `lahman`
-* **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** — `stackexchange_beer`, `wikipedia_simple`
+* **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** — `stackexchange_beer`, `stackexchange_dba`, `wikipedia_simple`, `wikipedia_simple_full`
 * **CC0 1.0 Universal (public domain dedication) - palmerpenguins** — `smallsets`
 * **City of Chicago Data Terms of Use** — `chicago_crimes`, `chicago_crimes_full`
-* **Enron email corpus — public record status and CMU distribution terms** — `enron`
-* **GNU Free Documentation License 1.3 (GFDL 1.3)** — `wikipedia_simple`
+* **Enron email corpus — public record status and CMU distribution terms** — `enron`, `enron_full`
+* **GNU Free Documentation License 1.3 (GFDL 1.3)** — `wikipedia_simple`, `wikipedia_simple_full`
 * **GNU General Public License v2.0 (or later) - Dell DVD Store 3** — `dvdstore`, `dvdstore_reviews`
 * **Vanderbilt Biostatistics (hbiostat.org/data) permission statement** — `smallsets`
 * **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `contoso_10m`, `contoso_1m`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`, `wideworldimporters`, `wideworldimporters_dw`

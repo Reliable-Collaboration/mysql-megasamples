@@ -111,6 +111,22 @@ PKs on Id; `posts(ParentId)`, `posts(OwnerUserId)`, `posts(PostTypeId, CreationD
 * Every `posts.parentid` points to a `posttypeid=1` row; every `acceptedanswerid` points to a row whose `parentid` is the question; `MAX(id) < 1000000000`.
 * `SELECT DISTINCT contentlicense` ⊆ {'CC BY-SA 2.5','CC BY-SA 3.0','CC BY-SA 4.0'}.
 
+# dba.stackexchange.com, the extended tier (2026-09-04, task X-05)
+`dba.stackexchange.com.7z` is 319,345,462 bytes -- the 319 MB this record predicted -- and gives
+**11 tables and 3,035,686 rows in 1,751.7 MB**, loading in 49 s: posts 243,410, users 248,141,
+comments 347,838, badges 429,421, votes 911,783, posthistory 833,657, postlinks 20,194, tags 1,242,
+plus the three generated lookups. 103,026 questions, 138,650 answers, 49,822 of them accepted. Top
+tags: sql-server 34,117, mysql 22,387, postgresql 16,860, oracle 7,754, performance 6,420.
+
+The converter is site-agnostic -- every Stack Exchange dump has the same eight XML files with the
+same attributes -- so `--site <slug>` is the only difference between this and the core `beer` set,
+and both pin the same eleven queries.
+
+**The licence spread is the reason to hold both.** beer's posts sit in one CC BY-SA version; dba's
+span all three, and the per-row `ContentLicense` is what makes attribution possible:
+**CC BY-SA 2.5 on 1,828 posts, 3.0 on 141,720 and 4.0 on 99,862**. A reuser cannot treat the site as
+uniformly licensed, which is exactly what the licence record says and what this makes checkable.
+
 # Tier assignment
 * `stackexchange_dba`: **extended** — 319 MB 7z; **Inferred:** ~2.2-2.8 GB of XML and 2-3 GB in InnoDB with FULLTEXT (bzip2 on XML ≈ 7-8×).
 * `stackexchange_beer` (or coffee): **core** — 4.3 MB 7z; **Inferred:** < 40 MB loaded. `datascience` (89.5 MB) is the fallback if dba is judged too slow to load.

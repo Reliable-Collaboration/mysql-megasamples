@@ -1626,3 +1626,15 @@ artifacts:
     size_bytes: 512408852
     license: mit
     ipv4_first: false
+
+  # Stack Exchange dba.stackexchange.com, the extended tier of the same 2024-04-02 archive.org
+  # snapshot the beer site comes from -- a separate site, so a separate database rather than an
+  # append. 319 MB against beer's 4.3 MB.
+  - id: stackexchange_dba/dba.stackexchange.com.7z
+    dataset: stackexchange_dba
+    url: https://archive.org/download/stackexchange/dba.stackexchange.com.7z
+    mirrors: []
+    sha256: "4db21874f8bad5e6cfc4dcba9c6489bd27a571cbec62f402f0a7b7ebb702bc0e"
+    size_bytes: 319345462
+    license: cc-by-sa-4-0
+    ipv4_first: false
