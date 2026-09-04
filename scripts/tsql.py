@@ -182,6 +182,7 @@ def scan_replace(sql, on_dquote=None, on_word=None):
 
 
 CAST_TYPES = {"money": "DECIMAL(19,4)", "smallmoney": "DECIMAL(10,4)", "int": "SIGNED",
+              "integer": "SIGNED", "numeric": "DECIMAL", "decimal": "DECIMAL",
               "bigint": "SIGNED", "smallint": "SIGNED", "tinyint": "SIGNED", "bit": "SIGNED",
               "float": "DOUBLE", "real": "DOUBLE", "datetime": "DATETIME", "date": "DATE",
               "varchar": "CHAR", "nvarchar": "CHAR", "char": "CHAR", "nchar": "CHAR"}
@@ -474,6 +475,80 @@ def collect_udts(sql):
         name, base, nullability = m.group(1), m.group(2), (m.group(3) or "")
         udts[name.lower()] = split_alias(f"{base.strip()} {nullability.strip()}".strip())
     return udts
+
+
+# T-SQL date parts and their MySQL interval units
+DATE_PARTS = {"yy": "YEAR", "yyyy": "YEAR", "year": "YEAR",
+              "qq": "QUARTER", "q": "QUARTER", "quarter": "QUARTER",
+              "mm": "MONTH", "m": "MONTH", "month": "MONTH",
+              "dy": "DAY", "y": "DAY", "dayofyear": "DAY",
+              "dd": "DAY", "d": "DAY", "day": "DAY",
+              "wk": "WEEK", "ww": "WEEK", "week": "WEEK",
+              "hh": "HOUR", "hour": "HOUR",
+              "mi": "MINUTE", "n": "MINUTE", "minute": "MINUTE",
+              "ss": "SECOND", "s": "SECOND", "second": "SECOND",
+              "ms": "MICROSECOND", "millisecond": "MICROSECOND"}
+
+
+CAST_TARGET = re.compile(r"(?i)\bCAST\s*\(")
+
+
+def convert_cast_targets(sql):
+    """Rewrite the target type of a literal `CAST(x AS type)` to one MySQL's CAST accepts.
+
+    MySQL's CAST takes a much shorter list than a column declaration: INTEGER, VARCHAR and the rest
+    are rejected outright, so a view written for SQL Server fails on the type name alone.
+    """
+    out, i = [], 0
+    while i < len(sql):
+        m = CAST_TARGET.search(sql, i)
+        if not m:
+            out.append(sql[i:]); break
+        depth, j = 1, m.end()
+        while j < len(sql) and depth:
+            depth += {"(": 1, ")": -1}.get(sql[j], 0)
+            j += 1
+        inner = sql[m.end():j - 1]
+        parts = re.split(r"(?i)\s+AS\s+(?=[A-Za-z_][A-Za-z0-9_]*\s*(?:\([^()]*\))?\s*$)", inner)
+        out.append(sql[i:m.start()])
+        if len(parts) == 2:
+            out.append(f"CAST({parts[0]} AS {_cast_type(parts[1])})")
+        else:
+            out.append(sql[m.start():j])
+        i = j
+    return "".join(out)
+
+
+def convert_date_functions(sql):
+    """`DATEDIFF(yy, a, b)` -> `TIMESTAMPDIFF(YEAR, a, b)`, `DATEADD(dd, n, d)` -> `DATE_ADD(...)`.
+
+    MySQL has a `DATEDIFF` of its own but it takes two arguments and returns days, so T-SQL's
+    three-argument form does not fail loudly everywhere -- with a two-argument call it would silently
+    mean something else. Both are rewritten to the MySQL function that takes a unit.
+    """
+    for name in ("DATEDIFF", "DATEADD"):
+        out, i = [], 0
+        pattern = re.compile(rf"(?i)(?<![A-Za-z0-9_]){name}\s*\(")
+        while i < len(sql):
+            m = pattern.search(sql, i)
+            if not m:
+                out.append(sql[i:]); break
+            depth, j = 1, m.end()
+            while j < len(sql) and depth:
+                depth += {"(": 1, ")": -1}.get(sql[j], 0)
+                j += 1
+            args = [a.strip() for a in split_top(sql[m.end():j - 1], ",")]
+            unit = DATE_PARTS.get(args[0].strip("[]`\"' ").lower()) if len(args) == 3 else None
+            out.append(sql[i:m.start()])
+            if unit and name == "DATEDIFF":
+                out.append(f"TIMESTAMPDIFF({unit}, {args[1]}, {args[2]})")
+            elif unit:
+                out.append(f"DATE_ADD({args[2]}, INTERVAL {args[1]} {unit})")
+            else:
+                out.append(sql[m.start():j])
+            i = j
+        sql = "".join(out)
+    return sql
 
 
 def convert_functions(sql):
@@ -913,8 +988,11 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
         elif re.match(r"(?i)^\s*(insert|update|delete)", lead): kind = "dml"
 
         body = scan_replace(body, on_dquote=dq)
-        if kind == "table":
-            m = re.search(r"(?i)CREATE\s+TABLE\s+(?:`([^`]+)`|(\w+))", body)
+        if kind in ("table", "view"):
+            # views join the map too: AdventureWorks DW's vTimeSeries selects `FROM vDMPrep`
+            # unquoted, and MySQL is case-sensitive for view names as well as table names
+            m = re.search(rf"(?i)CREATE\s+(?:OR\s+REPLACE\s+)?{kind.upper()}\s+(?:`([^`]+)`|(\w+))",
+                          body)
             if m:
                 tname = m.group(1) or m.group(2)
                 tables[tname.lower()] = tname
@@ -924,6 +1002,7 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             body = scan_replace(body, on_word=lambda w: f"`{tables[w.lower()]}`" if w.lower() in tables else w)
         # filegroup placement and index-organisation keywords have no MySQL equivalent, and they
         # appear on CREATE INDEX as well as on tables and constraints
+        body = re.sub(r"(?i)\s+(?:TEXTIMAGE_ON|FILESTREAM_ON)\s+`?\w+`?", "", body)
         body = re.sub(r"(?i)\s+ON\s+`primary`", "", body)
         body = re.sub(r"(?i)\b(?:NON)?CLUSTERED\s+(?=INDEX\b)", "", body)
         body = re.sub(r"(?i)\b(PRIMARY\s+KEY|UNIQUE)\s+(?:NON)?CLUSTERED", r"\1", body)
@@ -1018,6 +1097,7 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
         if kind in ("view", "procedure", "trigger"):
             body = convert_select_aliases(body)
             body = convert_functions(convert_tsql_convert(convert_xml_value(body)))
+            body = convert_cast_targets(convert_date_functions(body))
             body = convert_recursive_cte(body)
         if kind in ("view", "procedure") and not keep_objects:
             notes.append(f"skipped {kind}")

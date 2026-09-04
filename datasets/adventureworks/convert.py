@@ -16,7 +16,7 @@ import csv, os, re, struct, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import tsql, hierarchyid, ddlutil  # noqa: E402
+import tsql, hierarchyid, ddlutil, bulkinsert  # noqa: E402
 
 DATABASE = "adventureworks"
 SCRIPT = "instawdb.sql"
@@ -69,27 +69,6 @@ def decode_point(hexstr):
     return struct.unpack_from("<dd", raw, 6)
 
 
-def bulk_inserts(script):
-    """[(table, csv name, field terminator, row terminator)] in the order the script loads them."""
-    out = []
-    pattern = re.compile(r"(?is)BULK INSERT\s+\[?(\w+)\]?\.\[?(\w+)\]?\s+FROM\s+'[^']*?"
-                         r"([\w.]+\.csv)'\s*WITH\s*\((.*?)\)")
-    for m in pattern.finditer(script):
-        opts = {k.upper(): v.strip("'") for k, v in
-                re.findall(r"(\w+)\s*=\s*('[^']*'|\w+)", m.group(4))}
-        if opts.get("CODEPAGE") != "65001" or opts.get("DATAFILETYPE") != "char":
-            raise SystemExit(f"{m.group(3)}: unexpected codepage/datafiletype {opts}")
-        out.append((f"{SCHEMAS[m.group(1).lower()]}{m.group(2).lower()}", m.group(3),
-                    unescape(opts["FIELDTERMINATOR"]), unescape(opts["ROWTERMINATOR"])))
-    return out
-
-
-def unescape(term):
-    if term.lower().startswith("0x"):
-        return bytes.fromhex(term[2:]).decode("latin-1")
-    return term.replace("\\t", "\t").replace("\\n", "\n").replace("\\r", "\r")
-
-
 PATH_COLUMN = re.compile(r"(?im)^(\s*)`(\w+)`(\s+VARBINARY\(892\))")
 
 
@@ -108,59 +87,6 @@ def add_path_columns(create_table):
                 f"{m.group(1)}`{m.group(2)}_path` VARCHAR(300)")
 
     return PATH_COLUMN.sub(add, create_table) if table else create_table
-
-
-def bulk_rows(text, field, row, ncols, filename, table):
-    """Read a BULK INSERT data file the way BULK INSERT reads it: field by field.
-
-    The file is not split into lines first. Each field but the last ends at the field terminator, and
-    only the last field of a row ends at the row terminator -- which is why a newline inside
-    ProductReview's comments is data rather than a row break, even though rows end with a newline.
-    """
-    pos, n = 0, len(text)
-    while pos < n:
-        fields = []
-        for _ in range(ncols - 1):
-            j = text.find(field, pos)
-            if j < 0:
-                sys.exit(f"{filename}: ran out of fields for `{table}` after {len(fields)} of "
-                         f"{ncols} -- upstream layout changed")
-            fields.append(text[pos:j])
-            pos = j + len(field)
-        j = text.find(row, pos)
-        if j < 0:
-            j = n
-        fields.append(text[pos:j])
-        pos = j + len(row)
-        yield fields
-
-
-def row_terminator(term, text):
-    """The terminator the file actually uses, which is not always the one the script names.
-
-    Every one of these files is CRLF, so a ROWTERMINATOR of `\\n` means `\\r\\n` -- BULK INSERT's own
-    behaviour. Taking it literally matters here rather than being a nicety: ProductReview's comments
-    contain bare newlines, and splitting on those turns 4 rows into 31.
-    """
-    if term.endswith("\n") and (term[:-1] + "\r\n") in text:
-        return term[:-1] + "\r\n"
-    return term
-
-
-def escape(value):
-    return (value.replace("\\", "\\\\").replace("\t", "\\t")
-            .replace("\n", "\\n").replace("\r", "\\r"))
-
-
-def tsv_value(value):
-    # BULK INSERT's char format distinguishes the two: an empty field is NULL, and a field holding a
-    # single NUL byte is the empty string. Five fields in Document.csv rely on it -- the root
-    # hierarchyid and four folder rows whose FileExtension is '' rather than missing.
-    if value == "\x00":
-        return ""
-    if value == "":
-        return "\\N"
-    return escape(value)
 
 
 def main():
@@ -212,7 +138,8 @@ def main():
                           if not any(re.search(rf"`{t}`", s) for t in dropped_tables)]
 
     loads, loaded = [], {}
-    for table, filename, field, row in bulk_inserts(script):
+    for schema, table_name, filename, field, row in bulkinsert.statements(script):
+        table = f"{SCHEMAS[schema]}{table_name}"
         if table in DROP_TABLES:
             continue
         loaded[table] = write_tsv(z, filename, field, row, table, columns[table],
@@ -285,10 +212,9 @@ def write_tsv(z, filename, field, row, table, table_columns, generated_columns, 
     keep = [i for i, c in enumerate(source_columns) if c not in generated_columns]
     hierarchy = {i: f"{table}.{c}".lower() in HIERARCHY for i, c in enumerate(source_columns)}
     geography = {i: f"{table}.{c}".lower() in GEOGRAPHY for i, c in enumerate(source_columns)}
-    row = row_terminator(row, text)
     written = 0
     with open(os.path.join(context, f"{table}.tsv"), "w", encoding="utf-8", newline="") as out:
-        for fields in bulk_rows(text, field, row, len(source_columns), filename, table):
+        for fields in bulkinsert.rows(text, field, row, len(source_columns), filename, table):
             values = []
             for i in keep:
                 value = fields[i]
@@ -297,13 +223,13 @@ def write_tsv(z, filename, field, row, table, table_columns, generated_columns, 
                 if hierarchy[i]:
                     # the hex as written, then the decoded path. The root node's hierarchyid is the
                     # *empty* binary, not a missing value, so these two fields never become NULL.
-                    values.append(escape(value))
-                    values.append(escape(hierarchyid.decode(bytes.fromhex(value))))
+                    values.append(bulkinsert.escape(value))
+                    values.append(bulkinsert.escape(hierarchyid.decode(bytes.fromhex(value))))
                     continue
                 if geography[i] and value:
                     lat, lon = decode_point(value)
                     value = f"POINT({lat} {lon})"
-                values.append(tsv_value(value))
+                values.append(bulkinsert.tsv_value(value))
             out.write("\t".join(values) + "\n")
             written += 1
     return written

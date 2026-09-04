@@ -135,6 +135,14 @@ def stage_dvdstore(dest):
                        os.path.join(dest, "dvdstore.sql"))
 
 
+@stager("adventureworks_dw")
+def stage_adventureworks_dw(dest):
+    _run_converter("adventureworks_dw",
+                   os.path.join(ROOT, "downloads", "adventureworks_dw",
+                                "AdventureWorksDW-data-warehouse-install-script.zip"),
+                   os.path.join(dest, "adventureworks_dw.sql"))
+
+
 @stager("adventureworks")
 def stage_adventureworks(dest):
     _run_converter("adventureworks",

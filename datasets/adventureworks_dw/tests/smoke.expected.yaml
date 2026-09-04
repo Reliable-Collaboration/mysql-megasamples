@@ -1,0 +1,15 @@
+# S7: canonical query results, tab-separated as the client prints them.
+build_version: "17.0.1000.3\t2025-11-14 00:00:00"
+customers_by_country: "United States\t7819\nAustralia\t3591\nUnited Kingdom\t1913\n\
+  France\t1810\nGermany\t1780"
+date_dimension: "2005-01-01\t2014-12-31\t3652\t10"
+french_example: 'Cadre de vélo de route HL - rouge, 62
+
+  Cadre de vélo de route HL - rouge, 62'
+internet_sales_total: "60398\t29358677.2207\t60398"
+localised_product_names: "215\t396\t396"
+objects_created: "4\t0\t0"
+reseller_sales_total: "60855\t80450596.9823"
+sales_by_year: "2010\t14\t43421.04\n2011\t2216\t7075525.93\n2012\t3397\t5842485.20\n\
+  2013\t52801\t16351550.34\n2014\t1970\t45694.72"
+top_product_categories: "Bikes\t28318144.65\nAccessories\t700759.96\nClothing\t339772.61"

@@ -1,0 +1,434 @@
+# S6: every index that must exist after load.
+dimaccount:
+  PRIMARY:
+    columns:
+    - accountkey
+    type: BTREE
+    unique: true
+  fk_dimaccount_dimaccount:
+    columns:
+    - parentaccountkey
+    type: BTREE
+    unique: false
+dimcurrency:
+  PRIMARY:
+    columns:
+    - currencykey
+    type: BTREE
+    unique: true
+  ak_dimcurrency_currencyalternatekey:
+    columns:
+    - currencyalternatekey
+    type: BTREE
+    unique: true
+dimcustomer:
+  PRIMARY:
+    columns:
+    - customerkey
+    type: BTREE
+    unique: true
+  fk_dimcustomer_dimgeography:
+    columns:
+    - geographykey
+    type: BTREE
+    unique: false
+  ix_dimcustomer_customeralternatekey:
+    columns:
+    - customeralternatekey
+    type: BTREE
+    unique: true
+dimdate:
+  PRIMARY:
+    columns:
+    - datekey
+    type: BTREE
+    unique: true
+  ak_dimdate_fulldatealternatekey:
+    columns:
+    - fulldatealternatekey
+    type: BTREE
+    unique: true
+dimdepartmentgroup:
+  PRIMARY:
+    columns:
+    - departmentgroupkey
+    type: BTREE
+    unique: true
+  fk_dimdepartmentgroup_dimdepartmentgroup:
+    columns:
+    - parentdepartmentgroupkey
+    type: BTREE
+    unique: false
+dimemployee:
+  PRIMARY:
+    columns:
+    - employeekey
+    type: BTREE
+    unique: true
+  fk_dimemployee_dimemployee:
+    columns:
+    - parentemployeekey
+    type: BTREE
+    unique: false
+  fk_dimemployee_dimsalesterritory:
+    columns:
+    - salesterritorykey
+    type: BTREE
+    unique: false
+dimgeography:
+  PRIMARY:
+    columns:
+    - geographykey
+    type: BTREE
+    unique: true
+  fk_dimgeography_dimsalesterritory:
+    columns:
+    - salesterritorykey
+    type: BTREE
+    unique: false
+dimorganization:
+  PRIMARY:
+    columns:
+    - organizationkey
+    type: BTREE
+    unique: true
+  fk_dimorganization_dimcurrency:
+    columns:
+    - currencykey
+    type: BTREE
+    unique: false
+  fk_dimorganization_dimorganization:
+    columns:
+    - parentorganizationkey
+    type: BTREE
+    unique: false
+dimproduct:
+  PRIMARY:
+    columns:
+    - productkey
+    type: BTREE
+    unique: true
+  fk_dimproduct_dimproductsubcategory:
+    columns:
+    - productsubcategorykey
+    type: BTREE
+    unique: false
+  productalternatekey:
+    columns:
+    - productalternatekey
+    - startdate
+    type: BTREE
+    unique: true
+dimproductcategory:
+  PRIMARY:
+    columns:
+    - productcategorykey
+    type: BTREE
+    unique: true
+  productcategoryalternatekey:
+    columns:
+    - productcategoryalternatekey
+    type: BTREE
+    unique: true
+dimproductsubcategory:
+  PRIMARY:
+    columns:
+    - productsubcategorykey
+    type: BTREE
+    unique: true
+  fk_dimproductsubcategory_dimproductcategory:
+    columns:
+    - productcategorykey
+    type: BTREE
+    unique: false
+  productsubcategoryalternatekey:
+    columns:
+    - productsubcategoryalternatekey
+    type: BTREE
+    unique: true
+dimpromotion:
+  PRIMARY:
+    columns:
+    - promotionkey
+    type: BTREE
+    unique: true
+  promotionalternatekey:
+    columns:
+    - promotionalternatekey
+    type: BTREE
+    unique: true
+dimreseller:
+  PRIMARY:
+    columns:
+    - resellerkey
+    type: BTREE
+    unique: true
+  fk_dimreseller_dimgeography:
+    columns:
+    - geographykey
+    type: BTREE
+    unique: false
+  reselleralternatekey:
+    columns:
+    - reselleralternatekey
+    type: BTREE
+    unique: true
+dimsalesreason:
+  PRIMARY:
+    columns:
+    - salesreasonkey
+    type: BTREE
+    unique: true
+dimsalesterritory:
+  PRIMARY:
+    columns:
+    - salesterritorykey
+    type: BTREE
+    unique: true
+  salesterritoryalternatekey:
+    columns:
+    - salesterritoryalternatekey
+    type: BTREE
+    unique: true
+dimscenario:
+  PRIMARY:
+    columns:
+    - scenariokey
+    type: BTREE
+    unique: true
+factadditionalinternationalproductdescription:
+  PRIMARY:
+    columns:
+    - productkey
+    - culturename
+    type: BTREE
+    unique: true
+factcallcenter:
+  PRIMARY:
+    columns:
+    - factcallcenterid
+    type: BTREE
+    unique: true
+  datekey:
+    columns:
+    - datekey
+    - shift
+    type: BTREE
+    unique: true
+factcurrencyrate:
+  PRIMARY:
+    columns:
+    - currencykey
+    - datekey
+    type: BTREE
+    unique: true
+  fk_factcurrencyrate_dimdate:
+    columns:
+    - datekey
+    type: BTREE
+    unique: false
+factfinance:
+  PRIMARY:
+    columns:
+    - financekey
+    type: BTREE
+    unique: true
+  fk_factfinance_dimaccount:
+    columns:
+    - accountkey
+    type: BTREE
+    unique: false
+  fk_factfinance_dimdate:
+    columns:
+    - datekey
+    type: BTREE
+    unique: false
+  fk_factfinance_dimdepartmentgroup:
+    columns:
+    - departmentgroupkey
+    type: BTREE
+    unique: false
+  fk_factfinance_dimorganization:
+    columns:
+    - organizationkey
+    type: BTREE
+    unique: false
+  fk_factfinance_dimscenario:
+    columns:
+    - scenariokey
+    type: BTREE
+    unique: false
+factinternetsales:
+  PRIMARY:
+    columns:
+    - salesordernumber
+    - salesorderlinenumber
+    type: BTREE
+    unique: true
+  fk_factinternetsales_dimcurrency:
+    columns:
+    - currencykey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimcustomer:
+    columns:
+    - customerkey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimdate:
+    columns:
+    - orderdatekey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimdate1:
+    columns:
+    - duedatekey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimdate2:
+    columns:
+    - shipdatekey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimproduct:
+    columns:
+    - productkey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimpromotion:
+    columns:
+    - promotionkey
+    type: BTREE
+    unique: false
+  fk_factinternetsales_dimsalesterritory:
+    columns:
+    - salesterritorykey
+    type: BTREE
+    unique: false
+factinternetsalesreason:
+  PRIMARY:
+    columns:
+    - salesordernumber
+    - salesorderlinenumber
+    - salesreasonkey
+    type: BTREE
+    unique: true
+  fk_factinternetsalesreason_dimsalesreason:
+    columns:
+    - salesreasonkey
+    type: BTREE
+    unique: false
+factproductinventory:
+  PRIMARY:
+    columns:
+    - productkey
+    - datekey
+    type: BTREE
+    unique: true
+  fk_factproductinventory_dimdate:
+    columns:
+    - datekey
+    type: BTREE
+    unique: false
+factresellersales:
+  PRIMARY:
+    columns:
+    - salesordernumber
+    - salesorderlinenumber
+    type: BTREE
+    unique: true
+  fk_factresellersales_dimcurrency:
+    columns:
+    - currencykey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimdate:
+    columns:
+    - orderdatekey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimdate1:
+    columns:
+    - duedatekey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimdate2:
+    columns:
+    - shipdatekey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimemployee:
+    columns:
+    - employeekey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimproduct:
+    columns:
+    - productkey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimpromotion:
+    columns:
+    - promotionkey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimreseller:
+    columns:
+    - resellerkey
+    type: BTREE
+    unique: false
+  fk_factresellersales_dimsalesterritory:
+    columns:
+    - salesterritorykey
+    type: BTREE
+    unique: false
+factsalesquota:
+  PRIMARY:
+    columns:
+    - salesquotakey
+    type: BTREE
+    unique: true
+  fk_factsalesquota_dimdate:
+    columns:
+    - datekey
+    type: BTREE
+    unique: false
+  fk_factsalesquota_dimemployee:
+    columns:
+    - employeekey
+    type: BTREE
+    unique: false
+factsurveyresponse:
+  PRIMARY:
+    columns:
+    - surveyresponsekey
+    type: BTREE
+    unique: true
+  fk_factsurveyresponse_customerkey:
+    columns:
+    - customerkey
+    type: BTREE
+    unique: false
+  fk_factsurveyresponse_datekey:
+    columns:
+    - datekey
+    type: BTREE
+    unique: false
+prospectivebuyer:
+  PRIMARY:
+    columns:
+    - prospectivebuyerkey
+    type: BTREE
+    unique: true
+sysdiagrams:
+  PRIMARY:
+    columns:
+    - diagram_id
+    type: BTREE
+    unique: true
+  uk_principal_name:
+    columns:
+    - principal_id
+    - name
+    type: BTREE
+    unique: true

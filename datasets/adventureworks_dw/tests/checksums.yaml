@@ -1,0 +1,533 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+adventureworksdwbuildversion:
+  columns:
+  - dbversion
+  - versiondate
+  excluded: []
+  n: 1
+  s: 6302741351048504110
+  x: 6302741351048504110
+dimaccount:
+  columns:
+  - accountkey
+  - parentaccountkey
+  - accountcodealternatekey
+  - parentaccountcodealternatekey
+  - accountdescription
+  - accounttype
+  - operator
+  - custommembers
+  - valuetype
+  - custommemberoptions
+  excluded: []
+  n: 99
+  s: 16582055035696111422
+  x: 14363708262707424158
+dimcurrency:
+  columns:
+  - currencykey
+  - currencyalternatekey
+  - currencyname
+  excluded: []
+  n: 105
+  s: 738259646851702498
+  x: 3987418740570011870
+dimcustomer:
+  columns:
+  - customerkey
+  - geographykey
+  - customeralternatekey
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - namestyle
+  - birthdate
+  - maritalstatus
+  - suffix
+  - gender
+  - emailaddress
+  - yearlyincome
+  - totalchildren
+  - numberchildrenathome
+  - englisheducation
+  - spanisheducation
+  - frencheducation
+  - englishoccupation
+  - spanishoccupation
+  - frenchoccupation
+  - houseownerflag
+  - numbercarsowned
+  - addressline1
+  - addressline2
+  - phone
+  - datefirstpurchase
+  - commutedistance
+  excluded: []
+  n: 18484
+  s: 4685380159243597671
+  x: 3261570809486459877
+dimdate:
+  columns:
+  - datekey
+  - fulldatealternatekey
+  - daynumberofweek
+  - englishdaynameofweek
+  - spanishdaynameofweek
+  - frenchdaynameofweek
+  - daynumberofmonth
+  - daynumberofyear
+  - weeknumberofyear
+  - englishmonthname
+  - spanishmonthname
+  - frenchmonthname
+  - monthnumberofyear
+  - calendarquarter
+  - calendaryear
+  - calendarsemester
+  - fiscalquarter
+  - fiscalyear
+  - fiscalsemester
+  excluded: []
+  n: 3652
+  s: 12929935087325340626
+  x: 4341082732175117656
+dimdepartmentgroup:
+  columns:
+  - departmentgroupkey
+  - parentdepartmentgroupkey
+  - departmentgroupname
+  excluded: []
+  n: 7
+  s: 12656401386012710545
+  x: 16775681906332148907
+dimemployee:
+  columns:
+  - employeekey
+  - parentemployeekey
+  - employeenationalidalternatekey
+  - parentemployeenationalidalternatekey
+  - salesterritorykey
+  - firstname
+  - lastname
+  - middlename
+  - namestyle
+  - title
+  - hiredate
+  - birthdate
+  - loginid
+  - emailaddress
+  - phone
+  - maritalstatus
+  - emergencycontactname
+  - emergencycontactphone
+  - salariedflag
+  - gender
+  - payfrequency
+  - baserate
+  - vacationhours
+  - sickleavehours
+  - currentflag
+  - salespersonflag
+  - departmentname
+  - startdate
+  - enddate
+  - status
+  - employeephoto
+  excluded: []
+  n: 296
+  s: 414048844158030527
+  x: 17472790428735404581
+dimgeography:
+  columns:
+  - geographykey
+  - city
+  - stateprovincecode
+  - stateprovincename
+  - countryregioncode
+  - englishcountryregionname
+  - spanishcountryregionname
+  - frenchcountryregionname
+  - postalcode
+  - salesterritorykey
+  - ipaddresslocator
+  excluded: []
+  n: 655
+  s: 5800913377081291235
+  x: 17195987667905464135
+dimorganization:
+  columns:
+  - organizationkey
+  - parentorganizationkey
+  - percentageofownership
+  - organizationname
+  - currencykey
+  excluded: []
+  n: 14
+  s: 4400509354395613263
+  x: 17538208194871483165
+dimproduct:
+  columns:
+  - productkey
+  - productalternatekey
+  - productsubcategorykey
+  - weightunitmeasurecode
+  - sizeunitmeasurecode
+  - englishproductname
+  - spanishproductname
+  - frenchproductname
+  - standardcost
+  - finishedgoodsflag
+  - color
+  - safetystocklevel
+  - reorderpoint
+  - listprice
+  - size
+  - sizerange
+  - daystomanufacture
+  - productline
+  - dealerprice
+  - class
+  - style
+  - modelname
+  - largephoto
+  - englishdescription
+  - frenchdescription
+  - chinesedescription
+  - arabicdescription
+  - hebrewdescription
+  - thaidescription
+  - germandescription
+  - japanesedescription
+  - turkishdescription
+  - startdate
+  - enddate
+  - status
+  excluded:
+  - weight
+  n: 606
+  s: 6748179486280522647
+  x: 6726174928034698221
+dimproductcategory:
+  columns:
+  - productcategorykey
+  - productcategoryalternatekey
+  - englishproductcategoryname
+  - spanishproductcategoryname
+  - frenchproductcategoryname
+  excluded: []
+  n: 4
+  s: 5543329922006107730
+  x: 3751038023001195590
+dimproductsubcategory:
+  columns:
+  - productsubcategorykey
+  - productsubcategoryalternatekey
+  - englishproductsubcategoryname
+  - spanishproductsubcategoryname
+  - frenchproductsubcategoryname
+  - productcategorykey
+  excluded: []
+  n: 37
+  s: 7845967719443969327
+  x: 9464757471355865095
+dimpromotion:
+  columns:
+  - promotionkey
+  - promotionalternatekey
+  - englishpromotionname
+  - spanishpromotionname
+  - frenchpromotionname
+  - englishpromotiontype
+  - spanishpromotiontype
+  - frenchpromotiontype
+  - englishpromotioncategory
+  - spanishpromotioncategory
+  - frenchpromotioncategory
+  - startdate
+  - enddate
+  - minqty
+  - maxqty
+  excluded:
+  - discountpct
+  n: 16
+  s: 11893056762344753565
+  x: 5282907791589069467
+dimreseller:
+  columns:
+  - resellerkey
+  - geographykey
+  - reselleralternatekey
+  - phone
+  - businesstype
+  - resellername
+  - numberemployees
+  - orderfrequency
+  - ordermonth
+  - firstorderyear
+  - lastorderyear
+  - productline
+  - addressline1
+  - addressline2
+  - annualsales
+  - bankname
+  - minpaymenttype
+  - minpaymentamount
+  - annualrevenue
+  - yearopened
+  excluded: []
+  n: 701
+  s: 9937340650897699239
+  x: 13286798315811275935
+dimsalesreason:
+  columns:
+  - salesreasonkey
+  - salesreasonalternatekey
+  - salesreasonname
+  - salesreasonreasontype
+  excluded: []
+  n: 10
+  s: 8981079057993392090
+  x: 5741807892476597640
+dimsalesterritory:
+  columns:
+  - salesterritorykey
+  - salesterritoryalternatekey
+  - salesterritoryregion
+  - salesterritorycountry
+  - salesterritorygroup
+  - salesterritoryimage
+  excluded: []
+  n: 11
+  s: 16549175151939708328
+  x: 18117496890739907204
+dimscenario:
+  columns:
+  - scenariokey
+  - scenarioname
+  excluded: []
+  n: 3
+  s: 1455783699922012685
+  x: 8901333981867300305
+factadditionalinternationalproductdescription:
+  columns:
+  - productkey
+  - culturename
+  - productdescription
+  excluded: []
+  n: 1911
+  s: 3297165032009888659
+  x: 3801986113059442173
+factcallcenter:
+  columns:
+  - factcallcenterid
+  - datekey
+  - wagetype
+  - shift
+  - leveloneoperators
+  - leveltwooperators
+  - totaloperators
+  - calls
+  - automaticresponses
+  - orders
+  - issuesraised
+  - averagetimeperissue
+  - date
+  excluded:
+  - servicegrade
+  n: 120
+  s: 17518841539757853471
+  x: 14755108876780499697
+factcurrencyrate:
+  columns:
+  - currencykey
+  - datekey
+  - date
+  excluded:
+  - averagerate
+  - endofdayrate
+  n: 14264
+  s: 4492423926954097334
+  x: 4331874267957445834
+factfinance:
+  columns:
+  - financekey
+  - datekey
+  - organizationkey
+  - departmentgroupkey
+  - scenariokey
+  - accountkey
+  - date
+  excluded:
+  - amount
+  n: 39409
+  s: 8823555396214064568
+  x: 4197046177725747838
+factinternetsales:
+  columns:
+  - productkey
+  - orderdatekey
+  - duedatekey
+  - shipdatekey
+  - customerkey
+  - promotionkey
+  - currencykey
+  - salesterritorykey
+  - salesordernumber
+  - salesorderlinenumber
+  - revisionnumber
+  - orderquantity
+  - unitprice
+  - extendedamount
+  - productstandardcost
+  - totalproductcost
+  - salesamount
+  - taxamt
+  - freight
+  - carriertrackingnumber
+  - customerponumber
+  - orderdate
+  - duedate
+  - shipdate
+  excluded:
+  - unitpricediscountpct
+  - discountamount
+  n: 60398
+  s: 9544156459433362072
+  x: 12903825396653259848
+factinternetsalesreason:
+  columns:
+  - salesordernumber
+  - salesorderlinenumber
+  - salesreasonkey
+  excluded: []
+  n: 64515
+  s: 10317288820816449553
+  x: 64707497725872465
+factproductinventory:
+  columns:
+  - productkey
+  - datekey
+  - movementdate
+  - unitcost
+  - unitsin
+  - unitsout
+  - unitsbalance
+  excluded: []
+  n: 776286
+  s: 7623032970784666529
+  x: 6793267965920478945
+factresellersales:
+  columns:
+  - productkey
+  - orderdatekey
+  - duedatekey
+  - shipdatekey
+  - resellerkey
+  - employeekey
+  - promotionkey
+  - currencykey
+  - salesterritorykey
+  - salesordernumber
+  - salesorderlinenumber
+  - revisionnumber
+  - orderquantity
+  - unitprice
+  - extendedamount
+  - productstandardcost
+  - totalproductcost
+  - salesamount
+  - taxamt
+  - freight
+  - carriertrackingnumber
+  - customerponumber
+  - orderdate
+  - duedate
+  - shipdate
+  excluded:
+  - unitpricediscountpct
+  - discountamount
+  n: 60855
+  s: 1012204713705338970
+  x: 4196503434005452160
+factsalesquota:
+  columns:
+  - salesquotakey
+  - employeekey
+  - datekey
+  - calendaryear
+  - calendarquarter
+  - salesamountquota
+  - date
+  excluded: []
+  n: 163
+  s: 243912369556285386
+  x: 2829157249519152664
+factsurveyresponse:
+  columns:
+  - surveyresponsekey
+  - datekey
+  - customerkey
+  - productcategorykey
+  - englishproductcategoryname
+  - productsubcategorykey
+  - englishproductsubcategoryname
+  - date
+  excluded: []
+  n: 2727
+  s: 4014079227345683550
+  x: 4361466797062290300
+newfactcurrencyrate:
+  columns:
+  - currencyid
+  - currencydate
+  - currencykey
+  - datekey
+  excluded:
+  - averagerate
+  - endofdayrate
+  n: 50
+  s: 14812972311205186160
+  x: 1057796927235288202
+prospectivebuyer:
+  columns:
+  - prospectivebuyerkey
+  - prospectalternatekey
+  - firstname
+  - middlename
+  - lastname
+  - birthdate
+  - maritalstatus
+  - gender
+  - emailaddress
+  - yearlyincome
+  - totalchildren
+  - numberchildrenathome
+  - education
+  - occupation
+  - houseownerflag
+  - numbercarsowned
+  - addressline1
+  - addressline2
+  - city
+  - stateprovincecode
+  - postalcode
+  - phone
+  - salutation
+  - unknown
+  excluded: []
+  n: 2059
+  s: 16333827874647053506
+  x: 2007769490252844598
+sysdiagrams:
+  columns:
+  - name
+  - principal_id
+  - diagram_id
+  - version
+  - definition
+  excluded: []
+  n: 9
+  s: 15953821707411911821
+  x: 17512863143314263477

@@ -25,7 +25,7 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,adventureworks_dw sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
 
 # every core dataset: what the published image contains
 CORE := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \

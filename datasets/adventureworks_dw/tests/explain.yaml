@@ -1,0 +1,10 @@
+# star-schema joins: the fact tables' foreign key columns
+- name: internet_sales_by_product
+  query: SELECT COUNT(*) FROM factinternetsales WHERE productkey = 310
+  must_not_full_scan: [factinternetsales]
+- name: internet_sales_by_date
+  query: SELECT COUNT(*) FROM factinternetsales WHERE orderdatekey = 20130101
+  must_not_full_scan: [factinternetsales]
+- name: customer_by_key
+  query: SELECT lastname FROM dimcustomer WHERE customerkey = 11000
+  must_not_full_scan: [dimcustomer]

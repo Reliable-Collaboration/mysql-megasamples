@@ -15,6 +15,8 @@ generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:20:00Z"
 verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:20:00Z"
 sources:
@@ -40,6 +42,28 @@ AdventureWorksDW. Proposed MySQL database name: **`adventureworks_dw`**. All tab
 # Source artifact
 * Chosen: `samples/databases/adventure-works/data-warehouse-install-script/` at commit `b47eadc852` (2025-11-14): `instawdbdw.sql` (54,095 bytes, ASCII) + 30 CSVs, ~86 MB uncompressed; zip form `AdventureWorksDW-data-warehouse-install-script.zip` 16,765,004 bytes. No auth, no checksum published.
 * Alternative .bak (release `adventureworks`): DW2025 25,305,088 B; DW2022 101,834,752; DW2019 101,834,752; DW2017 23,436,800; DW2016 22,484,480 (+DW2016_EXT 926,232,064); DW2014 22,450,176; DW2012 22,822,912; 2008R2 77,709,312.
+
+# Built and measured (2026-09-03, task X-01)
+30 tables (31 in the script, less `DatabaseLog`, which the naming decision drops), **1,047,467 rows**,
+**161.2 MB** in InnoDB, loading in 9.2 s, with **45 foreign keys and 0 orphans**, 10 smoke queries and
+3 plan tests pinned. Both figures the record could only infer are confirmed to the last digit:
+`SUM(salesamount)` is **29,358,677.2207** over `factinternetsales` and **80,450,596.9823** over
+`factresellersales`. The localisation columns survive — 396 products carry non-ASCII Arabic text, and
+French names read `Cadre de vélo de route HL - rouge, 62`.
+
+This uses the same converter machinery as the OLTP database (`scripts/bulkinsert.py`), and the schema
+is far simpler: one `dbo` schema so nothing is prefixed, one terminator family (`|` and a newline), no
+computed columns, and none of SQL Server's exotic types.
+
+**A missing space nearly cost the largest dimension.** The script writes
+`BULK INSERT[dbo].[DimCustomer]` with no space after `INSERT` — the only one of the 29 that does — so a
+reader requiring whitespace there silently skipped `DimCustomer` entirely, 18,484 rows. It was caught
+because the converter reports every table it creates with no data file, not by anything failing.
+
+**Not yet ported (task V-02)**: the three scalar functions (`udfBuildISO8601Date`, `udfMinimumDate`,
+`udfTwoDigitZeroFill`) and the DDL trigger, and with them the `vTimeSeries` view, which calls the
+first of those. 4 of the 5 views are created. The converter drops a view whose body calls a routine it
+did not port, rather than emitting one that cannot be created.
 
 # Native format and friendlier forms
 Friendly form exists: every CSV is loaded with `CODEPAGE='65001', DATAFILETYPE='char', FIELDTERMINATOR='|', ROWTERMINATOR='\n'` (verified for all 29 BULK INSERTs). **Inferred:** files are LF-terminated UTF-8 like the OLTP set (not sampled individually; DimProduct/DimEmployee carry `varbinary` photos and an xml column as hex/inline text). `LOAD DATA ... FIELDS TERMINATED BY '|' ESCAPED BY '' LINES TERMINATED BY '\n'`.

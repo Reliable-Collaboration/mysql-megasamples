@@ -1,0 +1,63 @@
+- name: internet_sales_total
+  query: 'SELECT COUNT(*), ROUND(SUM(salesamount), 4), ROUND(SUM(orderquantity), 0)
+
+    FROM factinternetsales
+
+    '
+- name: reseller_sales_total
+  query: 'SELECT COUNT(*), ROUND(SUM(salesamount), 4) FROM factresellersales
+
+    '
+- name: build_version
+  query: SELECT dbversion, versiondate FROM adventureworksdwbuildversion
+- name: date_dimension
+  query: 'SELECT MIN(fulldatealternatekey), MAX(fulldatealternatekey), COUNT(*),
+
+    COUNT(DISTINCT calendaryear) FROM dimdate
+
+    '
+- name: sales_by_year
+  query: 'SELECT d.calendaryear, COUNT(*), ROUND(SUM(f.salesamount), 2) FROM factinternetsales f
+
+    JOIN dimdate d ON d.datekey = f.orderdatekey
+
+    GROUP BY d.calendaryear ORDER BY d.calendaryear
+
+    '
+- name: top_product_categories
+  query: 'SELECT c.englishproductcategoryname, ROUND(SUM(f.salesamount), 2) FROM factinternetsales f
+
+    JOIN dimproduct p ON p.productkey = f.productkey
+
+    JOIN dimproductsubcategory s ON s.productsubcategorykey = p.productsubcategorykey
+
+    JOIN dimproductcategory c ON c.productcategorykey = s.productcategorykey
+
+    GROUP BY c.productcategorykey, c.englishproductcategoryname ORDER BY 2 DESC
+
+    '
+- name: localised_product_names
+  query: 'SELECT SUM(frenchproductname REGEXP ''[^ -~]''), SUM(arabicdescription REGEXP ''[^ -~]''),
+
+    SUM(chinesedescription REGEXP ''[^ -~]'') FROM dimproduct
+
+    '
+- name: french_example
+  query: 'SELECT frenchproductname FROM dimproduct WHERE frenchproductname REGEXP ''[^ -~]''
+
+    ORDER BY productkey LIMIT 2
+
+    '
+- name: customers_by_country
+  query: 'SELECT g.englishcountryregionname, COUNT(*) FROM dimcustomer c
+
+    JOIN dimgeography g ON g.geographykey = c.geographykey
+
+    GROUP BY g.englishcountryregionname ORDER BY COUNT(*) DESC, 1 LIMIT 5
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='adventureworks_dw')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='adventureworks_dw')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='adventureworks_dw') AS triggers\n"

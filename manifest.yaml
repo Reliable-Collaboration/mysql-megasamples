@@ -1300,3 +1300,13 @@ artifacts:
     size_bytes: 862
     license: cc-by-sa-4-0
     ipv4_first: false
+
+  # AdventureWorks DW: the release zip, the same shape as the OLTP one.
+  - id: adventureworks_dw/AdventureWorksDW-data-warehouse-install-script.zip
+    dataset: adventureworks_dw
+    url: https://github.com/microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorksDW-data-warehouse-install-script.zip
+    mirrors: []
+    sha256: "73c27309d17cd30bf5351665401106abf649d9f9a9ecb0c770682f6be965aba8"
+    size_bytes: 16765004
+    license: mit
+    ipv4_first: false

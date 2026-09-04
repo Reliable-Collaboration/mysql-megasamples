@@ -1,0 +1,33 @@
+# Measured on the first load; upstream publishes no counts. 30 tables (31 in the script, less
+# DatabaseLog, which the naming decision drops); adventureworksdwbuildversion has no data file
+# upstream and carries the one row the install script INSERTs.
+adventureworksdwbuildversion: 1
+dimaccount: 99
+dimcurrency: 105
+dimcustomer: 18484
+dimdate: 3652
+dimdepartmentgroup: 7
+dimemployee: 296
+dimgeography: 655
+dimorganization: 14
+dimproduct: 606
+dimproductcategory: 4
+dimproductsubcategory: 37
+dimpromotion: 16
+dimreseller: 701
+dimsalesreason: 10
+dimsalesterritory: 11
+dimscenario: 3
+factadditionalinternationalproductdescription: 1911
+factcallcenter: 120
+factcurrencyrate: 14264
+factfinance: 39409
+factinternetsales: 60398
+factinternetsalesreason: 64515
+factproductinventory: 776286
+factresellersales: 60855
+factsalesquota: 163
+factsurveyresponse: 2727
+newfactcurrencyrate: 50
+prospectivebuyer: 2059
+sysdiagrams: 9

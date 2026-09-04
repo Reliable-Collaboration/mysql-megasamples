@@ -1,0 +1,9 @@
+name: adventureworks_dw
+database: adventureworks_dw
+tier: extended
+record: knowledge/datasets/adventureworks-dw.md
+licenses: [mit]
+artifacts: [adventureworks_dw/AdventureWorksDW-data-warehouse-install-script.zip]
+converter: none
+load:
+  - adventureworks_dw.sql
