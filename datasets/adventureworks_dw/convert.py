@@ -12,7 +12,7 @@ import os, re, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import tsql, ddlutil, bulkinsert  # noqa: E402
+import tsql, tsqlbody, ddlutil, bulkinsert  # noqa: E402
 
 DATABASE = "adventureworks_dw"
 CONTEXT = "/context/adventureworks_dw"
@@ -39,14 +39,15 @@ def main():
     buckets = {k: [] for k in ("table", "index", "constraint", "view", "procedure", "function",
                                "trigger", "dml")}
     columns, unported, deferred_routines = {}, [], set()
+    # the routine bodies are translated by scripts/tsqlbody.py; anything it refuses is named here
+    # with its reason, and a view that calls a refused routine is dropped below
+    udts = dict(tsql.collect_tsql_types(script))
+    routines, refused, routine_notes = tsqlbody.port(statements, udts)
+    unported += refused
+    deferred_routines = {r.split(":")[0].split()[-1].lower() for r in refused}
     for st in statements:
         kind, sql = st["kind"], st["sql"]
         if kind in ("procedure", "function", "trigger"):
-            name = re.search(r"(?i)(procedure|function|trigger)\s+`?(\w+)`?", sql)
-            if name:
-                deferred_routines.add(name.group(2).lower())
-            unported.append(f"{kind} {name.group(2).lower() if name else '?'}: "
-                            "T-SQL routine body, not yet ported (task V-02)")
             continue
         blockers = tsql.xml_blockers(sql) if kind == "view" else []
         if blockers:
@@ -105,10 +106,18 @@ USE `{DATABASE}`;
     for sql in buckets["dml"]:
         out.append(BUILD_VERSION if "SERVERPROPERTY" in sql.upper() else tsql.terminate(sql))
     out += loads
-    for phase in ("index", "constraint", "view"):
+    for phase in ("index", "constraint"):
         if buckets[phase]:
             out.append(f"\n-- {'-' * 60}\n-- {phase}\n")
             out += [tsql.terminate(sql) for sql in buckets[phase]]
+    # routines before views: vTimeSeries calls udfBuildISO8601Date, and MySQL resolves a function
+    # name when the view is created, not when it is queried
+    if routines:
+        out.append(f"\n-- {'-' * 60}\n-- routines\n")
+        out.append(routines)
+    if buckets["view"]:
+        out.append(f"\n-- {'-' * 60}\n-- view\n")
+        out += [tsql.terminate(sql) for sql in buckets["view"]]
     out.append("SET SESSION foreign_key_checks = 1;\n")
     open(dest, "w", encoding="utf-8").write("\n".join(out))
     with open(mapfile, "w", encoding="utf-8") as fh:
@@ -117,7 +126,10 @@ USE `{DATABASE}`;
             fh.write(f"{old}: {new}\n")
 
     print(f"  . translated {len(buckets['table'])} tables, {len(buckets['index'])} indexes, "
-          f"{len(buckets['view'])} views")
+          f"{len(buckets['view'])} views, "
+          f"{routines.count('CREATE ')} routines")
+    for n in routine_notes:
+        print(f"  . note {n}")
     print(f"  . wrote {len(loaded)} TSV files, {sum(loaded.values()):,} rows")
     if empty:
         print(f"  . created with no data file upstream: {', '.join(empty)}")

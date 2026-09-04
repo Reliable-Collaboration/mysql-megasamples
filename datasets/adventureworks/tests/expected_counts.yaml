@@ -1,6 +1,4 @@
-# Row counts for all 69 tables. 45 of them were verified from the CSVs during research
-# (knowledge/datasets/adventureworks-oltp.md) and reproduced exactly on the first load;
-# the rest are measured here, which is what the record's open row-count question asked for.
+# S3: row count per table. Pinned from a verified load.
 awbuildversion: 1
 humanresources_department: 16
 humanresources_employee: 290

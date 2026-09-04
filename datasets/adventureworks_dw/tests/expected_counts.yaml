@@ -1,6 +1,4 @@
-# Measured on the first load; upstream publishes no counts. 30 tables (31 in the script, less
-# DatabaseLog, which the naming decision drops); adventureworksdwbuildversion has no data file
-# upstream and carries the one row the install script INSERTs.
+# S3: row count per table. Pinned from a verified load.
 adventureworksdwbuildversion: 1
 dimaccount: 99
 dimcurrency: 105

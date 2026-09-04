@@ -42,7 +42,7 @@ sources:
 | `duckdb` | see [PyPI duckdb](/sources/pypi-duckdb.md) | MIT | Parquet/CSV normalisation, TPC-H/TPC-DS generators ([DuckDB record](/tools/duckdb.md)) |
 | `pyarrow` | 25.0.1 | Apache-2.0 | Parquet footer/schema inspection only (DuckDB does the heavy lifting) |
 | `lxml` | 6.1.3 | [BSD-3-Clause](/licenses/bsd-3-clause.md) | Stack Exchange XML (`iterparse`), AdventureWorks XML columns validation |
-| `sqlglot` | 30.17.0 | MIT | first-pass DDL/query transpilation T-SQL/Oracle → MySQL for TPC-DS queries and AdventureWorks views; output is always reviewed and tested because "SQLGlot is a transpiler, not a validator" ([PyPI](/sources/pypi-sqlglot.md)) |
+| `sqlglot` | 30.17.0 | MIT | first-pass DDL/query transpilation T-SQL/Oracle → MySQL for TPC-DS queries and AdventureWorks views; output is always reviewed and tested because "SQLGlot is a transpiler, not a validator" ([PyPI](/sources/pypi-sqlglot.md)). **Statements only.** Tried on routine bodies at V-02 and rejected on evidence: given AdventureWorks' twelve-line `ufnGetStock` it dropped the `RETURNS int` type, turned `IF (@ret IS NULL) SET @ret = 0` into an empty string, and parsed `RETURN @ret` as a column alias — printing `Unsupported If block syntax` and emitting output anyway. `scripts/tsqlbody.py` does routine bodies instead |
 | `mwxml` | 0.3.8 (see [mediawiki parsing](/tools/mediawiki-xml-dump-parsing.md)) | MIT | Wikipedia XML |
 | `PyYAML` | latest | MIT (**Inferred**, not read) | manifest and test files |
 

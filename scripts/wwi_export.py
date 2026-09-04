@@ -119,7 +119,8 @@ SELECT CAST((SELECT
          CAST(sq.current_value AS BIGINT) AS current_value
   FROM sys.sequences sq JOIN sys.schemas s ON s.schema_id=sq.schema_id
   ORDER BY s.name, sq.name FOR JSON PATH) AS [sequences],
- (SELECT s.name AS [schema], o.name, o.type_desc
+ (SELECT s.name AS [schema], o.name, o.type_desc,
+         OBJECT_DEFINITION(o.object_id) AS definition
   FROM sys.objects o JOIN sys.schemas s ON s.schema_id=o.schema_id
   WHERE o.type IN ('P','FN','IF','TF','V','TR') AND o.is_ms_shipped=0
   ORDER BY o.type_desc, s.name, o.name FOR JSON PATH) AS [routines]

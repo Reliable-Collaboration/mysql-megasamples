@@ -16,7 +16,7 @@ import csv, os, re, struct, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import tsql, hierarchyid, ddlutil, bulkinsert  # noqa: E402
+import tsql, tsqlbody, hierarchyid, ddlutil, bulkinsert  # noqa: E402
 
 DATABASE = "adventureworks"
 SCRIPT = "instawdb.sql"
@@ -99,21 +99,20 @@ def main():
         script, keep_objects=True, schemas=SCHEMAS,
         computed_types=COMPUTED_TYPES, materialize=MATERIALIZE)
 
+    udts = dict(tsql.collect_tsql_types(script))
+    udts.update({k: (v[0] if isinstance(v, tuple) else v)
+                 for k, v in tsql.collect_udts(script).items()})
+    routines, refused, routine_notes = tsqlbody.port(statements, udts)
+
     buckets = {k: [] for k in ("table", "index", "constraint", "view", "procedure", "function",
                                "trigger", "dml")}
-    columns, generated, dropped_tables, unported = {}, {}, [], []
+    columns, generated, dropped_tables, unported = {}, {}, [], list(refused)
     for st in statements:
         kind, sql = st["kind"], st["sql"]
         if kind == "table":
             sql = add_path_columns(sql)
         if kind in ("procedure", "function", "trigger"):
-            # T-SQL routine bodies (@parameters, RETURNS ... AS BEGIN, the inserted/deleted
-            # pseudo-tables, RAISERROR, SIGNAL-less error handling) need a translator of their own.
-            # They are named here rather than emitted broken; see the record for what each does.
-            name = re.search(r"(?i)(procedure|function|trigger)\s+`?([\w.]+)`?", sql)
-            unported.append(f"{kind} {name.group(2).lower() if name else '?'}: "
-                            f"T-SQL routine body, not yet ported")
-            continue
+            continue                 # translated in one pass by scripts/tsqlbody.py, below
         blockers = tsql.xml_blockers(sql) if kind == "view" else []
         if blockers:
             name = re.search(r"(?i)(view|procedure|function|trigger)\s+`?([\w.]+)`?", sql)
@@ -182,10 +181,17 @@ USE `{DATABASE}`;
             continue
         out.append(tsql.terminate(sql))
     out += loads
-    for phase in ("index", "constraint", "view", "function", "procedure", "trigger"):
+    for phase in ("index", "constraint"):
         if buckets[phase]:
             out.append(f"\n-- {'-' * 60}\n-- {phase}\n")
             out += [tsql.terminate(s) for s in buckets[phase]]
+    # routines before views: a view may call a function, and MySQL resolves the name at CREATE time
+    if routines:
+        out.append(f"\n-- {'-' * 60}\n-- routines\n")
+        out.append(routines)
+    if buckets["view"]:
+        out.append(f"\n-- {'-' * 60}\n-- view\n")
+        out += [tsql.terminate(s) for s in buckets["view"]]
     out.append("SET SESSION foreign_key_checks = 1;\n")
     open(dest, "w", encoding="utf-8").write("\n".join(out))
     with open(mapfile, "w", encoding="utf-8") as fh:
@@ -194,7 +200,7 @@ USE `{DATABASE}`;
             fh.write(f"{old}: {new}\n")
 
     print(f"  . translated {len(buckets['table'])} tables, {len(buckets['index'])} indexes, "
-          f"{len(buckets['view'])} views, {len(buckets['trigger'])} triggers")
+          f"{len(buckets['view'])} views, {routines.count('CREATE ')} routines")
     print(f"  . wrote {len(loaded)} TSV files, {sum(loaded.values()):,} rows")
     print(f"  . dropped SQL Server logging tables: {', '.join(dropped_tables)}")
     for u in unported:

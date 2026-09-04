@@ -11,6 +11,8 @@ What it does NOT attempt: rewriting T-SQL procedural bodies. Objects whose body 
 no mechanical MySQL equivalent are reported by name so the caller can decide to port or drop them.
 """
 import hashlib
+
+import ddlutil
 import re
 
 from ddlutil import inline_identity_pk
@@ -111,9 +113,14 @@ def split_statements(batch):
     lead = re.sub(r"(?s)^\s*(?:/\*.*?\*/|--[^\n]*\n)\s*", "", batch)
     if ROUTINE_START.match(lead):
         return [batch]
-    out, cur = [], []
-    for line in lines:
-        if not in_str and STMT_START.match(line) and cur and any(c.strip() for c in cur):
+    out, cur, in_routine = [], [], False
+    for n, line in enumerate(lines):
+        if not in_str and not in_routine and ROUTINE_START.match(line):
+            if cur and any(c.strip() for c in cur):
+                out.append("\n".join(cur)); cur = []
+            in_routine = True                    # its body is one definition, semicolons and all
+        elif not in_str and not in_routine and STMT_START.match(line) and cur \
+                and any(c.strip() for c in cur):
             out.append("\n".join(cur)); cur = []
         cur.append(line)
         quotes = 0
@@ -203,6 +210,13 @@ def _cast_type(tsql_type):
     return CAST_TYPES.get(t.lower(), t.upper())
 
 
+# SQL Server's CONVERT date styles, as MySQL format strings. Only the six the sources actually use
+# are listed; anything else is left as a CONVERT so it fails at CREATE time rather than silently.
+CONVERT_STYLES = {"107": "%b %e, %Y", "111": "%Y/%m/%d", "112": "%Y%m%d",
+                  "113": "%d %b %Y %H:%i:%s:%f", "121": "%Y-%m-%d %H:%i:%s.%f",
+                  "126": "%Y-%m-%dT%H:%i:%s.%f"}
+
+
 def convert_tsql_convert(sql):
     """`CONVERT(type, expr)` -> `CAST(expr AS type)`.
 
@@ -223,8 +237,24 @@ def convert_tsql_convert(sql):
         tm = re.match(r"(?i)\s*([A-Za-z_][A-Za-z0-9_]*\s*(?:\([^()]*\))?)\s*,", args)
         if not tm:
             out.append(sql[i:j]); i = j; continue
-        expr = args[tm.end():]
-        out.append(f"CAST({convert_tsql_convert(expr)} AS {_cast_type(tm.group(1))})")
+        rest = split_top(args[tm.end():], ",")
+        if len(rest) > 2 or (len(rest) == 2 and not rest[1].strip().isdigit()):
+            out.append(sql[i:j]); i = j; continue      # left alone, so it fails loudly
+        if len(rest) == 2:
+            # CONVERT(type, expr, style): the third argument is a date format code, and ignoring
+            # it turned `CONVERT(datetime, '20040701', 112)` into `CAST( '20040701', 112 AS
+            # DATETIME)` -- an expression with a stray comma and an unbalanced paren
+            fmt = CONVERT_STYLES.get(rest[1].strip())
+            if fmt is None:
+                out.append(sql[i:j]); i = j; continue
+            expr = convert_tsql_convert(rest[0])
+            target = tm.group(1).strip().lower()
+            out.append(f"DATE_FORMAT({expr}, '{fmt}')" if target.startswith(("char", "varchar",
+                                                                             "nchar", "nvarchar"))
+                       else f"STR_TO_DATE({expr}, '{fmt}')")
+            i = j
+            continue
+        out.append(f"CAST({convert_tsql_convert(rest[0])} AS {_cast_type(tm.group(1))})")
         i = j
     return "".join(out)
 
@@ -382,24 +412,48 @@ def top_groups(text):
     return groups
 
 
-def convert_concat(expr):
+def convert_concat(expr, stringy=()):
     """T-SQL overloads `+` for string concatenation; MySQL's `+` is always arithmetic.
 
     An operand tells the two apart: `N'SO' + CONVERT(...)` has a string literal at the top level of
     the expression and concatenates, while `[SubTotal] + [TaxAmt]` does not and stays as it is.
     Left alone, `'SO' + 71774` would silently evaluate to 71774 in MySQL rather than 'SO71774'.
+
+    Inside a routine body there is a second tell, and it is needed: `REPLICATE('0', n) + @Value`
+    has no top-level literal, but `@Value` was DECLAREd `varchar`. `stringy` carries the names of
+    the character-typed locals and parameters, and an operand that is exactly one of them counts.
+    The test is deliberately narrow -- a bare name, not a name appearing anywhere in a subexpression
+    -- so that `8 - LENGTH(@Value)` stays arithmetic.
     """
     parts = split_top(expr, "+")
-    if len(parts) > 1 and any(has_top_literal(p) for p in parts):
-        return "CONCAT(" + ", ".join(convert_concat(p.strip()) for p in parts) + ")"
+    if len(parts) > 1 and any(has_top_literal(p) or p.strip().strip("()").strip().lower() in stringy
+                              for p in parts):
+        return "CONCAT(" + ", ".join(convert_concat(p.strip(), stringy) for p in parts) + ")"
     out, i = [], 0
     for start, end in top_groups(expr):
         out.append(expr[i:start + 1])
-        out.append(", ".join(convert_concat(a.strip()) for a in split_top(expr[start + 1:end], ",")))
+        out.append(", ".join(_concat_operand(a.strip(), stringy)
+                             for a in split_top(expr[start + 1:end], ",")))
         out.append(")")
         i = end + 1
     out.append(expr[i:])
     return "".join(out)
+
+
+AS_TYPE = re.compile(r"(?is)^(.*?)(\s+AS\s+[A-Za-z_][A-Za-z0-9_]*\s*(?:\([^()]*\))?\s*)$")
+
+
+def _concat_operand(part, stringy):
+    """One argument of a call, with `CAST(x AS type)`'s type kept out of the concatenation.
+
+    `CAST('0' + CAST(n AS CHAR) AS CHAR(2))` splits on `+` into `'0'` and
+    `CAST(n AS CHAR) AS CHAR(2)`, and joining those with CONCAT swallows the outer cast's target
+    type. The trailing `AS <type>` is separated first and put back afterwards.
+    """
+    m = AS_TYPE.match(part)
+    if m and split_top(m.group(1), "+")[1:]:
+        return convert_concat(m.group(1).strip(), stringy) + m.group(2)
+    return convert_concat(part, stringy)
 
 
 COMPUTED = re.compile(r"(?i)(?:^|,)\s*`(\w+)`\s+AS\s+")
@@ -487,7 +541,10 @@ DATE_PARTS = {"yy": "YEAR", "yyyy": "YEAR", "year": "YEAR",
               "hh": "HOUR", "hour": "HOUR",
               "mi": "MINUTE", "n": "MINUTE", "minute": "MINUTE",
               "ss": "SECOND", "s": "SECOND", "second": "SECOND",
-              "ms": "MICROSECOND", "millisecond": "MICROSECOND"}
+              # MySQL has no MILLISECOND interval unit. Mapping ms straight onto MICROSECOND is a
+              # thousandfold error: DATEADD(ms, -2, x) means two milliseconds, not two microseconds.
+              "ms": "MILLISECOND", "millisecond": "MILLISECOND"}
+MILLISECOND = "MILLISECOND"
 
 
 CAST_TARGET = re.compile(r"(?i)\bCAST\s*\(")
@@ -540,7 +597,11 @@ def convert_date_functions(sql):
             args = [a.strip() for a in split_top(sql[m.end():j - 1], ",")]
             unit = DATE_PARTS.get(args[0].strip("[]`\"' ").lower()) if len(args) == 3 else None
             out.append(sql[i:m.start()])
-            if unit and name == "DATEDIFF":
+            if unit == MILLISECOND and name == "DATEDIFF":
+                out.append(f"(TIMESTAMPDIFF(MICROSECOND, {args[1]}, {args[2]}) / 1000)")
+            elif unit == MILLISECOND:
+                out.append(f"DATE_ADD({args[2]}, INTERVAL ({args[1]}) * 1000 MICROSECOND)")
+            elif unit and name == "DATEDIFF":
                 out.append(f"TIMESTAMPDIFF({unit}, {args[1]}, {args[2]})")
             elif unit:
                 out.append(f"DATE_ADD({args[2]}, INTERVAL {args[1]} {unit})")
@@ -977,7 +1038,7 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
         batch = re.sub(r"(?im)^[ \t]*PRINT\s+[^;]*;[ \t]*$", "", batch)
         body = strip_schemas(batch, schemas)
         # classify on the first real statement: several batches open with a block comment
-        lead = re.sub(r"(?s)^\s*(?:/\*.*?\*/|--[^\n]*\n)\s*", "", body)
+        lead = re.sub(r"(?s)^\s*(?:/\*.*?\*/|--[^\n]*\n)+\s*", "", body)
         kind = "other"
         if re.match(r"(?i)^\s*create\s+table", lead): kind = "table"
         elif re.match(r"(?i)^\s*create\s+view", lead): kind = "view"
@@ -1094,8 +1155,8 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             # changes what the client driver reports. Neither has a MySQL equivalent.
             body = re.sub(r"(?i)\s+WITH\s+(SCHEMABINDING|VIEW_METADATA|ENCRYPTION)"
                           r"(\s*,\s*(SCHEMABINDING|VIEW_METADATA|ENCRYPTION))*", "", body)
-        if kind in ("view", "procedure", "trigger"):
-            body = convert_select_aliases(body)
+        if kind in ("view", "procedure", "trigger", "function"):
+            body = convert_select_aliases(body) if kind != "function" else body
             body = convert_functions(convert_tsql_convert(convert_xml_value(body)))
             body = convert_cast_targets(convert_date_functions(body))
             body = convert_recursive_cte(body)

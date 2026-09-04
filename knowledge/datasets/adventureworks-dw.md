@@ -60,10 +60,20 @@ computed columns, and none of SQL Server's exotic types.
 reader requiring whitespace there silently skipped `DimCustomer` entirely, 18,484 rows. It was caught
 because the converter reports every table it creates with no data file, not by anything failing.
 
-**Not yet ported (task V-02)**: the three scalar functions (`udfBuildISO8601Date`, `udfMinimumDate`,
-`udfTwoDigitZeroFill`) and the DDL trigger, and with them the `vTimeSeries` view, which calls the
-first of those. 4 of the 5 views are created. The converter drops a view whose body calls a routine it
-did not port, rather than emitting one that cannot be created.
+**Ported at V-02 (2026-09-04)**: all three scalar functions are translated and **all 5 views are
+created**, `vTimeSeries` included -- it calls `udfBuildISO8601Date`, so the routines are emitted
+before the views, because MySQL resolves a function name when a view is created rather than when it
+is queried. Checked by calling them: `udfBuildISO8601Date(2024, 3, 7)` is `2024-03-07`,
+`udfTwoDigitZeroFill(7)` is `07`, `udfMinimumDate('2024-01-05','2023-11-02')` is the second date, and
+`vTimeSeries` returns its 100 rows.
+
+Only the DDL trigger is refused, because it is `ON DATABASE` and MySQL has no equivalent.
+
+**Three of those five views were being lost silently.** The install script puts several comment lines
+above each function and view, and `split_statements` stripped only one before deciding whether a
+batch was a routine -- so these bodies were split on their own semicolons and the `CREATE` ended at
+`AS`. The count in this record's earlier section ("4 of the 5 views are created") was measuring that
+bug, not a MySQL limitation.
 
 # Native format and friendlier forms
 Friendly form exists: every CSV is loaded with `CODEPAGE='65001', DATAFILETYPE='char', FIELDTERMINATOR='|', ROWTERMINATOR='\n'` (verified for all 29 BULK INSERTs). **Inferred:** files are LF-terminated UTF-8 like the OLTP set (not sampled individually; DimProduct/DimEmployee carry `varbinary` photos and an xml column as hex/inline text). `LOAD DATA ... FIELDS TERMINATED BY '|' ESCAPED BY '' LINES TERMINATED BY '\n'`.
