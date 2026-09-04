@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -14,6 +14,9 @@ help:
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
 	@echo "make check            the local gate: bundle validation + generated files up to date"
 	@echo "make okf-check        validate the knowledge bundle"
+	@echo "make load-citibike    download one month of Citi Bike trips to this machine and load"
+	@echo "make load-divvy       the same for Divvy (both need their licence accepted; nothing"
+	@echo "                      from either is ever redistributed by this project)"
 	@echo "make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server,"
 	@echo "                      Developer EULA -- see the target below; needed once, not per build)"
 	@echo "make build-server     start the throwaway MySQL build server"
@@ -94,6 +97,17 @@ chicago-full:
 	@$(PY) scripts/stage.py chicago_crimes_full
 	@$(PY) scripts/load.py  chicago_crimes_full
 	@$(PY) scripts/verify.py chicago_crimes_full
+
+# Citi Bike and Divvy are the only datasets whose data this project never redistributes: their
+# licences forbid publishing it as a stand-alone dataset. The loader downloads one month from Lyft's
+# own bucket to your machine, which is where the licence attaches, and refuses to start until you
+# accept it. Nothing is mirrored, committed or shipped.
+#   MEGASAMPLES_ACCEPT_BIKESHARE_LICENSE=1 make load-citibike [MONTH=JC-202602]
+load-citibike:
+	@$(PY) scripts/bikeshare.py citibike $(if $(MONTH),--month $(MONTH),)
+
+load-divvy:
+	@$(PY) scripts/bikeshare.py divvy $(if $(MONTH),--month $(MONTH),)
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

@@ -90,16 +90,27 @@ def build_provenance(name, cfg, arts, record, measurements, licences):
            f"**Licence:** {', '.join(cfg.get('licenses', [])) or '(none recorded)'} — see `LICENSE` "
            f"beside this file.", ""]
 
-    out += ["## Source artifacts", "",
-            "Every byte this database is built from, pinned. `scripts/fetch.py` refuses to proceed if",
-            "a download does not match.", "",
-            "| artifact | bytes | sha256 |", "|---|---:|---|"]
-    for art in arts:
-        size = art.get("size_bytes") or 0
-        out.append(f"| `{art['id']}` | {size:,} | `{art.get('sha256') or '(unpinned)'}` |")
-    if not arts:
-        out.append("| (none listed in manifest.yaml) | | |")
-    out.append("")
+    if not arts and cfg.get("tier") == "not-shipped":
+        # nothing is pinned because nothing is fetched by the build: the loader downloads on the
+        # machine of whoever accepts the licence, and the project never mirrors or ships it
+        out += ["## Source artifacts", "",
+                "**None.** This dataset's licence forbids publishing the data as a stand-alone",
+                "dataset, so the build never downloads it, `manifest.yaml` lists nothing for it, and",
+                "no release asset exists. `scripts/bikeshare.py` fetches one month from the",
+                "operator's own bucket, on the machine of whoever accepts the licence, and records",
+                "the key, its sha256 and its `LastModified` in the generated SQL and the table",
+                "comment. See the open question on redistribution in the knowledge bundle.", ""]
+    else:
+        out += ["## Source artifacts", "",
+                "Every byte this database is built from, pinned. `scripts/fetch.py` refuses to proceed if",
+                "a download does not match.", "",
+                "| artifact | bytes | sha256 |", "|---|---:|---|"]
+        for art in arts:
+            size = art.get("size_bytes") or 0
+            out.append(f"| `{art['id']}` | {size:,} | `{art.get('sha256') or '(unpinned)'}` |")
+        if not arts:
+            out.append("| (none listed in manifest.yaml) | | |")
+        out.append("")
 
     if "Source artifact" in sections:
         out += ["## What upstream publishes", "", sections["Source artifact"], ""]

@@ -1,0 +1,11 @@
+name: citibike
+database: citibike
+tier: not-shipped
+record: knowledge/datasets/citibike.md
+licenses: [citibike-data-use-policy]
+# No manifest artifacts by design: this data is never fetched by the build, never mirrored and
+# never redistributed. `scripts/bikeshare.py` downloads it from Lyft's own bucket, on the machine
+# of whoever accepts the licence. See knowledge/questions/citibike-divvy-redistribution.md.
+artifacts: []
+converter: none
+load: []

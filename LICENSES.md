@@ -16,9 +16,11 @@ database keeps the licence of the project it came from, listed below, and each
 | `chicago_crimes` | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) |
 | `chicago_crimes_full` | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) |
 | `chinook` | [mit](knowledge/licenses/mit.md) |
+| `citibike` | [citibike-data-use-policy](knowledge/licenses/citibike-data-use-policy.md) |
 | `contoso` | [mit](knowledge/licenses/mit.md) |
 | `contoso_10m` | [mit](knowledge/licenses/mit.md) |
 | `contoso_1m` | [mit](knowledge/licenses/mit.md) |
+| `divvy` | [divvy-data-license](knowledge/licenses/divvy-data-license.md) |
 | `dvdstore` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
 | `dvdstore_reviews` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
 | `employees` | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) |
@@ -52,6 +54,8 @@ database keeps the licence of the project it came from, listed below, and each
 * **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** — `stackexchange_beer`, `stackexchange_dba`, `wikipedia_simple`, `wikipedia_simple_full`
 * **CC0 1.0 Universal (public domain dedication) - palmerpenguins** — `smallsets`
 * **City of Chicago Data Terms of Use** — `chicago_crimes`, `chicago_crimes_full`
+* **Citi Bike / NYCBS Data Sharing Policy** — `citibike`
+* **Divvy Data License Agreement** — `divvy`
 * **Enron email corpus — public record status and CMU distribution terms** — `enron`, `enron_full`
 * **GNU Free Documentation License 1.3 (GFDL 1.3)** — `wikipedia_simple`, `wikipedia_simple_full`
 * **GNU General Public License v2.0 (or later) - Dell DVD Store 3** — `dvdstore`, `dvdstore_reviews`

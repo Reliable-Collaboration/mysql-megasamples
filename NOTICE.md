@@ -20,6 +20,14 @@ Reproduce the copyright line and the MIT permission notice for each MIT-licensed
 >
 > This site provides applications using data that has been modified for use from its original source, www.cityofchicago.org, the official website of the City of Chicago. The City of Chicago makes no claims as to the content, accuracy, timeliness, or completeness of any of the data provided at this site. The data provided at this site is subject to change at any time. It is understood that the data provided at this site is being used at one's own risk.
 
+## Citi Bike / NYCBS Data Sharing Policy
+
+> Bike trip data downloaded by the user at build time from the Citi Bike system-data S3 bucket (https://citibikenyc.com/system-data), subject to the Citi Bike Data Sharing Policy (https://citibikenyc.com/data-sharing-policy). This project is not affiliated with, endorsed or sponsored by Lyft Bikes and Scooters, LLC or Citigroup, Inc.
+
+## Divvy Data License Agreement
+
+> Bike trip data downloaded by the user at build time from the Divvy system-data bucket (https://divvybikes.com/system-data), owned by the City of Chicago and licensed under the Divvy Data License Agreement (https://divvybikes.com/data-license-agreement). This project is not affiliated with, endorsed or sponsored by Lyft Bikes and Scooters, LLC or the City of Chicago.
+
 ## GNU General Public License v2.0 (or later) - Dell DVD Store 3
 
 Ship `gpl.txt` (GPL-2.0-or-later) next to the DVD Store scripts, keep the Dell (2005) and VMware (2014) copyright headers, and mark every modified script with a dated change note. Wording used in NOTICE: "Dell DVD Store 3 kit © 2005 Dell, Inc. and © 2014 VMware, Inc., GNU GPL v2 or later; MySQL scripts adapted (InnoDB, utf8mb4, lower-case identifiers) by this project." sysbench (GPL-2.0) is executed at load time only and is not redistributed.

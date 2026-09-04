@@ -65,6 +65,15 @@ Already zipped CSV. Station metadata is separate GBFS JSON (`https://gbfs.lyft.c
 # Conversion path
 [DuckDB reader -> typed CSV -> `util.importTable`](/decisions/large-tabular-conversion-path.md), reading zip members directly. Same target DDL as [Citi Bike](/datasets/citibike.md) - one shared loader handles both, which is the main reason to keep them as a pair.
 
+# Built and measured (2026-09-04, task X-04)
+`make load-divvy` works exactly as Citi Bike's does, from the same loader; the two systems share the
+current 13-column layout. The default month `202004` (3,323,572 bytes) loads **84,776 trips in
+37.1 MB** — the ~84,800 this record inferred — across 602 start stations, 2020-04-01 to 2020-04-30,
+with second-precision timestamps and 99 trips with no end station.
+
+The bucket held **95 keys**, as recorded, including the legacy `Divvy_Trips_2015-Q1Q2.zip` whose
+hyphen breaks the pattern its siblings use; matching finds it, templating would not.
+
 # Type-mapping hazards
 1. **Two incompatible schemas** (12-column legacy vs 13-column modern), with the break exactly at `Divvy_Trips_2020_Q1` -> `202004`. `gender` and `birthyear` disappear; `tripduration` disappears and must be computed.
 2. **`tripduration` is a float in the legacy files** (`390.0`) despite being whole seconds.

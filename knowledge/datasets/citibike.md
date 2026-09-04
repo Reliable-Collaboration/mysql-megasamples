@@ -63,6 +63,23 @@ Sample: `61,2015-09-21 14:53:16,...,24722,Subscriber,1975,1`
 # Conversion path
 [DuckDB reader -> typed CSV -> `util.importTable`](/decisions/large-tabular-conversion-path.md), reading the zip members directly. Target DDL: `ride_id` -> `CHAR(16)`, `rideable_type` -> `ENUM`/`VARCHAR(16)`, `started_at`/`ended_at` -> `DATETIME(3)` (millisecond fractions are present), station names -> `VARCHAR(96)`, station ids -> `VARCHAR(16)` (**not** integers - modern ids are `HB103`), lat/lng -> `DECIMAL(17,14)` or `DOUBLE`, `member_casual` -> `ENUM('member','casual')`. A generated `trip_duration_s` column reproduces the legacy `tripduration`.
 
+# Built and measured (2026-09-04, task X-04)
+`make load-citibike` downloads one month from Lyft's bucket to the machine of whoever accepts the
+licence and loads it; nothing is fetched by the build, mirrored, committed or shipped. The default
+month is `JC-202602` (Jersey City, 958,731 bytes) because it is the smallest current-schema archive:
+**25,809 trips in 12.1 MB**, the ~25,900 this record inferred. 105 start stations, timestamps to the
+millisecond, 307 trips with no end station (dockless). Member/casual splits 22,261 / 3,548, and
+electric bikes outnumber classic ones in both groups.
+
+The bucket held **174 keys**, exactly as recorded, and every awkward name the record warns about
+resolves through matching rather than templating: `JC-201708 citibike-tripdata.csv.zip` (a space),
+`JC-202207-citbike-tripdata.csv.zip` (upstream's typo) and `JC-202510-citibike-tripdata.zip` (no
+`.csv` infix). A loader that constructed names would find none of the three.
+
+Multi-part stored archives, zips of zips and `__MACOSX/._*` members are all handled, and a
+**pre-2021 file is refused rather than half-loaded**: the 15-column legacy layout has no `ride_id`
+and is a different table, not a spelling variation.
+
 # Type-mapping hazards
 1. **Two incompatible schemas.** The Feb-2021 break changes column count (15 -> 13), names, semantics and even the *kind* of station id. Never union eras without an explicit mapping; `gender` and `birth year` simply do not exist after the break (a deliberate privacy change).
 2. **Station ids are strings.** `HB103`, `HB611`. A legacy-era integer column type would break on modern data.
