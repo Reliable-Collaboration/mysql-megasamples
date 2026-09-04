@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -27,7 +27,7 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,adventureworks_dw wideworldimporters wideworldimporters_dw sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,adventureworks_dw wideworldimporters wideworldimporters_dw bts_ontime contoso_1m contoso_10m sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
 
 # every core dataset: what the published image contains
 CORE := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \
@@ -79,6 +79,21 @@ clean-context:
 wwi-export:
 	@$(PY) scripts/fetch.py wideworldimporters wideworldimporters_dw
 	@$(PY) scripts/wwi_export.py
+
+# Extended tier: 3,475,226 yellow trips appended to a loaded `nyc_taxi` (which must exist first).
+nyc-taxi-yellow:
+	@$(PY) scripts/fetch.py nyc_taxi_yellow
+	@$(PY) scripts/stage.py nyc_taxi_yellow
+	@$(PY) scripts/load.py  nyc_taxi_yellow
+	@$(PY) scripts/verify.py nyc_taxi_yellow
+
+# Extended tier: 8.2 M crimes (2001..2024) appended to a loaded `chicago_crimes`. One CSV per year,
+# ~2.5 GB of download; the digests drift because the portal revises closed years.
+chicago-full:
+	@$(PY) scripts/fetch.py chicago_crimes_full
+	@$(PY) scripts/stage.py chicago_crimes_full
+	@$(PY) scripts/load.py  chicago_crimes_full
+	@$(PY) scripts/verify.py chicago_crimes_full
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

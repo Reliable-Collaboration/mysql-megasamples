@@ -10,6 +10,10 @@ are in each `datasets/<name>/LICENSE` and in `LICENSES.md`.
 
 Reproduce the copyright line and the MIT permission notice for each MIT-licensed dataset in its `LICENSE` and in NOTICE: "Copyright (c) Microsoft Corporation" (Northwind, Pubs, AdventureWorks, WideWorldImporters, plus the scripts' own "Copyright Microsoft, Inc. 1994 - 2000" lines), "Copyright (c) 2023 Oracle and/or its affiliates" (HR, CO, SH, OE), "Chinook Database, Copyright (c) 2008-2024 Luis Rocha", "Copyright (c) 2024 SQLBI" (Contoso data) and "Copyright (c) 2022 SQLBI" (generator), each followed by the standard MIT permission and disclaimer paragraphs.
 
+## U.S. Government work (17 U.S.C. Sec. 105) - public domain
+
+> Airline On-Time Performance data: U.S. Department of Transportation, Bureau of Transportation Statistics, "Reporting Carrier On-Time Performance (1987-present)", https://www.transtats.bts.gov/. A work of the U.S. Government, not subject to copyright (17 U.S.C. Sec. 105). This project is not endorsed by BTS or USDOT.
+
 ## City of Chicago Data Terms of Use
 
 > Crime data: City of Chicago Data Portal, "Crimes - 2001 to Present" (ijzp-q8t2), Chicago Police Department. Terms of use: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
@@ -59,10 +63,6 @@ Ship the CC BY-SA 4.0 legal code, credit per section 3(a)(1) (creator, copyright
 ## Natural Earth public domain terms
 
 None required (public domain). Courtesy line in the WideWorldImporters NOTICE: "Country and state boundaries and city locations derived from Natural Earth (public domain, https://www.naturalearthdata.com/) and data.gov."
-
-## U.S. Government work (17 U.S.C. Sec. 105) - public domain
-
-> Airline On-Time Performance data: U.S. Department of Transportation, Bureau of Transportation Statistics, "Reporting Carrier On-Time Performance (1987-present)", https://www.transtats.bts.gov/. A work of the U.S. Government, not subject to copyright (17 U.S.C. Sec. 105). This project is not endorsed by BTS or USDOT.
 
 ## GNU Free Documentation License 1.3 (GFDL 1.3)
 

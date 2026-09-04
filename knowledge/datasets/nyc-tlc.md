@@ -93,6 +93,34 @@ Target DDL sketch: `VendorID` -> `TINYINT UNSIGNED NULL`, datetimes -> `DATETIME
 
 Timestamps are `DATETIME(6)`, never `TIMESTAMP`, because the Parquet says `isAdjustedToUTC=false`. Views: `v_trip_zone`, `v_green_daily`, `v_suspect_trips`, all `SQL SECURITY INVOKER`.
 
+## Yellow, the extended tier (2026-09-03, task X-03)
+`yellow_tripdata_2025-01.parquet` is 59,158,238 bytes — the size this record predicted, to the byte —
+and holds **3,475,226** rows, the count it predicted. `make nyc-taxi-yellow` appends them to a loaded
+`nyc_taxi` in 22 s, taking the database from 11.1 MB to **610.9 MB**. Converting 3.5 M rows of Parquet
+to TSV takes 1.4 s; DuckDB is not the slow part of anything.
+
+The schema is exactly as recorded: 20 columns, `tpep_*` datetimes, **`Airport_fee` with a capital A**
+(hazard 2 — normalised to `airport_fee`), no `ehail_fee` or `trip_type`, and a column order that does
+not match green's (hazard 7), which is why every projection is by name.
+
+Measured rather than assumed:
+* **The DECIMAL(10,2) narrowing is lossless.** No money value in the file needs a third decimal — the
+  converter now checks that and refuses to run otherwise — and MySQL's sums match DuckDB's over the
+  source exactly: total_amount **89,005,026.80**, fare_amount **59,363,125.08**, trip_distance
+  **20,347,886.73**.
+* **All 3.5 M trips carry zone ids inside 1..265**, so both foreign keys onto `taxi_zone` are declared.
+  261 of the 265 zones appear as a pickup zone.
+* **`cbd_congestion_fee` is populated on every row**, which confirms 2025-01 as the first month
+  carrying it; `airport_fee` is NULL on exactly 540,149 rows — the same 540,149 that are
+  `payment_type` 0 (Flex Fare).
+* **Dirty rows are real and kept**: 173,644 suspect trips (5.0%), 24,656 with no passengers, 63,596
+  with a non-positive total, 162 longer than 100 miles, and pickups from 2024-12-31 20:47 to
+  2025-02-01 00:00 — 33 distinct dates in a 31-day month. `v_suspect_yellow_trips` names them.
+* Manhattan is 89% of pickups (3,089,275), then Queens 294,986 and Brooklyn 66,070.
+
+Both colours share one database and one `taxi_zone`; green stays core (11.1 MB baked into the image)
+and yellow is `append: true`, fetched and loaded only on request.
+
 # Type-mapping hazards
 1. **Cross-year schema drift** (the big one). `VendorID`/`PULocationID`/`DOLocationID` are INT64 in 2015-2022 files and INT32 in 2025+; `passenger_count`/`RatecodeID` are INT64 (2015-16), DOUBLE (2019-2022), INT64 again (2025+). Any multi-year read needs `union_by_name := true` and explicit casts.
 2. **`airport_fee` vs `Airport_fee`.** Lower case in every pre-2025 file, capital A in 2025+. The **data dictionary spells it lower case**, so the dictionary and the data disagree. MySQL identifiers on Linux are case-sensitive for tables but not columns - normalise to `airport_fee` on the way in.

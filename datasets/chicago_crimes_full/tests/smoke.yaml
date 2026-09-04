@@ -1,0 +1,31 @@
+# S7: the archive-wide answers. The per-year counts are the interesting pin -- they are what a
+# re-fetch would move, and they show the 2020 dip and the 2001-2024 decline plainly.
+- name: crimes_by_year
+  query: >
+    SELECT `year`, COUNT(*) FROM crimes_all GROUP BY `year` ORDER BY `year`
+- name: id_is_unique_case_number_is_not
+  query: >
+    SELECT COUNT(*), COUNT(DISTINCT id), COUNT(DISTINCT case_number) FROM crimes_all
+- name: core_year_is_a_subset
+  query: >
+    SELECT (SELECT COUNT(*) FROM crimes) AS core_2024,
+           (SELECT COUNT(*) FROM crimes_all WHERE `year` = 2024) AS full_2024,
+           (SELECT COUNT(*) FROM crimes c JOIN crimes_all a ON a.id = c.id) AS matched
+- name: top_primary_types
+  query: >
+    SELECT primary_type, COUNT(*) FROM crimes_all
+    GROUP BY primary_type ORDER BY COUNT(*) DESC, primary_type LIMIT 8
+- name: arrest_and_domestic_rates
+  query: >
+    SELECT ROUND(AVG(arrest), 6), ROUND(AVG(domestic), 6), SUM(arrest), SUM(domestic)
+    FROM crimes_all
+- name: missing_coordinates
+  query: >
+    SELECT COUNT(*) - COUNT(latitude), COUNT(*) - COUNT(x_coordinate),
+           COUNT(*) - COUNT(ward), COUNT(*) - COUNT(community_area),
+           COUNT(*) - COUNT(location_description), COUNT(*) - COUNT(district) FROM crimes_all
+- name: date_span
+  query: SELECT MIN(`date`), MAX(`date`), MIN(updated_on), MAX(updated_on) FROM crimes_all
+- name: every_iucr_resolves
+  query: >
+    SELECT COUNT(*), COUNT(i.iucr) FROM crimes_all c LEFT JOIN iucr i ON i.iucr = c.iucr

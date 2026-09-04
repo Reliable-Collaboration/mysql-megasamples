@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Contoso V2 (100k orders) -> MySQL.
+"""Contoso V2 -> MySQL, at whatever scale is asked for.
+
+  convert.py <downloads> <out.sql>              100 k orders -> `contoso`      (core)
+  convert.py <downloads> <out.sql> --size 1m    1 M orders   -> `contoso_1m`   (extended)
+  convert.py <downloads> <out.sql> --size 10m   10 M orders  -> `contoso_10m`  (extended)
+
+The larger sets are separate databases, not appends: they are the same eight tables at a different
+scale, so there is nothing to add to an existing one.
 
 The data ships as a 7-zip archive of eight header-bearing CSVs, read here with py7zr so the build
 needs no system 7-zip. The types come from SQLBI's own SQL Server DDL, pinned at generator release
@@ -16,16 +23,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
 import tsql, ddlutil  # noqa: E402
 
-DATABASE = "contoso"
-CONTEXT = "/context/contoso"
-ARCHIVE = "csv-100k.7z"
 DDL = ["CreateTablesCommon.sql", "CreateTablesSales.sql", "CreateTablesOrders.sql"]
 csv.field_size_limit(1 << 24)
 
 
 def main():
     downloads, dest = sys.argv[1], sys.argv[2]
+    size = "100k"
+    if "--size" in sys.argv[3:]:
+        size = sys.argv[sys.argv.index("--size") + 1]
+    database = "contoso" if size == "100k" else f"contoso_{size}"
+    archive = f"csv-{size}.7z"
     context = os.path.dirname(os.path.abspath(dest))
+    inside = f"/context/{os.path.basename(context)}"
 
     script = "\nGO\n".join(open(os.path.join(downloads, f), encoding="utf-8-sig").read()
                            for f in DDL)
@@ -42,27 +52,27 @@ def main():
         tables.append((name, st["sql"]))
         columns[name] = ddlutil.columns_of(st["sql"])
 
-    with py7zr.SevenZipFile(os.path.join(downloads, ARCHIVE)) as archive:
+    with py7zr.SevenZipFile(os.path.join(downloads, archive)) as archive:
         archive.extractall(path=context)
 
     loads, counts = [], {}
     for name, _ in tables:
         source = os.path.join(context, f"{name}.csv")
         if not os.path.exists(source):
-            sys.exit(f"{name}: no {name}.csv in {ARCHIVE}")
+            sys.exit(f"{name}: no {name}.csv in {archive}")
         counts[name] = to_tsv(source, os.path.join(context, f"{name}.tsv"), columns[name], name)
         os.remove(source)
         names = ", ".join(f"`{c}`" for c in columns[name])
-        loads.append(f"LOAD DATA LOCAL INFILE '{CONTEXT}/{name}.tsv' INTO TABLE `{name}`\n"
+        loads.append(f"LOAD DATA LOCAL INFILE '{inside}/{name}.tsv' INTO TABLE `{name}`\n"
                      f"  CHARACTER SET utf8mb4 ({names});")
 
-    out = [f"""-- Contoso V2 (100k orders), translated by datasets/{DATABASE}/convert.py from SQLBI's
--- ready-to-use CSV set and its SQL Server DDL (MIT). See datasets/{DATABASE}/LICENSE.
+    out = [f"""-- Contoso V2 ({size} orders), translated by datasets/contoso/convert.py from SQLBI's
+-- ready-to-use CSV set and its SQL Server DDL (MIT). See datasets/contoso/LICENSE.
 SET NAMES utf8mb4;
 SET SESSION foreign_key_checks = 0;
-DROP DATABASE IF EXISTS `{DATABASE}`;
-CREATE DATABASE `{DATABASE}` DEFAULT CHARACTER SET utf8mb4;
-USE `{DATABASE}`;
+DROP DATABASE IF EXISTS `{database}`;
+CREATE DATABASE `{database}` DEFAULT CHARACTER SET utf8mb4;
+USE `{database}`;
 """]
     out += [tsql.terminate(sql) for _, sql in tables]
     out.append(f"\n-- {'-' * 60}\n-- data\n")

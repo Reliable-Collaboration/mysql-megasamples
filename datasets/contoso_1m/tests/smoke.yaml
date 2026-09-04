@@ -1,0 +1,69 @@
+# S7: the same queries the core 100k set pins, against the 1m set. Holding both
+# lets a reader see exactly which numbers scale with the order count and which do
+# not -- the customer, product, store and date tables are the same size at every scale.
+- name: sales_totals
+  query: 'SELECT COUNT(*), ROUND(SUM(quantity * netprice), 2), ROUND(SUM(quantity * unitcost), 2)
+
+    FROM sales
+
+    '
+- name: sales_matches_orderrows
+  # The core 100k set proves this with an actual 1:1 join. At this scale that join is a
+  # multi-minute nested loop over tens of millions of random primary-key lookups, so the same
+  # claim is made with five single-table aggregates instead: if the counts and the sums of the
+  # key and the shared measures all agree, the two tables hold the same rows.
+  query: >
+    SELECT (SELECT COUNT(*) FROM sales), (SELECT COUNT(*) FROM orderrows),
+           (SELECT CONCAT_WS(',', SUM(orderkey), SUM(linenumber), SUM(quantity),
+                             ROUND(SUM(netprice), 2), SUM(productkey)) FROM sales),
+           (SELECT CONCAT_WS(',', SUM(orderkey), SUM(linenumber), SUM(quantity),
+                             ROUND(SUM(netprice), 2), SUM(productkey)) FROM orderrows)
+- name: date_dimension_span
+  query: 'SELECT MIN(date), MAX(date), COUNT(*), DATEDIFF(MAX(date), MIN(date)) + 1 FROM `date`
+
+    '
+- name: currencies_and_countries
+  query: 'SELECT (SELECT COUNT(DISTINCT tocurrency) FROM currencyexchange) AS currencies,
+
+    (SELECT COUNT(DISTINCT countrycode) FROM store) AS store_countries,
+
+    (SELECT COUNT(DISTINCT country) FROM customer) AS customer_countries
+
+    '
+- name: revenue_by_year
+  query: 'SELECT YEAR(orderdate), COUNT(*), ROUND(SUM(quantity * netprice), 2) FROM sales
+
+    GROUP BY YEAR(orderdate) ORDER BY YEAR(orderdate)
+
+    '
+- name: top_stores
+  query: 'SELECT st.storecode, st.countrycode, COUNT(*) FROM sales s
+
+    JOIN store st ON st.storekey = s.storekey
+
+    GROUP BY st.storekey, st.storecode, st.countrycode ORDER BY COUNT(*) DESC, st.storekey LIMIT 5
+
+    '
+- name: non_ascii_customers
+  query: 'SELECT COUNT(*) FROM customer
+
+    WHERE CONCAT(givenname, surname, city) REGEXP ''[^ -~]''
+
+    '
+- name: accented_customer_example
+  query: 'SELECT givenname, surname, city, countryfull FROM customer
+
+    WHERE CONCAT(givenname, surname, city) REGEXP ''[^ -~]'' ORDER BY customerkey LIMIT 3
+
+    '
+- name: exchange_rates_present
+  query: 'SELECT fromcurrency, tocurrency, ROUND(AVG(exchange), 4) FROM currencyexchange
+
+    GROUP BY fromcurrency, tocurrency ORDER BY fromcurrency, tocurrency LIMIT 5
+
+    '
+- name: objects_created
+  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='contoso_1m')\
+    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='contoso_1m')\
+    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
+    \ trigger_schema='contoso_1m') AS triggers\n"

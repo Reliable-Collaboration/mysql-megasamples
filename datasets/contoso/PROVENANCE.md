@@ -32,7 +32,7 @@ a download does not match.
 
 ## Transformation
 
-Converted by [`datasets/contoso/convert.py`](convert.py). Contoso V2 (100k orders) -> MySQL.
+Converted by [`datasets/contoso/convert.py`](convert.py). Contoso V2 -> MySQL, at whatever scale is asked for.
 
 What was and was not ported:
 

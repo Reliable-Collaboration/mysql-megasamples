@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
-"""Chicago crimes, calendar year 2024, plus the IUCR code lookup -> MySQL.
+"""Chicago crimes -> MySQL, in two tiers.
+
+  convert.py <downloads> <out.sql>          calendar year 2024 + the IUCR lookup (core)
+  convert.py <downloads> <out.sql> --full   2001 through the last closed year, appended (extended)
+
+The full archive arrives as one CSV per year, because a year is ~21 s and ~130 MB that `fetch.py`
+can retry, where one request for 8.2 M rows is six minutes of hoping. Those files carry the
+`location` column, whose values contain embedded newlines (record hazard 4) -- three physical lines
+per row. That is not a problem to route around: DuckDB is a real CSV parser and reads them, and the
+column is dropped in the projection because it duplicates latitude and longitude. Asking SODA to
+omit it with `$select` instead triples the request time.
 
 The source moves daily, so the snapshot is identified by three things together -- the sha256 in
 manifest.yaml, the row count, and `X-SODA2-Truth-Last-Modified` -- rather than by a checksum alone.
@@ -50,10 +60,100 @@ CRIME_COLUMNS = [
     ("longitude", "DECIMAL(9,6)", "longitude"),
 ]
 COPY_OPTIONS = "(FORMAT CSV, DELIMITER '\t', HEADER false, NULLSTR '\\N', QUOTE '', ESCAPE '')"
+YEARS = range(2001, 2025)
+LIMIT = 600000            # the manifest's $limit; a file at exactly this many rows was truncated
+
+
+def full(downloads, dest):
+    """The extended tier: 2001..2024 into `crimes_all`, beside the core year in `crimes`."""
+    context = os.path.dirname(os.path.abspath(dest))
+    inside = f"/context/{os.path.basename(context)}"
+    con = duckdb.connect()
+    files = [os.path.join(downloads, "full", f"crimes_{y}.csv") for y in YEARS]
+    missing = [os.path.basename(f) for f in files if not os.path.exists(f)]
+    if missing:
+        sys.exit(f"missing year file(s): {', '.join(missing)}; run scripts/fetch.py chicago_crimes_full")
+    glob = os.path.join(downloads, "full", "crimes_2[0-9][0-9][0-9].csv").replace("'", "''")
+    source = f"read_csv('{glob}', header=true, union_by_name=true)"
+
+    per_year = con.execute(
+        f'SELECT "year", COUNT(*) FROM {source} GROUP BY "year" ORDER BY "year"').fetchall()
+    truncated = [y for y, n in per_year if n >= LIMIT]
+    if truncated:
+        sys.exit(f"year(s) {truncated} came back at the $limit of {LIMIT}; the request was truncated")
+    unexpected = sorted({int(y) for y, _ in per_year} - set(YEARS))
+    if unexpected:
+        sys.exit(f"rows outside {YEARS.start}..{YEARS.stop - 1}: {unexpected}")
+    rows = sum(n for _, n in per_year)
+    distinct_ids = con.execute(f"SELECT COUNT(DISTINCT id) FROM {source}").fetchone()[0]
+    if rows != distinct_ids:
+        sys.exit(f"id is not unique across the archive: {rows:,} rows, {distinct_ids:,} distinct")
+    distinct_cases = con.execute(f"SELECT COUNT(DISTINCT case_number) FROM {source}").fetchone()[0]
+
+    # the narrow types were chosen for one year; over 24 the ranges have to be re-checked
+    narrow = {"beat": 32767, "district": 127, "ward": 127, "community_area": 127}
+    over = con.execute("SELECT " + ", ".join(
+        f'MAX(CAST("{c}" AS BIGINT))' for c in narrow) + f" FROM {source}").fetchone()
+    for (column, limit), seen in zip(narrow.items(), over):
+        if seen is not None and seen > limit:
+            sys.exit(f"{column} reaches {seen}, past the {limit} its column type allows")
+
+    projection = ", ".join(f"{expr} AS {name}" for name, _, expr in CRIME_COLUMNS)
+    con.execute(f"COPY (SELECT {projection} FROM {source} ORDER BY id) "
+                f"TO '{os.path.join(context, 'crimes_all.tsv').replace(chr(39), chr(39) * 2)}' "
+                f"{COPY_OPTIONS}")
+
+    iucr = os.path.join(downloads, IUCR).replace("'", "''")
+    orphans = con.execute(
+        f"SELECT COUNT(*) FROM {source} c WHERE c.iucr NOT IN "
+        f"(SELECT \"IUCR\" FROM read_csv('{iucr}', header=true))").fetchone()[0]
+    fk = ("" if orphans else
+          ",\n  CONSTRAINT `fk_crimes_all_iucr` FOREIGN KEY (`iucr`) REFERENCES `iucr` (`iucr`)")
+
+    columns = ",\n".join(f"  `{name}` {mysql}" for name, mysql, _ in CRIME_COLUMNS)
+    names = ", ".join(f"`{c}`" for c, _, _ in CRIME_COLUMNS)
+    comment = DISCLAIMER.replace("'", "''")
+    out = f"""-- Chicago crimes, {YEARS.start} to {YEARS.stop - 1}, prepared by datasets/{DATABASE}/convert.py.
+-- Extended tier: appended to an existing `{DATABASE}`, never baked into the image. The core
+-- `crimes` table holds calendar year 2024 and is a subset of this one.
+--
+-- The City of Chicago requires this paragraph wherever the data is redistributed:
+--
+--   {DISCLAIMER}
+SET NAMES utf8mb4;
+SET SESSION foreign_key_checks = 0;
+USE `{DATABASE}`;
+DROP TABLE IF EXISTS `crimes_all`;
+
+CREATE TABLE `crimes_all` (
+{columns},
+  PRIMARY KEY (`id`),
+  KEY `ix_crimes_all_date` (`date`),
+  KEY `ix_crimes_all_iucr` (`iucr`),
+  KEY `ix_crimes_all_primary_type` (`primary_type`),
+  KEY `ix_crimes_all_year` (`year`),
+  KEY `ix_crimes_all_community_area` (`community_area`){fk}
+) COMMENT = '{comment[:900]}';
+
+LOAD DATA LOCAL INFILE '{inside}/crimes_all.tsv' INTO TABLE `crimes_all`
+  CHARACTER SET utf8mb4 ({names});
+
+SET SESSION foreign_key_checks = 1;
+"""
+    open(dest, "w", encoding="utf-8").write(out)
+    print(f"  . {rows:,} crimes across {len(per_year)} years "
+          f"({per_year[0][0]}-{per_year[-1][0]})")
+    print(f"  . id is unique across all of them; case_number has {distinct_cases:,} distinct "
+          f"values ({rows - distinct_cases:,} repeats), so it is not a key")
+    print(f"  . IUCR codes absent from the lookup: {orphans} -> foreign key "
+          f"{'enabled' if not orphans else 'omitted'}")
+    print("  . " + ", ".join(f"{y}:{n:,}" for y, n in per_year[:4]) + ", ...")
 
 
 def main():
     downloads, dest = sys.argv[1], sys.argv[2]
+    if "--full" in sys.argv[3:]:
+        return full(downloads, dest)
     context = os.path.dirname(os.path.abspath(dest))
     crimes = os.path.join(downloads, CRIMES).replace("'", "''")
     iucr = os.path.join(downloads, IUCR).replace("'", "''")

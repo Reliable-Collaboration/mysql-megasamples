@@ -1,0 +1,9 @@
+name: contoso_10m
+database: contoso_10m
+tier: extended
+record: knowledge/datasets/contoso.md
+licenses: [mit]
+artifacts: [contoso/csv-10m.7z]
+converter: none
+load:
+  - contoso_10m.sql

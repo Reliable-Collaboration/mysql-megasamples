@@ -12,9 +12,13 @@ database keeps the licence of the project it came from, listed below, and each
 | `adventureworks` | [mit](knowledge/licenses/mit.md) |
 | `adventureworks_dw` | [mit](knowledge/licenses/mit.md) |
 | `adventureworks_lt` | [mit](knowledge/licenses/mit.md) |
+| `bts_ontime` | [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) |
 | `chicago_crimes` | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) |
+| `chicago_crimes_full` | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) |
 | `chinook` | [mit](knowledge/licenses/mit.md) |
 | `contoso` | [mit](knowledge/licenses/mit.md) |
+| `contoso_10m` | [mit](knowledge/licenses/mit.md) |
+| `contoso_1m` | [mit](knowledge/licenses/mit.md) |
 | `dvdstore` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
 | `dvdstore_reviews` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
 | `employees` | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) |
@@ -23,6 +27,7 @@ database keeps the licence of the project it came from, listed below, and each
 | `lahman` | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) |
 | `northwind` | [mit](knowledge/licenses/mit.md) |
 | `nyc_taxi` | [nyc-open-data-terms](knowledge/licenses/nyc-open-data-terms.md) |
+| `nyc_taxi_yellow` | [nyc-open-data-terms](knowledge/licenses/nyc-open-data-terms.md) |
 | `oracle_co` | [mit](knowledge/licenses/mit.md) |
 | `oracle_hr` | [mit](knowledge/licenses/mit.md) |
 | `oracle_oe` | [mit](knowledge/licenses/mit.md) |
@@ -43,12 +48,12 @@ database keeps the licence of the project it came from, listed below, and each
 * **Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)** — `employees`, `lahman`
 * **Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)** — `stackexchange_beer`, `wikipedia_simple`
 * **CC0 1.0 Universal (public domain dedication) - palmerpenguins** — `smallsets`
-* **City of Chicago Data Terms of Use** — `chicago_crimes`
+* **City of Chicago Data Terms of Use** — `chicago_crimes`, `chicago_crimes_full`
 * **Enron email corpus — public record status and CMU distribution terms** — `enron`
 * **GNU Free Documentation License 1.3 (GFDL 1.3)** — `wikipedia_simple`
 * **GNU General Public License v2.0 (or later) - Dell DVD Store 3** — `dvdstore`, `dvdstore_reviews`
 * **Vanderbilt Biostatistics (hbiostat.org/data) permission statement** — `smallsets`
-* **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`, `wideworldimporters`, `wideworldimporters_dw`
+* **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `contoso_10m`, `contoso_1m`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`, `wideworldimporters`, `wideworldimporters_dw`
 * **Natural Earth public domain terms** — `wideworldimporters`, `wideworldimporters_dw`
-* **NYC Open Data Terms of Use** — `nyc_taxi`
-* **U.S. Government work (17 U.S.C. Sec. 105) - public domain** — `wideworldimporters`, `wideworldimporters_dw`
+* **NYC Open Data Terms of Use** — `nyc_taxi`, `nyc_taxi_yellow`
+* **U.S. Government work (17 U.S.C. Sec. 105) - public domain** — `bts_ontime`, `wideworldimporters`, `wideworldimporters_dw`

@@ -1,0 +1,12 @@
+# S5: 8.2 M rows -- the indexes have to carry the obvious queries.
+- name: crimes_in_a_year
+  query: SELECT COUNT(*) FROM crimes_all WHERE `year` = 2015
+  must_not_full_scan: [crimes_all]
+- name: crimes_of_a_type
+  query: SELECT COUNT(*) FROM crimes_all WHERE primary_type = 'HOMICIDE'
+  must_not_full_scan: [crimes_all]
+- name: crimes_on_a_date_range
+  query: >
+    SELECT COUNT(*) FROM crimes_all
+    WHERE `date` >= '2015-06-01' AND `date` < '2015-06-02'
+  must_not_full_scan: [crimes_all]

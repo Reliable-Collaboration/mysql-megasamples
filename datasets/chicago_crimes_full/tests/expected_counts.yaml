@@ -1,0 +1,6 @@
+# Only the one extended-tier table; `crimes` (calendar year 2024) and `iucr` are checked by the core
+# chicago_crimes dataset, and `crimes` is a subset of this one.
+#
+# This number is a snapshot, not a constant: the portal revises historical records, so a fetch months
+# from now may differ. It is pinned so that a change is visible rather than silent.
+crimes_all: 8240594

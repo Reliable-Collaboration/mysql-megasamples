@@ -1,0 +1,3 @@
+# Only the one extended-tier table; taxi_zone and green_trips are checked by the core nyc_taxi
+# dataset. 3,475,226 is the Parquet footer's num_rows, which is also the count the record predicted.
+yellow_trips: 3475226

@@ -53,7 +53,11 @@
 
     '
 - name: objects_created
-  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='nyc_taxi')\
+  # Named, not counted: `nyc_taxi_yellow` adds views to this same database, and a bare COUNT(*)
+  # over information_schema makes the core dataset's test fail whenever the extended tier is
+  # loaded as well.
+  query: "SELECT (SELECT GROUP_CONCAT(table_name ORDER BY table_name) FROM information_schema.views\
+    \ WHERE table_schema='nyc_taxi' AND table_name IN ('v_trip_zone','v_green_daily','v_suspect_trips'))\
     \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='nyc_taxi')\
     \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
     \ trigger_schema='nyc_taxi') AS triggers\n"

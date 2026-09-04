@@ -60,6 +60,35 @@ Eight tables (from the SQL Server DDL, [source](/sources/github-sql-bi-contoso-v
 
 Two inferences are corrected. **orders is 93,470, not 100,000** — `OrdersCount` is what the generator is asked for, but the build then cuts orders outside its date window (`CutDateBefore` 2014-05-18, `CutDateAfter` 2024-04-20), so the shipped set is smaller. And sales/orderrows are **223,974**, a ratio of 2.40 rather than the inferred 2.43. `sales` and `orderrows` hold the same 223,974 rows and join one-to-one on (orderkey, linenumber).
 
+**The 1 M set (2026-09-03, task X-03)**: `csv-1m.7z` is 48,894,397 bytes — the size this record
+predicted — and gives **5,890,897 rows in 767.3 MB**, loading in 28.6 s. What scales and what does
+not is worth stating, because it is not what "1 M orders" suggests: at this size **only the fact
+tables grow**. `customer` is 104,990, `product` 2,517, `store` 74 and `date` 4,018 at *both* the
+100 k and 1 M sizes, spanning the same 2016-01-01 to 2026-12-31, and even the 6,142 non-ASCII
+customers are the same 6,142. `sales` and `orderrows` go from 223,974 to **2,349,091** (10.5×) and
+`orders` from 93,470 to **980,666** — again short of the round number, cut by the same date window.
+Revenue scales with them: `SUM(quantity * netprice)` is 2,298,959,220.81 against the 100 k set's
+218,814,472.24. (The customer pool does eventually grow: see the 10 M set below.)
+
+The store sentinel is clearer at this size: `storecode` -1, country `--`, carries 973,210 of the
+2,349,091 sales lines — the online store, 41% of the business.
+
+
+**The 10 M set (2026-09-03, task X-03)**: `csv-10m.7z` is 512,408,852 bytes — again the size this
+record predicted — and gives **59,114,388 rows in 7,766.9 MB**, loading in 222 s. Here the customer
+pool finally moves: **1,679,846 customers** against 104,990 at both smaller sizes, and 97,703 of them
+carry non-ASCII text. `product` (2,517), `store` (74), `date` (4,018) and `currencyexchange` (100,450)
+are unchanged at every scale. `sales` and `orderrows` are 23,719,935; `orders` 9,887,613.
+`SUM(quantity * netprice)` is 23,204,619,919.05. The online store (`storecode` -1) is 9,822,929 of
+the sales lines, the same 41%.
+
+One test had to change shape at this size. The core set proves `sales` and `orderrows` hold the same
+rows with a 1:1 join; over 23.7 M rows that becomes a multi-minute nested loop of random primary-key
+lookups. The scaled sets make the same claim with five single-table aggregates — counts plus the sums
+of `orderkey`, `linenumber`, `quantity`, `netprice` and `productkey` — which agree exactly
+(`5606843664697694,27666276,74586697,7377545409.97,28082132055` on both sides) and scan instead of
+joining.
+
 **CSV dialect (was undocumented, now measured)**: comma-delimited, one header row of column names in DDL order, no quoting needed, ISO `YYYY-MM-DD` dates, empty field = NULL, UTF-8 without BOM. The converter checks each header against the pinned SQL Server DDL before writing a row, because the load is positional.
 
 **Encoding** confirmed non-ASCII as inferred: 6,142 of 104,990 customers carry non-ASCII text in their name or city — `Stuttgart Dürrlewang`, `Schönwalde`, `Mönchengladbach Großheide`.

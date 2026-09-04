@@ -1,0 +1,18 @@
+# S7: canonical query results, tab-separated as the client prints them.
+accented_customer_example: "Sven\tMahler\tFürstenberg\tGermany\nEric\tSchultheiss\t\
+  München\tGermany\nRené\tKeller\tSaarwellingen\tGermany"
+currencies_and_countries: "5\t9\t8"
+date_dimension_span: "2016-01-01\t2026-12-31\t4018\t4018"
+exchange_rates_present: "AUD\tAUD\t1\nAUD\tCAD\t0.9303\nAUD\tEUR\t0.6368\nAUD\tGBP\t\
+  0.5501\nAUD\tUSD\t0.7071"
+non_ascii_customers: '97703'
+objects_created: "0\t0\t0"
+revenue_by_year: "2016\t584559\t659936158.05\n2017\t993393\t1215289584.99\n2018\t\
+  1268750\t1558925716.15\n2019\t2328971\t2691759487.90\n2020\t1697734\t1933522192.70\n\
+  2021\t1741458\t1737347530.06\n2022\t2481464\t2595353559.57\n2023\t4750053\t4522056791.44\n\
+  2024\t3959562\t3280758606.50\n2025\t3913991\t3009670291.69"
+sales_matches_orderrows: "23719935\t23719935\t5606843664697694,27666276,74586697,7377545409.97,28082132055\t\
+  5606843664697694,27666276,74586697,7377545409.97,28082132055"
+sales_totals: "23719935\t23204619919.05\t10236624684.74"
+top_stores: "-1\t--\t9822929\n50\tUS\t376614\n61\tUS\t376069\n9\tCA\t372594\n59\t\
+  US\t368235"

@@ -1,0 +1,42 @@
+# S7: the yellow tier's pinned answers. The first is the one that matters: DuckDB's sums over the
+# Parquet, before any narrowing, against MySQL's sums over the loaded DECIMAL(10,2) columns. The
+# converter refuses to run if any source value needs a third decimal, so these must agree exactly.
+- name: sums_match_the_parquet_source
+  query: >
+    SELECT COUNT(*), ROUND(SUM(total_amount), 2), ROUND(SUM(fare_amount), 2),
+           ROUND(SUM(trip_distance), 2) FROM yellow_trips
+- name: airport_fee_normalised
+  query: >
+    SELECT COUNT(airport_fee), ROUND(SUM(airport_fee), 2), COUNT(cbd_congestion_fee),
+           ROUND(SUM(cbd_congestion_fee), 2) FROM yellow_trips
+- name: wall_clock_timestamps
+  query: >
+    SELECT data_type FROM information_schema.columns
+    WHERE table_schema = 'nyc_taxi' AND table_name = 'yellow_trips'
+      AND column_name IN ('pickup_datetime', 'dropoff_datetime') ORDER BY column_name
+# Hazard 5, measured: pickup dates spill outside the file's own month.
+- name: pickup_range_spills_the_month
+  query: >
+    SELECT MIN(pickup_datetime), MAX(pickup_datetime), COUNT(DISTINCT DATE(pickup_datetime))
+    FROM yellow_trips
+- name: dirty_rows_are_kept
+  query: >
+    SELECT (SELECT COUNT(*) FROM v_suspect_yellow_trips) AS suspect,
+           (SELECT COUNT(*) FROM yellow_trips WHERE passenger_count = 0) AS no_passengers,
+           (SELECT COUNT(*) FROM yellow_trips WHERE total_amount <= 0) AS not_positive,
+           (SELECT COUNT(*) FROM yellow_trips WHERE trip_distance > 100) AS very_long
+- name: trips_by_borough
+  query: >
+    SELECT pickup_borough, COUNT(*) FROM v_yellow_zone
+    GROUP BY pickup_borough ORDER BY COUNT(*) DESC, pickup_borough
+- name: payment_type_mix
+  query: >
+    SELECT payment_type, COUNT(*) FROM yellow_trips
+    GROUP BY payment_type ORDER BY payment_type
+# Both colours live in one database and share the zone lookup; this is the join that proves it.
+- name: both_colours_share_the_zone_lookup
+  query: >
+    SELECT (SELECT COUNT(*) FROM green_trips), (SELECT COUNT(*) FROM yellow_trips),
+           (SELECT COUNT(*) FROM taxi_zone),
+           (SELECT COUNT(DISTINCT z.locationid) FROM taxi_zone z
+             JOIN yellow_trips y ON y.pulocationid = z.locationid)

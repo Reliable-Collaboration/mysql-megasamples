@@ -1,0 +1,9 @@
+# S5: 3.5 M rows makes the index question real rather than theoretical.
+- name: yellow_by_pickup_date
+  query: >
+    SELECT COUNT(*) FROM yellow_trips
+    WHERE pickup_datetime >= '2025-01-15' AND pickup_datetime < '2025-01-16'
+  must_not_full_scan: [yellow_trips]
+- name: yellow_by_pickup_zone
+  query: SELECT COUNT(*) FROM yellow_trips WHERE pulocationid = 132
+  must_not_full_scan: [yellow_trips]

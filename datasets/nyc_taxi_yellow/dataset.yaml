@@ -1,0 +1,10 @@
+name: nyc_taxi_yellow
+database: nyc_taxi
+append: true
+tier: extended
+record: knowledge/datasets/nyc-tlc.md
+licenses: [nyc-open-data-terms]
+artifacts: [nyc_taxi/yellow_tripdata_2025-01.parquet]
+converter: none
+load:
+  - nyc_taxi_yellow.sql

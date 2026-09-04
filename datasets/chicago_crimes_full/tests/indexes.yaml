@@ -1,0 +1,32 @@
+# S6: every index that must exist after load.
+crimes_all:
+  PRIMARY:
+    columns:
+    - id
+    type: BTREE
+    unique: true
+  ix_crimes_all_community_area:
+    columns:
+    - community_area
+    type: BTREE
+    unique: false
+  ix_crimes_all_date:
+    columns:
+    - date
+    type: BTREE
+    unique: false
+  ix_crimes_all_iucr:
+    columns:
+    - iucr
+    type: BTREE
+    unique: false
+  ix_crimes_all_primary_type:
+    columns:
+    - primary_type
+    type: BTREE
+    unique: false
+  ix_crimes_all_year:
+    columns:
+    - year
+    type: BTREE
+    unique: false

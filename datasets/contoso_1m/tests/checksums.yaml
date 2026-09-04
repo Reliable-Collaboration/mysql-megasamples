@@ -1,0 +1,146 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+currencyexchange:
+  columns:
+  - date
+  - fromcurrency
+  - tocurrency
+  excluded:
+  - exchange
+  n: 100450
+  s: 11624755196870464632
+  x: 13080735295201903932
+customer:
+  columns:
+  - customerkey
+  - geoareakey
+  - startdt
+  - enddt
+  - continent
+  - gender
+  - title
+  - givenname
+  - middleinitial
+  - surname
+  - streetaddress
+  - city
+  - state
+  - statefull
+  - zipcode
+  - country
+  - countryfull
+  - birthday
+  - age
+  - occupation
+  - company
+  - vehicle
+  excluded:
+  - latitude
+  - longitude
+  n: 104990
+  s: 18080068438753732814
+  x: 6984159472600896404
+date:
+  columns:
+  - date
+  - datekey
+  - year
+  - yearquarter
+  - yearquarternumber
+  - quarter
+  - yearmonth
+  - yearmonthshort
+  - yearmonthnumber
+  - month
+  - monthshort
+  - monthnumber
+  - dayofweek
+  - dayofweekshort
+  - dayofweeknumber
+  - workingday
+  - workingdaynumber
+  excluded: []
+  n: 4018
+  s: 18163148497055280705
+  x: 5520464083452227701
+orderrows:
+  columns:
+  - orderkey
+  - linenumber
+  - productkey
+  - quantity
+  - unitprice
+  - netprice
+  - unitcost
+  excluded: []
+  n: 2349091
+  s: 11275782801924814680
+  x: 4766715738879134046
+orders:
+  columns:
+  - orderkey
+  - customerkey
+  - storekey
+  - orderdate
+  - deliverydate
+  - currencycode
+  excluded: []
+  n: 980666
+  s: 3510070715780890568
+  x: 7881866485448047534
+product:
+  columns:
+  - productkey
+  - productcode
+  - productname
+  - manufacturer
+  - brand
+  - color
+  - weightunit
+  - cost
+  - price
+  - categorykey
+  - categoryname
+  - subcategorykey
+  - subcategoryname
+  excluded:
+  - weight
+  n: 2517
+  s: 5564173414290719939
+  x: 1502139474149424379
+sales:
+  columns:
+  - orderkey
+  - linenumber
+  - orderdate
+  - deliverydate
+  - customerkey
+  - storekey
+  - productkey
+  - quantity
+  - unitprice
+  - netprice
+  - unitcost
+  - currencycode
+  excluded:
+  - exchangerate
+  n: 2349091
+  s: 4080727449586018516
+  x: 10090833370550096366
+store:
+  columns:
+  - storekey
+  - storecode
+  - geoareakey
+  - countrycode
+  - countryname
+  - state
+  - opendate
+  - closedate
+  - description
+  - squaremeters
+  - status
+  excluded: []
+  n: 74
+  s: 5656534581449537636
+  x: 10010937533273530472

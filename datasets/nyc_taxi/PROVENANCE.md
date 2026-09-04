@@ -42,7 +42,7 @@ a download does not match.
 
 ## Transformation
 
-Converted by [`datasets/nyc_taxi/convert.py`](convert.py). NYC TLC green taxi trips (January 2025) + the zone lookup -> MySQL.
+Converted by [`datasets/nyc_taxi/convert.py`](convert.py). NYC TLC taxi trips (January 2025) + the zone lookup -> MySQL.
 
 What was and was not ported:
 

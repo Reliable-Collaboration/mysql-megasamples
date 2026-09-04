@@ -35,7 +35,7 @@ a download does not match.
 
 ## Transformation
 
-Converted by [`datasets/chicago_crimes/convert.py`](convert.py). Chicago crimes, calendar year 2024, plus the IUCR code lookup -> MySQL.
+Converted by [`datasets/chicago_crimes/convert.py`](convert.py). Chicago crimes -> MySQL, in two tiers.
 
 What was and was not ported:
 

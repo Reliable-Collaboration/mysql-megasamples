@@ -1,0 +1,55 @@
+# S6: every index that must exist after load.
+l_airline_id:
+  PRIMARY:
+    columns:
+    - code
+    type: BTREE
+    unique: true
+l_airport:
+  PRIMARY:
+    columns:
+    - code
+    type: BTREE
+    unique: true
+l_unique_carriers:
+  PRIMARY:
+    columns:
+    - code
+    type: BTREE
+    unique: true
+ontime:
+  PRIMARY:
+    columns:
+    - flight_id
+    type: BTREE
+    unique: true
+  ix_ontime_carrier:
+    columns:
+    - reporting_airline
+    type: BTREE
+    unique: false
+  ix_ontime_dest:
+    columns:
+    - dest
+    type: BTREE
+    unique: false
+  ix_ontime_flightdate:
+    columns:
+    - flightdate
+    type: BTREE
+    unique: false
+  ix_ontime_origin:
+    columns:
+    - origin
+    type: BTREE
+    unique: false
+  ix_ontime_segment:
+    columns:
+    - flightdate
+    - reporting_airline
+    - flight_number_reporting_airline
+    - origin
+    - dest
+    - crsdeptime
+    type: BTREE
+    unique: false

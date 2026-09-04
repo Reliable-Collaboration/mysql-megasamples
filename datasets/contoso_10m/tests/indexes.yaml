@@ -1,0 +1,88 @@
+# S6: every index that must exist after load.
+currencyexchange:
+  PRIMARY:
+    columns:
+    - date
+    - fromcurrency
+    - tocurrency
+    type: BTREE
+    unique: true
+customer:
+  PRIMARY:
+    columns:
+    - customerkey
+    type: BTREE
+    unique: true
+date:
+  PRIMARY:
+    columns:
+    - datekey
+    type: BTREE
+    unique: true
+orderrows:
+  PRIMARY:
+    columns:
+    - orderkey
+    - linenumber
+    type: BTREE
+    unique: true
+  ix_orderrows_orderkey:
+    columns:
+    - orderkey
+    type: BTREE
+    unique: false
+  ix_orderrows_productkey:
+    columns:
+    - productkey
+    type: BTREE
+    unique: false
+orders:
+  PRIMARY:
+    columns:
+    - orderkey
+    type: BTREE
+    unique: true
+  ix_orders_customerkey:
+    columns:
+    - customerkey
+    type: BTREE
+    unique: false
+  ix_orders_storekey:
+    columns:
+    - storekey
+    type: BTREE
+    unique: false
+product:
+  PRIMARY:
+    columns:
+    - productkey
+    type: BTREE
+    unique: true
+sales:
+  PRIMARY:
+    columns:
+    - orderkey
+    - linenumber
+    type: BTREE
+    unique: true
+  ix_sales_customerkey:
+    columns:
+    - customerkey
+    type: BTREE
+    unique: false
+  ix_sales_productkey:
+    columns:
+    - productkey
+    type: BTREE
+    unique: false
+  ix_sales_storekey:
+    columns:
+    - storekey
+    type: BTREE
+    unique: false
+store:
+  PRIMARY:
+    columns:
+    - storekey
+    type: BTREE
+    unique: true

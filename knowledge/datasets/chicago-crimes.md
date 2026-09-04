@@ -75,6 +75,42 @@ Null counts across all 8,627,693 rows (portal column statistics): `Ward` 614,812
 
 Target DDL: `ID` -> `INT UNSIGNED PRIMARY KEY`; `Case Number` -> `VARCHAR(16)`; `Date`/`Updated On` -> `DATETIME`; `Block` -> `VARCHAR(64)`; `IUCR` -> `CHAR(4)`; `Primary Type`/`Description`/`Location Description` -> `VARCHAR`; `Arrest`/`Domestic` -> `TINYINT(1)`; `Beat` -> `CHAR(4)`; `District` -> `CHAR(3)`; `Ward` -> `TINYINT UNSIGNED NULL`; `Community Area` -> `TINYINT UNSIGNED NULL`; `FBI Code` -> `VARCHAR(3)`; `X`/`Y Coordinate` -> `INT NULL`; `Latitude`/`Longitude` -> `DECIMAL(11,8)`/`DECIMAL(12,8)` NULL; `Location` **dropped** (pure duplication of lat/lon).
 
+# The full archive, as the extended tier (2026-09-03, task X-03)
+2001 through 2024 — **8,240,594 rows in `crimes_all`**, taking `chicago_crimes` from 100 MB to
+**2,031.9 MB**, appended in 70.8 s. The core `crimes` table (calendar year 2024) stays exactly as it
+was and is a strict subset: 259,268 rows on both sides, and **every one of those ids is present in
+`crimes_all`**.
+
+Fetched as one CSV per year rather than one 8-million-row request: a year is 40–90 s and ~130 MB that
+`fetch.py` can retry and resume, and each year's digest is separately recorded. `$order=id` is
+mandatory for stable paging, and `$limit` is set to 600,000 — well above the largest year (486,839 in
+2002) — so a file that comes back at exactly the limit means truncation, which the converter checks
+for. 2.2 GB of CSV in total; the conversion through DuckDB takes 5 s.
+
+**Hazard 4 is real and does not need routing around.** The SODA CSV output carries `location` with
+embedded newlines — each row spans three physical lines, so 2001 is 1,451,731 lines for 485,974 rows.
+DuckDB reads them correctly because it is a real CSV parser, and the column is dropped in the
+projection since it duplicates latitude and longitude. Asking SODA to omit it with `$select` instead
+**triples** the request time (21 s to 67 s for one year), which is worth knowing before reaching for
+the obvious fix.
+
+**Hazard 5 confirmed at archive scale**: `id` is unique across all 8,240,594 rows; `case_number` has
+8,240,009 distinct values, so 585 are repeats. And every IUCR code in 24 years of data is present in
+the current 434-row lookup, so the foreign key is declared rather than omitted — a better result than
+expected for a code list that has been revised over two decades.
+
+Null counts, against the portal's own column statistics (which cover the whole archive including
+2025–26, so the numbers should be a little lower here and are): `ward` 614,811 of a published
+614,812; `community_area` 613,713 of 613,723; coordinates 95,681 of 98,693; `location_description`
+14,702 of 16,587; **`district` 47, exactly the published figure** — every one of them predates 2025.
+
+**On drift.** The claim to make carefully: these digests are not guaranteed, because `updated_on`
+runs to 2026-09-02, one day before this build, so the portal is still revising historical records.
+But over short intervals it is stable, and that was measured rather than assumed — 2024 fetched for
+this set came back **byte-identical** to the copy the core dataset had already fetched through a
+different `$limit`, and 2001 re-fetched identically ten minutes after its first download. R-02's
+release asset is what makes the set verifiable by anyone other than the maintainer.
+
 # Type-mapping hazards
 1. **Date format `MM/DD/YYYY hh:mm:ss AM`** in the CSV export (`07/29/2022 03:39:00 AM`) - needs `STR_TO_DATE(x,'%m/%d/%Y %h:%i:%s %p')`, and note `%h` (12-hour) with `%p`, not `%H`. The **SODA API returns ISO-8601 instead** (`2001-01-01T10:40:00.000`), so the two ingest paths need different parsers. Both are naive local times with no timezone.
 2. **Leading-zero identifiers**: `Beat` = `0733`, `District` = `007`, `IUCR` = `0110`, `FBI Code` = `01A`. All must be strings; `FBI Code` is not even numeric.

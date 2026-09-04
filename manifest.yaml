@@ -1167,6 +1167,17 @@ artifacts:
     size_bytes: 1178451
     license: nyc-open-data-terms
     ipv4_first: false
+  # Yellow trips: the extended tier of an otherwise core dataset. 59 MB of Parquet against green's
+  # 1.2 MB, and 3.5 M rows against 48 k, so it is fetched only for `make nyc-taxi-yellow`.
+  # Multipart upload upstream, so the CloudFront ETag is not an MD5 and cannot be a weak check.
+  - id: nyc_taxi/yellow_tripdata_2025-01.parquet
+    dataset: nyc_taxi_yellow
+    url: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet
+    mirrors: []
+    sha256: "9af277e4c0d3f9deb30644da822981e1e7df6af58313170fd3aa8a474485488a"
+    size_bytes: 59158238
+    license: nyc-open-data-terms
+    ipv4_first: false
   - id: nyc_taxi/taxi_zone_lookup.csv
     dataset: nyc_taxi
     url: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
@@ -1349,5 +1360,269 @@ artifacts:
     mirrors: []
     sha256: "7604748509c07edec748c484aee26382947b1a78d50e85a7237380782ee22138"
     size_bytes: 53865472
+    license: mit
+    ipv4_first: false
+
+  # BTS Reporting Carrier On-Time Performance, January 2025. Extended tier: 27 MB zipped, 243 MB of
+  # CSV, 109 columns. The PREZIP path needs no session and no cookies -- only the interactive
+  # DL_SelectFields form does -- and the month is NOT zero-padded. transtats.bts.gov has no AAAA
+  # record, so the `--ipv4` the record recommends is unnecessary.
+  - id: bts_ontime/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip
+    dataset: bts_ontime
+    url: https://transtats.bts.gov/PREZIP/On_Time_Reporting_Carrier_On_Time_Performance_1987_present_2025_1.zip
+    mirrors: []
+    sha256: "868387dcedaef1b8d8392e608e642219fde50d594c3cf2094aec858167629ccf"
+    size_bytes: 27108664
+    license: us-government-public-domain
+    ipv4_first: false
+  # The three lookups. Download_Lookup.asp takes the table name ROT13-encoded in Y11x72.
+  - id: bts_ontime/L_AIRPORT.csv
+    dataset: bts_ontime
+    url: https://www.transtats.bts.gov/Download_Lookup.asp?Y11x72=Y_NVecbeg
+    mirrors: []
+    sha256: "7be383b4eb599a861aa19208e7fae9a97824abc094078e73ad05b118c0fc2405"
+    size_bytes: 319686
+    license: us-government-public-domain
+    ipv4_first: false
+  - id: bts_ontime/L_AIRLINE_ID.csv
+    dataset: bts_ontime
+    url: https://www.transtats.bts.gov/Download_Lookup.asp?Y11x72=Y_NVeYVaR_VQ
+    mirrors: []
+    sha256: "f84e6b89051a48910fe5487f25378b93173c10aa5752d01e1ddef09c3a50b5c2"
+    size_bytes: 66730
+    license: us-government-public-domain
+    ipv4_first: false
+  - id: bts_ontime/L_UNIQUE_CARRIERS.csv
+    dataset: bts_ontime
+    url: https://www.transtats.bts.gov/Download_Lookup.asp?Y11x72=Y_haVdhR_PNeeVRef
+    mirrors: []
+    sha256: "4ccd2b1edabe8d155efcbc8d00bb6df528872afd01c3afe038f9686902bc25cb"
+    size_bytes: 54217
+    license: us-government-public-domain
+    ipv4_first: false
+
+  # Chicago crimes, the full archive as the extended tier: one artifact per calendar year, 2001
+  # through the last closed year. Per year rather than one request because a year is ~21 s and
+  # ~130 MB, which fetch.py can retry and resume; one request for 8.2 M rows would be six minutes
+  # of hoping. `$order=id` is mandatory for stable paging, and `$limit` is set well above the
+  # largest year (486,839 in 2002) so that a file at exactly the limit means truncation -- which the
+  # converter checks. The `location` column arrives with embedded newlines and is dropped by the
+  # converter, not by `$select`: excluding it server-side triples the request time.
+  #
+  # These digests are not guaranteed: the portal revises historical records, so a re-fetch months
+  # later may not match, by the nature of the source rather than by any fault. Over short intervals
+  # it is stable -- 2024 fetched here came back byte-identical to the copy the core dataset fetched
+  # earlier, through a different $limit, and 2001 re-fetched identically ten minutes after its first
+  # download. R-02's release asset is what makes this verifiable by anyone else regardless.
+  - id: chicago_crimes/full/crimes_2001.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2001&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "24d518cf29f62008629982b171c8e54ba6dfb45ac615a2737c5d36d0752460c5"
+    size_bytes: 132932015
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2002.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2002&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "71d1ce92fdebcede3f45ebef6112eed40dbc1fc6d7cbfddd79f0598655eff101"
+    size_bytes: 135998717
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2003.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2003&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "66341216763ab77ed03f7e7bcb43372b31fe3c1b591a006921ede6f84a75f7c1"
+    size_bytes: 135452707
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2004.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2004&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "c59f2acb4b857dadb989cfed8d6d8fe159964d0092809d9f4910ef323b225e1a"
+    size_bytes: 133823716
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2005.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2005&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "a08448ff1f30c1a5b59f2fbcb72ed9eb6adb272ece6ab0f83630209e3d5d68f8"
+    size_bytes: 129375533
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2006.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2006&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "97c8ceb35d5cbbc8b3236eff3c411640e00c1a8aa4406afc442253156dc07cdd"
+    size_bytes: 127886299
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2007.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2007&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "cb37d6883c4e78b53b484c4063aedf0c114a2f46b351db9a8cbfbda17513c89f"
+    size_bytes: 124712551
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2008.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2008&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "d04c2d56421bd7d65c3a7889701443d6ae4db0c92406408835a93af92e8eddea"
+    size_bytes: 121380361
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2009.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2009&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "ebc93897195d574009bc513e2b37b805f4f53a22f1e947bb73c4dd4d40326f98"
+    size_bytes: 111733260
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2010.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2010&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "b8b58a31c5be02cecd799eb49596f9a9789292a6c68a4b11ee77d809b61a625f"
+    size_bytes: 105918385
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2011.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2011&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "6916ee16282be1c84955a2af79d14c138fd049ec86cd68505d9d424113ddd79c"
+    size_bytes: 100664384
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2012.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2012&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "6bb11408841c9b38c61806d8ed30b1bbc9b237774495e30c362a63f5e2960c27"
+    size_bytes: 96157167
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2013.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2013&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "738dffa74ae75fdc84440c937f3b79391b08fd73252f2b07047e4fe09ac5ff81"
+    size_bytes: 87983901
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2014.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2014&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "7309620a608f11eee648d10c21c22fa7160a13cd85711404ef69ec9cd46ea748"
+    size_bytes: 78866106
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2015.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2015&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "001f647291fd773197e9730a5e3870088b505094be4a84d091e20033381a081f"
+    size_bytes: 75575689
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2016.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2016&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "56e2478e405090cd1907353bf7bf3e69c6f5c3d78549ef3c4974e72c1deed0ed"
+    size_bytes: 77382197
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2017.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2017&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "dabe8a66cd01d8a94c99c9a2aa5590991187485fdfa51a8bd9e2f7c0b5284327"
+    size_bytes: 77061081
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2018.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2018&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "44f9e642e68c79cf6cbacc7c30b90277d7fab2d91fd31f8ff873cc5c68815953"
+    size_bytes: 76960081
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2019.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2019&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "21ee001ee72204d3c3cc0ff51263c1bd8f418eb812b120d1b5c98d5b46e32160"
+    size_bytes: 75139643
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2020.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2020&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "ffa61ca985606820a7aad3ca14ef5e2ecfd42bd3aa47fdd54caab265f0b52f49"
+    size_bytes: 61297573
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2021.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2021&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "80648a808b9652172e6002c233c3f95fd57f5258afef401802125e5bd6d3214a"
+    size_bytes: 60239381
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2022.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2022&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "cd4e677cee78bd390668d279094480ec2066143033ecd1d70d63d9c0bfb0cf5f"
+    size_bytes: 68982515
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2023.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2023&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "47cf48a02fdebd9403874a1846b5afab7149afa71ec1e20cfb849ea94fcbed59"
+    size_bytes: 75992181
+    license: chicago-data-portal-terms
+    ipv4_first: false
+  - id: chicago_crimes/full/crimes_2024.csv
+    dataset: chicago_crimes_full
+    url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2024&$order=id&$limit=600000"
+    mirrors: []
+    sha256: "243fb805b601e958ce12461f32746187fe9588da21146e96ffdfe11bbac736b6"
+    size_bytes: 74811578
+    license: chicago-data-portal-terms
+    ipv4_first: false
+
+  # Contoso at 1 M and 10 M orders: the extended tier of the same generator output the core ships at
+  # 100 k. Each is a separate database rather than an append, because it is the same eight tables at
+  # a different scale, not extra tables.
+  - id: contoso/csv-1m.7z
+    dataset: contoso_1m
+    url: https://github.com/sql-bi/Contoso-Data-Generator-V2-Data/releases/download/ready-to-use-data/csv-1m.7z
+    mirrors: []
+    sha256: "76672db38b1e7f72b698792d4b7c7be7aa756dd04b1cda868874b3e139862e1e"
+    size_bytes: 48894397
+    license: mit
+    ipv4_first: false
+  - id: contoso/csv-10m.7z
+    dataset: contoso_10m
+    url: https://github.com/sql-bi/Contoso-Data-Generator-V2-Data/releases/download/ready-to-use-data/csv-10m.7z
+    mirrors: []
+    sha256: "3461afe3de56d9be9c1dfb445f25ed2eabf3571bc7f72823105725d1f2309067"
+    size_bytes: 512408852
     license: mit
     ipv4_first: false

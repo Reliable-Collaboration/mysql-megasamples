@@ -123,6 +123,57 @@ def stage_nyc_taxi(dest):
                        os.path.join(dest, "nyc_taxi.sql"))
 
 
+def _stage_contoso_size(dest, size):
+    """The extended tier: the same eight tables at 1 M or 10 M orders, in their own database."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "contoso", "convert.py")
+    out = os.path.join(dest, f"contoso_{size}.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "contoso"), out,
+                       "--size", size], text=True).returncode != 0:
+        sys.exit(f"contoso_{size} conversion failed")
+
+
+@stager("contoso_1m")
+def stage_contoso_1m(dest):
+    _stage_contoso_size(dest, "1m")
+
+
+@stager("contoso_10m")
+def stage_contoso_10m(dest):
+    _stage_contoso_size(dest, "10m")
+
+
+@stager("chicago_crimes_full")
+def stage_chicago_crimes_full(dest):
+    """The extended tier: 2001..2024 appended to an existing chicago_crimes."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "chicago_crimes", "convert.py")
+    out = os.path.join(dest, "chicago_crimes_full.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "chicago_crimes"),
+                       out, "--full"], text=True).returncode != 0:
+        sys.exit("chicago_crimes_full conversion failed")
+
+
+@stager("bts_ontime")
+def stage_bts_ontime(dest):
+    _run_dir_converter("bts_ontime", os.path.join(ROOT, "downloads", "bts_ontime"),
+                       os.path.join(dest, "bts_ontime.sql"))
+
+
+@stager("nyc_taxi_yellow")
+def stage_nyc_taxi_yellow(dest):
+    """The extended tier: yellow trips appended to an existing nyc_taxi, never baked in."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "nyc_taxi", "convert.py")
+    out = os.path.join(dest, "nyc_taxi_yellow.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "nyc_taxi"), out,
+                       "--yellow"], text=True).returncode != 0:
+        sys.exit("nyc_taxi_yellow conversion failed")
+
+
 @stager("contoso")
 def stage_contoso(dest):
     _run_dir_converter("contoso", os.path.join(ROOT, "downloads", "contoso"),

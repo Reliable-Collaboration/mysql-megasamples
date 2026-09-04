@@ -1,0 +1,10 @@
+# the primary keys and foreign key indexes the DDL declares
+- name: sales_by_order
+  query: SELECT COUNT(*) FROM sales WHERE orderkey = 139000
+  must_not_full_scan: [sales]
+- name: orders_by_customer
+  query: SELECT COUNT(*) FROM orders WHERE customerkey = 1293529
+  must_not_full_scan: [orders]
+- name: customer_by_key
+  query: SELECT city FROM customer WHERE customerkey = 15
+  must_not_full_scan: [customer]

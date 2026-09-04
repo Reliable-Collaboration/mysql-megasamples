@@ -1,0 +1,16 @@
+# S7: canonical query results, tab-separated as the client prints them.
+busiest_origins: "DFW\t25124\t17.5934\nDEN\t24732\t15.6009\nATL\t23881\t18.7182\n\
+  ORD\t21643\t15.4295\nCLT\t16877\t12.8735"
+cancellation_codes_account_for_cancellations: "16312\t16312\tA=1635,B=14327,C=342,D=8"
+carriers_by_flights: "WN\tSouthwest Airlines Co.\t105307\nDL\tDelta Air Lines Inc.\t\
+  76306\nAA\tAmerican Airlines Inc.\t75088\nOO\tSkyWest Airlines Inc.\t65036\nUA\t\
+  United Air Lines Inc.\t62007"
+clock_2400_becomes_24_hours: "33\t245\t58\t202\t0\t0\t24:00:00\t24:00:00"
+delay_causes_present_from_2003: "98130\t98130\t98130\t98130\t98130"
+diversion_blocks_are_nearly_empty: "1252\t23\t0\t0\t0\t1166"
+latin1_airport_name: "RIH\tRio Hato, Panama: Scarlett MartÍnez International"
+leading_zeros_survive: "0053\t00:50:00\t04\t310\n0055\t00:48:00\t06\t356\n0059\t01:25:00\t\
+  49\t499"
+lookup_sizes: "6929\t1778\t1778"
+segment_tuple_is_unique_this_month: '0'
+totals_match_the_source_csv: "539747\t455119105\t7426076\t7381044\t16312\t1166"

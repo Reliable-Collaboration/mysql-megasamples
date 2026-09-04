@@ -1,0 +1,22 @@
+Licence terms for the `bts_ontime` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+U.S. Government work (17 U.S.C. Sec. 105) - public domain
+---------------------------------------------------------
+
+There is no licence file to ship; the status is statutory. Cite `https://www.law.cornell.edu/uscode/text/17/105` and `https://www.usa.gov/government-copyright` in `LICENSES/US-GOVERNMENT-PUBLIC-DOMAIN.txt`.
+
+Attribution required:
+
+> Airline On-Time Performance data: U.S. Department of Transportation, Bureau of Transportation Statistics, "Reporting Carrier On-Time Performance (1987-present)", https://www.transtats.bts.gov/. A work of the U.S. Government, not subject to copyright (17 U.S.C. Sec. 105). This project is not endorsed by BTS or USDOT.
+
+Obligations:
+
+* **Attribution:** none legally required. Cite the source as good practice.
+* **Share-alike:** none.
+* **Endorsement:** must not imply BTS or DOT endorses this image.
+* **Logos:** do not ship the BTS or DOT seal.

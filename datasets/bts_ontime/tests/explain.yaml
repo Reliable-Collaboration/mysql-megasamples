@@ -1,0 +1,16 @@
+# S5: half a million rows, 109 columns wide -- the indexes have to carry the obvious queries.
+- name: flights_on_a_date
+  query: SELECT COUNT(*) FROM ontime WHERE flightdate = '2025-01-15'
+  must_not_full_scan: [ontime]
+- name: flights_from_an_airport
+  query: SELECT COUNT(*) FROM ontime WHERE origin = 'JFK'
+  must_not_full_scan: [ontime]
+- name: flights_for_a_carrier
+  query: SELECT COUNT(*) FROM ontime WHERE reporting_airline = 'AA'
+  must_not_full_scan: [ontime]
+- name: one_segment
+  query: >
+    SELECT COUNT(*) FROM ontime WHERE flightdate = '2025-01-15'
+      AND reporting_airline = 'AA' AND flight_number_reporting_airline = '1'
+      AND origin = 'JFK' AND dest = 'LAX'
+  must_not_full_scan: [ontime]

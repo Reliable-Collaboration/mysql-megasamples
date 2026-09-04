@@ -3,7 +3,7 @@ busiest_days: "2025-01-16\t1909\t44256.48\n2025-01-30\t1909\t43201.86\n2025-01-1
   1886\t42300.48"
 cbd_fee_present_in_2025: "46490\t2480.25"
 dirty_rows_are_kept: "3447\t647\t186"
-objects_created: "3\t0\t0"
+objects_created: "v_green_daily,v_suspect_trips,v_trip_zone\t0\t0"
 payment_type_mix: "NULL\t1836\n1\t34635\n2\t11424\n3\t332\n4\t98\n5\t1"
 pickup_range_spills_the_month: "2024-12-25 23:13:15.000000\t2025-02-05 18:46:24.000000\t\
   38"

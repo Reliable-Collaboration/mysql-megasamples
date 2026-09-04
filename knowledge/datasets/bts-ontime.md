@@ -60,6 +60,54 @@ The prezipped CSV *is* the friendly form - no database product to stand up, no A
 
 **Downloader design.** Take a list of `(year, month)` pairs; build the URL with the non-padded month; `curl --fail --location --retry 5 --retry-all-errors --retry-delay 5 --connect-timeout 20 -C -`; **add `--ipv4`** - TranStats has a long history of stalling on IPv6-first resolvers, and forcing IPv4 is the cheapest mitigation (**Inferred**, but harmless). Verify the ZIP central directory before extracting, extract only the `.csv` member, and record the `sha256` of the zip plus the uncompressed member size.
 
+# Built and measured (2026-09-03, task X-03)
+Every URL in `# Source artifact` works exactly as recorded — the `PREZIP` path with a non-padded
+month needs no session, the three ROT13-keyed `Download_Lookup.asp` links return their CSVs, and all
+four sizes match to the byte (27,108,664 / 319,686 / 66,730 / 54,217), with the zip still carrying its
+2025-05-08 `Last-Modified`. `transtats.bts.gov` has **no AAAA record**, so the `--ipv4` this record
+recommends as a mitigation is unnecessary; it is harmless, but it is not doing anything.
+
+In MySQL: **4 tables, 539,747 flight segments, 210.1 MB in InnoDB**, loading in 7.3 s. The record
+inferred ~536,000 rows from a bytes-per-row sample and 250–400 MB loaded; the count was 0.7% low and
+the size came in under the range. Converting 243 MB of CSV through DuckDB takes under a second.
+
+**All eleven hazards are real.** Confirmed against the data rather than the readme:
+
+| hazard | measured |
+|---|---|
+| 1 trailing comma | the header parses as **110** fields; the 110th is unnamed and null in every row |
+| 2 clock columns are strings | `"0659"`, `"0053"` — kept `CHAR(4)` |
+| 3 `"2400"` occurs | 33 `DepTime`, 245 `ArrTime`, 58 `WheelsOff`, 202 `WheelsOn`, **0** in either scheduled column |
+| 4 `FlightDate` is `2025-01-01` | yes — the readme's `(yyyymmdd)` is wrong |
+| 5 integers written as decimals | yes, and **all 31 numeric columns are integral**, so the narrow types are lossless |
+| 6 two null spellings | a real CSV parser reads the quoted `""` of `CancellationCode` as NULL, which is the right answer: 523,435 NULL and A/B/C/D otherwise |
+| 7 leading-zero strings | `"04"`, `"06"` FIPS codes survive as `CHAR(2)` |
+| 8 embedded commas | `"New York, NY"` — quoted, parsed |
+| 10 `PA(1)`-style carrier codes | none in 2025; the column is still `VARCHAR(7)` |
+| 11 `Div2..Div5` nearly empty | `Div1Airport` 1,252 rows, `Div2Airport` **23**, Div3/4/5 **0** — 32 columns for 23 values |
+
+**Hazard 3 needs no special case after all.** The record says "any `TIME` conversion must
+special-case it"; it does not, because MySQL's `TIME` runs to `838:59:59` and `MAKETIME(24, 0, 0)` is
+simply `24:00:00`. Four generated columns (`crs_dep_time`, `dep_time`, `crs_arr_time`, `arr_time`)
+expose the parsed values, and 538 rows exercise the case.
+
+**The encoding inference was wrong, and the record was right to ask.** `L_AIRPORT.csv` is **Latin-1,
+not ASCII**: exactly one byte in 319,686 is `0xCD`, the `Í` of `Rio Hato, Panama: Scarlett MartÍnez
+International`. A UTF-8 read of the file fails outright on it. The other two lookups and the 243 MB
+flight CSV are pure ASCII. The converter decodes that one file as cp1252 and reports the byte count
+it re-encoded, so a future month that grows more of them says so.
+
+**The natural key is unique for this month.** The record marked it inferred and untested and warned
+it may not be: for 2025-01 the tuple `(FlightDate, Reporting_Airline, Flight_Number, Origin, Dest,
+CRSDepTime)` has **no duplicates** across all 539,747 rows, and there are no exact duplicate rows
+either. The key stays a surrogate anyway — that is a property of one month, not of a table spanning
+1987 to now — and the tuple gets a plain index.
+
+Cross-checks pinned: `SUM(distance)` 455,119,105, `SUM(arrdelayminutes)` 7,426,076, 16,312 cancelled
+and 1,166 diverted, all identical to DuckDB's sums over the source CSV; the cancellation codes account
+for the cancellations exactly (A 1,635 + B 14,327 + C 342 + D 8 = 16,312); the five delay-cause
+columns are populated together on 98,130 rows.
+
 # Type-mapping hazards
 1. **Trailing comma on every line.** The header ends `..."Div5TailNum",` so a naive split gives 110 fields with an unnamed empty one; pandas would create `Unnamed: 110`. Declare 109 columns and let the parser discard the trailing empty field, or add a throwaway column and drop it.
 2. **Clock columns are quoted zero-padded strings, not numbers.** `CRSDepTime` = `"0659"`, `"0053"`. Read as an integer, `"0053"` silently becomes 53. Keep them `CHAR(4)` and expose `TIME` through a generated column, because -

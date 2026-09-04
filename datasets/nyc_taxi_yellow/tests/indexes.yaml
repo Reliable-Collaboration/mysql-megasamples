@@ -1,0 +1,22 @@
+# S6: every index that must exist after load.
+yellow_trips:
+  PRIMARY:
+    columns:
+    - trip_id
+    type: BTREE
+    unique: true
+  ix_yellow_trips_do:
+    columns:
+    - dolocationid
+    type: BTREE
+    unique: false
+  ix_yellow_trips_pickup:
+    columns:
+    - pickup_datetime
+    type: BTREE
+    unique: false
+  ix_yellow_trips_pu:
+    columns:
+    - pulocationid
+    type: BTREE
+    unique: false

@@ -1,0 +1,57 @@
+# S7: pinned answers. The first holds the DuckDB-to-MySQL narrowing in place -- 31 numeric columns
+# arrive as decimal text ("0.00", "2475.00") and become integers here.
+- name: totals_match_the_source_csv
+  query: >
+    SELECT COUNT(*), SUM(distance), SUM(arrdelayminutes), SUM(depdelayminutes),
+           SUM(cancelled), SUM(diverted) FROM ontime
+# 2400 is a real value in the actual-time columns and never in the scheduled ones. MySQL TIME runs
+# to 838:59:59, so it needs no special case -- but if the generated columns were ever rewritten as
+# a datetime parse, this is what would fail.
+- name: clock_2400_becomes_24_hours
+  query: >
+    SELECT SUM(deptime = '2400'), SUM(arrtime = '2400'), SUM(wheelsoff = '2400'),
+           SUM(wheelson = '2400'), SUM(crsdeptime = '2400'), SUM(crsarrtime = '2400'),
+           MAX(dep_time), MAX(arr_time) FROM ontime
+- name: leading_zeros_survive
+  query: >
+    SELECT crsdeptime, dep_time, originstatefips, flight_number_reporting_airline
+    FROM ontime WHERE crsdeptime LIKE '00%' ORDER BY flight_id LIMIT 3
+# The BTS lookup is Latin-1: one byte in 319,686 is the capital I-acute of this airport's name.
+- name: latin1_airport_name
+  query: SELECT code, description FROM l_airport WHERE code = 'RIH'
+- name: cancellation_codes_account_for_cancellations
+  query: >
+    SELECT (SELECT SUM(cancelled) FROM ontime),
+           (SELECT COUNT(*) FROM ontime WHERE cancellationcode IS NOT NULL),
+           (SELECT GROUP_CONCAT(CONCAT(cancellationcode, '=', n) ORDER BY cancellationcode)
+              FROM (SELECT cancellationcode, COUNT(*) AS n FROM ontime
+                     WHERE cancellationcode IS NOT NULL GROUP BY cancellationcode) c)
+- name: carriers_by_flights
+  query: >
+    SELECT f.reporting_airline, c.description, COUNT(*) FROM ontime f
+    JOIN l_unique_carriers c ON c.code = f.reporting_airline
+    GROUP BY f.reporting_airline, c.description
+    ORDER BY COUNT(*) DESC, f.reporting_airline LIMIT 5
+- name: busiest_origins
+  query: >
+    SELECT origin, COUNT(*), ROUND(AVG(arrdelayminutes), 4) FROM ontime
+    GROUP BY origin ORDER BY COUNT(*) DESC, origin LIMIT 5
+# Hazard 11, measured: the Div2..Div5 blocks are 32 columns that hold almost nothing.
+- name: diversion_blocks_are_nearly_empty
+  query: >
+    SELECT COUNT(div1airport), COUNT(div2airport), COUNT(div3airport),
+           COUNT(div4airport), COUNT(div5airport), SUM(diverted) FROM ontime
+- name: lookup_sizes
+  query: >
+    SELECT (SELECT COUNT(*) FROM l_airport), (SELECT COUNT(*) FROM l_airline_id),
+           (SELECT COUNT(*) FROM l_unique_carriers)
+# The record marked the "natural key" untested and warned it may not be unique. For this month it is.
+- name: segment_tuple_is_unique_this_month
+  query: >
+    SELECT COUNT(*) FROM (SELECT flightdate, reporting_airline,
+      flight_number_reporting_airline, origin, dest, crsdeptime
+      FROM ontime GROUP BY 1,2,3,4,5,6 HAVING COUNT(*) > 1) d
+- name: delay_causes_present_from_2003
+  query: >
+    SELECT COUNT(carrierdelay), COUNT(weatherdelay), COUNT(nasdelay),
+           COUNT(securitydelay), COUNT(lateaircraftdelay) FROM ontime

@@ -1,0 +1,13 @@
+# S7: canonical query results, tab-separated as the client prints them.
+airport_fee_normalised: "2935077\t363688.50\t3475226\t1679956.50"
+both_colours_share_the_zone_lookup: "48326\t3475226\t265\t261"
+dirty_rows_are_kept: "173644\t24656\t63596\t162"
+payment_type_mix: "0\t540149\n1\t2444393\n2\t390429\n3\t23773\n4\t76481\n5\t1"
+pickup_range_spills_the_month: "2024-12-31 20:47:55.000000\t2025-02-01 00:00:44.000000\t\
+  33"
+sums_match_the_parquet_source: "3475226\t89005026.80\t59363125.08\t20347886.73"
+trips_by_borough: "Manhattan\t3089275\nQueens\t294986\nBrooklyn\t66070\nBronx\t14741\n\
+  Unknown\t8141\nN/A\t1380\nEWR\t377\nStaten Island\t256"
+wall_clock_timestamps: 'datetime
+
+  datetime'
