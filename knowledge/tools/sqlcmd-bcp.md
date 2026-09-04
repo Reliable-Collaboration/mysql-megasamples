@@ -58,6 +58,32 @@ stale_after: "2027-03-01"
 * Computed and timestamp columns are exported "as usual" (values appear in the file) - drop them from the `queryout` select or map them to a variable on load.
 * Typical export command (build container, ODBC 18 tools 18.x): `LC_ALL=C.UTF-8 /opt/mssql-tools18/bin/bcp "SELECT ... FROM Sales.Orders" queryout /out/Sales_Orders.tsv -c -t '|~|' -r '|~~|\n' -S localhost -U sa -P "$SA_PASSWORD" -d WideWorldImporters -u` (`-u` = trust server certificate; `-Yo` optional encryption; both bcp 18+). For geography use `.STAsText()` and for varbinary `CONVERT(varchar(max), col, 2)` (hex) in the select. Versions 17.x use `-C` ... no: ODBC 17 tools lack `-u/-Y`; they need a trusted certificate or `-N`? - **open**: confirm which flag set the 2022 container's bcp version accepts.
 
+# Measured, not read (2026-09-03, task X-02)
+Run against `mcr.microsoft.com/mssql/server@sha256:ba4c8329…` (SQL Server 2022 CU26). This closes the
+[export open question](/questions/mssql-bcp-linux-export-encoding-and-escaping.md).
+
+* **Version**: `bcp -v` reports **18.6.0002.1**, and it accepts `-u` (trust server certificate). The
+  ODBC-17 flag question is settled: the 2022 container ships bcp 18.
+* **UTF-8 with `-c`**: yes, under `LC_ALL=C.UTF-8`. `Côte d'Ivoire`, `São Tomé and Principe` and
+  `Türkiye` came out as UTF-8 with no substitution, through 4.7 M rows.
+* **Terminators `-t 0x1f -r 0x1e0a`**: safe for all 77 tables of both WWI databases. This was checked
+  rather than assumed — the separator counts in each file were compared against the row and column
+  counts SQL Server reported, and every row split into exactly its column count.
+* **NULL**: `ISNULL(col, sentinel)` alone is **not** enough, and WWI proves it — four
+  `Purchasing.Suppliers` rows hold a single NUL character *as their value*, so a lone-NUL sentinel read
+  four real values as NULL. Tag the value instead: `ISNULL(NCHAR(1) + <render>, NCHAR(0))`, so `0x00`
+  alone means NULL and `0x01` introduces a value of any content at all. `+` yields NULL when either
+  side is NULL, so the `ISNULL` still fires exactly on real NULLs.
+* **`datetime2` rendering**: `CONVERT(NVARCHAR(27), col, 121)` gives all seven fractional digits
+  (`9999-12-31 23:59:59.9999999`).
+* **sqlcmd 18 flag conflicts**: `-y 0` (unlimited column width) is **mutually exclusive with both `-h`
+  and `-W`**, so a query returning a long value cannot be read through sqlcmd without giving up the
+  header and whitespace flags — and without `-y 0` the value is silently cut at 256 characters. The
+  practical answer is to run every data-returning query through `bcp`, which has no width limit.
+  A readiness poll that treats any non-zero exit as "not started yet" will sit through the whole
+  timeout on a flag mistake; distinguish `Sqlcmd: Error:` (connection, retry) from the usage form
+  (fatal).
+
 # Limits
 * Proprietary; keep to build stage; needs the ODBC driver (`msodbcsql18`, glibc; Alpine unsupported for some locales).
 * `-C` unavailable on Linux; rely on locale + driver default UTF-8.

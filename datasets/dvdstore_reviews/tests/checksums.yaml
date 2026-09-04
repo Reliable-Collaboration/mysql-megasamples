@@ -1,0 +1,25 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+reviews:
+  columns:
+  - review_id
+  - prod_id
+  - review_date
+  - stars
+  - customerid
+  - review_summary
+  - review_text
+  excluded: []
+  n: 200000
+  s: 2934872255992508760
+  x: 6305709385750465636
+reviews_helpfulness:
+  columns:
+  - reviews_helpfulness_id
+  - review_id
+  - customerid
+  - helpfulness
+  excluded: []
+  n: 4106382
+  s: 7087522539332622918
+  x: 3419061936108957340

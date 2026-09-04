@@ -1329,3 +1329,25 @@ artifacts:
     size_bytes: 89190629
     license: gpl-2-0
     ipv4_first: false
+
+  # WideWorldImporters (task X-02). The only datasets with no script or CSV form: the transactional
+  # rows are produced by randomised T-SQL, so the .bak is the sole source of the released data.
+  # Restoring it needs SQL Server, which needs Microsoft's Developer EULA accepted -- see
+  # knowledge/licenses/microsoft-sql-server-developer-eula.md and `make wwi-export`.
+  # The Standard edition .bak (not Full) is chosen: same data, no In-Memory OLTP or columnstore.
+  - id: wideworldimporters/WideWorldImporters-Standard.bak
+    dataset: wideworldimporters
+    url: https://github.com/Microsoft/sql-server-samples/releases/download/wide-world-importers-v1.0/WideWorldImporters-Standard.bak
+    mirrors: []
+    sha256: "066279a8cd28c8d85cbd8215ea71a5d672b420cfbc19756b635c27bd8027dada"
+    size_bytes: 126951424
+    license: mit
+    ipv4_first: false
+  - id: wideworldimporters_dw/WideWorldImportersDW-Standard.bak
+    dataset: wideworldimporters_dw
+    url: https://github.com/Microsoft/sql-server-samples/releases/download/wide-world-importers-v1.0/WideWorldImportersDW-Standard.bak
+    mirrors: []
+    sha256: "7604748509c07edec748c484aee26382947b1a78d50e85a7237380782ee22138"
+    size_bytes: 53865472
+    license: mit
+    ipv4_first: false

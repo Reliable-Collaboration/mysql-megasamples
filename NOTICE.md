@@ -56,6 +56,26 @@ None required. Courtesy citations shipped: "Horst AM, Hill AP, Gorman KB (2020).
 
 Ship the CC BY-SA 4.0 legal code, credit per section 3(a)(1) (creator, copyright notice, license link, indication of modifications) and release the adaptation under the same license. Wording used for Wikipedia: "Text from Simple English Wikipedia (https://simple.wikipedia.org/), dump 2026-09-01, licensed CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL; attribution to the article's contributors via each article's page history link; converted to MySQL by this project." For Stack Exchange posts on or after 2018-05-02: "Content from <site>.stackexchange.com, licensed CC BY-SA 4.0; each post retains its Id, OwnerUserId and author display name so it can be linked and attributed as https://<site>.stackexchange.com/q/<Id> and https://<site>.stackexchange.com/users/<OwnerUserId>."
 
+## Natural Earth public domain terms
+
+None required (public domain). Courtesy line in the WideWorldImporters NOTICE: "Country and state boundaries and city locations derived from Natural Earth (public domain, https://www.naturalearthdata.com/) and data.gov."
+
+## U.S. Government work (17 U.S.C. Sec. 105) - public domain
+
+> Airline On-Time Performance data: U.S. Department of Transportation, Bureau of Transportation Statistics, "Reporting Carrier On-Time Performance (1987-present)", https://www.transtats.bts.gov/. A work of the U.S. Government, not subject to copyright (17 U.S.C. Sec. 105). This project is not endorsed by BTS or USDOT.
+
 ## GNU Free Documentation License 1.3 (GFDL 1.3)
 
 When relying on the GFDL instead of CC BY-SA, ship the GFDL 1.3 text, preserve the article history (list of authors) and title, and mark modified versions. This project relies on CC BY-SA 4.0 and ships the GFDL text for completeness with the line "also available under the GNU Free Documentation License 1.3 (https://www.gnu.org/licenses/fdl-1.3.html)".
+
+## Build-time only — Microsoft SQL Server Developer edition EULA (Linux container, ACCEPT_EULA)
+
+Rebuilding `wideworldimporters` and `wideworldimporters_dw` from upstream runs software under these terms:
+
+https://go.microsoft.com/fwlink/?linkid=857698
+
+> BY USING THE SOFTWARE, YOU ACCEPT THESE TERMS. IF YOU DO NOT ACCEPT THEM, DO NOT USE THE SOFTWARE.
+> ... to design, develop, test and demonstrate your programs. You may not use the software on a device or server in a production environment.
+> Your end users may access the software to perform acceptance tests on your programs.
+
+**You do not accept them by using this image**, and no code covered by them is in it. You accept them if you run `make wwi-export` yourself, which refuses to start until you say so explicitly. See `datasets/wideworldimporters/PROVENANCE.md`, `datasets/wideworldimporters_dw/PROVENANCE.md`.

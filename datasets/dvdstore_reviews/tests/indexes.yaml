@@ -1,0 +1,57 @@
+# S6: every index that must exist after load.
+reviews:
+  PRIMARY:
+    columns:
+    - review_id
+    type: BTREE
+    unique: true
+  fk_review_customerid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  ix_reviews_prod_id:
+    columns:
+    - prod_id
+    type: BTREE
+    unique: false
+  ix_reviews_prodid_revid_date:
+    columns:
+    - prod_id
+    - review_id
+    - review_date
+    type: BTREE
+    unique: false
+  ix_reviews_prodstars:
+    columns:
+    - prod_id
+    - stars
+    type: BTREE
+    unique: false
+  ix_reviews_stars:
+    columns:
+    - stars
+    type: BTREE
+    unique: false
+reviews_helpfulness:
+  PRIMARY:
+    columns:
+    - reviews_helpfulness_id
+    type: BTREE
+    unique: true
+  ix_review_help_id_helpid:
+    columns:
+    - review_id
+    - reviews_helpfulness_id
+    type: BTREE
+    unique: false
+  ix_reviews_help_custid:
+    columns:
+    - customerid
+    type: BTREE
+    unique: false
+  ix_reviews_help_revid:
+    columns:
+    - review_id
+    type: BTREE
+    unique: false

@@ -70,6 +70,29 @@ def extended_tables(database):
 def stage_counts(cfg, schema, d, pin, res):
     path = os.path.join(d, "tests", "expected_counts.yaml")
     observed = {t: int(db.rows(f"SELECT COUNT(*) FROM `{schema}`.`{t}`")[0][0]) for t in base_tables(schema)}
+    # A file that names an authority outside this database is not ours to overwrite: pinning it
+    # would replace "what the source says" with "what we happened to load", which is the one
+    # substitution that makes a lost row look correct.
+    if pin and os.path.exists(path) and open(path, encoding="utf-8").readline().startswith(
+            "# authority:"):
+        res.note(f"counts not pinned: {os.path.relpath(path)} is generated from the source")
+        pin = False
+    if pin and cfg.get("append"):
+        # Which tables an append dataset owns is a declaration, not something the database can be
+        # asked: it shares its schema with the core dataset that made it. Pinning refreshes the
+        # values of the tables already listed and never adds to the list -- otherwise the first
+        # --pin quietly claims the core dataset's tables as well, which is what happened here.
+        declared = load_yaml(path)
+        if declared is None:
+            res.fail(f"{cfg['database']}: an append dataset needs its table list written by hand "
+                     f"in {os.path.relpath(path)} before counts can be pinned"); return
+        missing = sorted(set(declared) - set(observed))
+        if missing:
+            res.fail(f"declared table(s) not present: {', '.join(missing)}"); return
+        header = "".join(line for line in open(path, encoding="utf-8")
+                         if line.startswith("#")) or "# S3: row count per table.\n"
+        dump_yaml(path, {t: observed[t] for t in declared}, header.rstrip("\n"))
+        res.note(f"counts pinned for the {len(declared)} table(s) this dataset declares"); return
     if pin:
         dump_yaml(path, observed, "# S3: row count per table. Pinned from a verified load.")
         res.note(f"counts pinned for {len(observed)} tables"); return
@@ -100,6 +123,20 @@ def stage_counts(cfg, schema, d, pin, res):
     res.note(f"counts OK for {len(expected)} tables")
 
 
+def own_tables(cfg, d, schema):
+    """The tables this dataset is responsible for.
+
+    An `append: true` dataset shares a database with the core dataset that made it, so it must
+    account for its own tables and no others -- otherwise the same expectation is stored twice and
+    the two copies drift.
+    """
+    tables = base_tables(schema)
+    if not cfg.get("append"):
+        return tables
+    mine = load_yaml(os.path.join(d, "tests", "expected_counts.yaml")) or {}
+    return [t for t in tables if t in mine]
+
+
 def stage_digests(cfg, schema, d, pin, res):
     path = os.path.join(d, "tests", "checksums.yaml")
     # Columns whose value is not reproducible across builds (a DEFAULT CURRENT_TIMESTAMP that the
@@ -107,7 +144,7 @@ def stage_digests(cfg, schema, d, pin, res):
     # reason, so the exclusion is visible rather than hidden inside a passing test.
     excluded = load_yaml(os.path.join(d, "tests", "digest_exclude.yaml"), {}) or {}
     observed = {}
-    for table in base_tables(schema):
+    for table in own_tables(cfg, d, schema):
         cols = [c for c in columns_of(schema, table)
                 if c[0] not in (excluded.get(table, {}) or {})]
         row = db.rows(canon.fingerprint_sql(schema, table, cols))[0]
@@ -161,12 +198,15 @@ def stage_fks(cfg, schema, d, pin, res):
 def stage_indexes(cfg, schema, d, pin, res):
     path = os.path.join(d, "tests", "indexes.yaml")
     observed = {}
+    mine = set(own_tables(cfg, d, schema))
     for table, index, nonuniq, itype, cols in [
         (r[0], r[1], r[2], r[3], r[4]) for r in db.rows(
             "SELECT table_name, index_name, MAX(non_unique), MAX(index_type), "
             "GROUP_CONCAT(column_name ORDER BY seq_in_index) "
             f"FROM information_schema.statistics WHERE table_schema='{schema}' "
             "GROUP BY table_name, index_name ORDER BY table_name, index_name")]:
+        if table not in mine:
+            continue
         observed.setdefault(table, {})[index] = {
             "unique": nonuniq == "0", "type": itype, "columns": cols.split(",")}
     if pin:

@@ -1,0 +1,32 @@
+# S7: pinned answers. fact_sale's total is the same number as the OLTP invoice lines' extended
+# price, which is the cleanest evidence that the two databases were exported from one restore.
+- name: fact_sale_totals
+  query: >
+    SELECT COUNT(*), ROUND(SUM(total_including_tax), 2), ROUND(SUM(total_excluding_tax), 2),
+           MIN(invoice_date_key), MAX(invoice_date_key) FROM fact_sale
+- name: fact_movement_quantity
+  query: SELECT COUNT(*), SUM(quantity), MIN(`date_key`), MAX(`date_key`) FROM fact_movement
+- name: sales_by_calendar_year
+  query: >
+    SELECT d.calendar_year, COUNT(*), ROUND(SUM(f.total_including_tax), 2) FROM fact_sale f
+    JOIN dimension_date d ON d.`date` = f.invoice_date_key
+    GROUP BY d.calendar_year ORDER BY d.calendar_year
+# Dimension key 0 is the "Unknown" member. MySQL turns a loaded 0 into a generated value unless
+# NO_AUTO_VALUE_ON_ZERO is set, and LOAD DATA LOCAL then drops the real key-1 row without a word.
+- name: unknown_dimension_members
+  query: >
+    SELECT (SELECT customer FROM dimension_customer WHERE customer_key = 0),
+           (SELECT city FROM dimension_city WHERE city_key = 0),
+           (SELECT COUNT(*) FROM dimension_customer), (SELECT COUNT(*) FROM dimension_city)
+- name: city_location_axis_order
+  query: >
+    SELECT city_key, city, state_province, ST_AsText(location, 'axis-order=long-lat')
+    FROM dimension_city WHERE city_key IN (1, 2) ORDER BY city_key
+- name: slowly_changing_supplier
+  query: >
+    SELECT supplier_key, supplier, valid_from, valid_to FROM dimension_supplier
+    ORDER BY supplier_key LIMIT 4
+- name: lineage
+  query: >
+    SELECT COUNT(*), MIN(data_load_started), MAX(data_load_completed), SUM(was_successful)
+    FROM integration_lineage

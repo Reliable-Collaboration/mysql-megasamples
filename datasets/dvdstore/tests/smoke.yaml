@@ -43,7 +43,11 @@
 
     '
 - name: objects_created
-  query: "SELECT (SELECT COUNT(*) FROM information_schema.views WHERE table_schema='dvdstore')\
-    \ AS views,\n       (SELECT COUNT(*) FROM information_schema.routines WHERE routine_schema='dvdstore')\
-    \ AS routines,\n       (SELECT COUNT(*) FROM information_schema.triggers WHERE\
-    \ trigger_schema='dvdstore') AS triggers\n"
+  # Named, not counted: `dvdstore_reviews` adds two more procedures to this same database, and a
+  # bare COUNT(*) over information_schema makes the core dataset's test fail when the extended
+  # tier happens to be loaded too.
+  query: "SELECT (SELECT GROUP_CONCAT(table_name ORDER BY table_name) FROM information_schema.views\
+    \ WHERE table_schema='dvdstore') AS views,\n       (SELECT GROUP_CONCAT(routine_name ORDER BY\
+    \ routine_name) FROM information_schema.routines WHERE routine_schema='dvdstore'\
+    \ AND routine_name IN ('new_customer','new_member')) AS routines,\n       (SELECT COUNT(*)\
+    \ FROM information_schema.triggers WHERE trigger_schema='dvdstore') AS triggers\n"

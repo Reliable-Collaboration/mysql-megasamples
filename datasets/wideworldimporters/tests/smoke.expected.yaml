@@ -1,0 +1,23 @@
+# S7: canonical query results, tab-separated as the client prints them.
+city_location_axis_order: "1\tAaronsburg\tPOINT(-77.4533235 40.8997903)"
+cold_room_range: "3654736\t2015-12-20 00:00:00.000000\t2016-05-31 23:59:00.000000\t\
+  3.9998"
+computed_confirmed_delivery: "70510\t70426\t70426\t2013-01-02 07:05:00.000000\t2016-05-31\
+  \ 13:30:00.000000"
+computed_is_finalized: "0\t84\n1\t97063"
+computed_search_details_nulls: "227\t227\t199"
+computed_search_name: "1\tData Conversion Only\tData Conversion Only\tData Conversion\
+  \ Only Data Conversion Only\n2\tKayla\tKayla Woodcock\tKayla Kayla Woodcock"
+invoice_line_totals: "228265\t198043439.45\t85729180.90\t25782098.25"
+json_user_preferences: "1\tblitzer\tNULL\n2\thumanity\t3\n3\tdark-hive\t0"
+non_ascii_country_names: "52\tCôte d'Ivoire\tRepublic of Ivory Coast\n185\tSão Tomé\
+  \ and Principe\tDemocratic Republic of São Tomé and Principe\n222\tTürkiye\tRepublic\
+  \ of Türkiye"
+nul_valued_address_lines: "4\t0\t0"
+order_lines_by_year: "2013\t61655\t2473653\n2014\t66852\t2672973\n2015\t73003\t2873250\n\
+  2016\t29902\t1291028"
+photos_are_absent_upstream: "1111\t0\t157"
+stock_item_tags: "1\tUSB missile launcher (Green)\t[\"USB Powered\"]\n2\tUSB rocket\
+  \ launcher (Gray)\t[\"USB Powered\"]\n4\tUSB food flash drive - sushi roll\t[\"\
+  32GB\", \"USB Powered\"]"
+temporal_current_and_history: "663\t51\t1111\t961"

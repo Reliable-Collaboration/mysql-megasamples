@@ -46,6 +46,25 @@ stale_after: "2027-03-01"
 * **Tools inside the image**: `/opt/mssql-tools18/bin/sqlcmd` and `bcp` (mssql-tools18) are included from 2022 CU14 / 2019 CU28 onward; ODBC 18 tools default to encrypted connections - use `sqlcmd -No` / `bcp -Yo` (bcp 18) or `-C`/`-u` trust-server-certificate flags against the self-signed container certificate ([sqlcmd/bcp record](/tools/sqlcmd-bcp.md)).
 * **Restore pattern** (Learn): copy the .bak to `/var/opt/mssql/backup/`, then `RESTORE DATABASE [WideWorldImporters] FROM DISK='/var/opt/mssql/backup/WideWorldImporters-Standard.bak' WITH MOVE 'WWI_Primary' TO '/var/opt/mssql/data/WideWorldImporters.mdf', MOVE 'WWI_UserData' TO '...UserData.ndf', MOVE 'WWI_Log' TO '...ldf', FILE=1, NOUNLOAD, STATS=5` (logical file names **inferred**; list them first with `RESTORE FILELISTONLY`). The Full .bak additionally has an `WWI_InMemory_Data_1` filestream container (inferred) - prefer the Standard .bak.
 
+# Measured, not read (2026-09-03, task X-02)
+* **Pinned**: `mcr.microsoft.com/mssql/server@sha256:ba4c8329f48fb8f02e1416be6a930ebfd71268caee78aa985f3af4315e457c89`
+  — a single-platform `linux/amd64` manifest, 3 layers, 624,896,000 bytes, reporting
+  `Microsoft SQL Server 2022 (RTM-CU26) (KB5093420) - 16.0.4265.3 (X64) ... Developer Edition (64-bit)
+  on Linux (Ubuntu 22.04.5 LTS)`. The version the catalogue advertised for `2022-latest` was right.
+* **Ready in ~2 s** with 6 GB, not the 10–30 s inferred. A login failure in the first seconds is
+  normal: the sa password is still being applied, and sqlcmd reports it identically to a usage error.
+* **Restore**: the logical file names this record inferred are correct for both backups —
+  `WWI_Primary`, `WWI_UserData`, `WWI_Log`. Both restore in under a second and run the 952→957
+  database upgrade steps on the way. Both databases, catalogued, baselined and fully exported in
+  **49 s**.
+* **The daemon could not pull it.** `docker pull mcr.microsoft.com/mssql/server:2022-latest` failed
+  with a bare `EOF` from the manifest request while `curl -4` to the same URL answered in 0.15 s —
+  the IPv6 signature the [runbook](/runbooks/ipv6-and-privileges.md) puts first, and one the Docker
+  Desktop fix applied for Docker Hub at P-02 does not cover. The no-privilege workaround in that
+  runbook's section 2 is now a script: `scripts/pull_image.py` fetches the manifest and blobs over
+  IPv4, verifies every digest, and hands Docker an OCI archive. It pins by digest, so it is a
+  stricter fetch than `docker pull` of a floating tag, not a looser one.
+
 # Limits
 * amd64-only; ~1.3 GB image pull per build unless cached; 2 GB RAM.
 * `MSSQL_SA_PASSWORD` visible in `ps`; use a throwaway password in CI.

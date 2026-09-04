@@ -2,7 +2,7 @@
 expiry_stays_text: 2019/03
 fulltext_on_products: '1009'
 inventory_matches_products: '0'
-objects_created: "0\t2\t0"
+objects_created: "NULL\tnew_customer,new_member\t0"
 order_totals_add_up: '15'
 orders_by_month: "1\t1000\n2\t1000\n3\t1000\n4\t1000\n5\t1000\n6\t1000\n7\t1000\n\
   8\t1000\n9\t1000\n10\t1000\n11\t1000\n12\t1000"

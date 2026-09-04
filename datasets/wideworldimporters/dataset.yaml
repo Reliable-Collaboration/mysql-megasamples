@@ -1,0 +1,12 @@
+name: wideworldimporters
+database: wideworldimporters
+tier: extended
+record: knowledge/datasets/wideworldimporters.md
+licenses: [mit, natural-earth-public-domain, us-government-public-domain]
+artifacts: [wideworldimporters/WideWorldImporters-Standard.bak]
+converter: none
+load:
+  - wideworldimporters.sql
+# Re-deriving this database from Microsoft's .bak runs SQL Server, which needs its EULA accepted.
+# Nothing under that licence is redistributed; see PROVENANCE.md and `make wwi-export`.
+build_license: microsoft-sql-server-developer-eula

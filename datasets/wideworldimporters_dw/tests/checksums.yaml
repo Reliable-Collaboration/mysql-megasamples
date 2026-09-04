@@ -1,0 +1,286 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+dimension_city:
+  columns:
+  - city_key
+  - wwi_city_id
+  - city
+  - state_province
+  - country
+  - continent
+  - sales_territory
+  - region
+  - subregion
+  - location
+  - latest_recorded_population
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 116295
+  s: 12090046503416816199
+  x: 6139414012753560817
+dimension_customer:
+  columns:
+  - customer_key
+  - wwi_customer_id
+  - customer
+  - bill_to_customer
+  - category
+  - buying_group
+  - primary_contact
+  - postal_code
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 403
+  s: 5529874628704394634
+  x: 14299058225219349672
+dimension_date:
+  columns:
+  - date
+  - day_number
+  - day
+  - month
+  - short_month
+  - calendar_month_number
+  - calendar_month_label
+  - calendar_year
+  - calendar_year_label
+  - fiscal_month_number
+  - fiscal_month_label
+  - fiscal_year
+  - fiscal_year_label
+  - iso_week_number
+  excluded: []
+  n: 1461
+  s: 5222786977624491570
+  x: 9392880893884805302
+dimension_employee:
+  columns:
+  - employee_key
+  - wwi_employee_id
+  - employee
+  - preferred_name
+  - is_salesperson
+  - photo
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 213
+  s: 17787789575793776443
+  x: 4645228618772321393
+dimension_paymentmethod:
+  columns:
+  - payment_method_key
+  - wwi_payment_method_id
+  - payment_method
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 6
+  s: 5862083895304600484
+  x: 12429057261900626476
+dimension_stockitem:
+  columns:
+  - stock_item_key
+  - wwi_stock_item_id
+  - stock_item
+  - color
+  - selling_package
+  - buying_package
+  - brand
+  - size
+  - lead_time_days
+  - quantity_per_outer
+  - is_chiller_stock
+  - barcode
+  - tax_rate
+  - unit_price
+  - recommended_retail_price
+  - typical_weight_per_unit
+  - photo
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 672
+  s: 16254757842543572254
+  x: 11069260774679033942
+dimension_supplier:
+  columns:
+  - supplier_key
+  - wwi_supplier_id
+  - supplier
+  - category
+  - primary_contact
+  - supplier_reference
+  - payment_days
+  - postal_code
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 28
+  s: 2712680721299828017
+  x: 17480355872946035993
+dimension_transactiontype:
+  columns:
+  - transaction_type_key
+  - wwi_transaction_type_id
+  - transaction_type
+  - valid_from
+  - valid_to
+  - lineage_key
+  excluded: []
+  n: 15
+  s: 3845161400283919313
+  x: 755066897690544469
+fact_movement:
+  columns:
+  - movement_key
+  - date_key
+  - stock_item_key
+  - customer_key
+  - supplier_key
+  - transaction_type_key
+  - wwi_stock_item_transaction_id
+  - wwi_invoice_id
+  - wwi_purchase_order_id
+  - quantity
+  - lineage_key
+  excluded: []
+  n: 236667
+  s: 15380063345382837131
+  x: 7633669563446454941
+fact_order:
+  columns:
+  - order_key
+  - city_key
+  - customer_key
+  - stock_item_key
+  - order_date_key
+  - picked_date_key
+  - salesperson_key
+  - picker_key
+  - wwi_order_id
+  - wwi_backorder_id
+  - description
+  - package
+  - quantity
+  - unit_price
+  - tax_rate
+  - total_excluding_tax
+  - tax_amount
+  - total_including_tax
+  - lineage_key
+  excluded: []
+  n: 231412
+  s: 4000351843101857169
+  x: 16201295546550672045
+fact_purchase:
+  columns:
+  - purchase_key
+  - date_key
+  - supplier_key
+  - stock_item_key
+  - wwi_purchase_order_id
+  - ordered_outers
+  - ordered_quantity
+  - received_outers
+  - package
+  - is_order_finalized
+  - lineage_key
+  excluded: []
+  n: 8367
+  s: 10488851822757118713
+  x: 14116384294368936955
+fact_sale:
+  columns:
+  - sale_key
+  - city_key
+  - customer_key
+  - bill_to_customer_key
+  - stock_item_key
+  - invoice_date_key
+  - delivery_date_key
+  - salesperson_key
+  - wwi_invoice_id
+  - description
+  - package
+  - quantity
+  - unit_price
+  - tax_rate
+  - total_excluding_tax
+  - tax_amount
+  - profit
+  - total_including_tax
+  - total_dry_items
+  - total_chiller_items
+  - lineage_key
+  excluded: []
+  n: 228265
+  s: 2553143220089131313
+  x: 18082659772100111807
+fact_stockholding:
+  columns:
+  - stock_holding_key
+  - stock_item_key
+  - quantity_on_hand
+  - bin_location
+  - last_stocktake_quantity
+  - last_cost_price
+  - reorder_level
+  - target_stock_level
+  - lineage_key
+  excluded: []
+  n: 227
+  s: 7424537026613683404
+  x: 14120015205216060480
+fact_transaction:
+  columns:
+  - transaction_key
+  - date_key
+  - customer_key
+  - bill_to_customer_key
+  - supplier_key
+  - transaction_type_key
+  - payment_method_key
+  - wwi_customer_transaction_id
+  - wwi_supplier_transaction_id
+  - wwi_invoice_id
+  - wwi_purchase_order_id
+  - supplier_invoice_number
+  - total_excluding_tax
+  - tax_amount
+  - total_including_tax
+  - outstanding_balance
+  - is_finalized
+  - lineage_key
+  excluded: []
+  n: 99585
+  s: 1266891040946924311
+  x: 3779011547068572089
+integration_etlcutoff:
+  columns:
+  - table_name
+  - cutoff_time
+  excluded: []
+  n: 14
+  s: 3191921637050481345
+  x: 1071961015216238075
+integration_lineage:
+  columns:
+  - lineage_key
+  - data_load_started
+  - table_name
+  - data_load_completed
+  - was_successful
+  - source_system_cutoff_time
+  excluded: []
+  n: 13
+  s: 5509750914703569133
+  x: 10002299427884888659

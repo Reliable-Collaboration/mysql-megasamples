@@ -1,0 +1,847 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+application_cities:
+  columns:
+  - cityid
+  - cityname
+  - stateprovinceid
+  - location
+  - latestrecordedpopulation
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 37940
+  s: 16219337559159682180
+  x: 4507629804472251712
+application_cities_archive:
+  columns:
+  - cityid
+  - cityname
+  - stateprovinceid
+  - location
+  - latestrecordedpopulation
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 28
+  s: 6887691594683785430
+  x: 1345619199829998912
+application_countries:
+  columns:
+  - countryid
+  - countryname
+  - formalname
+  - isoalpha3code
+  - isonumericcode
+  - countrytype
+  - latestrecordedpopulation
+  - continent
+  - region
+  - subregion
+  - border
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 190
+  s: 5997892828104006945
+  x: 15341270223541961129
+application_countries_archive:
+  columns:
+  - countryid
+  - countryname
+  - formalname
+  - isoalpha3code
+  - isonumericcode
+  - countrytype
+  - latestrecordedpopulation
+  - continent
+  - region
+  - subregion
+  - border
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 37
+  s: 5124005709495390862
+  x: 554023383433127930
+application_deliverymethods:
+  columns:
+  - deliverymethodid
+  - deliverymethodname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 10
+  s: 15714505247439284825
+  x: 11374107482683635513
+application_deliverymethods_archive:
+  columns:
+  - deliverymethodid
+  - deliverymethodname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 10472270579177095263
+  x: 10472270579177095263
+application_paymentmethods:
+  columns:
+  - paymentmethodid
+  - paymentmethodname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 4
+  s: 11156748514427996473
+  x: 5681252078960852861
+application_paymentmethods_archive:
+  columns:
+  - paymentmethodid
+  - paymentmethodname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 15966923595368152204
+  x: 15966923595368152204
+application_people:
+  columns:
+  - personid
+  - fullname
+  - preferredname
+  - searchname
+  - ispermittedtologon
+  - logonname
+  - isexternallogonprovider
+  - hashedpassword
+  - issystemuser
+  - isemployee
+  - issalesperson
+  - phonenumber
+  - faxnumber
+  - emailaddress
+  - photo
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded:
+  - userpreferences
+  - customfields
+  - otherlanguages
+  n: 1111
+  s: 5405831173992095330
+  x: 18040646638334416474
+application_people_archive:
+  columns:
+  - personid
+  - fullname
+  - preferredname
+  - searchname
+  - ispermittedtologon
+  - logonname
+  - isexternallogonprovider
+  - hashedpassword
+  - issystemuser
+  - isemployee
+  - issalesperson
+  - phonenumber
+  - faxnumber
+  - emailaddress
+  - photo
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded:
+  - userpreferences
+  - customfields
+  - otherlanguages
+  n: 961
+  s: 12826273516924553502
+  x: 17151308638942273482
+application_stateprovinces:
+  columns:
+  - stateprovinceid
+  - stateprovincecode
+  - stateprovincename
+  - countryid
+  - salesterritory
+  - border
+  - latestrecordedpopulation
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 53
+  s: 6882193958328376943
+  x: 4691453213289502061
+application_stateprovinces_archive:
+  columns:
+  - stateprovinceid
+  - stateprovincecode
+  - stateprovincename
+  - countryid
+  - salesterritory
+  - border
+  - latestrecordedpopulation
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 104
+  s: 6465635852461325332
+  x: 6430459954969562152
+application_systemparameters:
+  columns:
+  - systemparameterid
+  - deliveryaddressline1
+  - deliveryaddressline2
+  - deliverycityid
+  - deliverypostalcode
+  - deliverylocation
+  - postaladdressline1
+  - postaladdressline2
+  - postalcityid
+  - postalpostalcode
+  - lasteditedby
+  - lasteditedwhen
+  excluded:
+  - applicationsettings
+  n: 1
+  s: 2157305026322130524
+  x: 2157305026322130524
+application_transactiontypes:
+  columns:
+  - transactiontypeid
+  - transactiontypename
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 13
+  s: 9529392435437636827
+  x: 13549605228345594439
+application_transactiontypes_archive:
+  columns:
+  - transactiontypeid
+  - transactiontypename
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 5114764781120594836
+  x: 5114764781120594836
+purchasing_purchaseorderlines:
+  columns:
+  - purchaseorderlineid
+  - purchaseorderid
+  - stockitemid
+  - orderedouters
+  - description
+  - receivedouters
+  - packagetypeid
+  - expectedunitpriceperouter
+  - lastreceiptdate
+  - isorderlinefinalized
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 8367
+  s: 15801288696119176086
+  x: 11556422822895168072
+purchasing_purchaseorders:
+  columns:
+  - purchaseorderid
+  - supplierid
+  - orderdate
+  - deliverymethodid
+  - contactpersonid
+  - expecteddeliverydate
+  - supplierreference
+  - isorderfinalized
+  - comments
+  - internalcomments
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 2074
+  s: 14967551269075795232
+  x: 12386688400565770918
+purchasing_suppliercategories:
+  columns:
+  - suppliercategoryid
+  - suppliercategoryname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 9
+  s: 17968832805959052554
+  x: 2080496350172723558
+purchasing_suppliercategories_archive:
+  columns:
+  - suppliercategoryid
+  - suppliercategoryname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 8339744420791358258
+  x: 8339744420791358258
+purchasing_suppliers:
+  columns:
+  - supplierid
+  - suppliername
+  - suppliercategoryid
+  - primarycontactpersonid
+  - alternatecontactpersonid
+  - deliverymethodid
+  - deliverycityid
+  - postalcityid
+  - supplierreference
+  - bankaccountname
+  - bankaccountbranch
+  - bankaccountcode
+  - bankaccountnumber
+  - bankinternationalcode
+  - paymentdays
+  - internalcomments
+  - phonenumber
+  - faxnumber
+  - websiteurl
+  - deliveryaddressline1
+  - deliveryaddressline2
+  - deliverypostalcode
+  - deliverylocation
+  - postaladdressline1
+  - postaladdressline2
+  - postalpostalcode
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 13
+  s: 6684544239104671100
+  x: 9957329550293883136
+purchasing_suppliers_archive:
+  columns:
+  - supplierid
+  - suppliername
+  - suppliercategoryid
+  - primarycontactpersonid
+  - alternatecontactpersonid
+  - deliverymethodid
+  - deliverycityid
+  - postalcityid
+  - supplierreference
+  - bankaccountname
+  - bankaccountbranch
+  - bankaccountcode
+  - bankaccountnumber
+  - bankinternationalcode
+  - paymentdays
+  - internalcomments
+  - phonenumber
+  - faxnumber
+  - websiteurl
+  - deliveryaddressline1
+  - deliveryaddressline2
+  - deliverypostalcode
+  - deliverylocation
+  - postaladdressline1
+  - postaladdressline2
+  - postalpostalcode
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 13
+  s: 4461709966981920476
+  x: 7355114670398941732
+purchasing_suppliertransactions:
+  columns:
+  - suppliertransactionid
+  - supplierid
+  - transactiontypeid
+  - purchaseorderid
+  - paymentmethodid
+  - supplierinvoicenumber
+  - transactiondate
+  - amountexcludingtax
+  - taxamount
+  - transactionamount
+  - outstandingbalance
+  - finalizationdate
+  - isfinalized
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 2438
+  s: 615990920971800368
+  x: 3688473013255184558
+sales_buyinggroups:
+  columns:
+  - buyinggroupid
+  - buyinggroupname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 2
+  s: 12084685527498031528
+  x: 554026738865717332
+sales_buyinggroups_archive:
+  columns:
+  - buyinggroupid
+  - buyinggroupname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+sales_customercategories:
+  columns:
+  - customercategoryid
+  - customercategoryname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 8
+  s: 17137260946342243844
+  x: 6306169540744047810
+sales_customercategories_archive:
+  columns:
+  - customercategoryid
+  - customercategoryname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 14095217779992875284
+  x: 14095217779992875284
+sales_customers:
+  columns:
+  - customerid
+  - customername
+  - billtocustomerid
+  - customercategoryid
+  - buyinggroupid
+  - primarycontactpersonid
+  - alternatecontactpersonid
+  - deliverymethodid
+  - deliverycityid
+  - postalcityid
+  - creditlimit
+  - accountopeneddate
+  - standarddiscountpercentage
+  - isstatementsent
+  - isoncredithold
+  - paymentdays
+  - phonenumber
+  - faxnumber
+  - deliveryrun
+  - runposition
+  - websiteurl
+  - deliveryaddressline1
+  - deliveryaddressline2
+  - deliverypostalcode
+  - deliverylocation
+  - postaladdressline1
+  - postaladdressline2
+  - postalpostalcode
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 663
+  s: 17074012341241004484
+  x: 17193904155976444274
+sales_customers_archive:
+  columns:
+  - customerid
+  - customername
+  - billtocustomerid
+  - customercategoryid
+  - buyinggroupid
+  - primarycontactpersonid
+  - alternatecontactpersonid
+  - deliverymethodid
+  - deliverycityid
+  - postalcityid
+  - creditlimit
+  - accountopeneddate
+  - standarddiscountpercentage
+  - isstatementsent
+  - isoncredithold
+  - paymentdays
+  - phonenumber
+  - faxnumber
+  - deliveryrun
+  - runposition
+  - websiteurl
+  - deliveryaddressline1
+  - deliveryaddressline2
+  - deliverypostalcode
+  - deliverylocation
+  - postaladdressline1
+  - postaladdressline2
+  - postalpostalcode
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 51
+  s: 7049434545409133487
+  x: 16272734704658140093
+sales_customertransactions:
+  columns:
+  - customertransactionid
+  - customerid
+  - transactiontypeid
+  - invoiceid
+  - paymentmethodid
+  - transactiondate
+  - amountexcludingtax
+  - taxamount
+  - transactionamount
+  - outstandingbalance
+  - finalizationdate
+  - isfinalized
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 97147
+  s: 6732870365155077953
+  x: 17445804754963114521
+sales_invoicelines:
+  columns:
+  - invoicelineid
+  - invoiceid
+  - stockitemid
+  - description
+  - packagetypeid
+  - quantity
+  - unitprice
+  - taxrate
+  - taxamount
+  - lineprofit
+  - extendedprice
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 228265
+  s: 5768656455900174708
+  x: 13153334709093020380
+sales_invoices:
+  columns:
+  - invoiceid
+  - customerid
+  - billtocustomerid
+  - orderid
+  - deliverymethodid
+  - contactpersonid
+  - accountspersonid
+  - salespersonpersonid
+  - packedbypersonid
+  - invoicedate
+  - customerpurchaseordernumber
+  - iscreditnote
+  - creditnotereason
+  - comments
+  - deliveryinstructions
+  - internalcomments
+  - totaldryitems
+  - totalchilleritems
+  - deliveryrun
+  - runposition
+  - confirmeddeliverytime
+  - confirmedreceivedby
+  - lasteditedby
+  - lasteditedwhen
+  excluded:
+  - returneddeliverydata
+  n: 70510
+  s: 9425169157387310097
+  x: 10938321595393894667
+sales_orderlines:
+  columns:
+  - orderlineid
+  - orderid
+  - stockitemid
+  - description
+  - packagetypeid
+  - quantity
+  - unitprice
+  - taxrate
+  - pickedquantity
+  - pickingcompletedwhen
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 231412
+  s: 7716159390771466115
+  x: 3529884292201561205
+sales_orders:
+  columns:
+  - orderid
+  - customerid
+  - salespersonpersonid
+  - pickedbypersonid
+  - contactpersonid
+  - backorderorderid
+  - orderdate
+  - expecteddeliverydate
+  - customerpurchaseordernumber
+  - isundersupplybackordered
+  - comments
+  - deliveryinstructions
+  - internalcomments
+  - pickingcompletedwhen
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 73595
+  s: 6478729003902881169
+  x: 1681893376941605949
+sales_specialdeals:
+  columns:
+  - specialdealid
+  - stockitemid
+  - customerid
+  - buyinggroupid
+  - customercategoryid
+  - stockgroupid
+  - dealdescription
+  - startdate
+  - enddate
+  - discountamount
+  - discountpercentage
+  - unitprice
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 2
+  s: 4226321558524161022
+  x: 9583942372045581304
+warehouse_coldroomtemperatures:
+  columns:
+  - coldroomtemperatureid
+  - coldroomsensornumber
+  - recordedwhen
+  - temperature
+  - validfrom
+  - validto
+  excluded: []
+  n: 4
+  s: 3240878267613349322
+  x: 11242748222346720276
+warehouse_coldroomtemperatures_archive:
+  columns:
+  - coldroomtemperatureid
+  - coldroomsensornumber
+  - recordedwhen
+  - temperature
+  - validfrom
+  - validto
+  excluded: []
+  n: 3654736
+  s: 15363659919362431972
+  x: 2204308876416933618
+warehouse_colors:
+  columns:
+  - colorid
+  - colorname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 36
+  s: 14374440761488474985
+  x: 5795333198098869731
+warehouse_colors_archive:
+  columns:
+  - colorid
+  - colorname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 15074611247633055253
+  x: 15074611247633055253
+warehouse_packagetypes:
+  columns:
+  - packagetypeid
+  - packagetypename
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 14
+  s: 11912199215582003485
+  x: 14862305105484581069
+warehouse_packagetypes_archive:
+  columns:
+  - packagetypeid
+  - packagetypename
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 0
+  s: 0
+  x: 0
+warehouse_stockgroups:
+  columns:
+  - stockgroupid
+  - stockgroupname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 10
+  s: 2208377329923049101
+  x: 2464395209078203083
+warehouse_stockgroups_archive:
+  columns:
+  - stockgroupid
+  - stockgroupname
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded: []
+  n: 1
+  s: 933445482366302637
+  x: 933445482366302637
+warehouse_stockitemholdings:
+  columns:
+  - stockitemid
+  - quantityonhand
+  - binlocation
+  - laststocktakequantity
+  - lastcostprice
+  - reorderlevel
+  - targetstocklevel
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 227
+  s: 11217218572345708916
+  x: 12620967382019230208
+warehouse_stockitems:
+  columns:
+  - stockitemid
+  - stockitemname
+  - supplierid
+  - colorid
+  - unitpackageid
+  - outerpackageid
+  - brand
+  - size
+  - leadtimedays
+  - quantityperouter
+  - ischillerstock
+  - barcode
+  - taxrate
+  - unitprice
+  - recommendedretailprice
+  - typicalweightperunit
+  - marketingcomments
+  - internalcomments
+  - photo
+  - searchdetails
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded:
+  - customfields
+  - tags
+  n: 227
+  s: 10153574681506610852
+  x: 15323592433786840868
+warehouse_stockitems_archive:
+  columns:
+  - stockitemid
+  - stockitemname
+  - supplierid
+  - colorid
+  - unitpackageid
+  - outerpackageid
+  - brand
+  - size
+  - leadtimedays
+  - quantityperouter
+  - ischillerstock
+  - barcode
+  - taxrate
+  - unitprice
+  - recommendedretailprice
+  - typicalweightperunit
+  - marketingcomments
+  - internalcomments
+  - photo
+  - searchdetails
+  - lasteditedby
+  - validfrom
+  - validto
+  excluded:
+  - customfields
+  - tags
+  n: 444
+  s: 3028619871720707212
+  x: 8452083250976981124
+warehouse_stockitemstockgroups:
+  columns:
+  - stockitemstockgroupid
+  - stockitemid
+  - stockgroupid
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 442
+  s: 6736315593993749935
+  x: 13063946572993225443
+warehouse_stockitemtransactions:
+  columns:
+  - stockitemtransactionid
+  - stockitemid
+  - transactiontypeid
+  - customerid
+  - invoiceid
+  - supplierid
+  - purchaseorderid
+  - transactionoccurredwhen
+  - quantity
+  - lasteditedby
+  - lasteditedwhen
+  excluded: []
+  n: 236667
+  s: 2321259712866775423
+  x: 18069005494949478905
+warehouse_vehicletemperatures:
+  columns:
+  - vehicletemperatureid
+  - vehicleregistration
+  - chillersensornumber
+  - recordedwhen
+  - temperature
+  - iscompressed
+  - fullsensordata
+  - compressedsensordata
+  excluded: []
+  n: 65998
+  s: 7257747357357639047
+  x: 15530979904838465163

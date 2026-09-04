@@ -8,8 +8,11 @@ tags:
 - bcp
 - encoding
 - wideworldimporters
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-03T00:00:00Z"
 generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:20:00Z"
@@ -36,3 +39,23 @@ One container run: restore `WideWorldImportersDW-Standard.bak` (54 MB, smaller t
 
 # Resolves
 Export command in [sqlcmd/bcp tool record](/tools/sqlcmd-bcp.md) and the [WWI conversion decision](/decisions/mssql-wideworldimporters-conversion-path.md).
+
+# Answer (2026-09-03, task X-02)
+All four parts, measured against SQL Server 2022 CU26 over both WWI databases (77 tables, 5.6 M rows).
+Recorded in full in the [sqlcmd/bcp record](/tools/sqlcmd-bcp.md).
+
+1. **UTF-8: yes.** `LC_ALL=C.UTF-8 bcp ... -c` emitted `Côte d'Ivoire`, `São Tomé and Principe` and
+   `Türkiye` intact, with no `?` substitution anywhere. Checked across every column, not by sampling:
+   the export records a per-column count of rows containing any character outside printable ASCII, and
+   the converter re-derives it from the parsed file.
+2. **bcp 18.6.0002.1**, and it accepts `-u`.
+3. **`-t 0x1f -r 0x1e0a` survived every value.** Verified rather than assumed — each row is checked to
+   split into exactly its column count.
+4. **A sentinel is not enough; the value needs the tag.** `ISNULL(col, <sentinel>)` fails on this
+   data: four `Purchasing.Suppliers` rows hold a single NUL character as their value, so a
+   lone-NUL-means-NULL convention read four real values as NULL. `ISNULL(NCHAR(1) + <render>, NCHAR(0))`
+   works for any value at all. The mistake was caught by the per-column non-null counts, before
+   anything was loaded.
+
+One thing the question did not anticipate: `sqlcmd -y 0` is mutually exclusive with both `-h` and
+`-W`, so every data-returning query goes through `bcp` instead.

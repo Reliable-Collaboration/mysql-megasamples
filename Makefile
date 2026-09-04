@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -14,6 +14,8 @@ help:
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
 	@echo "make check            the local gate: bundle validation + generated files up to date"
 	@echo "make okf-check        validate the knowledge bundle"
+	@echo "make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server,"
+	@echo "                      Developer EULA -- see the target below; needed once, not per build)"
 	@echo "make build-server     start the throwaway MySQL build server"
 	@echo "make build-server-stop"
 
@@ -25,7 +27,7 @@ $(1):
 	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
 	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
 endef
-$(foreach d,adventureworks_dw sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
+$(foreach d,adventureworks_dw wideworldimporters wideworldimporters_dw sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
 
 # every core dataset: what the published image contains
 CORE := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \
@@ -67,6 +69,16 @@ build-server-stop:
 	@$(PY) scripts/db.py stop
 clean-context:
 	rm -rf docker/context/*
+
+# WideWorldImporters is the only dataset with no script or CSV form. Producing it means running
+# SQL Server 2022 Developer Edition, which means accepting Microsoft's EULA; the script refuses to
+# start until you say so, and prints the terms. Nothing licensed under that EULA is redistributed --
+# the container is deleted afterwards and only the exported data, which is MIT, is kept.
+#   MEGASAMPLES_ACCEPT_MSSQL_EULA=1 make wwi-export
+# You only need this to re-derive the export. Building or using the databases does not.
+wwi-export:
+	@$(PY) scripts/fetch.py wideworldimporters wideworldimporters_dw
+	@$(PY) scripts/wwi_export.py
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

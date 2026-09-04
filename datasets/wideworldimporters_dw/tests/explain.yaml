@@ -1,0 +1,10 @@
+# S5: star-schema joins go through the fact tables' dimension-key indexes.
+- name: sale_by_customer
+  query: SELECT COUNT(*) FROM fact_sale WHERE customer_key = 100
+  must_not_full_scan: [fact_sale]
+- name: sale_by_stock_item
+  query: SELECT COUNT(*) FROM fact_sale WHERE stock_item_key = 100
+  must_not_full_scan: [fact_sale]
+- name: movement_by_date
+  query: SELECT COUNT(*) FROM fact_movement WHERE `date_key` = '2015-06-01'
+  must_not_full_scan: [fact_movement]

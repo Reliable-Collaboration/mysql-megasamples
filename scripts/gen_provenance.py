@@ -74,7 +74,15 @@ def build_license_file(name, cfg, licences):
     return "\n".join(lines).rstrip() + "\n"
 
 
-def build_provenance(name, cfg, arts, record, measurements):
+def section_starting(sections, prefix):
+    """Records date their own headings ("# Accepted (2026-09-03, task X-02)"), so match the prefix."""
+    for heading, body in sections.items():
+        if heading.startswith(prefix):
+            return body
+    return ""
+
+
+def build_provenance(name, cfg, arts, record, measurements, licences):
     meta, sections = record
     out = [GENERATED, f"# Provenance — `{name}`", "",
            f"**Upstream:** {meta.get('resource', '(see the record)')}", "",
@@ -98,6 +106,21 @@ def build_provenance(name, cfg, arts, record, measurements):
     if "License and attribution" in sections:
         out += ["## Licence and attribution, as recorded", "",
                 sections["License and attribution"], ""]
+
+    if cfg.get("build_license"):
+        # A dataset whose *build* needs proprietary software the image never contains. The point of
+        # this section is that a reader can see what they would be agreeing to before they run it.
+        bmeta, bsections = licences[cfg["build_license"]]
+        out += ["## Build-time software and its licence", "",
+                f"Re-deriving this database from upstream runs software under a licence you must",
+                f"accept: **{bmeta['title']}** ({bmeta.get('resource', '')}).", "",
+                bsections.get("Where the text lives", ""), "",
+                bsections.get("Key terms (verbatim)", ""), "",
+                "Nothing licensed under those terms is redistributed here: the container is deleted",
+                "when the export finishes, and only the exported data — which carries the licence",
+                "named above — is kept. **Using the published image does not involve it**, and",
+                "neither does building any other dataset.", "",
+                section_starting(bsections, "Accepted"), ""]
 
     out += ["## Transformation", ""]
     converter = os.path.join(ROOT, "datasets", name, "convert.py")
@@ -163,6 +186,25 @@ def build_notice(all_datasets, licences):
             if "Attribution" not in sections:
                 continue
             out += [f"## {meta['title']}", "", sections["Attribution"], ""]
+
+    # Software used to *produce* a dataset, which the image never contains. It appears here because
+    # NOTICE is where someone looks to find out what licences this project involves, and "you are
+    # not agreeing to this by using the image, but you would be by rebuilding that dataset" is
+    # exactly the kind of thing that should not be buried.
+    build = {}
+    for name, cfg in all_datasets:
+        if cfg.get("build_license"):
+            build.setdefault(cfg["build_license"], []).append(name)
+    for licence_id, names in sorted(build.items()):
+        meta, sections = licences[licence_id]
+        out += [f"## Build-time only — {meta['title']}", "",
+                f"Rebuilding {' and '.join(f'`{n}`' for n in sorted(names))} from upstream runs "
+                f"software under these terms:", "", meta.get("resource", ""), "",
+                sections.get("Key terms (verbatim)", ""), "",
+                "**You do not accept them by using this image**, and no code covered by them is in "
+                "it. You accept them if you run `make wwi-export` yourself, which refuses to start "
+                "until you say so explicitly. See "
+                + ", ".join(f"`datasets/{n}/PROVENANCE.md`" for n in sorted(names)) + ".", ""]
     return "\n".join(out).rstrip() + "\n"
 
 
@@ -208,7 +250,8 @@ def main():
         write(os.path.join(directory, "LICENSE"),
               build_license_file(name, cfg, licences), a.check, changed)
         write(os.path.join(directory, "PROVENANCE.md"),
-              build_provenance(name, cfg, arts.get(name, []), record, not a.no_measurements),
+              build_provenance(name, cfg, arts.get(name, []), record, not a.no_measurements,
+                               licences),
               a.check, changed, ignore_measured=a.no_measurements)
     write(os.path.join(ROOT, "LICENSES.md"),
           build_licenses_md(all_datasets, licences), a.check, changed)

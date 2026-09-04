@@ -1,0 +1,21 @@
+# authority: SQL Server. These are the counts sys.partitions reported inside the
+# restored .bak, carried through the export -- not counts read back from MySQL. A
+# row lost on the way in therefore fails the check instead of being pinned as
+# correct, which is how a silently dropped row was found. Regenerate with
+#   python3 scripts/stage.py wideworldimporters_dw
+dimension_city: 116295
+dimension_customer: 403
+dimension_date: 1461
+dimension_employee: 213
+dimension_paymentmethod: 6
+dimension_stockitem: 672
+dimension_supplier: 28
+dimension_transactiontype: 15
+fact_movement: 236667
+fact_order: 231412
+fact_purchase: 8367
+fact_sale: 228265
+fact_stockholding: 227
+fact_transaction: 99585
+integration_etlcutoff: 14
+integration_lineage: 13

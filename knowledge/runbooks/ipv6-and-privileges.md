@@ -70,6 +70,25 @@ Observed on this machine on 2026-09-02: only link-local IPv6, `disable_ipv6=0`, 
 4. Registry: pull the base image once via a proxy/mirror that resolves IPv4 (e.g. a ghcr.io copy), or `docker login` to rule out rate limiting.
 If the step still fails, go to section 3.
 
+# 2b. What section 2 looks like in practice (2026-09-03, task X-02)
+The Docker Desktop change the user applied at P-02 fixed Docker Hub, **not every registry**.
+`docker pull mcr.microsoft.com/mssql/server:2022-latest` still fails with a bare
+`failed to do request: Head "https://mcr.microsoft.com/v2/mssql/server/manifests/2022-latest": EOF`,
+while from the same shell `curl -4` to that exact URL returns 200 in 0.15 s and `curl -6` fails in
+20 ms with "Could not connect". Same signature, different registry: this one has AAAA records too, and
+the daemon reaches it through the Desktop VM's stack.
+
+`scripts/pull_image.py` is the section-2 workaround made repeatable. It speaks the OCI distribution
+API over `curl -4`: resolve the tag, fetch the config and layer blobs, verify each against the digest
+the registry named, assemble an OCI archive and `docker load` it. It handles a 401 by fetching an
+anonymous token from the realm the challenge names, so it is not MCR-specific.
+
+    python3 scripts/pull_image.py mcr.microsoft.com/mssql/server:2022-latest
+
+It prints `image@sha256:...` for the caller to pin, which is *stricter* than `docker pull` of a
+floating tag. It needs no privileges and changes nothing on the host. The daemon-level fix in section 3
+is still the right answer for the machine; this is what unblocks a build without asking for it.
+
 # 3. Fixes that need privileges (never applied by the executor)
 | Fix | Exact change | Why it needs asking | Source |
 |---|---|---|---|

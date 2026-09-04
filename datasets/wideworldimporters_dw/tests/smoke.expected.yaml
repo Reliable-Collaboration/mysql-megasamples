@@ -1,0 +1,13 @@
+# S7: canonical query results, tab-separated as the client prints them.
+city_location_axis_order: "1\tCarrollton\tNew York\tPOINT(-78.651695 42.1083969)\n\
+  2\tCarrollton\tVirginia\tPOINT(-76.5605078 36.9468152)"
+fact_movement_quantity: "236667\t130467680\t2013-01-01\t2016-05-31"
+fact_sale_totals: "228265\t198043439.45\t172261341.20\t2013-01-01\t2016-05-31"
+lineage: "13\t2016-06-06 12:36:16.581470\t2016-06-06 12:37:28.420043\t13"
+sales_by_calendar_year: "2013\t60968\t52563272.64\n2014\t65941\t57418916.89\n2015\t\
+  71898\t62090220.81\n2016\t29458\t25971029.11"
+slowly_changing_supplier: "0\tUnknown\t2013-01-01 00:00:00.000000\t9999-12-31 23:59:59.999999\n\
+  1\tA Datum Corporation\t2013-01-01 00:00:00.000000\t2013-01-01 00:05:00.000000\n\
+  2\tWoodgrove Bank\t2013-01-01 00:00:00.000000\t2013-01-01 00:05:00.000000\n3\tConsolidated\
+  \ Messenger\t2013-01-01 00:00:00.000000\t2013-01-01 00:05:00.000000"
+unknown_dimension_members: "Unknown\tUnknown\t403\t116295"

@@ -1,0 +1,53 @@
+# authority: SQL Server. These are the counts sys.partitions reported inside the
+# restored .bak, carried through the export -- not counts read back from MySQL. A
+# row lost on the way in therefore fails the check instead of being pinned as
+# correct, which is how a silently dropped row was found. Regenerate with
+#   python3 scripts/stage.py wideworldimporters
+application_cities: 37940
+application_cities_archive: 28
+application_countries: 190
+application_countries_archive: 37
+application_deliverymethods: 10
+application_deliverymethods_archive: 1
+application_paymentmethods: 4
+application_paymentmethods_archive: 1
+application_people: 1111
+application_people_archive: 961
+application_stateprovinces: 53
+application_stateprovinces_archive: 104
+application_systemparameters: 1
+application_transactiontypes: 13
+application_transactiontypes_archive: 1
+purchasing_purchaseorderlines: 8367
+purchasing_purchaseorders: 2074
+purchasing_suppliercategories: 9
+purchasing_suppliercategories_archive: 1
+purchasing_suppliertransactions: 2438
+purchasing_suppliers: 13
+purchasing_suppliers_archive: 13
+sales_buyinggroups: 2
+sales_buyinggroups_archive: 0
+sales_customercategories: 8
+sales_customercategories_archive: 1
+sales_customertransactions: 97147
+sales_customers: 663
+sales_customers_archive: 51
+sales_invoicelines: 228265
+sales_invoices: 70510
+sales_orderlines: 231412
+sales_orders: 73595
+sales_specialdeals: 2
+warehouse_coldroomtemperatures: 4
+warehouse_coldroomtemperatures_archive: 3654736
+warehouse_colors: 36
+warehouse_colors_archive: 1
+warehouse_packagetypes: 14
+warehouse_packagetypes_archive: 0
+warehouse_stockgroups: 10
+warehouse_stockgroups_archive: 1
+warehouse_stockitemholdings: 227
+warehouse_stockitemstockgroups: 442
+warehouse_stockitemtransactions: 236667
+warehouse_stockitems: 227
+warehouse_stockitems_archive: 444
+warehouse_vehicletemperatures: 65998

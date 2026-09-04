@@ -45,5 +45,30 @@ How do we obtain the WideWorldImporters / WideWorldImportersDW data for MySQL wh
 # Outcome
 Option 1. Constraints recorded: amd64 builder; 2 GB RAM; EULA accepted in CI only; proprietary tools never copied into the MySQL image; the export artifact (not the .bak) becomes the build input, with row counts and checksums measured in SQL Server at export time and re-verified in MySQL. Temporal tables become current + `_Archive` pairs, columnstore/RLS/sequences/in-memory dropped or emulated as described in the dataset records. Database names `wideworldimporters`, `wideworldimporters_dw`.
 
+# Built (2026-09-03, task X-02)
+Option 1, done, and the shape it took differs from the plan in three ways worth recording.
+
+* **The export is not a tarball of bcp files with a separate schema script.** It is
+  `downloads/<dataset>/export/` holding `meta.json` (the whole SQL Server catalogue — columns, types,
+  defaults, computed definitions, indexes, foreign keys, checks, sequences, extended-property
+  descriptions), `baseline.json` (row counts plus three per-column aggregates) and one `.dat` per
+  table. The MySQL DDL is generated from that catalogue rather than translated from a script, which is
+  why both databases share one converter.
+* **Digests are not computed in SQL Server.** Rendering `scripts/canon.py`'s row digest in T-SQL would
+  have meant matching `HASHBYTES` over UTF-16 against Python over UTF-8, which is a second thing to get
+  wrong. Instead each column carries three numbers the export cannot fake — non-null count, total
+  UTF-16 code units, and rows containing any character outside printable ASCII — and the converter
+  re-derives all three while parsing. Those catch truncation, a NULL/value confusion and a `?`
+  substitution respectively; the MySQL-side digests are pinned afterwards as a regression check.
+  The per-column counts earned this immediately: they found the NUL-valued supplier addresses.
+* **Row counts are the expectation, not an observation.** `expected_counts.yaml` is generated from
+  `sys.partitions` in the restored backup and marked `# authority: SQL Server`, and
+  `scripts/verify.py --pin` refuses to overwrite a file so marked. That is what turned a silently
+  dropped row into a failing test.
+
+Measured: 49 s to restore, catalogue, baseline and export both databases; 5.6 M rows and 614 MB of
+`.dat`; the container removed afterwards. `make wwi-export` refuses to start until the EULA is
+accepted explicitly ([licence](/licenses/microsoft-sql-server-developer-eula.md)).
+
 # Status
-accepted, pending [row counts](/questions/mssql-wideworldimporters-row-counts.md), [bcp export details](/questions/mssql-bcp-linux-export-encoding-and-escaping.md) and the [bacpac question](/questions/mssql-bacpac-readable-without-sql-server.md).
+accepted; [row counts](/questions/mssql-wideworldimporters-row-counts.md) and [bcp export details](/questions/mssql-bcp-linux-export-encoding-and-escaping.md) are answered. The [bacpac question](/questions/mssql-bacpac-readable-without-sql-server.md) stays open and is now optional: it would only matter for an arm64 builder, since the export is published and reused.

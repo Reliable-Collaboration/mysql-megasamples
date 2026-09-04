@@ -1,0 +1,16 @@
+# S5: the foreign-key indexes WWI ships must survive the conversion, or every join in the sample's
+# own documentation degrades to a scan of a quarter-million rows.
+- name: invoice_lines_by_invoice
+  query: SELECT COUNT(*) FROM sales_invoicelines WHERE invoiceid = 40000
+  must_not_full_scan: [sales_invoicelines]
+- name: order_lines_by_stock_item
+  query: SELECT COUNT(*) FROM sales_orderlines WHERE stockitemid = 100
+  must_not_full_scan: [sales_orderlines]
+- name: transactions_by_customer
+  query: SELECT COUNT(*) FROM sales_customertransactions WHERE customerid = 500
+  must_not_full_scan: [sales_customertransactions]
+- name: cold_room_by_sensor
+  query: >
+    SELECT COUNT(*) FROM warehouse_coldroomtemperatures_archive
+    WHERE coldroomsensornumber = 3
+  must_not_full_scan: [warehouse_coldroomtemperatures_archive]

@@ -49,6 +49,71 @@ WideWorldImporters (WWI) OLTP. Proposed MySQL database name: **`wideworldimporte
 # Source artifact
 Release `wide-world-importers-v1.0` (2016-06-08; no auth; no checksums): `WideWorldImporters-Standard.bak` **126,951,424 B** (chosen), `WideWorldImporters-Full.bak` 127,111,168, `-Standard.bacpac` 60,996,994, `-Full.bacpac` 61,291,839, plus `_old` variants of each. Learn: "For the Full version of the sample, use SQL Server Evaluation/Developer/Enterprise Edition"; the Standard edition omits In-Memory OLTP/columnstore/partitioning/PolyBase/full-text which `Application.Configuration_*` procedures can re-apply. **Inferred:** data content is identical between Standard and Full (same generation run); the Standard .bak restores on any edition. Pin by release asset name + measured sha256 at first download.
 
+# Built and measured (2026-09-03, task X-02)
+Restored from `WideWorldImporters-Standard.bak` (sha256 `066279a8cd28c8d85cbd8215ea71a5d672b420cfbc19756b635c27bd8027dada`,
+126,951,424 B — the size this record predicted, to the byte) in SQL Server 2022 Developer Edition
+(16.0.4265.3, CU26) and exported by `scripts/wwi_export.py`. In MySQL: **48 tables, 4,713,833 rows,
+633.7 MB in InnoDB**, loading in 18.5 s, with **98 foreign keys and 0 orphans**, 46 secondary indexes,
+30 AUTO_INCREMENT columns, 14 smoke queries and 4 plan tests pinned.
+
+**Every row count in this record's `# Shape` section was right.** All nineteen figures recorded from
+memory — Orders 73,595, OrderLines 231,412, Invoices 70,510, InvoiceLines 228,265,
+CustomerTransactions 97,147, Customers 663, PurchaseOrders 2,074, PurchaseOrderLines 8,367,
+SupplierTransactions 2,438, Suppliers 13, StockItems 227, StockItemTransactions 236,667,
+StockItemHoldings 227, VehicleTemperatures 65,998, People 1,111, Cities 37,940, StateProvinces 53,
+Countries 190 — match exactly. One was attributed to the wrong table: the 3,654,736 ColdRoomTemperatures
+rows are all in `ColdRoomTemperatures_Archive`; the current table holds **4**.
+
+Row counts are now taken from SQL Server's own `sys.partitions` and written into
+`datasets/wideworldimporters/tests/expected_counts.yaml` by the converter, so the expectation is what
+the source says rather than what the load produced. That distinction is not academic — see the
+dimension-key defect in the [DW record](/datasets/wideworldimporters-dw.md).
+
+## What the conversion had to decide
+* **Temporal tables** (18 pairs): both sides are ordinary tables; `ValidFrom`/`ValidTo` are plain
+  `DATETIME(6)`. A `FOR SYSTEM_TIME` query becomes a `UNION ALL` over the pair.
+* **`datetime2(7)` → `DATETIME(6)`** costs the seventh digit, and the loss is not cosmetic: MySQL
+  *rounds*, so the `9999-12-31 23:59:59.9999999` that system versioning writes into every current
+  row's `ValidTo` rounds up into year 10000, overflows, and lands as a zero date. The converter
+  truncates explicitly instead, and counts how many values it touched.
+* **Sequences** (26): each target column becomes `AUTO_INCREMENT`, seeded past the sequence's current
+  value. The `TransactionID` sequence was shared by three tables; that guarantee does not survive.
+* **Computed columns** (8): translated by hand. Two needed a `COALESCE` the T-SQL does not have,
+  because SQL Server's `concat()` renders NULL as an empty string while MySQL's `CONCAT` returns NULL
+  for the whole expression — 199 of the 227 stock items have a NULL `MarketingComments`, so a literal
+  translation would have emptied `SearchDetails` for 88% of the table. The per-column baselines catch
+  exactly this: a changed non-null count.
+* **JSON**: seven columns become MySQL `JSON`, and every value is parsed during conversion rather
+  than trusted. MySQL normalises JSON on storage, so the stored bytes are not the source bytes, and
+  `scripts/canon.py` excludes JSON columns from the row digest — the pinned smoke queries cover them
+  instead.
+* **`geography` → `POINT SRID 4326`**, loaded with `ST_GeomFromText(..., 4326, 'axis-order=long-lat')`.
+  SQL Server's `STAsText()` writes longitude first; MySQL reads SRID 4326 latitude-first unless told
+  otherwise, so without the hint every point lands somewhere else entirely and nothing fails.
+
+## Predictions this record made that the data settled
+* **Geography probe: right.** `cityid` 1 is Aaronsburg at `POINT(-77.4533235 40.8997903)`; this record
+  inferred `POINT(-77.45 40.9)` from the seed script's hex.
+* **Encoding probe: right.** `Côte d'Ivoire`, `São Tomé and Principe` and `Türkiye` all survive
+  SQL Server → `bcp -c` UTF-8 → TSV → utf8mb4 intact.
+* **JSON probe: wrong.** `PersonID` 1's `$.theme` is `blitzer`, not `defaultblue`; PersonID 2 is
+  `humanity` and 3 is `dark-hive`.
+* **Loaded size: near the bottom of the range.** 633.7 MB against an inferred 600–900 MB.
+
+## The NUL discovery
+Four of the thirteen suppliers hold **a single NUL character** as `DeliveryAddressLine1` — not NULL,
+not an empty string. `bcp -c` writes NULL and `''` identically (as nothing), so the export tags fields:
+`0x00` alone means NULL and `0x01` introduces a value. A bare-NUL-means-NULL convention read those four
+real values as NULL, and the per-column non-null counts caught it (9 parsed against 13 counted) before
+anything was loaded. Consequence worth knowing: `scripts/canon.py` uses NUL as its NULL sentinel inside
+the digest text, so a value that *is* a lone NUL digests the same as NULL. The counts, which come from
+SQL Server, are what distinguishes them.
+
+**Not yet ported (task V-02)**: 42 stored procedures (`Website.*` search and ordering, the
+`Application.Configuration_*` SQL Server feature switches, `DataLoadSimulation.*`), 2 functions
+(`Application.DetermineCustomerAccess`, `Website.CalculateCustomerPrice`) and the 3 `Website` views
+(`Customers`, `Suppliers`, `VehicleTemperatures`).
+
 # Native format and friendlier forms
 Native: SQL Server backup (.bak) - needs `RESTORE DATABASE` on SQL Server 2016+; the Developer-edition container (`mcr.microsoft.com/mssql/server:2022-latest`, amd64 only) restores it. `.bacpac` is a DacFx package (schema + data, "compressed but not encrypted") importable only via SqlPackage/SSMS into a SQL engine; reading it directly is [an open question](/questions/mssql-bacpac-readable-without-sql-server.md). **There is no CSV/script form of the transactional data**: the SSDT project holds the schema and ~7.5 MB of T-SQL INSERTs for reference tables only (people, countries with Natural Earth borders, state provinces, cities, delivery/payment methods, transaction types, categories), while orders/invoices/transactions/sensor data are produced by `DataLoadSimulation` procedures with random factors ("recreating the sample will result in slight differences in the data"). Released data covers 2013-01-01 to the generation date (May 2016).
 

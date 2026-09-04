@@ -169,10 +169,36 @@ def stage_oracle_sh(dest):
                        os.path.join(dest, "oracle_sh.sql"))
 
 
+@stager("wideworldimporters")
+def stage_wideworldimporters(dest):
+    """Reads downloads/wideworldimporters/export/, which `make wwi-export` produced once."""
+    _run_export_converter("wideworldimporters", os.path.join(dest, "wideworldimporters.sql"))
+
+
+@stager("wideworldimporters_dw")
+def stage_wideworldimporters_dw(dest):
+    _run_export_converter("wideworldimporters_dw",
+                          os.path.join(dest, "wideworldimporters_dw.sql"))
+
+
 @stager("oracle_oe")
 def stage_oracle_oe(dest):
     _run_dir_converter("oracle_oe", os.path.join(ROOT, "downloads", "oracle_oe"),
                        os.path.join(dest, "oracle_oe.sql"))
+
+
+def _run_export_converter(name, out):
+    """WideWorldImporters converts from the SQL Server export, not from a downloaded archive."""
+    import subprocess
+    export = os.path.join(ROOT, "downloads", name, "export")
+    if not os.path.exists(os.path.join(export, "meta.json")):
+        sys.exit(f"{name}: no export in {export}. It is produced once, by:\n"
+                 f"    MEGASAMPLES_ACCEPT_MSSQL_EULA=1 make wwi-export\n"
+                 f"which runs SQL Server under Microsoft's Developer EULA -- see "
+                 f"knowledge/licenses/microsoft-sql-server-developer-eula.md")
+    conv = os.path.join(ROOT, "datasets", name, "convert.py")
+    if subprocess.run([sys.executable, conv, export, out], text=True).returncode != 0:
+        sys.exit(f"{name} conversion failed")
 
 
 def _run_dir_converter(name, src_dir, out):

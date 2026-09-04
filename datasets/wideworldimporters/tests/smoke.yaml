@@ -1,0 +1,67 @@
+# S7: queries whose answers are pinned. Several exist to hold a specific conversion decision in
+# place: the geography axis order, the computed columns' NULL handling, the JSON columns, and the
+# four supplier rows whose address line is a literal NUL character.
+- name: invoice_line_totals
+  query: >
+    SELECT COUNT(*), ROUND(SUM(extendedprice), 2), ROUND(SUM(lineprofit), 2),
+           ROUND(SUM(taxamount), 2) FROM sales_invoicelines
+- name: order_lines_by_year
+  query: >
+    SELECT YEAR(o.orderdate), COUNT(*), SUM(l.quantity) FROM sales_orders o
+    JOIN sales_orderlines l ON l.orderid = o.orderid
+    GROUP BY YEAR(o.orderdate) ORDER BY YEAR(o.orderdate)
+- name: cold_room_range
+  query: >
+    SELECT COUNT(*), MIN(recordedwhen), MAX(recordedwhen), ROUND(AVG(temperature), 4)
+    FROM warehouse_coldroomtemperatures_archive
+# SQL Server writes geography as longitude-then-latitude; MySQL reads SRID 4326 as
+# latitude-first unless told otherwise, so this fails loudly if the axis-order hint is ever dropped.
+- name: city_location_axis_order
+  query: >
+    SELECT cityid, cityname, ST_AsText(location, 'axis-order=long-lat')
+    FROM application_cities WHERE cityid IN (1, 2) ORDER BY cityid
+- name: non_ascii_country_names
+  query: >
+    SELECT countryid, countryname, formalname FROM application_countries
+    WHERE CONVERT(countryname USING utf8mb4) RLIKE '[^ -~]'
+       OR CONVERT(formalname USING utf8mb4) RLIKE '[^ -~]'
+    ORDER BY countryid
+- name: json_user_preferences
+  query: >
+    SELECT personid, userpreferences->>'$.theme', JSON_LENGTH(otherlanguages)
+    FROM application_people WHERE personid IN (1, 2, 3) ORDER BY personid
+- name: computed_search_name
+  query: >
+    SELECT personid, preferredname, fullname, searchname FROM application_people
+    WHERE personid IN (1, 2) ORDER BY personid
+# SearchDetails concatenates a nullable column. SQL Server's concat() renders NULL as '', MySQL's
+# CONCAT returns NULL for the whole expression, so this counts what the COALESCE is there for.
+- name: computed_search_details_nulls
+  query: >
+    SELECT COUNT(*), COUNT(searchdetails), SUM(marketingcomments IS NULL)
+    FROM warehouse_stockitems
+- name: computed_is_finalized
+  query: >
+    SELECT isfinalized, COUNT(*) FROM sales_customertransactions
+    GROUP BY isfinalized ORDER BY isfinalized
+- name: computed_confirmed_delivery
+  query: >
+    SELECT COUNT(*), COUNT(confirmeddeliverytime), COUNT(confirmedreceivedby),
+           MIN(confirmeddeliverytime), MAX(confirmeddeliverytime) FROM sales_invoices
+# Four of the thirteen suppliers hold a single NUL character as their address line, not NULL and not
+# an empty string. It is why every exported field carries a tag byte.
+- name: nul_valued_address_lines
+  query: >
+    SELECT SUM(deliveryaddressline1 = CHAR(0)), SUM(deliveryaddressline1 IS NULL),
+           SUM(LENGTH(deliveryaddressline1) = 1) FROM purchasing_suppliers
+- name: temporal_current_and_history
+  query: >
+    SELECT (SELECT COUNT(*) FROM sales_customers), (SELECT COUNT(*) FROM sales_customers_archive),
+           (SELECT COUNT(*) FROM application_people), (SELECT COUNT(*) FROM application_people_archive)
+- name: stock_item_tags
+  query: >
+    SELECT stockitemid, stockitemname, tags FROM warehouse_stockitems
+    WHERE JSON_LENGTH(tags) > 0 ORDER BY stockitemid LIMIT 3
+- name: photos_are_absent_upstream
+  query: >
+    SELECT COUNT(*), COUNT(photo), COUNT(hashedpassword) FROM application_people

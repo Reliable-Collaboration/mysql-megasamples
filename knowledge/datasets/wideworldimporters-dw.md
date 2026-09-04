@@ -43,6 +43,58 @@ WideWorldImportersDW. Proposed MySQL database name: **`wideworldimporters_dw`**.
 # Source artifact
 Release `wide-world-importers-v1.0`: `WideWorldImportersDW-Standard.bak` **53,865,472 B** (chosen), `-Full.bak` 50,044,416, `-Standard.bacpac` 22,448,674, `-Full.bacpac` 20,566,783. Learn: "SQL Server 2016 with Service Pack 1 (and later versions) ... To use the full version of the sample, use SQL Server Developer or Enterprise editions." No checksums; pin by asset name + measured sha256.
 
+# Built and measured (2026-09-03, task X-02)
+Restored from `WideWorldImportersDW-Standard.bak` (sha256
+`7604748509c07edec748c484aee26382947b1a78d50e85a7237380782ee22138`, 53,865,472 B — the size this
+record predicted, to the byte) in the same SQL Server session as the [OLTP database](/datasets/wideworldimporters.md).
+In MySQL: **16 tables, 923,643 rows, 249.9 MB in InnoDB**, loading in 7.0 s, with **29 foreign keys
+and 0 orphans**, 13 secondary indexes, 14 AUTO_INCREMENT columns, 7 smoke queries and 3 plan tests
+pinned. 235,317 `datetime2(7)` values were truncated to `DATETIME(6)`.
+
+**Ten of the fourteen row counts this record inferred were right; four were not**, and all four are
+wrong in the same direction and for the same reason — the dimensions are slowly-changing, so they hold
+versioned rows and an "Unknown" member that the OLTP source does not:
+
+| table | this record inferred | measured |
+|---|---|---|
+| Fact.Transaction | 91,109 | **99,585** |
+| Dimension.Supplier | 13 | **28** |
+| Dimension.Payment Method | 4 | **6** |
+| Dimension.Transaction Type | 8 | **15** |
+
+`SUM([Total Including Tax])` over `fact_sale` is **198,043,439.45**, which is the same number as
+`SUM(extendedprice)` over the OLTP's `sales_invoicelines` — the cleanest available evidence that both
+databases came out of one restore of one generation run.
+
+## The dimension-key defect, and why the counts now come from SQL Server
+Every dimension uses **key 0 for the "Unknown" member**. MySQL treats a 0 loaded into an
+AUTO_INCREMENT column as "generate a value" unless `NO_AUTO_VALUE_ON_ZERO` is set — so the Unknown row
+was renumbered onto key 1, collided with the real key-1 row, and `LOAD DATA LOCAL` (which implies
+`IGNORE`, because the server cannot stop a client mid-file) dropped that row **without a word**.
+`dimension_customer` came out with 402 of its 403 rows and no error anywhere.
+
+What made it visible was refusing to pin the expectation from the load. `expected_counts.yaml` for both
+WWI databases is generated from `sys.partitions` inside the restored backup and carries an
+`# authority:` header that `scripts/verify.py --pin` now declines to overwrite; pinning it from MySQL
+would have recorded 402 as correct. The load sets `NO_AUTO_VALUE_ON_ZERO`, and a smoke query asserts
+that customer key 0 is still `Unknown`.
+
+## Other conversion decisions
+* Column names contain spaces — 314 of them, plus five table names. Table names lose the spaces
+  (`dimension_stockitem`); column names replace them with underscores (`total_including_tax`), per the
+  [mapping decision](/decisions/schema-to-database-mapping.md). Two upstream constraint names ran past
+  MySQL's 64-character identifier limit and are truncated with a hash of the original.
+* `Integration.*_Staging` (13 tables) are dropped: they exist for the SSIS package, are empty in the
+  shipped backup, and nothing in the star schema references them. `Integration.ETL Cutoff` (14 rows)
+  and `Integration.Lineage` (13 rows) are kept.
+* `Dimension.City.Location` becomes `POINT SRID 4326` with the same long-lat axis-order handling as the
+  OLTP database. Every `Photo` column is NULL in the shipped backup, in both databases.
+* Loaded size is **249.9 MB**, above the 120–200 MB this record inferred.
+
+**Not yet ported (task V-02)**: 24 stored procedures (the `Integration.MigrateStaged*` ETL set, the
+`Application.Configuration_*` feature switches, `Sequences.Reseed*`) and
+`Integration.GenerateDateDimensionColumns`.
+
 # Native format and friendlier forms
 .bak only (plus .bacpac). The SSDT project builds an **empty** schema; population requires running the SSIS `Daily.ETL.ispac` package against a WideWorldImporters OLTP database. No CSV or script data anywhere. `Application.Configuration_PopulateLargeSaleTable` can inflate Fact.Sale by ~12 M rows for 2012 (not part of the shipped data).
 
