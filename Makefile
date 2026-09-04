@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image console console-down test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -14,6 +14,7 @@ help:
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
 	@echo "make check            the local gate: bundle validation + generated files up to date"
 	@echo "make okf-check        validate the knowledge bundle"
+	@echo "make console          the browsing console: four UIs on one landing page, opt-in"
 	@echo "make load-citibike    download one month of Citi Bike trips to this machine and load"
 	@echo "make load-divvy       the same for Divvy (both need their licence accepted; nothing"
 	@echo "                      from either is ever redistributed by this project)"
@@ -139,6 +140,21 @@ gen-ssb:
 # is a property of the generator (see knowledge/datasets/tpc-c.md). Counts are stable; content is not.
 load-tpcc:
 	@$(PY) scripts/tpcc_load.py --warehouses $(or $(W),1)
+
+# The browsing console (PLAN.md section 12). Opt-in: `docker compose up` without the profile still
+# starts only the database, and no UI is baked into the published image.
+console:
+	@$(PY) scripts/console_page.py --container megasamples-mysql 2>/dev/null || true
+	@docker compose --profile console up -d
+	@$(PY) scripts/console_page.py --container megasamples-mysql
+	@docker compose --profile console restart console >/dev/null
+	@echo "console at http://127.0.0.1:8080/  (phpMyAdmin 8081, Adminer 8082, DbGate 8083)"
+
+console-down:
+	@docker compose --profile console down
+
+test-console:
+	@$(PY) tests/console_test.py
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

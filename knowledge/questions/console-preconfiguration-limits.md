@@ -9,8 +9,11 @@ tags:
 - docker
 - cloudbeaver
 - dbgate
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-04T00:00:00Z"
 generated:
   by: claude-code/claude-opus-5
   at: "2026-09-03T00:00:00Z"
@@ -57,3 +60,27 @@ running container to see the shape of the files it actually reads, which is fast
 # Resolves
 [The console decision](/decisions/browsing-console-stack.md) and task C-01: specifically which of the
 four consoles ship, and whether the landing page must show credentials for any of them.
+
+# Answer (2026-09-04, task C-01)
+All four questions, answered by bringing each container up against the built image rather than by
+reading a wiki.
+
+1. **CloudBeaver: no, and it is dropped.** `dbeaver/cloudbeaver:25.2.0` stays in
+   `configurationMode: true` however it is configured. Mounting an `initial-data-sources.conf` with
+   the connection, setting `CLOUDBEAVER_APP_ANONYMOUS_ACCESS_ENABLED=true`, and setting both
+   `CB_ADMIN_NAME`/`CB_ADMIN_PASSWORD` and `CLOUDBEAVER_ADMIN_NAME`/`CLOUDBEAVER_ADMIN_PASSWORD`
+   were each tried; the GraphQL `serverConfig{configurationMode}` returned `true` every time. Its
+   first-launch wizard cannot be skipped by configuration, so per the decision it ships nothing
+   rather than shipping a manual step. The three that remain all come up unattended.
+2. **DbGate's engine string is `mysql@dbgate-plugin-mysql`** — confirmed, not inferred. The
+   container's own log prints `"engine":"mysql@dbgate-plugin-mysql"` under
+   `DBGM-00005 Using connections from ENV variables`, and the connection is present in the UI.
+3. **Adminer's login form does remain.** With `ADMINER_DEFAULT_SERVER` set, the page still serves
+   `auth[username]`, `auth[password]`, `auth[server]` and `auth[db]` fields under
+   `<title>Login - Adminer</title>`. The landing page therefore states the credentials, and the S10
+   test asserts they are on it. No password-less plugin was used: presetting a login for a UI that
+   can reach a database is worse than showing a read-only account's password.
+4. **Neither `PMA_ABSOLUTE_URI` nor `WEB_ROOT` is needed.** The consoles are served on their own
+   ports rather than under a path on one host, so the question does not arise in this shape.
+   phpMyAdmin signs in from `PMA_USER`/`PMA_PASSWORD` and opens straight into the data: its title is
+   `127.0.0.1:8081 / mysql | phpMyAdmin 5.2.3` with a navigation panel and no login form.

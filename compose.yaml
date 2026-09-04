@@ -1,0 +1,91 @@
+# The browsing console (PLAN.md section 12, task C-01).
+#
+#   docker compose up -d                        just the database, exactly as before
+#   docker compose --profile console up -d      the database plus the UIs and a landing page
+#
+# The console is opt-in and the published image is unchanged: no UI is baked into
+# mysql-megasamples. Every port binds to 127.0.0.1 rather than 0.0.0.0 -- an unauthenticated
+# database UI should not appear on the network because someone opened a laptop in a cafe.
+# Publishing them more widely is a deliberate edit, not a default.
+#
+# The consoles connect as `demo`, the read-only account, so a visitor cannot damage the data and the
+# read-only grant is demonstrated rather than described. The commented block on each service
+# switches it to `admin` for those who want to write.
+#
+# Images are pinned by digest rather than by tag. That is good practice anyway, and on this machine
+# it is also load-bearing: the Docker daemon cannot fetch blobs from Docker Hub's CDN over its own
+# network stack, so the images are fetched by `scripts/pull_image.py` over IPv4 and referred to here
+# by the digest that produced (knowledge/runbooks/ipv6-and-privileges.md).
+#
+# CloudBeaver is deliberately absent. Version 25.2.0 stays in `configurationMode: true` however it is
+# configured -- a mounted initial-data-sources.conf, CB_ADMIN_NAME/CB_ADMIN_PASSWORD and
+# CLOUDBEAVER_ADMIN_* were all tried -- so it cannot come up without its first-launch wizard, and the
+# console ships nothing that needs a manual step
+# (knowledge/questions/console-preconfiguration-limits.md).
+
+name: mysql-megasamples
+
+services:
+  mysql:
+    image: ${MEGASAMPLES_IMAGE:-mysql-megasamples:dev}
+    container_name: megasamples-mysql
+    ports: ["127.0.0.1:3306:3306"]
+    healthcheck:
+      test: ["CMD", "mysql", "-udemo", "-pdemo", "-e", "SELECT 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  console:
+    profiles: ["console"]
+    image: nginx@sha256:3bcf852aed06467cf075c6105892e4d5a6ebbbafa0ce22d35062db9e90ddef4c
+    container_name: megasamples-console
+    ports: ["127.0.0.1:8080:80"]
+    volumes:
+      - ./docker/console:/usr/share/nginx/html:ro
+    depends_on: { mysql: { condition: service_healthy } }
+    restart: unless-stopped
+
+  phpmyadmin:
+    profiles: ["console"]
+    image: phpmyadmin@sha256:20fa6f724ba77d41abc25b1aeb4d97692ce344c7ace305594e57c5893f60f0f7
+    container_name: megasamples-phpmyadmin
+    ports: ["127.0.0.1:8081:80"]
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: "3306"
+      PMA_USER: demo          # admin
+      PMA_PASSWORD: demo      # admin
+      UPLOAD_LIMIT: 256M
+    depends_on: { mysql: { condition: service_healthy } }
+    restart: unless-stopped
+
+  adminer:
+    profiles: ["console"]
+    image: adminer@sha256:f1e2ba27b10a565ac77b2d8555d803be4ddb3232f4216dcf0ea85bcd8f2f1343
+    container_name: megasamples-adminer
+    ports: ["127.0.0.1:8082:8080"]
+    environment:
+      # Adminer's login form remains even with the server preset -- measured, not assumed -- so the
+      # landing page states the credentials rather than pretending the field is filled in.
+      ADMINER_DEFAULT_SERVER: mysql
+    depends_on: { mysql: { condition: service_healthy } }
+    restart: unless-stopped
+
+  dbgate:
+    profiles: ["console"]
+    image: dbgate/dbgate@sha256:14fce4ece52df514e0d320dc82cbfbca5e8f18f98464a6389b1c126f783a6b7e
+    container_name: megasamples-dbgate
+    ports: ["127.0.0.1:8083:3000"]
+    environment:
+      CONNECTIONS: mega
+      LABEL_mega: mysql-megasamples
+      SERVER_mega: mysql
+      PORT_mega: "3306"
+      USER_mega: demo         # admin
+      PASSWORD_mega: demo     # admin
+      # confirmed from DbGate's own log, which the record could only infer from the mssql example
+      ENGINE_mega: mysql@dbgate-plugin-mysql
+    depends_on: { mysql: { condition: service_healthy } }
+    restart: unless-stopped
