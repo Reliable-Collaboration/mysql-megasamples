@@ -135,6 +135,18 @@ def stage_stackexchange_beer(dest):
                        os.path.join(dest, "stackexchange_beer.sql"))
 
 
+@stager("tpch")
+def stage_tpch(dest):
+    """Generated, not downloaded: SF comes from the environment so `make gen-tpch SF=…` works."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "tpch", "convert.py")
+    out = os.path.join(dest, "tpch.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, out, "--sf", os.environ.get("SF", "1")],
+                      text=True).returncode != 0:
+        sys.exit("tpch generation failed")
+
+
 @stager("stackexchange_dba")
 def stage_stackexchange_dba(dest):
     """The same converter, a different site: dba.stackexchange.com in its own database."""

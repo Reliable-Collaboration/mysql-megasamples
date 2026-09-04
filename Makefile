@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -108,6 +108,13 @@ load-citibike:
 
 load-divvy:
 	@$(PY) scripts/bikeshare.py divvy $(if $(MONTH),--month $(MONTH),)
+
+# TPC-H, generated on this machine. No TPC data is shipped or committed; SF=1 is about 1.5 GB
+# loaded, SF=0.01 is a ten-second smoke test.
+gen-tpch:
+	@SF=$(SF) $(PY) scripts/stage.py tpch
+	@$(PY) scripts/load.py  tpch
+	@$(PY) scripts/verify.py tpch
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

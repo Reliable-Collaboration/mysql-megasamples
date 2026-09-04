@@ -102,6 +102,40 @@ CREATE TABLE lineitem (l_orderkey BIGINT NOT NULL, l_partkey INT NOT NULL, l_sup
 # Conversion path
 **Chosen:** `make gen-tpch SF=1` in the loader image runs DuckDB: `INSTALL tpch; LOAD tpch; CALL dbgen(sf=$SF)` (with `children/step` partitions when SF ≥ 10), `COPY <table> TO '/build/tpch/<table>.tbl' (FORMAT csv, DELIMITER '|', HEADER false)`, computes `baseline.json` (counts, canonical digests) from the DuckDB tables, then loads MySQL with `LOAD DATA LOCAL INFILE ... FIELDS TERMINATED BY '|'` in the order region→nation→supplier→part→partsupp→customer→orders→lineitem, PKs pre-created, then `indexes.sql`, `constraints.sql`, `ANALYZE TABLE`. Decision and alternatives (tpch-kit C build; direct `ATTACH ... TYPE mysql`): [tpch-generator-path](/decisions/tpch-generator-path.md). If the fidelity experiment fails, the fallback is tpch-kit's dbgen in a builder stage with `LINES TERMINATED BY '|\n'` to absorb the trailing pipe.
 
+# Built and measured (2026-09-04, task B-01)
+Generated at SF 1 by DuckDB's `tpch` extension (1.5.5), loaded into MySQL: **8 tables, 8,661,245
+rows, 1,872.7 MB in InnoDB**, loading in 38.6 s. Every row count is the specification's, `lineitem`
+at **6,001,215** included. The plan estimated 1.5–2.5 GB (right) and 5–15 minutes to load (far
+pessimistic).
+
+**All 22 queries return the reference answers.** `scripts/tpc_check.py` runs each against MySQL and
+compares it with DuckDB's `tpch_answers()` for the same scale factor, which carries the
+specification's validation output: **22/22 match at SF 1**, in about three minutes. Q1's four
+validation rows come out exactly as the spec prints them —
+`A|F|37734107.00|56586554400.73|53758257134.8700|55909065222.827692|1478493` and its three siblings.
+
+Two things that made that work, both decided rather than defaulted:
+
+* **`utf8mb4_bin` on every table.** The reference answers order strings by byte value; under MySQL's
+  default case-insensitive collation several queries return their rows in a different order and the
+  comparison fails on rows that are individually correct.
+* **`DECIMAL(15,2)` from `dss.ddl`, not the generator's inferred types.** The answers are decimal
+  sums to the cent; a DOUBLE would differ in the last places on every money column.
+
+The comparison is numeric with a relative tolerance rather than textual, because MySQL prints
+`37734107.00` where the reference prints `37734107`, and the two engines carry different intermediate
+precision in the averages. Exact string equality would fail on correct output.
+
+**No patching was needed.** The rewrite rules the plan anticipated (`interval '90' day (3)` →
+`INTERVAL 90 DAY`) do not fire: DuckDB's query text already writes dates as `CAST('1998-09-02' AS
+date)`, which MySQL accepts. The rules stay in the converter because a different generator version
+may need them, and they are cheap.
+
+Nothing TPC-authored is committed: the rows and the 22 query texts are both produced into the
+staging directory at build time, which is the conservative reading of the EULA and costs nothing
+here ([data](/questions/tpc-eula-generated-data-redistribution.md),
+[query text](/questions/tpc-query-text-redistribution.md)).
+
 # Type-mapping hazards
 1. Trailing `|` in dbgen output: use `LINES TERMINATED BY '|\n'` ([dhuny](/sources/github-dhuny-tpch.md)) or accept "extra fields are ignored" warnings ([LOAD DATA](/sources/mysql-refman-9-7-load-data.md)); DuckDB export has no trailing pipe.
 2. `CHAR(n)` columns: dbgen emits unpadded values; MySQL CHAR pads on store and strips on read — digests must `RTRIM` on both sides ([checksum method](/decisions/test-checksum-method.md) already allows this for padded sources).

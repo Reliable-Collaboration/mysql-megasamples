@@ -1,0 +1,12 @@
+name: tpch
+database: tpch
+tier: generated
+record: knowledge/datasets/tpc-h.md
+licenses: [tpc-eula]
+# Nothing is downloaded and nothing is committed: the rows are produced on the machine that builds
+# them, and the 22 query texts are written into the staging directory at build time. See
+# knowledge/questions/tpc-eula-generated-data-redistribution.md.
+artifacts: []
+converter: none
+load:
+  - tpch.sql

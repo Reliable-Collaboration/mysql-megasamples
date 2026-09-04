@@ -1,0 +1,97 @@
+# S6: every index that must exist after load.
+customer:
+  PRIMARY:
+    columns:
+    - c_custkey
+    type: BTREE
+    unique: true
+  ix_customer_nationkey:
+    columns:
+    - c_nationkey
+    type: BTREE
+    unique: false
+lineitem:
+  PRIMARY:
+    columns:
+    - l_orderkey
+    - l_linenumber
+    type: BTREE
+    unique: true
+  ix_lineitem_part_supp:
+    columns:
+    - l_partkey
+    - l_suppkey
+    type: BTREE
+    unique: false
+  ix_lineitem_shipdate:
+    columns:
+    - l_shipdate
+    type: BTREE
+    unique: false
+  ix_lineitem_suppkey:
+    columns:
+    - l_suppkey
+    type: BTREE
+    unique: false
+nation:
+  PRIMARY:
+    columns:
+    - n_nationkey
+    type: BTREE
+    unique: true
+  ix_nation_regionkey:
+    columns:
+    - n_regionkey
+    type: BTREE
+    unique: false
+orders:
+  PRIMARY:
+    columns:
+    - o_orderkey
+    type: BTREE
+    unique: true
+  ix_orders_custkey:
+    columns:
+    - o_custkey
+    type: BTREE
+    unique: false
+  ix_orders_orderdate:
+    columns:
+    - o_orderdate
+    type: BTREE
+    unique: false
+part:
+  PRIMARY:
+    columns:
+    - p_partkey
+    type: BTREE
+    unique: true
+partsupp:
+  PRIMARY:
+    columns:
+    - ps_partkey
+    - ps_suppkey
+    type: BTREE
+    unique: true
+  ix_partsupp_suppkey:
+    columns:
+    - ps_suppkey
+    type: BTREE
+    unique: false
+region:
+  PRIMARY:
+    columns:
+    - r_regionkey
+    type: BTREE
+    unique: true
+supplier:
+  PRIMARY:
+    columns:
+    - s_suppkey
+    type: BTREE
+    unique: true
+  ix_supplier_nationkey:
+    columns:
+    - s_nationkey
+    type: BTREE
+    unique: false

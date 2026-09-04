@@ -1,0 +1,30 @@
+# S7: the specification's own validation output. Q1 at DELTA=90 is the canonical check -- its four
+# rows are quoted in the TPC-H spec, and they are what a wrong DECIMAL type or a wrong collation
+# changes first. The full 22-query comparison against DuckDB's tpch_answers() is a separate step,
+# `python3 scripts/tpc_check.py`, because it takes three minutes at SF 1.
+- name: q1_validation_rows
+  query: >
+    SELECT l_returnflag, l_linestatus, SUM(l_quantity), ROUND(SUM(l_extendedprice), 2),
+           ROUND(SUM(l_extendedprice * (1 - l_discount)), 4),
+           ROUND(SUM(l_extendedprice * (1 - l_discount) * (1 + l_tax)), 6), COUNT(*)
+    FROM lineitem WHERE l_shipdate <= DATE '1998-09-02'
+    GROUP BY l_returnflag, l_linestatus ORDER BY l_returnflag, l_linestatus
+- name: scale_factor_counts
+  query: >
+    SELECT (SELECT COUNT(*) FROM region), (SELECT COUNT(*) FROM nation),
+           (SELECT COUNT(*) FROM supplier), (SELECT COUNT(*) FROM part),
+           (SELECT COUNT(*) FROM partsupp), (SELECT COUNT(*) FROM customer),
+           (SELECT COUNT(*) FROM orders), (SELECT COUNT(*) FROM lineitem)
+- name: date_span
+  query: >
+    SELECT MIN(o_orderdate), MAX(o_orderdate), MIN(l_shipdate), MAX(l_receiptdate)
+    FROM orders, lineitem WHERE l_orderkey = o_orderkey AND o_orderkey <= 100
+# The collation is load-bearing: the reference answers order strings by byte value.
+- name: collation_is_binary
+  query: >
+    SELECT DISTINCT table_collation FROM information_schema.tables
+    WHERE table_schema = 'tpch' AND table_type = 'BASE TABLE'
+- name: nations_and_regions
+  query: >
+    SELECT r.r_name, COUNT(*) FROM nation n JOIN region r ON r.r_regionkey = n.n_regionkey
+    GROUP BY r.r_regionkey, r.r_name ORDER BY r.r_name

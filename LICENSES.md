@@ -40,6 +40,7 @@ database keeps the licence of the project it came from, listed below, and each
 | `smallsets` | [hbiostat-data-permission](knowledge/licenses/hbiostat-data-permission.md), [cc-by-4-0](knowledge/licenses/cc-by-4-0.md), [cc0-1-0](knowledge/licenses/cc0-1-0.md) |
 | `stackexchange_beer` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) |
 | `stackexchange_dba` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) |
+| `tpch` | [tpc-eula](knowledge/licenses/tpc-eula.md) |
 | `wideworldimporters` | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) |
 | `wideworldimporters_dw` | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) |
 | `wikipedia_simple` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) |
@@ -63,4 +64,5 @@ database keeps the licence of the project it came from, listed below, and each
 * **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `contoso_10m`, `contoso_1m`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`, `wideworldimporters`, `wideworldimporters_dw`
 * **Natural Earth public domain terms** — `wideworldimporters`, `wideworldimporters_dw`
 * **NYC Open Data Terms of Use** — `nyc_taxi`, `nyc_taxi_yellow`
+* **TPC End User License Agreement v2.2 (dbgen, qgen, dsdgen, dsqgen and derivatives)** — `tpch`
 * **U.S. Government work (17 U.S.C. Sec. 105) - public domain** — `bts_ontime`, `wideworldimporters`, `wideworldimporters_dw`

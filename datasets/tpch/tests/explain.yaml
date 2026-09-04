@@ -1,0 +1,14 @@
+# S5: the indexes dss.ri implies must actually be used. Q1 is deliberately absent -- it scans about
+# 95% of lineitem by design, and requiring an index there would be requiring the wrong thing.
+- name: q6_uses_shipdate
+  query: >
+    SELECT SUM(l_extendedprice * l_discount) FROM lineitem
+    WHERE l_shipdate >= DATE '1994-01-01' AND l_shipdate < DATE '1995-01-01'
+      AND l_discount BETWEEN 0.05 AND 0.07 AND l_quantity < 24
+  must_not_full_scan: [lineitem]
+- name: orders_by_custkey
+  query: SELECT COUNT(*) FROM orders WHERE o_custkey = 42
+  must_not_full_scan: [orders]
+- name: lineitem_by_orderkey
+  query: SELECT COUNT(*) FROM lineitem WHERE l_orderkey = 4000000
+  must_not_full_scan: [lineitem]
