@@ -5,13 +5,14 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
 	@echo "make <dataset>        fetch, stage, load, test one dataset (see CORE_FAST below)"
 	@echo "make core             every core dataset (what the image contains)"
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
+	@echo "make check            the local gate: bundle validation + generated files up to date"
 	@echo "make okf-check        validate the knowledge bundle"
 	@echo "make build-server     start the throwaway MySQL build server"
 	@echo "make build-server-stop"
@@ -78,6 +79,12 @@ print-core-fast:
 	@echo $(CORE_FAST)
 print-core:
 	@echo $(CORE)
+
+# the local gate, in place of CI: everything that does not need a build. `make core-fast`,
+# `make image` and `make test-image` are the rest of it, and they run in Docker on this machine.
+check:
+	@$(PY) scripts/okf_check.py
+	@$(PY) scripts/gen_provenance.py --check
 
 okf-check:
 	@$(PY) scripts/okf_check.py --bundle knowledge

@@ -39,5 +39,21 @@ How can one dataset be rebuilt without rebuilding all, while the final image rem
 * `make extended` loads every extended dataset that has a release asset into a running server; generators (`make gen-*`) and the license-gated `load-citibike`/`load-divvy` are separate because they cannot run unattended or produce redistributable assets.
 * Caching: BuildKit cache mounts for package installs; dataset dumps are content-addressed (`sha256` of the dump dir recorded in `baseline.json`), so unchanged datasets do not change the image layer input.
 
+# Amendment (2026-09-03, maintainer decision)
+**No CI service.** The plan assumed GitHub Actions workflows (`ci.yaml`, `okf.yaml`, `native.yaml`,
+`extended.yaml`); the maintainer decided against them for this repository. The pipeline downloads
+about 1.5 GB and bakes a 3.46 GB image, which is a poor use of hosted-runner minutes for a project
+whose entire content is data, and the build machine already has Docker.
+
+Nothing about the verification is lost — only the automation of when it runs. The workflows are
+replaced by `make` targets that run exactly the same code: `make check` (bundle validation and the
+generated licence files, seconds, no Docker), `make core-fast` (the 15-dataset subset end to end),
+`make image-only` + `make test-image` (bake and S8), and `make core` before a release. PLAN.md §4.3
+carries the table of gates.
+
+Two datasets could never have run in a hosted CI anyway, which is worth stating because it is a
+property of the data rather than of the choice: `lahman` is maintainer-supplied and has no fetchable
+URL, and `chicago_crimes` is a live API whose pinned digest changes daily.
+
 # Status
 accepted

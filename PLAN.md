@@ -56,7 +56,7 @@ This section is authoritative; [repository-layout](knowledge/decisions/repositor
 │   └── build/                                   # git-ignored: tsv/, dump/, baseline.json, load.log
 ├── downloads/                                   # git-ignored, sha256-verified upstream artifacts
 ├── knowledge/                                   # OKF v0.2 bundle
-└── .github/workflows/  ci.yaml  native.yaml  extended.yaml  okf.yaml
+└── (no CI workflows: verification runs locally in Docker — §4.3)
 ```
 
 ### 2.2 Build pipeline and Dockerfile
@@ -446,10 +446,38 @@ The sample is: the first 20 and the last 20 rows by primary key, plus every row 
 
 ### 4.3 CI
 
-* `ci.yaml` (every push and PR, GitHub-hosted `ubuntu-latest`): lint, `okf_check.py`, then `make core-fast`, an explicit, curated list in the Makefile chosen for CI wall-clock rather than by a size formula (`CORE_FAST := sakila chinook northwind pubs oracle_hr oracle_co oracle_oe adventureworks_lt jaffle_shop smallsets employees lahman contoso stackexchange_beer nyc_taxi chicago_crimes`; excluded: `adventureworks`, `oracle_sh` and `dvdstore` for conversion time, `enron` and `wikipedia_simple` until their core-subset release assets exist) against a `mysql:9.7.2` service container; ends with `make image DATASETS="$(CORE_FAST)"` and S8, which asserts exactly the databases named in the built image's `megasamples.datasets` registry (not a fixed list), so a CI image with 16 databases passes and the full 22-database core image is built on the build machine and by `native.yaml`. Path filters skip the data jobs when only `knowledge/` changes, and `okf_check.py` runs once per push in `okf.yaml`. Target < 40 minutes on the 4-vCPU runner (limits in [github-limits](knowledge/tools/github-limits.md)).
-* `native.yaml` (manual `workflow_dispatch`, and automatically when a `.bak` sha256 or the export script changes): the SQL Server and Oracle conversions (AdventureWorks family, WideWorldImporters, Oracle SH/CO/OE); needs the 16 GB runner memory for SQL Server + MySQL and ~1.5 h.
-* `extended.yaml` (manual): `make extended` (every extended dataset that has a release asset: adventureworks_dw, wideworldimporters ×2, contoso 1m, dvdstore reviews, nyc_taxi yellow, bts_ontime month, chicago full, enron full, stackexchange_dba, wikipedia_simple full) followed by `make gen-tpch SF=0.1`, `gen-tpcds SF=0.1`, `gen-tpcc W=1`, `gen-ssb SF=0.1`; Citi Bike and Divvy are never run in CI because their loaders require the interactive `--accept-license` gate. Skipped by default because of download size and the 14 GB runner disk; runs on a self-hosted or larger runner when available and otherwise on the build machine.
-* All three publish `build/baseline.json` and test reports as workflow artifacts so a failed comparison can be diffed without rerunning.
+**Verification runs on the build machine, in Docker — there is no CI service.** The maintainer decided
+against GitHub Actions for this project: the pipeline downloads about 1.5 GB and bakes a 3.46 GB image,
+which is a poor use of hosted-runner minutes for a repository whose whole purpose is data. Every gate
+below is a `make` target that runs the same code a workflow would have run, so nothing is lost except
+the automation of *when* it runs.
+
+| gate | command | what it costs | when |
+|---|---|---|---|
+| bundle + generated files | `make check` | seconds, no Docker, PyYAML only | before every commit |
+| the CI subset end to end | `make core-fast` | 15 datasets, fetch → convert → load → S3–S7 | before every push that touches the pipeline |
+| image and S8 | `make image-only DATASETS="$(make -s print-core-fast)"` then `make test-image` | one image build | with the above |
+| everything | `make core` then `make image` and `make test-image` | all 21 datasets, ~3.46 GB image | before a release |
+
+`CORE_FAST` is an explicit list in the Makefile, chosen for wall-clock rather than by a size formula:
+`sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe adventureworks_lt
+dvdstore contoso nyc_taxi stackexchange_beer employees`. Six core datasets sit outside it, and two of
+them for reasons no budget would fix:
+
+* **`lahman`** is maintainer-supplied (`manual: true` in the manifest) — there is no URL any automated
+  run could fetch.
+* **`chicago_crimes`** comes from a live API whose content, and therefore its pinned sha256, changes
+  daily; it moved by one row between research and build.
+* **`enron`** (443 MB), **`wikipedia_simple`** (540 MB), **`oracle_sh`** (91 MB) and
+  **`adventureworks`** (the longest conversion) are simply the expensive ones, and they are covered by
+  `make core` before a release.
+
+S8 asserts exactly the databases named in the built image's `megasamples.datasets` registry rather
+than a fixed list, so an image built from the subset passes and so does the full 21-database one.
+
+The SQL Server and Oracle conversions (`make wwi-export`, `make verify-oracle`) and the extended tier
+(`make extended`, the generators) are likewise run on the build machine, which is where the SQL Server
+container's memory requirement and the extended tier's download volume belong anyway.
 * **S10 — browsing console (task C-01, §12).** With the `console` Compose profile up, `curl -fsS` each of the five HTTP endpoints for a 200 and assert the generated landing page names every database in the `megasamples.datasets` registry. Deliberately shallow: it catches a withdrawn image tag or a console that no longer starts, and does not try to drive four web applications.
 
 ## 5. Indexing strategy
@@ -487,7 +515,7 @@ Everything below runs in the builder stage, the `loader` image, or a Compose ser
 | DS3 C generators, `7z`, `zstd`, `bzip2`, `curl`, `xz` | distro | GPL/LGPL/BSD | none | extraction, generation | loader image |
 | Host: `make`, `jq`, `zstd`, `bzip2`, `p7zip-full` | distro | GPL/MIT | **require `sudo apt-get install`** → user request before P-01 | orchestration | host only |
 
-Anything proprietary (SQL Server, ODBC tools, Oracle Free, SQLcl) touches only build-time containers whose file systems are discarded; the CI workflow that runs them (`native.yaml`) is manual and documents the EULA acceptance in its log.
+Anything proprietary (SQL Server, ODBC tools, Oracle Free, SQLcl) touches only build-time containers whose file systems are discarded; the targets that run them (`make wwi-export`, `make verify-oracle`) are manual, run on the build machine, and record the EULA acceptance in `log.md`.
 ## 7. Size and resource budget
 
 **Measured at task E-01 on 2026-09-03**, not estimated: per-database figures are
@@ -672,7 +700,7 @@ Decision record (`decisions/`): `# Question`, `# Options considered` (each with 
 
 ### 10.4 Validation in CI
 
-`scripts/okf_check.py` (committed now, wired into the `okf` workflow in task P-01) runs on every push in a few seconds and enforces, with PyYAML as its only dependency:
+`scripts/okf_check.py` runs in a few seconds as part of `make check`, which is the pre-commit gate, and enforces, with PyYAML as its only dependency:
 1. every non-reserved `.md` under `knowledge/` parses as terminated YAML frontmatter with a non-empty `type` (the spec's conformance rule);
 2. `status`, `trust`, `generated.at` are present and well-formed; `verified` is present iff `trust: verified`; `tags` are strings; no `sources[]` entry is marked "not read";
 3. the required section headings per type exist in order; Dataset tier tags come from the vocabulary; a Decision's `# Status` agrees with its `status`/`trust`; a License has a non-empty `# Attribution`;
@@ -688,7 +716,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | ID | Task | Depends on | Knowledge records |
 |---|---|---|---|
 | P-00 | Ask the user for `sudo apt-get install make jq zstd bzip2 p7zip-full` (template in executor-discipline §1); confirm `docker compose version` | — | log Verification |
-| P-01 ✅ | Create the repository skeleton (§2.1), `pyproject.toml` + `uv.lock`, `Makefile` targets, `manifest.yaml` schema, `scripts/fetch.py`, `scripts/canon.py`, `scripts/verify.py`, `scripts/gen_provenance.py`, `.gitignore`, `okf.yaml` workflow running `scripts/okf_check.py` | P-00 | update [repository-layout](knowledge/decisions/repository-layout.md), [build-orchestration](knowledge/decisions/build-orchestration.md) |
+| P-01 ✅ | Create the repository skeleton (§2.1), `pyproject.toml` + `uv.lock`, `Makefile` targets, `manifest.yaml` schema, `scripts/fetch.py`, `scripts/canon.py`, `scripts/verify.py`, `scripts/gen_provenance.py`, `.gitignore`, `make check` running `scripts/okf_check.py` | P-00 | update [repository-layout](knowledge/decisions/repository-layout.md), [build-orchestration](knowledge/decisions/build-orchestration.md) |
 | P-02 ✅ | **Verify first:** `docker manifest inspect mysql:9.7.3` (bump pin if present); pull `mysql:9.7.2` (IPv6 checklist if it hangs); run the one-line checks from risk 16 (`--init-file`, `GROUPING SETS`, date literal, `SHA2`, `secure_file_priv`, `local_infile`, `lower_case_table_names`) | P-01 | update [target-mysql-version](knowledge/decisions/target-mysql-version.md), [mysql-9x-behaviour-notes](knowledge/tools/mysql-9x-behaviour-notes.md); new source records for anything read |
 | P-03 ✅ | Throwaway bake test with Sakila: builder stage → final stage → `docker run`; measure first-start time and ownership; decide datadir design A/B | P-02 | update [bake-data-vs-initdb](knowledge/decisions/bake-data-vs-initdb.md), [docker-build-multistage](knowledge/tools/docker-build-multistage.md) |
 | P-04 (deferred) | `docker/loader.Dockerfile` (python 3.13, uv, duckdb + tpch/tpcds, mysqlsh, 7z, zstd, curl); `compose.yaml` services and profiles; `mysql-build` service with `--local-infile=1 --disable-log-bin` and `secure_file_priv` bind mount | P-02 | **Deferred.** Every dataset built so far converts with the host's Python 3 and standard library alone, and the base image has no `unzip`/`python3`, so extraction already happens on the host (P-03). The loader image and Compose profiles are needed first at M-05 (DuckDB for nyc_taxi) and X-02 (SQL Server export); building them earlier would be untested scaffolding. |
@@ -707,7 +735,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | M-05 ✅ | nyc_taxi green + zones (DuckDB path v1), chicago_crimes 2024 subset (SODA path) | P-04 | done without the loader image: DuckDB reads the Parquet from the project venv. nyc_taxi 48,326 trips + 265 zones, 11.1 MB, sums checked against the source; chicago_crimes 259,268 + 434, 75.7 MB, snapshot identity recorded |
 | M-06 ✅ | stackexchange_beer (XML loader v1), enron core subset (maildir parser v1), wikipedia_simple sample (SQL fix-up + mwxml) — run the MediaWiki 5-minute test first | P-04 | all three done: stackexchange_beer 11 tables / 62,492 rows, enron 5 of 150 mailboxes / 9,941 messages, wikipedia_simple 9 tables / 5,000 articles / 160.9 MB. Every upstream checksum matched. Both enron questions answered from a full-corpus parse, and the MediaWiki test showed **all four worries unfounded** — no SQL fix-up is needed, the dumps load as they are |
 | **E-01** ✅ | `make core` + `make image`; measure every core database size, datadir, image size, start time; rewrite §7 and [tier-assignments](knowledge/decisions/tier-assignments.md); apply the overflow rule if needed | M-01…M-06 | done — 22 databases, 249 tables, 9,056,697 rows, 942.8 MB logical / 1,785 MB datadir / 3.46 GB image, ready in 2.2 s. §7 and the tier decision rewritten from measurement; **no tier assignment changed**, so the overflow rule was not needed |
-| R-01 | `ci.yaml` (core-fast subset + image test) green on GitHub Actions; `okf.yaml` green; `make provenance` output committed | E-01 | log Verification |
+| R-01 ✅ | Local verification gates green and `make provenance` output committed | E-01 | log Verification |
 | X-01 | adventureworks_dw (same converter) | M-03 | update record |
 | X-02 | WideWorldImporters + DW: `make wwi-export` (SQL Server 2022, amd64, EULA), bcp experiment (risk 6), export cached as release asset, MySQL load | M-03 | update [wideworldimporters](knowledge/datasets/wideworldimporters.md), [-dw](knowledge/datasets/wideworldimporters-dw.md), [mssql-server-container](knowledge/tools/mssql-server-container.md); close bcp and row-count questions |
 | X-03 | nyc_taxi yellow, bts_ontime (downloader), chicago full, dvdstore reviews, contoso 1m/10m | M-04, M-05 | update records; BTS exact count Verification |
@@ -720,7 +748,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | V-01 | optional `make verify-oracle` cross-check of HR/CO/SH converters | M-02 | update [oracle-conversion-path](knowledge/decisions/oracle-conversion-path.md), [oracle-database-free-container](knowledge/tools/oracle-database-free-container.md) |
 | **V-02** | **T-SQL routine translator**, then finish M-03's programmable objects. AdventureWorks OLTP leaves 10 procedures, 11 functions and 8 triggers unported, and Northwind still has one view (`salesbycategory`) and pubs one trigger (`employee_insupd`) for the same reason. Needs: `@parameter` declarations and `DECLARE @x type` locals → MySQL routine parameters and `DECLARE`; `RETURNS x AS BEGIN … RETURN` → `RETURNS x DETERMINISTIC BEGIN … RETURN`; `SET @x =` → `SET x =`; the `inserted`/`deleted` pseudo-tables → per-event row triggers on `NEW`/`OLD` (statement-level bodies that aggregate over them do not port and stay dropped); `RAISERROR`/`THROW` → `SIGNAL SQLSTATE '45000'`; `@@ROWCOUNT` → `ROW_COUNT()`; `ERROR_*()` and `XACT_STATE()` have no equivalent, so `uspLogError`/`uspPrintError` stay dropped; the four hierarchy procedures (`uspGetBillOfMaterials`, `uspGetWhereUsedProductID`, `uspGetEmployeeManagers`, `uspGetManagerEmployees`) become recursive CTEs against the decoded `*_path` columns. Each converter already names every object it skips, so the work is bounded and its completion is measurable: the unported list goes to zero or to a list with a stated reason | M-03 | update [adventureworks-oltp](knowledge/datasets/adventureworks-oltp.md), [northwind](knowledge/datasets/northwind.md), [pubs](knowledge/datasets/pubs.md); log Deviation for anything that stays dropped |
 | **C-01** | **Browsing console** (§12): a `console` Compose profile that starts the image plus phpMyAdmin, Adminer, DbGate and CloudBeaver, all preconfigured against it, behind a generated landing page. Answer the [preconfiguration question](knowledge/questions/console-preconfiguration-limits.md) first — a console that cannot start unattended is dropped rather than shipped with a manual step. Ports bind to loopback; the consoles connect as the read-only `demo` user; every image tag is pinned | E-01 | update [browsing-console-stack](knowledge/decisions/browsing-console-stack.md) (pending → accepted), close [preconfiguration question](knowledge/questions/console-preconfiguration-limits.md); log Creation |
-| R-02 | `native.yaml` and `extended.yaml` workflows; `data-v1` release with all assets and sha256 manifest; §8.3 checklist; README with per-dataset license table; mark the bundle `stable` and turn on `--strict-links` | X-*, B-* | log Verification; update [knowledge-bundle-conventions](knowledge/runbooks/knowledge-bundle-conventions.md) |
+| R-02 | `data-v1` release with all assets and a sha256 manifest — including the `lahman` and `chicago_crimes` snapshots, which is what lets those two be verified by anyone other than the maintainer; §8.3 checklist; README with per-dataset license table; mark the bundle `stable` and turn on `--strict-links` | X-*, B-* | log Verification; update [knowledge-bundle-conventions](knowledge/runbooks/knowledge-bundle-conventions.md) |
 
 Dependencies form a DAG suitable for a project board: P-00→P-01→P-02→{P-03, P-04}→S-01→{S-02, S-03, S-04, S-05}→… (the table's Depends-on column is authoritative); the first image with real content exists after S-04, which is the earliest point at which the user can evaluate the design.
 
