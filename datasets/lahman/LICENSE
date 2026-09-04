@@ -1,0 +1,21 @@
+Licence terms for the `lahman` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+Creative Commons Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0)
+-------------------------------------------------------------------
+
+Full legal code: https://creativecommons.org/licenses/by-sa/3.0/legalcode (title line "Attribution-ShareAlike 3.0 Unported"). Human-readable deed: https://creativecommons.org/licenses/by-sa/3.0/.
+
+Attribution required:
+
+Ship the CC BY-SA 3.0 legal code as `LICENSE`, credit the authors named by upstream, link the license, state that the MySQL conversion is an adaptation released under the same license. Wording used for Employees: "This work is licensed under the Creative Commons Attribution-Share Alike 3.0 Unported License. Original data created by Fusheng Wang and Carlo Zaniolo (Siemens Corporate Research); current schema by Giuseppe Maxia; data conversion from XML to relational by Patrick Crews. Converted to this MySQL image with row-count and checksum verification; the data is fabricated." For Lahman the verbatim SABR notice is used (see Applied to). Stack Exchange posts dated 2011-04-08 to 2018-05-01 are attributed per the Stack Exchange rules (post link, author name and profile link).
+
+Obligations:
+
+* Ship the license URI and the upstream notice alongside each converted database (README section per dataset, and a `LICENSE-*.txt` in the repo).
+* A MySQL conversion of the data is an Adaptation: it must be offered under CC BY-SA 3.0 (or later BY-SA) - it cannot be relicensed; the project's own repository license must carve these datasets out.
+* Keep the "fabricated data" disclaimer for Employees and SABR's copyright line for Lahman intact.

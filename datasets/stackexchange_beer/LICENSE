@@ -1,0 +1,15 @@
+Licence terms for the `stackexchange_beer` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+------------------------------------------------------------------------
+
+Legal code: https://creativecommons.org/licenses/by-sa/4.0/legalcode (SPDX: `CC-BY-SA-4.0`). Ship the full legal code as `LICENSES/CC-BY-SA-4.0.txt` in the repository; the deed summary is not the license.
+
+Attribution required:
+
+Ship the CC BY-SA 4.0 legal code, credit per section 3(a)(1) (creator, copyright notice, license link, indication of modifications) and release the adaptation under the same license. Wording used for Wikipedia: "Text from Simple English Wikipedia (https://simple.wikipedia.org/), dump 2026-09-01, licensed CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL; attribution to the article's contributors via each article's page history link; converted to MySQL by this project." For Stack Exchange posts on or after 2018-05-02: "Content from <site>.stackexchange.com, licensed CC BY-SA 4.0; each post retains its Id, OwnerUserId and author display name so it can be linked and attributed as https://<site>.stackexchange.com/q/<Id> and https://<site>.stackexchange.com/users/<OwnerUserId>."

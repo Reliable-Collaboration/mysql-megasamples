@@ -5,11 +5,12 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help core-fast image test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
 	@echo "make <dataset>        fetch, stage, load, test one dataset (see CORE_FAST below)"
+	@echo "make core             every core dataset (what the image contains)"
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
 	@echo "make okf-check        validate the knowledge bundle"
 	@echo "make build-server     start the throwaway MySQL build server"
@@ -25,13 +26,31 @@ $(1):
 endef
 $(foreach d,sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
 
-CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
+# every core dataset: what the published image contains
+CORE := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \
+        oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi \
+        chicago_crimes stackexchange_beer lahman enron wikipedia_simple
+
+# the CI subset (PLAN.md section 4.3). Six datasets are deliberately outside it:
+#   lahman           maintainer-supplied: there is no URL a build can fetch (manifest `manual: true`)
+#   chicago_crimes   a live API whose content, and so its sha256, changes daily
+#   enron 443 MB, wikipedia_simple 540 MB, oracle_sh 91 MB, adventureworks (69 tables, the longest
+#                    conversion) -- download and wall-clock budget on a hosted runner
+# The first two become CI-able once R-02 publishes them as release assets; the rest stay local.
+CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \
+             adventureworks_lt dvdstore contoso nyc_taxi stackexchange_beer employees
+
+core: $(CORE)
 
 core-fast: $(CORE_FAST)
 
 # build the image from whatever datasets are named in DATASETS (default: the core-fast set)
-DATASETS ?= $(CORE_FAST)
-image: $(DATASETS)
+DATASETS ?= $(CORE)
+image: $(DATASETS) image-only
+
+# bake what is already loaded in the build server, without re-running the datasets. CI uses this
+# after `make core-fast` so the pipeline is not run twice.
+image-only:
 	@$(PY) scripts/db.py start
 	@for d in $(DATASETS); do $(PY) scripts/dump.py $$d; done
 	@$(PY) scripts/registry.py $(DATASETS)
@@ -50,6 +69,15 @@ clean-context:
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)
+
+provenance:
+	@$(PY) scripts/gen_provenance.py
+
+# used by CI to pass the same list to `make image` and `make test-image`
+print-core-fast:
+	@echo $(CORE_FAST)
+print-core:
+	@echo $(CORE)
 
 okf-check:
 	@$(PY) scripts/okf_check.py --bundle knowledge

@@ -1,0 +1,22 @@
+Licence terms for the `dvdstore` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+GNU General Public License v2.0 (or later) - Dell DVD Store 3
+-------------------------------------------------------------
+
+* Verbatim GPL v2 text: `ds3/gpl.txt` in the repository (18,013 bytes; identical copies under mysqlds3/ and oracleds3/) - canonical https://www.gnu.org/licenses/old-licenses/gpl-2.0.txt (returned HTTP 429 during this session; not re-verified there).
+* Grant: each generator/driver source header says "either version 2 of the License, or (at your option) any later version" - SPDX `GPL-2.0-or-later` ([source](/sources/github-dvdstore-ds3-gpl-and-source-headers.md)). No repository-level LICENSE file; GitHub shows no license.
+
+Attribution required:
+
+Ship `gpl.txt` (GPL-2.0-or-later) next to the DVD Store scripts, keep the Dell (2005) and VMware (2014) copyright headers, and mark every modified script with a dated change note. Wording used in NOTICE: "Dell DVD Store 3 kit © 2005 Dell, Inc. and © 2014 VMware, Inc., GNU GPL v2 or later; MySQL scripts adapted (InnoDB, utf8mb4, lower-case identifiers) by this project." sysbench (GPL-2.0) is executed at load time only and is not redistributed.
+
+Obligations:
+
+* Redistributing the DS3 DDL/index/procedure scripts (even edited) = distributing a GPL work: ship `gpl.txt`, keep Dell/VMware notices, mark modified files with a change notice (Section 2(a)), and license the modified scripts GPL-2.0-or-later.
+* Because of the aggregation clause, including the DS3 scripts in the image does not force the other datasets or the project's own build code under the GPL, provided they are separate works on the same medium.
+* The generated CSV data: see [open question](/questions/dvdstore-generated-data-license.md).

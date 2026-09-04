@@ -1,0 +1,25 @@
+Licence terms for the `chicago_crimes` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+City of Chicago Data Terms of Use
+---------------------------------
+
+`https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html` - the full text is quoted in [the source record](/sources/chicago-data-terms-of-use.md). The Socrata metadata for each dataset declares `license: {"name": "See Terms of Use"}`, i.e. these terms and nothing else. Ship as `LICENSES/CHICAGO-DATA-TERMS-OF-USE.txt`.
+
+Attribution required:
+
+> Crime data: City of Chicago Data Portal, "Crimes - 2001 to Present" (ijzp-q8t2), Chicago Police Department. Terms of use: https://www.chicago.gov/city/en/narr/foia/data_disclaimer.html
+>
+> This site provides applications using data that has been modified for use from its original source, www.cityofchicago.org, the official website of the City of Chicago. The City of Chicago makes no claims as to the content, accuracy, timeliness, or completeness of any of the data provided at this site. The data provided at this site is subject to change at any time. It is understood that the data provided at this site is being used at one's own risk.
+
+Obligations:
+
+* **Attribution / disclaimer:** the boxed paragraph above must appear verbatim in the repository README and on the image's documentation page. This is the strongest obligation in the whole bundle for this dataset.
+* **Extra dataset terms:** reproduce the CPD accuracy disclaimer alongside it.
+* **Share-alike:** none.
+* **Personal data:** the data is already block-level redacted; do not attempt to re-derive addresses.
+* **Risk:** the City may revoke; the image must be able to drop the dataset.

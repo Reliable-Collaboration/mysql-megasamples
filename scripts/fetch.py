@@ -71,6 +71,20 @@ def download(art, dest_path):
         f"{a['url']} ipv4={a['ipv4']} rc={a['rc']} {a['detail']}" for a in attempts))
 
 
+def write_manifest_size(manifest_path, art_id, size):
+    """Backfill size_bytes for an artifact whose entry left it at 0."""
+    lines = open(manifest_path, encoding="utf-8").read().split("\n")
+    for i, line in enumerate(lines):
+        if line.strip() == f"- id: {art_id}":
+            for j in range(i, min(i + 12, len(lines))):
+                if lines[j].strip() == "size_bytes: 0":
+                    lines[j] = lines[j].replace("size_bytes: 0", f"size_bytes: {size}")
+                    open(manifest_path, "w", encoding="utf-8").write("\n".join(lines))
+                    return True
+            return False
+    return False
+
+
 def write_manifest_sha(manifest_path, art_id, digest):
     """Write a first-fetch digest back into the manifest without disturbing anything else."""
     text = open(manifest_path, encoding="utf-8").read()
@@ -144,6 +158,7 @@ def fetch_one(art, dest_root, manifest_path, trust_first):
         verdict = "verified"
     elif trust_first:
         wrote = write_manifest_sha(manifest_path, art_id, digest)
+        write_manifest_size(manifest_path, art_id, size)   # pin the length as well as the digest
         verdict = "first fetch, digest recorded" if wrote else "first fetch, MANIFEST NOT UPDATED"
         print(f"  VERIFICATION for knowledge/log.md: {art_id} sha256 {digest} size {size}")
     else:

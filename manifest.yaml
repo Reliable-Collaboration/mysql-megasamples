@@ -60,7 +60,7 @@ artifacts:
     url: https://raw.githubusercontent.com/scikit-learn/scikit-learn/main/sklearn/datasets/data/iris.csv
     mirrors: []
     sha256: "f13ffa8fdd56fd8e6c8d16d4081a3fbd3114bcd0aae4256c43205169cd9d1449"
-    size_bytes: 0
+    size_bytes: 2734
     license: cc-by-4-0
     ipv4_first: false
   - id: smallsets/penguins.csv
@@ -84,7 +84,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/fd7bfacae4f497ff044a6a0275268676bf1b64c3/seeds/raw_customers.csv
     mirrors: []
     sha256: "24579b4b26098d43265376f3c50be8b10faf8e8fd95f5508074f10f76a12671d"
-    size_bytes: 0
+    size_bytes: 1302
     license: apache-2-0
     ipv4_first: false
   - id: jaffle_shop/raw_orders.csv
@@ -92,7 +92,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/fd7bfacae4f497ff044a6a0275268676bf1b64c3/seeds/raw_orders.csv
     mirrors: []
     sha256: "ee6c68d1639ec2b23a4495ec12475e09b8ed4b61e23ab0411ea7ec76648356f7"
-    size_bytes: 0
+    size_bytes: 2723
     license: apache-2-0
     ipv4_first: false
   - id: jaffle_shop/raw_payments.csv
@@ -100,7 +100,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dbt-labs/jaffle-shop-classic/fd7bfacae4f497ff044a6a0275268676bf1b64c3/seeds/raw_payments.csv
     mirrors: []
     sha256: "03fd407f3135f84456431a923f22fc185a2154079e210c20b690e3ab11687d11"
-    size_bytes: 0
+    size_bytes: 2560
     license: apache-2-0
     ipv4_first: false
   - id: oracle_hr/hr_create.sql
@@ -108,7 +108,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/human_resources/hr_create.sql
     mirrors: []
     sha256: "7d5b1e75a450f4e96a2efb23d9bac81963d8331974a72feacee712464091dd47"
-    size_bytes: 0
+    size_bytes: 17112
     license: mit
     ipv4_first: false
   - id: oracle_hr/hr_populate.sql
@@ -116,7 +116,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/human_resources/hr_populate.sql
     mirrors: []
     sha256: "420375c58700178b74949ccfc1a7b22bc2fd305c486fc558fca43f8ce3ddc4df"
-    size_bytes: 0
+    size_bytes: 41301
     license: mit
     ipv4_first: false
   - id: oracle_hr/hr_code.sql
@@ -124,7 +124,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/human_resources/hr_code.sql
     mirrors: []
     sha256: "5604aae0d47585bba996a90eecc43f494d4c63de19b2b9db7afe5007d6f669f5"
-    size_bytes: 0
+    size_bytes: 3849
     license: mit
     ipv4_first: false
   - id: oracle_co/co_create.sql
@@ -132,7 +132,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/customer_orders/co_create.sql
     mirrors: []
     sha256: "8ce42790ec255840bcaf22ff8bc4f53e53996ccecb318410a0b3a36a4c3d6cc1"
-    size_bytes: 0
+    size_bytes: 19570
     license: mit
     ipv4_first: false
   - id: oracle_co/co_populate.sql
@@ -140,7 +140,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/customer_orders/co_populate.sql
     mirrors: []
     sha256: "e636942e49d9f7cb586f779122ffa2b4da95b07cc7f314c0ef1dae60a5f0cefa"
-    size_bytes: 0
+    size_bytes: 1274129
     license: mit
     ipv4_first: false
 
@@ -149,7 +149,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/employees.sql
     mirrors: []
     sha256: "cfe3f89f7b21326c516ba65d253e35e795877e9bb60c388520d915f348403a9a"
-    size_bytes: 0
+    size_bytes: 4193
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/objects.sql
@@ -157,7 +157,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/objects.sql
     mirrors: []
     sha256: "80c4a5915c27a41d9dff05951d88e152137f15d62dc5852f54176a5b085d7ef0"
-    size_bytes: 0
+    size_bytes: 4568
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/test_employees_sha2.sql
@@ -165,7 +165,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/test_employees_sha2.sql
     mirrors: []
     sha256: "a78e6b89ffbdb569239b070d5489ac8db83e7c027f9df7ea849982ab28459c66"
-    size_bytes: 0
+    size_bytes: 3668
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_departments.dump
@@ -173,7 +173,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_departments.dump
     mirrors: []
     sha256: "2271cfef20852e395ec72ce269a119b2c799a973a9277c971409ea53d5a17cfa"
-    size_bytes: 0
+    size_bytes: 250
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_employees.dump
@@ -181,7 +181,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_employees.dump
     mirrors: []
     sha256: "ba004ebc5fcdad59544fd8ced262d1793ca02c7936c5d7668a355c6a683d6fa8"
-    size_bytes: 0
+    size_bytes: 17722832
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_dept_emp.dump
@@ -189,7 +189,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_dept_emp.dump
     mirrors: []
     sha256: "52cc6dbc1b139254533264bd5d44a6012377f34ecf1eef693ddfb349aeb40ed6"
-    size_bytes: 0
+    size_bytes: 14159880
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_dept_manager.dump
@@ -197,7 +197,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_dept_manager.dump
     mirrors: []
     sha256: "d9cff691f09f2399f5490e435deb8c932946246aaf483b8f1cbef0bc556aa1dc"
-    size_bytes: 0
+    size_bytes: 1090
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_titles.dump
@@ -205,7 +205,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_titles.dump
     mirrors: []
     sha256: "dcd382989c46719e1e216ffef4919483f0f71d52da517c37c22d39cdaf9bc044"
-    size_bytes: 0
+    size_bytes: 21708736
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_salaries1.dump
@@ -213,7 +213,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_salaries1.dump
     mirrors: []
     sha256: "aa485ea7b1553f1660d6db5a93e9ede0a0c182cb923f9471a39594f7ca967c5b"
-    size_bytes: 0
+    size_bytes: 39806034
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_salaries2.dump
@@ -221,7 +221,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_salaries2.dump
     mirrors: []
     sha256: "cad589bff736cb575358d7806e4e4a13e28a2e9c714c2fb51fbe4db74a5706fa"
-    size_bytes: 0
+    size_bytes: 39805981
     license: cc-by-sa-3-0
     ipv4_first: false
   - id: employees/load_salaries3.dump
@@ -229,7 +229,7 @@ artifacts:
     url: https://raw.githubusercontent.com/datacharmer/test_db/e324b56193ca506ab7cc1ab143a9153d8c4535d7/load_salaries3.dump
     mirrors: []
     sha256: "75fc473d2472341fbfd635d6f4853c63645051829a9c7a1a18ee819fe5816f45"
-    size_bytes: 0
+    size_bytes: 39080916
     license: cc-by-sa-3-0
     ipv4_first: false
 
@@ -250,7 +250,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/coe_v3.sql
     mirrors: []
     sha256: "fa409c0e84d1779a194c376423b5c0cada7366bfba7e84a54438b9e804913bed"
-    size_bytes: 0
+    size_bytes: 12250
     license: mit
     ipv4_first: false
   - id: oracle_oe/ccus_v3.sql
@@ -258,7 +258,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/ccus_v3.sql
     mirrors: []
     sha256: "55ab9f2645de0b258e6cfad936ac72cd2ca13e93a130b405d88e38c62b5db792"
-    size_bytes: 0
+    size_bytes: 2643
     license: mit
     ipv4_first: false
   - id: oracle_oe/cwhs_v3.sql
@@ -266,7 +266,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cwhs_v3.sql
     mirrors: []
     sha256: "15413237e4b21067cde2f7a2cccf6f149bd0e42ca6f8b8c3911ef3773b792302"
-    size_bytes: 0
+    size_bytes: 1934
     license: mit
     ipv4_first: false
   - id: oracle_oe/cord_v3.sql
@@ -274,7 +274,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cord_v3.sql
     mirrors: []
     sha256: "009a83bb18efbbdf2300e075235fb954973be505025e08e06beb591435d4774b"
-    size_bytes: 0
+    size_bytes: 2319
     license: mit
     ipv4_first: false
   - id: oracle_oe/loe_v3.sql
@@ -282,7 +282,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/loe_v3.sql
     mirrors: []
     sha256: "a585f1730dd3ef1662f6e9bab6e304ca23230b3d85de4ac70c3756e8f5358a4c"
-    size_bytes: 0
+    size_bytes: 63498
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_pi.sql
@@ -290,7 +290,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pi.sql
     mirrors: []
     sha256: "eb071ecb2bd8b7ef6dc48b41d2bc75dfb59fa9f4347d350a35f7f6ab0ba945b6"
-    size_bytes: 0
+    size_bytes: 91524
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_pd.sql
@@ -298,7 +298,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pd.sql
     mirrors: []
     sha256: "30a8e1e3aac8cf7bcc62e6130dc8d4e27a4ce45b667c50eb82af2642a970e114"
-    size_bytes: 0
+    size_bytes: 2179
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_us.sql
@@ -306,7 +306,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_us.sql
     mirrors: []
     sha256: "a6351f539d84854c5a647a469970106da53ff41e57d71384a9297a79c9bca6ad"
-    size_bytes: 0
+    size_bytes: 70753
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ar.sql
@@ -314,7 +314,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ar.sql
     mirrors: []
     sha256: "3cffeb4758efc4832a1690fc16e9f1a5286998d02ece4706b98a0bdf18958ba7"
-    size_bytes: 0
+    size_bytes: 176919
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ca.sql
@@ -322,7 +322,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ca.sql
     mirrors: []
     sha256: "267fe927c11dfd900937d6363697babc5e98937e760e7a80318297cd588e9907"
-    size_bytes: 0
+    size_bytes: 77886
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_cs.sql
@@ -330,7 +330,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_cs.sql
     mirrors: []
     sha256: "d9f716b4a83e90b38e45cb581877ddb82684804b325c68d32e018be06a5ff5bf"
-    size_bytes: 0
+    size_bytes: 88408
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_d.sql
@@ -338,7 +338,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_d.sql
     mirrors: []
     sha256: "ae4fbbb9f857bbcbd09453fd3a21733bce21e1d5e0e891cccb69c98170427403"
-    size_bytes: 0
+    size_bytes: 62107
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_dk.sql
@@ -346,7 +346,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_dk.sql
     mirrors: []
     sha256: "e3ca344557418f10ad78e7e073503271c52bdea305a9fc780ab118ced02307fd"
-    size_bytes: 0
+    size_bytes: 68026
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_e.sql
@@ -354,7 +354,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_e.sql
     mirrors: []
     sha256: "9e2c753cb14c913c71354c6c93b4ea896edff28dec2aec873929d7d62b2fb697"
-    size_bytes: 0
+    size_bytes: 77984
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_el.sql
@@ -362,7 +362,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_el.sql
     mirrors: []
     sha256: "7d07a0a36bdee991c3b8466391530c4e853399172c9ed6ec7f1713a18e92deb0"
-    size_bytes: 0
+    size_bytes: 219252
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_esa.sql
@@ -370,7 +370,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_esa.sql
     mirrors: []
     sha256: "644a73d9cf5dc10742f529c5df7409853075d17f1c231ac06d2c6856c6390cb2"
-    size_bytes: 0
+    size_bytes: 78594
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_f.sql
@@ -378,7 +378,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_f.sql
     mirrors: []
     sha256: "94073d512ccf866a8495bb883798124a77ac324ca85a4f0da750cc791d4ebd51"
-    size_bytes: 0
+    size_bytes: 77133
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_frc.sql
@@ -386,7 +386,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_frc.sql
     mirrors: []
     sha256: "67d79e4d86b2571bf90c3892c008803175226a2bb606ddedec3c0785524788ab"
-    size_bytes: 0
+    size_bytes: 77709
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_hu.sql
@@ -394,7 +394,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_hu.sql
     mirrors: []
     sha256: "74410406c0bc288d908cc452290725936bfafa3b96205898f47ab57e85b0fa49"
-    size_bytes: 0
+    size_bytes: 82955
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_i.sql
@@ -402,7 +402,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_i.sql
     mirrors: []
     sha256: "bf3a45caafcd0deee3749d976f11e7d91ff81eda876980d16feb3e9773489b96"
-    size_bytes: 0
+    size_bytes: 70334
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_iw.sql
@@ -410,7 +410,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_iw.sql
     mirrors: []
     sha256: "5f883ffeb245dd516c93bcc7f22dcef129032c418bb6bc5f8054d65c23191199"
-    size_bytes: 0
+    size_bytes: 142725
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ja.sql
@@ -418,7 +418,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ja.sql
     mirrors: []
     sha256: "993243a5b8c379ffbe904a7b19cf11eb52c1d124e9a69c9a2caf79b4c2656972"
-    size_bytes: 0
+    size_bytes: 116256
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ko.sql
@@ -426,7 +426,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ko.sql
     mirrors: []
     sha256: "424e145b0461eebc45f70d57128f8ec6aee20add54125baae72bbce3f222d109"
-    size_bytes: 0
+    size_bytes: 94205
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_n.sql
@@ -434,7 +434,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_n.sql
     mirrors: []
     sha256: "a7fb10a9adae7c6bed4e0cd140ff7743766a47ef869e678ec366051454369472"
-    size_bytes: 0
+    size_bytes: 68855
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_nl.sql
@@ -442,7 +442,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_nl.sql
     mirrors: []
     sha256: "9e7f5112cc89e984f588e14fc08d6b25b7bf64b4d2cc236817e28a38ee99cca0"
-    size_bytes: 0
+    size_bytes: 68659
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_pl.sql
@@ -450,7 +450,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pl.sql
     mirrors: []
     sha256: "468b89739bd9a500465b0f0603ae7a3fe214c414a4e6cfb32cd079693c883fc0"
-    size_bytes: 0
+    size_bytes: 72351
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_pt.sql
@@ -458,7 +458,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_pt.sql
     mirrors: []
     sha256: "a556aab6aa9fac4ad91af1492860c4d84eba1d083a6dbff62ca6a8befc369935"
-    size_bytes: 0
+    size_bytes: 80191
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ptb.sql
@@ -466,7 +466,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ptb.sql
     mirrors: []
     sha256: "b59f7f6385faae7f9516acfb19d4c2e7ad2aaf924f1d18b01235a988e094c71f"
-    size_bytes: 0
+    size_bytes: 77922
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ro.sql
@@ -474,7 +474,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ro.sql
     mirrors: []
     sha256: "9173efd95cd65880fd0ae5a5e492b5596310531292c8336c65ebe40347fbf0d0"
-    size_bytes: 0
+    size_bytes: 78915
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_ru.sql
@@ -482,7 +482,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_ru.sql
     mirrors: []
     sha256: "a37e8be49fa977724f2064a595bae5df0140bec46bb71cb503b5c8016c096142"
-    size_bytes: 0
+    size_bytes: 229051
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_s.sql
@@ -490,7 +490,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_s.sql
     mirrors: []
     sha256: "28d86b3a9fb01ed65c996ab48976d3eeb556dc6d6581673f0dce362a09f5d74f"
-    size_bytes: 0
+    size_bytes: 72148
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_sf.sql
@@ -498,7 +498,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_sf.sql
     mirrors: []
     sha256: "1a68531b1658aa543b0b5eb919ab8fac838558517cc3d4ef1577939e924dbfd2"
-    size_bytes: 0
+    size_bytes: 77944
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_sk.sql
@@ -506,7 +506,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_sk.sql
     mirrors: []
     sha256: "3e8de8c491b21f3f1e06054f3a919dea316dc82439d02960a7db05d01d30db0f"
-    size_bytes: 0
+    size_bytes: 83029
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_th.sql
@@ -514,7 +514,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_th.sql
     mirrors: []
     sha256: "a4b276a1ec86808eccb40a3cfc8d48720d71d50dcfe4ea255f01565b527c0dce"
-    size_bytes: 0
+    size_bytes: 192358
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_tr.sql
@@ -522,7 +522,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_tr.sql
     mirrors: []
     sha256: "7658df201f0e4d7861c0f1e9e1c9732b8759023ead6ebf7404d6dccbd9c392b0"
-    size_bytes: 0
+    size_bytes: 83094
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_zhs.sql
@@ -530,7 +530,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_zhs.sql
     mirrors: []
     sha256: "daaf74de2dc4b295f9db81c015cf3bbe1ef8175e9e46f0d2cfdf90d32200249c"
-    size_bytes: 0
+    size_bytes: 84465
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_zht.sql
@@ -538,7 +538,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_zht.sql
     mirrors: []
     sha256: "29b2086f3c4ebd9ae112db7e24a9b2e24f7807d0ffe44c7d4e69977610cd64e5"
-    size_bytes: 0
+    size_bytes: 84296
     license: mit
     ipv4_first: false
   - id: oracle_oe/pwhs_v3.sql
@@ -546,7 +546,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/pwhs_v3.sql
     mirrors: []
     sha256: "dec4034c8311c29c089abe8ce77381a83567a1aad6377dff632fe5563de3bfc0"
-    size_bytes: 0
+    size_bytes: 4086
     license: mit
     ipv4_first: false
   - id: oracle_oe/pcus_v3.sql
@@ -554,7 +554,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/pcus_v3.sql
     mirrors: []
     sha256: "e78b56cec1e50d07a084b99e569fed1b78adec5d461173d185150376d693de12"
-    size_bytes: 0
+    size_bytes: 99139
     license: mit
     ipv4_first: false
   - id: oracle_oe/pord_v3.sql
@@ -562,7 +562,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/pord_v3.sql
     mirrors: []
     sha256: "5e2af78d93b760760e3d9f598540a4ce3bbff2a1adc510b07ae662a70e66b50a"
-    size_bytes: 0
+    size_bytes: 21518
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_itm.sql
@@ -570,7 +570,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_itm.sql
     mirrors: []
     sha256: "4975d17803beb1da7a463c8edeafc8df525eb57b0cff71a5a1338aa39050ddec"
-    size_bytes: 0
+    size_bytes: 40641
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_p_inv.sql
@@ -578,7 +578,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_p_inv.sql
     mirrors: []
     sha256: "b684c6b54fcb07d373d7f5429184a5a9bd3259372915e80aed11e161f74d14f3"
-    size_bytes: 0
+    size_bytes: 50918
     license: mit
     ipv4_first: false
   - id: oracle_oe/poe_v3.sql
@@ -586,7 +586,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/poe_v3.sql
     mirrors: []
     sha256: "fc6c7e06aff9752e8398ff657365cad34e019f021341197f198545388b6919d4"
-    size_bytes: 0
+    size_bytes: 3997
     license: mit
     ipv4_first: false
   - id: oracle_oe/oe_views.sql
@@ -594,7 +594,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/oe_views.sql
     mirrors: []
     sha256: "bad5ef1cd07ab713c3081686eb602daf9b94c5719baaaacca8fb06150350e015"
-    size_bytes: 0
+    size_bytes: 3683
     license: mit
     ipv4_first: false
   - id: oracle_oe/cmnt_v3.sql
@@ -602,7 +602,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cmnt_v3.sql
     mirrors: []
     sha256: "69565a0cf6f2c25594ae950d0a45aa7399ba5b7c28df4e6c3c5b613197b5c0d9"
-    size_bytes: 0
+    size_bytes: 6899
     license: mit
     ipv4_first: false
   - id: oracle_oe/cidx_v3.sql
@@ -610,7 +610,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/order_entry/cidx_v3.sql
     mirrors: []
     sha256: "9e5e204ccf14890889358cc11d7e27a051bc9df5ae26712c6814a2cfc046a095"
-    size_bytes: 0
+    size_bytes: 2690
     license: mit
     ipv4_first: false
 
@@ -622,7 +622,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sh_install.sql
     mirrors: []
     sha256: "fec44618ff24ae4ffcf117978b753014fd25e7072b0346846564e0b3c4e25378"
-    size_bytes: 0
+    size_bytes: 8412
     license: mit
     ipv4_first: false
   - id: oracle_sh/sh_create.sql
@@ -630,7 +630,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sh_create.sql
     mirrors: []
     sha256: "739357c74c101fb043b1cf20897829392902e8a1506fcdc1e7ff8adfac67b190"
-    size_bytes: 0
+    size_bytes: 25051
     license: mit
     ipv4_first: false
   - id: oracle_sh/sh_populate.sql
@@ -638,7 +638,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sh_populate.sql
     mirrors: []
     sha256: "1581dabda1e0b482f0ec37c9ca5d2cb6968926b84df4f62a6e639d44cc9a3bcd"
-    size_bytes: 0
+    size_bytes: 41072
     license: mit
     ipv4_first: false
   - id: oracle_sh/promotions.csv
@@ -646,7 +646,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/promotions.csv
     mirrors: []
     sha256: "db0b579e3a5b6a29f326af2d75913c3e8ec38a0cb4da3ac101180ee9be81474c"
-    size_bytes: 0
+    size_bytes: 56158
     license: mit
     ipv4_first: false
   - id: oracle_sh/times.csv
@@ -654,7 +654,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/times.csv
     mirrors: []
     sha256: "69382c241c84780c78ca4a5b621ab6b35e70f1378a81a3f002cda040ebab0577"
-    size_bytes: 0
+    size_bytes: 439487
     license: mit
     ipv4_first: false
   - id: oracle_sh/supplementary_demographics.csv
@@ -662,7 +662,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/supplementary_demographics.csv
     mirrors: []
     sha256: "7a8d9f1a24e6187f42ca9264721c71621f55ddec4168d9a6132bf178bc2a151b"
-    size_bytes: 0
+    size_bytes: 701892
     license: mit
     ipv4_first: false
   - id: oracle_sh/costs.csv
@@ -670,7 +670,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/costs.csv
     mirrors: []
     sha256: "85e8e912a04e1454a39b23d9a067564bdaa82727732d1cf0b5761045e73f3daa"
-    size_bytes: 0
+    size_bytes: 2658415
     license: mit
     ipv4_first: false
   - id: oracle_sh/customers.csv
@@ -678,7 +678,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/customers.csv
     mirrors: []
     sha256: "664d9426ba42132fab4383140d2caa9be24960911448bec9f4db8ad2f6d676be"
-    size_bytes: 0
+    size_bytes: 12615719
     license: mit
     ipv4_first: false
   - id: oracle_sh/sales.csv
@@ -686,7 +686,7 @@ artifacts:
     url: https://raw.githubusercontent.com/oracle-samples/db-sample-schemas/e3325a83e56c516815844025418a96ecaf219751/sales_history/sales.csv
     mirrors: []
     sha256: "484699e0e239858d59dbef9d5ce3e91c93dab3010ea17f99c7e0221db5c36187"
-    size_bytes: 0
+    size_bytes: 74426366
     license: mit
     ipv4_first: false
 
@@ -708,7 +708,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/build/mysqlds3_create_db.sql
     mirrors: []
     sha256: "83951ce9ad8dd786b153ddf410a41a4994c8bd325efd6f25b84bf891c025e437"
-    size_bytes: 0
+    size_bytes: 4038
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_create_ind.sql
@@ -716,7 +716,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/build/mysqlds3_create_ind.sql
     mirrors: []
     sha256: "9291072e5f952bf873dd75fda084286423f47926ba64f26400f4d29929a6c926"
-    size_bytes: 0
+    size_bytes: 2437
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_create_sp.sql
@@ -724,7 +724,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/build/mysqlds3_create_sp.sql
     mirrors: []
     sha256: "eba3012138eca0d880911fa178da770dadd086d7a95f6c9bafe04c1524c87ac9"
-    size_bytes: 0
+    size_bytes: 3629
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_create_trigger2.sql
@@ -732,7 +732,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/build/mysqlds3_create_trigger2.sql
     mirrors: []
     sha256: "59d7d463c70883e31aa56e5766662d4662af15225110bcfca3e3ea5852813ee6"
-    size_bytes: 0
+    size_bytes: 197
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_cust.sql
@@ -740,7 +740,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/cust/mysqlds3_load_cust.sql
     mirrors: []
     sha256: "31d0d242a58b00d4920a7b14987a2b4a812e71862c5f99d9e31f04578d2ce52b"
-    size_bytes: 0
+    size_bytes: 449
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_member.sql
@@ -748,7 +748,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/membership/mysqlds3_load_member.sql
     mirrors: []
     sha256: "7ec90f5846945e48c4ab27f78d4d0c4645e10a185c39187137f8b82181ceee4a"
-    size_bytes: 0
+    size_bytes: 324
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_cust_hist.sql
@@ -756,7 +756,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/orders/mysqlds3_load_cust_hist.sql
     mirrors: []
     sha256: "877f94f8472d856baa143549a3f9cd0c406b7b129d836a68e6ec9eca26e2ad62"
-    size_bytes: 0
+    size_bytes: 1904
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_orderlines.sql
@@ -764,7 +764,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/orders/mysqlds3_load_orderlines.sql
     mirrors: []
     sha256: "b2cced3aef32e641c1a3ad9dcb9288da8f916f07f3185f5a0ed0b1079b4bf9be"
-    size_bytes: 0
+    size_bytes: 1930
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_orders.sql
@@ -772,7 +772,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/orders/mysqlds3_load_orders.sql
     mirrors: []
     sha256: "1237acc3ba73ae181cdcd9abfa0e3f26cd500d368efc71222cc9aaf55114b12a"
-    size_bytes: 0
+    size_bytes: 1826
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_inv.sql
@@ -780,7 +780,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/prod/mysqlds3_load_inv.sql
     mirrors: []
     sha256: "c8efbfbafc5c5448b26f9554a1d3fc3dc6729a982def4dc343d706c8c5ff9941"
-    size_bytes: 0
+    size_bytes: 309
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mysqlds3_load_prod.sql
@@ -788,7 +788,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/mysqlds3/load/prod/mysqlds3_load_prod.sql
     mirrors: []
     sha256: "731b08b205eb118d2ed8a0ac57642d96a56c3fbb56334fa7d21ef980e31a3bcd"
-    size_bytes: 0
+    size_bytes: 307
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/us_cust.csv
@@ -796,7 +796,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/cust/us_cust.csv
     mirrors: []
     sha256: "25401f519801b174ce8a863aef907f04047d161bc066ad73ff3016c1685b24a2"
-    size_bytes: 0
+    size_bytes: 1529725
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/row_cust.csv
@@ -804,7 +804,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/cust/row_cust.csv
     mirrors: []
     sha256: "35aaf564f12fc5724bf52ef0d2457a47fabfc0e830f261cc793c5b2a669138f2"
-    size_bytes: 0
+    size_bytes: 1574627
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/membership.csv
@@ -812,7 +812,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/membership/membership.csv
     mirrors: []
     sha256: "c8bdec1fdeed5b2fdb4834ae201ebb6d4efecd115db33e04433a5ecf4c1740d4"
-    size_bytes: 0
+    size_bytes: 36889
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/prod.csv
@@ -820,7 +820,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/prod/prod.csv
     mirrors: []
     sha256: "9c0a86b3eee80e1dcf4073b5b78acf4af592fa17d02818af115887755505fac9"
-    size_bytes: 0
+    size_bytes: 510392
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/inv.csv
@@ -828,7 +828,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/prod/inv.csv
     mirrors: []
     sha256: "7e2d77a1ef44528cf927031d17624b1fb7e9769f3a7be1dc542bcb43f974f8e6"
-    size_bytes: 0
+    size_bytes: 113269
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jan_orders.csv
@@ -836,7 +836,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jan_orders.csv
     mirrors: []
     sha256: "754f056892af0f998ee9128ae39187aeaedf192031f07bc974a892692a449caf"
-    size_bytes: 0
+    size_bytes: 39459
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jan_orderlines.csv
@@ -844,7 +844,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jan_orderlines.csv
     mirrors: []
     sha256: "5df91f7d38b581f61342f0c6c42eb4bfbdeaf5b91933528c9d3caafaaddb658a"
-    size_bytes: 0
+    size_bytes: 120882
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jan_cust_hist.csv
@@ -852,7 +852,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jan_cust_hist.csv
     mirrors: []
     sha256: "e58702d638a2b7077db708a31974db3854cef22beccc24c33630a7232f4b2b47"
-    size_bytes: 0
+    size_bytes: 72206
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/feb_orders.csv
@@ -860,7 +860,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/feb_orders.csv
     mirrors: []
     sha256: "80191608f8947665954d8ef2057a620fbd9b6e1b9aa76fb5a6605e11952cf653"
-    size_bytes: 0
+    size_bytes: 40605
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/feb_orderlines.csv
@@ -868,7 +868,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/feb_orderlines.csv
     mirrors: []
     sha256: "bc85197040c1d1f81fa8e2828eba925c8d99f7c0ffc79855cd769f76550359f9"
-    size_bytes: 0
+    size_bytes: 124448
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/feb_cust_hist.csv
@@ -876,7 +876,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/feb_cust_hist.csv
     mirrors: []
     sha256: "3e0be3c121878bfab528cf004fed735f672495de879e6c59942834c52dd515b0"
-    size_bytes: 0
+    size_bytes: 76825
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mar_orders.csv
@@ -884,7 +884,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/mar_orders.csv
     mirrors: []
     sha256: "8bed576aa30f6b7f4fbe83d49460b3a8041fa441bc42cdc3b6c20a9d7f6d1ca9"
-    size_bytes: 0
+    size_bytes: 40614
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mar_orderlines.csv
@@ -892,7 +892,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/mar_orderlines.csv
     mirrors: []
     sha256: "45d6488d3cedea936e9132c394862e3a15e5aa5c95f380c9a0343fce4f263164"
-    size_bytes: 0
+    size_bytes: 128500
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/mar_cust_hist.csv
@@ -900,7 +900,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/mar_cust_hist.csv
     mirrors: []
     sha256: "b8e83cd94acf56bb2c2f3ecd5919615e28798b6f608d1eccade51ac9b9a1bee6"
-    size_bytes: 0
+    size_bytes: 79277
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/apr_orders.csv
@@ -908,7 +908,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/apr_orders.csv
     mirrors: []
     sha256: "a68e6a121fbf6a960c5ba5d6b6e5dfb136002aff2897a475a3190d26b541e63c"
-    size_bytes: 0
+    size_bytes: 40588
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/apr_orderlines.csv
@@ -916,7 +916,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/apr_orderlines.csv
     mirrors: []
     sha256: "cfca950326eee23e30103717dd444a1f30820eec0a12f1a800db24e78a5a8d8b"
-    size_bytes: 0
+    size_bytes: 123125
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/apr_cust_hist.csv
@@ -924,7 +924,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/apr_cust_hist.csv
     mirrors: []
     sha256: "e7bbdc81f26a4ce4c895ea19a50de5ffaa49cfc89f8e5fa38d0b74569ab4a9ba"
-    size_bytes: 0
+    size_bytes: 75723
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/may_orders.csv
@@ -932,7 +932,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/may_orders.csv
     mirrors: []
     sha256: "6d12aba8c9fb6bbd6d5eb090ec205b6f1e312b28df2cf0b6f0c22aa2571c454a"
-    size_bytes: 0
+    size_bytes: 40563
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/may_orderlines.csv
@@ -940,7 +940,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/may_orderlines.csv
     mirrors: []
     sha256: "c416e887cdd3ee3f83eb8293b2ad92c75744e3a80563e9a688478bb905fc9443"
-    size_bytes: 0
+    size_bytes: 125005
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/may_cust_hist.csv
@@ -948,7 +948,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/may_cust_hist.csv
     mirrors: []
     sha256: "1083ed344a0cefbe74e8a3b7f70abef076c2481b8636c2f7dadb34708d7e4c90"
-    size_bytes: 0
+    size_bytes: 77069
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jun_orders.csv
@@ -956,7 +956,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jun_orders.csv
     mirrors: []
     sha256: "e4557e767db2a8f75d132e51a22a163b0575d8c443fac019b2cf8f3d370d52e1"
-    size_bytes: 0
+    size_bytes: 40614
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jun_orderlines.csv
@@ -964,7 +964,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jun_orderlines.csv
     mirrors: []
     sha256: "9a59e20f0c891e761ac5d8da94f9a93b5f23e49b6b7590ce2a0da19879f73bdb"
-    size_bytes: 0
+    size_bytes: 126063
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jun_cust_hist.csv
@@ -972,7 +972,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jun_cust_hist.csv
     mirrors: []
     sha256: "b79739d91285e2ab0d3a032de7f10aefb47c779298d3e20afc93f6c4546b537e"
-    size_bytes: 0
+    size_bytes: 77661
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jul_orders.csv
@@ -980,7 +980,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jul_orders.csv
     mirrors: []
     sha256: "d5db0def91f7ab286df07a95799df65a3e4a27dd44de7ec9ba34d52450af7515"
-    size_bytes: 0
+    size_bytes: 40508
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jul_orderlines.csv
@@ -988,7 +988,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jul_orderlines.csv
     mirrors: []
     sha256: "d19fba1923cf3aa4b82ce9d8acfc7b4b19c2db628dc05dd314dc3232f94c033d"
-    size_bytes: 0
+    size_bytes: 124694
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/jul_cust_hist.csv
@@ -996,7 +996,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/jul_cust_hist.csv
     mirrors: []
     sha256: "57bb066e40fbbb29919c193bac17162fe86a4f852a4d86ff1e720d5dd3ef4491"
-    size_bytes: 0
+    size_bytes: 76872
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/aug_orders.csv
@@ -1004,7 +1004,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/aug_orders.csv
     mirrors: []
     sha256: "ea8c6f9fe113882a412080b46c0b39265beb06d509ebddf8ab3838a46e5ad389"
-    size_bytes: 0
+    size_bytes: 40500
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/aug_orderlines.csv
@@ -1012,7 +1012,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/aug_orderlines.csv
     mirrors: []
     sha256: "8fa0dc1e4afb04f48330f402458ef3749aa99d16184b877ae07d84b9637e4722"
-    size_bytes: 0
+    size_bytes: 122966
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/aug_cust_hist.csv
@@ -1020,7 +1020,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/aug_cust_hist.csv
     mirrors: []
     sha256: "30228b25744e95cbce0dc99d11a4bdfcc9fa5e5f857efc3a9ad654a7c5852ec4"
-    size_bytes: 0
+    size_bytes: 75723
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/sep_orders.csv
@@ -1028,7 +1028,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/sep_orders.csv
     mirrors: []
     sha256: "5a3142e8190c1358b8ea1960e2147a4b3528f8e120f3674d1ad8259176a407d5"
-    size_bytes: 0
+    size_bytes: 40666
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/sep_orderlines.csv
@@ -1036,7 +1036,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/sep_orderlines.csv
     mirrors: []
     sha256: "d7d181f206536c309ffc10523b8fb4f93a167586792e5f5591c19e2c1a50f894"
-    size_bytes: 0
+    size_bytes: 124711
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/sep_cust_hist.csv
@@ -1044,7 +1044,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/sep_cust_hist.csv
     mirrors: []
     sha256: "b9a1b54ed0b72aa3d3527dc253f4f8c2b88cd52680d920cada6a215cc985aa20"
-    size_bytes: 0
+    size_bytes: 76906
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/oct_orders.csv
@@ -1052,7 +1052,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/oct_orders.csv
     mirrors: []
     sha256: "7071d447de4db3954157d6daab383c262c6cb13aad942e73ae5a89dcf4705a23"
-    size_bytes: 0
+    size_bytes: 40604
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/oct_orderlines.csv
@@ -1060,7 +1060,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/oct_orderlines.csv
     mirrors: []
     sha256: "130af4f1c231b5f4cd2c9dbc1ffe5b946f796a266b80d5e778a7a25bf5568cbc"
-    size_bytes: 0
+    size_bytes: 128497
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/oct_cust_hist.csv
@@ -1068,7 +1068,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/oct_cust_hist.csv
     mirrors: []
     sha256: "9fa5aeebd5e1c6f5313f3b682cca3f9965d8286fb4650fead5632fefa69a96ce"
-    size_bytes: 0
+    size_bytes: 79328
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/nov_orders.csv
@@ -1076,7 +1076,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/nov_orders.csv
     mirrors: []
     sha256: "b9d3585a8c137e730eb8be153518fa0ae1f82d9e8d70fb4ab749402bc11a8f02"
-    size_bytes: 0
+    size_bytes: 41622
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/nov_orderlines.csv
@@ -1084,7 +1084,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/nov_orderlines.csv
     mirrors: []
     sha256: "1c06e1718de965229836b8b4e9c22412144adc6fbab20902f15561024166d451"
-    size_bytes: 0
+    size_bytes: 129224
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/nov_cust_hist.csv
@@ -1092,7 +1092,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/nov_cust_hist.csv
     mirrors: []
     sha256: "5272e6bc1c2bcc37ea1ae5ed26e2e6470560ef2492f3f5bc937c106e453f1e87"
-    size_bytes: 0
+    size_bytes: 81422
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/dec_orders.csv
@@ -1100,7 +1100,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/dec_orders.csv
     mirrors: []
     sha256: "16da433f699d48400df11b2c4dc4a07becd953130f9aa32b4f3f5fc30c1f6c42"
-    size_bytes: 0
+    size_bytes: 41673
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/dec_orderlines.csv
@@ -1108,7 +1108,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/dec_orderlines.csv
     mirrors: []
     sha256: "2c34375f4945c8c37aaaa21b52836d7e5946cd4e83a26275927872c88566b772"
-    size_bytes: 0
+    size_bytes: 128184
     license: gpl-2-0
     ipv4_first: false
   - id: dvdstore/dec_cust_hist.csv
@@ -1116,7 +1116,7 @@ artifacts:
     url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/orders/dec_cust_hist.csv
     mirrors: []
     sha256: "dfe6457982fe0645c79569c30db1aaca34e5bd24db6e080582128e2c67080745"
-    size_bytes: 0
+    size_bytes: 80936
     license: gpl-2-0
     ipv4_first: false
 
@@ -1137,7 +1137,7 @@ artifacts:
     url: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/fd606c50c560b03a5add9c5f526d0b9f5f188dbf/scripts/sql/CreateTablesCommon.sql
     mirrors: []
     sha256: "46e8d39530f3d984c0fb13a5f3c398cf45f94c90ead462ca32c45c0153b224f3"
-    size_bytes: 0
+    size_bytes: 7507
     license: mit
     ipv4_first: false
   - id: contoso/CreateTablesSales.sql
@@ -1145,7 +1145,7 @@ artifacts:
     url: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/fd606c50c560b03a5add9c5f526d0b9f5f188dbf/scripts/sql/CreateTablesSales.sql
     mirrors: []
     sha256: "dc344238e0dd5ec18a05f95b134b2102db6f1ac47a5ee63f16f67a2472032e52"
-    size_bytes: 0
+    size_bytes: 3142
     license: mit
     ipv4_first: false
   - id: contoso/CreateTablesOrders.sql
@@ -1153,7 +1153,7 @@ artifacts:
     url: https://raw.githubusercontent.com/sql-bi/Contoso-Data-Generator-V2/fd606c50c560b03a5add9c5f526d0b9f5f188dbf/scripts/sql/CreateTablesOrders.sql
     mirrors: []
     sha256: "d82ef30a2b8faba85ee4510fc1cffb08b1b50c6f7d9f6e1cde5080bca4e425d8"
-    size_bytes: 0
+    size_bytes: 3260
     license: mit
     ipv4_first: false
 
@@ -1172,7 +1172,7 @@ artifacts:
     url: https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv
     mirrors: []
     sha256: "1a99e105092230f8620f301edcca7f80d3080642ff404d28ed957d3fa222c8ed"
-    size_bytes: 0
+    size_bytes: 12331
     license: nyc-open-data-terms
     ipv4_first: false
 
@@ -1185,7 +1185,7 @@ artifacts:
     url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2024&$order=id&$limit=300000"
     mirrors: []
     sha256: "243fb805b601e958ce12461f32746187fe9588da21146e96ffdfe11bbac736b6"
-    size_bytes: 0
+    size_bytes: 74811578
     license: chicago-data-portal-terms
     ipv4_first: false
   - id: chicago_crimes/iucr.csv
@@ -1193,7 +1193,7 @@ artifacts:
     url: "https://data.cityofchicago.org/api/views/c7ck-438e/rows.csv?accessType=DOWNLOAD"
     mirrors: []
     sha256: "257503d02bfbf487b8679c0aa1dfb45217fcd1867c909e2ed41cfdbf7e46f370"
-    size_bytes: 0
+    size_bytes: 24230
     license: chicago-data-portal-terms
     ipv4_first: false
 

@@ -1,0 +1,28 @@
+Licence terms for the `nyc_taxi` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+NYC Open Data Terms of Use
+--------------------------
+
+There is **no single licence document**. Three pages together form the terms, and all three were read on 2026-09-02:
+
+1. `https://opendata.cityofnewyork.us/overview/` (the `#termsofuse` section) - [source record](/sources/nyc-open-data-overview-terms.md)
+2. `https://opendata.cityofnewyork.us/faq/` - [source record](/sources/nyc-open-data-faq.md)
+3. `https://www.nyc.gov/home/terms-of-use.page`, incorporated by reference - [source record](/sources/nyc-gov-terms-of-use.md)
+
+This is **not** an SPDX-identifiable licence. Ship the three URLs plus the quoted text in `LICENSES/NYC-OPEN-DATA-TERMS.txt`; there is no upstream file to copy.
+
+Attribution required:
+
+> Trip record data: NYC Taxi & Limousine Commission, published via NYC Open Data (https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page). The trip data was not created by the TLC, and TLC makes no representations as to the accuracy of these data. Terms of use: https://opendata.cityofnewyork.us/overview/#termsofuse
+
+Obligations:
+
+* **Attribution:** none is legally required. This project credits anyway.
+* **Share-alike:** none.
+* **Trademarks:** the City's marks (including the City seal) are not licensed; do not use them.
+* **Personal data:** trip records are already de-identified to taxi-zone granularity (no coordinates since 2016); no additional obligation is stated.

@@ -1,0 +1,19 @@
+Licence terms for the `chinook` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+MIT License
+-----------
+
+Template: https://opensource.org/license/mit ([source](/sources/opensource-org-mit.md)). Each project's file carries the same operative text with its own copyright line.
+
+Attribution required:
+
+Reproduce the copyright line and the MIT permission notice for each MIT-licensed dataset in its `LICENSE` and in NOTICE: "Copyright (c) Microsoft Corporation" (Northwind, Pubs, AdventureWorks, WideWorldImporters, plus the scripts' own "Copyright Microsoft, Inc. 1994 - 2000" lines), "Copyright (c) 2023 Oracle and/or its affiliates" (HR, CO, SH, OE), "Chinook Database, Copyright (c) 2008-2024 Luis Rocha", "Copyright (c) 2024 SQLBI" (Contoso data) and "Copyright (c) 2022 SQLBI" (generator), each followed by the standard MIT permission and disclaimer paragraphs.
+
+Obligations:
+
+"The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software." - ship each project's copyright line plus the permission paragraph and disclaimer with the converted database and in the repository. No share-alike, no attribution beyond the notice.

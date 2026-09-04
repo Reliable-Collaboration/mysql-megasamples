@@ -1,0 +1,50 @@
+Licence terms for the `smallsets` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+Vanderbilt Biostatistics (hbiostat.org/data) permission statement
+-----------------------------------------------------------------
+
+On the index page https://hbiostat.org/data/ ([source](/sources/hbiostat-data-index.md)):
+
+> Permission is granted to anyone wishing to use the data sets provided here. Please reference the original paper which, for most data sets, is given in our notes linked below, and note "Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of Biostatistics."
+
+Attribution required:
+
+Ship the requested acknowledgement verbatim: "Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of Biostatistics." plus the dataset's own credits: "titanic3: compiled by Thomas Cason from the Encyclopedia Titanica; see Eaton & Haas (1994), Titanic: Triumph and Tragedy."
+
+Obligations:
+
+* Include the acknowledgement: "Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of Biostatistics."
+* Reference the original source: Encyclopedia Titanica; Eaton & Haas (1994) Titanic: Triumph and Tragedy; Thomas Cason (UVa) for titanic3 ([description](/sources/hbiostat-titanic-description.md)).
+* No share-alike. The statement is a permission, not a recognised open license (no SPDX id); the underlying passenger facts are historical public records - see [question](/questions/titanic-hbiostat-license-status.md).
+
+==============================================================================
+
+Creative Commons Attribution 4.0 International (CC BY 4.0) - UCI Iris
+---------------------------------------------------------------------
+
+https://creativecommons.org/licenses/by/4.0/legalcode ([source](/sources/creativecommons-by-4-0-legalcode.md)); UCI's statement: "This dataset is licensed under a Creative Commons Attribution 4.0 International (CC BY 4.0) license." ([UCI page](/sources/uci-iris-dataset-page.md)).
+
+Attribution required:
+
+Wording used for Iris: "Iris data set: Fisher, R. A. (1936), The use of multiple measurements in taxonomic problems, Annals of Eugenics 7(2):179–188. Distributed via the UCI Machine Learning Repository, https://doi.org/10.24432/C56C76, under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Two values corrected per Fisher's paper, as in R and scikit-learn (BSD-3-Clause)." Section 3(a)(1) requires the creator credit, the license notice and an indication of modifications; all three are present.
+
+
+==============================================================================
+
+CC0 1.0 Universal (public domain dedication) - palmerpenguins
+-------------------------------------------------------------
+
+https://creativecommons.org/publicdomain/zero/1.0/legalcode ([source](/sources/creativecommons-cc0-1-0-legalcode.md)); shipped verbatim as `LICENSE.md` in the palmerpenguins repository ([source](/sources/github-allisonhorst-palmerpenguins-license.md)). README: "Data are available by CC-0 license in accordance with the Palmer Station LTER Data Policy and the LTER Data Access Policy for Type I data."
+
+Attribution required:
+
+None required. Courtesy citations shipped: "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi:10.5281/zenodo.3960218" and "Gorman KB, Williams TD, Fraser WR (2014) Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PLoS ONE 9(3):e90081." Wikidata (CC0, not shipped) would carry "Data from Wikidata (https://www.wikidata.org/), CC0 1.0."
+
+Obligations:
+
+None legally (Section 2 waiver). Requested courtesy: cite "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi: 10.5281/zenodo.3960218." and the original study "Gorman KB, Williams TD, Fraser WR (2014). Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PLoS ONE 9(3):e90081. https://doi.org/10.1371/journal.pone.0090081", and follow the US LTER Network Data Access Policy (https://lternet.edu/data-access-policy/).

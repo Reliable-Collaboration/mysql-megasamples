@@ -1,0 +1,19 @@
+Licence terms for the `jaffle_shop` database as redistributed by mysql-megasamples.
+
+The data is not this project's work. Each licence below is the upstream one, and
+this database is offered under the same terms.
+
+==============================================================================
+
+Apache License 2.0
+------------------
+
+Verbatim text: `LICENSE` in dbt-labs/jaffle-shop-classic and dbt-labs/jaffle-shop-generator (11,357 bytes each, "Apache License Version 2.0, January 2004 http://www.apache.org/licenses/"). Canonical URL https://www.apache.org/licenses/LICENSE-2.0 (not opened in this session; the repository copies were read - [source](/sources/github-dbt-labs-jaffle-shop-classic-license.md)).
+
+Attribution required:
+
+Ship the Apache-2.0 text as `LICENSE` next to the seeds, keep any upstream `NOTICE` content, and state changes made. Wording used: "Jaffle Shop seed data and dbt project © dbt Labs, Inc., licensed under the Apache License, Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0); converted to MySQL by this project." The same notice covers the `sysbench-tpcc` scripts executed at TPC-C load time.
+
+Obligations:
+
+Ship a copy of the license with the converted Jaffle Shop database; state that the CSVs were converted (change notice); neither repository has a NOTICE file or a filled-in copyright line (the appendix still reads "Copyright {yyyy} {name of copyright owner}") - attribute to "dbt Labs, Inc." as the repository owner (**Inferred** attribution string; no explicit author line exists).
