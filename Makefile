@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -85,6 +85,12 @@ print-core:
 check:
 	@$(PY) scripts/okf_check.py
 	@$(PY) scripts/gen_provenance.py --check
+
+# extended tier: loads the 190 MB review tables into an already-loaded dvdstore
+dvdstore-reviews:
+	@echo "== dvdstore_reviews: fetch" && $(PY) scripts/fetch.py dvdstore_reviews
+	@echo "== dvdstore_reviews: stage" && $(PY) scripts/stage.py dvdstore_reviews
+	@echo "== dvdstore_reviews: load"  && $(PY) scripts/load.py dvdstore_reviews
 
 okf-check:
 	@$(PY) scripts/okf_check.py --bundle knowledge

@@ -129,6 +129,18 @@ def stage_contoso(dest):
                        os.path.join(dest, "contoso.sql"))
 
 
+@stager("dvdstore_reviews")
+def stage_dvdstore_reviews(dest):
+    """The extended tier: loaded into an existing dvdstore, never baked into the image."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "dvdstore", "convert.py")
+    out = os.path.join(dest, "dvdstore_reviews.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, os.path.join(ROOT, "downloads", "dvdstore"), out,
+                       "--reviews"], text=True).returncode != 0:
+        sys.exit("dvdstore_reviews conversion failed")
+
+
 @stager("dvdstore")
 def stage_dvdstore(dest):
     _run_dir_converter("dvdstore", os.path.join(ROOT, "downloads", "dvdstore"),

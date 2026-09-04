@@ -1,0 +1,25 @@
+- name: review_counts
+  query: 'SELECT (SELECT COUNT(*) FROM reviews) AS reviews,
+
+    (SELECT COUNT(*) FROM reviews_helpfulness) AS helpfulness
+
+    '
+- name: every_review_has_a_product
+  query: 'SELECT COUNT(*) FROM reviews r LEFT JOIN products p ON p.prod_id = r.prod_id
+
+    WHERE p.prod_id IS NULL
+
+    '
+- name: star_distribution
+  query: SELECT stars, COUNT(*) FROM reviews GROUP BY stars ORDER BY stars
+- name: helpfulness_links_to_reviews
+  query: 'SELECT COUNT(*) FROM reviews_helpfulness h
+
+    LEFT JOIN reviews r ON r.review_id = h.review_id WHERE r.review_id IS NULL
+
+    '
+- name: review_date_range
+  query: SELECT MIN(review_date), MAX(review_date) FROM reviews
+- name: review_procedures_present
+  query: "SELECT COUNT(*) FROM information_schema.routines\n WHERE routine_schema='dvdstore'\
+    \ AND routine_name IN ('new_prod_review', 'new_review_helpfulness')\n"

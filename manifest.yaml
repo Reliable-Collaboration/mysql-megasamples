@@ -1310,3 +1310,22 @@ artifacts:
     size_bytes: 16765004
     license: mit
     ipv4_first: false
+
+  # DVD Store reviews: the extended tier of an otherwise core dataset (190 MB of the repository's
+  # 197 MB). Fetched only for `make dvdstore-reviews`, never baked into the image.
+  - id: dvdstore/reviews.csv
+    dataset: dvdstore_reviews
+    url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/reviews/reviews.csv
+    mirrors: []
+    sha256: "48fc63e8062731b6707002d55e2f5be3d41f3ef462afb3b19bf7e5c7932afb3b"
+    size_bytes: 101366769
+    license: gpl-2-0
+    ipv4_first: false
+  - id: dvdstore/review_helpfulness.csv
+    dataset: dvdstore_reviews
+    url: https://raw.githubusercontent.com/dvdstore/ds3/8226cc06584fde1688a37184c2bd9fbc6faf7282/ds3/data_files/reviews/review_helpfulness.csv
+    mirrors: []
+    sha256: "601521826f8f625f66942caf9d35cab11248f1715832c9169d0bab29de9a8695"
+    size_bytes: 89190629
+    license: gpl-2-0
+    ipv4_first: false

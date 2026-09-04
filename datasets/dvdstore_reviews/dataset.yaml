@@ -1,0 +1,11 @@
+name: dvdstore_reviews
+database: dvdstore
+tier: extended
+record: knowledge/datasets/dell-dvd-store.md
+licenses: [gpl-2-0]
+# adds the two review tables to the dvdstore the core build already made
+append: true
+artifacts: [dvdstore/reviews.csv, dvdstore/review_helpfulness.csv]
+converter: none
+load:
+  - dvdstore_reviews.sql

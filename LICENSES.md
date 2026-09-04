@@ -16,6 +16,7 @@ database keeps the licence of the project it came from, listed below, and each
 | `chinook` | [mit](knowledge/licenses/mit.md) |
 | `contoso` | [mit](knowledge/licenses/mit.md) |
 | `dvdstore` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
+| `dvdstore_reviews` | [gpl-2-0](knowledge/licenses/gpl-2-0.md) |
 | `employees` | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) |
 | `enron` | [enron-public-record](knowledge/licenses/enron-public-record.md) |
 | `jaffle_shop` | [apache-2-0](knowledge/licenses/apache-2-0.md) |
@@ -43,7 +44,7 @@ database keeps the licence of the project it came from, listed below, and each
 * **City of Chicago Data Terms of Use** — `chicago_crimes`
 * **Enron email corpus — public record status and CMU distribution terms** — `enron`
 * **GNU Free Documentation License 1.3 (GFDL 1.3)** — `wikipedia_simple`
-* **GNU General Public License v2.0 (or later) - Dell DVD Store 3** — `dvdstore`
+* **GNU General Public License v2.0 (or later) - Dell DVD Store 3** — `dvdstore`, `dvdstore_reviews`
 * **Vanderbilt Biostatistics (hbiostat.org/data) permission statement** — `smallsets`
 * **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`
 * **NYC Open Data Terms of Use** — `nyc_taxi`

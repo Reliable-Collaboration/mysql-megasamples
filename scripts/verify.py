@@ -52,6 +52,21 @@ class Result:
     def note(self, msg): self.notes.append(msg)
 
 
+def extended_tables(database):
+    """Tables that an `append: true` dataset declares for this database."""
+    owned = set()
+    root = os.path.join(ROOT, "datasets")
+    for name in sorted(os.listdir(root)):
+        config = os.path.join(root, name, "dataset.yaml")
+        if not os.path.exists(config):
+            continue
+        other = load_yaml(config) or {}
+        if other.get("append") and other.get("database") == database:
+            counts = load_yaml(os.path.join(root, name, "tests", "expected_counts.yaml")) or {}
+            owned |= set(counts)
+    return owned
+
+
 def stage_counts(cfg, schema, d, pin, res):
     path = os.path.join(d, "tests", "expected_counts.yaml")
     observed = {t: int(db.rows(f"SELECT COUNT(*) FROM `{schema}`.`{t}`")[0][0]) for t in base_tables(schema)}
@@ -67,8 +82,21 @@ def stage_counts(cfg, schema, d, pin, res):
             res.fail(f"table {table} missing (expected {want} rows)")
         elif got != want:
             res.fail(f"{table}: {got} rows, expected {want}")
-    for extra in sorted(set(observed) - set(expected)):
+    if cfg.get("append"):
+        # an extended-tier dataset adds tables to a database the core build already made, so the
+        # other tables in it are not this dataset's to account for -- the core dataset checks those
+        res.note(f"counts OK for {len(expected)} table(s) added to `{cfg['database']}` "
+                 f"({len(observed) - len(expected)} more belong to the core dataset)")
+        return
+    # tables an extended-tier dataset owns are not this one's to account for, when both are loaded
+    extended = extended_tables(cfg["database"])
+    unexpected = sorted(set(observed) - set(expected) - extended)
+    shared = sorted((set(observed) - set(expected)) & extended)
+    for extra in unexpected:
         res.fail(f"unexpected table {extra} ({observed[extra]} rows)")
+    if shared:
+        res.note(f"ignoring {len(shared)} extended-tier table(s) also loaded here: "
+                 + ", ".join(shared))
     res.note(f"counts OK for {len(expected)} tables")
 
 

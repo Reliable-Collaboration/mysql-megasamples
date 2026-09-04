@@ -1,0 +1,4 @@
+# Only the two extended-tier tables; the other nine are checked by the core dvdstore dataset.
+# Both counts are the ones recorded during research, and both reproduced exactly.
+reviews: 200000
+reviews_helpfulness: 4106382

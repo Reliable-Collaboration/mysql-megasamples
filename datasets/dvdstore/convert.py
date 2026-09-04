@@ -16,6 +16,9 @@ CONTEXT = "/context/dvdstore"
 SCRIPTS = ["mysqlds3_create_db.sql", "mysqlds3_create_ind.sql", "mysqlds3_create_sp.sql"]
 # deferred to the extended tier with their indexes; see the record's tier assignment
 EXTENDED_TABLES = {"reviews", "reviews_helpfulness"}
+# the extended tier: 190 MB of the repository's 197 MB, loaded on demand into an existing dvdstore
+EXTENDED_LOADS = [("reviews", ["reviews.csv"]),
+                  ("reviews_helpfulness", ["review_helpfulness.csv"])]
 # table -> the CSVs the upstream load scripts read into it, in their order
 MONTHS = "jan feb mar apr may jun jul aug sep oct nov dec".split()
 LOADS = [("customers", ["us_cust.csv", "row_cust.csv"]),
@@ -71,6 +74,7 @@ def split_statements(sql, delimiter=";"):
 def main():
     downloads, dest = sys.argv[1], sys.argv[2]
     context = os.path.dirname(os.path.abspath(dest))
+    extended = "--reviews" in sys.argv
 
     kept, dropped, procedures = [], [], 0
     for name in SCRIPTS:
@@ -86,8 +90,13 @@ def main():
             target = re.search(r"(?i)\b(?:table|index\s+\w+\s+on|procedure)\s+(?:ds3\.)?(\w+)",
                                statement)
             touched = re.findall(r"(?i)\b(reviews|reviews_helpfulness)\b", statement)
-            if touched or (target and target.group(1) in EXTENDED_TABLES):
-                dropped.append(target.group(1) if target else "statement")
+            # bool(): `a or (b and c)` yields None when both are falsy, and `None != False` is
+            # True, which would skip every statement that matched neither test
+            is_extended = bool(touched or (target and target.group(1) in EXTENDED_TABLES))
+            # the extended run emits *only* the review objects, into an existing database
+            if is_extended != extended:
+                if not extended:
+                    dropped.append(target.group(1) if target else "statement")
                 continue
             statement = re.sub(r"(?i)\bds3\.", "", statement)
             statement = re.sub(r"(?i)\bengine\s*=\s*myisam\b", "ENGINE = InnoDB", statement)
@@ -95,7 +104,7 @@ def main():
             kept.append(statement)
 
     loads, copied = [], 0
-    for table, files in LOADS:
+    for table, files in (EXTENDED_LOADS if extended else LOADS):
         for filename in files:
             shutil.copyfile(os.path.join(downloads, filename), os.path.join(context, filename))
             copied += 1
@@ -103,7 +112,18 @@ def main():
                          f"  CHARACTER SET utf8mb4 FIELDS TERMINATED BY ',' "
                          f"OPTIONALLY ENCLOSED BY '\"';")
 
-    out = [f"""-- Dell DVD Store 3, prepared by datasets/{DATABASE}/convert.py from the upstream MySQL
+    if extended:
+        out = [f"""-- Dell DVD Store 3 review tables (extended tier), prepared by
+-- datasets/{DATABASE}/convert.py. These are 190 MB of the repository's 197 MB and are loaded into an
+-- existing `{DATABASE}` database on demand -- they are not baked into the image.
+SET NAMES utf8mb4;
+SET SESSION foreign_key_checks = 0;
+USE `{DATABASE}`;
+DROP TABLE IF EXISTS `reviews_helpfulness`;
+DROP TABLE IF EXISTS `reviews`;
+"""]
+    else:
+        out = [f"""-- Dell DVD Store 3, prepared by datasets/{DATABASE}/convert.py from the upstream MySQL
 -- kit (GPL-2.0-or-later). See datasets/{DATABASE}/LICENSE.
 SET NAMES utf8mb4;
 SET SESSION foreign_key_checks = 0;
@@ -127,11 +147,14 @@ USE `{DATABASE}`;
 
     print(f"  . prepared {len(tables)} tables, {procedures} procedures, "
           f"{len(rest) - procedures} indexes/constraints")
-    print(f"  . staged {copied} CSV files for {len(LOADS)} tables")
-    print(f"  . left to the extended tier: {', '.join(sorted(EXTENDED_TABLES))} "
-          f"({len(dropped)} statements)")
-    print("  . dropped trigger restock: upstream ships it commented \"Doesn't work yet!!!\" and it "
-          "inserts hard-coded values")
+    print(f"  . staged {copied} CSV file(s)")
+    if extended:
+        print("  . extended tier: reviews and reviews_helpfulness, loaded into an existing dvdstore")
+    else:
+        print(f"  . left to the extended tier: {', '.join(sorted(EXTENDED_TABLES))} "
+              f"({len(dropped)} statements)")
+        print("  . dropped trigger restock: upstream ships it commented \"Doesn't work yet!!!\" and "
+              "it inserts hard-coded values")
 
 
 if __name__ == "__main__":

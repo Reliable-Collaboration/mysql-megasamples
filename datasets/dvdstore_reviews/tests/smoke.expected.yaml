@@ -1,0 +1,7 @@
+# S7: canonical query results, tab-separated as the client prints them.
+every_review_has_a_product: '0'
+helpfulness_links_to_reviews: '0'
+review_counts: "200000\t4106382"
+review_date_range: "2013-01-01\t2013-12-31"
+review_procedures_present: '2'
+star_distribution: "1\t40259\n2\t40061\n3\t39712\n4\t39964\n5\t40004"
