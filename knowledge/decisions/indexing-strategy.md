@@ -62,5 +62,32 @@ Load-time measurement: `make bench-index-order DATASET=employees` loads once wit
 # Outcome
 The rules, order of operations and verification above are adopted for every dataset; per-dataset index lists live in the dataset records and `datasets/<name>/indexes.sql`.
 
+# Measured (2026-09-03, task E-02)
+`make bench-index-order DATASET=employees REPEAT=3` loads the 3,919,015-row Employees database three
+ways and checks that all three end with the same 9 indexes, the same row counts and the same 146.8 MB
+before comparing times. Best of three:
+
+| ordering | time |
+|---|---:|
+| index-first (keys declared with the tables) | 12.3 s |
+| load-then-index (6 keys added afterwards, `foreign_key_checks=0`) | **9.7 s** |
+| load-then-index, then letting MySQL validate those foreign keys | 84.5 s |
+
+Two conclusions, and the second matters far more than the first:
+
+1. **Deferring the keys is worth about 1.28x** on this dataset — real, but modest. The strategy's
+   "PK-only DDL → bulk load → one ALTER per table" ordering is right, and it is not the difference
+   between a usable build and an unusable one.
+2. **Foreign key *validation* costs 74.9 s, more than seven times the entire load**, and it dwarfs
+   anything the index ordering can save. That is what justifies loading with `foreign_key_checks=0`
+   throughout.
+
+And the check that validation would have bought is not lost, it is bought elsewhere far more cheaply:
+the S5 orphan stage runs the same six referential checks as `LEFT JOIN ... IS NULL` counts in
+**1.4 seconds** — **53x faster than MySQL's own validation of the same constraints** — because by then
+the foreign key indexes exist and each check is an index lookup rather than a constraint build. The
+pipeline therefore gets the assurance without the cost, which is why S5 exists as a test rather than
+being left to the server.
+
 # Status
 accepted

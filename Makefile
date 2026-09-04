@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help core-fast image test-image okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help core-fast image test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -47,6 +47,9 @@ build-server-stop:
 	@$(PY) scripts/db.py stop
 clean-context:
 	rm -rf docker/context/*
+
+bench-index-order:
+	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)
 
 okf-check:
 	@$(PY) scripts/okf_check.py --bundle knowledge

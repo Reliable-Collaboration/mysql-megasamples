@@ -88,6 +88,13 @@ Run [test_employees_sha2.sql](/sources/github-datacharmer-test-db-test-sha2.md);
 **M-01 result (2026-09-02): green, and independently verified.** All six published row counts match, and the upstream `test_employees_sha2.sql` reports `CRC OK` and `count OK` for every table — third-party confirmation that the conversion is byte-perfect, with the same SHA-256 values this record quotes (employees `21f5d003…`, salaries `4e99e691…`). 3,919,015 rows load in 15.2 s and occupy **146.8 MB** in InnoDB, against this record's inferred 150–250 MB. Full verification including per-table digests takes 10.7 s.
 The upstream loader is driven by the mysql client's own `source` command and a `flush binary logs`; neither survives being piped, so the converter splices the dump files inline in upstream order and skips the non-data helper `show_elapsed.sql`.
 
+# Index-order benchmark (task E-02, 2026-09-03)
+This dataset is the project's benchmark for load ordering, at 3,919,015 rows. `make bench-index-order
+DATASET=employees REPEAT=3`, best of three, with all three arms verified to produce the same 9
+indexes, row counts and 146.8 MB: index-first **12.3 s**, load-then-index **9.7 s** (1.28x faster),
+and load-then-index followed by foreign-key validation **84.5 s**. The S5 orphan check covers the same
+six constraints in **1.4 s**. See the [indexing strategy](/decisions/indexing-strategy.md).
+
 # Tier assignment
 core (medium) - the [tier model](/decisions/tier-model.md) explicitly names Employees among the "medium" core datasets (up to roughly 200 MB each); it is the canonical "large" MySQL sample with a built-in verification suite, 172 MB of SQL compressing to ~36 MB; loaded size (inferred 150-250 MB) must be measured to confirm it stays within that allowance. Evidence: [API sizes](/sources/github-datacharmer-test-db-api.md).
 
