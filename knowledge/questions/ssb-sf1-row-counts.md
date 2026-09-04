@@ -7,8 +7,11 @@ tags:
 - question
 - ssb
 - generator
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-04T00:00:00Z"
 generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:30:00Z"
@@ -30,3 +33,10 @@ Build ssb-dbgen in the builder stage, run `dbgen -s 1 -T a` and `dbgen -s 0.01 -
 
 # Resolves
 SSB expected counts, smoke SF, FK on lo_commitdate.
+
+# Answer (2026-09-04, task B-04)
+Measured at SF 1 from ssb-dbgen at commit `ae1e254a`: **customer 30,000, supplier 2,000, part
+200,000, date 2,557, lineorder 6,001,173 — 6,235,730 rows in 1,272.5 MB of InnoDB.** Every rule in
+the paper holds exactly, including the one that has been wrong in older forks: supplier is
+**2,000×SF**, not 10,000×SF. The date dimension is seven calendar years, 1992-01-01 to 1998-12-31,
+leap days included. Recorded in [the dataset record](/datasets/ssb.md).

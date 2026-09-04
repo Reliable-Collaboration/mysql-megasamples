@@ -135,6 +135,18 @@ def stage_stackexchange_beer(dest):
                        os.path.join(dest, "stackexchange_beer.sql"))
 
 
+@stager("ssb")
+def stage_ssb(dest):
+    """Generated inside the loader image; nothing is compiled or installed on the host."""
+    import subprocess
+    conv = os.path.join(ROOT, "datasets", "ssb", "convert.py")
+    out = os.path.join(dest, "ssb.sql")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    if subprocess.run([sys.executable, conv, out, "--sf", os.environ.get("SF", "1")],
+                      text=True).returncode != 0:
+        sys.exit("ssb generation failed")
+
+
 @stager("tpcds")
 def stage_tpcds(dest):
     import subprocess

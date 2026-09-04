@@ -82,6 +82,30 @@ There is no data file format: every implementation generates rows in memory and 
 # Conversion path
 **Chosen** ([decision](/decisions/tpcc-implementation-choice.md)): `make gen-tpcc W=10` in the loader image runs `sysbench tpcc.lua --db-driver=mysql --mysql-host=… --mysql-db=tpcc --tables=1 --scale=$W --threads=$T --use_fk=0 --rand-seed=$SEED prepare`, then `RENAME TABLE warehouse1 TO warehouse, …` (9 renames), then our `indexes.sql` (the four secondary indexes) and `constraints.sql` (the ten FKs, as in tpcc-mysql `add_fkey_idx.sql`), `ANALYZE TABLE`, then `baseline.json` computed from MySQL. Fallback: `docker run --network host tpcorg/hammerdb:mysql ./hammerdbcli auto build.tcl` with `dbset db mysql; diset tpcc mysql_count_ware $W; diset tpcc mysql_num_vu $T; buildschema` ([CLI docs](/sources/hammerdb-docs-ch09s03-cli-commands.md)), then rename `new_order`→`new_orders`.
 
+# Built and measured (2026-09-04, task B-03)
+sysbench 1.0.20 with Percona's sysbench-tpcc at commit `f110afa8023c7924b1ba00177232a9090624acb5` —
+the commit [the decision](/decisions/tpcc-implementation-choice.md) names — both inside
+`docker/loader.Dockerfile`. At W=1, `--tables=1 --use_fk=0 --threads=1`: **9 tables, 54.2 MB**.
+
+**The first execution task is answered: sysbench connects to MySQL 9.7 without trouble.** The
+concern was `caching_sha2_password`, which 9.x is the only supported plugin for; Debian 12's
+`default-mysql-client` is MariaDB 10.11 and it authenticates fine, as does sysbench's own driver.
+
+**The determinism experiment (risk 10) is answered too, and the answer is no.** Two loads with
+identical parameters — same `--rand-seed=42`, same `--threads=1`, same scale — produce **different
+data in eight of the nine tables**. Only `new_orders` matches, and that one is derived structurally
+rather than randomly. sysbench-tpcc does not thread its seed through the row generation.
+
+Row *counts* are a different matter and are stable: seven of the nine are exactly the
+specification's W=1 cardinalities — warehouse 1, district 10, customer 30,000, history 30,000,
+orders 30,000, new_orders 9,000, item 100,000, stock 100,000 — and only `order_line` varies
+(299,674 here), because TPC-C specifies 5 to 15 lines per order at random.
+
+The consequence for this project: **TPC-C cannot carry pinned digests the way every other dataset
+does.** Counts can be asserted, content cannot. That is a property of the generator, not of the
+conversion, and it is why the dataset ships as a `make load-tpcc` target rather than as a verified
+database with a checksum file.
+
 # Type-mapping hazards
 1. `history` has no primary key → InnoDB uses a hidden row id; the [indexing strategy](/decisions/indexing-strategy.md) prefers an explicit surrogate: add `h_id BIGINT AUTO_INCREMENT PRIMARY KEY` (sysbench `--force_pk=1` does exactly this; HammerDB offers an INVISIBLE auto-inc PK for the same reason).
 2. Timestamps: loaders insert `NOW()` for `c_since`, `h_date`, `o_entry_d`, `ol_delivery_d` → non-reproducible; exclude from digests; document that "current date/time given by the operating system" is what the spec requires.

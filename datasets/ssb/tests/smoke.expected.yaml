@@ -1,0 +1,7 @@
+# S7: canonical query results, tab-separated as the client prints them.
+cardinality_rules: "30000\t2000\t200000\t2557\t6001173"
+date_dimension_is_seven_years: "1992-01-01\t1998-12-31\t7\t2557"
+lineorder_spans_the_dimensions: "20000\t200000\t2000\t1500000\t7"
+q1_1_revenue: '445921715901'
+regions_and_nations: "AFRICA\t5\t6000\nAMERICA\t5\t5992\nASIA\t5\t6051\nEUROPE\t5\t\
+  5937\nMIDDLE EAST\t5\t6020"

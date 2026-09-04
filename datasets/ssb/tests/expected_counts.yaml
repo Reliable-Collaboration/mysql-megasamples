@@ -1,0 +1,6 @@
+# S3: row count per table. Pinned from a verified load.
+customer: 30000
+date: 2557
+lineorder: 6001173
+part: 200000
+supplier: 2000

@@ -81,6 +81,30 @@ CREATE TABLE lineorder (lo_orderkey BIGINT NOT NULL, lo_linenumber TINYINT NOT N
 # Conversion path
 **Chosen** ([decision](/decisions/ssb-generator-path.md)): a builder stage (gcc + cmake) clones ssb-dbgen at the pinned commit, `cmake -B build -DEOL_HANDLING=ON && cmake --build build`, and the resulting `dbgen` + `dists.dss` are copied into the loader image (~100 KB); `make gen-ssb SF=1` runs `dbgen -b dists.dss -s $SF -T a -v`, computes `baseline.json` from the `.tbl` files with `scripts/canon.py`, loads with `LOAD DATA LOCAL INFILE … FIELDS TERMINATED BY '|'` (no trailing pipe thanks to EOL_HANDLING=ON; else `LINES TERMINATED BY '|\n'`), dimensions first, then lineorder pre-sorted by (lo_orderkey, lo_linenumber) (dbgen order), then `indexes.sql`, `constraints.sql`, `ANALYZE`. The 13 queries are shipped as `datasets/ssb/queries/q1_1.sql … q4_3.sql` written from the paper (authors' own SQL, 10–20 lines each).
 
+# Built and measured (2026-09-04, task B-04)
+Generated at SF 1 by ssb-dbgen compiled inside `docker/loader.Dockerfile`, loaded into MySQL:
+**5 tables, 6,235,730 rows, 1,272.5 MB in InnoDB**, loading in 35.1 s with 17 indexes and 4 foreign
+keys, 0 orphans.
+
+**This answers the row-count question.** The paper's cardinality rules hold exactly at SF 1:
+customer **30,000** (30,000×SF), supplier **2,000** (2,000×SF — the electrum fix, not the original
+10,000×SF), part **200,000** (200,000×(1+⌊log₂ SF⌋)), date **2,557** (seven years, 1992-01-01 to
+1998-12-31, leap days included) and lineorder **6,001,173** (≈6,000,000×SF). Every customer region
+has exactly 5 nations. Q1.1's revenue is **445,921,715,901**.
+
+Two build options do the work that would otherwise be post-processing, which is why the `.tbl` files
+load with no rewriting at all: `EOL_HANDLING=ON` drops the trailing pipe, so MySQL sees 8 fields in
+`customer.tbl` rather than 9, and `YMD_DASH_DATE=ON` emits `1992-01-01` rather than the integer
+`19920101`. The converter checks the field count against the declared schema and says which option
+is missing if they disagree.
+
+The schema is the paper's rather than `doc/ssb.ri`, which names the date table `date_` and puts a
+single-column primary key on lineorder — both contradict the DDL beside it. `date` needs backticks
+in MySQL but is otherwise fine as a table name.
+
+The generator is cloned at commit `ae1e254aa4d603d8ef1f44078e5abed011634b23` and compiled at build
+time; nothing is vendored and its output is never shipped.
+
 # Type-mapping hazards
 1. `d_date` "December 22, 1998" is 18 chars (paper "fixed text, size 18"); `doc/ssb.ddl` says VARCHAR(19) — use CHAR(18)? Keep **VARCHAR(19)** to be safe until measured.
 2. Trailing pipe (default build) — see conversion path.

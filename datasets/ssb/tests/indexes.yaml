@@ -1,0 +1,118 @@
+# S6: every index that must exist after load.
+customer:
+  PRIMARY:
+    columns:
+    - c_custkey
+    type: BTREE
+    unique: true
+  ix_customer_city:
+    columns:
+    - c_city
+    type: BTREE
+    unique: false
+  ix_customer_nation:
+    columns:
+    - c_nation
+    type: BTREE
+    unique: false
+  ix_customer_region:
+    columns:
+    - c_region
+    type: BTREE
+    unique: false
+date:
+  PRIMARY:
+    columns:
+    - d_datekey
+    type: BTREE
+    unique: true
+  ix_date_year:
+    columns:
+    - d_year
+    type: BTREE
+    unique: false
+  ix_date_yearmonth:
+    columns:
+    - d_yearmonth
+    type: BTREE
+    unique: false
+  ix_date_yearmonthnum:
+    columns:
+    - d_yearmonthnum
+    type: BTREE
+    unique: false
+lineorder:
+  PRIMARY:
+    columns:
+    - lo_orderkey
+    - lo_linenumber
+    type: BTREE
+    unique: true
+  ix_lineorder_custkey:
+    columns:
+    - lo_custkey
+    type: BTREE
+    unique: false
+  ix_lineorder_discount_quantity:
+    columns:
+    - lo_discount
+    - lo_quantity
+    type: BTREE
+    unique: false
+  ix_lineorder_orderdate:
+    columns:
+    - lo_orderdate
+    type: BTREE
+    unique: false
+  ix_lineorder_partkey:
+    columns:
+    - lo_partkey
+    type: BTREE
+    unique: false
+  ix_lineorder_suppkey:
+    columns:
+    - lo_suppkey
+    type: BTREE
+    unique: false
+part:
+  PRIMARY:
+    columns:
+    - p_partkey
+    type: BTREE
+    unique: true
+  ix_part_brand1:
+    columns:
+    - p_brand1
+    type: BTREE
+    unique: false
+  ix_part_category:
+    columns:
+    - p_category
+    type: BTREE
+    unique: false
+  ix_part_mfgr:
+    columns:
+    - p_mfgr
+    type: BTREE
+    unique: false
+supplier:
+  PRIMARY:
+    columns:
+    - s_suppkey
+    type: BTREE
+    unique: true
+  ix_supplier_city:
+    columns:
+    - s_city
+    type: BTREE
+    unique: false
+  ix_supplier_nation:
+    columns:
+    - s_nation
+    type: BTREE
+    unique: false
+  ix_supplier_region:
+    columns:
+    - s_region
+    type: BTREE
+    unique: false

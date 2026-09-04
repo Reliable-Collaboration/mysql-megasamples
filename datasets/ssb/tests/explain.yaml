@@ -1,0 +1,10 @@
+# S5: SSB is a star schema; the fact table's dimension keys and the date year have to be indexed.
+- name: lineorder_by_orderdate
+  query: SELECT COUNT(*) FROM lineorder WHERE lo_orderdate = '1996-01-30'
+  must_not_full_scan: [lineorder]
+- name: lineorder_by_partkey
+  query: SELECT COUNT(*) FROM lineorder WHERE lo_partkey = 155190
+  must_not_full_scan: [lineorder]
+- name: date_by_year
+  query: SELECT COUNT(*) FROM `date` WHERE d_year = 1993
+  must_not_full_scan: ["date"]

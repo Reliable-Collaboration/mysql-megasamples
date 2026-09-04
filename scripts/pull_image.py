@@ -50,6 +50,14 @@ def curl(url, out=None, headers=(), fail=True):
 
 
 def split_ref(ref):
+    """`host/repo:tag`, and also Docker Hub's shorthands: `debian:12-slim`, `library/debian`.
+
+    A first segment with no dot and no colon is not a hostname, so it belongs to the repository and
+    the registry is Docker Hub -- where a single-segment name additionally lives under `library/`.
+    """
+    head = ref.split("/", 1)[0]
+    if "/" not in ref or not ("." in head or ":" in head or head == "localhost"):
+        ref = "registry-1.docker.io/" + ("library/" + ref if "/" not in ref else ref)
     host, rest = ref.split("/", 1)
     if "@" in rest:
         repo, tag = rest.split("@", 1)

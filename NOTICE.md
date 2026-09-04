@@ -64,10 +64,6 @@ Wording used for Iris: "Iris data set: Fisher, R. A. (1936), The use of multiple
 
 None required. Courtesy citations shipped: "Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. https://allisonhorst.github.io/palmerpenguins/. doi:10.5281/zenodo.3960218" and "Gorman KB, Williams TD, Fraser WR (2014) Ecological sexual dimorphism and environmental variability within a community of Antarctic penguins (genus Pygoscelis). PLoS ONE 9(3):e90081." Wikidata (CC0, not shipped) would carry "Data from Wikidata (https://www.wikidata.org/), CC0 1.0."
 
-## Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
-
-Ship the CC BY-SA 4.0 legal code, credit per section 3(a)(1) (creator, copyright notice, license link, indication of modifications) and release the adaptation under the same license. Wording used for Wikipedia: "Text from Simple English Wikipedia (https://simple.wikipedia.org/), dump 2026-09-01, licensed CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL; attribution to the article's contributors via each article's page history link; converted to MySQL by this project." For Stack Exchange posts on or after 2018-05-02: "Content from <site>.stackexchange.com, licensed CC BY-SA 4.0; each post retains its Id, OwnerUserId and author display name so it can be linked and attributed as https://<site>.stackexchange.com/q/<Id> and https://<site>.stackexchange.com/users/<OwnerUserId>."
-
 ## TPC End User License Agreement v2.2 (dbgen, qgen, dsdgen, dsqgen and derivatives)
 
 1. A complete copy of the EULA next to any TPC-derived code or query text we ship (`datasets/tpch/LICENSE`, `datasets/tpcds/LICENSE`, `datasets/ssb/LICENSE`).
@@ -75,6 +71,10 @@ Ship the CC BY-SA 4.0 legal code, credit per section 3(a)(1) (creator, copyright
 3. The original TPC copyright headers on any TPC file or excerpt (e.g. "Copyright owned by the Transaction Processing Performance Council"; the TPC-DS "Legal Notice" block).
 4. The Fair Use disclaimer in README wherever the databases are described, using "derived from TPC-H/TPC-DS/TPC-C" and never the metric names; e.g. "The `tpch`, `tpcds`, `tpcc` and `ssb` databases are derived from the TPC-H, TPC-DS and TPC-C Benchmark Standards and as such are not comparable to published TPC results, as they do not comply with the TPC specifications."
 5. The TPC spec copying notice when we quote table definitions from a spec: "copying is by permission of the Transaction Processing Performance Council", with the spec title and date.
+
+## Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+
+Ship the CC BY-SA 4.0 legal code, credit per section 3(a)(1) (creator, copyright notice, license link, indication of modifications) and release the adaptation under the same license. Wording used for Wikipedia: "Text from Simple English Wikipedia (https://simple.wikipedia.org/), dump 2026-09-01, licensed CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/) and GFDL; attribution to the article's contributors via each article's page history link; converted to MySQL by this project." For Stack Exchange posts on or after 2018-05-02: "Content from <site>.stackexchange.com, licensed CC BY-SA 4.0; each post retains its Id, OwnerUserId and author display name so it can be linked and attributed as https://<site>.stackexchange.com/q/<Id> and https://<site>.stackexchange.com/users/<OwnerUserId>."
 
 ## Natural Earth public domain terms
 

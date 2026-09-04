@@ -38,6 +38,7 @@ database keeps the licence of the project it came from, listed below, and each
 | `pubs` | [mit](knowledge/licenses/mit.md) |
 | `sakila` | [bsd-3-clause-sakila](knowledge/licenses/bsd-3-clause-sakila.md) |
 | `smallsets` | [hbiostat-data-permission](knowledge/licenses/hbiostat-data-permission.md), [cc-by-4-0](knowledge/licenses/cc-by-4-0.md), [cc0-1-0](knowledge/licenses/cc0-1-0.md) |
+| `ssb` | [tpc-eula](knowledge/licenses/tpc-eula.md) |
 | `stackexchange_beer` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) |
 | `stackexchange_dba` | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) |
 | `tpcds` | [tpc-eula](knowledge/licenses/tpc-eula.md) |
@@ -65,5 +66,5 @@ database keeps the licence of the project it came from, listed below, and each
 * **MIT License** — `adventureworks`, `adventureworks_dw`, `adventureworks_lt`, `chinook`, `contoso`, `contoso_10m`, `contoso_1m`, `northwind`, `oracle_co`, `oracle_hr`, `oracle_oe`, `oracle_sh`, `pubs`, `wideworldimporters`, `wideworldimporters_dw`
 * **Natural Earth public domain terms** — `wideworldimporters`, `wideworldimporters_dw`
 * **NYC Open Data Terms of Use** — `nyc_taxi`, `nyc_taxi_yellow`
-* **TPC End User License Agreement v2.2 (dbgen, qgen, dsdgen, dsqgen and derivatives)** — `tpcds`, `tpch`
+* **TPC End User License Agreement v2.2 (dbgen, qgen, dsdgen, dsqgen and derivatives)** — `ssb`, `tpcds`, `tpch`
 * **U.S. Government work (17 U.S.C. Sec. 105) - public domain** — `bts_ontime`, `wideworldimporters`, `wideworldimporters_dw`

@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -122,6 +122,23 @@ gen-tpcds:
 	@SF=$(SF) $(PY) scripts/stage.py tpcds
 	@$(PY) scripts/load.py  tpcds
 	@$(PY) scripts/verify.py tpcds
+
+# The build-time loader image: compiles SSB's dbgen and carries sysbench for TPC-C. Nothing from it
+# reaches the published MySQL image.
+loader-image:
+	@$(PY) scripts/pull_image.py debian:12-slim
+	@DOCKER_BUILDKIT=1 docker build -f docker/loader.Dockerfile -t mms-loader:dev .
+
+gen-ssb:
+	@SF=$(SF) $(PY) scripts/stage.py ssb
+	@$(PY) scripts/load.py  ssb
+	@$(PY) scripts/verify.py ssb
+
+# TPC-C through sysbench-tpcc, in the loader image. Unlike every other dataset this one has no
+# pinned digests: two loads with the same seed produce different data in eight of nine tables, which
+# is a property of the generator (see knowledge/datasets/tpc-c.md). Counts are stable; content is not.
+load-tpcc:
+	@$(PY) scripts/tpcc_load.py --warehouses $(or $(W),1)
 
 bench-index-order:
 	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)

@@ -1,0 +1,23 @@
+# S7: the paper's cardinality rules made checkable, plus Q1.1 -- the simplest of the 13 SSB queries
+# and the one that exercises the lineorder/date join and the discount-revenue arithmetic.
+- name: cardinality_rules
+  query: >
+    SELECT (SELECT COUNT(*) FROM customer), (SELECT COUNT(*) FROM supplier),
+           (SELECT COUNT(*) FROM part), (SELECT COUNT(*) FROM `date`),
+           (SELECT COUNT(*) FROM lineorder)
+- name: q1_1_revenue
+  query: >
+    SELECT SUM(lo_extendedprice * lo_discount) AS revenue
+    FROM lineorder JOIN `date` ON d_datekey = lo_orderdate
+    WHERE d_year = 1993 AND lo_discount BETWEEN 1 AND 3 AND lo_quantity < 25
+- name: date_dimension_is_seven_years
+  query: >
+    SELECT MIN(d_datekey), MAX(d_datekey), COUNT(DISTINCT d_year), COUNT(*) FROM `date`
+- name: regions_and_nations
+  query: >
+    SELECT c_region, COUNT(DISTINCT c_nation), COUNT(*) FROM customer
+    GROUP BY c_region ORDER BY c_region
+- name: lineorder_spans_the_dimensions
+  query: >
+    SELECT COUNT(DISTINCT lo_custkey), COUNT(DISTINCT lo_partkey), COUNT(DISTINCT lo_suppkey),
+           COUNT(DISTINCT lo_orderkey), MAX(lo_linenumber) FROM lineorder

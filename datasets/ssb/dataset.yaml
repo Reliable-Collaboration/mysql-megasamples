@@ -1,0 +1,11 @@
+name: ssb
+database: ssb
+tier: generated
+record: knowledge/datasets/ssb.md
+licenses: [tpc-eula]
+# Nothing downloaded, nothing committed: the generator is compiled in docker/loader.Dockerfile and
+# its output stays on the machine that produced it.
+artifacts: []
+converter: none
+load:
+  - ssb.sql

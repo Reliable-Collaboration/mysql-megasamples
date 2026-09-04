@@ -1,0 +1,90 @@
+# S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
+# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+customer:
+  columns:
+  - c_custkey
+  - c_name
+  - c_address
+  - c_city
+  - c_nation
+  - c_region
+  - c_phone
+  - c_mktsegment
+  excluded: []
+  n: 30000
+  s: 15237298829417589512
+  x: 3888332873819764154
+date:
+  columns:
+  - d_datekey
+  - d_date
+  - d_dayofweek
+  - d_month
+  - d_year
+  - d_yearmonthnum
+  - d_yearmonth
+  - d_daynuminweek
+  - d_daynuminmonth
+  - d_daynuminyear
+  - d_monthnuminyear
+  - d_weeknuminyear
+  - d_sellingseason
+  - d_lastdayinweekfl
+  - d_lastdayinmonthfl
+  - d_holidayfl
+  - d_weekdayfl
+  excluded: []
+  n: 2557
+  s: 18421777268129750639
+  x: 16358024586742335783
+lineorder:
+  columns:
+  - lo_orderkey
+  - lo_linenumber
+  - lo_custkey
+  - lo_partkey
+  - lo_suppkey
+  - lo_orderdate
+  - lo_orderpriority
+  - lo_shippriority
+  - lo_quantity
+  - lo_extendedprice
+  - lo_ordtotalprice
+  - lo_discount
+  - lo_revenue
+  - lo_supplycost
+  - lo_tax
+  - lo_commitdate
+  - lo_shipmode
+  excluded: []
+  n: 6001173
+  s: 9468514195709961622
+  x: 16949367905600547692
+part:
+  columns:
+  - p_partkey
+  - p_name
+  - p_mfgr
+  - p_category
+  - p_brand1
+  - p_color
+  - p_type
+  - p_size
+  - p_container
+  excluded: []
+  n: 200000
+  s: 18360952437936074925
+  x: 748133559361869701
+supplier:
+  columns:
+  - s_suppkey
+  - s_name
+  - s_address
+  - s_city
+  - s_nation
+  - s_region
+  - s_phone
+  excluded: []
+  n: 2000
+  s: 5445183553097106276
+  x: 8591288604974190478
