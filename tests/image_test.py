@@ -127,9 +127,15 @@ def main():
                  .stdout.strip() == "2025-12-31 18:00:00", "CONVERT_TZ works (time-zone tables loaded)")
         c.expect(q("SELECT SHA2('a',256)").returncode == 0, "SHA2 available (SSL build)")
 
-        size = q("SELECT ROUND(SUM(data_length+index_length)/1048576) FROM information_schema.tables "
-                 "WHERE table_schema NOT IN ('mysql','information_schema','performance_schema','sys')").stdout.strip()
-        print(f"  . user data: {size} MB")
+        # The data directory on disk, not information_schema: after a dump load the table
+        # statistics have not been gathered, and they under-report by a wide margin (667 MB against
+        # a real 1,785 MB when this was last measured). The datadir is also what a user pays for.
+        datadir = sh("docker", "exec", NAME, "sh", "-c",
+                     "du -sm /var/lib/mysql | cut -f1").stdout.strip()
+        databases = q("SELECT COUNT(DISTINCT table_schema) FROM information_schema.tables "
+                      "WHERE table_schema NOT IN "
+                      "('mysql','information_schema','performance_schema','sys')").stdout.strip()
+        print(f"  . data directory: {datadir} MB across {databases} databases")
     finally:
         # the override path needs its own container
         sh("docker", "rm", "-f", NAME)

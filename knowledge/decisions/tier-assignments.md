@@ -62,5 +62,30 @@ Each row of the table links to the dataset record that holds the size evidence; 
 
 Core total, inferred: 1.0–1.3 GB of InnoDB pages; compressed image target ≤ 2 GB (base image ≈ 0.6 GB). Task E-01 replaces every inferred figure with a measurement; if the measured core datadir exceeds 3 GB, `adventureworks` and then `contoso` move to extended (in that order).
 
+# Measured outcome (2026-09-03, task E-01)
+Every core dataset is now built and measured, and **no tier assignment changed**. The image holds 22
+databases, 249 base tables and 9,056,697 rows: 942.8 MB logical, a 1,785 MB data directory, a 3.46 GB
+image, ready to serve a query 2.2 seconds after start.
+
+Where measurement differed from the estimate it was in both directions, and none of it crossed a tier
+boundary:
+
+| dataset | estimated | measured | note |
+|---|---:|---:|---|
+| wikipedia_simple (sample) | < 50 MB | 131.3 MB | wikitext and the two link tables; still in the employees band |
+| chicago_crimes (2024) | 60–90 MB | 65.7 MB | |
+| contoso (100k) | 60–120 MB | 103.3 MB | |
+| oracle_sh | 150–250 MB | 160.6 MB | |
+| adventureworks | 220 MB | 154.0 MB | |
+| employees | 150–250 MB | 146.8 MB | |
+| lahman | ~50 MB | 75.6 MB | |
+| enron (subset) | < 40 MB | 38.0 MB | the 40 MB rule is on source bytes, and it held |
+| dvdstore (no reviews) | 15–25 MB | 16.3 MB | |
+| nyc_taxi (green) | ~10 MB | 10.1 MB | |
+| stackexchange_beer | ~20 MB | 21.5 MB logical, 74 MB on disk | FULLTEXT over post bodies dominates the on-disk cost |
+
+The last row is the one worth carrying forward: **logical size is not what the disk pays**. Across the
+image the ratio is 1.9x, and for a FULLTEXT-heavy dataset it is 3.4x.
+
 # Status
 accepted (sizes inferred; revisit after E-01)

@@ -488,46 +488,62 @@ Everything below runs in the builder stage, the `loader` image, or a Compose ser
 Anything proprietary (SQL Server, ODBC tools, Oracle Free, SQLcl) touches only build-time containers whose file systems are discarded; the CI workflow that runs them (`native.yaml`) is manual and documents the EULA acceptance in its log.
 ## 7. Size and resource budget
 
-All loaded sizes are inferred from source sizes and row counts (see each dataset record); **task E-01 measures them** (`SELECT SUM(data_length+index_length)` per database after `ANALYZE TABLE` with `information_schema_stats_expiry=0`, plus `du -sh` of the datadir and `docker image inspect --format '{{.Size}}'`) and rewrites this table.
+**Measured at task E-01 on 2026-09-03**, not estimated: per-database figures are
+`SUM(data_length+index_length)` taken inside the built image after `ANALYZE TABLE` on every table,
+the data directory is `du -sm /var/lib/mysql`, and the image size is Docker's own. The three do not
+agree with one another and each answers a different question, so all three are given.
 
-| Database | Raw source | Loaded InnoDB (est.) | zstd dump (est.) | Tier |
-|---|---|---|---|---|
-| sakila | 3.4 MB SQL | 8 | 1 | core |
-| chinook | 0.6 MB | 3 | 0.2 | core |
-| northwind | 1 MB | 6 | 0.5 | core |
-| pubs | 0.1 MB | 1 | 0.1 | core |
-| employees | 172 MB | 200 | 35 | core |
-| oracle_hr / oracle_co / oracle_oe | 0.08 / 1.3 / 3.6 MB | 0.5 / 1.6 / 4.4 (measured) | <2 each (measured) | core |
-| oracle_sh | 91 MB CSV | 168.7 (measured) | 10.5 (measured) | core |
-| adventureworks | 95 MB CSV | 162 (measured) | 14 (measured) | core |
-| adventureworks_lt | 0.9 MB | 4.1 (measured) | 1.2 (measured) | core |
-| contoso (100k) | 9.8 MB 7z | 103.3 (measured) | 4.8 (measured) | core |
-| dvdstore (DS2 tables) | 6.5 MB | 16.3 (measured) | 1.7 (measured) | core |
-| jaffle_shop, smallsets | < 0.2 MB | 2 | <1 | core |
-| lahman | 42.2 MB CSV | 77.7 (measured) | 4.2 (measured) | core |
-| nyc_taxi (green 2025-01 + zones) | 1.2 MB Parquet | 11.1 (measured) | 0.7 (measured) | core |
-| chicago_crimes (2024) | 74.8 MB CSV | 75.7 (measured) | 3.3 (measured) | core |
-| enron (subset) | 23.8 MB text | 36.5 (measured) | 4.4 (measured) | core |
-| stackexchange_beer | 4.3 MB 7z | 21.5 (measured) | 2.1 (measured) | core |
-| wikipedia_simple (sample) | 356 MB bz2 | 160.9 (measured) | 17.8 (measured) | core |
-| megasamples (metadata) | — | 1 | — | core |
-| **core total** | | **≈ 1,030 MB** (range 0.9–1.4 GB) | ≈ 150 MB | image ≈ 0.6 GB base + data layer; target **≤ 2 GB compressed** |
-| adventureworks_dw | 86 MB | 150 | 20 | extended |
-| wideworldimporters / _dw | 127 / 54 MB bak | 600–900 / 150 | 80 / 20 | extended |
-| contoso 1m / 10m | 49 / 512 MB | 800 / 8,000 | | extended |
-| dvdstore reviews | 190 MB | 350 | | extended |
-| nyc_taxi yellow 2025-01 | 59 MB | 600 | 60 | extended |
-| bts_ontime (one month) | 27 MB zip / 243 MB CSV | 350 | 40 | extended |
-| chicago_crimes full | 1.65 GB CSV | 2,000 | 300 | extended |
-| enron full | 443 MB tgz | 2,500 | 400 | extended |
-| stackexchange_dba | 319 MB 7z | 2,500 | 350 | extended |
-| wikipedia_simple full | 540 MB | 2,800 | 500 | extended |
-| tpch SF=1 / tpcds SF=1 / tpcc W=10 / ssb SF=1 | generated | 2,000 / 3,500 / 1,200 / 1,600 | — | generated |
-| citibike / divvy (one year) | multi-GB | 3,000+ / 1,500 | — | user-fetched |
+| Database | Raw source | Loaded (MB) | Tables | zstd dump (MB) | Tier |
+|---|---|---:|---:|---:|---|
+| oracle_sh | 91 MB CSV | 160.6 | 9 | 7 | core |
+| adventureworks | 17.5 MB zip | 154.0 | 69 | 20 | core |
+| employees | 172 MB | 146.8 | 6 | 36 | core |
+| wikipedia_simple | 540 MB dumps | 131.3 | 9 | 25 | core |
+| contoso | 9.8 MB 7z | 103.3 | 8 | 17 | core |
+| lahman | 42.2 MB zip | 75.6 | 27 | 12 | core |
+| chicago_crimes | 74.8 MB CSV | 65.7 | 2 | 11 | core |
+| enron | 443 MB tgz | 38.0 | 3 | 7 | core |
+| stackexchange_beer | 4.3 MB 7z | 21.5 | 11 | 6 | core |
+| dvdstore | 7 MB | 16.3 | 9 | 3 | core |
+| nyc_taxi | 1.2 MB Parquet | 10.1 | 2 | 2 | core |
+| sakila | 3.4 MB SQL | 6.1 | 16 | 2 | core |
+| adventureworks_lt | 0.9 MB zip | 4.1 | 12 | 1 | core |
+| oracle_oe | 3.6 MB scripts | 3.7 | 9 | 1 | core |
+| chinook | 0.6 MB | 1.6 | 11 | 1 | core |
+| northwind | 1 MB | 1.4 | 13 | 1 | core |
+| oracle_co | 1.3 MB | 1.1 | 7 | 1 | core |
+| oracle_hr | 0.08 MB | 0.4 | 7 | <1 | core |
+| pubs | 0.1 MB | 0.4 | 11 | <1 | core |
+| smallsets | <0.2 MB | 0.3 | 4 | <1 | core |
+| jaffle_shop | <0.2 MB | 0.1 | 3 | <1 | core |
+| megasamples (registry) | — | 0.1 | 1 | <1 | core |
+| **total** | | **942.8** | **249** | **145** | |
 
-**Build machine** ([survey](knowledge/sources/build-machine-environment-2026-09-02.md)): 32 CPUs, 15.5 GB RAM for Docker, 932 GB free — sufficient. Peak concurrent memory: SQL Server (2 GB min, 4 GB comfortable) + `mysql-build` (1 GB buffer pool) + loader; run WWI export alone. Disk high-water mark for a full extended build ≈ 60 GB (downloads 5 GB, TSV staging 15 GB, MySQL datadirs 25 GB, images 15 GB). Time: core pipeline end-to-end ≈ 45–60 min on this machine (dominated by employees, SH, AdventureWorks conversions and the image load layer); extended datasets 4–8 h total, run individually.
+**Whole-image figures**
 
-**Hard limits and mechanisms:** GitHub 100 MiB file / 2 GiB release asset ([limits](knowledge/tools/github-limits.md)) → dumps are chunked by `util.dumpSchemas` (64 MB chunks) and each dataset's dump directory is published as a single `tar` under 2 GiB, split with `split -b 1900M` when needed (WWI, Wikipedia full, dba); ghcr.io 10 GB per layer → the data layer is one `COPY --from` under 4 GB; GitHub-hosted runner 14 GB disk → CI builds core only, extended runs on the build machine or a self-hosted runner. The image-level test asserts the data layer size stays under the documented ceiling; exceeding it moves the next-largest core dataset to extended per the order in [tier assignments](knowledge/decisions/tier-assignments.md).
+| measure | value |
+|---|---|
+| databases baked | 22 (21 datasets + the `megasamples` registry) |
+| base tables | 249 |
+| rows | 9,056,697 |
+| logical data (`data_length+index_length`, after ANALYZE) | 942.8 MB |
+| data directory on disk (`du -sm /var/lib/mysql`) | **1,785 MB** |
+| image (`docker images`) | **3.46 GB** |
+| first start, ready to serve a real query | **2.2 s** (budget 30 s) |
+| dumps staged into the build (zstd, `util.dumpSchemas`) | 145 MB |
+
+Three notes on why those numbers differ, since each is easy to misread:
+
+* **1,785 MB on disk against 942.8 MB logical.** InnoDB pays for page fill factor, per-table
+  tablespace rounding and the FULLTEXT auxiliary tables, and the redo log is a further 101 MB of the
+  datadir. `stackexchange_beer` is the clearest case: 21.5 MB logical, 74 MB on disk, almost all of it
+  the FULLTEXT index over post bodies.
+* **The image is 3.46 GB against a 1,785 MB datadir.** The `mysql:9.7.2` base is about 1.1 GB before
+  any data, and the datadir is copied into a single layer on top.
+* **`information_schema` under-reports right after a load.** A dump load leaves table statistics
+  ungathered, and reading them before `ANALYZE` gave 667 MB for the same image that really holds
+  1,785 MB. `tests/image_test.py` therefore reports the data directory, not the catalogue.
+
 ## 8. Licensing findings and compliance checklist
 
 Every license record: [`knowledge/licenses/`](knowledge/licenses/index.md). The repository states per-dataset licenses in `README.md` and `LICENSES.md` (generated), never a single license for the data; project code is MIT (proposed) and says so separately.
@@ -688,7 +704,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | M-04 ✅ | contoso 100k, dvdstore DS2 tables, lahman (maintainer downloads the CSV zip once → release asset) | S-04 | all three done: dvdstore 9 tables / 174,716 rows / 16.3 MB, contoso 8 / 753,467 / 103.3 MB, lahman 27 / 706,466 / 77.7 MB. contoso needs no system 7-zip (`py7zr`), and lahman arrives through the new `manual: true` manifest flag — the maintainer places the file once and the build verifies it |
 | M-05 ✅ | nyc_taxi green + zones (DuckDB path v1), chicago_crimes 2024 subset (SODA path) | P-04 | done without the loader image: DuckDB reads the Parquet from the project venv. nyc_taxi 48,326 trips + 265 zones, 11.1 MB, sums checked against the source; chicago_crimes 259,268 + 434, 75.7 MB, snapshot identity recorded |
 | M-06 ✅ | stackexchange_beer (XML loader v1), enron core subset (maildir parser v1), wikipedia_simple sample (SQL fix-up + mwxml) — run the MediaWiki 5-minute test first | P-04 | all three done: stackexchange_beer 11 tables / 62,492 rows, enron 5 of 150 mailboxes / 9,941 messages, wikipedia_simple 9 tables / 5,000 articles / 160.9 MB. Every upstream checksum matched. Both enron questions answered from a full-corpus parse, and the MediaWiki test showed **all four worries unfounded** — no SQL fix-up is needed, the dumps load as they are |
-| **E-01** | `make core` + `make image`; measure every core database size, datadir, image size, start time; rewrite §7 and [tier-assignments](knowledge/decisions/tier-assignments.md); apply the overflow rule if needed | M-01…M-06 | update [tier-assignments](knowledge/decisions/tier-assignments.md), [tier-model](knowledge/decisions/tier-model.md) |
+| **E-01** ✅ | `make core` + `make image`; measure every core database size, datadir, image size, start time; rewrite §7 and [tier-assignments](knowledge/decisions/tier-assignments.md); apply the overflow rule if needed | M-01…M-06 | done — 22 databases, 249 tables, 9,056,697 rows, 942.8 MB logical / 1,785 MB datadir / 3.46 GB image, ready in 2.2 s. §7 and the tier decision rewritten from measurement; **no tier assignment changed**, so the overflow rule was not needed |
 | R-01 | `ci.yaml` (core-fast subset + image test) green on GitHub Actions; `okf.yaml` green; `make provenance` output committed | E-01 | log Verification |
 | X-01 | adventureworks_dw (same converter) | M-03 | update record |
 | X-02 | WideWorldImporters + DW: `make wwi-export` (SQL Server 2022, amd64, EULA), bcp experiment (risk 6), export cached as release asset, MySQL load | M-03 | update [wideworldimporters](knowledge/datasets/wideworldimporters.md), [-dw](knowledge/datasets/wideworldimporters-dw.md), [mssql-server-container](knowledge/tools/mssql-server-container.md); close bcp and row-count questions |
