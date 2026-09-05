@@ -8,8 +8,11 @@ tags:
 - stackexchange
 - row-counts
 - text-group
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-04T00:00:00Z"
 generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:25:00Z"
@@ -28,3 +31,20 @@ How many rows do Posts/Users/Comments/Votes/Badges/Tags/PostLinks/PostHistory ha
 
 # Resolves
 Test baseline and the core/extended size estimates (compression ratio) in [Stack Exchange](/datasets/stackexchange.md).
+
+# Answer (2026-09-04, tasks M-06 and X-05)
+
+**Counted, and pinned.** Both dumps were loaded and every table's count recorded in
+`datasets/stackexchange_*/tests/expected_counts.yaml`, which the S3 test asserts on every build.
+
+`dba.stackexchange.com` (2024-04-02): posts 243,410 · comments 347,838 · users 248,141 ·
+votes 911,783 · badges 429,421 · posthistory 833,657 · postlinks 20,194 · tags 1,242 ·
+posttypes 15 · votetypes 14 · linktypes 2 — **3,035,686 rows over 1,751.7 MB loaded**.
+
+`beer.stackexchange.com` (same snapshot): posts 3,924 · comments 4,007 · users 10,168 ·
+badges 12,901 · posthistory 10,423 · postlinks 152 · tags 152 · posttypes 15 · linktypes 2.
+
+These numbers are fixed for good rather than merely current: the project reads the archive.org
+snapshot, whose upstream md5 matches what the record pins, so unlike the live site they cannot move.
+The per-row `contentlicense` column is populated for every post, which is what the CC BY-SA
+attribution requires.

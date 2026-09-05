@@ -8,8 +8,11 @@ tags:
 - validator
 - ci
 - process
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-04T00:00:00Z"
 generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:51:18Z"
@@ -90,3 +93,21 @@ Records that depend on the answer:
 * [pypi-okf.md](/sources/pypi-okf.md)
 * [pypi-pyyaml.md](/sources/pypi-pyyaml.md)
 * PLAN.md §9 risk register (outside the bundle)
+
+# Answer (2026-09-04, task R-02)
+
+**No official validator exists, and `scripts/okf_check.py` is the one this project runs.** The
+`open-knowledge-format` repository ships `SPEC.md`, `bundles/`, `connectors/`, `samples/`, `src/` and
+`tests/` — and no validation entry point: the only validation code is
+`src/reference_agent/bundle/document.py`, which checks that `type` is present. There is no package to
+install and nothing for CI to call.
+
+So the checker is project-owned, and its scope is deliberately wider than the specification: as well
+as OKF v0.2's frontmatter rules it enforces this bundle's own conventions — type-specific section
+headings in order, `index.md` files that match their directories, log entries that begin with one of
+five verbs, and every internal link resolving. That last rule is why `bundle_status` matters: broken
+links are warnings while the bundle says `draft` and errors once it says `stable`, which it now does.
+
+This should be revisited if the format publishes a reference validator; until then, "valid OKF" for
+this repository means "passes `scripts/okf_check.py`", and the record says so rather than implying an
+external authority.
