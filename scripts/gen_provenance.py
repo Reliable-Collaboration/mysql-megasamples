@@ -197,7 +197,15 @@ def build_licenses_md(all_datasets, licences):
     out = [GENERATED, "# Licences", "",
            "This project ships no data of its own. **There is no single licence for the data**: each",
            "database keeps the licence of the project it came from, listed below, and each",
-           "`datasets/<name>/LICENSE` carries the terms in full. The project's own code is MIT.", "",
+           "`datasets/<name>/LICENSE` carries the terms in full.", "",
+           "**The project's own code is Apache-2.0** (`LICENSE` at the repository root): the scripts,",
+           "the converters, the tests, the Dockerfiles, the knowledge bundle and the generated",
+           "documentation. Apache-2.0 covers **none of the data**. It is not a relicensing of",
+           "anything upstream and it cannot be: several of these datasets are share-alike and must",
+           "stay under their own terms, so a converted `employees`, `lahman`, `stackexchange_*` or",
+           "`wikipedia_simple` remains CC BY-SA and is offered as such. Where the two could appear to",
+           "conflict, the dataset's licence governs the dataset and Apache-2.0 governs the code that",
+           "processed it.", "",
            "| database | licence |", "|---|---|"]
     for name, cfg in all_datasets:
         ids = ", ".join(f"[{i}](knowledge/licenses/{i}.md)" for i in cfg.get("licenses", []))
@@ -211,8 +219,23 @@ def build_licenses_md(all_datasets, licences):
 
 def build_notice(all_datasets, licences):
     out = [GENERATED, "# NOTICE", "",
+           "This file serves two purposes, and they are separate.", "",
+           "## 1. The Apache-2.0 NOTICE for this project's code", "",
+           "```",
+           "mysql-megasamples",
+           "Copyright 2026 Reliable Collaboration",
+           "",
+           "This product includes software developed at Reliable Collaboration.",
+           "```",
+           "",
+           "The project's code is licensed under the Apache License, Version 2.0 (`LICENSE`).",
+           "Section 4(d) requires this notice to travel with any redistribution of that code.",
+           "**It says nothing about the data**, which is the rest of this file.", "",
+           "## 2. Attribution required by the data's own licences", "",
            "Attribution required by the licences of the data this image redistributes. The full terms",
-           "are in each `datasets/<name>/LICENSE` and in `LICENSES.md`.", ""]
+           "are in each `datasets/<name>/LICENSE` and in `LICENSES.md`. These obligations are not",
+           "Apache-2.0's and are not satisfied by it: they come from the upstream projects, and",
+           "several are share-alike.", ""]
     seen = set()
     for name, cfg in all_datasets:
         for licence_id in cfg.get("licenses", []):
