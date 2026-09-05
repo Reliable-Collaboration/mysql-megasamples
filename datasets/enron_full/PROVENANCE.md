@@ -16,7 +16,7 @@ a download does not match.
 
 | artifact | bytes | sha256 |
 |---|---:|---|
-| (none listed in manifest.yaml) | | |
+| `enron/enron_mail_20150507.tar.gz` | 443,254,787 | `b3da1b3fe0369ec3140bb4fbce94702c33b7da810ec15d718b3fadf5cd748ca7` |
 
 ## What upstream publishes
 

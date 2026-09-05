@@ -1,6 +1,13 @@
-# The build context needs only docker/ and build/dumps/; everything else is repository weight.
+# The build context needs docker/, build/dumps/ and the licence files that must travel with the
+# data; everything else is repository weight.
 *
 !docker/my.cnf
 !docker/init/
 !docker/entrypoint-wrapper.sh
 !build/dumps/
+!NOTICE.md
+!LICENSES.md
+!CATALOGUE.md
+!README.md
+!datasets/*/LICENSE
+!datasets/*/PROVENANCE.md

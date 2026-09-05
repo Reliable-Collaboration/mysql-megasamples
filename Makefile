@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image up down console console-down status clean clean-all test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check catalogue audit-assets prepub-check release release-check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image up down console console-down status clean clean-all test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -15,6 +15,10 @@ help:
 	@echo "make core             every core dataset (what the image contains)"
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
 	@echo "make check            the local gate: bundle validation + generated files up to date"
+	@echo "make catalogue        regenerate CATALOGUE.md from the built image"
+	@echo "make audit-assets     prove nothing unredistributable is in the repo, image or release"
+	@echo "make prepub-check     the ten-item pre-publication checklist (PLAN section 8.3)"
+	@echo "make release          stage the data-v1 assets (staging only; never publishes)"
 	@echo "make okf-check        validate the knowledge bundle"
 	@echo "make up               the stack: the database, four UIs and the landing page, together"
 	@echo "make down             all of it down again"
@@ -189,6 +193,26 @@ bench-index-order:
 provenance:
 	@$(PY) scripts/gen_provenance.py
 
+catalogue:
+	@$(PY) scripts/catalogue.py
+
+# PLAN.md section 8.3 items 4, 5 and 6: nothing that may not be redistributed is in the repository,
+# the image or the staged release.
+audit-assets:
+	@$(PY) scripts/audit_assets.py
+
+# PLAN.md section 8.3, all ten items. Run it before publishing, not only when preparing: these are
+# the checks that must still hold on the day the release actually goes out.
+prepub-check:
+	@$(PY) scripts/prepub_check.py
+
+# Stage the data-v1 release assets and verify them. Staging only: this never publishes anything,
+# and creating the release is the maintainer's step (task R-02).
+release:
+	@$(PY) scripts/release.py stage
+release-check:
+	@$(PY) scripts/release.py check
+
 # used by CI to pass the same list to `make image` and `make test-image`
 print-core-fast:
 	@echo $(CORE_FAST)
@@ -200,6 +224,7 @@ print-core:
 check:
 	@$(PY) scripts/okf_check.py
 	@$(PY) scripts/gen_provenance.py --check
+	@$(PY) scripts/catalogue.py --check
 
 # extended tier: loads the 190 MB review tables into an already-loaded dvdstore
 dvdstore-reviews:

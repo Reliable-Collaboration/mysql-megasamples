@@ -1,6 +1,6 @@
 ---
 okf_version: "0.2"
-bundle_status: draft
+bundle_status: stable
 ---
 
 # Knowledge bundle

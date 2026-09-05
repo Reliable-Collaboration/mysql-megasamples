@@ -16,7 +16,14 @@ a download does not match.
 
 | artifact | bytes | sha256 |
 |---|---:|---|
-| (none listed in manifest.yaml) | | |
+| `wikipedia_simple/simplewiki-20260901-pages-articles.xml.bz2` | 356,186,307 | `6832fd106ae0e4734a349d6351709fc219ccebad5850234214a57e653f7812f8` |
+| `wikipedia_simple/simplewiki-20260901-page.sql.gz` | 33,064,269 | `8e6e48a2ea20fab45e2478ca08429deaa9185fc9d6e6400b6ef8e6d65923de0b` |
+| `wikipedia_simple/simplewiki-20260901-categorylinks.sql.gz` | 28,305,762 | `1ff87577c208177ead0295134e7fd4d728cd0c257a619a9601d1a96e698712b5` |
+| `wikipedia_simple/simplewiki-20260901-pagelinks.sql.gz` | 82,424,067 | `26897fe06e9d883684371204f1c431f917258df086e98e1c50297e9c0ba7ed0d` |
+| `wikipedia_simple/simplewiki-20260901-linktarget.sql.gz` | 37,519,370 | `1793587eeb634c9efd65d4be102864980f02c840caf14762ef607851c96b7896` |
+| `wikipedia_simple/simplewiki-20260901-redirect.sql.gz` | 1,463,928 | `bf6f37a15c68f76bf0490ae392d9b6bbe2c19393896f94837da5cd6d7a02c47d` |
+| `wikipedia_simple/simplewiki-20260901-category.sql.gz` | 1,199,048 | `66ac8266aa78ae431c361ad43cdb608e8dd4daa88b5bc7e2697846e1f545545a` |
+| `wikipedia_simple/simplewiki-20260901-site_stats.sql.gz` | 862 | `a411142b28874bc1e1549ef2bf3c4db48f51068807a5a8bfaa9b7a19b5f6cdbf` |
 
 ## What upstream publishes
 

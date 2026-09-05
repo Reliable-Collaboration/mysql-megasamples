@@ -15,7 +15,8 @@ instead of configuring clients.
 | accounts | `demo` (read-only) and `admin` (full privileges) |
 
 Every dataset keeps its own upstream licence — this project never places a single licence over the
-data. See [Licensing](#licensing), which is worth reading before you publish anything built from it.
+data. [`CATALOGUE.md`](CATALOGUE.md) lists all 38 datasets with what each licence asks of you, and
+[Licensing](#licensing) is worth reading before you publish anything built from this.
 
 **Status: not published yet.** There is no image to `docker pull`; you build it locally, which is
 what the rest of this page is about. [`PLAN.md`](PLAN.md) is the plan being executed and
@@ -154,6 +155,46 @@ and in a few cases share-alike. Before you redistribute anything built from this
 Project **code** is MIT. The console index page shows each database's licence beside it, so the
 answer to "what am I allowed to do with this table" is one click from the data.
 
+### Share-alike: four datasets must stay under their own licence
+
+`employees`, `lahman`, the Stack Exchange datasets and `wikipedia_simple` are CC BY-SA. A converted
+database is an adaptation, so **this project offers those four converted databases under the same
+licence** — CC BY-SA 3.0 for `employees` and `lahman`, CC BY-SA 4.0 for Stack Exchange and
+`wikipedia_simple` — and so must anyone who redistributes a modified version. The project's own MIT
+licence covers the code, and carves these datasets out. [`CATALOGUE.md`](CATALOGUE.md) marks every
+dataset with what its licence asks of a redistributor.
+
+### Notices that must travel with the data
+
+Chicago's terms require this paragraph **verbatim** wherever the data appears, and reserve the City's
+right to require distribution to stop:
+
+> This site provides applications using data that has been modified for use from its original source, www.cityofchicago.org, the official website of the City of Chicago. The City of Chicago makes no claims as to the content, accuracy, timeliness, or completeness of any of the data provided at this site. The data provided at this site is subject to change at any time. It is understood that the data provided at this site is being used at one's own risk.
+
+Two more are required by the terms they were obtained under:
+
+> Data obtained from http://hbiostat.org/data courtesy of the Vanderbilt University Department of Biostatistics.
+
+> Iris data set: Fisher, R. A. (1936), The use of multiple measurements in taxonomic problems, Annals of Eugenics 7(2):179–188. Distributed via the UCI Machine Learning Repository, https://doi.org/10.24432/C56C76, under CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/). Two values corrected per Fisher's paper, as in R and scikit-learn (BSD-3-Clause).
+
+[`NOTICE.md`](NOTICE.md) carries these and every other attribution in full.
+
+### Licensing notes: what is still unresolved
+
+Five licensing questions are genuinely open. None of them blocks using the data; each is recorded
+with what was actually read, so you can form your own view rather than inherit an assumption:
+
+| question | status |
+|---|---|
+| **NYC TLC terms.** The Open Data FAQ says there are no restrictions; the NYC.gov Terms of Use it incorporates reserve all rights | unresolved on the City's own pages; treated as reusable with attribution ([record](knowledge/questions/nyc-open-data-reuse-terms.md)) |
+| **Titanic.** hbiostat grants blanket permission with an acknowledgement request, but names no licence | permission relied on, acknowledgement shipped ([record](knowledge/questions/titanic-hbiostat-license-status.md)) |
+| **Enron.** No licence text exists; FERC public-record material redistributed by CMU with a privacy request | status inferred, not stated by anyone; CMU's deletion list is applied ([record](knowledge/licenses/enron-public-record.md)) |
+| **DVD Store data.** The kit is GPL-2.0-or-later, but the CSVs are generator *output*, which GPL §0 covers only if it is a work based on the Program | treated as redistributable program output ([record](knowledge/questions/dvdstore-generated-data-license.md)) |
+| **Jaffle Shop.** The newer dbt-labs/jaffle-shop seeds and the 6-year S3 set carry no licence at all | **not vendored**; only the Apache-2.0 classic seeds are used ([record](knowledge/questions/jaffle-shop-new-repo-license.md)) |
+
+Iris was a sixth: UCI labels it CC BY 4.0 rather than public domain, which is the stricter reading,
+so that is the one the project follows ([record](knowledge/questions/iris-uci-cc-by-vs-public-domain.md)).
+
 ### Two datasets are never redistributed
 
 Citi Bike and Divvy licences forbid publishing their data as a stand-alone dataset. The loaders ship;
@@ -208,6 +249,7 @@ generated:
 
 | Path | What it holds |
 |---|---|
+| `CATALOGUE.md` | every dataset: tier, shape, licence, and what that licence asks of a redistributor (generated) |
 | `PLAN.md` | the plan: architecture, per-dataset conversion paths, tests, licensing |
 | `knowledge/` | OKF v0.2 evidence bundle: datasets, licences, tools, decisions, sources, runbooks, open questions |
 | `scripts/` | the pipeline: fetch, stage, load, verify, dump, plus the converters |

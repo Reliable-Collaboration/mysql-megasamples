@@ -11,12 +11,12 @@
 
 ## Source artifacts
 
-Every byte this database is built from, pinned. `scripts/fetch.py` refuses to proceed if
-a download does not match.
-
-| artifact | bytes | sha256 |
-|---|---:|---|
-| (none listed in manifest.yaml) | | |
+**None downloaded.** This dataset is generated on the machine that builds it, so
+there is no upstream file to pin and nothing of it is redistributed. What is pinned
+is the *generator*: `docker/loader.Dockerfile` fixes the source commit it is built
+from, and the loader records the commit it actually ran. The knowledge record for
+this dataset states the cardinalities the specification requires, which is what the
+tests assert instead of a content digest.
 
 ## What upstream publishes
 
