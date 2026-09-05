@@ -5,23 +5,28 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image console console-down test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image up down console console-down status clean clean-all test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
 	@echo "make <dataset>        fetch, stage, load, test one dataset (see CORE_FAST below)"
+	@echo "make image            build the image: every core dataset, then bake. Removes the"
+	@echo "                      build containers when it finishes; KEEP_BUILD_RESOURCES=1 keeps them"
 	@echo "make core             every core dataset (what the image contains)"
 	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
 	@echo "make check            the local gate: bundle validation + generated files up to date"
 	@echo "make okf-check        validate the knowledge bundle"
-	@echo "make console          the browsing console: four UIs on one landing page, opt-in"
+	@echo "make up               the stack: the database, four UIs and the landing page, together"
+	@echo "make down             all of it down again"
+	@echo "make status           what is running: the stack, and any transient container"
+	@echo "make clean            remove the transient containers (build server, export, tests)"
 	@echo "make load-citibike    download one month of Citi Bike trips to this machine and load"
 	@echo "make load-divvy       the same for Divvy (both need their licence accepted; nothing"
 	@echo "                      from either is ever redistributed by this project)"
 	@echo "make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server,"
 	@echo "                      Developer EULA -- see the target below; needed once, not per build)"
 	@echo "make build-server     start the throwaway MySQL build server"
-	@echo "make build-server-stop"
+	@echo "make build-server-stop   remove it (this discards everything loaded into it)"
 
 # --- per-dataset pipeline: fetch -> stage -> load -> test ---------------------------------
 define DATASET_RULE
@@ -57,12 +62,23 @@ image: $(DATASETS) image-only
 
 # bake what is already loaded in the build server, without re-running the datasets. CI uses this
 # after `make core-fast` so the pipeline is not run twice.
+#
+# When the image is built the build server has done its job, so it is removed -- it is a container
+# holding a second copy of every dataset, and leaving it up is how a machine ends up with a 28-hour
+# MySQL nobody remembers starting. `KEEP_BUILD_RESOURCES=1` keeps it, which is what you want while
+# developing a converter: the next `make <dataset>` then reuses the loaded data instead of reloading.
 image-only:
 	@$(PY) scripts/db.py start
 	@for d in $(DATASETS); do $(PY) scripts/dump.py $$d; done
 	@$(PY) scripts/registry.py $(DATASETS)
 	@DOCKER_BUILDKIT=1 docker build -f docker/Dockerfile -t mysql-megasamples:dev .
 	@echo "built mysql-megasamples:dev with: $(DATASETS)"
+	@if [ -n "$(KEEP_BUILD_RESOURCES)" ]; then \
+	    echo "keeping the build resources up (KEEP_BUILD_RESOURCES set); \`make clean\` removes them"; \
+	 else \
+	    echo "removing the build resources; KEEP_BUILD_RESOURCES=1 keeps them next time"; \
+	    $(PY) scripts/workspace.py clean; \
+	 fi
 
 test-image:
 	@$(PY) tests/image_test.py $(DATASETS)
@@ -141,17 +157,28 @@ gen-ssb:
 load-tpcc:
 	@$(PY) scripts/tpcc_load.py --warehouses $(or $(W),1)
 
-# The browsing console (PLAN.md section 12). Opt-in: `docker compose up` without the profile still
-# starts only the database, and no UI is baked into the published image.
-console:
+# The stack: the database, the four UIs and the landing page, up together (PLAN.md section 12).
+# `docker compose up -d mysql` still starts the database on its own. No UI is baked into the image.
+up console:
 	@$(PY) scripts/console_page.py --container megasamples-mysql 2>/dev/null || true
-	@docker compose --profile console up -d
+	@docker compose up -d
 	@$(PY) scripts/console_page.py --container megasamples-mysql
-	@docker compose --profile console restart console >/dev/null
-	@echo "console at http://127.0.0.1:8080/  (phpMyAdmin 8081, Adminer 8082, DbGate 8083)"
+	@docker compose restart console >/dev/null
+	@echo "console at http://127.0.0.1:8080/  (phpMyAdmin 8081, Adminer 8082, DbGate 8083, CloudBeaver 8084)"
 
-console-down:
-	@docker compose --profile console down
+down console-down:
+	@docker compose down
+
+# What is running, and getting rid of what should not be. `clean` removes the transient containers
+# -- the build server, the SQL Server for the WWI export, the loader, the test servers -- and leaves
+# the stack alone; `clean-all` takes the stack down too. Removing the build server discards the
+# datasets loaded into it, which is why nothing does it automatically: reloading them takes hours.
+status:
+	@$(PY) scripts/workspace.py status
+clean:
+	@$(PY) scripts/workspace.py clean
+clean-all:
+	@$(PY) scripts/workspace.py clean --all
 
 test-console:
 	@$(PY) tests/console_test.py

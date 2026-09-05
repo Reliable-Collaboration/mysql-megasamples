@@ -302,6 +302,17 @@ def main():
     started = time.time()
     print(f"starting {mssql.NAME} from {mssql.IMAGE}")
     mssql.start(mounts)
+    try:
+        export(via, started)
+    finally:
+        # a failed export used to leave SQL Server running for days; the container is temporary
+        # whether or not the work succeeded, and nothing under the EULA should outlive it
+        if not a.keep:
+            mssql.stop()
+            print(f"removed {mssql.NAME}; nothing licensed under the EULA remains")
+
+
+def export(via, started):
     facts = mssql.server_facts(via)
     print(f"  . {facts['version'].splitlines()[0].strip()}")
     print(f"  . bcp {facts['bcp']}")
@@ -330,9 +341,6 @@ def main():
               dict(facts, database=database, backup=os.path.basename(bak),
                    backup_bytes=os.path.getsize(artifact)))
 
-    if not a.keep:
-        mssql.stop()
-        print(f"\nremoved {mssql.NAME}; nothing licensed under the EULA remains")
     print(f"export finished in {time.time() - started:.0f}s")
 
 

@@ -24,16 +24,26 @@
 <p class="sub">21 databases · 248 tables · 9,056,697 rows · MySQL 9.7.2</p>
 
 <div class="consoles">
-      <a class="console" href="http://127.0.0.1:8081/"><b>phpMyAdmin</b><span>Signed in already — it opens straight into the data.</span></a>
-      <a class="console" href="http://127.0.0.1:8082/"><b>Adminer</b><span>Its login form remains; use the credentials below.</span></a>
-      <a class="console" href="http://127.0.0.1:8083/"><b>DbGate</b><span>The connection is preconfigured; pick it in the sidebar.</span></a>
+      <a class="console" href="http://127.0.0.1:8081/"><b>phpMyAdmin</b><span>Signed in already; the server menu switches account.</span></a>
+      <a class="console" href="http://127.0.0.1:8082/"><b>Adminer</b><span>Its login form remains; use either account below.</span></a>
+      <a class="console" href="http://127.0.0.1:8083/"><b>DbGate</b><span>Both connections are preconfigured; pick one in the sidebar.</span></a>
+      <a class="console" href="http://127.0.0.1:8084/"><b>CloudBeaver</b><span>Open as a guest; both connections are in the sidebar.</span></a>
 </div>
 
 <div class="creds">
-  <b>Credentials</b> — host <code>127.0.0.1</code>, port <code>3306</code>,
-  user <code>demo</code>, password <code>demo</code>. This account is <b>read only</b>: it can
-  select and it cannot change anything, which is deliberate. An <code>admin</code> account exists for
-  writing; <code>compose.yaml</code> has a commented block that switches the consoles over to it.
+  <b>Two accounts</b>, both reachable from every console on host <code>127.0.0.1</code>, port
+  <code>3306</code>.
+  <br>
+  <code>demo</code> / <code>demo</code> — <b>read only</b>: <code>SELECT</code> and
+  <code>SHOW VIEW</code> everywhere, no write privilege anywhere. Each console opens on this one.
+  <br>
+  <code>admin</code> / <code>admin</code> — <b>full privileges</b>, so anything you change here
+  stays changed. In phpMyAdmin and DbGate and CloudBeaver it is the second entry; in Adminer, type it
+  into the login form.
+  <br>
+  Both passwords are boilerplate for a disposable test database. Change them by copying
+  <code>.env.example</code> to <code>.env</code>: the same value reaches the server and every
+  console.
 </div>
 
 <table>
@@ -67,7 +77,6 @@
 <footer>
   Generated from <code>megasamples.datasets</code> inside the running image, so it cannot drift from
   what is actually loaded. Each dataset keeps its own upstream licence — see
-  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository. CloudBeaver is deliberately
-  absent: version 25.2.0 cannot be brought up without its first-launch wizard, and the console ships
-  nothing that needs a manual step.
+  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository. Every console here starts
+  configured; none of them asks you to set anything up first.
 </footer>

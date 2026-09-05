@@ -9,22 +9,41 @@ dataset is added or a row count moves. It reads `megasamples.datasets` -- the sa
 the counts they actually have.
 
 It also states the credentials, which is not laziness: Adminer's login form remains even with
-`ADMINER_DEFAULT_SERVER` set (measured, not assumed), so a visitor needs them to get in. They are the
-read-only `demo` account, and saying so is better than leaving someone guessing.
+`ADMINER_DEFAULT_SERVER` set (measured, not assumed), so a visitor needs them to get in. Both
+accounts are shown -- the read-only `demo` one and the full-privilege `admin` one -- because every
+console offers both and a visitor has to know which is which. The passwords are read from `.env` if
+there is one, so the page says what is actually configured rather than what the defaults were.
 """
 import argparse, html, json, os, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONSOLES = [
-    ("phpMyAdmin", 8081, "Signed in already — it opens straight into the data."),
-    ("Adminer", 8082, "Its login form remains; use the credentials below."),
-    ("DbGate", 8083, "The connection is preconfigured; pick it in the sidebar."),
+    ("phpMyAdmin", 8081, "Signed in already; the server menu switches account."),
+    ("Adminer", 8082, "Its login form remains; use either account below."),
+    ("DbGate", 8083, "Both connections are preconfigured; pick one in the sidebar."),
+    ("CloudBeaver", 8084, "Open as a guest; both connections are in the sidebar."),
 ]
 
 
+def passwords():
+    """What the consoles are actually configured with: .env if present, else the environment, else
+    the image's baked defaults. A page that states a stale password is worse than one that omits it."""
+    found = {}
+    env_file = os.path.join(ROOT, ".env")
+    if os.path.exists(env_file):
+        for line in open(env_file, encoding="utf-8"):
+            line = line.strip()
+            if line.startswith("#") or "=" not in line:
+                continue
+            k, v = line.split("=", 1)
+            found[k.strip()] = v.strip().strip('"\'')
+    return (found.get("DEMO_PASSWORD") or os.environ.get("DEMO_PASSWORD") or "demo",
+            found.get("ADMIN_PASSWORD") or os.environ.get("ADMIN_PASSWORD") or "admin")
+
+
 def query(container, sql):
-    p = subprocess.run(["docker", "exec", container, "mysql", "-udemo", "-pdemo", "-N", "--batch",
-                        "-e", sql], capture_output=True, text=True)
+    p = subprocess.run(["docker", "exec", container, "mysql", "-udemo", f"-p{passwords()[0]}",
+                        "-N", "--batch", "-e", sql], capture_output=True, text=True)
     if p.returncode != 0:
         sys.exit(f"could not read the registry from {container}: {p.stderr.strip()[:200]}")
     return [line.split("\t") for line in p.stdout.splitlines() if line.strip()]
@@ -66,6 +85,8 @@ def main():
         f'<td class="n">{tab:,}</td><td class="n">{rc:,}</td><td class="n">{mb:,.1f}</td>'
         f'<td>{html.escape(lic)}</td></tr>'
         for n, t, tab, rc, mb, lic in items)
+    demo_pw, admin_pw = passwords()
+    demo_pw, admin_pw = html.escape(demo_pw), html.escape(admin_pw)
     links = "\n".join(
         f'      <a class="console" href="http://127.0.0.1:{port}/"><b>{name}</b>'
         f'<span>{html.escape(note)}</span></a>' for name, port, note in CONSOLES)
@@ -100,10 +121,19 @@ def main():
 </div>
 
 <div class="creds">
-  <b>Credentials</b> — host <code>127.0.0.1</code>, port <code>3306</code>,
-  user <code>demo</code>, password <code>demo</code>. This account is <b>read only</b>: it can
-  select and it cannot change anything, which is deliberate. An <code>admin</code> account exists for
-  writing; <code>compose.yaml</code> has a commented block that switches the consoles over to it.
+  <b>Two accounts</b>, both reachable from every console on host <code>127.0.0.1</code>, port
+  <code>3306</code>.
+  <br>
+  <code>demo</code> / <code>{demo_pw}</code> — <b>read only</b>: <code>SELECT</code> and
+  <code>SHOW VIEW</code> everywhere, no write privilege anywhere. Each console opens on this one.
+  <br>
+  <code>admin</code> / <code>{admin_pw}</code> — <b>full privileges</b>, so anything you change here
+  stays changed. In phpMyAdmin and DbGate and CloudBeaver it is the second entry; in Adminer, type it
+  into the login form.
+  <br>
+  Both passwords are boilerplate for a disposable test database. Change them by copying
+  <code>.env.example</code> to <code>.env</code>: the same value reaches the server and every
+  console.
 </div>
 
 <table>
@@ -117,9 +147,8 @@ def main():
 <footer>
   Generated from <code>megasamples.datasets</code> inside the running image, so it cannot drift from
   what is actually loaded. Each dataset keeps its own upstream licence — see
-  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository. CloudBeaver is deliberately
-  absent: version 25.2.0 cannot be brought up without its first-launch wizard, and the console ships
-  nothing that needs a manual step.
+  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository. Every console here starts
+  configured; none of them asks you to set anything up first.
 </footer>
 """
     os.makedirs(os.path.dirname(a.out), exist_ok=True)

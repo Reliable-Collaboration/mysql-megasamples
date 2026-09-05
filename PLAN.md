@@ -748,7 +748,7 @@ Tasks are ordered so the pipeline is proven on the smallest datasets first. Each
 | B-04 ✅ | ssb | B-01 | done — SF 1 is **5 tables, 6,235,730 rows, 1,272.5 MB**, loading in 35.1 s with 4 foreign keys and 0 orphans. The [row-count question](knowledge/questions/ssb-sf1-row-counts.md) is answered: every cardinality rule in the paper holds exactly, supplier at 2,000×SF rather than the original 10,000×SF. dbgen is compiled in the loader image with `EOL_HANDLING=ON` and `YMD_DASH_DATE=ON`, which is why the .tbl files need no rewriting at all |
 | V-01 ⏸ | optional `make verify-oracle` cross-check of HR/CO/SH | M-02 | **deferred, and it is optional in this plan's own terms.** It needs the 3.7 GB Oracle Free image (1.19 GB for gvenzl's) *and* SQLcl, which is not in either image and carries its own OTN licence — the SH installer needs SQLcl's `LOAD`. The three converters already verify against the row counts the research recorded, so the cross-check would confirm what is confirmed rather than close a gap. Worth doing if the Oracle schemas are ever changed |
 | **V-02** ✅ | **T-SQL routine translator** (`scripts/tsqlbody.py`), then M-03's programmable objects | M-03 | done — of the **47 routines** in AdventureWorks, AdventureWorks DW, Northwind and pubs, **30 translate and are accepted by MySQL and 17 are refused with a stated reason**; none is emitted on a guess. AdventureWorks gains 10 functions and 6 procedures, DW all 3 functions **and all 5 views** (`vTimeSeries` included). `sqlglot` was tried first and rejected on evidence: on the simplest routine it dropped the return type, turned an `IF` into an empty string and read `RETURN` as a column alias. Four defects in shared code came out of it, one of them a 1000× error |
-| **C-01** ✅ | **Browsing console** (§12) | E-01 | done — `docker compose --profile console up -d` starts a generated landing page on 8080 plus phpMyAdmin, Adminer and DbGate, all on `127.0.0.1`, all connected as the read-only `demo` account. Without the profile nothing changes. **CloudBeaver is dropped**: 25.2.0 stays in `configurationMode: true` however it is configured, and the decision's own rule says a console that needs a manual step ships nothing. The page is generated from `megasamples.datasets`, so it lists the 21 databases actually present — 248 tables, 9,056,697 rows — and cannot drift; `tests/console_test.py` is S10 |
+| **C-01** ✅ | **Browsing console** (§12) | E-01 | done — `make up` (`docker compose up -d`) starts the database, a generated landing page on 8080 and phpMyAdmin, Adminer, DbGate and CloudBeaver, all on `127.0.0.1`, as **one stack that goes down together** with `make down`; `docker compose up -d mysql` still starts only the database. Every console offers both accounts. **All four ship**: CloudBeaver was briefly dropped as unconfigurable and that was withdrawn — it starts unattended given a `java.util.Properties` file at `conf/.cloudbeaver.auto.conf` (its presence is the trigger; environment variables alone are not) plus `CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM`, without which a visitor sees an empty sidebar ([runbook](knowledge/runbooks/cloudbeaver-unattended-startup.md)). The page is generated from `megasamples.datasets`, so it lists the 21 databases actually present — 248 tables, 9,056,697 rows — and cannot drift; `tests/console_test.py` is S10 |
 | R-02 (last) | **Prepare** the `data-v1` release — assets staged, sha256 manifest written, §8.3 checklist complete, the generated catalogue and README ready, the bundle marked `stable` — and stop there. **Publishing is the maintainer's, not the executor's**: the executor never creates the release, pushes an asset or flips anything public. It hands over a reviewed, ready-to-publish state and says what is in it. Includes the `lahman` and `chicago_crimes` snapshots, which is what lets those two be verified by anyone other than the maintainer. Runs **after every other task**, so the release reflects the finished project | all others | update the bundle status; log Creation |
 
 Dependencies form a DAG suitable for a project board: P-00→P-01→P-02→{P-03, P-04}→S-01→{S-02, S-03, S-04, S-05}→… (the table's Depends-on column is authoritative); the first image with real content exists after S-04, which is the earliest point at which the user can evaluate the design.
@@ -764,10 +764,18 @@ first.
 
 ### 12.1 Shape
 
-`docker compose --profile console up` starts six services. Without the profile, `docker compose up`
-starts only the database, exactly as it does today — **the console is opt-in and the published image
-is unchanged**. No UI is baked into `mysql-megasamples`; §2's description of the final image as
-"`mysql:9.7.2` plus data, `my.cnf` and a 20-line wrapper" still holds.
+`docker compose up -d` starts six services **as one stack**, and `docker compose down` takes all six
+away again; `make up` and `make down` are the same thing with the landing page regenerated first.
+Naming one service, `docker compose up -d mysql`, starts only the database, exactly as it does today.
+**The published image is unchanged**: no UI is baked into `mysql-megasamples`, and §2's description
+of the final image as "`mysql:9.7.2` plus data, `my.cnf` and a 20-line wrapper" still holds.
+
+Everything else this repository starts is **transient** and is not part of the stack: the `mms-build`
+server datasets are loaded into, the SQL Server behind `make wwi-export`, the loader image, the
+servers the tests start. Each carries the label `megasamples.transient=true`; `make status` lists
+them beside the stack and `make clean` removes them. Nothing removes the build server automatically,
+because removing it discards every dataset loaded into it and reloading takes hours — it is a build
+session's workspace, and `make clean` is how a session ends.
 
 | service | image (pinned) | container port | published on | preconfigured with |
 |---|---|---:|---|---|
@@ -776,16 +784,24 @@ is unchanged**. No UI is baked into `mysql-megasamples`; §2's description of th
 | `phpmyadmin` | `phpmyadmin:5.2.3-apache` | 80 | `127.0.0.1:8081` | `PMA_HOST`, `PMA_PORT`, `PMA_USER`, `PMA_PASSWORD` — opens straight into the data |
 | `adminer` | `adminer:6.0.1-standalone` | 8080 | `127.0.0.1:8082` | `ADMINER_DEFAULT_SERVER`; **its login form remains**, so the landing page shows the credentials |
 | `dbgate` | `dbgate/dbgate:7.2.6-alpine` | 3000 | `127.0.0.1:8083` | `CONNECTIONS`, `LABEL_/SERVER_/USER_/PASSWORD_/PORT_/ENGINE_` — opens straight into the data |
-| `cloudbeaver` | `dbeaver/cloudbeaver:26.2.0` | 8978 | `127.0.0.1:8084` | a mounted `data-sources.json`; **ships only if it starts unattended** |
+| `cloudbeaver` | `dbeaver/cloudbeaver:25.2.0` | 8978 | `127.0.0.1:8084` | `conf/initial-data-sources.conf` for the connection, `conf/.cloudbeaver.auto.conf` to skip the wizard, `CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM` to make it visible — opens straight into the data |
 
 Every port binds to `127.0.0.1` rather than `0.0.0.0`: an unauthenticated database UI should not
 appear on the network because someone opened a laptop in a café. Publishing them more widely is the
 user's deliberate edit.
 
-The consoles connect as **`demo`**, the read-only account from the
-[naming and accounts decision](knowledge/decisions/database-naming-convention.md) — a visitor cannot
-damage the data, and the read-only grant gets demonstrated rather than described. `compose.yaml`
-carries a commented `admin` block for those who want to write.
+Every console offers **both** accounts from the
+[naming and accounts decision](knowledge/decisions/database-naming-convention.md): **`demo`**, which
+has `SELECT` and `SHOW VIEW` and nothing else, and **`admin`**, which has `ALL PRIVILEGES`. Each
+console opens on the read-only one, because the safe account should be the one you get without
+choosing; phpMyAdmin lists the two as servers, DbGate and CloudBeaver as two connections, and
+Adminer's login form takes either. The read-only grant is therefore demonstrated rather than
+described, and writing is one click away rather than an edit to `compose.yaml`.
+
+The passwords are boilerplate (`demo` / `admin`) and committed on purpose, so `docker compose up`
+needs no setup. Copying `.env.example` to `.env` changes them in one place: compose passes each value
+both to the server, where `docker/entrypoint-wrapper.sh` applies it with `ALTER USER` at startup, and
+to every console, so the two cannot drift apart. `.env` is gitignored.
 
 ### 12.2 The landing page is generated, not written
 
@@ -796,7 +812,8 @@ its licence, and cannot drift from what is running. A hand-written page would be
 a dataset moved tier.
 
 The page carries, beside the four links: the connection details for an external client
-(`127.0.0.1:3306`, user `demo`), a one-line "what is this" per database, the per-dataset licence with
+(`127.0.0.1:3306`, both accounts with the passwords actually configured — it reads `.env` if there is
+one), a one-line "what is this" per database, the per-dataset licence with
 a link to its `PROVENANCE.md`, and the attribution notices §8 requires to travel with the data —
 including the City of Chicago paragraph and the CC BY-SA share-alike notices, which is the same
 obligation the table comments already carry.

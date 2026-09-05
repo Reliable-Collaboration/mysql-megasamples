@@ -13,3 +13,6 @@ work/
 __pycache__/
 build/
 docker/init/10-registry.sql
+
+# local credential overrides; .env.example is the committed template
+.env

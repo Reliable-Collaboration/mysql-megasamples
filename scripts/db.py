@@ -41,6 +41,9 @@ def start(fresh=False):
     if container_state():
         run(["docker", "rm", "-f", NAME])
     p = run(["docker", "run", "-d", "--name", NAME,
+             # transient: `python3 scripts/workspace.py clean` removes everything so labelled, and
+             # Docker Desktop shows them apart from the compose stack rather than mixed into it
+             "--label", "megasamples.transient=true", "--label", "megasamples.role=build",
              "-e", f"MYSQL_ROOT_PASSWORD={PW}",
              "-v", f"{os.path.join(ROOT, 'docker', 'my.cnf')}:/etc/mysql/conf.d/megasamples.cnf:ro",
              "-v", f"{os.path.join(ROOT, 'datasets')}:/datasets:ro",

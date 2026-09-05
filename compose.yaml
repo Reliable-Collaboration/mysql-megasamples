@@ -1,27 +1,43 @@
 # The browsing console (PLAN.md section 12, task C-01).
 #
-#   docker compose up -d                        just the database, exactly as before
-#   docker compose --profile console up -d      the database plus the UIs and a landing page
+#   docker compose up -d           the database, the four UIs and the landing page: one stack
+#   docker compose down            all of it down again
+#   docker compose up -d mysql     just the database, when that is all you want
 #
-# The console is opt-in and the published image is unchanged: no UI is baked into
-# mysql-megasamples. Every port binds to 127.0.0.1 rather than 0.0.0.0 -- an unauthenticated
+# These six services are one Compose project and are meant to come up and go down together -- that
+# is the whole point of them being in one file. Everything else this repository starts (the build
+# server, the SQL Server used for the WideWorldImporters export, the loader, the test servers) is
+# transient, is labelled `megasamples.transient=true`, and is listed and removed by
+# `python3 scripts/workspace.py` (`make status`, `make clean`).
+#
+# Nothing here is baked into the published image: no UI ships inside mysql-megasamples, and
+# `docker compose up -d mysql` is the same database it always was. Every port binds to 127.0.0.1
+# rather than 0.0.0.0 -- an unauthenticated
 # database UI should not appear on the network because someone opened a laptop in a cafe.
 # Publishing them more widely is a deliberate edit, not a default.
 #
-# The consoles connect as `demo`, the read-only account, so a visitor cannot damage the data and the
-# read-only grant is demonstrated rather than described. The commented block on each service
-# switches it to `admin` for those who want to write.
+# Two accounts reach the database, and every console offers both: `demo` has SELECT and SHOW VIEW
+# only, `admin` has ALL PRIVILEGES. Each console opens on the read-only one, because the safe account
+# should be the one you get without choosing -- phpMyAdmin and DbGate and CloudBeaver each list the
+# two side by side, and Adminer's login form takes either.
+#
+# The passwords are boilerplate and committed on purpose: this is a disposable test database and
+# `docker compose up` should need no setup. To change them, copy .env.example to .env and edit it --
+# compose passes each value both to the server, which applies it with ALTER USER at startup, and to
+# every console, so the two cannot drift apart.
 #
 # Images are pinned by digest rather than by tag. That is good practice anyway, and on this machine
 # it is also load-bearing: the Docker daemon cannot fetch blobs from Docker Hub's CDN over its own
 # network stack, so the images are fetched by `scripts/pull_image.py` over IPv4 and referred to here
 # by the digest that produced (knowledge/runbooks/ipv6-and-privileges.md).
 #
-# CloudBeaver is deliberately absent. Version 25.2.0 stays in `configurationMode: true` however it is
-# configured -- a mounted initial-data-sources.conf, CB_ADMIN_NAME/CB_ADMIN_PASSWORD and
-# CLOUDBEAVER_ADMIN_* were all tried -- so it cannot come up without its first-launch wizard, and the
-# console ships nothing that needs a manual step
-# (knowledge/questions/console-preconfiguration-limits.md).
+# CloudBeaver does start unattended, but only through a mechanism its wiki does not mention: a
+# java.util.Properties file at conf/.cloudbeaver.auto.conf, whose mere presence makes the server
+# configure itself instead of showing its first-launch wizard. Environment variables alone do not do
+# it. The connection is seeded separately, and made visible to anonymous visitors by
+# grantConnectionsAccessToAnonymousTeam -- a global connection is granted to nobody by default, so
+# without it the wizard is gone but the sidebar is empty
+# (knowledge/runbooks/cloudbeaver-unattended-startup.md).
 
 name: mysql-megasamples
 
@@ -30,15 +46,19 @@ services:
     image: ${MEGASAMPLES_IMAGE:-mysql-megasamples:dev}
     container_name: megasamples-mysql
     ports: ["127.0.0.1:3306:3306"]
+    environment:
+      # applied by docker/entrypoint-wrapper.sh at startup, since the baked data directory means the
+      # official entrypoint's account setup never runs
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-demo}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
     healthcheck:
-      test: ["CMD", "mysql", "-udemo", "-pdemo", "-e", "SELECT 1"]
+      test: ["CMD-SHELL", "mysql -udemo -p\"$$DEMO_PASSWORD\" -e 'SELECT 1'"]
       interval: 5s
       timeout: 5s
       retries: 30
     restart: unless-stopped
 
   console:
-    profiles: ["console"]
     image: nginx@sha256:3bcf852aed06467cf075c6105892e4d5a6ebbbafa0ce22d35062db9e90ddef4c
     container_name: megasamples-console
     ports: ["127.0.0.1:8080:80"]
@@ -48,21 +68,23 @@ services:
     restart: unless-stopped
 
   phpmyadmin:
-    profiles: ["console"]
     image: phpmyadmin@sha256:20fa6f724ba77d41abc25b1aeb4d97692ce344c7ace305594e57c5893f60f0f7
     container_name: megasamples-phpmyadmin
     ports: ["127.0.0.1:8081:80"]
     environment:
       PMA_HOST: mysql
       PMA_PORT: "3306"
-      PMA_USER: demo          # admin
-      PMA_PASSWORD: demo      # admin
+      # deliberately no PMA_USER: it would force the same account on every server. The two servers,
+      # one per account, are defined in the mounted config.user.inc.php, which reads these.
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-demo}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
       UPLOAD_LIMIT: 256M
+    volumes:
+      - ./docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro
     depends_on: { mysql: { condition: service_healthy } }
     restart: unless-stopped
 
   adminer:
-    profiles: ["console"]
     image: adminer@sha256:f1e2ba27b10a565ac77b2d8555d803be4ddb3232f4216dcf0ea85bcd8f2f1343
     container_name: megasamples-adminer
     ports: ["127.0.0.1:8082:8080"]
@@ -74,18 +96,46 @@ services:
     restart: unless-stopped
 
   dbgate:
-    profiles: ["console"]
     image: dbgate/dbgate@sha256:14fce4ece52df514e0d320dc82cbfbca5e8f18f98464a6389b1c126f783a6b7e
     container_name: megasamples-dbgate
     ports: ["127.0.0.1:8083:3000"]
     environment:
-      CONNECTIONS: mega
-      LABEL_mega: mysql-megasamples
-      SERVER_mega: mysql
-      PORT_mega: "3306"
-      USER_mega: demo         # admin
-      PASSWORD_mega: demo     # admin
+      CONNECTIONS: demo,admin
+      LABEL_demo: megasamples (read-only)
+      SERVER_demo: mysql
+      PORT_demo: "3306"
+      USER_demo: demo
+      PASSWORD_demo: ${DEMO_PASSWORD:-demo}
       # confirmed from DbGate's own log, which the record could only infer from the mssql example
-      ENGINE_mega: mysql@dbgate-plugin-mysql
+      ENGINE_demo: mysql@dbgate-plugin-mysql
+      LABEL_admin: megasamples (full access)
+      SERVER_admin: mysql
+      PORT_admin: "3306"
+      USER_admin: admin
+      PASSWORD_admin: ${ADMIN_PASSWORD:-admin}
+      ENGINE_admin: mysql@dbgate-plugin-mysql
+    depends_on: { mysql: { condition: service_healthy } }
+    restart: unless-stopped
+
+  cloudbeaver:
+    image: dbeaver/cloudbeaver@sha256:3b4bf82287cf4febe0d335873f1346a01100f3951d266cd6a78c27fe30429cbc
+    container_name: megasamples-cloudbeaver
+    ports: ["127.0.0.1:8084:8978"]
+    environment:
+      # a global connection is granted to no subject by default, so an anonymous visitor sees an
+      # empty sidebar without this; measured, not assumed
+      CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM: "true"
+      # show the host, port and database rather than masking them from non-administrators
+      CLOUDBEAVER_APP_READ_ONLY_CONNECTION_INFO: "true"
+      # let ${...} in initial-data-sources.conf read these; without it the literal text is sent as
+      # the password and the connection fails. Measured both ways.
+      CLOUDBEAVER_SYSTEM_VARIABLES_RESOLVING_ENABLED: "true"
+      DEMO_PASSWORD: ${DEMO_PASSWORD:-demo}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-admin}
+    volumes:
+      # the dotfile is the trigger for unattended startup; the .conf is copied into the workspace by
+      # the image's own entrypoint, which does it only while workspace/.metadata does not exist
+      - ./docker/cloudbeaver/.cloudbeaver.auto.conf:/opt/cloudbeaver/conf/.cloudbeaver.auto.conf:ro
+      - ./docker/cloudbeaver/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf:ro
     depends_on: { mysql: { condition: service_healthy } }
     restart: unless-stopped
