@@ -3,8 +3,27 @@
 
 # NOTICE
 
+This file serves two purposes, and they are separate.
+
+## 1. The Apache-2.0 NOTICE for this project's code
+
+```
+mysql-megasamples
+Copyright 2026 Reliable Collaboration
+
+This product includes software developed at Reliable Collaboration.
+```
+
+The project's code is licensed under the Apache License, Version 2.0 (`LICENSE`).
+Section 4(d) requires this notice to travel with any redistribution of that code.
+**It says nothing about the data**, which is the rest of this file.
+
+## 2. Attribution required by the data's own licences
+
 Attribution required by the licences of the data this image redistributes. The full terms
-are in each `datasets/<name>/LICENSE` and in `LICENSES.md`.
+are in each `datasets/<name>/LICENSE` and in `LICENSES.md`. These obligations are not
+Apache-2.0's and are not satisfied by it: they come from the upstream projects, and
+several are share-alike.
 
 ## MIT License
 

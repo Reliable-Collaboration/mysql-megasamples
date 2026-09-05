@@ -5,7 +5,16 @@
 
 This project ships no data of its own. **There is no single licence for the data**: each
 database keeps the licence of the project it came from, listed below, and each
-`datasets/<name>/LICENSE` carries the terms in full. The project's own code is MIT.
+`datasets/<name>/LICENSE` carries the terms in full.
+
+**The project's own code is Apache-2.0** (`LICENSE` at the repository root): the scripts,
+the converters, the tests, the Dockerfiles, the knowledge bundle and the generated
+documentation. Apache-2.0 covers **none of the data**. It is not a relicensing of
+anything upstream and it cannot be: several of these datasets are share-alike and must
+stay under their own terms, so a converted `employees`, `lahman`, `stackexchange_*` or
+`wikipedia_simple` remains CC BY-SA and is offered as such. Where the two could appear to
+conflict, the dataset's licence governs the dataset and Apache-2.0 governs the code that
+processed it.
 
 | database | licence |
 |---|---|

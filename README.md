@@ -187,8 +187,12 @@ and in a few cases share-alike. Before you redistribute anything built from this
 * `datasets/<name>/LICENSE` and `datasets/<name>/PROVENANCE.md` — per dataset, generated from
   [`knowledge/licenses/`](knowledge/licenses/index.md), never hand-written
 
-Project **code** is MIT. The console index page shows each database's licence beside it, so the
-answer to "what am I allowed to do with this table" is one click from the data.
+Project **code** is **Apache-2.0** — [`LICENSE`](LICENSE) — and that covers the scripts, converters,
+tests, Dockerfiles, knowledge bundle and generated documentation. It covers **none of the data**, and
+is not a relicensing of anything upstream: the share-alike datasets stay CC BY-SA and are offered as
+such. Where the two could appear to conflict, the dataset's licence governs the dataset and
+Apache-2.0 governs the code that processed it. The console index page shows each database's licence
+beside it, so the answer to "what am I allowed to do with this table" is one click from the data.
 
 ### Share-alike: four datasets must stay under their own licence
 

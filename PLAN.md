@@ -577,7 +577,7 @@ Three notes on why those numbers differ, since each is easy to misread:
 
 ## 8. Licensing findings and compliance checklist
 
-Every license record: [`knowledge/licenses/`](knowledge/licenses/index.md). The repository states per-dataset licenses in `README.md` and `LICENSES.md` (generated), never a single license for the data; project code is MIT (proposed) and says so separately.
+Every license record: [`knowledge/licenses/`](knowledge/licenses/index.md). The repository states per-dataset licenses in `README.md` and `LICENSES.md` (generated), never a single license for the data; project code is **Apache-2.0** (`LICENSE`) and says so separately, with an explicit carve-out for the share-alike datasets, which stay under their own terms.
 
 ### 8.1 Confirmations and discrepancies with the inventory
 

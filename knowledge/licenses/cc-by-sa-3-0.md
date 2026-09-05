@@ -38,7 +38,7 @@ Full legal code: https://creativecommons.org/licenses/by-sa/3.0/legalcode (title
 
 # Obligations
 * Ship the license URI and the upstream notice alongside each converted database (README section per dataset, and a `LICENSE-*.txt` in the repo).
-* A MySQL conversion of the data is an Adaptation: it must be offered under CC BY-SA 3.0 (or later BY-SA) - it cannot be relicensed; the project's own repository license must carve these datasets out.
+* A MySQL conversion of the data is an Adaptation: it must be offered under CC BY-SA 3.0 (or later BY-SA) - it cannot be relicensed; the project's own repository license carves these datasets out: the code is Apache-2.0 and `LICENSES.md`, `NOTICE.md` and the README all state that it covers none of the data.
 * Keep the "fabricated data" disclaimer for Employees and SABR's copyright line for Lahman intact.
 
 # Attribution
