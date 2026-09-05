@@ -42,7 +42,9 @@ def main():
     c = Checks()
     sh("docker", "rm", "-f", NAME)
     started = time.time()
-    run = sh("docker", "run", "-d", "--name", NAME, "-e", "MYSQL_ROOT_PASSWORD=root", IMAGE)
+    run = sh("docker", "run", "-d", "--name", NAME,
+             "--label", "megasamples.transient=true", "--label", "megasamples.role=test",
+             "-e", "MYSQL_ROOT_PASSWORD=root", IMAGE)
     if run.returncode != 0:
         sys.exit(f"could not start {IMAGE}: {run.stderr}")
     try:
@@ -139,8 +141,9 @@ def main():
     finally:
         # the override path needs its own container
         sh("docker", "rm", "-f", NAME)
-        sh("docker", "run", "-d", "--name", NAME + "2", "-e", "MYSQL_ROOT_PASSWORD=sekret",
-           "-e", "DEMO_PASSWORD=viewer", IMAGE)
+        sh("docker", "run", "-d", "--name", NAME + "2",
+           "--label", "megasamples.transient=true", "--label", "megasamples.role=test",
+           "-e", "MYSQL_ROOT_PASSWORD=sekret", "-e", "DEMO_PASSWORD=viewer", IMAGE)
         for _ in range(150):
             if q("SELECT 1", pw="sekret", container=NAME + "2").returncode == 0:
                 break

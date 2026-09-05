@@ -14,3 +14,7 @@ artifacts:
 - smallsets/iris.csv
 - smallsets/penguins.csv
 - smallsets/penguins_raw.csv
+
+# Shown in CATALOGUE.md and on the console landing page. The knowledge record's description
+# explains which naming option was accepted, which is the wrong thing to tell a visitor.
+blurb: Three classic teaching datasets in one database — the Titanic passenger list, Fisher's Iris measurements and the Palmer Penguins

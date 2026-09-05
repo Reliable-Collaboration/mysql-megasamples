@@ -43,7 +43,9 @@ def main():
            f"--mysql-password={db.PW} --mysql-db=tpcc --threads={a.threads} --tables=1 "
            f"--scale={a.warehouses} --use_fk=0 --db-driver=mysql --rand-seed={a.seed} prepare")
     print(f"  . loading {a.warehouses} warehouse(s) with sysbench-tpcc in {IMAGE}")
-    p = subprocess.run(["docker", "run", "--rm", IMAGE, "sh", "-c", cmd],
+    p = subprocess.run(["docker", "run", "--rm",
+                        "--label", "megasamples.transient=true",
+                        "--label", "megasamples.role=loader", IMAGE, "sh", "-c", cmd],
                        capture_output=True, text=True)
     if p.returncode != 0:
         sys.exit(f"sysbench-tpcc failed:\n{(p.stderr or p.stdout)[-500:]}\n"

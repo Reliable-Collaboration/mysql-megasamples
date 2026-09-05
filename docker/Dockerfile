@@ -9,6 +9,19 @@ FROM mysql:${MYSQL_VERSION} AS builder
 COPY docker/my.cnf /etc/mysql/conf.d/megasamples.cnf
 COPY docker/init/ /build/init/
 COPY build/dumps/ /build/dumps/
+# The attribution has to travel with the data: several licences here require it inside any
+# redistribution, and an image is a redistribution (PLAN.md section 8.3 item 9).
+# /docs, not /build: the builder's last act is `rm -rf /build`
+COPY NOTICE.md LICENSES.md CATALOGUE.md README.md /docs/
+COPY datasets/ /build/datasets/
+RUN set -eu; \
+    mkdir -p /docs/datasets; \
+    for d in /build/datasets/*/; do \
+        n=$(basename "$d"); \
+        [ -f "$d/LICENSE" ] && cp "$d/LICENSE" "/docs/datasets/$n.LICENSE"; \
+        [ -f "$d/PROVENANCE.md" ] && cp "$d/PROVENANCE.md" "/docs/datasets/$n.PROVENANCE.md"; \
+        true; \
+    done
 RUN <<'SH'
 set -eux
 S=/var/run/mysqld/mysqld.sock
@@ -44,6 +57,7 @@ LABEL org.opencontainers.image.title="mysql-megasamples" \
 COPY docker/my.cnf /etc/mysql/conf.d/megasamples.cnf
 COPY docker/entrypoint-wrapper.sh /usr/local/bin/entrypoint-wrapper.sh
 COPY --from=builder --chown=mysql:mysql /var/lib/mysql /var/lib/mysql
+COPY --from=builder /docs /usr/share/doc/megasamples
 ENTRYPOINT ["entrypoint-wrapper.sh"]
 EXPOSE 3306 33060
 CMD ["mysqld"]

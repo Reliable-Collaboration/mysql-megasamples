@@ -1,6 +1,6 @@
 ---
 okf_version: "0.2"
-bundle_status: draft
+bundle_status: stable
 ---
 
 # Knowledge bundle
@@ -14,6 +14,6 @@ MySQL LTS sample-database image: research trail and decisions. Read [runbooks/kn
 * [decisions/](decisions/index.md) - 33 concepts
 * [licenses/](licenses/index.md) - 24 concepts
 * [questions/](questions/index.md) - 38 concepts
-* [runbooks/](runbooks/index.md) - 3 concepts
+* [runbooks/](runbooks/index.md) - 4 concepts
 * [sources/](sources/index.md) - 375 concepts
 * [tools/](tools/index.md) - 28 concepts

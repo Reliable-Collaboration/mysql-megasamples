@@ -81,6 +81,7 @@ def start(mounts, memory="6g"):
     if state():
         run(["docker", "rm", "-f", NAME])
     cmd = ["docker", "run", "-d", "--name", NAME,
+           "--label", "megasamples.transient=true", "--label", "megasamples.role=mssql",
            "-e", "ACCEPT_EULA=Y",                    # see require_acceptance()
            "-e", f"MSSQL_SA_PASSWORD={SA_PASSWORD}",
            "-e", "MSSQL_PID=Developer",

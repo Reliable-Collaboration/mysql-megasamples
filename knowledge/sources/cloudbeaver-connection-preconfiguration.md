@@ -39,7 +39,16 @@ listing through the registry API, 2026-09-03.
 
 # What it was used to decide
 That CloudBeaver is the console with the least certain preconfiguration story: the connection can be
-supplied as a file, but whether a fresh container can be brought up **unattended**, with no wizard and
-no manual admin creation, is unresolved and is the substance of the console task's
-[open question](/questions/console-preconfiguration-limits.md). Pinned tag: `26.2.0`
+supplied as a file, but the wiki does not say how the first administrator is created or whether the
+wizard can be skipped, which was the substance of the console task's
+[open question](/questions/console-preconfiguration-limits.md).
+
+That question is now closed **by measurement rather than by this page**, and the gap is worth
+recording: the mechanism that actually skips the wizard — a `java.util.Properties` file at
+`conf/.cloudbeaver.auto.conf` — appears nowhere in the wiki, and was found by reading
+`CBApplication` in the shipped jars. Nor does the wiki mention that a seeded global connection is
+granted to no subject, so it stays invisible until
+`CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM` is set. Treat this source as accurate on
+the file format and incomplete on startup; the measured procedure is in
+[the runbook](/runbooks/cloudbeaver-unattended-startup.md). Shipped by digest, version `25.2.0`
 ([decision](/decisions/browsing-console-stack.md)).

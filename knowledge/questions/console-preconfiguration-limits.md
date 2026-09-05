@@ -1,7 +1,7 @@
 ---
 type: Open Question
 title: How far can each of the four database consoles be preconfigured without a manual step?
-description: phpMyAdmin and DbGate look fully preconfigurable and Adminer clearly is not; CloudBeaver's unattended startup is unknown, and DbGate's MySQL engine string is inferred from the documented MSSQL one.
+description: "Answered by measurement: phpMyAdmin and DbGate are fully preconfigurable, Adminer's login form is not, and CloudBeaver does start unattended -- through an undocumented conf/.cloudbeaver.auto.conf trigger plus an anonymous-team grant, not through anything the wiki describes."
 resource: /questions/console-preconfiguration-limits.md
 tags:
 - question
@@ -65,13 +65,20 @@ four consoles ship, and whether the landing page must show credentials for any o
 All four questions, answered by bringing each container up against the built image rather than by
 reading a wiki.
 
-1. **CloudBeaver: no, and it is dropped.** `dbeaver/cloudbeaver:25.2.0` stays in
-   `configurationMode: true` however it is configured. Mounting an `initial-data-sources.conf` with
-   the connection, setting `CLOUDBEAVER_APP_ANONYMOUS_ACCESS_ENABLED=true`, and setting both
-   `CB_ADMIN_NAME`/`CB_ADMIN_PASSWORD` and `CLOUDBEAVER_ADMIN_NAME`/`CLOUDBEAVER_ADMIN_PASSWORD`
-   were each tried; the GraphQL `serverConfig{configurationMode}` returned `true` every time. Its
-   first-launch wizard cannot be skipped by configuration, so per the decision it ships nothing
-   rather than shipping a manual step. The three that remain all come up unattended.
+1. **CloudBeaver: yes, and it ships.** This was first answered "no" the same day, wrongly: the
+   routes tried — a mounted `initial-data-sources.conf`, `CLOUDBEAVER_APP_ANONYMOUS_ACCESS_ENABLED`,
+   and both `CB_ADMIN_*` and `CLOUDBEAVER_ADMIN_*` — genuinely all leave
+   `serverConfig{configurationMode}` at `true`, but they are not the mechanism. The trigger is a
+   `java.util.Properties` file at exactly `/opt/cloudbeaver/conf/.cloudbeaver.auto.conf`; its
+   *presence* makes `CBApplication.performAutoConfiguration` finish the setup, and without the file
+   the same keys in the environment do nothing (the log says "No auto configuration was found").
+   Two further things are needed: the connection in `conf/initial-data-sources.conf`, which the
+   image's entrypoint copies into the workspace on first start, and
+   `CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM=true`, without which the wizard is
+   gone but an anonymous visitor sees an empty sidebar, because a global connection is granted to no
+   subject by default. Verified end to end: an anonymous session lists the connection, connects and
+   returns 1,000 for `SELECT COUNT(*) FROM sakila.film`
+   ([runbook](/runbooks/cloudbeaver-unattended-startup.md)). All four consoles come up unattended.
 2. **DbGate's engine string is `mysql@dbgate-plugin-mysql`** — confirmed, not inferred. The
    container's own log prints `"engine":"mysql@dbgate-plugin-mysql"` under
    `DBGM-00005 Using connections from ENV variables`, and the connection is present in the UI.

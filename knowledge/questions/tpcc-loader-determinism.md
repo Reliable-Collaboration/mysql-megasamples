@@ -8,8 +8,11 @@ tags:
 - tpc-c
 - sysbench
 - determinism
-status: draft
-trust: open
+status: deprecated
+trust: verified
+verified:
+- by: claude-code/claude-opus-5
+  at: "2026-09-04T00:00:00Z"
 generated:
   by: claude-code/claude-fable-5-1
   at: "2026-09-02T20:30:00Z"
@@ -31,3 +34,24 @@ Loader image: `apt-get install sysbench`; run W=1 twice with the same seed and t
 
 # Resolves
 [TPC-C record](/datasets/tpc-c.md) tests section; whether `baseline.json` for tpcc can be pre-committed.
+
+# Answer (2026-09-04, task B-03)
+
+**No, and the project stopped trying.** Two `sysbench-tpcc` loads with the same `--rand-seed` and
+`--threads=1` produce **different data in eight of the nine tables**; only `new_orders` matched.
+`--rand-seed` seeds `sysbench.rand`, but the Lua populator does not thread that seed through row
+generation, so the data differs run to run regardless.
+
+The consequences were taken rather than worked around. TPC-C is the one dataset in this project that
+carries **no pinned content digests**: `scripts/tpcc_load.py` asserts the specification's W=1
+cardinalities instead, which seven of the nine tables meet exactly, and says plainly that content is
+not pinned. `order_line` is excluded even from the count check, because the specification calls for 5
+to 15 lines per order at random — it came out at 299,674 and 300,222 on two runs. Pinning a checksum
+here would have produced a test that fails on its next run.
+
+The third sub-question is answered too: Debian's `sysbench` (against libmariadb3) **does**
+authenticate to MySQL 9.7 with `caching_sha2_password`. That concern was unfounded.
+
+Option 4 — replacing sysbench with a seeded Python populator writing `.tbl` files per Clause 4.3.3 —
+was not taken. It would buy determinism at the cost of writing and maintaining a TPC-C data generator,
+for a dataset whose value here is a realistic write workload rather than a reproducible corpus.

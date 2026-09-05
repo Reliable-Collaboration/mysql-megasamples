@@ -13,3 +13,12 @@ work/
 __pycache__/
 build/
 docker/init/10-registry.sql
+
+# local credential overrides; .env.example is the committed template
+.env
+
+# staged release assets: the files are large and are mirrors of upstream artifacts, but the
+# manifest and checksums that describe them are the record and are committed
+release/*/*
+!release/*/SHA256SUMS
+!release/*/MANIFEST.md

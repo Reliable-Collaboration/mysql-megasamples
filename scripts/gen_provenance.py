@@ -46,10 +46,26 @@ def datasets():
 
 
 def artifacts_by_dataset():
+    """Artifacts per dataset, resolved through `dataset.yaml` first.
+
+    Grouping only by the artifact's own `dataset` field loses the datasets that are built from
+    someone else's download: `enron_full` reads the same CMU tarball as `enron`, declares it in its
+    `artifacts:` list, and would otherwise get an empty "Source artifacts" table -- a provenance file
+    claiming to pin every byte while pinning none.
+    """
     manifest = yaml.safe_load(open(os.path.join(ROOT, "manifest.yaml"), encoding="utf-8"))
+    by_id = {art["id"]: art for art in manifest["artifacts"]}
     out = {}
     for art in manifest["artifacts"]:
         out.setdefault(art["dataset"], []).append(art)
+    for name, cfg in datasets():
+        # union, not replacement: `dvdstore` owns 52 artifacts in the manifest and names only 3 in
+        # its dataset.yaml, so preferring the declared list would drop 49 pinned digests
+        owned = out.get(name, [])
+        have = {a["id"] for a in owned}
+        extra = [by_id[i] for i in (cfg.get("artifacts") or []) if i in by_id and i not in have]
+        if extra:
+            out[name] = owned + extra
     return out
 
 
@@ -100,6 +116,16 @@ def build_provenance(name, cfg, arts, record, measurements, licences):
                 "operator's own bucket, on the machine of whoever accepts the licence, and records",
                 "the key, its sha256 and its `LastModified` in the generated SQL and the table",
                 "comment. See the open question on redistribution in the knowledge bundle.", ""]
+    elif not arts and cfg.get("tier") == "generated":
+        # nothing is downloaded at all: the data comes out of a generator compiled from a pinned
+        # commit. Saying "every byte, pinned" above an empty table would be a false claim.
+        out += ["## Source artifacts", "",
+                "**None downloaded.** This dataset is generated on the machine that builds it, so",
+                "there is no upstream file to pin and nothing of it is redistributed. What is pinned",
+                "is the *generator*: `docker/loader.Dockerfile` fixes the source commit it is built",
+                "from, and the loader records the commit it actually ran. The knowledge record for",
+                "this dataset states the cardinalities the specification requires, which is what the",
+                "tests assert instead of a content digest.", ""]
     else:
         out += ["## Source artifacts", "",
                 "Every byte this database is built from, pinned. `scripts/fetch.py` refuses to proceed if",

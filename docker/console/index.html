@@ -16,6 +16,12 @@
  th,td { text-align:left; padding:.35rem .6rem; border-bottom:1px solid var(--line); }
  td.n, th.n { text-align:right; font-variant-numeric:tabular-nums; }
  code { font-size:.95em; }
+ .what { font-size:.88em; opacity:.72; margin-top:.15rem; max-width:46rem; }
+ .opens { margin-left:.45rem; white-space:nowrap; }
+ a.go { display:inline-block; width:1.25rem; height:1.25rem; line-height:1.25rem; text-align:center;
+         border:1px solid var(--line); border-radius:.25rem; font-size:.72em; font-weight:600;
+         text-decoration:none; color:inherit; opacity:.65; margin-left:.15rem; }
+ a.go:hover { opacity:1; border-color:#69f; }
  .creds { border:1px solid var(--line); border-radius:.5rem; padding:.75rem 1rem; margin:1.5rem 0;
            font-size:.9em; }
  footer { margin-top:2rem; font-size:.85em; opacity:.7; }
@@ -24,50 +30,63 @@
 <p class="sub">21 databases · 248 tables · 9,056,697 rows · MySQL 9.7.2</p>
 
 <div class="consoles">
-      <a class="console" href="http://127.0.0.1:8081/"><b>phpMyAdmin</b><span>Signed in already — it opens straight into the data.</span></a>
-      <a class="console" href="http://127.0.0.1:8082/"><b>Adminer</b><span>Its login form remains; use the credentials below.</span></a>
-      <a class="console" href="http://127.0.0.1:8083/"><b>DbGate</b><span>The connection is preconfigured; pick it in the sidebar.</span></a>
+      <a class="console" href="http://127.0.0.1:8081/"><b>phpMyAdmin</b><span>Signed in already; the server menu switches account.</span></a>
+      <a class="console" href="http://127.0.0.1:8082/"><b>Adminer</b><span>Its login form remains; use either account below.</span></a>
+      <a class="console" href="http://127.0.0.1:8083/"><b>DbGate</b><span>Both connections are preconfigured; pick one in the sidebar.</span></a>
+      <a class="console" href="http://127.0.0.1:8084/"><b>CloudBeaver</b><span>Open as a guest; both connections are in the sidebar.</span></a>
 </div>
 
 <div class="creds">
-  <b>Credentials</b> — host <code>127.0.0.1</code>, port <code>3306</code>,
-  user <code>demo</code>, password <code>demo</code>. This account is <b>read only</b>: it can
-  select and it cannot change anything, which is deliberate. An <code>admin</code> account exists for
-  writing; <code>compose.yaml</code> has a commented block that switches the consoles over to it.
+  <b>Two accounts</b>, both reachable from every console on host <code>127.0.0.1</code>, port
+  <code>3306</code>.
+  <br>
+  <code>demo</code> / <code>demo</code> — <b>read only</b>: <code>SELECT</code> and
+  <code>SHOW VIEW</code> everywhere, no write privilege anywhere. Each console opens on this one.
+  <br>
+  <code>admin</code> / <code>admin</code> — <b>full privileges</b>, so anything you change here
+  stays changed. In phpMyAdmin and DbGate and CloudBeaver it is the second entry; in Adminer, type it
+  into the login form.
+  <br>
+  Both passwords are boilerplate for a disposable test database. Change them by copying
+  <code>.env.example</code> to <code>.env</code>: the same value reaches the server and every
+  console.
 </div>
 
 <table>
-  <thead><tr><th>database</th><th>tier</th><th class="n">tables</th><th class="n">rows</th>
+  <thead><tr><th>database — <b>P</b> opens it in phpMyAdmin, <b>A</b> in Adminer</th>
+  <th>tier</th><th class="n">tables</th><th class="n">rows</th>
   <th class="n">MB</th><th>licence</th></tr></thead>
   <tbody>
-      <tr><td><code>adventureworks</code></td><td>core</td><td class="n">69</td><td class="n">759,240</td><td class="n">119.0</td><td>mit</td></tr>
-      <tr><td><code>adventureworks_lt</code></td><td>core</td><td class="n">12</td><td class="n">4,277</td><td class="n">4.1</td><td>mit</td></tr>
-      <tr><td><code>chicago_crimes</code></td><td>core</td><td class="n">2</td><td class="n">259,702</td><td class="n">65.7</td><td>chicago-data-portal-terms</td></tr>
-      <tr><td><code>chinook</code></td><td>core</td><td class="n">11</td><td class="n">15,607</td><td class="n">1.6</td><td>mit</td></tr>
-      <tr><td><code>contoso</code></td><td>core</td><td class="n">8</td><td class="n">753,467</td><td class="n">103.3</td><td>mit</td></tr>
-      <tr><td><code>dvdstore</code></td><td>core</td><td class="n">9</td><td class="n">174,716</td><td class="n">16.3</td><td>gpl-2-0</td></tr>
-      <tr><td><code>employees</code></td><td>core-medium</td><td class="n">6</td><td class="n">3,919,015</td><td class="n">146.8</td><td>cc-by-sa-3-0</td></tr>
-      <tr><td><code>enron</code></td><td>core</td><td class="n">3</td><td class="n">48,778</td><td class="n">38.0</td><td>enron-public-record</td></tr>
-      <tr><td><code>jaffle_shop</code></td><td>core</td><td class="n">3</td><td class="n">312</td><td class="n">0.1</td><td>apache-2-0</td></tr>
-      <tr><td><code>lahman</code></td><td>core</td><td class="n">27</td><td class="n">706,466</td><td class="n">75.6</td><td>cc-by-sa-3-0</td></tr>
-      <tr><td><code>northwind</code></td><td>core</td><td class="n">13</td><td class="n">3,308</td><td class="n">1.4</td><td>mit</td></tr>
-      <tr><td><code>nyc_taxi</code></td><td>core</td><td class="n">2</td><td class="n">48,591</td><td class="n">10.1</td><td>nyc-open-data-terms</td></tr>
-      <tr><td><code>oracle_co</code></td><td>core</td><td class="n">7</td><td class="n">8,783</td><td class="n">1.1</td><td>mit</td></tr>
-      <tr><td><code>oracle_hr</code></td><td>core</td><td class="n">7</td><td class="n">216</td><td class="n">0.1</td><td>mit</td></tr>
-      <tr><td><code>oracle_oe</code></td><td>core</td><td class="n">9</td><td class="n">11,518</td><td class="n">3.2</td><td>mit</td></tr>
-      <tr><td><code>oracle_sh</code></td><td>core</td><td class="n">9</td><td class="n">1,063,396</td><td class="n">1.7</td><td>mit</td></tr>
-      <tr><td><code>pubs</code></td><td>core</td><td class="n">11</td><td class="n">255</td><td class="n">0.2</td><td>mit</td></tr>
-      <tr><td><code>sakila</code></td><td>core</td><td class="n">16</td><td class="n">47,268</td><td class="n">0.4</td><td>bsd-3-clause-sakila</td></tr>
-      <tr><td><code>smallsets</code></td><td>core</td><td class="n">4</td><td class="n">2,147</td><td class="n">0.1</td><td>hbiostat-data-permission, cc-by-4-0, cc0-1-0</td></tr>
-      <tr><td><code>stackexchange_beer</code></td><td>core</td><td class="n">11</td><td class="n">62,523</td><td class="n">6.1</td><td>cc-by-sa-4-0</td></tr>
-      <tr><td><code>wikipedia_simple</code></td><td>core</td><td class="n">9</td><td class="n">1,167,112</td><td class="n">64.7</td><td>cc-by-sa-4-0, gfdl-1-3</td></tr>
+      <tr><td><code>adventureworks</code><span class="opens"><a class="go" title="Open adventureworks in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=adventureworks&amp;server=1">P</a><a class="go" title="Open adventureworks in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=adventureworks">A</a></span><div class="what">Microsoft&#x27;s flagship 68-table, 5-schema OLTP sample (bicycle manufacturer)</div></td><td>core</td><td class="n">69</td><td class="n">759,240</td><td class="n">119.3</td><td>mit</td></tr>
+      <tr><td><code>adventureworks_lt</code><span class="opens"><a class="go" title="Open adventureworks_lt in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=adventureworks_lt&amp;server=1">P</a><a class="go" title="Open adventureworks_lt in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=adventureworks_lt">A</a></span><div class="what">The lightweight 12-table AdventureWorks (SalesLT schema)</div></td><td>core</td><td class="n">12</td><td class="n">4,277</td><td class="n">4.1</td><td>mit</td></tr>
+      <tr><td><code>chicago_crimes</code><span class="opens"><a class="go" title="Open chicago_crimes in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=chicago_crimes&amp;server=1">P</a><a class="go" title="Open chicago_crimes in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=chicago_crimes">A</a></span><div class="what">The City of Chicago&#x27;s 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup</div></td><td>core</td><td class="n">2</td><td class="n">259,702</td><td class="n">65.7</td><td>chicago-data-portal-terms</td></tr>
+      <tr><td><code>chinook</code><span class="opens"><a class="go" title="Open chinook in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=chinook&amp;server=1">P</a><a class="go" title="Open chinook in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=chinook">A</a></span><div class="what">Luis Rocha&#x27;s digital media store sample (v1.4.5, 2024-02-12)</div></td><td>core</td><td class="n">11</td><td class="n">15,607</td><td class="n">1.6</td><td>mit</td></tr>
+      <tr><td><code>contoso</code><span class="opens"><a class="go" title="Open contoso in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=contoso&amp;server=1">P</a><a class="go" title="Open contoso in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=contoso">A</a></span><div class="what">SQLBI&#x27;s synthetic Contoso retail star schema V2</div></td><td>core</td><td class="n">8</td><td class="n">753,467</td><td class="n">103.3</td><td>mit</td></tr>
+      <tr><td><code>dvdstore</code><span class="opens"><a class="go" title="Open dvdstore in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=dvdstore&amp;server=1">P</a><a class="go" title="Open dvdstore in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=dvdstore">A</a></span><div class="what">Dell/VMware&#x27;s open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships)</div></td><td>core</td><td class="n">9</td><td class="n">174,716</td><td class="n">16.3</td><td>gpl-2-0</td></tr>
+      <tr><td><code>employees</code><span class="opens"><a class="go" title="Open employees in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=employees&amp;server=1">P</a><a class="go" title="Open employees in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=employees">A</a></span><div class="what">The MySQL &quot;Employees Sample Database&quot; - 300,024 fabricated employees with 2.8 M salary rows</div></td><td>core-medium</td><td class="n">6</td><td class="n">3,919,015</td><td class="n">146.8</td><td>cc-by-sa-3-0</td></tr>
+      <tr><td><code>enron</code><span class="opens"><a class="go" title="Open enron in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=enron&amp;server=1">P</a><a class="go" title="Open enron in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=enron">A</a></span><div class="what">About 517k real corporate emails from 150 Enron custodians, distributed by CMU as a maildir-style tree of RFC 822 files</div></td><td>core</td><td class="n">3</td><td class="n">48,778</td><td class="n">38.0</td><td>enron-public-record</td></tr>
+      <tr><td><code>jaffle_shop</code><span class="opens"><a class="go" title="Open jaffle_shop in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=jaffle_shop&amp;server=1">P</a><a class="go" title="Open jaffle_shop in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=jaffle_shop">A</a></span><div class="what">dbt Labs&#x27; fictional jaffle (toasted sandwich) shop</div></td><td>core</td><td class="n">3</td><td class="n">312</td><td class="n">0.1</td><td>apache-2-0</td></tr>
+      <tr><td><code>lahman</code><span class="opens"><a class="go" title="Open lahman in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=lahman&amp;server=1">P</a><a class="go" title="Open lahman in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=lahman">A</a></span><div class="what">Sean Lahman&#x27;s historical MLB statistics 1871-2025, now published by SABR as 27 CSV tables (plus Access and SQL Server forms) under CC BY-SA 3.0</div></td><td>core</td><td class="n">27</td><td class="n">706,466</td><td class="n">75.6</td><td>cc-by-sa-3-0</td></tr>
+      <tr><td><code>northwind</code><span class="opens"><a class="go" title="Open northwind in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=northwind&amp;server=1">P</a><a class="go" title="Open northwind in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=northwind">A</a></span><div class="what">Microsoft&#x27;s classic 13-table trading-company sample (SQL Server 2000 era) shipped as a single 1 MB T-SQL script with all data inline</div></td><td>core</td><td class="n">13</td><td class="n">3,308</td><td class="n">1.4</td><td>mit</td></tr>
+      <tr><td><code>nyc_taxi</code><span class="opens"><a class="go" title="Open nyc_taxi in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=nyc_taxi&amp;server=1">P</a><a class="go" title="Open nyc_taxi in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=nyc_taxi">A</a></span><div class="what">New York City yellow and green taxi trip records in Parquet, plus the 265-row taxi zone lookup</div></td><td>core</td><td class="n">2</td><td class="n">48,591</td><td class="n">10.1</td><td>nyc-open-data-terms</td></tr>
+      <tr><td><code>oracle_co</code><span class="opens"><a class="go" title="Open oracle_co in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=oracle_co&amp;server=1">P</a><a class="go" title="Open oracle_co in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=oracle_co">A</a></span><div class="what">Oracle&#x27;s &quot;modern&quot; e-commerce sample (7 tables, 8,783 rows) with identity columns, a JSON check constraint on a BLOB</div></td><td>core</td><td class="n">7</td><td class="n">8,783</td><td class="n">1.1</td><td>mit</td></tr>
+      <tr><td><code>oracle_hr</code><span class="opens"><a class="go" title="Open oracle_hr in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=oracle_hr&amp;server=1">P</a><a class="go" title="Open oracle_hr in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=oracle_hr">A</a></span><div class="what">The 7-table, 216-row teaching schema from Oracle&#x27;s db-sample-schemas v23.3, converted from its plain INSERT scripts</div></td><td>core</td><td class="n">7</td><td class="n">216</td><td class="n">0.1</td><td>mit</td></tr>
+      <tr><td><code>oracle_oe</code><span class="opens"><a class="go" title="Open oracle_oe in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=oracle_oe&amp;server=1">P</a><a class="go" title="Open oracle_oe in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=oracle_oe">A</a></span><div class="what">The object-relational Order Entry schema</div></td><td>core</td><td class="n">9</td><td class="n">11,518</td><td class="n">3.2</td><td>mit</td></tr>
+      <tr><td><code>oracle_sh</code><span class="opens"><a class="go" title="Open oracle_sh in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=oracle_sh&amp;server=1">P</a><a class="go" title="Open oracle_sh in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=oracle_sh">A</a></span><div class="what">Oracle&#x27;s star-schema data-warehouse sample</div></td><td>core</td><td class="n">9</td><td class="n">1,063,396</td><td class="n">1.7</td><td>mit</td></tr>
+      <tr><td><code>pubs</code><span class="opens"><a class="go" title="Open pubs in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=pubs&amp;server=1">P</a><a class="go" title="Open pubs in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=pubs">A</a></span><div class="what">Microsoft&#x27;s tiny 11-table publishers/authors sample (SQL Server 2000 era) shipped as a 126 KB T-SQL script with inline data</div></td><td>core</td><td class="n">11</td><td class="n">255</td><td class="n">0.2</td><td>mit</td></tr>
+      <tr><td><code>sakila</code><span class="opens"><a class="go" title="Open sakila in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=sakila&amp;server=1">P</a><a class="go" title="Open sakila in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=sakila">A</a></span><div class="what">Oracle&#x27;s DVD-rental sample database for MySQL (Version 1.5), 16 tables / 7 views / 3 procedures / 3 functions / 6 triggers, 46,268 rows</div></td><td>core</td><td class="n">16</td><td class="n">47,268</td><td class="n">0.4</td><td>bsd-3-clause-sakila</td></tr>
+      <tr><td><code>smallsets</code><span class="opens"><a class="go" title="Open smallsets in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=smallsets&amp;server=1">P</a><a class="go" title="Open smallsets in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=smallsets">A</a></span><div class="what">Three classic teaching datasets in one database — the Titanic passenger list, Fisher&#x27;s Iris measurements and the Palmer Penguins</div></td><td>core</td><td class="n">4</td><td class="n">2,147</td><td class="n">0.1</td><td>hbiostat-data-permission, cc-by-4-0, cc0-1-0</td></tr>
+      <tr><td><code>stackexchange_beer</code><span class="opens"><a class="go" title="Open stackexchange_beer in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=stackexchange_beer&amp;server=1">P</a><a class="go" title="Open stackexchange_beer in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=stackexchange_beer">A</a></span><div class="what">CC BY-SA XML dump of a Stack Exchange Q&amp;A site (Posts, Users, Comments, Votes, Badges, Tags, PostLinks, PostHistory) converted to MySQL with FULLTEXT</div></td><td>core</td><td class="n">11</td><td class="n">62,523</td><td class="n">6.1</td><td>cc-by-sa-4-0</td></tr>
+      <tr><td><code>wikipedia_simple</code><span class="opens"><a class="go" title="Open wikipedia_simple in phpMyAdmin" href="http://127.0.0.1:8081/index.php?route=/database/structure&amp;db=wikipedia_simple&amp;server=1">P</a><a class="go" title="Open wikipedia_simple in Adminer" href="http://127.0.0.1:8082/?server=mysql&amp;username=demo&amp;db=wikipedia_simple">A</a></span><div class="what">Current-revision article text plus MediaWiki link tables of the Simple English Wikipedia</div></td><td>core</td><td class="n">9</td><td class="n">1,167,112</td><td class="n">64.7</td><td>cc-by-sa-4-0, gfdl-1-3</td></tr>
   </tbody>
 </table>
 
 <footer>
   Generated from <code>megasamples.datasets</code> inside the running image, so it cannot drift from
   what is actually loaded. Each dataset keeps its own upstream licence — see
-  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository. CloudBeaver is deliberately
-  absent: version 25.2.0 cannot be brought up without its first-launch wizard, and the console ships
-  nothing that needs a manual step.
+  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository, and each database's description
+  comes from its own research record rather than being written here. Every console starts configured;
+  none asks you to set anything up first. The <b>P</b> and <b>A</b> links open a single database
+  directly — only phpMyAdmin and Adminer accept one in a URL, so DbGate and CloudBeaver have no
+  per-row link rather than one that would just open their front page.
 </footer>
