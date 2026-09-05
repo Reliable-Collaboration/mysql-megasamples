@@ -7,7 +7,7 @@ instead of configuring clients.
 
 |  |  |
 |---|---|
-| databases | 21 (`sakila`, `northwind`, `chinook`, `pubs`, `employees`, `adventureworks`, `contoso`, `lahman`, `enron`, `nyc_taxi`, `chicago_crimes`, `wikipedia_simple`, the four Oracle schemas, and more) |
+| databases | 21, listed below |
 | tables / rows | 248 tables, 9,056,697 rows |
 | data size | ~660 MB loaded; the built image is ~3.5 GB |
 | server | MySQL 9.7.2, `utf8mb4`, InnoDB |
@@ -21,6 +21,41 @@ data. [`CATALOGUE.md`](CATALOGUE.md) lists all 38 datasets with what each licenc
 **Status: not published yet.** There is no image to `docker pull`; you build it locally, which is
 what the rest of this page is about. [`PLAN.md`](PLAN.md) is the plan being executed and
 [`knowledge/`](knowledge/index.md) is the evidence bundle behind every claim in it.
+
+## The 21 databases
+
+Each one is converted from its authoritative upstream source; the description is the one its own
+research record carries, so it says what the thing actually is rather than what a blurb writer
+guessed. Full detail — every tier, licence and obligation — is in [`CATALOGUE.md`](CATALOGUE.md).
+
+<!-- databases:start -->
+| database | what it is | tables | rows |
+|---|---|---:|---:|
+| `adventureworks` | Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer) | 69 | 759,240 |
+| `adventureworks_lt` | The lightweight 12-table AdventureWorks (SalesLT schema) | 12 | 4,277 |
+| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 259,702 |
+| `chinook` | Luis Rocha's digital media store sample (v1.4.5, 2024-02-12) | 11 | 15,607 |
+| `contoso` | SQLBI's synthetic Contoso retail star schema V2 | 8 | 753,467 |
+| `dvdstore` | Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships) | 9 | 174,716 |
+| `employees` | The MySQL "Employees Sample Database" - 300,024 fabricated employees with 2.8 M salary rows | 6 | 3,919,015 |
+| `enron` | About 517k real corporate emails from 150 Enron custodians, distributed by CMU as a maildir-style tree of RFC 822 files | 3 | 48,778 |
+| `jaffle_shop` | dbt Labs' fictional jaffle (toasted sandwich) shop | 3 | 312 |
+| `lahman` | Sean Lahman's historical MLB statistics 1871-2025, now published by SABR as 27 CSV tables (plus Access and SQL Server forms) under CC BY-SA 3.0 | 27 | 706,466 |
+| `northwind` | Microsoft's classic 13-table trading-company sample (SQL Server 2000 era) shipped as a single 1 MB T-SQL script with all data inline | 13 | 3,308 |
+| `nyc_taxi` | New York City yellow and green taxi trip records in Parquet, plus the 265-row taxi zone lookup | 2 | 48,591 |
+| `oracle_co` | Oracle's "modern" e-commerce sample (7 tables, 8,783 rows) with identity columns, a JSON check constraint on a BLOB | 7 | 8,783 |
+| `oracle_hr` | The 7-table, 216-row teaching schema from Oracle's db-sample-schemas v23.3, converted from its plain INSERT scripts | 7 | 216 |
+| `oracle_oe` | The object-relational Order Entry schema | 9 | 11,518 |
+| `oracle_sh` | Oracle's star-schema data-warehouse sample | 9 | 1,063,396 |
+| `pubs` | Microsoft's tiny 11-table publishers/authors sample (SQL Server 2000 era) shipped as a 126 KB T-SQL script with inline data | 11 | 255 |
+| `sakila` | Oracle's DVD-rental sample database for MySQL (Version 1.5), 16 tables / 7 views / 3 procedures / 3 functions / 6 triggers, 46,268 rows | 16 | 47,268 |
+| `smallsets` | Three classic teaching datasets in one database — the Titanic passenger list, Fisher's Iris measurements and the Palmer Penguins | 4 | 2,147 |
+| `stackexchange_beer` | CC BY-SA XML dump of a Stack Exchange Q&A site (Posts, Users, Comments, Votes, Badges, Tags, PostLinks, PostHistory) converted to MySQL with FULLTEXT | 11 | 62,523 |
+| `wikipedia_simple` | Current-revision article text plus MediaWiki link tables of the Simple English Wikipedia | 9 | 1,167,112 |
+<!-- databases:end -->
+
+Beyond these, the extended, generated and user-fetched datasets are in
+[Beyond the 21](#beyond-the-21).
 
 ## What you need
 

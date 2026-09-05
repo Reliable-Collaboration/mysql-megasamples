@@ -11,66 +11,66 @@ it cannot drift from what was actually built. `README.md` explains the project;
 
 ## core — in the image
 
-| database | tables | rows | licence | asks of a redistributor |
-|---|---:|---:|---|---|
-| `adventureworks` | 69 | 759,240 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `adventureworks_lt` | 12 | 4,277 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `chicago_crimes` | 2 | 259,702 | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) | attribution, verbatim disclaimer |
-| `chinook` | 11 | 15,607 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `contoso` | 8 | 753,467 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `dvdstore` | 9 | 174,716 | [gpl-2-0](knowledge/licenses/gpl-2-0.md) | share-alike |
-| `enron` | 3 | 48,778 | [enron-public-record](knowledge/licenses/enron-public-record.md) | see the record |
-| `jaffle_shop` | 3 | 312 | [apache-2-0](knowledge/licenses/apache-2-0.md) | ship the notice |
-| `lahman` | 27 | 706,466 | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) | share-alike, attribution |
-| `northwind` | 13 | 3,308 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `nyc_taxi` | 2 | 48,591 | [nyc-open-data-terms](knowledge/licenses/nyc-open-data-terms.md) | ship the notice |
-| `oracle_co` | 7 | 8,783 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `oracle_hr` | 7 | 216 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `oracle_oe` | 9 | 11,518 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `oracle_sh` | 9 | 1,063,396 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `pubs` | 11 | 255 | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `sakila` | 16 | 47,268 | [bsd-3-clause-sakila](knowledge/licenses/bsd-3-clause-sakila.md) | ship the notice |
-| `smallsets` | 4 | 2,147 | [hbiostat-data-permission](knowledge/licenses/hbiostat-data-permission.md), [cc-by-4-0](knowledge/licenses/cc-by-4-0.md), [cc0-1-0](knowledge/licenses/cc0-1-0.md) | see the record, attribution |
-| `stackexchange_beer` | 11 | 62,523 | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) | share-alike, attribution |
-| `wikipedia_simple` | 9 | 1,167,112 | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) | share-alike, attribution |
+| database | what it is | tables | rows | licence | asks of a redistributor |
+|---|---|---:|---:|---|---|
+| `adventureworks` | Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer) | 69 | 759,240 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `adventureworks_lt` | The lightweight 12-table AdventureWorks (SalesLT schema) | 12 | 4,277 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 259,702 | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) | attribution, verbatim disclaimer |
+| `chinook` | Luis Rocha's digital media store sample (v1.4.5, 2024-02-12) | 11 | 15,607 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `contoso` | SQLBI's synthetic Contoso retail star schema V2 | 8 | 753,467 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `dvdstore` | Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships) | 9 | 174,716 | [gpl-2-0](knowledge/licenses/gpl-2-0.md) | share-alike |
+| `enron` | About 517k real corporate emails from 150 Enron custodians, distributed by CMU as a maildir-style tree of RFC 822 files | 3 | 48,778 | [enron-public-record](knowledge/licenses/enron-public-record.md) | see the record |
+| `jaffle_shop` | dbt Labs' fictional jaffle (toasted sandwich) shop | 3 | 312 | [apache-2-0](knowledge/licenses/apache-2-0.md) | ship the notice |
+| `lahman` | Sean Lahman's historical MLB statistics 1871-2025, now published by SABR as 27 CSV tables (plus Access and SQL Server forms) under CC BY-SA 3.0 | 27 | 706,466 | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) | share-alike, attribution |
+| `northwind` | Microsoft's classic 13-table trading-company sample (SQL Server 2000 era) shipped as a single 1 MB T-SQL script with all data inline | 13 | 3,308 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `nyc_taxi` | New York City yellow and green taxi trip records in Parquet, plus the 265-row taxi zone lookup | 2 | 48,591 | [nyc-open-data-terms](knowledge/licenses/nyc-open-data-terms.md) | ship the notice |
+| `oracle_co` | Oracle's "modern" e-commerce sample (7 tables, 8,783 rows) with identity columns, a JSON check constraint on a BLOB | 7 | 8,783 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `oracle_hr` | The 7-table, 216-row teaching schema from Oracle's db-sample-schemas v23.3, converted from its plain INSERT scripts | 7 | 216 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `oracle_oe` | The object-relational Order Entry schema | 9 | 11,518 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `oracle_sh` | Oracle's star-schema data-warehouse sample | 9 | 1,063,396 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `pubs` | Microsoft's tiny 11-table publishers/authors sample (SQL Server 2000 era) shipped as a 126 KB T-SQL script with inline data | 11 | 255 | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `sakila` | Oracle's DVD-rental sample database for MySQL (Version 1.5), 16 tables / 7 views / 3 procedures / 3 functions / 6 triggers, 46,268 rows | 16 | 47,268 | [bsd-3-clause-sakila](knowledge/licenses/bsd-3-clause-sakila.md) | ship the notice |
+| `smallsets` | Three classic teaching datasets in one database — the Titanic passenger list, Fisher's Iris measurements and the Palmer Penguins | 4 | 2,147 | [hbiostat-data-permission](knowledge/licenses/hbiostat-data-permission.md), [cc-by-4-0](knowledge/licenses/cc-by-4-0.md), [cc0-1-0](knowledge/licenses/cc0-1-0.md) | see the record, attribution |
+| `stackexchange_beer` | CC BY-SA XML dump of a Stack Exchange Q&A site (Posts, Users, Comments, Votes, Badges, Tags, PostLinks, PostHistory) converted to MySQL with FULLTEXT | 11 | 62,523 | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) | share-alike, attribution |
+| `wikipedia_simple` | Current-revision article text plus MediaWiki link tables of the Simple English Wikipedia | 9 | 1,167,112 | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) | share-alike, attribution |
 
 ## core-medium — in the image
 
-| database | tables | rows | licence | asks of a redistributor |
-|---|---:|---:|---|---|
-| `employees` | 6 | 3,919,015 | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) | share-alike, attribution |
+| database | what it is | tables | rows | licence | asks of a redistributor |
+|---|---|---:|---:|---|---|
+| `employees` | The MySQL "Employees Sample Database" - 300,024 fabricated employees with 2.8 M salary rows | 6 | 3,919,015 | [cc-by-sa-3-0](knowledge/licenses/cc-by-sa-3-0.md) | share-alike, attribution |
 
 ## extended — opt-in; `make <name>`
 
-| database | tables | rows | licence | asks of a redistributor |
-|---|---:|---:|---|---|
-| `adventureworks_dw` | — | — | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `bts_ontime` | — | — | [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) | none |
-| `chicago_crimes_full`<br>appends to `chicago_crimes` | — | — | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) | attribution, verbatim disclaimer |
-| `contoso_10m` | — | — | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `contoso_1m` | — | — | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `dvdstore_reviews`<br>appends to `dvdstore` | — | — | [gpl-2-0](knowledge/licenses/gpl-2-0.md) | share-alike |
-| `enron_full` | — | — | [enron-public-record](knowledge/licenses/enron-public-record.md) | see the record |
-| `nyc_taxi_yellow`<br>appends to `nyc_taxi` | — | — | [nyc-open-data-terms](knowledge/licenses/nyc-open-data-terms.md) | ship the notice |
-| `stackexchange_dba` | — | — | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) | share-alike, attribution |
-| `wideworldimporters` | — | — | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) | ship the notice |
-| `wideworldimporters_dw` | — | — | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) | ship the notice |
-| `wikipedia_simple_full` | — | — | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) | share-alike, attribution |
+| database | what it is | tables | rows | licence | asks of a redistributor |
+|---|---|---:|---:|---|---|
+| `adventureworks_dw` | The AdventureWorks star-schema data warehouse (31 dbo tables, dimension/fact naming) | — | — | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `bts_ontime` | One month of the US DOT Reporting Carrier On-Time Performance table (~536k flights, 109 columns) plus the airport and carrier lookup tables | — | — | [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) | none |
+| `chicago_crimes_full`<br>appends to `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | — | — | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) | attribution, verbatim disclaimer |
+| `contoso_10m` | SQLBI's synthetic Contoso retail star schema V2 | — | — | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `contoso_1m` | SQLBI's synthetic Contoso retail star schema V2 | — | — | [mit](knowledge/licenses/mit.md) | ship the notice |
+| `dvdstore_reviews`<br>appends to `dvdstore` | Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships) | — | — | [gpl-2-0](knowledge/licenses/gpl-2-0.md) | share-alike |
+| `enron_full` | About 517k real corporate emails from 150 Enron custodians, distributed by CMU as a maildir-style tree of RFC 822 files | — | — | [enron-public-record](knowledge/licenses/enron-public-record.md) | see the record |
+| `nyc_taxi_yellow`<br>appends to `nyc_taxi` | New York City yellow and green taxi trip records in Parquet, plus the 265-row taxi zone lookup | — | — | [nyc-open-data-terms](knowledge/licenses/nyc-open-data-terms.md) | ship the notice |
+| `stackexchange_dba` | CC BY-SA XML dump of a Stack Exchange Q&A site (Posts, Users, Comments, Votes, Badges, Tags, PostLinks, PostHistory) converted to MySQL with FULLTEXT | — | — | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md) | share-alike, attribution |
+| `wideworldimporters` | Microsoft's SQL Server 2016+ showcase OLTP sample (wholesale importer): temporal tables, memory-optimized tables, columnstore, JSON, geography | — | — | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) | ship the notice |
+| `wideworldimporters_dw` | The star-schema warehouse companion of WideWorldImporters (Dimension/Fact/Integration schemas, 8 dimensions, 6 facts, table names with spaces) | — | — | [mit](knowledge/licenses/mit.md), [natural-earth-public-domain](knowledge/licenses/natural-earth-public-domain.md), [us-government-public-domain](knowledge/licenses/us-government-public-domain.md) | ship the notice |
+| `wikipedia_simple_full` | Current-revision article text plus MediaWiki link tables of the Simple English Wikipedia | — | — | [cc-by-sa-4-0](knowledge/licenses/cc-by-sa-4-0.md), [gfdl-1-3](knowledge/licenses/gfdl-1-3.md) | share-alike, attribution |
 
 ## generated — generated on your machine
 
-| database | tables | rows | licence | asks of a redistributor |
-|---|---:|---:|---|---|
-| `ssb` | — | — | [tpc-eula](knowledge/licenses/tpc-eula.md) | **build-time only, never redistributed** |
-| `tpcds` | — | — | [tpc-eula](knowledge/licenses/tpc-eula.md) | **build-time only, never redistributed** |
-| `tpch` | — | — | [tpc-eula](knowledge/licenses/tpc-eula.md) | **build-time only, never redistributed** |
+| database | what it is | tables | rows | licence | asks of a redistributor |
+|---|---|---:|---:|---|---|
+| `ssb` | The five-table star schema (lineorder fact + customer, supplier, part, date dimensions) of O'Neil | — | — | [tpc-eula](knowledge/licenses/tpc-eula.md) | **build-time only, never redistributed** |
+| `tpcds` | The 24-table retail data-warehouse schema of TPC Benchmark DS (7 fact, 17 dimension tables), generated by dsdgen 2.10.0 | — | — | [tpc-eula](knowledge/licenses/tpc-eula.md) | **build-time only, never redistributed** |
+| `tpch` | The eight-table decision-support schema of TPC Benchmark H, generated at a chosen scale factor by dbgen 2.17.3 | — | — | [tpc-eula](knowledge/licenses/tpc-eula.md) | **build-time only, never redistributed** |
 
 ## not-shipped — loaders only; you fetch the data, it is never redistributed
 
-| database | tables | rows | licence | asks of a redistributor |
-|---|---:|---:|---|---|
-| `citibike` | — | — | [citibike-data-use-policy](knowledge/licenses/citibike-data-use-policy.md) | **cannot be redistributed** |
-| `divvy` | — | — | [divvy-data-license](knowledge/licenses/divvy-data-license.md) | **cannot be redistributed** |
+| database | what it is | tables | rows | licence | asks of a redistributor |
+|---|---|---:|---:|---|---|
+| `citibike` | Lyft-operated Citi Bike trip records from the public S3 bucket | — | — | [citibike-data-use-policy](knowledge/licenses/citibike-data-use-policy.md) | **cannot be redistributed** |
+| `divvy` | City-of-Chicago-owned, Lyft-operated Divvy trip records from a public S3 bucket | — | — | [divvy-data-license](knowledge/licenses/divvy-data-license.md) | **cannot be redistributed** |
 
 TPC-C is generated too, by `make load-tpcc`, but has no `datasets/*/dataset.yaml` and so no
 row above: it is loaded by `scripts/tpcc_load.py` through sysbench rather than by the

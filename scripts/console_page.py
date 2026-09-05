@@ -16,6 +16,11 @@ there is one, so the page says what is actually configured rather than what the 
 """
 import argparse, html, json, os, subprocess, sys
 
+import yaml
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from catalogue import shorten  # noqa: E402
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONSOLES = [
     ("phpMyAdmin", 8081, "Signed in already; the server menu switches account."),
@@ -41,6 +46,47 @@ def passwords():
             found.get("ADMIN_PASSWORD") or os.environ.get("ADMIN_PASSWORD") or "admin")
 
 
+def describe(record, blurb=""):
+    """The dataset's one-line description, from its knowledge record.
+
+    Written there once, by the research that produced the dataset, and reused here rather than
+    rewritten: a hand-typed blurb on a landing page is the first thing to go stale, and inventing
+    one would be the first thing to be wrong."""
+    if blurb:
+        return blurb
+    if not record:
+        return ""
+    path = os.path.join(ROOT, record)
+    if not os.path.exists(path):
+        return ""
+    try:
+        text = open(path, encoding="utf-8").read()
+        meta = yaml.safe_load(text.split("---", 2)[1]) or {}
+    except Exception:
+        return ""
+    # one trimming rule, shared with scripts/catalogue.py, so the page and the catalogue cannot
+    # describe the same dataset differently
+    return shorten((meta.get("description") or "").strip())
+
+
+# Which consoles can actually be pointed at one database, measured rather than assumed. phpMyAdmin
+# takes a route and a db; Adminer takes the db and lands on it once you are past its login form.
+# DbGate and CloudBeaver have no such URL -- their front ends read no database parameter at all
+# (DbGate's bundle reads only auth params; CloudBeaver's routing carries none) -- so no icon is
+# offered for them rather than one that quietly opens the app at its front page.
+DEEP_LINKS = (
+    ("phpMyAdmin", "P", "http://127.0.0.1:8081/index.php?route=/database/structure&db={db}&server=1"),
+    ("Adminer", "A", "http://127.0.0.1:8082/?server=mysql&username=demo&db={db}"),
+)
+
+
+def open_in(db):
+    links = "".join(
+        f'<a class="go" title="Open {db} in {name}" href="{html.escape(url.format(db=db), quote=True)}">{letter}</a>'
+        for name, letter, url in DEEP_LINKS)
+    return f'<span class="opens">{links}</span>'
+
+
 def query(container, sql):
     p = subprocess.run(["docker", "exec", container, "mysql", "-udemo", f"-p{passwords()[0]}",
                         "-N", "--batch", "-e", sql], capture_output=True, text=True)
@@ -55,8 +101,8 @@ def main():
     ap.add_argument("--out", default=os.path.join(ROOT, "docker", "console", "index.html"))
     a = ap.parse_args()
 
-    rows = query(a.container, "SELECT name, tier, licenses, row_counts FROM megasamples.datasets "
-                              "ORDER BY name")
+    rows = query(a.container, "SELECT name, tier, licenses, row_counts, record "
+                              "FROM megasamples.datasets ORDER BY name")
     sizes = {r[0]: (int(r[1]), float(r[2])) for r in query(
         a.container,
         "SELECT table_schema, COUNT(*), ROUND(SUM(data_length+index_length)/1048576,1) "
@@ -64,8 +110,16 @@ def main():
         "AND table_schema NOT IN ('mysql','information_schema','performance_schema','sys') "
         "GROUP BY table_schema")}
 
+    blurbs = {}
+    for d in os.listdir(os.path.join(ROOT, "datasets")):
+        spec_path = os.path.join(ROOT, "datasets", d, "dataset.yaml")
+        if os.path.exists(spec_path):
+            spec = yaml.safe_load(open(spec_path, encoding="utf-8")) or {}
+            if spec.get("blurb"):
+                blurbs[d] = spec["blurb"]
+
     items, total_rows, total_tables = [], 0, 0
-    for name, tier, licenses, counts in rows:
+    for name, tier, licenses, counts, record in rows:
         try:
             per_table = json.loads(counts) if counts and counts != "NULL" else {}
         except ValueError:
@@ -78,13 +132,14 @@ def main():
             lic = ", ".join(json.loads(licenses)) if licenses else ""
         except ValueError:
             lic = licenses or ""
-        items.append((name, tier, tables, n, mb, lic))
+        items.append((name, tier, tables, n, mb, lic, describe(record, blurbs.get(name, ""))))
 
     cards = "\n".join(
-        f'      <tr><td><code>{html.escape(n)}</code></td><td>{t}</td>'
+        f'      <tr><td><code>{html.escape(n)}</code>{open_in(n)}'
+        f'<div class="what">{html.escape(what)}</div></td><td>{t}</td>'
         f'<td class="n">{tab:,}</td><td class="n">{rc:,}</td><td class="n">{mb:,.1f}</td>'
         f'<td>{html.escape(lic)}</td></tr>'
-        for n, t, tab, rc, mb, lic in items)
+        for n, t, tab, rc, mb, lic, what in items)
     demo_pw, admin_pw = passwords()
     demo_pw, admin_pw = html.escape(demo_pw), html.escape(admin_pw)
     links = "\n".join(
@@ -109,6 +164,12 @@ def main():
  th,td {{ text-align:left; padding:.35rem .6rem; border-bottom:1px solid var(--line); }}
  td.n, th.n {{ text-align:right; font-variant-numeric:tabular-nums; }}
  code {{ font-size:.95em; }}
+ .what {{ font-size:.88em; opacity:.72; margin-top:.15rem; max-width:46rem; }}
+ .opens {{ margin-left:.45rem; white-space:nowrap; }}
+ a.go {{ display:inline-block; width:1.25rem; height:1.25rem; line-height:1.25rem; text-align:center;
+         border:1px solid var(--line); border-radius:.25rem; font-size:.72em; font-weight:600;
+         text-decoration:none; color:inherit; opacity:.65; margin-left:.15rem; }}
+ a.go:hover {{ opacity:1; border-color:#69f; }}
  .creds {{ border:1px solid var(--line); border-radius:.5rem; padding:.75rem 1rem; margin:1.5rem 0;
            font-size:.9em; }}
  footer {{ margin-top:2rem; font-size:.85em; opacity:.7; }}
@@ -137,7 +198,8 @@ def main():
 </div>
 
 <table>
-  <thead><tr><th>database</th><th>tier</th><th class="n">tables</th><th class="n">rows</th>
+  <thead><tr><th>database — <b>P</b> opens it in phpMyAdmin, <b>A</b> in Adminer</th>
+  <th>tier</th><th class="n">tables</th><th class="n">rows</th>
   <th class="n">MB</th><th>licence</th></tr></thead>
   <tbody>
 {cards}
@@ -147,8 +209,11 @@ def main():
 <footer>
   Generated from <code>megasamples.datasets</code> inside the running image, so it cannot drift from
   what is actually loaded. Each dataset keeps its own upstream licence — see
-  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository. Every console here starts
-  configured; none of them asks you to set anything up first.
+  <code>datasets/&lt;name&gt;/PROVENANCE.md</code> in the repository, and each database's description
+  comes from its own research record rather than being written here. Every console starts configured;
+  none asks you to set anything up first. The <b>P</b> and <b>A</b> links open a single database
+  directly — only phpMyAdmin and Adminer accept one in a URL, so DbGate and CloudBeaver have no
+  per-row link rather than one that would just open their front page.
 </footer>
 """
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
