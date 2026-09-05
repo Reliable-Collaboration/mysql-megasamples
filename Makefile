@@ -5,7 +5,7 @@ PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo pyt
 DATASET ?=
 SF      ?= 1
 
-.PHONY: help check catalogue audit-assets prepub-check release release-check dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image up down console console-down status clean clean-all test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
+.PHONY: help check catalogue audit-assets prepub-check release release-check verify-oracle dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image up down console console-down status clean clean-all test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
 .PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
 
 help:
@@ -27,6 +27,8 @@ help:
 	@echo "make load-citibike    download one month of Citi Bike trips to this machine and load"
 	@echo "make load-divvy       the same for Divvy (both need their licence accepted; nothing"
 	@echo "                      from either is ever redistributed by this project)"
+	@echo "make verify-oracle    cross-check HR/CO/SH against a real Oracle (Free Use Terms;"
+	@echo "                      the script prints them and will not start until you accept)"
 	@echo "make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server,"
 	@echo "                      Developer EULA -- see the target below; needed once, not per build)"
 	@echo "make build-server     start the throwaway MySQL build server"
@@ -103,6 +105,15 @@ clean-context:
 wwi-export:
 	@$(PY) scripts/fetch.py wideworldimporters wideworldimporters_dw
 	@$(PY) scripts/wwi_export.py
+
+# V-01: load HR, CO and SH into a real Oracle from the same upstream scripts and compare every
+# table against what MySQL holds. Runs Oracle AI Database Free in a container under the Oracle Free
+# Use Terms; the script prints them and refuses to start until you accept:
+#   MEGASAMPLES_ACCEPT_ORACLE_LICENSE=1 make verify-oracle
+# Nothing Oracle produces is redistributed and the container is removed when it finishes. SQLcl is
+# not needed -- the image ships SQL*Loader, which loads the SH CSVs.
+verify-oracle:
+	@$(PY) scripts/verify_oracle.py $(if $(ONLY),--only $(ONLY),) $(if $(KEEP),--keep,)
 
 # Extended tier: 3,475,226 yellow trips appended to a loaded `nyc_taxi` (which must exist first).
 nyc-taxi-yellow:
