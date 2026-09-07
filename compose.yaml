@@ -1,3 +1,9 @@
+# Every service carries a mem_limit. WSL2 gave this host 15.5 GB and ran out of it while the
+# experiment was running, because nothing anywhere was bounded -- not the loads, not the consoles.
+# A container with no limit can see the whole VM, so one process going wide takes the machine down
+# rather than failing on its own. These figures are chosen so both repositories' console stacks can
+# be up together in about 7.5 GB; a timed run needs its consoles down regardless, since a server
+# reading the data competes with the thing being measured.
 # The browsing console (PLAN.md section 12, task C-01).
 #
 #   docker compose up -d           the database, the four UIs and the landing page: one stack
@@ -44,6 +50,7 @@ name: mysql-megasamples
 services:
   mysql:
     image: ${MEGASAMPLES_IMAGE:-mysql-megasamples:dev}
+    mem_limit: 2g
     container_name: megasamples-mysql
     ports: ["127.0.0.1:3306:3306"]
     environment:
@@ -60,6 +67,7 @@ services:
 
   console:
     image: nginx@sha256:3bcf852aed06467cf075c6105892e4d5a6ebbbafa0ce22d35062db9e90ddef4c
+    mem_limit: 32m
     container_name: megasamples-console
     ports: ["127.0.0.1:8080:80"]
     volumes:
@@ -69,6 +77,7 @@ services:
 
   phpmyadmin:
     image: phpmyadmin@sha256:20fa6f724ba77d41abc25b1aeb4d97692ce344c7ace305594e57c5893f60f0f7
+    mem_limit: 256m
     container_name: megasamples-phpmyadmin
     ports: ["127.0.0.1:8081:80"]
     environment:
@@ -86,6 +95,7 @@ services:
 
   adminer:
     image: adminer@sha256:f1e2ba27b10a565ac77b2d8555d803be4ddb3232f4216dcf0ea85bcd8f2f1343
+    mem_limit: 160m
     container_name: megasamples-adminer
     ports: ["127.0.0.1:8082:8080"]
     environment:
@@ -97,6 +107,7 @@ services:
 
   dbgate:
     image: dbgate/dbgate@sha256:14fce4ece52df514e0d320dc82cbfbca5e8f18f98464a6389b1c126f783a6b7e
+    mem_limit: 320m
     container_name: megasamples-dbgate
     ports: ["127.0.0.1:8083:3000"]
     environment:
@@ -119,6 +130,7 @@ services:
 
   cloudbeaver:
     image: dbeaver/cloudbeaver@sha256:3b4bf82287cf4febe0d335873f1346a01100f3951d266cd6a78c27fe30429cbc
+    mem_limit: 640m
     container_name: megasamples-cloudbeaver
     ports: ["127.0.0.1:8084:8978"]
     environment:
