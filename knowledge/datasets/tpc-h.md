@@ -108,7 +108,7 @@ rows, 1,872.7 MB in InnoDB**, loading in 38.6 s. Every row count is the specific
 at **6,001,215** included. The plan estimated 1.5–2.5 GB (right) and 5–15 minutes to load (far
 pessimistic).
 
-**All 22 queries return the reference answers.** `scripts/tpc_check.py` runs each against MySQL and
+**All 22 queries return the reference answers.** `megasamples/sources/tpc_check.py` runs each against MySQL and
 compares it with DuckDB's `tpch_answers()` for the same scale factor, which carries the
 specification's validation output: **22/22 match at SF 1**, in about three minutes. Q1's four
 validation rows come out exactly as the spec prints them —

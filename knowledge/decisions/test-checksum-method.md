@@ -44,7 +44,7 @@ How do we prove, for every table, that what landed in MySQL equals what the sour
 * [Mathematical functions](/sources/mysql-refman-9-7-mathematical-functions.md): CONV returns a string with 64-bit precision; ROUND on DOUBLE is C-library dependent.
 * [CHECKSUM TABLE](/sources/mysql-refman-9-7-checksum-table.md), [TABLES](/sources/mysql-refman-9-7-information-schema-tables.md).
 
-# Canonical row form (`scripts/canon.py` and the generated SQL must agree byte-for-byte)
+# Canonical row form (`megasamples/canon.py` and the generated SQL must agree byte-for-byte)
 Columns in DDL order, joined by the unit separator U+001F, with each value rendered as below. **The separator must be written as `CHAR(31)` (or `0x1F`) in SQL and `\x1f` in Python — never as `'\x1f'` in a MySQL string literal**: MySQL drops the backslash before an unrecognised escape, so `'a\x1fb'` is the six characters `ax1fb` (`HEX()` = `6178316662`), silently producing a digest that can never match the Python baseline. Verified 2026-09-02 on `mysql:9.7.2`: `SHA2(CONCAT('a',CHAR(31),'b'),256)` and Python `hashlib.sha256(b"a\x1fb")` both give `17315457580335015581` after the CONV/CAST reduction.
 
 | Source type class | Canonical text | MySQL expression |

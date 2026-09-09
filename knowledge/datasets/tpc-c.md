@@ -85,7 +85,7 @@ There is no data file format: every implementation generates rows in memory and 
 # Built and measured (2026-09-04, task B-03)
 sysbench 1.0.20 with Percona's sysbench-tpcc at commit `f110afa8023c7924b1ba00177232a9090624acb5` —
 the commit [the decision](/decisions/tpcc-implementation-choice.md) names — both inside
-`docker/loader.Dockerfile`. At W=1, `--tables=1 --use_fk=0 --threads=1`: **9 tables, 54.2 MB**.
+`engines/mysql/loader.Dockerfile`. At W=1, `--tables=1 --use_fk=0 --threads=1`: **9 tables, 54.2 MB**.
 
 **The first execution task is answered: sysbench connects to MySQL 9.7 without trouble.** The
 concern was `caching_sha2_password`, which 9.x is the only supported plugin for; Debian 12's

@@ -11,6 +11,6 @@ artifacts: [wikipedia_simple/simplewiki-20260901-pages-articles.xml.bz2,
             wikipedia_simple/simplewiki-20260901-redirect.sql.gz,
             wikipedia_simple/simplewiki-20260901-category.sql.gz,
             wikipedia_simple/simplewiki-20260901-site_stats.sql.gz]
-converter: none
+stage: {input: dir}
 load:
   - wikipedia_simple.sql

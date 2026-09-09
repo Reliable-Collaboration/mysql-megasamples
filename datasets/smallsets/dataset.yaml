@@ -1,8 +1,9 @@
 name: smallsets
 database: smallsets
 tier: core
+quick: true
 record: knowledge/decisions/smallsets-database-layout.md
-converter: none
+stage: {input: dir}
 load:
 - smallsets.sql
 licenses:

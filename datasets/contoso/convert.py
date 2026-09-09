@@ -20,8 +20,8 @@ import csv, io, os, re, sys
 import py7zr
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import tsql, ddlutil  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+from megasamples.sources import tsql, ddlutil  # noqa: E402
 
 DDL = ["CreateTablesCommon.sql", "CreateTablesSales.sql", "CreateTablesOrders.sql"]
 csv.field_size_limit(1 << 24)

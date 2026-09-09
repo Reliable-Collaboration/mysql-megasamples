@@ -1,248 +1,93 @@
-# megasamples build orchestration. Every target is a thin shim over a script in scripts/, so the
-# pipeline is testable without make. Target list and rationale: PLAN.md section 2.4.
-# the project venv when uv has created one (duckdb, lxml and py7zr live there), else system python
-PY      ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo python3)
-DATASET ?=
-SF      ?= 1
+# sql-megasamples. Every target is a one-line shim over `python3 -m megasamples <command>`, so
+# `make -n <target>` shows exactly what runs and nothing here is logic. ARCHITECTURE.md explains the
+# pipeline; `make help` lists the commands.
+PY  ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo python3)
+MS   = PYTHONPATH=. $(PY) -m megasamples
+DATASETS := $(shell PYTHONPATH=. $(PY) -m megasamples list --names 2>/dev/null)
+export SF                      # scale factor for the generated benchmarks: make tpch SF=0.01
 
-.PHONY: help check catalogue audit-assets prepub-check release release-check verify-oracle dvdstore-reviews nyc-taxi-yellow chicago-full load-citibike load-divvy gen-tpch gen-tpcds gen-ssb load-tpcc loader-image up down console console-down status clean clean-all test-console wwi-export core core-fast print-core print-core-fast image image-only test-image bench-index-order okf-check provenance build-server build-server-stop clean-context dump
-.PHONY: sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple
+.PHONY: help configure list list-core list-quick fetch build image test-image run up down status clean clean-all \
+        compose console-page catalogue provenance check okf-check audit-assets prepub-check \
+        release release-check test-console build-server build-server-stop loader-image \
+        wwi-export verify-oracle load-citibike load-divvy load-tpcc bench $(DATASETS)
 
 help:
-	@echo "make <dataset>        fetch, stage, load, test one dataset (see CORE_FAST below)"
-	@echo "make image            build the image: every core dataset, then bake. Removes the"
-	@echo "                      build containers when it finishes; KEEP_BUILD_RESOURCES=1 keeps them"
-	@echo "make core             every core dataset (what the image contains)"
-	@echo "make core-fast        the CI subset (PLAN.md section 4.3)"
-	@echo "make check            the local gate: bundle validation + generated files up to date"
-	@echo "make catalogue        regenerate CATALOGUE.md from the built image"
-	@echo "make audit-assets     prove nothing unredistributable is in the repo, image or release"
-	@echo "make prepub-check     the ten-item pre-publication checklist (PLAN section 8.3)"
-	@echo "make release          stage the data-v1 assets (staging only; never publishes)"
-	@echo "make okf-check        validate the knowledge bundle"
-	@echo "make up               the stack: the database, four UIs and the landing page, together"
-	@echo "make down             all of it down again"
-	@echo "make status           what is running: the stack, and any transient container"
-	@echo "make clean            remove the transient containers (build server, export, tests)"
-	@echo "make load-citibike    download one month of Citi Bike trips to this machine and load"
-	@echo "make load-divvy       the same for Divvy (both need their licence accepted; nothing"
-	@echo "                      from either is ever redistributed by this project)"
-	@echo "make verify-oracle    cross-check HR/CO/SH against a real Oracle (Free Use Terms;"
-	@echo "                      the script prints them and will not start until you accept)"
-	@echo "make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server,"
-	@echo "                      Developer EULA -- see the target below; needed once, not per build)"
-	@echo "make build-server     start the throwaway MySQL build server"
-	@echo "make build-server-stop   remove it (this discards everything loaded into it)"
+	@echo "The stack (reads megasamples.yaml; \`make configure\` writes it):"
+	@echo "  make configure        choose engines x datasets and consoles, interactively"
+	@echo "  make run              the whole job: fetch, build, image, for every engine configured"
+	@echo "  make up | down        start the stack (regenerating compose.yaml and the index page) | stop it"
+	@echo "  make status | clean   what is running | remove the transient containers (clean-all: the stack too)"
+	@echo "  make list             every engine, dataset (tier, download size, shape) and console"
+	@echo ""
+	@echo "The pipeline, one step at a time:"
+	@echo "  make fetch D=\"sakila chinook\"   download and verify (once) the named datasets' artifacts"
+	@echo "  make <dataset>        fetch, stage, load and verify one dataset on MySQL, e.g. make sakila"
+	@echo "  make build [ENGINE=mysql] [D=...]   the same for the configured datasets of an engine"
+	@echo "  make image [ENGINE=mysql]           bake the configured datasets into the engine's image"
+	@echo "                        (FROM_DUMPS=1: from the dumps already built, without the build server)"
+	@echo "  make test-image [ENGINE=mysql]      the image-level tests"
+	@echo "  make test-console     the consoles are up and the accounts behave"
+	@echo ""
+	@echo "Documents and checks:"
+	@echo "  make check            the local gate: bundle validation + generated files up to date"
+	@echo "  make catalogue | provenance         regenerate CATALOGUE.md | LICENSE, PROVENANCE, NOTICE files"
+	@echo "  make audit-assets | prepub-check    nothing unredistributable is shipped | the release checklist"
+	@echo "  make release          stage the release assets (staging only; never publishes)"
+	@echo ""
+	@echo "Source-side tools (each prints its licence gate and refuses until you accept):"
+	@echo "  make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server EULA)"
+	@echo "  make verify-oracle    cross-check the Oracle datasets against Oracle Free (Free Use Terms)"
+	@echo "  make load-citibike | load-divvy     one month of bike-share trips, never redistributed"
+	@echo "  make load-tpcc W=1    TPC-C through sysbench in the loader image (make loader-image first)"
+	@echo ""
+	@echo "  python3 -m megasamples --help       every command, with its own --help"
 
-# --- per-dataset pipeline: fetch -> stage -> load -> test ---------------------------------
-define DATASET_RULE
-$(1):
-	@echo "== $(1): fetch"    && $$(PY) scripts/fetch.py $(1)
-	@echo "== $(1): stage"    && $$(PY) scripts/stage.py $(1)
-	@echo "== $(1): load"     && $$(PY) scripts/load.py  $(1)
-	@echo "== $(1): test"     && $$(PY) scripts/verify.py $(1)
-endef
-$(foreach d,adventureworks_dw wideworldimporters wideworldimporters_dw bts_ontime contoso_1m contoso_10m stackexchange_dba enron_full wikipedia_simple_full sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi chicago_crimes stackexchange_beer lahman enron wikipedia_simple,$(eval $(call DATASET_RULE,$(d))))
+configure:      ; @$(MS) configure
+list:           ; @$(MS) list
+list-core:      ; @$(MS) list --names --select core | tr '\n' ' '
+list-quick:     ; @$(MS) list --names --select quick | tr '\n' ' '
+fetch:          ; @$(MS) fetch $(D)
+build:          ; @$(MS) build $(if $(ENGINE),--engine $(ENGINE),) $(D)
+image:          ; @$(MS) image $(if $(ENGINE),--engine $(ENGINE),) $(if $(KEEP_BUILD_RESOURCES),--keep,) $(if $(FROM_DUMPS),--from-dumps,) $(D)
+test-image:     ; @$(MS) test-image $(if $(ENGINE),--engine $(ENGINE),) $(D)
+run:            ; @$(MS) run
+up:             ; @$(MS) up
+down:           ; @$(MS) down
+status:         ; @$(MS) status
+clean:          ; @$(MS) clean
+clean-all:      ; @$(MS) clean --all
+compose:        ; @$(MS) compose
+console-page:   ; @$(MS) console-page
+catalogue:      ; @$(MS) catalogue
+provenance:     ; @$(MS) provenance
+check:          ; @$(MS) check
+okf-check:      ; @$(MS) okf-check --bundle knowledge && $(MS) okf-fix-quotes --bundle knowledge --check
+audit-assets:   ; @$(MS) audit-assets
+prepub-check:   ; @$(MS) prepub-check
+release:        ; @$(MS) release stage
+release-check:  ; @$(MS) release check
+test-console:   ; @$(MS) test-console
+build-server:   ; @$(MS) build-server start
+build-server-stop: ; @$(MS) build-server stop
+bench:          ; @$(MS) bench --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)
 
-# every core dataset: what the published image contains
-CORE := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \
-        oracle_sh employees adventureworks_lt adventureworks dvdstore contoso nyc_taxi \
-        chicago_crimes stackexchange_beer lahman enron wikipedia_simple
-
-# the CI subset (PLAN.md section 4.3). Six datasets are deliberately outside it:
-#   lahman           maintainer-supplied: there is no URL a build can fetch (manifest `manual: true`)
-#   chicago_crimes   a live API whose content, and so its sha256, changes daily
-#   enron 443 MB, wikipedia_simple 540 MB, oracle_sh 91 MB, adventureworks (69 tables, the longest
-#                    conversion) -- download and wall-clock budget on a hosted runner
-# The first two become CI-able once R-02 publishes them as release assets; the rest stay local.
-CORE_FAST := sakila chinook northwind pubs smallsets jaffle_shop oracle_hr oracle_co oracle_oe \
-             adventureworks_lt dvdstore contoso nyc_taxi stackexchange_beer employees
-
-core: $(CORE)
-
-core-fast: $(CORE_FAST)
-
-# build the image from whatever datasets are named in DATASETS (default: the core-fast set)
-DATASETS ?= $(CORE)
-image: $(DATASETS) image-only
-
-# bake what is already loaded in the build server, without re-running the datasets. CI uses this
-# after `make core-fast` so the pipeline is not run twice.
-#
-# When the image is built the build server has done its job, so it is removed -- it is a container
-# holding a second copy of every dataset, and leaving it up is how a machine ends up with a 28-hour
-# MySQL nobody remembers starting. `KEEP_BUILD_RESOURCES=1` keeps it, which is what you want while
-# developing a converter: the next `make <dataset>` then reuses the loaded data instead of reloading.
-image-only:
-	@$(PY) scripts/db.py start
-	@for d in $(DATASETS); do $(PY) scripts/dump.py $$d; done
-	@$(PY) scripts/registry.py $(DATASETS)
-	@DOCKER_BUILDKIT=1 docker build -f docker/Dockerfile -t mysql-megasamples:dev .
-	@echo "built mysql-megasamples:dev with: $(DATASETS)"
-	@if [ -n "$(KEEP_BUILD_RESOURCES)" ]; then \
-	    echo "keeping the build resources up (KEEP_BUILD_RESOURCES set); \`make clean\` removes them"; \
-	 else \
-	    echo "removing the build resources; KEEP_BUILD_RESOURCES=1 keeps them next time"; \
-	    $(PY) scripts/workspace.py clean; \
-	 fi
-
-test-image:
-	@$(PY) tests/image_test.py $(DATASETS)
-
-build-server:
-	@$(PY) scripts/db.py start
-build-server-stop:
-	@$(PY) scripts/db.py stop
-clean-context:
-	rm -rf docker/context/*
-
-# WideWorldImporters is the only dataset with no script or CSV form. Producing it means running
-# SQL Server 2022 Developer Edition, which means accepting Microsoft's EULA; the script refuses to
-# start until you say so, and prints the terms. Nothing licensed under that EULA is redistributed --
-# the container is deleted afterwards and only the exported data, which is MIT, is kept.
-#   MEGASAMPLES_ACCEPT_MSSQL_EULA=1 make wwi-export
-# You only need this to re-derive the export. Building or using the databases does not.
-wwi-export:
-	@$(PY) scripts/fetch.py wideworldimporters wideworldimporters_dw
-	@$(PY) scripts/wwi_export.py
-
-# V-01: load HR, CO and SH into a real Oracle from the same upstream scripts and compare every
-# table against what MySQL holds. Runs Oracle AI Database Free in a container under the Oracle Free
-# Use Terms; the script prints them and refuses to start until you accept:
-#   MEGASAMPLES_ACCEPT_ORACLE_LICENSE=1 make verify-oracle
-# Nothing Oracle produces is redistributed and the container is removed when it finishes. SQLcl is
-# not needed -- the image ships SQL*Loader, which loads the SH CSVs.
-verify-oracle:
-	@$(PY) scripts/verify_oracle.py $(if $(ONLY),--only $(ONLY),) $(if $(KEEP),--keep,)
-
-# Extended tier: 3,475,226 yellow trips appended to a loaded `nyc_taxi` (which must exist first).
-nyc-taxi-yellow:
-	@$(PY) scripts/fetch.py nyc_taxi_yellow
-	@$(PY) scripts/stage.py nyc_taxi_yellow
-	@$(PY) scripts/load.py  nyc_taxi_yellow
-	@$(PY) scripts/verify.py nyc_taxi_yellow
-
-# Extended tier: 8.2 M crimes (2001..2024) appended to a loaded `chicago_crimes`. One CSV per year,
-# ~2.5 GB of download; the digests drift because the portal revises closed years.
-chicago-full:
-	@$(PY) scripts/fetch.py chicago_crimes_full
-	@$(PY) scripts/stage.py chicago_crimes_full
-	@$(PY) scripts/load.py  chicago_crimes_full
-	@$(PY) scripts/verify.py chicago_crimes_full
-
-# Citi Bike and Divvy are the only datasets whose data this project never redistributes: their
-# licences forbid publishing it as a stand-alone dataset. The loader downloads one month from Lyft's
-# own bucket to your machine, which is where the licence attaches, and refuses to start until you
-# accept it. Nothing is mirrored, committed or shipped.
-#   MEGASAMPLES_ACCEPT_BIKESHARE_LICENSE=1 make load-citibike [MONTH=JC-202602]
-load-citibike:
-	@$(PY) scripts/bikeshare.py citibike $(if $(MONTH),--month $(MONTH),)
-
-load-divvy:
-	@$(PY) scripts/bikeshare.py divvy $(if $(MONTH),--month $(MONTH),)
-
-# TPC-H, generated on this machine. No TPC data is shipped or committed; SF=1 is about 1.5 GB
-# loaded, SF=0.01 is a ten-second smoke test.
-gen-tpch:
-	@SF=$(SF) $(PY) scripts/stage.py tpch
-	@$(PY) scripts/load.py  tpch
-	@$(PY) scripts/verify.py tpch
-
-# TPC-DS, generated on this machine. Same licence position as TPC-H: nothing TPC-authored is
-# shipped or committed.
-gen-tpcds:
-	@SF=$(SF) $(PY) scripts/stage.py tpcds
-	@$(PY) scripts/load.py  tpcds
-	@$(PY) scripts/verify.py tpcds
-
-# The build-time loader image: compiles SSB's dbgen and carries sysbench for TPC-C. Nothing from it
-# reaches the published MySQL image.
+# the build-time loader image: compiles SSB's dbgen and carries sysbench for TPC-C. Nothing from it
+# reaches any published image.
 loader-image:
-	@$(PY) scripts/pull_image.py debian:12-slim
-	@DOCKER_BUILDKIT=1 docker build -f docker/loader.Dockerfile -t mms-loader:dev .
+	@$(MS) pull-image debian:12-slim
+	@DOCKER_BUILDKIT=1 docker build -f engines/mysql/loader.Dockerfile -t sql-megasamples-loader:dev .
 
-gen-ssb:
-	@SF=$(SF) $(PY) scripts/stage.py ssb
-	@$(PY) scripts/load.py  ssb
-	@$(PY) scripts/verify.py ssb
+#   MEGASAMPLES_ACCEPT_MSSQL_EULA=1 make wwi-export
+wwi-export:
+	@$(MS) fetch wideworldimporters wideworldimporters_dw
+	@$(MS) wwi-export
+#   MEGASAMPLES_ACCEPT_ORACLE_LICENSE=1 make verify-oracle [ONLY=oracle_hr] [KEEP=1]
+verify-oracle:  ; @$(MS) verify-oracle $(if $(ONLY),--only $(ONLY),) $(if $(KEEP),--keep,)
+#   MEGASAMPLES_ACCEPT_BIKESHARE_LICENSE=1 make load-citibike [MONTH=JC-202602]
+load-citibike:  ; @$(MS) bikeshare citibike $(if $(MONTH),--month $(MONTH),)
+load-divvy:     ; @$(MS) bikeshare divvy $(if $(MONTH),--month $(MONTH),)
+load-tpcc:      ; @$(MS) tpcc-load --warehouses $(or $(W),1)
 
-# TPC-C through sysbench-tpcc, in the loader image. Unlike every other dataset this one has no
-# pinned digests: two loads with the same seed produce different data in eight of nine tables, which
-# is a property of the generator (see knowledge/datasets/tpc-c.md). Counts are stable; content is not.
-load-tpcc:
-	@$(PY) scripts/tpcc_load.py --warehouses $(or $(W),1)
-
-# The stack: the database, the four UIs and the landing page, up together (PLAN.md section 12).
-# `docker compose up -d mysql` still starts the database on its own. No UI is baked into the image.
-up console:
-	@$(PY) scripts/console_page.py --container megasamples-mysql 2>/dev/null || true
-	@docker compose up -d
-	@$(PY) scripts/console_page.py --container megasamples-mysql
-	@docker compose restart console >/dev/null
-	@echo "console at http://127.0.0.1:8080/  (phpMyAdmin 8081, Adminer 8082, DbGate 8083, CloudBeaver 8084)"
-
-down console-down:
-	@docker compose down
-
-# What is running, and getting rid of what should not be. `clean` removes the transient containers
-# -- the build server, the SQL Server for the WWI export, the loader, the test servers -- and leaves
-# the stack alone; `clean-all` takes the stack down too. Removing the build server discards the
-# datasets loaded into it, which is why nothing does it automatically: reloading them takes hours.
-status:
-	@$(PY) scripts/workspace.py status
-clean:
-	@$(PY) scripts/workspace.py clean
-clean-all:
-	@$(PY) scripts/workspace.py clean --all
-
-test-console:
-	@$(PY) tests/console_test.py
-
-bench-index-order:
-	@$(PY) scripts/bench_index_order.py --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)
-
-provenance:
-	@$(PY) scripts/gen_provenance.py
-
-catalogue:
-	@$(PY) scripts/catalogue.py
-
-# PLAN.md section 8.3 items 4, 5 and 6: nothing that may not be redistributed is in the repository,
-# the image or the staged release.
-audit-assets:
-	@$(PY) scripts/audit_assets.py
-
-# PLAN.md section 8.3, all ten items. Run it before publishing, not only when preparing: these are
-# the checks that must still hold on the day the release actually goes out.
-prepub-check:
-	@$(PY) scripts/prepub_check.py
-
-# Stage the data-v1 release assets and verify them. Staging only: this never publishes anything,
-# and creating the release is the maintainer's step (task R-02).
-release:
-	@$(PY) scripts/release.py stage
-release-check:
-	@$(PY) scripts/release.py check
-
-# used by CI to pass the same list to `make image` and `make test-image`
-print-core-fast:
-	@echo $(CORE_FAST)
-print-core:
-	@echo $(CORE)
-
-# the local gate, in place of CI: everything that does not need a build. `make core-fast`,
-# `make image` and `make test-image` are the rest of it, and they run in Docker on this machine.
-check:
-	@$(PY) scripts/okf_check.py
-	@$(PY) scripts/gen_provenance.py --check
-	@$(PY) scripts/catalogue.py --check
-
-# extended tier: loads the 190 MB review tables into an already-loaded dvdstore
-dvdstore-reviews:
-	@echo "== dvdstore_reviews: fetch" && $(PY) scripts/fetch.py dvdstore_reviews
-	@echo "== dvdstore_reviews: stage" && $(PY) scripts/stage.py dvdstore_reviews
-	@echo "== dvdstore_reviews: load"  && $(PY) scripts/load.py dvdstore_reviews
-
-okf-check:
-	@$(PY) scripts/okf_check.py --bundle knowledge
-	@$(PY) scripts/okf_fix_quotes.py --bundle knowledge --check
+# one target per dataset: fetch, stage, load and verify it on MySQL
+$(DATASETS):
+	@$(MS) build --engine mysql $@

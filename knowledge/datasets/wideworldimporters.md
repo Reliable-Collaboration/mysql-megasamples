@@ -52,7 +52,7 @@ Release `wide-world-importers-v1.0` (2016-06-08; no auth; no checksums): `WideWo
 # Built and measured (2026-09-03, task X-02)
 Restored from `WideWorldImporters-Standard.bak` (sha256 `066279a8cd28c8d85cbd8215ea71a5d672b420cfbc19756b635c27bd8027dada`,
 126,951,424 B — the size this record predicted, to the byte) in SQL Server 2022 Developer Edition
-(16.0.4265.3, CU26) and exported by `scripts/wwi_export.py`. In MySQL: **48 tables, 4,713,833 rows,
+(16.0.4265.3, CU26) and exported by `megasamples/sources/wwi_export.py`. In MySQL: **48 tables, 4,713,833 rows,
 633.7 MB in InnoDB**, loading in 18.5 s, with **98 foreign keys and 0 orphans**, 46 secondary indexes,
 30 AUTO_INCREMENT columns, 14 smoke queries and 4 plan tests pinned.
 
@@ -85,7 +85,7 @@ dimension-key defect in the [DW record](/datasets/wideworldimporters-dw.md).
   exactly this: a changed non-null count.
 * **JSON**: seven columns become MySQL `JSON`, and every value is parsed during conversion rather
   than trusted. MySQL normalises JSON on storage, so the stored bytes are not the source bytes, and
-  `scripts/canon.py` excludes JSON columns from the row digest — the pinned smoke queries cover them
+  `megasamples/canon.py` excludes JSON columns from the row digest — the pinned smoke queries cover them
   instead.
 * **`geography` → `POINT SRID 4326`**, loaded with `ST_GeomFromText(..., 4326, 'axis-order=long-lat')`.
   SQL Server's `STAsText()` writes longitude first; MySQL reads SRID 4326 latitude-first unless told
@@ -105,7 +105,7 @@ Four of the thirteen suppliers hold **a single NUL character** as `DeliveryAddre
 not an empty string. `bcp -c` writes NULL and `''` identically (as nothing), so the export tags fields:
 `0x00` alone means NULL and `0x01` introduces a value. A bare-NUL-means-NULL convention read those four
 real values as NULL, and the per-column non-null counts caught it (9 parsed against 13 counted) before
-anything was loaded. Consequence worth knowing: `scripts/canon.py` uses NUL as its NULL sentinel inside
+anything was loaded. Consequence worth knowing: `megasamples/canon.py` uses NUL as its NULL sentinel inside
 the digest text, so a value that *is* a lone NUL digests the same as NULL. The counts, which come from
 SQL Server, are what distinguishes them.
 

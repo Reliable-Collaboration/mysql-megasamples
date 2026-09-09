@@ -1,8 +1,9 @@
 name: jaffle_shop
 database: jaffle_shop
 tier: core
+quick: true
 record: knowledge/datasets/jaffle-shop.md
-converter: none
+stage: {input: dir}
 load:
 - jaffle_shop.sql
 licenses:

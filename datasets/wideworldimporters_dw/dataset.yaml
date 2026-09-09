@@ -4,7 +4,7 @@ tier: extended
 record: knowledge/datasets/wideworldimporters-dw.md
 licenses: [mit, natural-earth-public-domain, us-government-public-domain]
 artifacts: [wideworldimporters_dw/WideWorldImportersDW-Standard.bak]
-converter: none
+stage: {input: export}
 load:
   - wideworldimporters_dw.sql
 # Re-deriving this database from Microsoft's .bak runs SQL Server, which needs its EULA accepted.

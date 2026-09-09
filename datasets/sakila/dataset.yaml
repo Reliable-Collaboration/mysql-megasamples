@@ -3,13 +3,16 @@
 name: sakila
 database: sakila
 tier: core
+quick: true
 record: knowledge/datasets/sakila.md
 licenses: [bsd-3-clause-sakila]
 artifacts: [sakila/sakila-db.zip]
 # Native-SQL dataset: the upstream files are run unchanged, so there is no converter to produce a
 # baseline before MySQL is involved. Per the documented exception in the checksum decision, the
 # baseline is the upstream-documented counts plus the digests of the first verified load.
-converter: none
+stage:
+  extract:
+    sakila/sakila-db.zip: [sakila-db/sakila-schema.sql, sakila-db/sakila-data.sql]
 load:
   - sakila-schema.sql
   - sakila-data.sql

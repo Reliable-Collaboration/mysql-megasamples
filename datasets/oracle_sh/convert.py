@@ -15,8 +15,8 @@ Record: knowledge/datasets/oracle-sh.md
 import csv, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import oracle_convert, plsql  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+from megasamples.sources import oracle_convert, plsql  # noqa: E402
 
 DATABASE = "oracle_sh"
 SCRIPTS = ["sh_create.sql", "sh_populate.sql"]
@@ -25,7 +25,7 @@ CSV_TABLES = [("costs", "costs.csv"), ("customers", "customers.csv"),
               ("promotions", "promotions.csv"), ("sales", "sales.csv"),
               ("times", "times.csv"),
               ("supplementary_demographics", "supplementary_demographics.csv")]
-# the container path of the read-only mount that scripts/db.py gives the build server
+# the container path of the read-only mount that megasamples/engines/mysql/server.py gives the build server
 CONTEXT = "/context/oracle_sh"
 csv.field_size_limit(1 << 20)
 

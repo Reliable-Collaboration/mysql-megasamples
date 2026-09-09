@@ -33,7 +33,7 @@ How are the two tiers delivered and how does a user opt in to the extended tier?
 
 # Outcome
 * Tier thresholds: **core** = loaded InnoDB size ≤ 50 MB per dataset, plus a small set of "medium" core datasets (Employees, Sakila-sized and up to roughly 200 MB each) such that the core image stays under 2 GB compressed; **extended** = anything larger, anything generated, anything requiring click-through or login upstream.
-* Extended opt-in: `docker compose --profile extended up` starts the same MySQL image plus a `loader` service (built from `docker/loader.Dockerfile`, containing mysqlsh, duckdb, python) that reads `manifest.yaml`, downloads verified assets into `./downloads/`, and loads them with `util.loadDump`. `make load-<dataset>` does the same for a running container. Generators: `make gen-tpch SF=1` etc.
+* Extended opt-in: `docker compose --profile extended up` starts the same MySQL image plus a `loader` service (built from `engines/mysql/loader.Dockerfile`, containing mysqlsh, duckdb, python) that reads `manifest.yaml`, downloads verified assets into `./downloads/`, and loads them with `util.loadDump`. `make load-<dataset>` does the same for a running container. Generators: `make gen-tpch SF=1` etc.
 * Every dataset record states its tier with the size evidence; the summary table lives in PLAN.md §7.
 
 # Status

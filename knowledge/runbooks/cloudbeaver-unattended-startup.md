@@ -127,5 +127,5 @@ curl -s -b $J -X POST http://127.0.0.1:8084/api/gql -H 'Content-Type: applicatio
 ```
 
 `configurationMode: false` plus a non-empty `userConnections` is the pair worth asserting;
-`tests/console_test.py` asserts exactly that, because HTTP 200 does not distinguish a working console
+`megasamples/console_test.py` asserts exactly that, because HTTP 200 does not distinguish a working console
 from a wizard.

@@ -43,7 +43,7 @@ stale_after: "2027-03-01"
 # Accepted (2026-09-03, task X-02)
 The maintainer accepted these terms explicitly, and the acceptance is recorded rather than implied:
 
-* `scripts/mssql.py` **refuses to start the container** until `MEGASAMPLES_ACCEPT_MSSQL_EULA=1` is set
+* `megasamples/sources/mssql.py` **refuses to start the container** until `MEGASAMPLES_ACCEPT_MSSQL_EULA=1` is set
   or `--accept-eula` is passed, and prints the terms and the link first. `ACCEPT_EULA=Y` is set only
   after that.
 * The run records how acceptance was given, alongside the image digest and engine build, in

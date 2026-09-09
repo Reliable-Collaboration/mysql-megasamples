@@ -12,6 +12,6 @@ artifacts:
   - wikipedia_simple/simplewiki-20260901-redirect.sql.gz
   - wikipedia_simple/simplewiki-20260901-category.sql.gz
   - wikipedia_simple/simplewiki-20260901-site_stats.sql.gz
-converter: none
+stage: {input: dir, source: wikipedia_simple, converter: wikipedia_simple, args: [--full]}
 load:
   - wikipedia_simple_full.sql

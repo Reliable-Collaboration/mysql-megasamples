@@ -1,6 +1,7 @@
 name: employees
 database: employees
 tier: core-medium
+quick: true
 record: knowledge/datasets/employees.md
 licenses: [cc-by-sa-3-0]
 artifacts:
@@ -14,6 +15,6 @@ artifacts:
   - employees/load_salaries2.dump
   - employees/load_salaries3.dump
   - employees/objects.sql
-converter: none
+stage: {input: dir}
 load:
   - employees.sql

@@ -1,4 +1,4 @@
-# Every downloadable artifact the build needs. scripts/fetch.py is the only reader.
+# Every downloadable artifact the build needs. megasamples/fetch.py is the only reader.
 # Adding a mirror never requires editing build logic. See PLAN.md section 2.5.
 #
 #   id            unique key; also the filename under downloads/

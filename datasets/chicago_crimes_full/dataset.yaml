@@ -29,6 +29,6 @@ artifacts:
   - chicago_crimes/full/crimes_2022.csv
   - chicago_crimes/full/crimes_2023.csv
   - chicago_crimes/full/crimes_2024.csv
-converter: none
+stage: {input: dir, source: chicago_crimes, converter: chicago_crimes, args: [--full]}
 load:
   - chicago_crimes_full.sql

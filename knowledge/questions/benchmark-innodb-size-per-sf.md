@@ -25,7 +25,7 @@ sources:
 What are `SUM(data_length+index_length)` from `information_schema.TABLES`, `du -sh` of the tablespaces, and wall-clock generate+load times for: tpch SF 0.01/0.1/1/10; tpcds SF 0.01/0.1/1; tpcc W 1/10/100; ssb SF 0.01/1/10 — on the reference build machine, with the index sets in the dataset records?
 
 # Cheapest experiment
-`make gen-<ds> SF=…` for each size on the `mysql-build` service, then `scripts/verify.py sizes` writes the numbers into each dataset record's "Tier assignment" and PLAN.md §7; keep the 1.5–3× estimate marked inferred until then.
+`make gen-<ds> SF=…` for each size on the `mysql-build` service, then `megasamples/verify.py sizes` writes the numbers into each dataset record's "Tier assignment" and PLAN.md §7; keep the 1.5–3× estimate marked inferred until then.
 
 # Resolves
 Default SF/W documented in README, disk-space warnings, CI smoke sizes for [TPC-H](/datasets/tpc-h.md), [TPC-DS](/datasets/tpc-ds.md), [TPC-C](/datasets/tpc-c.md), [SSB](/datasets/ssb.md).

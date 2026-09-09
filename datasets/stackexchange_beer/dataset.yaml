@@ -1,9 +1,10 @@
 name: stackexchange_beer
 database: stackexchange_beer
 tier: core
+quick: true
 record: knowledge/datasets/stackexchange.md
 licenses: [cc-by-sa-4-0]
 artifacts: [stackexchange_beer/beer.stackexchange.com.7z]
-converter: none
+stage: {input: dir}
 load:
   - stackexchange_beer.sql

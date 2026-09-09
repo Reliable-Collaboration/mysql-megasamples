@@ -1,7 +1,7 @@
 ---
 type: Open Question
 title: Is there an OKF v0.2 validator we can run in CI?
-description: Neither GoogleCloudPlatform/open-knowledge-format nor knowledge-catalog ships a validator (only the reference agent has an OKFDocument.validate that requires a `type`); the PyPI `okf` package is an unrelated stub; the repository owns its own checker, scripts/okf_check.py.
+description: Neither GoogleCloudPlatform/open-knowledge-format nor knowledge-catalog ships a validator (only the reference agent has an OKFDocument.validate that requires a `type`); the PyPI `okf` package is an unrelated stub; the repository owns its own checker, megasamples/okf_check.py.
 resource: /questions/okf-validator-availability.md
 tags:
 - okf
@@ -30,7 +30,7 @@ sources:
 ---
 
 # Question
-Is there an official OKF v0.2 validator that CI can run instead of, or in addition to, the project-owned `scripts/okf_check.py`?
+Is there an official OKF v0.2 validator that CI can run instead of, or in addition to, the project-owned `megasamples/okf_check.py`?
 
 ## What exists (verified)
 * `open-knowledge-format` root: `SPEC.md`, `bundles/`, `connectors/`, `samples/`, `src/`, `tests/`, `pyproject.toml`; no `tools/`, `okf/`, `scripts/` or `validator/` (404 for each). The package is `reference-agent` 0.1.0 (Apache-2.0 header, `requires-python >=3.11`, depends on `google-adk>=2.0`, `google-cloud-bigquery`, `pyyaml`, `pydantic`, `markdownify`), a bundle-*producing* agent, not a checker ([repo record](/sources/github-open-knowledge-format-repo.md)).
@@ -40,7 +40,7 @@ Is there an official OKF v0.2 validator that CI can run instead of, or in additi
 * Conformance rules to check come from the spec: frontmatter parseable YAML with non-empty `type`; reserved files `index.md`/`log.md`; consumers must tolerate broken links and unknown keys ([spec record](/sources/okf-spec-v0-2.md)); project conventions add `trust`, `verified` presence when `trust: verified`, absolute links, and an `index.md` per directory listing every file ([conventions](/runbooks/knowledge-bundle-conventions.md)).
 
 # Cheapest experiment
-Own the check. `scripts/okf_check.py` (PyYAML only), run in CI as a warning until the bundle is marked stable, then as a failure:
+Own the check. `megasamples/okf_check.py` (PyYAML only), run in CI as a warning until the bundle is marked stable, then as a failure:
 
 ```python
 #!/usr/bin/env python3
@@ -96,7 +96,7 @@ Records that depend on the answer:
 
 # Answer (2026-09-04, task R-02)
 
-**No official validator exists, and `scripts/okf_check.py` is the one this project runs.** The
+**No official validator exists, and `megasamples/okf_check.py` is the one this project runs.** The
 `open-knowledge-format` repository ships `SPEC.md`, `bundles/`, `connectors/`, `samples/`, `src/` and
 `tests/` — and no validation entry point: the only validation code is
 `src/reference_agent/bundle/document.py`, which checks that `type` is present. There is no package to
@@ -109,5 +109,5 @@ five verbs, and every internal link resolving. That last rule is why `bundle_sta
 links are warnings while the bundle says `draft` and errors once it says `stable`, which it now does.
 
 This should be revisited if the format publishes a reference validator; until then, "valid OKF" for
-this repository means "passes `scripts/okf_check.py`", and the record says so rather than implying an
+this repository means "passes `megasamples/okf_check.py`", and the record says so rather than implying an
 external authority.

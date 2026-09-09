@@ -79,10 +79,10 @@ CREATE TABLE lineorder (lo_orderkey BIGINT NOT NULL, lo_linenumber TINYINT NOT N
 (The generated column `d_iso_date` is our addition for convenience; `lo_orderdate`/`lo_commitdate` stay INT `YYYYMMDD` as in the paper so the canonical queries' `lo_orderdate = d_datekey` join is unchanged. `doc/ssb.ri`'s single-column `lineorder(lo_orderkey)` PK is wrong — the paper's compound key is used.)
 
 # Conversion path
-**Chosen** ([decision](/decisions/ssb-generator-path.md)): a builder stage (gcc + cmake) clones ssb-dbgen at the pinned commit, `cmake -B build -DEOL_HANDLING=ON && cmake --build build`, and the resulting `dbgen` + `dists.dss` are copied into the loader image (~100 KB); `make gen-ssb SF=1` runs `dbgen -b dists.dss -s $SF -T a -v`, computes `baseline.json` from the `.tbl` files with `scripts/canon.py`, loads with `LOAD DATA LOCAL INFILE … FIELDS TERMINATED BY '|'` (no trailing pipe thanks to EOL_HANDLING=ON; else `LINES TERMINATED BY '|\n'`), dimensions first, then lineorder pre-sorted by (lo_orderkey, lo_linenumber) (dbgen order), then `indexes.sql`, `constraints.sql`, `ANALYZE`. The 13 queries are shipped as `datasets/ssb/queries/q1_1.sql … q4_3.sql` written from the paper (authors' own SQL, 10–20 lines each).
+**Chosen** ([decision](/decisions/ssb-generator-path.md)): a builder stage (gcc + cmake) clones ssb-dbgen at the pinned commit, `cmake -B build -DEOL_HANDLING=ON && cmake --build build`, and the resulting `dbgen` + `dists.dss` are copied into the loader image (~100 KB); `make gen-ssb SF=1` runs `dbgen -b dists.dss -s $SF -T a -v`, computes `baseline.json` from the `.tbl` files with `megasamples/canon.py`, loads with `LOAD DATA LOCAL INFILE … FIELDS TERMINATED BY '|'` (no trailing pipe thanks to EOL_HANDLING=ON; else `LINES TERMINATED BY '|\n'`), dimensions first, then lineorder pre-sorted by (lo_orderkey, lo_linenumber) (dbgen order), then `indexes.sql`, `constraints.sql`, `ANALYZE`. The 13 queries are shipped as `datasets/ssb/queries/q1_1.sql … q4_3.sql` written from the paper (authors' own SQL, 10–20 lines each).
 
 # Built and measured (2026-09-04, task B-04)
-Generated at SF 1 by ssb-dbgen compiled inside `docker/loader.Dockerfile`, loaded into MySQL:
+Generated at SF 1 by ssb-dbgen compiled inside `engines/mysql/loader.Dockerfile`, loaded into MySQL:
 **5 tables, 6,235,730 rows, 1,272.5 MB in InnoDB**, loading in 35.1 s with 17 indexes and 4 foreign
 keys, 0 orphans.
 

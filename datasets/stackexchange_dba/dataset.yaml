@@ -4,6 +4,6 @@ tier: extended
 record: knowledge/datasets/stackexchange.md
 licenses: [cc-by-sa-4-0]
 artifacts: [stackexchange_dba/dba.stackexchange.com.7z]
-converter: none
+stage: {input: dir, converter: stackexchange_beer, args: [--site, dba]}
 load:
   - stackexchange_dba.sql

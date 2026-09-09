@@ -41,7 +41,7 @@ How do we turn `instnwnd.sql` (1 MB) and `instpubs.sql` (126 KB) into MySQL 9.7 
 Option 1. Pin the two blobs by SHA (`ae61e5631d7f...`, `d887fd48cb06...`), commit the translated MySQL scripts plus the translator, and verify with the INSERT-derived row counts. Known deviations to document: dropped `CK_Birthdate` (non-deterministic), `LIKE` character classes rewritten to `REGEXP`, OLE-wrapped pictures kept as-is, `COMPUTE BY` procedures (if present in pubs `reptq*`) simplified.
 
 # Implementation (2026-09-02, S-03)
-`scripts/tsql.py` is the shared translator; both datasets use it. Constructs it handles, each found by a real load failure rather than by reading the script:
+`megasamples/sources/tsql.py` is the shared translator; both datasets use it. Constructs it handles, each found by a real load failure rather than by reading the script:
 
 | Construct | Handling |
 |---|---|

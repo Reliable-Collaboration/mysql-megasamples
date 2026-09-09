@@ -68,7 +68,7 @@ The friendlier form exists and is current: plain UTF-8 CSVs loaded by `BULK INSE
 CSV + DDL translated from `instawdb.sql`, loaded with `LOAD DATA LOCAL INFILE`; no SQL Server. See [decision](/decisions/mssql-adventureworks-conversion-path.md). Fallback for the three exotic column types is a one-off SQL Server round-trip (or the documented binary decoders).
 
 # Routines ported (2026-09-04, task V-02)
-`scripts/tsqlbody.py` translates the routine bodies. Of this database's 31 routines, **16 are
+`megasamples/sources/tsqlbody.py` translates the routine bodies. Of this database's 31 routines, **16 are
 created and accepted by MySQL** -- 10 functions and 6 procedures -- and 15 are refused, each with a
 reason the converter prints. Nothing is emitted on a guess.
 
@@ -90,7 +90,7 @@ digits rounds straight back up to the next day. Routine types widen to `DATETIME
 unchanged. The function now returns `2004-06-30 23:59:59.998`.
 
 # Type-mapping hazards
-* **hierarchyid** (three columns: Employee.OrganizationNode, Document.DocumentNode, ProductDocument.DocumentNode). **As built**: the raw bytes stay in a `VARBINARY(892)` column and a decoded `<column>_path VARCHAR(300)` sits beside it, written by `scripts/hierarchyid.py`. No SQL Server round-trip was needed — the decoder is checked against every row instead: all 290 employee paths have the depth the shipped `OrganizationLevel` states, all 290 re-encode to their original bytes, and every parent path exists. `GetLevel()` becomes the materialised level column from the data file.
+* **hierarchyid** (three columns: Employee.OrganizationNode, Document.DocumentNode, ProductDocument.DocumentNode). **As built**: the raw bytes stay in a `VARBINARY(892)` column and a decoded `<column>_path VARCHAR(300)` sits beside it, written by `megasamples/sources/hierarchyid.py`. No SQL Server round-trip was needed — the decoder is checked against every row instead: all 290 employee paths have the depth the shipped `OrganizationLevel` states, all 290 re-encode to their original bytes, and every parent path exists. `GetLevel()` becomes the materialised level column from the data file.
 * **geography** (Person.Address.SpatialLocation). **As built**: `POINT SRID 4326`, decoded from the 22-byte serialization (SRID, version, flags, then latitude and longitude as little-endian doubles) and loaded with `ST_GeomFromText(..., 4326)`. Address 1 is 47.7869921906598, -122.164644615406 — Bothell, WA, as the row says — and all 19,614 points carry a latitude inside [-90, 90]. MySQL's axis order for 4326 was [measured](/sources/mysql-9-7-srid-4326-axis-order-probe.md), not assumed.
 * **xml** (Person.Person.AdditionalContactInfo/Demographics, JobCandidate.Resume, ProductModel.CatalogDescription/Instructions, Store.Demographics, Illustration.Diagram, DatabaseLog.XmlEvent): -> `LONGTEXT`/`MEDIUMTEXT`; XML schema collections and primary XML indexes dropped; XQuery-based views (vAdditionalContactInfo, vJobCandidate*, vProductModelCatalogDescription, vProductModelInstructions, vStoreWithDemographics, vPersonDemographics, vIndividualCustomer) cannot be ported as-is (MySQL has only `ExtractValue`).
 * **money/smallmoney** (48 columns) -> `DECIMAL(19,4)` / `DECIMAL(10,4)`; `uniqueidentifier` (29 rowguid) -> `CHAR(36)` (or `BINARY(16)`); `varbinary(max)` -> `LONGBLOB` (hex in CSV -> `UNHEX()` in `SET`); `datetime` -> `DATETIME(3)`; `time(7)` (Shift) -> `TIME(6)`; `bit`/`Flag`/`NameStyle` -> `TINYINT(1)`; UDTs `Name`, `Phone`, `AccountNumber`, `OrderNumber` -> `VARCHAR(50/25/15/25)`.

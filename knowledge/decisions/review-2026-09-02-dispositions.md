@@ -16,7 +16,7 @@ verified:
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T22:33:25Z"
 sources:
-- resource: https://github.com/Reliable-Collaboration/mysql-megasamples/pull/1
+- resource: https://github.com/Reliable-Collaboration/sql-megasamples/pull/1
   title: "PR #1 with the Copilot review (8 comments) and the code-review findings (15 numbered, 38 merged, 6 refuted, about 30 cut)"
   accessed: "2026-09-02"
 ---
@@ -37,11 +37,11 @@ The finding texts are recorded in the PR; the sweeps that sized each class are i
 | # | Finding (source) | Verdict | Class and resolution |
 |---|---|---|---|
 | 1 | Row-digest SUM over CONV string is DOUBLE; float and JSON rules inconsistent (review) | valid, design defect | [checksum method](/decisions/test-checksum-method.md): `CAST(... AS UNSIGNED)`; floats and JSON excluded from the digest and compared per column / as parsed objects; native-SQL baseline exception stated; PLAN §4 and oracle-co updated |
-| 2 | Bake decision contradicts itself; wrapper specified three ways; post-exec hook; registry has three writers (review) | valid | [bake decision](/decisions/bake-data-vs-initdb.md), [naming convention](/decisions/database-naming-convention.md), [large-tabular path](/decisions/large-tabular-conversion-path.md), PLAN §2.2–2.3: no initdb scripts at all; one `--init-file` wrapper; `MEGASAMPLES_EXTENDED` removed; `scripts/registry.py` is the single registry writer |
+| 2 | Bake decision contradicts itself; wrapper specified three ways; post-exec hook; registry has three writers (review) | valid | [bake decision](/decisions/bake-data-vs-initdb.md), [naming convention](/decisions/database-naming-convention.md), [large-tabular path](/decisions/large-tabular-conversion-path.md), PLAN §2.2–2.3: no initdb scripts at all; one `--init-file` wrapper; `MEGASAMPLES_EXTENDED` removed; `megasamples/registry.py` is the single registry writer |
 | 3 | Sakila/Employees/DVD Store records still load via initdb (review) | valid, same class as 2 | swept every "init sequence / init directory / at init / via the entrypoint" mention in datasets, decisions and tools; all now load through the build server during `make <dataset>` |
 | 4 | AdventureWorks record says extended, plan says core; tier tag vocabulary inconsistent (review) | valid | tier vocabulary defined in conventions and checked; all 34 dataset records re-tagged from [tier assignments](/decisions/tier-assignments.md); AdventureWorks section rewritten |
 | 5 | Resolved decisions still marked pending/draft/open; mixed-case table names in test SQL (review) | valid | checker now cross-checks `# Status` with `status`/`trust`/tags/description; four decisions fixed; test SQL in seven dataset records lower-cased per the naming convention; column names with spaces get underscores |
-| 6 | Undefined task IDs, make targets, scripts (review) | valid | PLAN §2.4 now lists every target used anywhere (swept by grep); E-02 row and V series added, P-07/O-05 references fixed; `scripts/registry.py`, `canon.sql`, `mirror.sh` added to the layout; `checksum.py` → `canon.py`; `verify.py sizes` named in §4 |
+| 6 | Undefined task IDs, make targets, scripts (review) | valid | PLAN §2.4 now lists every target used anywhere (swept by grep); E-02 row and V series added, P-07/O-05 references fixed; `megasamples/registry.py`, `canon.sql`, `mirror.sh` added to the layout; `checksum.py` → `canon.py`; `verify.py sizes` named in §4 |
 | 7 | Plan and repository-layout record disagree (review) | valid | PLAN §2.1 declared authoritative; the record now mirrors it (`ipv4_first`, scripts, `.gitignore` = committed file, tests files, `dataset.yaml`) |
 | 8 | Provenance generator reads a `# Attribution` heading no license record has; Applied-to gaps (review) | valid | License section template made mandatory and checked; 18 records received attribution wording, headings normalized in all 24; Applied-to gaps for Stack Exchange (CC BY-SA 3.0), Wikidata (CC0), TPC-C (Apache-2.0) filled |
 | 9 | core-fast rule contradicts its list; §11 DAG inconsistent (review) | valid | explicit `CORE_FAST` list with a 200 MB rule; S-01 depends on P-03; X-03 depends on M-04 |
@@ -101,7 +101,7 @@ unreturned candidates are unknown and a further review pass is worth running.
 | 7 | The entrypoint wrapper writes a root-owned `mktemp` file but mysqld runs as uid 999 via `gosu`, and passwords were not escaped | valid | the wrapper creates the file with `install -m 0400 -o mysql -g mysql`, single-quotes each password with `\` and `'` doubled, and removes it on a trap |
 | 8 | `mysqlsh -u root` without `--no-password` prompts, which cannot succeed in a non-interactive build | valid | `--no-password` added to the builder's load loop |
 | 9 | The planned Enron view used `GROUP_CONCAT`, which truncates at 1024 bytes — the same reason it was rejected for checksums — on exactly the broadcast mails the record calls out | valid | the view uses `JSON_ARRAYAGG` |
-| 10 | `docker/init/10-registry.sql` is generated into a git-tracked path, absent from the tree and `.gitignore` | valid (the CI-failure mechanism claimed alongside it was wrong) | listed in the tree and ignored |
+| 10 | `build/mysql/registry.sql` is generated into a git-tracked path, absent from the tree and `.gitignore` | valid (the CI-failure mechanism claimed alongside it was wrong) | listed in the tree and ignored |
 | 11 | `# Applied to` was checked for omissions but never for stale entries | valid | the checker now compares both directions, with an asymmetric rule: any mention counts against omission, only a bullet's subject link counts as an assertion, and negative or aside bullets are exempt. Five genuine one-way references were found and the missing back-links added (`internet-archive-mirroring`→AGPL, `python-conversion-stack`→BSD, `iris`→BSD, `wikidata`→CC BY-SA 4.0, `tpc-h`→MIT) |
 | 12 | The license-coverage check re-scanned every Dataset and Tool body once per License (1,488 pairs, ~63 ms) | valid, efficiency | each record's resolved link targets are cached once during its own check; behaviour verified identical |
 | 13 | `dir_has_md` counted a directory holding only a stale `index.md` | valid | only non-reserved files count |

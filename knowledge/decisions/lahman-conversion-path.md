@@ -39,7 +39,7 @@ Option 1. Because there is no stable download URL, vendor the CSVs (with readme2
 # Amendment (2026-09-03, on building it)
 The outcome said "vendor the CSVs in the repository" because there is no stable download URL. In
 practice the same problem is solved without putting 42 MB into git: `manifest.yaml` gained a
-`manual: true` flag for artifacts no build can fetch, and `scripts/fetch.py` verifies a
+`manual: true` flag for artifacts no build can fetch, and `megasamples/fetch.py` verifies a
 maintainer-placed file against its sha256 and size instead of downloading it, with a message naming
 the URL and the exact path if it is missing. That keeps the repository small (a plan constraint),
 still pins the exact bytes, and leaves R-02 to republish the set as a release asset under CC BY-SA

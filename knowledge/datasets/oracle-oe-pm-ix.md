@@ -157,7 +157,7 @@ All **measured** and pinned under `datasets/oracle_oe/tests/` (19 smoke queries,
 **core**, confirmed: **4.4 MB** loaded, 1.2 s ([tier model](/decisions/tier-model.md)). PM media (2.7 MB) and XML (0.5 MB) are not shipped.
 
 # Build-order consequence of the cross-database foreign keys
-Keeping the three foreign keys into `oracle_hr` costs something the naming decision only hinted at: `oracle_hr` can no longer be rebuilt on its own. `DROP DATABASE` is refused while they exist, and dropping with the checks off is worse — MySQL re-resolves the dangling key while the recreated `locations` table still has no unique index, and the reload fails outright. `scripts/load.py` therefore drops inbound foreign keys before dropping a referenced database and says which datasets need reloading; `dataset.yaml` carries `depends: [oracle_hr]` so the build orders them.
+Keeping the three foreign keys into `oracle_hr` costs something the naming decision only hinted at: `oracle_hr` can no longer be rebuilt on its own. `DROP DATABASE` is refused while they exist, and dropping with the checks off is worse — MySQL re-resolves the dangling key while the recreated `locations` table still has no unique index, and the reload fails outright. `megasamples/engines/mysql/load.py` therefore drops inbound foreign keys before dropping a referenced database and says which datasets need reloading; `dataset.yaml` carries `depends: [oracle_hr]` so the build orders them.
 
 # License and attribution
 MIT — [MIT record](/licenses/mit.md); archived scripts carry "Copyright (c) 2001, 2018, Oracle" headers with the same MIT text.

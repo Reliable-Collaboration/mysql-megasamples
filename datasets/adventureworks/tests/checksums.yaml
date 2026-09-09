@@ -1,5 +1,5 @@
 # S4: canonical per-table fingerprint (count, BIT_XOR, SUM mod 2^64) over the
-# row digest defined in scripts/canon.py. float/double/json columns are excluded.
+# row digest defined in megasamples/canon.py. float/double/json columns are excluded.
 awbuildversion:
   columns:
   - systeminformationid

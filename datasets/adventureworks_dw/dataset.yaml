@@ -4,6 +4,6 @@ tier: extended
 record: knowledge/datasets/adventureworks-dw.md
 licenses: [mit]
 artifacts: [adventureworks_dw/AdventureWorksDW-data-warehouse-install-script.zip]
-converter: none
+stage: {input: artifact}
 load:
   - adventureworks_dw.sql

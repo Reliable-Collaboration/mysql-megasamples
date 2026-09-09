@@ -56,7 +56,7 @@ What indexes does each converted database get, in what order are they created, a
 Load-time measurement: `make bench-index-order DATASET=employees` loads once with indexes pre-created and once with the order above and records both times in the dataset record (task E-02).
 
 # Verification
-* `tests/indexes.yaml` lists every expected index as `table, name, unique, type, columns[]`; `scripts/verify.py indexes` compares it with `INFORMATION_SCHEMA.STATISTICS` grouped by index ([doc](/sources/mysql-refman-9-7-information-schema-statistics.md)); missing or extra indexes fail the build.
+* `tests/indexes.yaml` lists every expected index as `table, name, unique, type, columns[]`; `megasamples/verify.py indexes` compares it with `INFORMATION_SCHEMA.STATISTICS` grouped by index ([doc](/sources/mysql-refman-9-7-information-schema-statistics.md)); missing or extra indexes fail the build.
 * `tests/explain.yaml` lists each smoke query with the tables that must not show `access_type: "ALL"` in `EXPLAIN FORMAT=JSON` ([doc](/sources/mysql-refman-9-7-explain-output.md)); tiny lookup tables (< 100 rows) are exempt because the optimizer legitimately scans them.
 
 # Outcome

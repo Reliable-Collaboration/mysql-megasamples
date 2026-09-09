@@ -4,6 +4,6 @@ tier: core
 record: knowledge/datasets/enron.md
 licenses: [enron-public-record]
 artifacts: [enron/enron_mail_20150507.tar.gz]
-converter: none
+stage: {input: dir}
 load:
   - enron.sql
