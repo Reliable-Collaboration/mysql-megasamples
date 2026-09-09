@@ -7,8 +7,10 @@ something once it does.
 
 The three engines are built: every core dataset is verified on MySQL, and ported and verified on
 PostgreSQL and SQLite by one deterministic program whose output is committed and reproducibility-
-checked (`ARCHITECTURE.md` sections 3 and 4). One configuration names any combination of engines,
-datasets and consoles, and `make run` then `make up` builds and starts it.
+checked (`ARCHITECTURE.md` sections 3 and 4) — tables and rows, and also the views, stored routines,
+triggers and full-text indexes, verified by executing them against outputs pinned from MySQL
+(section 5). One configuration names any combination of engines, datasets and consoles, and
+`make run` then `make up` builds and starts it.
 
 ## 2. Next: the Dolt comparison
 
@@ -27,10 +29,11 @@ per container, as the earlier experiment had to learn.
 
 ## 3. Open in this repository
 
-* **Views on the ports.** Sixty-nine MySQL views are not ported. sqlglot (already a dependency) is
-  the candidate for translating them statement by statement, verified by executing each view on the
-  target and comparing its row count and digest with MySQL's; `megasamples/sources/tsqlbody.py`
-  records why it is not used for procedural bodies. Routines and triggers stay MySQL-only.
+* **The spatial index.** `sakila.address.idx_location` is the one index no port carries
+  (`knowledge/decisions/programmable-object-parity.md`, exception 7). PostgreSQL could, with PostGIS:
+  the base image would move from the official `postgres:18.6-bookworm` to `postgis/postgis:18-3.6`
+  and the geometry column from WKB in `bytea` to `geometry(Point)`; SQLite cannot. The maintainer
+  decides whether that trade is worth one index.
 * **Extended-tier ports.** The ports cover what is loaded in the MySQL build server, so an extended
   dataset ports once it is built there; the `append: true` datasets (reviews, yellow trips, the
   full Chicago set) add tables to a core database and the port has to run after the append.

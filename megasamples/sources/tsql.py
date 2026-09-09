@@ -576,14 +576,19 @@ def convert_cast_targets(sql):
     return "".join(out)
 
 
+DATENAME_TEXT = {"MONTH": "MONTHNAME({x})", "WEEKDAY": "DAYNAME({x})"}
+
+
 def convert_date_functions(sql):
-    """`DATEDIFF(yy, a, b)` -> `TIMESTAMPDIFF(YEAR, a, b)`, `DATEADD(dd, n, d)` -> `DATE_ADD(...)`.
+    """`DATEDIFF(yy, a, b)` -> `TIMESTAMPDIFF(YEAR, a, b)`, `DATEADD(dd, n, d)` -> `DATE_ADD(...)`,
+    `DATENAME(yy, d)` -> `CAST(YEAR(d) AS CHAR)`.
 
     MySQL has a `DATEDIFF` of its own but it takes two arguments and returns days, so T-SQL's
     three-argument form does not fail loudly everywhere -- with a two-argument call it would silently
-    mean something else. Both are rewritten to the MySQL function that takes a unit.
+    mean something else. Both are rewritten to the MySQL function that takes a unit. `DATENAME`
+    returns the part as text: the month's and the weekday's names, every other part as its number.
     """
-    for name in ("DATEDIFF", "DATEADD"):
+    for name in ("DATEDIFF", "DATEADD", "DATENAME"):
         out, i = [], 0
         pattern = re.compile(rf"(?i)(?<![A-Za-z0-9_]){name}\s*\(")
         while i < len(sql):
@@ -595,9 +600,17 @@ def convert_date_functions(sql):
                 depth += {"(": 1, ")": -1}.get(sql[j], 0)
                 j += 1
             args = [a.strip() for a in split_top(sql[m.end():j - 1], ",")]
-            unit = DATE_PARTS.get(args[0].strip("[]`\"' ").lower()) if len(args) == 3 else None
+            wanted = 2 if name == "DATENAME" else 3
+            part = args[0].strip("[]`\"' ").lower()
+            unit = (DATE_PARTS.get(part) or ("WEEKDAY" if part in ("dw", "weekday", "w") else None)) if len(args) == wanted else None
             out.append(sql[i:m.start()])
-            if unit == MILLISECOND and name == "DATEDIFF":
+            if name == "DATENAME" and unit in DATENAME_TEXT:
+                out.append(DATENAME_TEXT[unit].format(x=args[1]))
+            elif name == "DATENAME" and unit and unit != MILLISECOND:
+                out.append(f"CAST(EXTRACT({unit} FROM {args[1]}) AS CHAR)")
+            elif name == "DATENAME":
+                out.append(sql[m.start():j])
+            elif unit == MILLISECOND and name == "DATEDIFF":
                 out.append(f"(TIMESTAMPDIFF(MICROSECOND, {args[1]}, {args[2]}) / 1000)")
             elif unit == MILLISECOND:
                 out.append(f"DATE_ADD({args[2]}, INTERVAL ({args[1]}) * 1000 MICROSECOND)")
@@ -674,7 +687,8 @@ def convert_select_aliases(sql):
     return "".join(out)
 
 
-CTE_HEAD = re.compile(r"(?i)\bWITH\s+(`?\w+`?)\s*(?:\([^()]*\))?\s+AS\s*\(")
+# a line comment may sit between the column list and AS, as in AdventureWorks' bill-of-materials
+CTE_HEAD = re.compile(r"(?i)\bWITH\s+(`?\w+`?)\s*(?:\([^()]*\))?(?:\s*--[^\n]*\n)*\s*AS\s*\(")
 
 
 def convert_recursive_cte(sql):
@@ -1160,6 +1174,10 @@ def translate(sql, drop_checks=(), keep_objects=True, dateformat=None, schemas=(
             body = convert_functions(convert_tsql_convert(convert_xml_value(body)))
             body = convert_cast_targets(convert_date_functions(body))
             body = convert_recursive_cte(body)
+            if kind == "view":
+                # `FirstName + ' ' + LastName` in a view is T-SQL concatenation; left as `+`, MySQL
+                # adds the strings numerically and returns 0 with a warning per row
+                body = convert_concat(body)
         if kind in ("view", "procedure") and not keep_objects:
             notes.append(f"skipped {kind}")
             continue

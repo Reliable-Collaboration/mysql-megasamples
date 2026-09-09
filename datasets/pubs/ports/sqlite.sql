@@ -11,7 +11,9 @@ CREATE TABLE "authors" (
   "state" CHAR(2),
   "zip" CHAR(5),
   "contract" TINYINT NOT NULL,
-  PRIMARY KEY ("au_id")
+  PRIMARY KEY ("au_id"),
+  CONSTRAINT "authors_chk_1" CHECK ("au_id" GLOB '[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9][0-9][0-9]'),
+  CONSTRAINT "authors_chk_2" CHECK ("zip" GLOB '[0-9][0-9][0-9][0-9][0-9]')
 );
 
 CREATE TABLE "stores" (
@@ -48,7 +50,8 @@ CREATE TABLE "publishers" (
   "city" VARCHAR(20),
   "state" CHAR(2),
   "country" VARCHAR(30) DEFAULT 'USA',
-  PRIMARY KEY ("pub_id")
+  PRIMARY KEY ("pub_id"),
+  CONSTRAINT "publishers_chk_1" CHECK ((("pub_id" in ('1389','0736','0877','1622','1756')) or "pub_id" GLOB '99[0-9][0-9]'))
 );
 
 CREATE TABLE "employee" (
@@ -62,7 +65,8 @@ CREATE TABLE "employee" (
   "hire_date" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY ("emp_id"),
   CONSTRAINT "employee_ibfk_1" FOREIGN KEY ("job_id") REFERENCES "jobs" ("job_id") ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT "employee_ibfk_2" FOREIGN KEY ("pub_id") REFERENCES "publishers" ("pub_id") ON UPDATE NO ACTION ON DELETE NO ACTION
+  CONSTRAINT "employee_ibfk_2" FOREIGN KEY ("pub_id") REFERENCES "publishers" ("pub_id") ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT "employee_chk_1" CHECK (("emp_id" GLOB '[A-Za-z][A-Za-z][A-Za-z][1-9][0-9][0-9][0-9][0-9][FfMm]' or "emp_id" GLOB '[A-Za-z]-[A-Za-z][1-9][0-9][0-9][0-9][0-9][FfMm]'))
 );
 
 CREATE TABLE "pub_info" (
@@ -129,3 +133,6 @@ CREATE INDEX "roysched_titleidind" ON "roysched" ("title_id");
 CREATE INDEX "sales_titleidind" ON "sales" ("title_id");
 CREATE INDEX "titleauthor_auidind" ON "titleauthor" ("au_id");
 CREATE INDEX "titleauthor_titleidind" ON "titleauthor" ("title_id");
+
+CREATE VIEW "titleview" ("title", "au_ord", "au_lname", "price", "ytd_sales", "pub_id") AS
+SELECT "titles"."title" AS "title", "titleauthor"."au_ord" AS "au_ord", "authors"."au_lname" AS "au_lname", "titles"."price" AS "price", "titles"."ytd_sales" AS "ytd_sales", "titles"."pub_id" AS "pub_id" FROM (("authors" CROSS JOIN "titles") CROSS JOIN "titleauthor") WHERE (("authors"."au_id" = "titleauthor"."au_id") AND ("titles"."title_id" = "titleauthor"."title_id"));

@@ -1,0 +1,252 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+humanresources_vemployee:
+  columns:
+  - businessentityid
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - jobtitle
+  - phonenumber
+  - phonenumbertype
+  - emailaddress
+  - emailpromotion
+  - addressline1
+  - addressline2
+  - city
+  - stateprovincename
+  - postalcode
+  - countryregionname
+  - additionalcontactinfo
+  excluded: []
+  n: 290
+  s: 11783653523241879687
+  x: 13935148521798611131
+humanresources_vemployeedepartment:
+  columns:
+  - businessentityid
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - jobtitle
+  - department
+  - groupname
+  - startdate
+  excluded: []
+  n: 290
+  s: 8302713145332091275
+  x: 13816489948890390307
+humanresources_vemployeedepartmenthistory:
+  columns:
+  - businessentityid
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - shift
+  - department
+  - groupname
+  - startdate
+  - enddate
+  excluded: []
+  n: 296
+  s: 3851868151280959437
+  x: 3119303322633792407
+person_vstateprovincecountryregion:
+  columns:
+  - stateprovinceid
+  - stateprovincecode
+  - isonlystateprovinceflag
+  - stateprovincename
+  - territoryid
+  - countryregioncode
+  - countryregionname
+  excluded: []
+  n: 181
+  s: 11044935398190936001
+  x: 17606880318282329387
+production_vproductanddescription:
+  columns:
+  - productid
+  - name
+  - productmodel
+  - cultureid
+  - description
+  excluded: []
+  n: 1764
+  s: 3473569015487541463
+  x: 9920629212816549957
+production_vproductmodelcatalogdescription:
+  columns:
+  - productmodelid
+  - name
+  - summary
+  - manufacturer
+  - copyright
+  - producturl
+  - warrantyperiod
+  - warrantydescription
+  - noofyears
+  - maintenancedescription
+  - wheel
+  - saddle
+  - pedal
+  - bikeframe
+  - crankset
+  - pictureangle
+  - picturesize
+  - productphotoid
+  - material
+  - color
+  - productline
+  - style
+  - riderexperience
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 6
+  s: 17994229007675196882
+  x: 17130139202600395126
+purchasing_vvendorwithaddresses:
+  columns:
+  - businessentityid
+  - name
+  - addresstype
+  - addressline1
+  - addressline2
+  - city
+  - stateprovincename
+  - postalcode
+  - countryregionname
+  excluded: []
+  n: 104
+  s: 17618364983763682920
+  x: 9434483885967221122
+purchasing_vvendorwithcontacts:
+  columns:
+  - businessentityid
+  - name
+  - contacttype
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - phonenumber
+  - phonenumbertype
+  - emailaddress
+  - emailpromotion
+  excluded: []
+  n: 156
+  s: 9456198550747352814
+  x: 9342587458858522292
+sales_vindividualcustomer:
+  columns:
+  - businessentityid
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - phonenumber
+  - phonenumbertype
+  - emailaddress
+  - emailpromotion
+  - addresstype
+  - addressline1
+  - addressline2
+  - city
+  - stateprovincename
+  - postalcode
+  - countryregionname
+  - demographics
+  excluded: []
+  n: 18508
+  s: 9974652072016430349
+  x: 10276218717469732221
+sales_vsalesperson:
+  columns:
+  - businessentityid
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - jobtitle
+  - phonenumber
+  - phonenumbertype
+  - emailaddress
+  - emailpromotion
+  - addressline1
+  - addressline2
+  - city
+  - stateprovincename
+  - postalcode
+  - countryregionname
+  - territoryname
+  - territorygroup
+  - salesquota
+  - salesytd
+  - saleslastyear
+  excluded: []
+  n: 17
+  s: 525791434826078964
+  x: 13369608343105354466
+sales_vstorewithaddresses:
+  columns:
+  - businessentityid
+  - name
+  - addresstype
+  - addressline1
+  - addressline2
+  - city
+  - stateprovincename
+  - postalcode
+  - countryregionname
+  excluded: []
+  n: 712
+  s: 11538686610438659084
+  x: 6572377920225615872
+sales_vstorewithcontacts:
+  columns:
+  - businessentityid
+  - name
+  - contacttype
+  - title
+  - firstname
+  - middlename
+  - lastname
+  - suffix
+  - phonenumber
+  - phonenumbertype
+  - emailaddress
+  - emailpromotion
+  excluded: []
+  n: 753
+  s: 12361398000326064754
+  x: 15601271173740547064
+sales_vstorewithdemographics:
+  columns:
+  - businessentityid
+  - name
+  - annualsales
+  - annualrevenue
+  - bankname
+  - businesstype
+  - yearopened
+  - specialty
+  - squarefeet
+  - brands
+  - internet
+  - numberemployees
+  excluded: []
+  n: 701
+  s: 6968476344468951120
+  x: 10215991900402237200

@@ -1,0 +1,13 @@
+# What the PostgreSQL port changed inside a routine body, by routine: constructs with no
+# PL/pgSQL counterpart, replaced by rule (megasamples/port/routines.py).
+film_in_stock:
+- 'OUT parameter(s) p_film_count omitted: a function returning rows cannot also return them; the count equals the rows returned'
+film_not_in_stock:
+- 'OUT parameter(s) p_film_count omitted: a function returning rows cannot also return them; the count equals the rows returned'
+inventory_held_by_customer:
+- 'EXIT HANDLER FOR NOT FOUND RETURN NULL dropped: SELECT INTO leaves the variable NULL'
+rewards_report:
+- SELECT 'Minimum monthly purchases para' became RAISE NOTICE
+- SELECT 'Minimum monthly dollar amount ' became RAISE NOTICE
+- 'OUT parameter(s) count_rewardees omitted: a function returning rows cannot also return them; the count equals the rows
+  returned'

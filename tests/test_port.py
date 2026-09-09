@@ -56,14 +56,39 @@ def test_checks_are_translated_or_dropped_with_a_reason():
     assert ddl.constraints(t, ddl.DIALECTS["sqlite"]) == ([], [])
     sql, dropped = ddl.schema(t, ddl.DIALECTS["sqlite"])
     assert 'CONSTRAINT "ck_upper" CHECK ((upper("c") in (\'A\',\'B\')))' in sql
-    assert "ck_re" not in sql and len(dropped) == 1 and "regexp_like" in dropped[0]
+    # an anchored character-class regular expression becomes a GLOB, matching either case as
+    # MySQL's REGEXP does; anything else in the pattern drops the check by name
+    assert 'CONSTRAINT "ck_re" CHECK ("c" GLOB \'[A-Za-z]\')' in sql and dropped == []
+    t.checks[1] = model.Check("ck_re", "regexp_like(`c`,_utf8mb4\\'^a.*$\\')")
+    sql, dropped = ddl.schema(t, ddl.DIALECTS["sqlite"])
+    assert "ck_re" not in sql and len(dropped) == 1 and "GLOB" in dropped[0]
 
 
-def test_fulltext_and_spatial_indexes_are_dropped_named():
-    t = model.Table("s", "t", columns=[col("c", "text")], indexes=[
-        model.Index("ft", False, "FULLTEXT", [("c", None)]), model.Index("ix", False, "BTREE", [("c", None)])])
+def test_glob_rewrites_only_what_it_can_express():
+    assert ddl.glob_of("^99[0-9][0-9]$") == "99[0-9][0-9]"
+    assert ddl.glob_of("^[A-Z]-[FM]$") == "[A-Za-z]-[FfMm]"
+    for pattern in ("^a+$", "[0-9]$", "^(a|b)$", "^[^0-9]$"):
+        try:
+            ddl.glob_of(pattern)
+            assert False, pattern
+        except ddl.Unmatched:
+            pass
+
+
+def test_fulltext_becomes_gin_or_fts5_and_spatial_is_dropped_named():
+    t = model.Table("s", "t", columns=[col("c", "text"), col("d", "text")], indexes=[
+        model.Index("ft", False, "FULLTEXT", [("c", None), ("d", None)]), model.Index("ix", False, "BTREE", [("c", None)])])
     stmts, dropped = ddl.indexes(t, ddl.DIALECTS["postgres"])
-    assert stmts == ['CREATE INDEX "t_ix" ON "t" ("c");'] and dropped == ["t.ft: FULLTEXT index: not ported"]
+    assert stmts == ['CREATE INDEX "t_ft" ON "t" USING gin (to_tsvector(\'simple\', coalesce("c", \'\') || \' \' || coalesce("d", \'\')));',
+                     'CREATE INDEX "t_ix" ON "t" ("c");'] and dropped == []
+    stmts, dropped = ddl.indexes(t, ddl.DIALECTS["sqlite"])
+    assert stmts[0] == 'CREATE VIRTUAL TABLE "t_ft_fts" USING fts5("c", "d", content=\'t\', content_rowid=\'rowid\');'
+    assert [s.split(" ")[2] for s in stmts[1:4]] == ['"t_ft_fts_ai"', '"t_ft_fts_ad"', '"t_ft_fts_au"']
+    assert stmts[4] == 'INSERT INTO "t_ft_fts"("t_ft_fts") VALUES (\'rebuild\');' and dropped == []
+    t.indexes = [model.Index("sp", False, "SPATIAL", [("c", None)])]
+    for dialect in ("postgres", "sqlite"):
+        stmts, dropped = ddl.indexes(t, ddl.DIALECTS[dialect])
+        assert stmts == [] and dropped == ["t.sp: SPATIAL index: not ported"]
 
 
 def test_tsv_escapes_round_trip_into_postgres_copy_format():
@@ -113,3 +138,31 @@ def test_sqlite_canonical_rendering_matches_mysql_text_forms():
     assert canonical(b"\x01\xff", "varbinary", None) == "01ff"
     assert canonical(7, "tinyint", None) == "7"
     assert canonical(None, "int", None) is None
+
+
+def test_translator_typed_rules():
+    """Unquoted identifiers are resolved to the schema's spelling; a FLOAT in arithmetic is cast to
+    double precision on PostgreSQL; a predicate in a select list is an integer; a compact date
+    literal against a date-time column is ISO, with midnight appended on SQLite."""
+    from megasamples.port import sqltranslate
+    t = model.Table("s", "Orders", columns=[col("OrderID", "int"), col("Discount", "float"), col("ShippedDate", "datetime")], indexes=[])
+    db = model.Database("s", [t], [], [], [])
+    names = sqltranslate.names_of(db)
+    sql = "select orderid, (1 - discount) * 2 as d, (orderid = 1) as one from orders where shippeddate between '19970101' and '1997-12-31'"
+    assert sqltranslate.translate(sql, "postgres", "s", names=names) == (
+        'SELECT "OrderID", (1 - CAST("Discount" AS DOUBLE PRECISION)) * 2 AS d, CAST("OrderID" = 1 AS INT) AS one '
+        'FROM "Orders" WHERE "ShippedDate" BETWEEN \'1997-01-01\' AND \'1997-12-31\'')
+    assert sqltranslate.translate(sql, "sqlite", "s", names=names).endswith(
+        'WHERE "ShippedDate" BETWEEN \'1997-01-01 00:00:00\' AND \'1997-12-31 00:00:00\'')
+    # a routine's variables are never taken for columns
+    assert sqltranslate.translate("select orderid from orders where orderid = p_OrderID", "postgres", "s", names=names,
+                                  exclude={"p_orderid"}) == 'SELECT "OrderID" FROM "Orders" WHERE "OrderID" = p_OrderID'
+
+
+def test_json_table_nested_path_keeps_the_parent_row_on_sqlite():
+    from megasamples.port import sqltranslate
+    sql = ("select `p`.`name` AS `name`, `r`.`rating` AS `rating` from (`db`.`products` `p` join json_table(`p`.`details`, '$' "
+           "columns (nested path '$.reviews[*]' columns (`rating` int path '$.rating'))) `r`)")
+    out = sqltranslate.translate(sql, "sqlite", "db")
+    assert 'LEFT JOIN JSON_EACH("p"."details", \'$.reviews\') AS r ON 1 = 1' in out and "JSON_EXTRACT(r.value, '$.rating')" in out
+    assert "NESTED PATH '$.reviews[*]'" in sqltranslate.translate(sql, "postgres", "db")

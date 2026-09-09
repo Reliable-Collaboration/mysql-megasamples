@@ -1,0 +1,42 @@
+# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by
+# line (megasamples/probe.py); 'ERROR' when the call must fail.
+byroyalty_100:
+- 172-32-1176
+- 213-46-8915
+- 238-95-7766
+- 274-80-9391
+- 486-29-1786
+- 486-29-1786
+- 648-92-1872
+- 712-45-1867
+- 807-91-6654
+- 998-72-3567
+byroyalty_40:
+- 213-46-8915
+- 267-41-2394
+- 672-71-3249
+reptq1:
+- "0736\t9.784"
+- "0877\t15.41"
+- "1389\t18.976"
+- "ALL\t14.7663"
+reptq2:
+- "ALL\t0736\t5657.2"
+- "ALL\t0877\t7369.8333"
+- "ALL\t1389\t4988.2"
+- "ALL\tALL\t6090.375"
+- "UNDECIDED\t0877\tNULL"
+- "business\t0736\t18722"
+- "business\t1389\t4022"
+- "mod_cook\t0877\t12139"
+- "popular_comp\t1389\t6437.5"
+- "psychology\t0736\t2391"
+- "psychology\t0877\t375"
+- "trad_cook\t0877\t6522"
+reptq3:
+- "0877\tALL\t5"
+- "0877\tmod_cook\t2"
+- "0877\ttrad_cook\t3"
+- "1389\tALL\t3"
+- "1389\tbusiness\t3"
+- "ALL\tALL\t8"

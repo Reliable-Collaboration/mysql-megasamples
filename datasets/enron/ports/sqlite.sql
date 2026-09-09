@@ -44,6 +44,18 @@ CREATE TABLE "recipient" (
 );
 
 CREATE UNIQUE INDEX "mailbox_uq_mailbox_name" ON "mailbox" ("name");
+CREATE VIRTUAL TABLE "message_ft_message_fts" USING fts5("subject", "body", content='message', content_rowid='rowid');
+CREATE TRIGGER "message_ft_message_fts_ai" AFTER INSERT ON "message" BEGIN
+  INSERT INTO "message_ft_message_fts"(rowid, "subject", "body") VALUES (NEW.rowid, NEW."subject", NEW."body");
+END;
+CREATE TRIGGER "message_ft_message_fts_ad" AFTER DELETE ON "message" BEGIN
+  INSERT INTO "message_ft_message_fts"("message_ft_message_fts", rowid, "subject", "body") VALUES ('delete', OLD.rowid, OLD."subject", OLD."body");
+END;
+CREATE TRIGGER "message_ft_message_fts_au" AFTER UPDATE ON "message" BEGIN
+  INSERT INTO "message_ft_message_fts"("message_ft_message_fts", rowid, "subject", "body") VALUES ('delete', OLD.rowid, OLD."subject", OLD."body");
+  INSERT INTO "message_ft_message_fts"(rowid, "subject", "body") VALUES (NEW.rowid, NEW."subject", NEW."body");
+END;
+INSERT INTO "message_ft_message_fts"("message_ft_message_fts") VALUES ('rebuild');
 CREATE INDEX "message_ix_message_body_sha1" ON "message" ("body_sha1");
 CREATE INDEX "message_ix_message_date" ON "message" ("date_utc");
 CREATE INDEX "message_ix_message_from" ON "message" ("from_address");
@@ -51,3 +63,6 @@ CREATE INDEX "message_ix_message_mailbox_folder" ON "message" ("mailbox_id", "fo
 CREATE UNIQUE INDEX "message_uq_message_message_id" ON "message" ("message_id");
 CREATE UNIQUE INDEX "message_uq_message_path" ON "message" ("path");
 CREATE INDEX "recipient_ix_recipient_address" ON "recipient" ("address");
+
+CREATE VIEW "v_thread" ("id", "date_utc", "mailbox", "folder", "from_address", "subject", "recipients") AS
+SELECT "m"."id" AS "id", "m"."date_utc" AS "date_utc", "b"."name" AS "mailbox", "m"."folder" AS "folder", "m"."from_address" AS "from_address", "m"."subject" AS "subject", COUNT("r"."address") AS "recipients" FROM (("message" AS "m" JOIN "mailbox" AS "b" ON (("b"."mailbox_id" = "m"."mailbox_id"))) LEFT JOIN "recipient" AS "r" ON (("r"."message_id" = "m"."id"))) GROUP BY "m"."id", "m"."date_utc", "b"."name", "m"."folder", "m"."from_address", "m"."subject";

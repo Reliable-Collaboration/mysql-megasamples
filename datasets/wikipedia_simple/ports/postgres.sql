@@ -108,3 +108,24 @@ CREATE INDEX "pagelinks_pl_target_id" ON "pagelinks" ("pl_target_id", "pl_from")
 CREATE INDEX "redirect_rd_ns_title" ON "redirect" ("rd_namespace", "rd_title", "rd_from");
 CREATE INDEX "revision_rev_page" ON "revision" ("rev_page");
 CREATE INDEX "revision_rev_timestamp" ON "revision" ("rev_timestamp");
+CREATE INDEX "text_ft_old_text" ON "text" USING gin (to_tsvector('simple', coalesce("old_text", '')));
+
+CREATE VIEW "v_article" ("page_id", "title", "page_len", "rev_timestamp", "last_editor", "wikitext") AS
+SELECT "p"."page_id" AS "page_id", CONVERT_FROM("p"."page_title", 'UTF8') AS "title", "p"."page_len" AS "page_len", "r"."rev_timestamp" AS "rev_timestamp", CONVERT_FROM("r"."rev_user_text", 'UTF8') AS "last_editor", "t"."old_text" AS "wikitext" FROM (("page" AS "p" JOIN "revision" AS "r" ON (("r"."rev_page" = "p"."page_id"))) JOIN "text" AS "t" ON (("t"."old_id" = "r"."rev_id")));
+
+CREATE VIEW "v_category_member" ("page_id", "page_title", "category") AS
+SELECT "c"."cl_from" AS "page_id", CONVERT_FROM("p"."page_title", 'UTF8') AS "page_title", CONVERT_FROM("lt"."lt_title", 'UTF8') AS "category" FROM (("categorylinks" AS "c" JOIN "page" AS "p" ON (("p"."page_id" = "c"."cl_from"))) JOIN "linktarget" AS "lt" ON (("lt"."lt_id" = "c"."cl_target_id")));
+
+CREATE VIEW "v_page" ("page_id", "page_namespace", "page_title", "page_is_redirect", "page_len", "page_latest", "page_touched") AS
+SELECT "page"."page_id" AS "page_id", "page"."page_namespace" AS "page_namespace", CONVERT_FROM("page"."page_title", 'UTF8') AS "page_title", "page"."page_is_redirect" AS "page_is_redirect", "page"."page_len" AS "page_len", "page"."page_latest" AS "page_latest", CONVERT_FROM("page"."page_touched", 'UTF8') AS "page_touched" FROM "page";
+
+CREATE VIEW "v_pagelink" ("from_page_id", "from_title", "to_namespace", "to_title") AS
+SELECT "pl"."pl_from" AS "from_page_id", CONVERT_FROM("f"."page_title", 'UTF8') AS "from_title", "lt"."lt_namespace" AS "to_namespace", CONVERT_FROM("lt"."lt_title", 'UTF8') AS "to_title" FROM (("pagelinks" AS "pl" JOIN "page" AS "f" ON (("f"."page_id" = "pl"."pl_from"))) JOIN "linktarget" AS "lt" ON (("lt"."lt_id" = "pl"."pl_target_id")));
+
+CREATE FUNCTION "categorylinks_cl_timestamp_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."cl_timestamp" IS NOT DISTINCT FROM OLD."cl_timestamp" THEN NEW."cl_timestamp" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "categorylinks_cl_timestamp_on_update" BEFORE UPDATE ON "categorylinks" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "categorylinks_cl_timestamp_on_update_fn"();

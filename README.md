@@ -10,8 +10,8 @@ choice and one command builds it.
 | engine | what ships | size |
 |---|---|---|
 | **MySQL 9.7.2** | `sql-megasamples-mysql`: an image with the databases baked into its data directory | 3.5 GB image |
-| **PostgreSQL 18.6** | `sql-megasamples-postgres`: an image with the databases in its cluster, ported from the verified MySQL corpus | 4.0 GB image (2.5 GB data directory) |
-| **SQLite 3.49** | `sql-megasamples-sqlite`: one `.sqlite` file per database with the `sqlite3` shell beside them, also staged as release assets | 1.2 GB image (867 MB of files) |
+| **PostgreSQL 18.6** | `sql-megasamples-postgres`: an image with the databases in its cluster, ported from the verified MySQL corpus | 4.1 GB image (2.6 GB data directory) |
+| **SQLite 3.49** | `sql-megasamples-sqlite`: one `.sqlite` file per database with the `sqlite3` shell beside them, also staged as release assets | 1.3 GB image (899 MB of files) |
 
 Every dataset is built and verified on all three engines. PostgreSQL and SQLite are **ports of the
 MySQL corpus**: the same rows, proved by the same per-table content digests, foreign-key checks and
@@ -89,9 +89,10 @@ Beyond these, the extended, generated and user-fetched datasets are in
 
 **MySQL is the hub.** Every dataset is converted into MySQL first, loaded into a throwaway build
 server, verified there — row counts, a canonical content digest of every table, foreign-key
-integrity, the index set, query plans, canonical query results — and dumped. The other engines are
-ports of that verified corpus, checked against the same expectations, so a database in PostgreSQL
-or SQLite is provably the same rows as in MySQL.
+integrity, the index set, every view's digest, the output of every stored routine and trigger,
+query plans, canonical query results — and dumped. The other engines are ports of that verified
+corpus, checked against the same expectations, so a database in PostgreSQL or SQLite is provably
+the same rows, the same views and the same behaviour as in MySQL.
 
 ### MySQL
 
@@ -124,10 +125,14 @@ catalogue, the landing page and the image tests all read it, so none can drift f
 its cluster, the same `demo` (read-only) and `admin` accounts, the superuser `postgres` with
 password `root`, and a `megasamples` database holding the registry. `POSTGRES_PASSWORD`,
 `DEMO_PASSWORD` and `ADMIN_PASSWORD` override the passwords at start. Tables, data, primary and
-unique keys, secondary indexes, foreign keys, check constraints and stored generated columns are
-ported; views, routines, triggers and full-text or spatial indexes are not, and each database's
-registry row and [`CATALOGUE.md`](CATALOGUE.md) say exactly which. The identical table set is kept,
-so a query written for one engine names the same tables on the other.
+unique keys, secondary indexes, foreign keys, check constraints, stored generated columns, views,
+stored routines (as PL/pgSQL; a procedure that returns rows is a function you `SELECT * FROM`),
+triggers, `ON UPDATE CURRENT_TIMESTAMP` columns and full-text indexes (GIN over `to_tsvector`) are
+all ported. Of the corpus's 69 views two are not carried (they reach into another database), and
+the one spatial index is not; each database's registry row and [`CATALOGUE.md`](CATALOGUE.md) say
+exactly which, and [`knowledge/decisions/programmable-object-parity.md`](knowledge/decisions/programmable-object-parity.md)
+says why. The identical table set is kept, so a query written for one engine names the same tables
+on the other.
 
 ```sh
 PGPASSWORD=demo psql -h 127.0.0.1 -p 5432 -U demo sakila
@@ -141,6 +146,10 @@ release asset set (`make release SET=sqlite`) for readers that want a database w
 and are what [DoltLite](https://github.com/dolthub/doltlite) opens directly. Types are declared in
 MySQL's terms (`DECIMAL(10,2)`, `DATETIME`, `VARCHAR(45)`) so readers see the intent; foreign keys are
 declared and verified, and enforced by the reader's `PRAGMA foreign_keys=ON`, as with any SQLite file.
+Views, triggers, `ON UPDATE` columns and full-text indexes (an FTS5 table beside each indexed
+table, kept in step by triggers) are ported; SQLite has no stored routines, so the 42 routines are
+not, nor are the views that call them, the three views that read XML, and a handful of others the
+catalogue names — every one with its reason in `datasets/<name>/ports/not_ported.yaml`.
 
 ```sh
 docker exec -it megasamples-sqlite sqlite3 /data/sakila.sqlite
@@ -149,14 +158,18 @@ docker run --rm -it sql-megasamples-sqlite:dev sqlite3 /data/chinook.sqlite
 
 ### How the ports are made, and why you can trust them
 
-One program, `megasamples/port/`, reads each database's schema from the MySQL build server's
-`information_schema` and its rows from the MySQL Shell dump, applies one type-mapping table and one
-DDL emitter with two dialects, and loads the result with the engine's own tools (`psql \copy`, the
-`sqlite3` driver). Nothing is written by hand and nothing is guessed: a type with no mapping stops
-the build. The DDL and the not-ported list of every dataset are committed under
-`datasets/<name>/ports/`, so a mapping change shows up as a diff, and `make check` regenerates them
-and fails on any byte of difference. Then the port is verified against the same
-`datasets/<name>/tests/` files as MySQL — counts, canonical content digests, foreign keys, indexes.
+One program, `megasamples/port/`, reads each database's schema, views, routines and triggers from
+the MySQL build server's `information_schema` and its rows from the MySQL Shell dump, applies one
+type-mapping table and one DDL emitter with two dialects, translates every view, routine body and
+trigger by rule (sqlglot for the statements, a scanner over the constructs the corpus uses for the
+procedural bodies), and loads the result with the engine's own tools (`psql \copy`, the `sqlite3`
+driver). Nothing is written by hand and nothing is guessed: a type with no mapping or a function the
+target lacks stops that object with its name. The DDL, the translated objects and the not-ported
+list of every dataset are committed under `datasets/<name>/ports/`, so a rule change shows up as a
+diff, and `make check` regenerates them and fails on any byte of difference. Then the port is
+verified against the same `datasets/<name>/tests/` files as MySQL — counts, canonical content
+digests, foreign keys, indexes, the digest of every view, and the printed output of every routine
+call and trigger scenario, pinned from MySQL.
 
 ## The consoles
 

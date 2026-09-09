@@ -1,0 +1,31 @@
+# The result columns PostgreSQL infers for each procedure that returns rows, measured with
+# psql's \gdesc on the ported schema; the procedure becomes a function RETURNS TABLE(...).
+custorderhist:
+- [productname, character varying(40)]
+- [Total, bigint]
+custordersdetail:
+- [productname, character varying(40)]
+- [UnitPrice, numeric]
+- [quantity, smallint]
+- [Discount, bigint]
+- [ExtendedPrice, numeric]
+custordersorders:
+- [orderid, integer]
+- [orderdate, timestamp(0) without time zone]
+- [requireddate, timestamp(0) without time zone]
+- [shippeddate, timestamp(0) without time zone]
+employee_sales_by_country:
+- [country, character varying(15)]
+- [lastname, character varying(20)]
+- [firstname, character varying(10)]
+- [shippeddate, timestamp(0) without time zone]
+- [orderid, integer]
+- [saleamount, numeric]
+sales_by_year:
+- [shippeddate, timestamp(0) without time zone]
+- [orderid, integer]
+- [Subtotal, numeric]
+- [year, text]
+ten_most_expensive_products:
+- [tenmostexpensiveproducts, character varying(40)]
+- [unitprice, 'numeric(19,4)']

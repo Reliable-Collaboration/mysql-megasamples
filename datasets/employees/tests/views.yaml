@@ -1,0 +1,45 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+current_dept_emp:
+  columns:
+  - emp_no
+  - dept_no
+  - from_date
+  - to_date
+  excluded: []
+  n: 300024
+  s: 15779458342880849611
+  x: 2349036147243853319
+dept_emp_latest_date:
+  columns:
+  - emp_no
+  - from_date
+  - to_date
+  excluded: []
+  n: 300024
+  s: 16889343740144730534
+  x: 6023255457142153532
+v_full_departments:
+  columns:
+  - dept_no
+  - dept_name
+  - manager
+  excluded: []
+  n: 9
+  s: 8649984996693205538
+  x: 9962643657244426662
+v_full_employees:
+  columns:
+  - emp_no
+  - first_name
+  - last_name
+  - birth_date
+  - gender
+  - hire_date
+  - department
+  excluded: []
+  n: 300024
+  s: 17608021143772920125
+  x: 9962192404382725701

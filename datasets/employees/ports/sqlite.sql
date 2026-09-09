@@ -58,3 +58,9 @@ CREATE TABLE "titles" (
 CREATE UNIQUE INDEX "departments_dept_name" ON "departments" ("dept_name");
 CREATE INDEX "dept_emp_dept_no" ON "dept_emp" ("dept_no");
 CREATE INDEX "dept_manager_dept_no" ON "dept_manager" ("dept_no");
+
+CREATE VIEW "dept_emp_latest_date" ("emp_no", "from_date", "to_date") AS
+SELECT "dept_emp"."emp_no" AS "emp_no", MAX("dept_emp"."from_date") AS "from_date", MAX("dept_emp"."to_date") AS "to_date" FROM "dept_emp" GROUP BY "dept_emp"."emp_no";
+
+CREATE VIEW "current_dept_emp" ("emp_no", "dept_no", "from_date", "to_date") AS
+SELECT "l"."emp_no" AS "emp_no", "d"."dept_no" AS "dept_no", "l"."from_date" AS "from_date", "l"."to_date" AS "to_date" FROM ("dept_emp" AS "d" JOIN "dept_emp_latest_date" AS "l" ON ((("d"."emp_no" = "l"."emp_no") AND ("d"."from_date" = "l"."from_date") AND ("l"."to_date" = "d"."to_date"))));

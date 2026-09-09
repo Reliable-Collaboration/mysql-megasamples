@@ -2,14 +2,20 @@
 
     schema(table, dialect)       CREATE TABLE with primary key, NOT NULL, defaults, generated columns
                                  and the enum CHECKs
-    indexes(table, dialect)      CREATE [UNIQUE] INDEX for every btree index that is not the primary key
-    constraints(table, dialect)  ALTER TABLE ... ADD FOREIGN KEY / ADD CHECK
+    indexes(table, dialect)      CREATE [UNIQUE] INDEX for every btree index that is not the primary
+                                 key; a FULLTEXT index as a GIN index over to_tsvector (PostgreSQL)
+                                 or an FTS5 external-content table with sync triggers (SQLite)
+    constraints(table, dialect)  ALTER TABLE ... ADD FOREIGN KEY / ADD CHECK (a REGEXP check becomes
+                                 a GLOB on SQLite when its pattern is an anchored run of classes)
+    render(database, dialect)    all of the above plus the routines, views and triggers
+                                 (routines.py, views.py, triggers.py), grouped
 
 Index names are prefixed with the table name because PostgreSQL and SQLite scope them to the
 schema, where MySQL scopes them to the table; the verification adapters strip the prefix again so
 `tests/indexes.yaml` is compared by MySQL's names. What a dialect cannot carry is returned in the
-`dropped` list with a reason, never silently skipped: FULLTEXT and SPATIAL indexes, ON UPDATE
-CURRENT_TIMESTAMP, and CHECKs whose functions the dialect lacks.
+`dropped` list with a reason, never silently skipped: the SPATIAL index, a CHECK whose functions
+the dialect lacks, an AUTO_INCREMENT column SQLite cannot auto-assign, and what the object ports
+refuse (knowledge/decisions/programmable-object-parity.md lists every kind).
 """
 import hashlib, re
 
@@ -28,13 +34,16 @@ def short_name(name):
     return f"{head}_{digest}"
 
 
+def fulltext_table_name(table, index):
+    return short_name(f"{table}_{index}_fts")
+
+
 def physical_index_name(table, index):
     """The index name the target carries: `<table>_<index>`, scoped to the schema as PostgreSQL and
     SQLite require, shortened when it exceeds 63 bytes. The verification adapters compute the same
     name to map observed indexes back to MySQL's names."""
     return short_name(f"{table}_{index}")
 
-DROP_FULLTEXT = "FULLTEXT index: not ported"
 DROP_SPATIAL = "SPATIAL index: not ported"
 
 
@@ -66,6 +75,9 @@ class Dialect:
         uniq = "UNIQUE " if index.unique else ""
         return f"CREATE {uniq}INDEX {self.quote(physical_index_name(table.name, index.name))} ON {self.quote(table.name)} ({cols});"
 
+    def fulltext_index(self, table, index):
+        raise NotImplementedError
+
 
 class Postgres(Dialect):
     name = "postgres"
@@ -78,6 +90,13 @@ class Postgres(Dialect):
 
     def bytes_literal(self, raw):
         return "'\\x" + raw.hex() + "'::bytea"
+
+    def fulltext_index(self, table, index):
+        # the 'simple' configuration tokenises without stemming, the closest to InnoDB's full-text
+        # parser; the expression concatenates the indexed columns as MySQL's multi-column index does
+        text = " || ' ' || ".join(f"coalesce({self.quote(c)}, '')" for c, _ in index.columns)
+        return [f"CREATE INDEX {self.quote(physical_index_name(table.name, index.name))} ON {self.quote(table.name)} "
+                f"USING gin (to_tsvector('simple', {text}));"]
 
 
 class SQLite(Dialect):
@@ -95,6 +114,28 @@ class SQLite(Dialect):
 
     def bytes_literal(self, raw):
         return "X'" + raw.hex() + "'"
+
+    def fulltext_index(self, table, index):
+        """An FTS5 table over the base table's columns, in the external-content form that reads the
+        text from the base table, kept in step by three triggers; built once from the data with the
+        'rebuild' command after the load."""
+        fts = self.quote(fulltext_table_name(table.name, index.name))
+        t = self.quote(table.name)
+        cols = [c for c, _ in index.columns]
+        qcols = ", ".join(self.quote(c) for c in cols)
+        new_vals = ", ".join(f"NEW.{self.quote(c)}" for c in cols)
+        old_vals = ", ".join(f"OLD.{self.quote(c)}" for c in cols)
+        return [
+            f"CREATE VIRTUAL TABLE {fts} USING fts5({qcols}, content={self.literal(table.name)}, content_rowid='rowid');",
+            f"CREATE TRIGGER {self.quote(fulltext_table_name(table.name, index.name) + '_ai')} AFTER INSERT ON {t} BEGIN\n"
+            f"  INSERT INTO {fts}(rowid, {qcols}) VALUES (NEW.rowid, {new_vals});\nEND;",
+            f"CREATE TRIGGER {self.quote(fulltext_table_name(table.name, index.name) + '_ad')} AFTER DELETE ON {t} BEGIN\n"
+            f"  INSERT INTO {fts}({fts}, rowid, {qcols}) VALUES ('delete', OLD.rowid, {old_vals});\nEND;",
+            f"CREATE TRIGGER {self.quote(fulltext_table_name(table.name, index.name) + '_au')} AFTER UPDATE ON {t} BEGIN\n"
+            f"  INSERT INTO {fts}({fts}, rowid, {qcols}) VALUES ('delete', OLD.rowid, {old_vals});\n"
+            f"  INSERT INTO {fts}(rowid, {qcols}) VALUES (NEW.rowid, {new_vals});\nEND;",
+            f"INSERT INTO {fts}({fts}) VALUES ('rebuild');",
+        ]
 
 
 DIALECTS = {"postgres": Postgres(), "sqlite": SQLite()}
@@ -116,8 +157,15 @@ def functions_in(expr):
     return {m.lower() for m in re.findall(r"\b([a-z_]+)\(", expr)}
 
 
+TRIGGER_DEFAULTS = {}      # (table, column) -> "CURRENT_TIMESTAMP", for the SQLite dialect; set by render()
+
+
 def default_clause(col, dialect):
     """The DEFAULT clause, or "" when there is none. Returns (clause, dropped_reason)."""
+    if col.default is None and dialect.name == "sqlite" and (dialect.table_name, col.name) in TRIGGER_DEFAULTS:
+        # a SQLite trigger cannot fill NEW before the row is checked, so a NOT NULL column that a
+        # BEFORE INSERT trigger sets to NOW() carries that as its default (triggers.py updates it after)
+        return f"DEFAULT {TRIGGER_DEFAULTS[(dialect.table_name, col.name)]}", None
     if col.default is None or col.generated:
         return "", None
     if col.default_is_expression:
@@ -148,6 +196,9 @@ def column_def(table, col, dialect, dropped):
             ident = dialect.identity(col)
             if ident:
                 parts.append(ident)
+            elif dialect.name == "sqlite":
+                dropped.append(f"{table.name}.{col.name}: AUTO_INCREMENT on a column that is not the whole primary key: "
+                               "SQLite auto-assigns only a single-column INTEGER PRIMARY KEY; inserts must supply it")
     if not (dialect.name == "sqlite" and col.auto_increment and single_int_pk):
         if not col.nullable:
             parts.append("NOT NULL")
@@ -156,8 +207,6 @@ def column_def(table, col, dialect, dropped):
             parts.append(clause)
         if reason:
             dropped.append(f"{table.name}.{col.name}: {reason}")
-    if col.on_update_now:
-        dropped.append(f"{table.name}.{col.name}: ON UPDATE CURRENT_TIMESTAMP not ported")
     if col.data_type == "enum":
         members = ", ".join(dialect.literal(v) for v in col.enum_values)
         parts.append(f"CHECK ({dialect.quote(col.name)} IN ({members}))")
@@ -167,6 +216,7 @@ def column_def(table, col, dialect, dropped):
 def schema(table, dialect):
     """(CREATE TABLE statement, dropped). The primary key is declared here; nothing else is."""
     dropped = []
+    dialect.table_name = table.name
     lines = [column_def(table, c, dialect, dropped) for c in table.columns]
     pk = table.primary_key
     sqlite_rowid_pk = (dialect.name == "sqlite" and pk and len(pk.columns) == 1
@@ -190,7 +240,7 @@ def indexes(table, dialect):
         if index.primary:
             continue
         if index.type == "FULLTEXT":
-            dropped.append(f"{table.name}.{index.name}: {DROP_FULLTEXT}")
+            out += dialect.fulltext_index(table, index)
             continue
         if index.type == "SPATIAL":
             dropped.append(f"{table.name}.{index.name}: {DROP_SPATIAL}")
@@ -220,12 +270,78 @@ def constraint_clauses(table, dialect):
                    f"REFERENCES {dialect.quote(fk.ref_table)} ({rcols}) "
                    f"ON UPDATE {ACTIONS[fk.on_update]} ON DELETE {ACTIONS[fk.on_delete]}")
     for check in table.checks:
-        missing = functions_in(check.clause) - dialect.check_functions()
+        clause = check.clause
+        if dialect.name == "sqlite" and "regexp_like(" in clause.lower():
+            try:
+                clause = regexp_to_glob(clause)
+            except Unmatched as exc:
+                dropped.append(f"{table.name}.{check.name}: CHECK uses a regular expression SQLite cannot express as GLOB ({exc}); not ported")
+                continue
+        missing = functions_in(clause) - dialect.check_functions()
         if missing:
             dropped.append(f"{table.name}.{check.name}: CHECK uses {', '.join(sorted(missing))}, which {dialect.name} lacks; not ported")
             continue
-        out.append(f"CONSTRAINT {dialect.quote(short_name(check.name))} CHECK ({translate_expr(check.clause, dialect)})")
+        out.append(f"CONSTRAINT {dialect.quote(short_name(check.name))} CHECK ({translate_expr(clause, dialect)})")
     return out, dropped
+
+
+class Unmatched(Exception):
+    pass
+
+
+def glob_of(pattern):
+    """A ^...$ anchored regular expression of literal characters and [...] classes -> a GLOB pattern.
+
+    MySQL's REGEXP is case-insensitive on non-binary strings, GLOB is case-sensitive, so every
+    letter, in a class or literal, matches either case. Anything else in the pattern -- ., +, *,
+    ?, |, groups, escapes -- is Unmatched and the check is dropped by name."""
+    if not (pattern.startswith("^") and pattern.endswith("$")):
+        raise Unmatched("not anchored at both ends")
+    body, out, i = pattern[1:-1], [], 0
+    while i < len(body):
+        ch = body[i]
+        if ch == "[":
+            j = body.find("]", i)
+            if j < 0:
+                raise Unmatched("unterminated class")
+            cls = body[i + 1:j]
+            if cls.startswith("^") or "\\" in cls:
+                raise Unmatched(f"class [{cls}] not expressible")
+            expanded = ""
+            k = 0
+            while k < len(cls):
+                if k + 2 < len(cls) and cls[k + 1] == "-":
+                    a, b = cls[k], cls[k + 2]
+                    expanded += f"{a}-{b}"
+                    if a.isalpha() and b.isalpha():
+                        expanded += f"{a.swapcase()}-{b.swapcase()}"
+                    k += 3
+                else:
+                    c = cls[k]
+                    expanded += c + (c.swapcase() if c.isalpha() and c.swapcase() != c else "")
+                    k += 1
+            out.append(f"[{expanded}]")
+            i = j + 1
+        elif ch in ".+*?|(){}\\":
+            raise Unmatched(f"metacharacter {ch!r}")
+        elif ch.isalpha():
+            out.append(f"[{ch}{ch.swapcase()}]")
+            i += 1
+        else:
+            out.append(ch)
+            i += 1
+    return "".join(out)
+
+
+def regexp_to_glob(clause):
+    """regexp_like(`col`, _utf8mb4\'^...$\') -> `col` GLOB '...' inside a check clause."""
+    def swap(m):
+        col, pat = m.group(1), m.group(2).replace("\\'", "'")
+        return f"{col} GLOB '{glob_of(pat)}'"
+    out, n = re.subn(r"regexp_like\((`\w+`)\s*,\s*_utf8mb4\\?'((?:[^'\\]|\\[^'])*)\\?'\)", swap, clause)
+    if n == 0:
+        raise Unmatched("regexp_like call not in the expected form")
+    return out
 
 
 def constraints(table, dialect):
@@ -238,11 +354,18 @@ def constraints(table, dialect):
     return [f"ALTER TABLE {t} ADD {c};" for c in clauses], dropped
 
 
-def render(database, dialect_name):
-    """Every statement for a database, grouped: {"schema": [...], "indexes": [...], "constraints": [...], "dropped": [...]}."""
+def render(database, dialect_name, result_columns=None, probe=None):
+    """Every statement for a database, grouped: {"schema", "indexes", "constraints", "routines",
+    "views", "triggers", "dropped", "notes"}. `result_columns` records the result-set columns of the
+    procedures PostgreSQL turns into table functions (datasets/<name>/ports/result_sets.yaml);
+    `probe` measures a missing one on a PostgreSQL server."""
     from megasamples.port.model import load_order
+    from megasamples.port import triggers as trigger_port
     dialect = DIALECTS[dialect_name]
-    out = {"schema": [], "indexes": [], "constraints": [], "dropped": []}
+    out = {"schema": [], "indexes": [], "constraints": [], "routines": [], "views": [], "triggers": [],
+           "dropped": [], "notes": {}}
+    TRIGGER_DEFAULTS.clear()
+    TRIGGER_DEFAULTS.update(trigger_port.insert_defaults(database))
     for table in load_order(database):
         s, d = schema(table, dialect)
         out["schema"].append(s)
@@ -253,10 +376,18 @@ def render(database, dialect_name):
         c, d = constraints(table, dialect)
         out["constraints"] += c
         out["dropped"] += d
-    for v in database.views:
-        out["dropped"].append(f"view {v}: not ported")
-    for r in database.routines:
-        out["dropped"].append(f"{r}: not ported")
-    for tr in database.triggers:
-        out["dropped"].append(f"trigger {tr}: not ported")
+    from megasamples.port import routines as routine_port, triggers as trigger_port, views as view_port
+    if dialect_name == "postgres":
+        r, d, notes = routine_port.render(database, result_columns if result_columns is not None else {}, probe)
+        out["routines"] += r
+        out["dropped"] += d
+        out["notes"].update(notes)
+    else:
+        out["dropped"] += [f"{r.kind.lower()} {r.name}: SQLite has no stored routines" for r in database.routines]
+    v, d = view_port.render(database, dialect_name)
+    out["views"] += v
+    out["dropped"] += d
+    tr, d = trigger_port.render(database, dialect_name)
+    out["triggers"] += tr
+    out["dropped"] += d
     return out

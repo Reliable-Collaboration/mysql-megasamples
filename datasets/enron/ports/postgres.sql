@@ -42,6 +42,7 @@ CREATE TABLE "recipient" (
 );
 
 CREATE UNIQUE INDEX "mailbox_uq_mailbox_name" ON "mailbox" ("name");
+CREATE INDEX "message_ft_message" ON "message" USING gin (to_tsvector('simple', coalesce("subject", '') || ' ' || coalesce("body", '')));
 CREATE INDEX "message_ix_message_body_sha1" ON "message" ("body_sha1");
 CREATE INDEX "message_ix_message_date" ON "message" ("date_utc");
 CREATE INDEX "message_ix_message_from" ON "message" ("from_address");
@@ -52,3 +53,6 @@ CREATE INDEX "recipient_ix_recipient_address" ON "recipient" ("address");
 
 ALTER TABLE "message" ADD CONSTRAINT "fk_message_mailbox" FOREIGN KEY ("mailbox_id") REFERENCES "mailbox" ("mailbox_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "recipient" ADD CONSTRAINT "fk_recipient_message" FOREIGN KEY ("message_id") REFERENCES "message" ("id") ON UPDATE NO ACTION ON DELETE CASCADE;
+
+CREATE VIEW "v_thread" ("id", "date_utc", "mailbox", "folder", "from_address", "subject", "recipients") AS
+SELECT "m"."id" AS "id", "m"."date_utc" AS "date_utc", "b"."name" AS "mailbox", "m"."folder" AS "folder", "m"."from_address" AS "from_address", "m"."subject" AS "subject", COUNT("r"."address") AS "recipients" FROM (("message" AS "m" JOIN "mailbox" AS "b" ON (("b"."mailbox_id" = "m"."mailbox_id"))) LEFT JOIN "recipient" AS "r" ON (("r"."message_id" = "m"."id"))) GROUP BY "m"."id", "m"."date_utc", "b"."name", "m"."folder", "m"."from_address", "m"."subject";

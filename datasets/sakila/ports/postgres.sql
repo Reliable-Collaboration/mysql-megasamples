@@ -170,6 +170,7 @@ CREATE INDEX "film_idx_fk_original_language_id" ON "film" ("original_language_id
 CREATE INDEX "film_idx_title" ON "film" ("title");
 CREATE INDEX "film_actor_idx_fk_film_id" ON "film_actor" ("film_id");
 CREATE INDEX "film_category_fk_film_category_category" ON "film_category" ("category_id");
+CREATE INDEX "film_text_idx_title_description" ON "film_text" USING gin (to_tsvector('simple', coalesce("title", '') || ' ' || coalesce("description", '')));
 CREATE INDEX "inventory_idx_fk_film_id" ON "inventory" ("film_id");
 CREATE INDEX "inventory_idx_store_id_film_id" ON "inventory" ("store_id", "film_id");
 CREATE INDEX "rental_idx_fk_customer_id" ON "rental" ("customer_id");
@@ -202,3 +203,266 @@ ALTER TABLE "rental" ADD CONSTRAINT "fk_rental_staff" FOREIGN KEY ("staff_id") R
 ALTER TABLE "payment" ADD CONSTRAINT "fk_payment_customer" FOREIGN KEY ("customer_id") REFERENCES "customer" ("customer_id") ON UPDATE CASCADE ON DELETE RESTRICT;
 ALTER TABLE "payment" ADD CONSTRAINT "fk_payment_rental" FOREIGN KEY ("rental_id") REFERENCES "rental" ("rental_id") ON UPDATE CASCADE ON DELETE SET NULL;
 ALTER TABLE "payment" ADD CONSTRAINT "fk_payment_staff" FOREIGN KEY ("staff_id") REFERENCES "staff" ("staff_id") ON UPDATE CASCADE ON DELETE RESTRICT;
+
+CREATE FUNCTION "get_customer_balance"(p_customer_id integer, p_effective_date timestamp(0) without time zone) RETURNS numeric(5,2) LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_rentfees numeric(5,2);
+  v_overfees integer;
+  v_payments numeric(5,2);
+BEGIN
+  SELECT COALESCE(SUM(film."rental_rate"), 0) FROM "film" CROSS JOIN "inventory" CROSS JOIN "rental" WHERE film."film_id" = inventory."film_id" AND inventory."inventory_id" = rental."inventory_id" AND rental."rental_date" <= p_effective_date AND rental."customer_id" = p_customer_id INTO v_rentfees;
+  SELECT COALESCE(SUM(CASE WHEN ((CAST(rental."return_date" AS DATE) - CAST(rental."rental_date" AS DATE))) > film."rental_duration" THEN (((CAST(rental."return_date" AS DATE) - CAST(rental."rental_date" AS DATE))) - film."rental_duration") ELSE 0 END), 0) FROM "rental" CROSS JOIN "inventory" CROSS JOIN "film" WHERE film."film_id" = inventory."film_id" AND inventory."inventory_id" = rental."inventory_id" AND rental."rental_date" <= p_effective_date AND rental."customer_id" = p_customer_id INTO v_overfees;
+  SELECT COALESCE(SUM(payment."amount"), 0) FROM "payment" WHERE payment."payment_date" <= p_effective_date AND payment."customer_id" = p_customer_id INTO v_payments;
+  RETURN v_rentfees + v_overfees - v_payments;
+END $body$;
+
+CREATE FUNCTION "inventory_held_by_customer"(p_inventory_id integer) RETURNS integer LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_customer_id integer;
+BEGIN
+  SELECT "customer_id" FROM "rental" WHERE "return_date" IS NULL AND "inventory_id" = p_inventory_id INTO v_customer_id;
+  RETURN v_customer_id;
+END $body$;
+
+CREATE FUNCTION "inventory_in_stock"(p_inventory_id integer) RETURNS boolean LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_rentals integer;
+  v_out integer;
+BEGIN
+  SELECT COUNT(*) FROM "rental" WHERE "inventory_id" = p_inventory_id INTO v_rentals;
+  IF v_rentals = 0 THEN
+    RETURN TRUE;
+  END IF;
+  SELECT COUNT("rental_id") FROM "inventory" LEFT JOIN "rental" USING (inventory_id) WHERE inventory."inventory_id" = p_inventory_id AND rental."return_date" IS NULL INTO v_out;
+  IF v_out > 0 THEN
+    RETURN FALSE;
+  ELSE
+    RETURN TRUE;
+  END IF;
+END $body$;
+
+CREATE FUNCTION "film_in_stock"(p_film_id integer, p_store_id integer) RETURNS TABLE("inventory_id" integer) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY SELECT "inventory_id" FROM "inventory" WHERE "film_id" = p_film_id AND "store_id" = p_store_id AND INVENTORY_IN_STOCK("inventory_id");
+END $body$;
+
+CREATE FUNCTION "film_not_in_stock"(p_film_id integer, p_store_id integer) RETURNS TABLE("inventory_id" integer) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY SELECT "inventory_id" FROM "inventory" WHERE "film_id" = p_film_id AND "store_id" = p_store_id AND NOT INVENTORY_IN_STOCK("inventory_id");
+END $body$;
+
+CREATE FUNCTION "rewards_report"(min_monthly_purchases smallint, min_dollar_amount_purchased numeric(10,2)) RETURNS TABLE("customer_id" integer, "store_id" smallint, "first_name" character varying(45), "last_name" character varying(45), "email" character varying(50), "address_id" integer, "active" smallint, "create_date" timestamp(0) without time zone, "last_update" timestamp(0) without time zone) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+DECLARE
+  last_month_start date;
+  last_month_end date;
+BEGIN
+  IF min_monthly_purchases = 0 THEN
+    RAISE NOTICE '%', 'Minimum monthly purchases parameter must be > 0';
+    RETURN;
+  END IF;
+  IF min_dollar_amount_purchased = 0.00 THEN
+    RAISE NOTICE '%', 'Minimum monthly dollar amount purchased parameter must be > $0.00';
+    RETURN;
+  END IF;
+  last_month_start := CURRENT_DATE - INTERVAL '1 MONTH';
+  last_month_start := TO_DATE(EXTRACT(YEAR FROM CAST(last_month_start AS DATE)) || '-' || EXTRACT(MONTH FROM CAST(last_month_start AS DATE)) || '-01', 'YYYY-MM-DD');
+  last_month_end := CAST(DATE_TRUNC('MONTH', last_month_start) + INTERVAL '1 MONTH' - INTERVAL '1 DAY' AS DATE);
+  CREATE TEMP TABLE tmpcustomer (customer_id integer NOT NULL PRIMARY KEY);
+  INSERT INTO tmpCustomer (customer_id) SELECT p."customer_id" FROM "payment" AS p WHERE CAST(p."payment_date" AS DATE) BETWEEN last_month_start AND last_month_end GROUP BY "customer_id", p."customer_id" HAVING SUM(p."amount") > min_dollar_amount_purchased AND COUNT("customer_id") > min_monthly_purchases;
+  RETURN QUERY SELECT c.* FROM tmpCustomer AS t INNER JOIN "customer" AS c ON t."customer_id" = c."customer_id";
+  DROP TABLE tmpcustomer;
+END $body$;
+
+CREATE VIEW "actor_info" ("actor_id", "first_name", "last_name", "film_info") AS
+SELECT "a"."actor_id" AS "actor_id", "a"."first_name" AS "first_name", "a"."last_name" AS "last_name", STRING_AGG(DISTINCT "c"."name" || ': ' || (SELECT STRING_AGG("f"."title", ', ' ORDER BY "f"."title" ASC NULLS FIRST) FROM (("film" AS "f" JOIN "film_category" AS "fc" ON (("f"."film_id" = "fc"."film_id"))) JOIN "film_actor" AS "fa" ON (("f"."film_id" = "fa"."film_id"))) WHERE (("fc"."category_id" = "c"."category_id") AND ("fa"."actor_id" = "a"."actor_id"))), '; ' ORDER BY "c"."name" || ': ' || (SELECT STRING_AGG("f"."title", ', ' ORDER BY "f"."title" ASC NULLS FIRST) FROM (("film" AS "f" JOIN "film_category" AS "fc" ON (("f"."film_id" = "fc"."film_id"))) JOIN "film_actor" AS "fa" ON (("f"."film_id" = "fa"."film_id"))) WHERE (("fc"."category_id" = "c"."category_id") AND ("fa"."actor_id" = "a"."actor_id"))) ASC) AS "film_info" FROM ((("actor" AS "a" LEFT JOIN "film_actor" AS "fa" ON (("a"."actor_id" = "fa"."actor_id"))) LEFT JOIN "film_category" AS "fc" ON (("fa"."film_id" = "fc"."film_id"))) LEFT JOIN "category" AS "c" ON (("fc"."category_id" = "c"."category_id"))) GROUP BY "a"."actor_id", "a"."first_name", "a"."last_name";
+
+CREATE VIEW "customer_list" ("ID", "name", "address", "zip code", "phone", "city", "country", "notes", "SID") AS
+SELECT "cu"."customer_id" AS "ID", "cu"."first_name" || ' ' || "cu"."last_name" AS "name", "a"."address" AS "address", "a"."postal_code" AS "zip code", "a"."phone" AS "phone", "city"."city" AS "city", "country"."country" AS "country", CASE WHEN "cu"."active" <> 0 THEN 'active' ELSE '' END AS "notes", "cu"."store_id" AS "SID" FROM ((("customer" AS "cu" JOIN "address" AS "a" ON (("cu"."address_id" = "a"."address_id"))) JOIN "city" ON (("a"."city_id" = "city"."city_id"))) JOIN "country" ON (("city"."country_id" = "country"."country_id")));
+
+CREATE VIEW "film_list" ("FID", "title", "description", "category", "price", "length", "rating", "actors") AS
+SELECT "film"."film_id" AS "FID", "film"."title" AS "title", "film"."description" AS "description", "category"."name" AS "category", "film"."rental_rate" AS "price", "film"."length" AS "length", "film"."rating" AS "rating", STRING_AGG("actor"."first_name" || ' ' || "actor"."last_name", ', ') AS "actors" FROM (((("film" LEFT JOIN "film_category" ON (("film_category"."film_id" = "film"."film_id"))) LEFT JOIN "category" ON (("category"."category_id" = "film_category"."category_id"))) LEFT JOIN "film_actor" ON (("film"."film_id" = "film_actor"."film_id"))) LEFT JOIN "actor" ON (("film_actor"."actor_id" = "actor"."actor_id"))) GROUP BY "film"."film_id", "category"."name", "film"."title", "film"."description", "film"."rental_rate", "film"."length", "film"."rating";
+
+CREATE VIEW "nicer_but_slower_film_list" ("FID", "title", "description", "category", "price", "length", "rating", "actors") AS
+SELECT "film"."film_id" AS "FID", "film"."title" AS "title", "film"."description" AS "description", "category"."name" AS "category", "film"."rental_rate" AS "price", "film"."length" AS "length", "film"."rating" AS "rating", STRING_AGG(UPPER(SUBSTRING("actor"."first_name" FROM 1 FOR 1)) || LOWER(SUBSTRING("actor"."first_name" FROM 2 FOR LENGTH("actor"."first_name"))) || ' ' || UPPER(SUBSTRING("actor"."last_name" FROM 1 FOR 1)) || LOWER(SUBSTRING("actor"."last_name" FROM 2 FOR LENGTH("actor"."last_name"))), ', ') AS "actors" FROM (((("film" LEFT JOIN "film_category" ON (("film_category"."film_id" = "film"."film_id"))) LEFT JOIN "category" ON (("category"."category_id" = "film_category"."category_id"))) LEFT JOIN "film_actor" ON (("film"."film_id" = "film_actor"."film_id"))) LEFT JOIN "actor" ON (("film_actor"."actor_id" = "actor"."actor_id"))) GROUP BY "film"."film_id", "category"."name", "film"."title", "film"."description", "film"."rental_rate", "film"."length", "film"."rating";
+
+CREATE VIEW "sales_by_film_category" ("category", "total_sales") AS
+SELECT "c"."name" AS "category", SUM("p"."amount") AS "total_sales" FROM ((((("payment" AS "p" JOIN "rental" AS "r" ON (("p"."rental_id" = "r"."rental_id"))) JOIN "inventory" AS "i" ON (("r"."inventory_id" = "i"."inventory_id"))) JOIN "film" AS "f" ON (("i"."film_id" = "f"."film_id"))) JOIN "film_category" AS "fc" ON (("f"."film_id" = "fc"."film_id"))) JOIN "category" AS "c" ON (("fc"."category_id" = "c"."category_id"))) GROUP BY "c"."name" ORDER BY "total_sales" DESC NULLS LAST;
+
+CREATE VIEW "sales_by_store" ("store", "manager", "total_sales") AS
+SELECT "c"."city" || ',' || "cy"."country" AS "store", "m"."first_name" || ' ' || "m"."last_name" AS "manager", SUM("p"."amount") AS "total_sales" FROM ((((((("payment" AS "p" JOIN "rental" AS "r" ON (("p"."rental_id" = "r"."rental_id"))) JOIN "inventory" AS "i" ON (("r"."inventory_id" = "i"."inventory_id"))) JOIN "store" AS "s" ON (("i"."store_id" = "s"."store_id"))) JOIN "address" AS "a" ON (("s"."address_id" = "a"."address_id"))) JOIN "city" AS "c" ON (("a"."city_id" = "c"."city_id"))) JOIN "country" AS "cy" ON (("c"."country_id" = "cy"."country_id"))) JOIN "staff" AS "m" ON (("s"."manager_staff_id" = "m"."staff_id"))) GROUP BY "s"."store_id", "c"."city" || ',' || "cy"."country", "m"."first_name" || ' ' || "m"."last_name", "cy"."country", "c"."city" ORDER BY "cy"."country" NULLS FIRST, "c"."city" NULLS FIRST;
+
+CREATE VIEW "staff_list" ("ID", "name", "address", "zip code", "phone", "city", "country", "SID") AS
+SELECT "s"."staff_id" AS "ID", "s"."first_name" || ' ' || "s"."last_name" AS "name", "a"."address" AS "address", "a"."postal_code" AS "zip code", "a"."phone" AS "phone", "city"."city" AS "city", "country"."country" AS "country", "s"."store_id" AS "SID" FROM ((("staff" AS "s" JOIN "address" AS "a" ON (("s"."address_id" = "a"."address_id"))) JOIN "city" ON (("a"."city_id" = "city"."city_id"))) JOIN "country" ON (("city"."country_id" = "country"."country_id")));
+
+CREATE FUNCTION "actor_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "actor_last_update_on_update" BEFORE UPDATE ON "actor" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "actor_last_update_on_update_fn"();
+
+CREATE FUNCTION "address_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "address_last_update_on_update" BEFORE UPDATE ON "address" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "address_last_update_on_update_fn"();
+
+CREATE FUNCTION "category_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "category_last_update_on_update" BEFORE UPDATE ON "category" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "category_last_update_on_update_fn"();
+
+CREATE FUNCTION "city_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "city_last_update_on_update" BEFORE UPDATE ON "city" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "city_last_update_on_update_fn"();
+
+CREATE FUNCTION "country_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "country_last_update_on_update" BEFORE UPDATE ON "country" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "country_last_update_on_update_fn"();
+
+CREATE FUNCTION "customer_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "customer_last_update_on_update" BEFORE UPDATE ON "customer" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "customer_last_update_on_update_fn"();
+
+CREATE FUNCTION "film_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "film_last_update_on_update" BEFORE UPDATE ON "film" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "film_last_update_on_update_fn"();
+
+CREATE FUNCTION "film_actor_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "film_actor_last_update_on_update" BEFORE UPDATE ON "film_actor" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "film_actor_last_update_on_update_fn"();
+
+CREATE FUNCTION "film_category_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "film_category_last_update_on_update" BEFORE UPDATE ON "film_category" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "film_category_last_update_on_update_fn"();
+
+CREATE FUNCTION "inventory_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "inventory_last_update_on_update" BEFORE UPDATE ON "inventory" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "inventory_last_update_on_update_fn"();
+
+CREATE FUNCTION "language_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "language_last_update_on_update" BEFORE UPDATE ON "language" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "language_last_update_on_update_fn"();
+
+CREATE FUNCTION "payment_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "payment_last_update_on_update" BEFORE UPDATE ON "payment" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "payment_last_update_on_update_fn"();
+
+CREATE FUNCTION "rental_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "rental_last_update_on_update" BEFORE UPDATE ON "rental" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "rental_last_update_on_update_fn"();
+
+CREATE FUNCTION "staff_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "staff_last_update_on_update" BEFORE UPDATE ON "staff" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "staff_last_update_on_update_fn"();
+
+CREATE FUNCTION "store_last_update_on_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."last_update" IS NOT DISTINCT FROM OLD."last_update" THEN NEW."last_update" := CURRENT_TIMESTAMP; END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "store_last_update_on_update" BEFORE UPDATE ON "store" FOR EACH ROW WHEN (OLD.* IS DISTINCT FROM NEW.*) EXECUTE FUNCTION "store_last_update_on_update_fn"();
+
+CREATE FUNCTION "customer_customer_create_date_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW."create_date" := NOW();
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "customer_create_date" BEFORE INSERT ON "customer" FOR EACH ROW EXECUTE FUNCTION "customer_customer_create_date_fn"();
+
+CREATE FUNCTION "film_del_film_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  DELETE FROM "film_text" WHERE "film_id" = old."film_id";
+  RETURN OLD;
+END $$;
+
+CREATE TRIGGER "del_film" AFTER DELETE ON "film" FOR EACH ROW EXECUTE FUNCTION "film_del_film_fn"();
+
+CREATE FUNCTION "film_ins_film_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  INSERT INTO "film_text" ("film_id", "title", "description") VALUES (new."film_id", new."title", new."description");
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "ins_film" AFTER INSERT ON "film" FOR EACH ROW EXECUTE FUNCTION "film_ins_film_fn"();
+
+CREATE FUNCTION "film_upd_film_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF (old."title" <> new."title") OR (old."description" <> new."description") OR (old."film_id" <> new."film_id") THEN
+  UPDATE "film_text" SET "title" = new."title", "description" = new."description", "film_id" = new."film_id" WHERE "film_id" = old."film_id";
+  END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "upd_film" AFTER UPDATE ON "film" FOR EACH ROW EXECUTE FUNCTION "film_upd_film_fn"();
+
+CREATE FUNCTION "payment_payment_date_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW."payment_date" := NOW();
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "payment_date" BEFORE INSERT ON "payment" FOR EACH ROW EXECUTE FUNCTION "payment_payment_date_fn"();
+
+CREATE FUNCTION "rental_rental_date_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW."rental_date" := NOW();
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "rental_date" BEFORE INSERT ON "rental" FOR EACH ROW EXECUTE FUNCTION "rental_rental_date_fn"();

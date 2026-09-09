@@ -1,0 +1,55 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+vgetallcategories:
+  columns:
+  - parentproductcategoryname
+  - productcategoryname
+  - productcategoryid
+  excluded: []
+  n: 37
+  s: 15310086271908906173
+  x: 1232656392595839451
+vproductanddescription:
+  columns:
+  - productid
+  - name
+  - productmodel
+  - culture
+  - description
+  excluded: []
+  n: 1764
+  s: 15729323963753836952
+  x: 14768404269750743580
+vproductmodelcatalogdescription:
+  columns:
+  - productmodelid
+  - name
+  - summary
+  - manufacturer
+  - copyright
+  - producturl
+  - warrantyperiod
+  - warrantydescription
+  - noofyears
+  - maintenancedescription
+  - wheel
+  - saddle
+  - pedal
+  - bikeframe
+  - crankset
+  - pictureangle
+  - picturesize
+  - productphotoid
+  - material
+  - color
+  - productline
+  - style
+  - riderexperience
+  - rowguid
+  - modifieddate
+  excluded: []
+  n: 6
+  s: 13220359346002191228
+  x: 11532416594466364542

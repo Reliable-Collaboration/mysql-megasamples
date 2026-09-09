@@ -212,3 +212,54 @@ ALTER TABLE "salesorderdetail" ADD CONSTRAINT "fk_salesorderdetail_salesorderhea
 ALTER TABLE "salesorderdetail" ADD CONSTRAINT "ck_salesorderdetail_orderqty" CHECK (("orderqty" > 0));
 ALTER TABLE "salesorderdetail" ADD CONSTRAINT "ck_salesorderdetail_unitprice" CHECK (("unitprice" >= 0.00));
 ALTER TABLE "salesorderdetail" ADD CONSTRAINT "ck_salesorderdetail_unitpricediscount" CHECK (("unitpricediscount" >= 0.00));
+
+CREATE FUNCTION "ufngetsalesorderstatustext"(status smallint) RETURNS character varying(15) LANGUAGE plpgsql VOLATILE AS $body$
+BEGIN
+  RETURN CASE "status" WHEN 1 THEN 'In process' WHEN 2 THEN 'Approved' WHEN 3 THEN 'Backordered' WHEN 4 THEN 'Rejected' WHEN 5 THEN 'Shipped' WHEN 6 THEN 'Cancelled' ELSE '** Invalid **' END;
+END $body$;
+
+CREATE VIEW "vgetallcategories" ("parentproductcategoryname", "productcategoryname", "productcategoryid") AS
+WITH RECURSIVE "CategoryCTE"("parentproductcategoryid", "productcategoryid", "name") AS (SELECT "productcategory"."parentproductcategoryid" AS "parentproductcategoryid", "productcategory"."productcategoryid" AS "productcategoryid", "productcategory"."name" AS "name" FROM "productcategory" WHERE ("productcategory"."parentproductcategoryid" IS NULL) UNION ALL SELECT "C"."parentproductcategoryid" AS "parentproductcategoryid", "C"."productcategoryid" AS "productcategoryid", "C"."name" AS "name" FROM ("productcategory" AS "C" JOIN "CategoryCTE" AS "BC" ON (("BC"."productcategoryid" = "C"."parentproductcategoryid")))) SELECT "PC"."name" AS "parentproductcategoryname", "CCTE"."name" AS "productcategoryname", "CCTE"."productcategoryid" AS "productcategoryid" FROM ("CategoryCTE" AS "CCTE" JOIN "productcategory" AS "PC" ON (("PC"."productcategoryid" = "CCTE"."parentproductcategoryid")));
+
+CREATE VIEW "vproductanddescription" ("productid", "name", "productmodel", "culture", "description") AS
+SELECT "p"."productid" AS "productid", "p"."name" AS "name", "pm"."name" AS "productmodel", "pmx"."culture" AS "culture", "pd"."description" AS "description" FROM ((("product" AS "p" JOIN "productmodel" AS "pm" ON (("p"."productmodelid" = "pm"."productmodelid"))) JOIN "productmodelproductdescription" AS "pmx" ON (("pm"."productmodelid" = "pmx"."productmodelid"))) JOIN "productdescription" AS "pd" ON (("pmx"."productdescriptionid" = "pd"."productdescriptionid")));
+
+CREATE VIEW "vproductmodelcatalogdescription" ("productmodelid", "name", "summary", "manufacturer", "copyright", "producturl", "warrantyperiod", "warrantydescription", "noofyears", "maintenancedescription", "wheel", "saddle", "pedal", "bikeframe", "crankset", "pictureangle", "picturesize", "productphotoid", "material", "color", "productline", "style", "riderexperience", "rowguid", "modifieddate") AS
+SELECT "productmodel"."productmodelid" AS "productmodelid", "productmodel"."name" AS "name", ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Summary'']/*[local-name()=''p''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS "summary", ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Manufacturer'']/*[local-name()=''Name''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS "manufacturer", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Manufacturer'']/*[local-name()=''Copyright''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "copyright", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Manufacturer'']/*[local-name()=''ProductURL''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "producturl", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Warranty'']/*[local-name()=''WarrantyPeriod''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "warrantyperiod", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Warranty'']/*[local-name()=''Description''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "warrantydescription", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Maintenance'']/*[local-name()=''NoOfYears''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "noofyears", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Maintenance'']/*[local-name()=''Description''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "maintenancedescription", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''wheel''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "wheel", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''saddle''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "saddle", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''pedal''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "pedal", ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''BikeFrame''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS "bikeframe", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''crankset''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "crankset", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Picture'']/*[local-name()=''Angle''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "pictureangle", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Picture'']/*[local-name()=''Size''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "picturesize", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Picture'']/*[local-name()=''ProductPhotoID''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "productphotoid", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''Material''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "material", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''Color''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "color", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''ProductLine''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "productline", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''Style''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "style", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''RiderExperience''][1]/text()', CAST("productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "riderexperience", "productmodel"."rowguid" AS "rowguid", "productmodel"."modifieddate" AS "modifieddate" FROM "productmodel" WHERE (NOT "productmodel"."catalogdescription" IS NULL);
+
+CREATE FUNCTION "salesorderdetail_idusalesorderdetail_delete_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = OLD."salesorderid") WHERE "salesorderid" = OLD."salesorderid";
+  RETURN OLD;
+END $$;
+
+CREATE TRIGGER "idusalesorderdetail_delete" AFTER DELETE ON "salesorderdetail" FOR EACH ROW EXECUTE FUNCTION "salesorderdetail_idusalesorderdetail_delete_fn"();
+
+CREATE FUNCTION "salesorderdetail_idusalesorderdetail_insert_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = NEW."salesorderid") WHERE "salesorderid" = NEW."salesorderid";
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "idusalesorderdetail_insert" AFTER INSERT ON "salesorderdetail" FOR EACH ROW EXECUTE FUNCTION "salesorderdetail_idusalesorderdetail_insert_fn"();
+
+CREATE FUNCTION "salesorderdetail_idusalesorderdetail_update_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = NEW."salesorderid") WHERE "salesorderid" = NEW."salesorderid";
+  IF OLD."salesorderid" <> NEW."salesorderid" THEN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = OLD."salesorderid") WHERE "salesorderid" = OLD."salesorderid";
+  END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "idusalesorderdetail_update" AFTER UPDATE ON "salesorderdetail" FOR EACH ROW EXECUTE FUNCTION "salesorderdetail_idusalesorderdetail_update_fn"();
+
+CREATE FUNCTION "salesorderheader_usalesorderheader_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  IF NEW."status" IS NOT DISTINCT FROM OLD."status" AND NEW."revisionnumber" IS NOT DISTINCT FROM OLD."revisionnumber" THEN
+  NEW."revisionnumber" := OLD."revisionnumber" + 1;
+  END IF;
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "usalesorderheader" BEFORE UPDATE ON "salesorderheader" FOR EACH ROW EXECUTE FUNCTION "salesorderheader_usalesorderheader_fn"();

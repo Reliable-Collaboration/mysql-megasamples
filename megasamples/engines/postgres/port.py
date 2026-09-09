@@ -11,6 +11,9 @@ dump under build/mysql/dumps/<dataset>/, and writes build/postgres/<dataset>/:
     data/<table>.tsv   COPY text format, one file per table; data/tables.tsv lists them in load order
     indexes.sql        secondary indexes
     constraints.sql    foreign keys, checks, identity sequences advanced past the loaded keys
+    routines.sql       the stored functions and procedures, in PL/pgSQL
+    views.sql          the views, in the order their dependencies allow
+    triggers.sql       the triggers, as PL/pgSQL trigger functions
     dropped.txt        what PostgreSQL does not carry, one line each, with the reason
 
 then loads them into the PostgreSQL build server: CREATE DATABASE, schema, \\copy per table,
@@ -24,7 +27,7 @@ from megasamples import datasets as inventory
 from megasamples.engines.postgres import server as pg
 from megasamples.engines.mysql import dump as dumper, server as mysql
 from megasamples.paths import engine_build_dir, rel
-from megasamples.port import ddl, model, record, tsv, typemap
+from megasamples.port import ddl, model, record, tsv, typemap, views as view_port
 
 
 def out_dir(dataset):
@@ -42,6 +45,46 @@ def setval_statements(database, dialect):
     return out
 
 
+class ResultProbe:
+    """Measures the result columns of a procedure that returns rows: the ported schema and the
+    database's functions are created in a scratch database on the build server, and psql's \\gdesc
+    describes the procedure's SELECT (with its variables as typed NULLs) without running it."""
+
+    def __init__(self, schema, database):
+        self.schema, self.database, self.name, self.functions_done = schema, database, f"_probe_{schema}", False
+
+    def open(self):
+        pg.start()
+        pg.psql(f'DROP DATABASE IF EXISTS "{self.name}"')
+        pg.psql(f'CREATE DATABASE "{self.name}" TEMPLATE template0 ENCODING \'UTF8\'')
+        from megasamples.port import routines as routine_port
+        rendered = ddl.render(self.database, "postgres", {}, probe=lambda tr: [])   # no result sets needed here
+        pg.psql_script("\n".join(rendered["schema"]), self.name)
+        # what a procedure's SELECT may use: the functions, then the views; one at a time, because a
+        # failure here is reported by the port itself when it loads the same statement
+        for st in [s for s in rendered["routines"] if s.startswith("CREATE FUNCTION")
+                   and "RETURNS TABLE" not in s.split("\n", 1)[0]] + rendered["views"]:
+            try:
+                pg.psql_script(st, self.name)
+            except RuntimeError:
+                pass
+        self.functions_done = True
+
+    def probe(self, tr):
+        if not self.functions_done:
+            self.open()
+        script = "BEGIN;\n" + "\n".join(tr.temp_tables) + "\n" + tr.probe_select() + " \\gdesc\nROLLBACK;\n"
+        out = pg.psql_script(script, self.name)
+        cols = [tuple(line.split("\t")) for line in out.splitlines() if line]
+        if not cols:
+            raise RuntimeError(f"{tr.r.name}: \\gdesc described no columns for its result set")
+        return cols
+
+    def close(self):
+        if self.functions_done:
+            pg.psql(f'DROP DATABASE IF EXISTS "{self.name}"')
+
+
 def write_files(dataset):
     cfg = inventory.load(dataset)
     schema = cfg["database"]
@@ -55,11 +98,28 @@ def write_files(dataset):
     target = out_dir(dataset)
     shutil.rmtree(target, ignore_errors=True)
     os.makedirs(os.path.join(target, "data"))
-    rendered = ddl.render(database, "postgres")
     dialect = ddl.DIALECTS["postgres"]
+    result_columns = {}
+    prober = ResultProbe(schema, database)
+    rendered = ddl.render(database, "postgres", result_columns, prober.probe)
+    prober.close()
+    rendered["result_columns"] = result_columns
 
+    with open(os.path.join(target, "routines.sql"), "w", encoding="utf-8") as fh:
+        fh.write("\n\n".join(rendered["routines"]) + ("\n" if rendered["routines"] else ""))
+    view_sql = rendered["views"]
+    ported_views = [s.split('"')[1] for s in view_sql]
+    with open(os.path.join(target, "views.sql"), "w", encoding="utf-8") as fh:
+        fh.write("\n\n".join(view_sql) + ("\n" if view_sql else ""))
+    with open(os.path.join(target, "triggers.sql"), "w", encoding="utf-8") as fh:
+        fh.write("\n\n".join(rendered["triggers"]) + ("\n" if rendered["triggers"] else ""))
     with open(os.path.join(target, "model.json"), "w", encoding="utf-8") as fh:
-        json.dump(dataclasses.asdict(database), fh, indent=1)
+        doc = dataclasses.asdict(database)
+        doc["ported_views"] = ported_views
+        doc["ported_routines"] = [s.split('"')[1] for s in rendered["routines"]]
+        doc["result_sets"] = {k: [list(c) for c in v] for k, v in result_columns.items()}
+        doc["ported_triggers"] = [s.split('"')[1] for s in rendered["triggers"] if s.startswith("CREATE TRIGGER")]
+        json.dump(doc, fh, indent=1)
     with open(os.path.join(target, "schema.sql"), "w", encoding="utf-8") as fh:
         fh.write("-- generated by megasamples pg-port from the MySQL corpus; do not edit\n\n")
         fh.write("\n\n".join(rendered["schema"]) + "\n")
@@ -110,6 +170,9 @@ def load(dataset):
             n_tables += 1
     pg.psql_file(f"{inside}/indexes.sql", schema)
     pg.psql_file(f"{inside}/constraints.sql", schema)
+    pg.psql_file(f"{inside}/routines.sql", schema)
+    pg.psql_file(f"{inside}/views.sql", schema)
+    pg.psql_file(f"{inside}/triggers.sql", schema)
     pg.psql("ANALYZE", schema)
     size = pg.rows(f"SELECT pg_size_pretty(pg_database_size('{schema}'))")[0][0]
     print(f"  . {dataset} loaded into PostgreSQL in {time.time() - started:.1f}s: {n_tables} tables, {size}")

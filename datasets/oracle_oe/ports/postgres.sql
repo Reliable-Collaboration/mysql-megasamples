@@ -120,6 +120,7 @@ CREATE INDEX "orders_ord_sales_rep_ix" ON "orders" ("sales_rep_id");
 CREATE INDEX "order_items_item_order_ix" ON "order_items" ("order_id");
 CREATE INDEX "order_items_item_product_ix" ON "order_items" ("product_id");
 CREATE UNIQUE INDEX "order_items_order_items_uk" ON "order_items" ("order_id", "product_id");
+CREATE INDEX "product_descriptions_prod_desc_ft" ON "product_descriptions" USING gin (to_tsvector('simple', coalesce("translated_description", '')));
 CREATE INDEX "product_descriptions_prod_desc_language_ix" ON "product_descriptions" ("language_id");
 CREATE INDEX "product_descriptions_prod_name_ix" ON "product_descriptions" ("translated_name");
 
@@ -135,3 +136,29 @@ ALTER TABLE "orders" ADD CONSTRAINT "order_total_min" CHECK (("order_total" >= 0
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_fk" FOREIGN KEY ("order_id") REFERENCES "orders" ("order_id") ON UPDATE NO ACTION ON DELETE CASCADE;
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_product_id_fk" FOREIGN KEY ("product_id") REFERENCES "product_information" ("product_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "product_descriptions" ADD CONSTRAINT "pd_product_id_fk" FOREIGN KEY ("product_id") REFERENCES "product_information" ("product_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+CREATE VIEW "products" ("product_id", "language_id", "product_name", "category_id", "product_description", "weight_class", "warranty_months", "supplier_id", "product_status", "list_price", "min_price", "catalog_url") AS
+SELECT "i"."product_id" AS "product_id", "d"."language_id" AS "language_id", COALESCE("d"."translated_name", "i"."product_name") AS "product_name", "i"."category_id" AS "category_id", COALESCE("d"."translated_description", "i"."product_description") AS "product_description", "i"."weight_class" AS "weight_class", "i"."warranty_months" AS "warranty_months", "i"."supplier_id" AS "supplier_id", "i"."product_status" AS "product_status", "i"."list_price" AS "list_price", "i"."min_price" AS "min_price", "i"."catalog_url" AS "catalog_url" FROM ("product_information" AS "i" LEFT JOIN "product_descriptions" AS "d" ON ((("d"."product_id" = "i"."product_id") AND ("d"."language_id" = 'US'))));
+
+CREATE VIEW "bombay_inventory" ("product_id", "product_name", "quantity_on_hand") AS
+SELECT "p"."product_id" AS "product_id", "p"."product_name" AS "product_name", "i"."quantity_on_hand" AS "quantity_on_hand" FROM (("inventories" AS "i" JOIN "warehouses" AS "w" ON (("i"."warehouse_id" = "w"."warehouse_id"))) JOIN "products" AS "p" ON (("p"."product_id" = "i"."product_id"))) WHERE ("w"."warehouse_name" = 'Bombay');
+
+CREATE VIEW "orders_view" ("order_id", "order_date", "order_mode", "customer_id", "order_status", "order_total", "sales_rep_id", "promotion_id") AS
+SELECT "orders"."order_id" AS "order_id", CAST("orders"."order_date" AS DATE) AS "order_date", "orders"."order_mode" AS "order_mode", "orders"."customer_id" AS "customer_id", "orders"."order_status" AS "order_status", "orders"."order_total" AS "order_total", "orders"."sales_rep_id" AS "sales_rep_id", "orders"."promotion_id" AS "promotion_id" FROM "orders";
+
+CREATE VIEW "product_prices" ("category_id", "#_of_products", "low_price", "high_price") AS
+SELECT "product_information"."category_id" AS "category_id", COUNT(0) AS "#_of_products", MIN("product_information"."list_price") AS "low_price", MAX("product_information"."list_price") AS "high_price" FROM "product_information" GROUP BY "product_information"."category_id";
+
+CREATE VIEW "sydney_inventory" ("product_id", "product_name", "quantity_on_hand") AS
+SELECT "p"."product_id" AS "product_id", "p"."product_name" AS "product_name", "i"."quantity_on_hand" AS "quantity_on_hand" FROM (("inventories" AS "i" JOIN "warehouses" AS "w" ON (("i"."warehouse_id" = "w"."warehouse_id"))) JOIN "products" AS "p" ON (("p"."product_id" = "i"."product_id"))) WHERE ("w"."warehouse_name" = 'Sydney');
+
+CREATE VIEW "toronto_inventory" ("product_id", "product_name", "quantity_on_hand") AS
+SELECT "p"."product_id" AS "product_id", "p"."product_name" AS "product_name", "i"."quantity_on_hand" AS "quantity_on_hand" FROM (("inventories" AS "i" JOIN "warehouses" AS "w" ON (("i"."warehouse_id" = "w"."warehouse_id"))) JOIN "products" AS "p" ON (("p"."product_id" = "i"."product_id"))) WHERE ("w"."warehouse_name" = 'Toronto');
+
+CREATE FUNCTION "order_items_insert_ord_line_fn"() RETURNS trigger LANGUAGE plpgsql AS $$
+BEGIN
+  NEW."line_item_id" := (SELECT COALESCE(MAX("line_item_id"), 0) + 1 FROM "order_items" WHERE "order_id" = NEW."order_id");
+  RETURN NEW;
+END $$;
+
+CREATE TRIGGER "insert_ord_line" BEFORE INSERT ON "order_items" FOR EACH ROW EXECUTE FUNCTION "order_items_insert_ord_line_fn"();

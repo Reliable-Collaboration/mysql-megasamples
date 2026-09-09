@@ -84,6 +84,18 @@ trigger on the database), `uspLogError` (calls `ERROR_*()`), `ufnGetContactInfor
 table), and `uspGetEmployeeManagers`/`uspGetManagerEmployees` (call hierarchyid methods -- the decoded
 `*_path` columns are the MySQL equivalent, and porting them to recursive CTEs is separate work).
 
+**2026-09-09.** `uspGetBillOfMaterials` and `uspGetWhereUsedProductID` failed on MySQL itself with
+"table bom_cte doesn't exist": their CTE carries a line comment between the column list and `AS`,
+which hid the self-reference from the `WITH RECURSIVE` rewrite; the converter now looks past such
+comments and both procedures return their bills of materials (product 800 on 2022-01-01 is part of
+`tests/routines.yaml`, pinned from MySQL and reproduced on PostgreSQL). All 16 routines are ported to
+PostgreSQL and verified by 19 calls ([parity record](/decisions/programmable-object-parity.md));
+the three update procedures keep their handler's `CALL usplogerror()`, which does not exist on any
+engine, so `uspUpdateEmployeeHireInfo` fails identically on MySQL and PostgreSQL when its insert
+is rejected, and the test pins that failure. SQLite has no stored routines. Three of this
+database's AUTO_INCREMENT columns sit inside composite keys, which SQLite cannot auto-assign
+(`person_emailaddress`, `purchasing_purchaseorderdetail`, `sales_salesorderdetail`).
+
 **A note on precision.** T-SQL `datetime` keeps milliseconds and these routines rely on it:
 `ufnGetAccountingEndDate` is `DATEADD(ms, -2, ...)`, which a MySQL `DATETIME` with no fractional
 digits rounds straight back up to the next day. Routine types widen to `DATETIME(3)`; columns are

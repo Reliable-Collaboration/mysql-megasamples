@@ -3,11 +3,14 @@
 
   python3 -m megasamples verify <dataset> [stage ...] [--engine mysql] [--pin]
 
-Stages: counts (S3), digests (S4), fks (S5), indexes (S6), explain (S6), smoke (S7). Default: all
-the engine supports. The expectations under datasets/<name>/tests/ are engine-neutral: every engine
-is checked against the same counts, the same canonical digests, the same foreign keys and the same
-index set, which is what makes a port provably the same data as the MySQL corpus. explain and smoke
-are MySQL-only, since their queries are written in MySQL's dialect.
+Stages: counts (S3), digests (S4), fks (S5), indexes (S6), views (S4v), routines (S8), triggers
+(S9), explain (S6), smoke (S7). Default: all the engine supports. The expectations under
+datasets/<name>/tests/ are engine-neutral: every engine is checked against the same counts, the
+same canonical digests, the same foreign keys, the same index set, the same view results, the same
+routine outputs and the same trigger effects, which is what makes a port provably the same
+database as the MySQL corpus. explain and smoke are MySQL-only, since their queries are written in
+MySQL's dialect; routines and triggers scenarios are written in MySQL's dialect too, and the ports
+translate them with the same translator that ported the objects (megasamples/port/sqltranslate.py).
 
 `--pin` writes the observed values into the tests/ files instead of comparing, and is allowed on
 MySQL only: expectations come from the hub, never from a port. It is how a native-SQL dataset with
@@ -226,8 +229,138 @@ def stage_smoke(ad, cfg, schema, d, pin, res):
     res.note(f"smoke OK for {len(expected)} queries")
 
 
+def stage_views(ad, cfg, schema, d, pin, res):
+    """Every view's row count and canonical digest, pinned from MySQL: a ported view is right when
+    it returns the same rows, not merely when it exists."""
+    from megasamples import canon
+    path = os.path.join(d, "tests", "views.yaml")
+    expected = None if pin else load_yaml(path)
+    observed = {}
+    for view in ad.views(schema):
+        cols = ad.view_columns(schema, view)
+        n, x, s = ad.fingerprint(schema, view, cols)
+        observed[view] = {"n": n, "x": x, "s": s,
+                          "columns": [c for c, t in cols if t.lower() not in canon.EXCLUDED],
+                          "excluded": [c for c, t in cols if t.lower() in canon.EXCLUDED]}
+        # a decimal the view computes is exact on MySQL and PostgreSQL and floating-point on
+        # SQLite: the digest without those columns is pinned too, and SQLite is held to that one
+        inexact = (ad.view_inexact_columns(schema, view) if pin else (expected or {}).get(view, {}).get("inexact")) or []
+        if inexact:
+            exact_cols = [(c, t) for c, t in cols if c not in inexact]
+            _, x2, s2 = ad.fingerprint(schema, view, exact_cols)
+            observed[view].update({"inexact": sorted(inexact), "x_exact": x2, "s_exact": s2})
+    if pin:
+        dump_yaml(path, observed, "# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod\n"
+                                  "# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and\n"
+                                  "# s_exact leave out the `inexact` columns: decimals the view computes, which an engine\n"
+                                  "# without decimal arithmetic (SQLite) cannot reproduce to the digit.")
+        res.note(f"views pinned for {len(observed)} views"); return
+    if expected is None:
+        if observed:
+            res.fail(f"no views.yaml for {cfg['database']}; run with --pin"); return
+        res.note("no views"); return
+    absent = ad.views_not_ported(schema)
+    checked, by_count, without = 0, [], []
+    for view, want in sorted(expected.items()):
+        if view in absent:
+            continue
+        got = observed.get(view)
+        if not got:
+            res.fail(f"view {view} missing"); continue
+        if got["columns"] != want["columns"]:
+            res.fail(f"view {view}: digested column set changed {want['columns']} -> {got['columns']}"); continue
+        # a GROUP_CONCAT with no ORDER BY concatenates in whatever order the engine reads the rows,
+        # which MySQL itself leaves unspecified; such a view is held to its row count
+        if ad.view_has_unordered_aggregate(schema, view):
+            keys = ("n",)
+            by_count.append(view)
+        elif want.get("inexact") and not ad.exact_decimals:
+            keys = ("n", "x_exact", "s_exact")
+            without.append(view)
+        else:
+            keys = ("n", "x", "s")
+        for k in keys:
+            if got.get(k) != want.get(k):
+                res.fail(f"view {view}: digest {k} {got.get(k)} != expected {want.get(k)}")
+        checked += 1
+    res.note(f"views OK for {checked} views"
+             + (f"; {len(by_count)} compared by row count only (unordered GROUP_CONCAT): {', '.join(by_count)}" if by_count else "")
+             + (f"; {len(without)} compared without their computed decimals (no decimal arithmetic on {ad.name}): {', '.join(without)}" if without else "")
+             + (f"; {len(absent)} not ported on {ad.name}" if absent else ""))
+
+
+def stage_routines(ad, cfg, schema, d, pin, res):
+    """Every call in tests/routines.yaml, run inside a transaction that is rolled back, printed by
+    the engine's client and compared line by line (megasamples/probe.py) with what MySQL printed."""
+    from megasamples import probe
+    spec = load_yaml(os.path.join(d, "tests", "routines.yaml"))
+    path = os.path.join(d, "tests", "routines.expected.yaml")
+    if not spec:
+        res.note("no routines.yaml, skipped"); return
+    absent = ad.routines_not_ported(schema)
+    observed, skipped = {}, []
+    for case in spec:
+        if case["routine"] in absent:
+            skipped.append(case["name"]); continue
+        observed[case["name"]] = ad.call_routine(schema, case)
+    if pin:
+        dump_yaml(path, observed, "# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by\n"
+                                  "# line (megasamples/probe.py); 'ERROR' when the call must fail.")
+        res.note(f"routine calls pinned for {len(observed)} calls"); return
+    expected = load_yaml(path)
+    if expected is None:
+        res.fail(f"no routines.expected.yaml for {cfg['database']}; run with --pin"); return
+    checked = 0
+    for name, want in sorted(expected.items()):
+        if name not in observed:
+            if name in skipped:
+                continue
+            res.fail(f"routine call {name} not run"); continue
+        got = observed[name]
+        if got != want:
+            res.fail(f"routine call {name}:\n    expected {want!r}\n    got      {got!r}")
+        checked += 1
+    res.note(f"routine calls OK for {checked} calls"
+             + (f"; {len(skipped)} skipped, routine not ported on {ad.name}: {', '.join(skipped)}" if skipped else ""))
+
+
+def stage_triggers(ad, cfg, schema, d, pin, res):
+    """Every scenario in tests/triggers.yaml: its statements run inside a transaction, the probe
+    query is printed, the transaction is rolled back; compared with MySQL like the routine calls."""
+    spec = load_yaml(os.path.join(d, "tests", "triggers.yaml"))
+    path = os.path.join(d, "tests", "triggers.expected.yaml")
+    if not spec:
+        res.note("no triggers.yaml, skipped"); return
+    absent = ad.triggers_not_ported(schema)
+    observed, skipped = {}, []
+    for case in spec:
+        if case.get("trigger") in absent:
+            skipped.append(case["name"]); continue
+        observed[case["name"]] = ad.run_scenario(schema, case)
+    if pin:
+        dump_yaml(path, observed, "# S9: what each scenario's probe in triggers.yaml prints on MySQL after the scenario's\n"
+                                  "# statements, normalised and sorted line by line (megasamples/probe.py).")
+        res.note(f"trigger scenarios pinned for {len(observed)} scenarios"); return
+    expected = load_yaml(path)
+    if expected is None:
+        res.fail(f"no triggers.expected.yaml for {cfg['database']}; run with --pin"); return
+    checked = 0
+    for name, want in sorted(expected.items()):
+        if name not in observed:
+            if name in skipped:
+                continue
+            res.fail(f"trigger scenario {name} not run"); continue
+        got = observed[name]
+        if got != want:
+            res.fail(f"trigger scenario {name}:\n    expected {want!r}\n    got      {got!r}")
+        checked += 1
+    res.note(f"trigger scenarios OK for {checked} scenarios"
+             + (f"; {len(skipped)} skipped, trigger not ported on {ad.name}: {', '.join(skipped)}" if skipped else ""))
+
+
 STAGES = {"counts": stage_counts, "digests": stage_digests, "fks": stage_fks,
-          "indexes": stage_indexes, "explain": stage_explain, "smoke": stage_smoke}
+          "indexes": stage_indexes, "views": stage_views, "routines": stage_routines, "triggers": stage_triggers,
+          "explain": stage_explain, "smoke": stage_smoke}
 
 
 def adapter_for(engine, dataset):

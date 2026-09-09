@@ -135,3 +135,30 @@ ALTER TABLE "sales" ADD CONSTRAINT "sales_ibfk_1" FOREIGN KEY ("stor_id") REFERE
 ALTER TABLE "sales" ADD CONSTRAINT "sales_ibfk_2" FOREIGN KEY ("title_id") REFERENCES "titles" ("title_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "titleauthor" ADD CONSTRAINT "titleauthor_ibfk_1" FOREIGN KEY ("au_id") REFERENCES "authors" ("au_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "titleauthor" ADD CONSTRAINT "titleauthor_ibfk_2" FOREIGN KEY ("title_id") REFERENCES "titles" ("title_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+CREATE FUNCTION "byroyalty"(p_percentage integer) RETURNS TABLE("au_id" character(11)) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY SELECT "au_id" FROM "titleauthor" WHERE "titleauthor"."royaltyper" = p_percentage;
+END $body$;
+
+CREATE FUNCTION "reptq1"() RETURNS TABLE("pub_id" bpchar, "avg_price" numeric) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY SELECT CASE WHEN GROUPING("pub_id") = 1 THEN 'ALL' ELSE "pub_id" END AS pub_id, AVG("price") AS avg_price FROM "titles" WHERE NOT "price" IS NULL GROUP BY ROLLUP ("pub_id") ORDER BY "pub_id" NULLS FIRST;
+END $body$;
+
+CREATE FUNCTION "reptq2"() RETURNS TABLE("type" bpchar, "pub_id" bpchar, "avg_ytd_sales" numeric) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY SELECT CASE WHEN GROUPING("type") = 1 THEN 'ALL' ELSE "type" END AS type, CASE WHEN GROUPING("pub_id") = 1 THEN 'ALL' ELSE "pub_id" END AS pub_id, AVG("ytd_sales") AS avg_ytd_sales FROM "titles" WHERE NOT "pub_id" IS NULL GROUP BY ROLLUP ("pub_id", "type");
+END $body$;
+
+CREATE FUNCTION "reptq3"(p_lolimit numeric(19,4), p_hilimit numeric(19,4), p_type character(12)) RETURNS TABLE("pub_id" bpchar, "type" bpchar, "cnt" bigint) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY SELECT CASE WHEN GROUPING("pub_id") = 1 THEN 'ALL' ELSE "pub_id" END AS pub_id, CASE WHEN GROUPING("type") = 1 THEN 'ALL' ELSE "type" END AS type, COUNT("title_id") AS cnt FROM "titles" WHERE "price" > p_lolimit AND "price" < p_hilimit AND "type" = p_type OR "type" LIKE '%cook%' GROUP BY ROLLUP ("pub_id", "type");
+END $body$;
+
+CREATE VIEW "titleview" ("title", "au_ord", "au_lname", "price", "ytd_sales", "pub_id") AS
+SELECT "titles"."title" AS "title", "titleauthor"."au_ord" AS "au_ord", "authors"."au_lname" AS "au_lname", "titles"."price" AS "price", "titles"."ytd_sales" AS "ytd_sales", "titles"."pub_id" AS "pub_id" FROM (("authors" CROSS JOIN "titles") CROSS JOIN "titleauthor") WHERE (("authors"."au_id" = "titleauthor"."au_id") AND ("titles"."title_id" = "titleauthor"."title_id"));

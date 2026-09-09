@@ -1,0 +1,15 @@
+# The result columns PostgreSQL infers for each procedure that returns rows, measured with
+# psql's \gdesc on the ported schema; the procedure becomes a function RETURNS TABLE(...).
+byroyalty:
+- [au_id, character(11)]
+reptq1:
+- [pub_id, bpchar]
+- [avg_price, numeric]
+reptq2:
+- [type, bpchar]
+- [pub_id, bpchar]
+- [avg_ytd_sales, numeric]
+reptq3:
+- [pub_id, bpchar]
+- [type, bpchar]
+- [cnt, bigint]

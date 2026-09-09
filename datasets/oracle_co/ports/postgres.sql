@@ -96,3 +96,12 @@ ALTER TABLE "shipments" ADD CONSTRAINT "shipment_status_c" CHECK (("shipment_sta
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_order_id_fk" FOREIGN KEY ("order_id") REFERENCES "orders" ("order_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_product_id_fk" FOREIGN KEY ("product_id") REFERENCES "products" ("product_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "order_items" ADD CONSTRAINT "order_items_shipment_id_fk" FOREIGN KEY ("shipment_id") REFERENCES "shipments" ("shipment_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+CREATE VIEW "customer_order_products" ("order_id", "order_tms", "order_status", "customer_id", "email_address", "full_name", "order_total", "items") AS
+SELECT "o"."order_id" AS "order_id", "o"."order_tms" AS "order_tms", "o"."order_status" AS "order_status", "c"."customer_id" AS "customer_id", "c"."email_address" AS "email_address", "c"."full_name" AS "full_name", SUM(("oi"."quantity" * "oi"."unit_price")) AS "order_total", STRING_AGG("p"."product_name", ', ' ORDER BY "oi"."line_item_id" ASC NULLS FIRST) AS "items" FROM ((("orders" AS "o" JOIN "order_items" AS "oi" ON (("o"."order_id" = "oi"."order_id"))) JOIN "customers" AS "c" ON (("o"."customer_id" = "c"."customer_id"))) JOIN "products" AS "p" ON (("oi"."product_id" = "p"."product_id"))) GROUP BY "o"."order_id", "o"."order_tms", "o"."order_status", "c"."customer_id", "c"."email_address", "c"."full_name";
+
+CREATE VIEW "product_orders" ("product_name", "order_status", "total_sales", "order_count") AS
+SELECT "p"."product_name" AS "product_name", "o"."order_status" AS "order_status", SUM(("oi"."quantity" * "oi"."unit_price")) AS "total_sales", COUNT(0) AS "order_count" FROM ((("orders" AS "o" JOIN "order_items" AS "oi" ON (("o"."order_id" = "oi"."order_id"))) JOIN "customers" AS "c" ON (("o"."customer_id" = "c"."customer_id"))) JOIN "products" AS "p" ON (("oi"."product_id" = "p"."product_id"))) GROUP BY "p"."product_name", "o"."order_status";
+
+CREATE VIEW "product_reviews" ("product_name", "rating", "avg_rating", "review") AS
+SELECT "p"."product_name" AS "product_name", "r"."rating" AS "rating", ROUND(CAST(AVG("r"."rating") OVER (PARTITION BY "p"."product_name") AS DECIMAL), 2) AS "avg_rating", "r"."review" AS "review" FROM ("products" AS "p" CROSS JOIN JSON_TABLE(CAST("p"."product_details" AS JSONB), '$' COLUMNS(NESTED PATH '$.reviews[*]' COLUMNS("rating" INT PATH '$.rating', "review" VARCHAR(4000) PATH '$.review'))) AS r);

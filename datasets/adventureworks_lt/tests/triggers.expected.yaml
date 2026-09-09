@@ -1,0 +1,12 @@
+# S9: what each scenario's probe in triggers.yaml prints on MySQL after the scenario's
+# statements, normalised and sorted line by line (megasamples/probe.py).
+idusalesorderdetail_delete:
+- '356.898'
+idusalesorderdetail_insert:
+- '913.796'
+idusalesorderdetail_update:
+- '1427.592'
+usalesorderheader:
+- "3\t5"
+usalesorderheader_status_change:
+- "2\t4"

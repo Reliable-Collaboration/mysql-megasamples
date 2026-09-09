@@ -95,12 +95,40 @@ CREATE INDEX "cust_hist_ix_cust_hist_customerid_prodid" ON "cust_hist" ("custome
 CREATE INDEX "membership_fk_membership_custid" ON "membership" ("customerid");
 CREATE INDEX "orders_ix_order_custid" ON "orders" ("customerid");
 CREATE UNIQUE INDEX "orderlines_ix_orderlines_orderid" ON "orderlines" ("orderid", "orderlineid");
+CREATE INDEX "products_ix_prod_actor" ON "products" USING gin (to_tsvector('simple', coalesce("actor", '')));
 CREATE INDEX "products_ix_prod_category" ON "products" ("category");
 CREATE INDEX "products_ix_prod_prodid_common" ON "products" ("prod_id", "common_prod_id");
 CREATE INDEX "products_ix_prod_special" ON "products" ("special");
+CREATE INDEX "products_ix_prod_title" ON "products" USING gin (to_tsvector('simple', coalesce("title", '')));
 CREATE INDEX "reorder_ix_reorder_prodid" ON "reorder" ("prod_id");
 
 ALTER TABLE "cust_hist" ADD CONSTRAINT "fk_cust_hist_customerid" FOREIGN KEY ("customerid") REFERENCES "customers" ("customerid") ON UPDATE NO ACTION ON DELETE CASCADE;
 ALTER TABLE "membership" ADD CONSTRAINT "fk_membership_custid" FOREIGN KEY ("customerid") REFERENCES "customers" ("customerid") ON UPDATE NO ACTION ON DELETE CASCADE;
 ALTER TABLE "orders" ADD CONSTRAINT "fk_customerid" FOREIGN KEY ("customerid") REFERENCES "customers" ("customerid") ON UPDATE NO ACTION ON DELETE SET NULL;
 ALTER TABLE "orderlines" ADD CONSTRAINT "fk_orderid" FOREIGN KEY ("orderid") REFERENCES "orders" ("orderid") ON UPDATE NO ACTION ON DELETE CASCADE;
+
+CREATE PROCEDURE "new_customer"(IN firstname_in character varying(50), IN lastname_in character varying(50), IN address1_in character varying(50), IN address2_in character varying(50), IN city_in character varying(50), IN state_in character varying(50), IN zip_in integer, IN country_in character varying(50), IN region_in integer, IN email_in character varying(50), IN phone_in character varying(50), IN creditcardtype_in integer, IN creditcard_in character varying(50), IN creditcardexpiration_in character varying(50), IN username_in character varying(50), IN password_in character varying(50), IN age_in integer, IN income_in integer, IN gender_in character varying(1), OUT customerid_out integer) LANGUAGE plpgsql AS $body$
+DECLARE
+  rows_returned integer;
+BEGIN
+  SELECT COUNT(*) FROM "customers" WHERE "username" = username_in INTO rows_returned;
+  IF rows_returned = 0 THEN
+    INSERT INTO "customers" ("firstname", "lastname", "email", "phone", "username", "password", "address1", "address2", "city", "state", "zip", "country", "region", "creditcardtype", "creditcard", "creditcardexpiration", "age", "income", "gender") VALUES (firstname_in, lastname_in, email_in, phone_in, username_in, password_in, address1_in, address2_in, city_in, state_in, zip_in, country_in, region_in, creditcardtype_in, creditcard_in, creditcardexpiration_in, age_in, income_in, gender_in);
+    SELECT LASTVAL() INTO customerid_out;
+  ELSE
+    customerid_out := 0;
+  END IF;
+END $body$;
+
+CREATE PROCEDURE "new_member"(IN customerid_in integer, IN membershiplevel_in integer, OUT customerid_out integer) LANGUAGE plpgsql AS $body$
+DECLARE
+  rows_returned integer;
+BEGIN
+  SELECT COUNT(*) FROM "membership" WHERE "customerid" = customerid_in INTO rows_returned;
+  IF rows_returned = 0 THEN
+    INSERT INTO "membership" ("customerid", "membershiptype", "expiredate") VALUES (customerid_in, membershiplevel_in, NOW());
+    customerid_out := customerid_in;
+  ELSE
+    customerid_out := 0;
+  END IF;
+END $body$;

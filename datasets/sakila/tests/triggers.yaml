@@ -1,0 +1,53 @@
+# S9: trigger scenarios. Each runs its statements (MySQL dialect; the ports translate them with
+# the same translator that ported the triggers) inside a transaction, prints the probe query, and
+# rolls back. What MySQL prints is pinned into triggers.expected.yaml (megasamples/probe.py).
+# `trigger` names the trigger exercised, so an engine that could not port it skips the scenario;
+# a scenario without one exercises ON UPDATE CURRENT_TIMESTAMP, which every port emulates.
+- name: customer_create_date
+  trigger: customer_create_date
+  statements:
+  - "INSERT INTO customer (store_id, first_name, last_name, address_id, active) VALUES (1, 'VERIFY', 'TRIGGER', 1, 1)"
+  probe: "SELECT create_date >= CURRENT_DATE, last_update >= CURRENT_DATE FROM customer WHERE first_name = 'VERIFY' AND last_name = 'TRIGGER'"
+- name: ins_film
+  trigger: ins_film
+  statements:
+  - "INSERT INTO film (title, description, language_id) VALUES ('VERIFY FILM', 'A trigger test', 1)"
+  probe: "SELECT title, description FROM film_text WHERE title = 'VERIFY FILM'"
+- name: upd_film
+  trigger: upd_film
+  statements:
+  - "UPDATE film SET title = 'VERIFY RENAMED', description = 'Renamed by the scenario' WHERE film_id = 1"
+  probe: "SELECT film_id, title, description FROM film_text WHERE film_id = 1"
+- name: upd_film_no_text_change
+  trigger: upd_film
+  statements:
+  - "UPDATE film SET rental_rate = 9.99 WHERE film_id = 2"
+  probe: "SELECT film_id, title FROM film_text WHERE film_id = 2"
+- name: del_film
+  trigger: del_film
+  statements:
+  - "INSERT INTO film (title, description, language_id) VALUES ('VERIFY DELETED', 'Gone', 1)"
+  - "DELETE FROM film WHERE title = 'VERIFY DELETED'"
+  probe: "SELECT COUNT(*) FROM film_text WHERE title = 'VERIFY DELETED'"
+- name: payment_date
+  trigger: payment_date
+  statements:
+  - "INSERT INTO payment (customer_id, staff_id, rental_id, amount) VALUES (1, 1, NULL, 0.01)"
+  probe: "SELECT payment_date >= CURRENT_DATE, amount FROM payment WHERE customer_id = 1 AND amount = 0.01"
+- name: rental_date
+  trigger: rental_date
+  statements:
+  - "INSERT INTO rental (inventory_id, customer_id, staff_id) VALUES (1, 1, 1)"
+  probe: "SELECT rental_date >= CURRENT_DATE, return_date FROM rental WHERE inventory_id = 1 AND customer_id = 1 AND return_date IS NULL"
+- name: on_update_actor
+  statements:
+  - "UPDATE actor SET first_name = 'VERIFY' WHERE actor_id = 1"
+  probe: "SELECT first_name, last_update >= CURRENT_DATE FROM actor WHERE actor_id = 1"
+- name: on_update_actor_unchanged
+  statements:
+  - "UPDATE actor SET first_name = first_name WHERE actor_id = 2"
+  probe: "SELECT last_update >= CURRENT_DATE FROM actor WHERE actor_id = 2"
+- name: on_update_film
+  statements:
+  - "UPDATE film SET rental_duration = 7 WHERE film_id = 3"
+  probe: "SELECT rental_duration, last_update >= CURRENT_DATE FROM film WHERE film_id = 3"

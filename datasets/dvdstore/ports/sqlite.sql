@@ -95,7 +95,31 @@ CREATE INDEX "cust_hist_ix_cust_hist_customerid_prodid" ON "cust_hist" ("custome
 CREATE INDEX "membership_fk_membership_custid" ON "membership" ("customerid");
 CREATE INDEX "orders_ix_order_custid" ON "orders" ("customerid");
 CREATE UNIQUE INDEX "orderlines_ix_orderlines_orderid" ON "orderlines" ("orderid", "orderlineid");
+CREATE VIRTUAL TABLE "products_ix_prod_actor_fts" USING fts5("actor", content='products', content_rowid='rowid');
+CREATE TRIGGER "products_ix_prod_actor_fts_ai" AFTER INSERT ON "products" BEGIN
+  INSERT INTO "products_ix_prod_actor_fts"(rowid, "actor") VALUES (NEW.rowid, NEW."actor");
+END;
+CREATE TRIGGER "products_ix_prod_actor_fts_ad" AFTER DELETE ON "products" BEGIN
+  INSERT INTO "products_ix_prod_actor_fts"("products_ix_prod_actor_fts", rowid, "actor") VALUES ('delete', OLD.rowid, OLD."actor");
+END;
+CREATE TRIGGER "products_ix_prod_actor_fts_au" AFTER UPDATE ON "products" BEGIN
+  INSERT INTO "products_ix_prod_actor_fts"("products_ix_prod_actor_fts", rowid, "actor") VALUES ('delete', OLD.rowid, OLD."actor");
+  INSERT INTO "products_ix_prod_actor_fts"(rowid, "actor") VALUES (NEW.rowid, NEW."actor");
+END;
+INSERT INTO "products_ix_prod_actor_fts"("products_ix_prod_actor_fts") VALUES ('rebuild');
 CREATE INDEX "products_ix_prod_category" ON "products" ("category");
 CREATE INDEX "products_ix_prod_prodid_common" ON "products" ("prod_id", "common_prod_id");
 CREATE INDEX "products_ix_prod_special" ON "products" ("special");
+CREATE VIRTUAL TABLE "products_ix_prod_title_fts" USING fts5("title", content='products', content_rowid='rowid');
+CREATE TRIGGER "products_ix_prod_title_fts_ai" AFTER INSERT ON "products" BEGIN
+  INSERT INTO "products_ix_prod_title_fts"(rowid, "title") VALUES (NEW.rowid, NEW."title");
+END;
+CREATE TRIGGER "products_ix_prod_title_fts_ad" AFTER DELETE ON "products" BEGIN
+  INSERT INTO "products_ix_prod_title_fts"("products_ix_prod_title_fts", rowid, "title") VALUES ('delete', OLD.rowid, OLD."title");
+END;
+CREATE TRIGGER "products_ix_prod_title_fts_au" AFTER UPDATE ON "products" BEGIN
+  INSERT INTO "products_ix_prod_title_fts"("products_ix_prod_title_fts", rowid, "title") VALUES ('delete', OLD.rowid, OLD."title");
+  INSERT INTO "products_ix_prod_title_fts"(rowid, "title") VALUES (NEW.rowid, NEW."title");
+END;
+INSERT INTO "products_ix_prod_title_fts"("products_ix_prod_title_fts") VALUES ('rebuild');
 CREATE INDEX "reorder_ix_reorder_prodid" ON "reorder" ("prod_id");

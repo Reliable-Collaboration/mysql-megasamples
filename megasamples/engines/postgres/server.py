@@ -74,6 +74,16 @@ def psql(sql, database="postgres", check=True):
     return p.stdout
 
 
+def psql_script(text, database="postgres", null="\\N"):
+    """Run a script through psql's standard input: statements go one at a time, every result is
+    printed tab-separated without headers, and the first error stops it."""
+    p = run(["docker", "exec", "-i", NAME, "psql", "-U", "postgres", "-d", database,
+             "-v", "ON_ERROR_STOP=1", "-qAt", "-F", "\t", "-P", f"null={null}"], input=text)
+    if p.returncode != 0:
+        raise RuntimeError(f"psql script failed: {p.stderr.strip()[:600]}\n--- script ---\n{text[:600]}")
+    return p.stdout
+
+
 def psql_file(path_in_container, database):
     p = run(["docker", "exec", NAME, "psql", "-U", "postgres", "-d", database,
              "-v", "ON_ERROR_STOP=1", "-q", "-f", path_in_container])

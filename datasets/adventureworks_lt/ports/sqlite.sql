@@ -202,3 +202,31 @@ CREATE UNIQUE INDEX "salesorderheader_salesordernumber" ON "salesorderheader" ("
 CREATE INDEX "salesorderdetail_ix_salesorderdetail_productid" ON "salesorderdetail" ("productid");
 CREATE UNIQUE INDEX "salesorderdetail_rowguid" ON "salesorderdetail" ("rowguid");
 CREATE INDEX "salesorderdetail_salesorderdetailid" ON "salesorderdetail" ("salesorderdetailid");
+
+CREATE VIEW "vgetallcategories" ("parentproductcategoryname", "productcategoryname", "productcategoryid") AS
+WITH RECURSIVE "CategoryCTE"("parentproductcategoryid", "productcategoryid", "name") AS (SELECT "productcategory"."parentproductcategoryid" AS "parentproductcategoryid", "productcategory"."productcategoryid" AS "productcategoryid", "productcategory"."name" AS "name" FROM "productcategory" WHERE ("productcategory"."parentproductcategoryid" IS NULL) UNION ALL SELECT "C"."parentproductcategoryid" AS "parentproductcategoryid", "C"."productcategoryid" AS "productcategoryid", "C"."name" AS "name" FROM ("productcategory" AS "C" JOIN "CategoryCTE" AS "BC" ON (("BC"."productcategoryid" = "C"."parentproductcategoryid")))) SELECT "PC"."name" AS "parentproductcategoryname", "CCTE"."name" AS "productcategoryname", "CCTE"."productcategoryid" AS "productcategoryid" FROM ("CategoryCTE" AS "CCTE" JOIN "productcategory" AS "PC" ON (("PC"."productcategoryid" = "CCTE"."parentproductcategoryid")));
+
+CREATE VIEW "vproductanddescription" ("productid", "name", "productmodel", "culture", "description") AS
+SELECT "p"."productid" AS "productid", "p"."name" AS "name", "pm"."name" AS "productmodel", "pmx"."culture" AS "culture", "pd"."description" AS "description" FROM ((("product" AS "p" JOIN "productmodel" AS "pm" ON (("p"."productmodelid" = "pm"."productmodelid"))) JOIN "productmodelproductdescription" AS "pmx" ON (("pm"."productmodelid" = "pmx"."productmodelid"))) JOIN "productdescription" AS "pd" ON (("pmx"."productdescriptionid" = "pd"."productdescriptionid")));
+
+CREATE TRIGGER "idusalesorderdetail_delete" AFTER DELETE ON "salesorderdetail" FOR EACH ROW
+BEGIN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = OLD."salesorderid") WHERE "salesorderid" = OLD."salesorderid";
+END;
+
+CREATE TRIGGER "idusalesorderdetail_insert" AFTER INSERT ON "salesorderdetail" FOR EACH ROW
+BEGIN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = NEW."salesorderid") WHERE "salesorderid" = NEW."salesorderid";
+END;
+
+CREATE TRIGGER "idusalesorderdetail_update" AFTER UPDATE ON "salesorderdetail" FOR EACH ROW
+BEGIN
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = NEW."salesorderid") WHERE "salesorderid" = NEW."salesorderid";
+  UPDATE "salesorderheader" SET "subtotal" = (SELECT COALESCE(SUM("linetotal"), 0) FROM "salesorderdetail" WHERE "salesorderid" = OLD."salesorderid") WHERE ("salesorderid" = OLD."salesorderid") AND (OLD."salesorderid" <> NEW."salesorderid");
+END;
+
+CREATE TRIGGER "usalesorderheader" AFTER UPDATE ON "salesorderheader" FOR EACH ROW
+WHEN NEW."status" IS NOT DISTINCT FROM OLD."status" AND NEW."revisionnumber" IS NOT DISTINCT FROM OLD."revisionnumber"
+BEGIN
+  UPDATE "salesorderheader" SET "revisionnumber" = OLD."revisionnumber" + 1 WHERE rowid = NEW.rowid;
+END;

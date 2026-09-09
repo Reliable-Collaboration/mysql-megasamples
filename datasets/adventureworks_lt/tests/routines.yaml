@@ -1,0 +1,7 @@
+# S8: calls of the stored routines, with arguments as MySQL literals. What each call prints on
+# MySQL is pinned into routines.expected.yaml (normalised and sorted line by line,
+# megasamples/probe.py), and every port must print the same. A call runs inside a transaction
+# that is rolled back; `probe` is a query printed after the call; `error: true` means the call
+# must fail, on every engine; `probe_only: true` compares the probe alone, not the OUT values.
+- {name: ufngetsalesorderstatustext_5, routine: ufngetsalesorderstatustext, args: [5]}
+- {name: ufngetsalesorderstatustext_9, routine: ufngetsalesorderstatustext, args: [9]}

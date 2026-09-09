@@ -1,0 +1,34 @@
+# S9: trigger scenarios. Each runs its statements (MySQL dialect; the ports translate them with
+# the same translator that ported the triggers) inside a transaction, prints the probe query, and
+# rolls back. What MySQL prints is pinned into triggers.expected.yaml (megasamples/probe.py).
+# `trigger` names the trigger exercised, so an engine that could not port it skips the scenario;
+# a scenario without one exercises ON UPDATE CURRENT_TIMESTAMP, which every port emulates.
+# linetotal is a stored generated column (unitprice * (1 - unitpricediscount) * orderqty); the
+# three salesorderdetail triggers keep salesorderheader.subtotal equal to the sum of its lines.
+# The insert names its salesorderdetailid: SQLite cannot auto-assign a column that is only part of
+# the primary key (ports/not_ported.yaml), and the id is not what the scenario tests.
+- name: idusalesorderdetail_insert
+  trigger: idusalesorderdetail_insert
+  statements:
+  - "INSERT INTO salesorderdetail (salesorderid, salesorderdetailid, orderqty, productid, unitprice, unitpricediscount, rowguid) VALUES (71774, 999999, 2, 836, 100.0000, 0, '00000000-0000-0000-0000-000000000001')"
+  probe: "SELECT subtotal FROM salesorderheader WHERE salesorderid = 71774"
+- name: idusalesorderdetail_update
+  trigger: idusalesorderdetail_update
+  statements:
+  - "UPDATE salesorderdetail SET orderqty = 3 WHERE salesorderdetailid = 110562"
+  probe: "SELECT subtotal FROM salesorderheader WHERE salesorderid = 71774"
+- name: idusalesorderdetail_delete
+  trigger: idusalesorderdetail_delete
+  statements:
+  - "DELETE FROM salesorderdetail WHERE salesorderdetailid = 110563"
+  probe: "SELECT subtotal FROM salesorderheader WHERE salesorderid = 71774"
+- name: usalesorderheader
+  trigger: usalesorderheader
+  statements:
+  - "UPDATE salesorderheader SET comment = 'verify' WHERE salesorderid = 71774"
+  probe: "SELECT revisionnumber, status FROM salesorderheader WHERE salesorderid = 71774"
+- name: usalesorderheader_status_change
+  trigger: usalesorderheader
+  statements:
+  - "UPDATE salesorderheader SET status = 4 WHERE salesorderid = 71776"
+  probe: "SELECT revisionnumber, status FROM salesorderheader WHERE salesorderid = 71776"

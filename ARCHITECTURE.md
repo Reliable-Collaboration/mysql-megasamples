@@ -152,15 +152,20 @@ is the registry the configuration names.
 
 * **Port** (`megasamples pg-port`, or `make build ENGINE=postgres`): the model and the dump become
   `build/postgres/<dataset>/` — `schema.sql`, `data/<table>.tsv` in `COPY` text format with the
-  insertable columns listed, `indexes.sql`, `constraints.sql` (foreign keys, checks, and `setval`
-  for every identity sequence), `model.json`, `dropped.txt` — and are loaded into a throwaway
-  `postgres:18.6-bookworm` build server, `megasamples-build-postgres`, with `\copy`.
+  insertable columns listed, `indexes.sql` (btree, and a GIN index over `to_tsvector('simple', …)`
+  for every FULLTEXT index), `constraints.sql` (foreign keys, checks, and `setval` for every
+  identity sequence), `routines.sql` (PL/pgSQL), `views.sql`, `triggers.sql` (PL/pgSQL trigger
+  functions, including one per `ON UPDATE CURRENT_TIMESTAMP` column), `model.json`, `dropped.txt` —
+  and are loaded in that order into a throwaway `postgres:18.6-bookworm` build server,
+  `megasamples-build-postgres`, with `\copy`. A procedure that returns rows becomes a function
+  `RETURNS TABLE(...)`; its columns are measured once with psql's `\gdesc` on the ported schema and
+  recorded in `datasets/<name>/ports/result_sets.yaml`, so the next render needs no server.
 * **Image.** `engines/postgres/Dockerfile`: a builder stage runs `initdb` at the image's own
   `PGDATA`, appends the `host all all all scram-sha-256` rule the official entrypoint would have
   written, starts a private server with bulk-load settings, creates the accounts and the registry,
   replays every port's files, and stops; the final stage is the official image plus that cluster.
-  First start answers a real query in under a second; the data directory is 2.5 GB for the 21 core
-  databases and the image is 4.0 GB. Details: `knowledge/decisions/postgres-image-shape.md`.
+  First start answers a real query in under a second; the data directory is 2.6 GB for the 21 core
+  databases and the image is 4.1 GB. Details: `knowledge/decisions/postgres-image-shape.md`.
 * **Accounts.** `postgres` (superuser, `root`), `admin` (create, alter, drop; `ALL` on every table),
   `demo` (`SELECT` everywhere). `POSTGRES_PASSWORD`, `ADMIN_PASSWORD`, `DEMO_PASSWORD` override them
   at start through the wrapper entrypoint. Tag: `sql-megasamples-postgres:dev`.
@@ -175,13 +180,15 @@ is the registry the configuration names.
 
 * **Port** (`megasamples sqlite-port`, or `make build ENGINE=sqlite`): the stdlib `sqlite3` driver
   writes `build/sqlite/<dataset>/<database>.sqlite` — MySQL-like declared types for their affinity,
-  keys, foreign keys and checks inline, secondary indexes after the data, `VACUUM`ed, rollback
-  journal, `application_id` `MSMP`. There is no build server: the file is the database. Details:
-  `knowledge/decisions/sqlite-file-conventions.md`.
+  keys, foreign keys and checks inline (a `REGEXP` check becomes a `GLOB` when its pattern is an
+  anchored run of character classes), secondary indexes after the data, then an FTS5
+  external-content table with three sync triggers for every FULLTEXT index, the views, and the
+  triggers; `VACUUM`ed, rollback journal, `application_id` `MSMP`. There is no build server: the
+  file is the database. Details: `knowledge/decisions/sqlite-file-conventions.md`.
 * **Image.** `engines/sqlite/Dockerfile`: Alpine 3.22 (digest-pinned) with the `sqlite` package
   (SQLite 3.49.2), the files under `/data` and `/data/megasamples.sqlite` as the registry; its default
   command sleeps so the container holds the files for `docker exec` and for the consoles. The 21 core
-  databases are 867 MB of files and a 1.2 GB image. The same files are a release asset set
+  databases are 899 MB of files and a 1.3 GB image. The same files are a release asset set
   (`make release SET=sqlite`).
 * **Stack.** The `sqlite` service copies the image's files into the named volume `megasamples-sqlite`
   at every start, and the consoles that can open SQLite mount that volume read-only, so a rebuilt
@@ -190,6 +197,36 @@ is the registry the configuration names.
   canonical text form in Python (decimals at the declared scale, date-times with six fractional
   digits); foreign keys are checked by the orphan query with the model's names; indexes come from
   the pragmas.
+
+### 4.4 The port toolkit (`megasamples/port/`)
+
+One program produces every port, and nothing in it is written by hand per dataset:
+
+* `model.py` reads a database from the MySQL build server's `information_schema` (tables, columns,
+  keys, indexes, checks, views with their column types, routines with their parameters, triggers);
+  `typemap.py` is the one type-mapping table; `ddl.py` emits the schema, indexes and constraints
+  in two dialects; `tsv.py` reads the MySQL Shell dump chunks; `record.py` writes what was decided
+  beside the dataset.
+* `sqltranslate.py` translates one MySQL statement or expression at a time with sqlglot, then
+  applies the rules the corpus needed and MySQL's semantics require (listed in its header): the
+  target's function allowlist, so an unknown function stops the port with its name; unquoted
+  identifiers resolved to the schema's spelling, because PostgreSQL folds them; a FLOAT operand
+  cast to double precision on PostgreSQL, as MySQL computes it; a comparison in a select list cast
+  to an integer, since MySQL has no boolean; a compact date literal against a date-time column
+  written out in ISO form; `GROUP_CONCAT`, `JSON_TABLE`, `EXTRACTVALUE`, `TO_DAYS`, `ROLLUP` and
+  the other constructs each engine spells differently.
+* `views.py` renders the views in dependency order; `triggers.py` renders each trigger as a
+  PL/pgSQL function and trigger, or as a SQLite trigger that updates the row afterwards where
+  MySQL assigns `NEW` (a SQLite trigger cannot modify the row being inserted); `routines.py`
+  translates the stored routines to PL/pgSQL over a closed census of constructs (`DECLARE`, `SET`,
+  `SELECT INTO`, `IF`/`ELSEIF`, `CASE`, `RETURN`, DML, `CALL`, temporary tables, the two handler
+  forms, `LEAVE`, transaction statements, user variables), and anything outside it drops the
+  routine by name.
+* Anything an engine cannot carry is dropped **with its reason**, by name, into
+  `datasets/<name>/ports/not_ported.yaml`; what a routine body had to change is in
+  `ports/notes.yaml`. `megasamples ports-check` (part of `make check`) re-renders every port's DDL,
+  routines, views and triggers from the build server and fails on any byte of difference from what
+  is committed, so a port is reproducible by construction and reviewed as a diff.
 
 ## 5. Verification
 
@@ -204,6 +241,9 @@ files under `datasets/<name>/tests/`, so a port is verified against exactly what
 | S5 integrity | every foreign key has zero orphans, including cross-database keys | `verify … fks` |
 | S6 indexes | every index in `tests/indexes.yaml` exists with the same columns, uniqueness and type; smoke queries do not full-scan the tables `tests/explain.yaml` names | `verify … indexes explain` |
 | S7 semantics | canonical queries return `tests/smoke.expected.yaml` | `verify … smoke` |
+| S4v views | every view's row count and canonical digest equal `tests/views.yaml`, pinned from MySQL; a view with an unordered `GROUP_CONCAT` is held to its row count, and on an engine without decimal arithmetic a view's computed decimals are left out of the digest (`x_exact`, `s_exact`) | `verify … views` |
+| S8r routines | every call in `tests/routines.yaml` (arguments as MySQL literals, inside a rolled-back transaction) prints what MySQL printed, normalised line by line by `megasamples/probe.py` (booleans, decimal scale, CHAR padding, row order) | `verify … routines` |
+| S9 triggers | every scenario in `tests/triggers.yaml` (MySQL-dialect DML, translated for the port by the same translator that ported the triggers, then a probe query, then rollback) prints what MySQL printed | `verify … triggers` |
 | S8 image | per engine: the image answers a real query within 30 s, holds exactly the registered datasets with their pinned counts, `demo` cannot write and `admin` can, no account is passwordless, password overrides apply (over the network for PostgreSQL); MySQL adds `CHECK TABLE` and time-zone conversion, SQLite adds `integrity_check`, `foreign_key_check` and the journal mode | `megasamples test-image --engine …` |
 | S10 console | every console answers HTTP 200, the landing page names every registered database of every engine, CloudBeaver is out of its wizard and opens each engine's connections, `demo` reads and cannot write and `admin` writes on each server engine | `megasamples test-console` |
 
@@ -213,11 +253,14 @@ U+0000, dates and times in fixed formats, binary and geometry as lowercase hex o
 float, double and JSON columns are excluded and compared by aggregates instead. Because it is
 defined as text, the same digest is computed on every engine — in SQL on MySQL, in Python from
 `COPY` output on PostgreSQL, in Python from the driver on SQLite — which is what makes a port
-provably equal to the MySQL corpus. `verify --engine postgres|sqlite` runs counts, digests, foreign
-keys and indexes; explain and smoke stay MySQL-only, since their queries are written in its dialect. `--pin`
-writes observed values instead of comparing them, which is how a native-SQL dataset with no
-converter-side baseline gets its first expectations; a `# authority:` header on a counts file marks
-it as generated from the source and refuses pinning.
+provably equal to the MySQL corpus. `verify --engine postgres` runs counts, digests, foreign keys,
+indexes (a FULLTEXT index counts as carried by its GIN or FTS5 form), views, routines and triggers;
+`--engine sqlite` the same minus routines, which it has none of; explain and smoke stay MySQL-only,
+since their queries are written in its dialect. `--pin` writes observed values instead of comparing
+them, which is how a native-SQL dataset with no converter-side baseline gets its first
+expectations; a `# authority:` header on a counts file marks it as generated from the source and
+refuses pinning. The routine calls and trigger scenarios are the one hand-written part: the
+arguments and the DML are chosen per dataset, while their outcomes are always pinned from MySQL.
 
 ## 6. The stack
 

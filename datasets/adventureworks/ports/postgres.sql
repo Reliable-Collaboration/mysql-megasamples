@@ -1059,3 +1059,164 @@ ALTER TABLE "sales_salesterritoryhistory" ADD CONSTRAINT "fk_salesterritoryhisto
 ALTER TABLE "sales_salesterritoryhistory" ADD CONSTRAINT "ck_salesterritoryhistory_enddate" CHECK ((("enddate" >= "startdate") or ("enddate" is null)));
 ALTER TABLE "sales_shoppingcartitem" ADD CONSTRAINT "fk_shoppingcartitem_product_productid" FOREIGN KEY ("productid") REFERENCES "production_product" ("productid") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "sales_shoppingcartitem" ADD CONSTRAINT "ck_shoppingcartitem_quantity" CHECK (("quantity" >= 1));
+
+CREATE FUNCTION "ufngetaccountingenddate"() RETURNS timestamp(3) without time zone LANGUAGE plpgsql IMMUTABLE AS $body$
+BEGIN
+  RETURN TO_DATE('20040701', 'YYYYMMDD') + INTERVAL '-2000 MICROSECOND';
+END $body$;
+
+CREATE FUNCTION "ufngetaccountingstartdate"() RETURNS timestamp(3) without time zone LANGUAGE plpgsql IMMUTABLE AS $body$
+BEGIN
+  RETURN TO_DATE('20030701', 'YYYYMMDD');
+END $body$;
+
+CREATE FUNCTION "ufngetdocumentstatustext"(p_status smallint) RETURNS character varying(16) LANGUAGE plpgsql IMMUTABLE AS $body$
+DECLARE
+  v_ret character varying(16);
+BEGIN
+  v_ret := CASE p_status WHEN 1 THEN 'Pending approval' WHEN 2 THEN 'Approved' WHEN 3 THEN 'Obsolete' ELSE '** Invalid **' END;
+  RETURN v_ret;
+END $body$;
+
+CREATE FUNCTION "ufngetproductdealerprice"(p_productid integer, p_orderdate timestamp(3) without time zone) RETURNS numeric(19,4) LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_dealerprice numeric(19,4);
+  v_dealerdiscount numeric(19,4);
+BEGIN
+  v_dealerdiscount := 0.60;
+  SELECT plph."listprice" * v_dealerdiscount FROM "production_product" AS p INNER JOIN "production_productlistpricehistory" AS plph ON p."productid" = plph."productid" AND p."productid" = p_productid AND p_orderdate BETWEEN plph."startdate" AND COALESCE(plph."enddate", TO_DATE('99991231', 'YYYYMMDD')) INTO v_dealerprice;
+  RETURN v_dealerprice;
+END $body$;
+
+CREATE FUNCTION "ufngetproductlistprice"(p_productid integer, p_orderdate timestamp(3) without time zone) RETURNS numeric(19,4) LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_listprice numeric(19,4);
+BEGIN
+  SELECT plph."listprice" FROM "production_product" AS p INNER JOIN "production_productlistpricehistory" AS plph ON p."productid" = plph."productid" AND p."productid" = p_productid AND p_orderdate BETWEEN plph."startdate" AND COALESCE(plph."enddate", TO_DATE('99991231', 'YYYYMMDD')) INTO v_listprice;
+  RETURN v_listprice;
+END $body$;
+
+CREATE FUNCTION "ufngetproductstandardcost"(p_productid integer, p_orderdate timestamp(3) without time zone) RETURNS numeric(19,4) LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_standardcost numeric(19,4);
+BEGIN
+  SELECT pch."standardcost" FROM "production_product" AS p INNER JOIN "production_productcosthistory" AS pch ON p."productid" = pch."productid" AND p."productid" = p_productid AND p_orderdate BETWEEN pch."startdate" AND COALESCE(pch."enddate", TO_DATE('99991231', 'YYYYMMDD')) INTO v_standardcost;
+  RETURN v_standardcost;
+END $body$;
+
+CREATE FUNCTION "ufngetpurchaseorderstatustext"(p_status smallint) RETURNS character varying(15) LANGUAGE plpgsql IMMUTABLE AS $body$
+DECLARE
+  v_ret character varying(15);
+BEGIN
+  v_ret := CASE p_status WHEN 1 THEN 'Pending' WHEN 2 THEN 'Approved' WHEN 3 THEN 'Rejected' WHEN 4 THEN 'Complete' ELSE '** Invalid **' END;
+  RETURN v_ret;
+END $body$;
+
+CREATE FUNCTION "ufngetsalesorderstatustext"(p_status smallint) RETURNS character varying(15) LANGUAGE plpgsql IMMUTABLE AS $body$
+DECLARE
+  v_ret character varying(15);
+BEGIN
+  v_ret := CASE p_status WHEN 1 THEN 'In process' WHEN 2 THEN 'Approved' WHEN 3 THEN 'Backordered' WHEN 4 THEN 'Rejected' WHEN 5 THEN 'Shipped' WHEN 6 THEN 'Cancelled' ELSE '** Invalid **' END;
+  RETURN v_ret;
+END $body$;
+
+CREATE FUNCTION "ufngetstock"(p_productid integer) RETURNS integer LANGUAGE plpgsql STABLE AS $body$
+DECLARE
+  v_ret integer;
+BEGIN
+  SELECT SUM(p."quantity") FROM "production_productinventory" AS p WHERE p."productid" = p_productid AND p."locationid" = '6' INTO v_ret;
+  IF (v_ret IS NULL) THEN
+    v_ret := 0;
+  END IF;
+  RETURN v_ret;
+END $body$;
+
+CREATE FUNCTION "ufnleadingzeros"(p_value integer) RETURNS character varying(8) LANGUAGE plpgsql IMMUTABLE AS $body$
+DECLARE
+  v_returnvalue character varying(8);
+BEGIN
+  v_returnvalue := CAST(p_value AS VARCHAR(8));
+  v_returnvalue := REPEAT('0', 8 - LENGTH(v_returnvalue)) || v_returnvalue;
+  RETURN v_returnvalue;
+END $body$;
+
+CREATE PROCEDURE "humanresources_uspupdateemployeehireinfo"(IN p_businessentityid integer, IN p_jobtitle character varying(50), IN p_hiredate timestamp(3) without time zone, IN p_ratechangedate timestamp(3) without time zone, IN p_rate numeric(19,4), IN p_payfrequency smallint, IN p_currentflag smallint) LANGUAGE plpgsql AS $body$
+BEGIN
+  UPDATE "humanresources_employee" SET "jobtitle" = p_jobtitle, "hiredate" = p_hiredate, "currentflag" = p_currentflag WHERE "businessentityid" = p_businessentityid;
+  INSERT INTO "humanresources_employeepayhistory" ("businessentityid", "ratechangedate", "rate", "payfrequency") VALUES (p_businessentityid, p_ratechangedate, p_rate, p_payfrequency);
+EXCEPTION WHEN OTHERS THEN
+    IF 0 > 0 THEN
+      NULL;
+    END IF;
+    CALL "usplogerror"();
+END $body$;
+
+CREATE PROCEDURE "humanresources_uspupdateemployeelogin"(IN p_businessentityid integer, IN p_organizationnode bytea, IN p_loginid character varying(256), IN p_jobtitle character varying(50), IN p_hiredate timestamp(3) without time zone, IN p_currentflag smallint) LANGUAGE plpgsql AS $body$
+BEGIN
+  UPDATE "humanresources_employee" SET "organizationnode" = p_organizationnode, "loginid" = p_loginid, "jobtitle" = p_jobtitle, "hiredate" = p_hiredate, "currentflag" = p_currentflag WHERE "businessentityid" = p_businessentityid;
+EXCEPTION WHEN OTHERS THEN
+    CALL "usplogerror"();
+END $body$;
+
+CREATE PROCEDURE "humanresources_uspupdateemployeepersonalinfo"(IN p_businessentityid integer, IN p_nationalidnumber character varying(15), IN p_birthdate timestamp(3) without time zone, IN p_maritalstatus character(1), IN p_gender character(1)) LANGUAGE plpgsql AS $body$
+BEGIN
+  UPDATE "humanresources_employee" SET "nationalidnumber" = p_nationalidnumber, "birthdate" = p_birthdate, "maritalstatus" = p_maritalstatus, "gender" = p_gender WHERE "businessentityid" = p_businessentityid;
+EXCEPTION WHEN OTHERS THEN
+    CALL "usplogerror"();
+END $body$;
+
+CREATE FUNCTION "uspgetbillofmaterials"(p_startproductid integer, p_checkdate timestamp(3) without time zone) RETURNS TABLE("productassemblyid" integer, "componentid" integer, "componentdesc" character varying(50), "totalquantity" numeric, "standardcost" numeric(19,4), "listprice" numeric(19,4), "bomlevel" smallint, "recursionlevel" integer) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY WITH RECURSIVE "bom_cte"("productassemblyid", "componentid", "componentdesc", "perassemblyqty", "standardcost", "listprice", "bomlevel", "recursionlevel") AS (SELECT b."productassemblyid", b."componentid", p."name", b."perassemblyqty", p."standardcost", p."listprice", b."bomlevel", 0 FROM "production_billofmaterials" AS b INNER JOIN "production_product" AS p ON b."componentid" = p."productid" WHERE b."productassemblyid" = p_startproductid AND p_checkdate >= b."startdate" AND p_checkdate <= COALESCE(b."enddate", p_checkdate) UNION ALL SELECT b."productassemblyid", b."componentid", p."name", b."perassemblyqty", p."standardcost", p."listprice", b."bomlevel", "recursionlevel" + 1 FROM "bom_cte" AS cte INNER JOIN "production_billofmaterials" AS b ON b."productassemblyid" = cte."componentid" INNER JOIN "production_product" AS p ON b."componentid" = p."productid" WHERE p_checkdate >= b."startdate" AND p_checkdate <= COALESCE(b."enddate", p_checkdate)) SELECT b."productassemblyid", b."componentid", b."componentdesc", SUM(b."perassemblyqty") AS "totalquantity", b."standardcost", b."listprice", b."bomlevel", b."recursionlevel" FROM "bom_cte" AS b GROUP BY b."componentid", b."componentdesc", b."productassemblyid", b."bomlevel", b."recursionlevel", b."standardcost", b."listprice" ORDER BY b."bomlevel" NULLS FIRST, b."productassemblyid" NULLS FIRST, b."componentid" NULLS FIRST;
+END $body$;
+
+CREATE FUNCTION "uspgetwhereusedproductid"(p_startproductid integer, p_checkdate timestamp(3) without time zone) RETURNS TABLE("productassemblyid" integer, "componentid" integer, "componentdesc" character varying(50), "totalquantity" numeric, "standardcost" numeric(19,4), "listprice" numeric(19,4), "bomlevel" smallint, "recursionlevel" integer) LANGUAGE plpgsql AS $body$
+#variable_conflict use_column
+BEGIN
+  RETURN QUERY WITH RECURSIVE "bom_cte"("productassemblyid", "componentid", "componentdesc", "perassemblyqty", "standardcost", "listprice", "bomlevel", "recursionlevel") AS (SELECT b."productassemblyid", b."componentid", p."name", b."perassemblyqty", p."standardcost", p."listprice", b."bomlevel", 0 FROM "production_billofmaterials" AS b INNER JOIN "production_product" AS p ON b."productassemblyid" = p."productid" WHERE b."componentid" = p_startproductid AND p_checkdate >= b."startdate" AND p_checkdate <= COALESCE(b."enddate", p_checkdate) UNION ALL SELECT b."productassemblyid", b."componentid", p."name", b."perassemblyqty", p."standardcost", p."listprice", b."bomlevel", "recursionlevel" + 1 FROM "bom_cte" AS cte INNER JOIN "production_billofmaterials" AS b ON cte."productassemblyid" = b."componentid" INNER JOIN "production_product" AS p ON b."productassemblyid" = p."productid" WHERE p_checkdate >= b."startdate" AND p_checkdate <= COALESCE(b."enddate", p_checkdate)) SELECT b."productassemblyid", b."componentid", b."componentdesc", SUM(b."perassemblyqty") AS "totalquantity", b."standardcost", b."listprice", b."bomlevel", b."recursionlevel" FROM "bom_cte" AS b GROUP BY b."componentid", b."componentdesc", b."productassemblyid", b."bomlevel", b."recursionlevel", b."standardcost", b."listprice" ORDER BY b."bomlevel" NULLS FIRST, b."productassemblyid" NULLS FIRST, b."componentid" NULLS FIRST;
+END $body$;
+
+CREATE PROCEDURE "uspprinterror"() LANGUAGE plpgsql AS $body$
+BEGIN
+  NULL;
+END $body$;
+
+CREATE VIEW "humanresources_vemployee" ("businessentityid", "title", "firstname", "middlename", "lastname", "suffix", "jobtitle", "phonenumber", "phonenumbertype", "emailaddress", "emailpromotion", "addressline1", "addressline2", "city", "stateprovincename", "postalcode", "countryregionname", "additionalcontactinfo") AS
+SELECT "e"."businessentityid" AS "businessentityid", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "e"."jobtitle" AS "jobtitle", "pp"."phonenumber" AS "phonenumber", "pnt"."name" AS "phonenumbertype", "ea"."emailaddress" AS "emailaddress", "p"."emailpromotion" AS "emailpromotion", "a"."addressline1" AS "addressline1", "a"."addressline2" AS "addressline2", "a"."city" AS "city", "sp"."name" AS "stateprovincename", "a"."postalcode" AS "postalcode", "cr"."name" AS "countryregionname", "p"."additionalcontactinfo" AS "additionalcontactinfo" FROM (((((((("humanresources_employee" AS "e" JOIN "person_person" AS "p" ON (("p"."businessentityid" = "e"."businessentityid"))) JOIN "person_businessentityaddress" AS "bea" ON (("bea"."businessentityid" = "e"."businessentityid"))) JOIN "person_address" AS "a" ON (("a"."addressid" = "bea"."addressid"))) JOIN "person_stateprovince" AS "sp" ON (("sp"."stateprovinceid" = "a"."stateprovinceid"))) JOIN "person_countryregion" AS "cr" ON (("cr"."countryregioncode" = "sp"."countryregioncode"))) LEFT JOIN "person_personphone" AS "pp" ON (("pp"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_phonenumbertype" AS "pnt" ON (("pp"."phonenumbertypeid" = "pnt"."phonenumbertypeid"))) LEFT JOIN "person_emailaddress" AS "ea" ON (("p"."businessentityid" = "ea"."businessentityid")));
+
+CREATE VIEW "humanresources_vemployeedepartment" ("businessentityid", "title", "firstname", "middlename", "lastname", "suffix", "jobtitle", "department", "groupname", "startdate") AS
+SELECT "e"."businessentityid" AS "businessentityid", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "e"."jobtitle" AS "jobtitle", "d"."name" AS "department", "d"."groupname" AS "groupname", "edh"."startdate" AS "startdate" FROM ((("humanresources_employee" AS "e" JOIN "person_person" AS "p" ON (("p"."businessentityid" = "e"."businessentityid"))) JOIN "humanresources_employeedepartmenthistory" AS "edh" ON (("e"."businessentityid" = "edh"."businessentityid"))) JOIN "humanresources_department" AS "d" ON (("edh"."departmentid" = "d"."departmentid"))) WHERE ("edh"."enddate" IS NULL);
+
+CREATE VIEW "humanresources_vemployeedepartmenthistory" ("businessentityid", "title", "firstname", "middlename", "lastname", "suffix", "shift", "department", "groupname", "startdate", "enddate") AS
+SELECT "e"."businessentityid" AS "businessentityid", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "s"."name" AS "shift", "d"."name" AS "department", "d"."groupname" AS "groupname", "edh"."startdate" AS "startdate", "edh"."enddate" AS "enddate" FROM (((("humanresources_employee" AS "e" JOIN "person_person" AS "p" ON (("p"."businessentityid" = "e"."businessentityid"))) JOIN "humanresources_employeedepartmenthistory" AS "edh" ON (("e"."businessentityid" = "edh"."businessentityid"))) JOIN "humanresources_department" AS "d" ON (("edh"."departmentid" = "d"."departmentid"))) JOIN "humanresources_shift" AS "s" ON (("s"."shiftid" = "edh"."shiftid")));
+
+CREATE VIEW "person_vstateprovincecountryregion" ("stateprovinceid", "stateprovincecode", "isonlystateprovinceflag", "stateprovincename", "territoryid", "countryregioncode", "countryregionname") AS
+SELECT "sp"."stateprovinceid" AS "stateprovinceid", "sp"."stateprovincecode" AS "stateprovincecode", "sp"."isonlystateprovinceflag" AS "isonlystateprovinceflag", "sp"."name" AS "stateprovincename", "sp"."territoryid" AS "territoryid", "cr"."countryregioncode" AS "countryregioncode", "cr"."name" AS "countryregionname" FROM ("person_stateprovince" AS "sp" JOIN "person_countryregion" AS "cr" ON (("sp"."countryregioncode" = "cr"."countryregioncode")));
+
+CREATE VIEW "production_vproductanddescription" ("productid", "name", "productmodel", "cultureid", "description") AS
+SELECT "p"."productid" AS "productid", "p"."name" AS "name", "pm"."name" AS "productmodel", "pmx"."cultureid" AS "cultureid", "pd"."description" AS "description" FROM ((("production_product" AS "p" JOIN "production_productmodel" AS "pm" ON (("p"."productmodelid" = "pm"."productmodelid"))) JOIN "production_productmodelproductdescriptionculture" AS "pmx" ON (("pm"."productmodelid" = "pmx"."productmodelid"))) JOIN "production_productdescription" AS "pd" ON (("pmx"."productdescriptionid" = "pd"."productdescriptionid")));
+
+CREATE VIEW "production_vproductmodelcatalogdescription" ("productmodelid", "name", "summary", "manufacturer", "copyright", "producturl", "warrantyperiod", "warrantydescription", "noofyears", "maintenancedescription", "wheel", "saddle", "pedal", "bikeframe", "crankset", "pictureangle", "picturesize", "productphotoid", "material", "color", "productline", "style", "riderexperience", "rowguid", "modifieddate") AS
+SELECT "production_productmodel"."productmodelid" AS "productmodelid", "production_productmodel"."name" AS "name", ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Summary'']/*[local-name()=''p''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS "summary", ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Manufacturer'']/*[local-name()=''Name''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS "manufacturer", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Manufacturer'']/*[local-name()=''Copyright''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "copyright", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Manufacturer'']/*[local-name()=''ProductURL''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "producturl", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Warranty'']/*[local-name()=''WarrantyPeriod''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "warrantyperiod", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Warranty'']/*[local-name()=''Description''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "warrantydescription", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Maintenance'']/*[local-name()=''NoOfYears''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "noofyears", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''Maintenance'']/*[local-name()=''Description''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "maintenancedescription", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''wheel''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "wheel", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''saddle''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "saddle", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''pedal''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "pedal", ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''BikeFrame''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS "bikeframe", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Features'']/*[local-name()=''crankset''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "crankset", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Picture'']/*[local-name()=''Angle''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "pictureangle", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Picture'']/*[local-name()=''Size''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "picturesize", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Picture'']/*[local-name()=''ProductPhotoID''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "productphotoid", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''Material''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "material", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''Color''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "color", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''ProductLine''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "productline", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''Style''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "style", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''ProductDescription'']/*[local-name()=''Specifications'']/*[local-name()=''RiderExperience''][1]/text()', CAST("production_productmodel"."catalogdescription" AS xml)), '') AS TEXT) AS "riderexperience", "production_productmodel"."rowguid" AS "rowguid", "production_productmodel"."modifieddate" AS "modifieddate" FROM "production_productmodel" WHERE (NOT "production_productmodel"."catalogdescription" IS NULL);
+
+CREATE VIEW "purchasing_vvendorwithaddresses" ("businessentityid", "name", "addresstype", "addressline1", "addressline2", "city", "stateprovincename", "postalcode", "countryregionname") AS
+SELECT "v"."businessentityid" AS "businessentityid", "v"."name" AS "name", "at"."name" AS "addresstype", "a"."addressline1" AS "addressline1", "a"."addressline2" AS "addressline2", "a"."city" AS "city", "sp"."name" AS "stateprovincename", "a"."postalcode" AS "postalcode", "cr"."name" AS "countryregionname" FROM ((((("purchasing_vendor" AS "v" JOIN "person_businessentityaddress" AS "bea" ON (("bea"."businessentityid" = "v"."businessentityid"))) JOIN "person_address" AS "a" ON (("a"."addressid" = "bea"."addressid"))) JOIN "person_stateprovince" AS "sp" ON (("sp"."stateprovinceid" = "a"."stateprovinceid"))) JOIN "person_countryregion" AS "cr" ON (("cr"."countryregioncode" = "sp"."countryregioncode"))) JOIN "person_addresstype" AS "at" ON (("at"."addresstypeid" = "bea"."addresstypeid")));
+
+CREATE VIEW "purchasing_vvendorwithcontacts" ("businessentityid", "name", "contacttype", "title", "firstname", "middlename", "lastname", "suffix", "phonenumber", "phonenumbertype", "emailaddress", "emailpromotion") AS
+SELECT "v"."businessentityid" AS "businessentityid", "v"."name" AS "name", "ct"."name" AS "contacttype", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "pp"."phonenumber" AS "phonenumber", "pnt"."name" AS "phonenumbertype", "ea"."emailaddress" AS "emailaddress", "p"."emailpromotion" AS "emailpromotion" FROM (((((("purchasing_vendor" AS "v" JOIN "person_businessentitycontact" AS "bec" ON (("bec"."businessentityid" = "v"."businessentityid"))) JOIN "person_contacttype" AS "ct" ON (("ct"."contacttypeid" = "bec"."contacttypeid"))) JOIN "person_person" AS "p" ON (("p"."businessentityid" = "bec"."personid"))) LEFT JOIN "person_emailaddress" AS "ea" ON (("ea"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_personphone" AS "pp" ON (("pp"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_phonenumbertype" AS "pnt" ON (("pnt"."phonenumbertypeid" = "pp"."phonenumbertypeid")));
+
+CREATE VIEW "sales_vindividualcustomer" ("businessentityid", "title", "firstname", "middlename", "lastname", "suffix", "phonenumber", "phonenumbertype", "emailaddress", "emailpromotion", "addresstype", "addressline1", "addressline2", "city", "stateprovincename", "postalcode", "countryregionname", "demographics") AS
+SELECT "p"."businessentityid" AS "businessentityid", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "pp"."phonenumber" AS "phonenumber", "pnt"."name" AS "phonenumbertype", "ea"."emailaddress" AS "emailaddress", "p"."emailpromotion" AS "emailpromotion", "at"."name" AS "addresstype", "a"."addressline1" AS "addressline1", "a"."addressline2" AS "addressline2", "a"."city" AS "city", "sp"."name" AS "stateprovincename", "a"."postalcode" AS "postalcode", "cr"."name" AS "countryregionname", "p"."demographics" AS "demographics" FROM ((((((((("person_person" AS "p" JOIN "person_businessentityaddress" AS "bea" ON (("bea"."businessentityid" = "p"."businessentityid"))) JOIN "person_address" AS "a" ON (("a"."addressid" = "bea"."addressid"))) JOIN "person_stateprovince" AS "sp" ON (("sp"."stateprovinceid" = "a"."stateprovinceid"))) JOIN "person_countryregion" AS "cr" ON (("cr"."countryregioncode" = "sp"."countryregioncode"))) JOIN "person_addresstype" AS "at" ON (("at"."addresstypeid" = "bea"."addresstypeid"))) JOIN "sales_customer" AS "c" ON (("c"."personid" = "p"."businessentityid"))) LEFT JOIN "person_emailaddress" AS "ea" ON (("ea"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_personphone" AS "pp" ON (("pp"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_phonenumbertype" AS "pnt" ON (("pnt"."phonenumbertypeid" = "pp"."phonenumbertypeid"))) WHERE ("c"."storeid" IS NULL);
+
+CREATE VIEW "sales_vsalesperson" ("businessentityid", "title", "firstname", "middlename", "lastname", "suffix", "jobtitle", "phonenumber", "phonenumbertype", "emailaddress", "emailpromotion", "addressline1", "addressline2", "city", "stateprovincename", "postalcode", "countryregionname", "territoryname", "territorygroup", "salesquota", "salesytd", "saleslastyear") AS
+SELECT "s"."businessentityid" AS "businessentityid", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "e"."jobtitle" AS "jobtitle", "pp"."phonenumber" AS "phonenumber", "pnt"."name" AS "phonenumbertype", "ea"."emailaddress" AS "emailaddress", "p"."emailpromotion" AS "emailpromotion", "a"."addressline1" AS "addressline1", "a"."addressline2" AS "addressline2", "a"."city" AS "city", "sp"."name" AS "stateprovincename", "a"."postalcode" AS "postalcode", "cr"."name" AS "countryregionname", "st"."name" AS "territoryname", "st"."group" AS "territorygroup", "s"."salesquota" AS "salesquota", "s"."salesytd" AS "salesytd", "s"."saleslastyear" AS "saleslastyear" FROM (((((((((("sales_salesperson" AS "s" JOIN "humanresources_employee" AS "e" ON (("e"."businessentityid" = "s"."businessentityid"))) JOIN "person_person" AS "p" ON (("p"."businessentityid" = "s"."businessentityid"))) JOIN "person_businessentityaddress" AS "bea" ON (("bea"."businessentityid" = "s"."businessentityid"))) JOIN "person_address" AS "a" ON (("a"."addressid" = "bea"."addressid"))) JOIN "person_stateprovince" AS "sp" ON (("sp"."stateprovinceid" = "a"."stateprovinceid"))) JOIN "person_countryregion" AS "cr" ON (("cr"."countryregioncode" = "sp"."countryregioncode"))) LEFT JOIN "sales_salesterritory" AS "st" ON (("st"."territoryid" = "s"."territoryid"))) LEFT JOIN "person_emailaddress" AS "ea" ON (("ea"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_personphone" AS "pp" ON (("pp"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_phonenumbertype" AS "pnt" ON (("pnt"."phonenumbertypeid" = "pp"."phonenumbertypeid")));
+
+CREATE VIEW "sales_vstorewithaddresses" ("businessentityid", "name", "addresstype", "addressline1", "addressline2", "city", "stateprovincename", "postalcode", "countryregionname") AS
+SELECT "s"."businessentityid" AS "businessentityid", "s"."name" AS "name", "at"."name" AS "addresstype", "a"."addressline1" AS "addressline1", "a"."addressline2" AS "addressline2", "a"."city" AS "city", "sp"."name" AS "stateprovincename", "a"."postalcode" AS "postalcode", "cr"."name" AS "countryregionname" FROM ((((("sales_store" AS "s" JOIN "person_businessentityaddress" AS "bea" ON (("bea"."businessentityid" = "s"."businessentityid"))) JOIN "person_address" AS "a" ON (("a"."addressid" = "bea"."addressid"))) JOIN "person_stateprovince" AS "sp" ON (("sp"."stateprovinceid" = "a"."stateprovinceid"))) JOIN "person_countryregion" AS "cr" ON (("cr"."countryregioncode" = "sp"."countryregioncode"))) JOIN "person_addresstype" AS "at" ON (("at"."addresstypeid" = "bea"."addresstypeid")));
+
+CREATE VIEW "sales_vstorewithcontacts" ("businessentityid", "name", "contacttype", "title", "firstname", "middlename", "lastname", "suffix", "phonenumber", "phonenumbertype", "emailaddress", "emailpromotion") AS
+SELECT "s"."businessentityid" AS "businessentityid", "s"."name" AS "name", "ct"."name" AS "contacttype", "p"."title" AS "title", "p"."firstname" AS "firstname", "p"."middlename" AS "middlename", "p"."lastname" AS "lastname", "p"."suffix" AS "suffix", "pp"."phonenumber" AS "phonenumber", "pnt"."name" AS "phonenumbertype", "ea"."emailaddress" AS "emailaddress", "p"."emailpromotion" AS "emailpromotion" FROM (((((("sales_store" AS "s" JOIN "person_businessentitycontact" AS "bec" ON (("bec"."businessentityid" = "s"."businessentityid"))) JOIN "person_contacttype" AS "ct" ON (("ct"."contacttypeid" = "bec"."contacttypeid"))) JOIN "person_person" AS "p" ON (("p"."businessentityid" = "bec"."personid"))) LEFT JOIN "person_emailaddress" AS "ea" ON (("ea"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_personphone" AS "pp" ON (("pp"."businessentityid" = "p"."businessentityid"))) LEFT JOIN "person_phonenumbertype" AS "pnt" ON (("pnt"."phonenumbertypeid" = "pp"."phonenumbertypeid")));
+
+CREATE VIEW "sales_vstorewithdemographics" ("businessentityid", "name", "annualsales", "annualrevenue", "bankname", "businesstype", "yearopened", "specialty", "squarefeet", "brands", "internet", "numberemployees") AS
+SELECT "s"."businessentityid" AS "businessentityid", "s"."name" AS "name", ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''AnnualSales''][1]/text()', CAST("s"."demographics" AS xml)), '') AS "annualsales", ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''AnnualRevenue''][1]/text()', CAST("s"."demographics" AS xml)), '') AS "annualrevenue", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''BankName''][1]/text()', CAST("s"."demographics" AS xml)), '') AS TEXT) AS "bankname", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''BusinessType''][1]/text()', CAST("s"."demographics" AS xml)), '') AS TEXT) AS "businesstype", ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''YearOpened''][1]/text()', CAST("s"."demographics" AS xml)), '') AS "yearopened", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''Specialty''][1]/text()', CAST("s"."demographics" AS xml)), '') AS TEXT) AS "specialty", ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''SquareFeet''][1]/text()', CAST("s"."demographics" AS xml)), '') AS "squarefeet", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''Brands''][1]/text()', CAST("s"."demographics" AS xml)), '') AS TEXT) AS "brands", CAST(ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''Internet''][1]/text()', CAST("s"."demographics" AS xml)), '') AS TEXT) AS "internet", ARRAY_TO_STRING(XPATH('/*[local-name()=''StoreSurvey'']/*[local-name()=''NumberEmployees''][1]/text()', CAST("s"."demographics" AS xml)), '') AS "numberemployees" FROM "sales_store" AS "s";

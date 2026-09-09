@@ -187,6 +187,7 @@ CREATE INDEX "sales_sales_cust_bix" ON "sales" ("cust_id");
 CREATE INDEX "sales_sales_prod_bix" ON "sales" ("prod_id");
 CREATE INDEX "sales_sales_promo_bix" ON "sales" ("promo_id");
 CREATE INDEX "sales_sales_time_bix" ON "sales" ("time_id");
+CREATE INDEX "supplementary_demographics_sup_text_idx" ON "supplementary_demographics" USING gin (to_tsvector('simple', coalesce("comments", '')));
 
 ALTER TABLE "costs" ADD CONSTRAINT "costs_channel_fk" FOREIGN KEY ("channel_id") REFERENCES "channels" ("channel_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "costs" ADD CONSTRAINT "costs_product_fk" FOREIGN KEY ("prod_id") REFERENCES "products" ("prod_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
@@ -198,3 +199,12 @@ ALTER TABLE "sales" ADD CONSTRAINT "sales_customer_fk" FOREIGN KEY ("cust_id") R
 ALTER TABLE "sales" ADD CONSTRAINT "sales_product_fk" FOREIGN KEY ("prod_id") REFERENCES "products" ("prod_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "sales" ADD CONSTRAINT "sales_promo_fk" FOREIGN KEY ("promo_id") REFERENCES "promotions" ("promo_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE "sales" ADD CONSTRAINT "sales_time_fk" FOREIGN KEY ("time_id") REFERENCES "times" ("time_id") ON UPDATE NO ACTION ON DELETE NO ACTION;
+
+CREATE VIEW "cal_month_sales_mv" ("calendar_month_desc", "dollars") AS
+SELECT "t"."calendar_month_desc" AS "calendar_month_desc", SUM("s"."amount_sold") AS "dollars" FROM ("sales" AS "s" CROSS JOIN "times" AS "t") WHERE ("s"."time_id" = "t"."time_id") GROUP BY "t"."calendar_month_desc";
+
+CREATE VIEW "fweek_pscat_sales_mv" ("week_ending_day", "prod_subcategory", "dollars", "channel_id", "promo_id") AS
+SELECT "t"."week_ending_day" AS "week_ending_day", "p"."prod_subcategory" AS "prod_subcategory", SUM("s"."amount_sold") AS "dollars", "s"."channel_id" AS "channel_id", "s"."promo_id" AS "promo_id" FROM (("sales" AS "s" CROSS JOIN "times" AS "t") CROSS JOIN "products" AS "p") WHERE (("s"."time_id" = "t"."time_id") AND ("s"."prod_id" = "p"."prod_id")) GROUP BY "t"."week_ending_day", "p"."prod_subcategory", "s"."channel_id", "s"."promo_id";
+
+CREATE VIEW "profits" ("channel_id", "cust_id", "prod_id", "promo_id", "time_id", "unit_cost", "unit_price", "amount_sold", "quantity_sold", "TOTAL_COST") AS
+SELECT "s"."channel_id" AS "channel_id", "s"."cust_id" AS "cust_id", "s"."prod_id" AS "prod_id", "s"."promo_id" AS "promo_id", "s"."time_id" AS "time_id", "c"."unit_cost" AS "unit_cost", "c"."unit_price" AS "unit_price", "s"."amount_sold" AS "amount_sold", "s"."quantity_sold" AS "quantity_sold", ("c"."unit_cost" * "s"."quantity_sold") AS "TOTAL_COST" FROM ("costs" AS "c" CROSS JOIN "sales" AS "s") WHERE (("c"."prod_id" = "s"."prod_id") AND ("c"."time_id" = "s"."time_id") AND ("c"."channel_id" = "s"."channel_id") AND ("c"."promo_id" = "s"."promo_id"));

@@ -108,12 +108,40 @@ class Table:
 
 
 @dataclass
+class View:
+    name: str
+    definition: str           # the SELECT, as SHOW CREATE VIEW renders it (grouping/rollup intact)
+    columns: list             # [(name, data_type, precision, scale)] from information_schema
+    depends_on: list          # other views of the same database it selects from
+
+
+@dataclass
+class Routine:
+    name: str
+    kind: str                 # FUNCTION | PROCEDURE
+    params: list              # [(mode, name, type)] with mode IN | OUT | INOUT
+    returns: str | None       # the declared return type of a function
+    body: str                 # the compound statement, as information_schema.routines holds it
+    deterministic: bool
+    data_access: str          # NO SQL | CONTAINS SQL | READS SQL DATA | MODIFIES SQL DATA
+
+
+@dataclass
+class Trigger:
+    name: str
+    table: str
+    timing: str               # BEFORE | AFTER
+    event: str                # INSERT | UPDATE | DELETE
+    body: str
+
+
+@dataclass
 class Database:
     name: str
     tables: list
-    views: list
-    routines: list
-    triggers: list
+    views: list               # [View]
+    routines: list            # [Routine]
+    triggers: list            # [Trigger]
 
     def table(self, name):
         for t in self.tables:
@@ -128,6 +156,12 @@ def _int(v):
 
 def _str(v):
     return None if v in (None, "NULL") else v
+
+
+def view_body(create):
+    """The SELECT of a SHOW CREATE VIEW statement."""
+    m = re.search(r"\bVIEW\s+(?:`[^`]*`\.)?`[^`]*`\s*(?:\([^)]*\)\s*)?AS\s+(.*)$", create, re.S | re.I)
+    return (m.group(1) if m else create).strip()
 
 
 def extract(schema):
@@ -193,13 +227,33 @@ def extract(schema):
         if r[0] in tables:
             tables[r[0]].checks.append(Check(name=r[1], clause=r[2]))
 
-    views = [r[0] for r in db.rows(
+    views = []
+    view_names = [r[0] for r in db.rows(
         f"SELECT table_name FROM information_schema.views WHERE table_schema='{schema}' ORDER BY table_name")]
-    routines = [f"{r[1].lower()} {r[0]}" for r in db.rows(
-        "SELECT routine_name, routine_type FROM information_schema.routines "
-        f"WHERE routine_schema='{schema}' ORDER BY routine_name")]
-    triggers = [r[0] for r in db.rows(
-        f"SELECT trigger_name FROM information_schema.triggers WHERE trigger_schema='{schema}' ORDER BY trigger_name")]
+    for name in view_names:
+        # SHOW CREATE VIEW keeps GROUPING()/WITH ROLLUP as written; the catalog copy exposes the
+        # server's rollup_group_item()/rollup_sum_switcher() internals instead
+        create = db.rows_escaped(f"SHOW CREATE VIEW `{schema}`.`{name}`")[0][1]
+        definition = view_body(create)
+        cols = [(r[0], r[1], _int(r[2]), _int(r[3])) for r in db.rows(
+            "SELECT column_name, data_type, numeric_precision, numeric_scale FROM information_schema.columns "
+            f"WHERE table_schema='{schema}' AND table_name='{name}' ORDER BY ordinal_position")]
+        views.append(View(name=name, definition=definition, columns=cols, depends_on=[]))
+    for v in views:
+        v.depends_on = sorted(o.name for o in views if o.name != v.name
+                              and re.search(r"`" + re.escape(o.name) + r"`", v.definition))
+    routines = []
+    for r in db.rows_escaped(
+            "SELECT routine_name, routine_type, routine_definition, dtd_identifier, is_deterministic, sql_data_access "
+            f"FROM information_schema.routines WHERE routine_schema='{schema}' ORDER BY routine_name"):
+        params = [(p[0], p[1], p[2]) for p in db.rows_escaped(
+            "SELECT parameter_mode, parameter_name, dtd_identifier FROM information_schema.parameters "
+            f"WHERE specific_schema='{schema}' AND specific_name='{r[0]}' AND ordinal_position > 0 ORDER BY ordinal_position")]
+        routines.append(Routine(name=r[0], kind=r[1], params=params, returns=_str(r[3]) if r[1] == "FUNCTION" else None,
+                                body=r[2], deterministic=(r[4] == "YES"), data_access=r[5]))
+    triggers = [Trigger(name=r[0], table=r[2], timing=r[3], event=r[1], body=r[4]) for r in db.rows_escaped(
+        "SELECT trigger_name, event_manipulation, event_object_table, action_timing, action_statement "
+        f"FROM information_schema.triggers WHERE trigger_schema='{schema}' ORDER BY event_object_table, action_order, trigger_name")]
     return Database(schema, list(tables.values()), views, routines, triggers)
 
 

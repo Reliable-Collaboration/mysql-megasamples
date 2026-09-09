@@ -89,3 +89,12 @@ CREATE INDEX "shipments_shipments_customer_id_i" ON "shipments" ("customer_id");
 CREATE INDEX "shipments_shipments_store_id_i" ON "shipments" ("store_id");
 CREATE UNIQUE INDEX "order_items_order_items_product_u" ON "order_items" ("product_id", "order_id");
 CREATE INDEX "order_items_order_items_shipment_id_i" ON "order_items" ("shipment_id");
+
+CREATE VIEW "customer_order_products" ("order_id", "order_tms", "order_status", "customer_id", "email_address", "full_name", "order_total", "items") AS
+SELECT "o"."order_id" AS "order_id", "o"."order_tms" AS "order_tms", "o"."order_status" AS "order_status", "c"."customer_id" AS "customer_id", "c"."email_address" AS "email_address", "c"."full_name" AS "full_name", SUM(("oi"."quantity" * "oi"."unit_price")) AS "order_total", group_concat("p"."product_name", ', ' ORDER BY "oi"."line_item_id" ASC) AS "items" FROM ((("orders" AS "o" JOIN "order_items" AS "oi" ON (("o"."order_id" = "oi"."order_id"))) JOIN "customers" AS "c" ON (("o"."customer_id" = "c"."customer_id"))) JOIN "products" AS "p" ON (("oi"."product_id" = "p"."product_id"))) GROUP BY "o"."order_id", "o"."order_tms", "o"."order_status", "c"."customer_id", "c"."email_address", "c"."full_name";
+
+CREATE VIEW "product_orders" ("product_name", "order_status", "total_sales", "order_count") AS
+SELECT "p"."product_name" AS "product_name", "o"."order_status" AS "order_status", SUM(("oi"."quantity" * "oi"."unit_price")) AS "total_sales", COUNT(0) AS "order_count" FROM ((("orders" AS "o" JOIN "order_items" AS "oi" ON (("o"."order_id" = "oi"."order_id"))) JOIN "customers" AS "c" ON (("o"."customer_id" = "c"."customer_id"))) JOIN "products" AS "p" ON (("oi"."product_id" = "p"."product_id"))) GROUP BY "p"."product_name", "o"."order_status";
+
+CREATE VIEW "product_reviews" ("product_name", "rating", "avg_rating", "review") AS
+SELECT "p"."product_name" AS "product_name", JSON_EXTRACT(r.value, '$.rating') AS "rating", ROUND(AVG(JSON_EXTRACT(r.value, '$.rating')) OVER (PARTITION BY "p"."product_name"), 2) AS "avg_rating", JSON_EXTRACT(r.value, '$.review') AS "review" FROM ("products" AS "p" LEFT JOIN JSON_EACH("p"."product_details", '$.reviews') AS r ON 1 = 1);

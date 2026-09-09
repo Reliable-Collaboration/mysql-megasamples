@@ -1,0 +1,44 @@
+# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by
+# line (megasamples/probe.py); 'ERROR' when the call must fail.
+current_manager_d001:
+- Vishwani Minakawa
+emp_dept_id_10001:
+- d005
+emp_dept_name_10001:
+- Development
+emp_name_10001:
+- Georgi Facello
+employees_help:
+- '        Shows name and surname of a given employee'
+- '        Shows the current department of given employee'
+- '        Shows who is the manager of a given departmennt'
+- '        number of employees per department'
+- '        shows the departments with the manager and'
+- '    == USAGE =='
+- '    ===================='
+- '    FUNCTION current_manager (dept_id)'
+- '    FUNCTION emp_dept_id (emp_id)'
+- '    FUNCTION emp_name (emp_id)'
+- '    PROCEDURE show_departments()'
+employees_usage:
+- '        Shows name and surname of a given employee'
+- '        Shows the current department of given employee'
+- '        Shows who is the manager of a given departmennt'
+- '        number of employees per department'
+- '        shows the departments with the manager and'
+- '    == USAGE =='
+- '    ===================='
+- '    FUNCTION current_manager (dept_id)'
+- '    FUNCTION emp_dept_id (emp_id)'
+- '    FUNCTION emp_name (emp_id)'
+- '    PROCEDURE show_departments()'
+show_departments:
+- "d001\tMarketing\tVishwani Minakawa\t18426"
+- "d002\tFinance\tIsamu Legleitner\t15579"
+- "d003\tHuman Resources\tKarsten Sigstam\t16071"
+- "d004\tProduction\tOscar Ghazalie\t66675"
+- "d005\tDevelopment\tLeon DasSarma\t76958"
+- "d006\tQuality Management\tDung Pesch\t18295"
+- "d007\tSales\tHauke Zhang\t46922"
+- "d008\tResearch\tHilary Kambil\t19285"
+- "d009\tCustomer Service\tYuchang Weedman\t21813"

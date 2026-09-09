@@ -66,10 +66,12 @@ each engine is built from, and how is a port proven correct?
 Option 1. `megasamples.yaml` may name a dataset for any engine; the build always loads it into the
 MySQL build server first, and every other engine is produced from that verified corpus. Tables,
 data, primary and unique keys, btree indexes, foreign keys, check constraints and stored generated
-columns are ported; FULLTEXT and SPATIAL indexes, views, routines and triggers are not, and the
-catalogue lists them per database. Enum and set become text with a CHECK constraint on every target;
-no boolean is inferred from `tinyint(1)`; the `<schema>_<table>` flattening is kept so every
-engine carries an identical table set.
+columns are ported, and so are views, stored routines (PostgreSQL), triggers, `ON UPDATE` columns
+and FULLTEXT indexes — [programmable-object parity](/decisions/programmable-object-parity.md) has
+the translators, the verification by execution and the seven kinds of exception, which the
+catalogue lists per database. Enum and set become text with a CHECK constraint on every target;
+no boolean is inferred from `tinyint(1)` except for a function's return type; the
+`<schema>_<table>` flattening is kept so every engine carries an identical table set.
 
 Rules fixed while porting the 21 core datasets on 2026-09-09, each the outcome of a verification
 failure and now covered by a unit test:

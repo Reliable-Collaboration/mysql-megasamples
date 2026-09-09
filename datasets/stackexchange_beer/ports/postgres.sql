@@ -133,9 +133,16 @@ CREATE INDEX "badges_ix_badges_user" ON "badges" ("userid");
 CREATE INDEX "comments_ix_comments_post" ON "comments" ("postid");
 CREATE INDEX "comments_ix_comments_user" ON "comments" ("userid");
 CREATE INDEX "posthistory_ix_posthistory_post" ON "posthistory" ("postid");
+CREATE INDEX "posts_ft_posts_body" ON "posts" USING gin (to_tsvector('simple', coalesce("title", '') || ' ' || coalesce("body", '')));
 CREATE INDEX "posts_ix_posts_creation" ON "posts" ("creationdate");
 CREATE INDEX "posts_ix_posts_owner" ON "posts" ("owneruserid");
 CREATE INDEX "posts_ix_posts_parent" ON "posts" ("parentid");
 CREATE INDEX "posts_ix_posts_type" ON "posts" ("posttypeid");
 CREATE INDEX "users_ix_users_reputation" ON "users" ("reputation");
 CREATE INDEX "votes_ix_votes_post" ON "votes" ("postid");
+
+CREATE VIEW "v_answers" ("id", "question_id", "question_title", "score", "creationdate", "owner", "is_accepted") AS
+SELECT "a"."id" AS "id", "a"."parentid" AS "question_id", "q"."title" AS "question_title", "a"."score" AS "score", "a"."creationdate" AS "creationdate", "u"."displayname" AS "owner", CAST("q"."acceptedanswerid" = "a"."id" AS INT) AS "is_accepted" FROM (("posts" AS "a" JOIN "posts" AS "q" ON (("q"."id" = "a"."parentid"))) LEFT JOIN "users" AS "u" ON (("u"."id" = "a"."owneruserid"))) WHERE ("a"."posttypeid" = 2);
+
+CREATE VIEW "v_questions" ("id", "title", "tags", "score", "viewcount", "answercount", "creationdate", "owner") AS
+SELECT "p"."id" AS "id", "p"."title" AS "title", "p"."tags" AS "tags", "p"."score" AS "score", "p"."viewcount" AS "viewcount", "p"."answercount" AS "answercount", "p"."creationdate" AS "creationdate", "u"."displayname" AS "owner" FROM ("posts" AS "p" LEFT JOIN "users" AS "u" ON (("u"."id" = "p"."owneruserid"))) WHERE ("p"."posttypeid" = 1);

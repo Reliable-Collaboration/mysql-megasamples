@@ -1,0 +1,22 @@
+# S9: what each scenario's probe in triggers.yaml prints on MySQL after the scenario's
+# statements, normalised and sorted line by line (megasamples/probe.py).
+customer_create_date:
+- "1\t1"
+del_film:
+- '0'
+ins_film:
+- "VERIFY FILM\tA trigger test"
+on_update_actor:
+- "VERIFY\t1"
+on_update_actor_unchanged:
+- '0'
+on_update_film:
+- "7\t0"
+payment_date:
+- "1\t0.01"
+rental_date:
+- "1\tNULL"
+upd_film:
+- "1\tVERIFY RENAMED\tRenamed by the scenario"
+upd_film_no_text_change:
+- "2\tACE GOLDFINGER"

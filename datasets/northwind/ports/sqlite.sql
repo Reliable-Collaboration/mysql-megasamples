@@ -185,3 +185,51 @@ CREATE INDEX "order_details_orderid" ON "order_details" ("orderid");
 CREATE INDEX "order_details_ordersorder_details" ON "order_details" ("orderid");
 CREATE INDEX "order_details_productid" ON "order_details" ("productid");
 CREATE INDEX "order_details_productsorder_details" ON "order_details" ("productid");
+
+CREATE VIEW "Invoices" ("ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry", "CustomerID", "CustomerName", "Address", "City", "Region", "PostalCode", "Country", "Salesperson", "OrderID", "OrderDate", "RequiredDate", "ShippedDate", "ShipperName", "ProductID", "ProductName", "UnitPrice", "Quantity", "Discount", "ExtendedPrice", "Freight") AS
+SELECT "orders"."shipname" AS "ShipName", "orders"."shipaddress" AS "ShipAddress", "orders"."shipcity" AS "ShipCity", "orders"."shipregion" AS "ShipRegion", "orders"."shippostalcode" AS "ShipPostalCode", "orders"."shipcountry" AS "ShipCountry", "orders"."customerid" AS "CustomerID", "customers"."companyname" AS "CustomerName", "customers"."address" AS "Address", "customers"."city" AS "City", "customers"."region" AS "Region", "customers"."postalcode" AS "PostalCode", "customers"."country" AS "Country", "employees"."firstname" || ' ' || "employees"."lastname" AS "Salesperson", "orders"."orderid" AS "OrderID", "orders"."orderdate" AS "OrderDate", "orders"."requireddate" AS "RequiredDate", "orders"."shippeddate" AS "ShippedDate", "shippers"."companyname" AS "ShipperName", "order_details"."productid" AS "ProductID", "products"."productname" AS "ProductName", "order_details"."unitprice" AS "UnitPrice", "order_details"."quantity" AS "Quantity", "order_details"."discount" AS "Discount", (CAST((CAST((("order_details"."unitprice" * "order_details"."quantity") * (1 - "order_details"."discount")) AS REAL) / 100) AS REAL(19, 4)) * 100) AS "ExtendedPrice", "orders"."freight" AS "Freight" FROM ("shippers" JOIN ("products" JOIN (("employees" JOIN ("customers" JOIN "orders" ON (("customers"."customerid" = "orders"."customerid"))) ON (("employees"."employeeid" = "orders"."employeeid"))) JOIN "order_details" ON (("orders"."orderid" = "order_details"."orderid"))) ON (("products"."productid" = "order_details"."productid"))) ON (("shippers"."shipperid" = "orders"."shipvia")));
+
+CREATE VIEW "alphabetical_list_of_products" ("productid", "productname", "supplierid", "categoryid", "quantityperunit", "unitprice", "unitsinstock", "unitsonorder", "reorderlevel", "discontinued", "CategoryName") AS
+SELECT "products"."productid" AS "productid", "products"."productname" AS "productname", "products"."supplierid" AS "supplierid", "products"."categoryid" AS "categoryid", "products"."quantityperunit" AS "quantityperunit", "products"."unitprice" AS "unitprice", "products"."unitsinstock" AS "unitsinstock", "products"."unitsonorder" AS "unitsonorder", "products"."reorderlevel" AS "reorderlevel", "products"."discontinued" AS "discontinued", "categories"."categoryname" AS "CategoryName" FROM ("categories" JOIN "products" ON (("categories"."categoryid" = "products"."categoryid"))) WHERE ("products"."discontinued" = 0);
+
+CREATE VIEW "product_sales_for_1997" ("CategoryName", "ProductName", "ProductSales") AS
+SELECT "categories"."categoryname" AS "CategoryName", "products"."productname" AS "ProductName", SUM((CAST((CAST((("order_details"."unitprice" * "order_details"."quantity") * (1 - "order_details"."discount")) AS REAL) / 100) AS REAL(19, 4)) * 100)) AS "ProductSales" FROM (("categories" JOIN "products" ON (("categories"."categoryid" = "products"."categoryid"))) JOIN ("orders" JOIN "order_details" ON (("orders"."orderid" = "order_details"."orderid"))) ON (("products"."productid" = "order_details"."productid"))) WHERE ("orders"."shippeddate" BETWEEN '1997-01-01 00:00:00' AND '1997-12-31 00:00:00') GROUP BY "categories"."categoryname", "products"."productname";
+
+CREATE VIEW "category_sales_for_1997" ("CategoryName", "CategorySales") AS
+SELECT "product_sales_for_1997"."CategoryName" AS "CategoryName", SUM("product_sales_for_1997"."ProductSales") AS "CategorySales" FROM "product_sales_for_1997" GROUP BY "product_sales_for_1997"."CategoryName";
+
+CREATE VIEW "current_product_list" ("ProductID", "ProductName") AS
+SELECT "Product_List"."productid" AS "ProductID", "Product_List"."productname" AS "ProductName" FROM "products" AS "Product_List" WHERE ("Product_List"."discontinued" = 0);
+
+CREATE VIEW "customer_and_suppliers_by_city" ("City", "CompanyName", "ContactName", "Relationship") AS
+SELECT "customers"."city" AS "City", "customers"."companyname" AS "CompanyName", "customers"."contactname" AS "ContactName", 'Customers' AS "Relationship" FROM "customers" UNION SELECT "suppliers"."city" AS "City", "suppliers"."companyname" AS "CompanyName", "suppliers"."contactname" AS "ContactName", 'Suppliers' AS "Suppliers" FROM "suppliers";
+
+CREATE VIEW "order_details_extended" ("OrderID", "ProductID", "ProductName", "UnitPrice", "Quantity", "Discount", "ExtendedPrice") AS
+SELECT "order_details"."orderid" AS "OrderID", "order_details"."productid" AS "ProductID", "products"."productname" AS "ProductName", "order_details"."unitprice" AS "UnitPrice", "order_details"."quantity" AS "Quantity", "order_details"."discount" AS "Discount", (CAST((CAST((("order_details"."unitprice" * "order_details"."quantity") * (1 - "order_details"."discount")) AS REAL) / 100) AS REAL(19, 4)) * 100) AS "ExtendedPrice" FROM ("products" JOIN "order_details" ON (("products"."productid" = "order_details"."productid")));
+
+CREATE VIEW "order_subtotals" ("OrderID", "Subtotal") AS
+SELECT "order_details"."orderid" AS "OrderID", SUM((CAST((CAST((("order_details"."unitprice" * "order_details"."quantity") * (1 - "order_details"."discount")) AS REAL) / 100) AS REAL(19, 4)) * 100)) AS "Subtotal" FROM "order_details" GROUP BY "order_details"."orderid";
+
+CREATE VIEW "orders_qry" ("OrderID", "CustomerID", "EmployeeID", "OrderDate", "RequiredDate", "ShippedDate", "ShipVia", "Freight", "ShipName", "ShipAddress", "ShipCity", "ShipRegion", "ShipPostalCode", "ShipCountry", "CompanyName", "Address", "City", "Region", "PostalCode", "Country") AS
+SELECT "orders"."orderid" AS "OrderID", "orders"."customerid" AS "CustomerID", "orders"."employeeid" AS "EmployeeID", "orders"."orderdate" AS "OrderDate", "orders"."requireddate" AS "RequiredDate", "orders"."shippeddate" AS "ShippedDate", "orders"."shipvia" AS "ShipVia", "orders"."freight" AS "Freight", "orders"."shipname" AS "ShipName", "orders"."shipaddress" AS "ShipAddress", "orders"."shipcity" AS "ShipCity", "orders"."shipregion" AS "ShipRegion", "orders"."shippostalcode" AS "ShipPostalCode", "orders"."shipcountry" AS "ShipCountry", "customers"."companyname" AS "CompanyName", "customers"."address" AS "Address", "customers"."city" AS "City", "customers"."region" AS "Region", "customers"."postalcode" AS "PostalCode", "customers"."country" AS "Country" FROM ("customers" JOIN "orders" ON (("customers"."customerid" = "orders"."customerid")));
+
+CREATE VIEW "products_above_average_price" ("ProductName", "UnitPrice") AS
+SELECT "products"."productname" AS "ProductName", "products"."unitprice" AS "UnitPrice" FROM "products" WHERE ("products"."unitprice" > (SELECT AVG("products"."unitprice") FROM "products"));
+
+CREATE VIEW "products_by_category" ("CategoryName", "ProductName", "QuantityPerUnit", "UnitsInStock", "Discontinued") AS
+SELECT "categories"."categoryname" AS "CategoryName", "products"."productname" AS "ProductName", "products"."quantityperunit" AS "QuantityPerUnit", "products"."unitsinstock" AS "UnitsInStock", "products"."discontinued" AS "Discontinued" FROM ("categories" JOIN "products" ON (("categories"."categoryid" = "products"."categoryid"))) WHERE ("products"."discontinued" <> 1);
+
+CREATE VIEW "quarterly_orders" ("CustomerID", "CompanyName", "City", "Country") AS
+SELECT DISTINCT "customers"."customerid" AS "CustomerID", "customers"."companyname" AS "CompanyName", "customers"."city" AS "City", "customers"."country" AS "Country" FROM ("orders" LEFT JOIN "customers" ON (("customers"."customerid" = "orders"."customerid"))) WHERE ("orders"."orderdate" BETWEEN '1997-01-01 00:00:00' AND '1997-12-31 00:00:00');
+
+CREATE VIEW "sales_by_category" ("CategoryID", "CategoryName", "ProductName", "ProductSales") AS
+SELECT "categories"."categoryid" AS "CategoryID", "categories"."categoryname" AS "CategoryName", "products"."productname" AS "ProductName", SUM("order_details_extended"."ExtendedPrice") AS "ProductSales" FROM ("categories" JOIN ("products" JOIN ("orders" JOIN "order_details_extended" ON (("orders"."orderid" = "order_details_extended"."OrderID"))) ON (("products"."productid" = "order_details_extended"."ProductID"))) ON (("categories"."categoryid" = "products"."categoryid"))) WHERE ("orders"."orderdate" BETWEEN '1997-01-01 00:00:00' AND '1997-12-31 00:00:00') GROUP BY "categories"."categoryid", "categories"."categoryname", "products"."productname";
+
+CREATE VIEW "sales_totals_by_amount" ("SaleAmount", "OrderID", "CompanyName", "ShippedDate") AS
+SELECT "order_subtotals"."Subtotal" AS "SaleAmount", "orders"."orderid" AS "OrderID", "customers"."companyname" AS "CompanyName", "orders"."shippeddate" AS "ShippedDate" FROM ("customers" JOIN ("orders" JOIN "order_subtotals" ON (("orders"."orderid" = "order_subtotals"."OrderID"))) ON (("customers"."customerid" = "orders"."customerid"))) WHERE (("order_subtotals"."Subtotal" > 2500) AND ("orders"."shippeddate" BETWEEN '1997-01-01 00:00:00' AND '1997-12-31 00:00:00'));
+
+CREATE VIEW "summary_of_sales_by_quarter" ("ShippedDate", "OrderID", "Subtotal") AS
+SELECT "orders"."shippeddate" AS "ShippedDate", "orders"."orderid" AS "OrderID", "order_subtotals"."Subtotal" AS "Subtotal" FROM ("orders" JOIN "order_subtotals" ON (("orders"."orderid" = "order_subtotals"."OrderID"))) WHERE (NOT "orders"."shippeddate" IS NULL);
+
+CREATE VIEW "summary_of_sales_by_year" ("ShippedDate", "OrderID", "Subtotal") AS
+SELECT "orders"."shippeddate" AS "ShippedDate", "orders"."orderid" AS "OrderID", "order_subtotals"."Subtotal" AS "Subtotal" FROM ("orders" JOIN "order_subtotals" ON (("orders"."orderid" = "order_subtotals"."OrderID"))) WHERE (NOT "orders"."shippeddate" IS NULL);

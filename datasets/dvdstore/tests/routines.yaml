@@ -1,0 +1,17 @@
+# S8: calls of the stored routines, with arguments as MySQL literals. What each call prints on
+# MySQL is pinned into routines.expected.yaml (normalised and sorted line by line,
+# megasamples/probe.py), and every port must print the same. A call runs inside a transaction
+# that is rolled back; `probe` is a query printed after the call; `error: true` means the call
+# must fail, on every engine; `probe_only: true` compares the probe alone, not the OUT values.
+# new_customer with a username that exists returns 0 and inserts nothing; with a new one it inserts
+# a row (rolled back) and the probe sees it. new_member: customer 1 has a membership, customer 2 none.
+- name: new_customer_existing
+  routine: new_customer
+  args: ["'A'", "'B'", "'1 Street'", "''", "'Town'", "'ST'", 12345, "'US'", 1, "'a@b.c'", "'555'", 1, "'4111'", "'2030/01'", "'user1'", "'pw'", 30, 50000, "'M'"]
+- name: new_customer_new
+  routine: new_customer
+  args: ["'A'", "'B'", "'1 Street'", "''", "'Town'", "'ST'", 12345, "'US'", 1, "'a@b.c'", "'555'", 1, "'4111'", "'2030/01'", "'verify_user'", "'pw'", 30, 50000, "'M'"]
+  probe: "SELECT firstname, lastname, city, zip, age, gender FROM customers WHERE username = 'verify_user'"
+  probe_only: true     # the OUT value is the new row's auto-increment id, which MySQL advances even when the insert is rolled back
+- {name: new_member_existing, routine: new_member, args: [1, 1], probe: "SELECT COUNT(*) FROM membership WHERE customerid = 1"}
+- {name: new_member_new, routine: new_member, args: [2, 1], probe: "SELECT membershiptype, expiredate >= CURRENT_DATE FROM membership WHERE customerid = 2"}

@@ -1,0 +1,11 @@
+# S8: calls of the stored routines, with arguments as MySQL literals. What each call prints on
+# MySQL is pinned into routines.expected.yaml (normalised and sorted line by line,
+# megasamples/probe.py), and every port must print the same. A call runs inside a transaction
+# that is rolled back; `probe` is a query printed after the call; `error: true` means the call
+# must fail, on every engine; `probe_only: true` compares the probe alone, not the OUT values.
+- {name: custorderhist_alfki, routine: custorderhist, args: ["'ALFKI'"]}
+- {name: custordersdetail_10248, routine: custordersdetail, args: [10248]}
+- {name: custordersorders_alfki, routine: custordersorders, args: ["'ALFKI'"]}
+- {name: employee_sales_by_country_1997, routine: employee_sales_by_country, args: ["'1997-01-01'", "'1997-01-31'"]}
+- {name: sales_by_year_1997, routine: sales_by_year, args: ["'1997-01-01'", "'1997-01-31'"]}
+- {name: ten_most_expensive_products, routine: ten_most_expensive_products, args: []}

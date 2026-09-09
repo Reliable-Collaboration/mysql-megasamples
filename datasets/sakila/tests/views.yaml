@@ -1,0 +1,96 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+actor_info:
+  columns:
+  - actor_id
+  - first_name
+  - last_name
+  - film_info
+  excluded: []
+  n: 200
+  s: 14577356570860848134
+  x: 15658737520565523518
+customer_list:
+  columns:
+  - ID
+  - name
+  - address
+  - zip code
+  - phone
+  - city
+  - country
+  - notes
+  - SID
+  excluded: []
+  n: 599
+  s: 16033175740309813641
+  x: 7106411530725385373
+film_list:
+  columns:
+  - FID
+  - title
+  - description
+  - category
+  - price
+  - length
+  - rating
+  - actors
+  excluded: []
+  n: 1000
+  s: 12209276464162801659
+  x: 15610022721734683781
+nicer_but_slower_film_list:
+  columns:
+  - FID
+  - title
+  - description
+  - category
+  - price
+  - length
+  - rating
+  - actors
+  excluded: []
+  n: 1000
+  s: 7207549324728789700
+  x: 11476342429493435872
+sales_by_film_category:
+  columns:
+  - category
+  - total_sales
+  excluded: []
+  inexact:
+  - total_sales
+  n: 16
+  s: 5753820918429010940
+  s_exact: 5381067391784277283
+  x: 14281045838682784648
+  x_exact: 16761126872795666471
+sales_by_store:
+  columns:
+  - store
+  - manager
+  - total_sales
+  excluded: []
+  inexact:
+  - total_sales
+  n: 2
+  s: 9929554141375279879
+  s_exact: 12191379466036617669
+  x: 8478832094136020167
+  x_exact: 6128384208533608505
+staff_list:
+  columns:
+  - ID
+  - name
+  - address
+  - zip code
+  - phone
+  - city
+  - country
+  - SID
+  excluded: []
+  n: 2
+  s: 8566994918833295820
+  x: 8132317280690851266

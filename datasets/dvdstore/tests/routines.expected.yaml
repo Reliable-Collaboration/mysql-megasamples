@@ -1,0 +1,12 @@
+# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by
+# line (megasamples/probe.py); 'ERROR' when the call must fail.
+new_customer_existing:
+- '0'
+new_customer_new:
+- "A\tB\tTown\t12345\t30\tM"
+new_member_existing:
+- '0'
+- '1'
+new_member_new:
+- "1\t1"
+- '2'
