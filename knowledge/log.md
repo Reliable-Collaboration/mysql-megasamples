@@ -1,6 +1,7 @@
 # Update Log
 
 ## 2026-09-10
+* **Verification**: PostgreSQL and SQLite images rebaked so their registries carry the explained reasons, `make test-image` 0 failures on both, `make up` then `make test-console` 0 failures; the `megasamples` registry inside the PostgreSQL image reports the spatial index with its reason and the pointer to the record.
 * **Deviation**: the maintainer keeps the one remaining port limitation rather than adopting PostGIS for it: `sakila.address.idx_location` (the corpus's only SPATIAL index) stays unported on PostgreSQL and SQLite, with the geometry column itself carried as standard WKB. Recorded as exception 7 of [programmable-object parity](/decisions/programmable-object-parity.md); the seven kinds of exception are now also tabled in `README.md` and the reasons in every `not_ported.yaml` point at the record.
 
 ## 2026-09-09
