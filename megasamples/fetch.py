@@ -416,6 +416,10 @@ def main(argv=None):
     elif not a.all:
         ap.error("name datasets, --id an artifact, or pass --all")
     if not arts:
+        if a.datasets and not a.id:
+            # generated datasets, and those built from another dataset's download, own no artifact
+            print(f"  . nothing to fetch for {' '.join(a.datasets)}: no artifacts of their own in the manifest")
+            return 0
         print("no matching artifacts in the manifest")
         return 2
     jobs = a.jobs

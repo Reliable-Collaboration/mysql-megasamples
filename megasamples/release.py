@@ -86,7 +86,7 @@ def stage_sqlite():
     rows, missing = [], []
     for name in inventory.core():
         db = inventory.load(name)["database"]
-        src = os.path.join(engine_build_dir("sqlite"), name, f"{db}.sqlite")
+        src = os.path.join(engine_build_dir("sqlite"), db, f"{db}.sqlite")
         if not os.path.exists(src):
             missing.append(name)
             print(f"  x {db}.sqlite: not built -- make build ENGINE=sqlite D={name}")

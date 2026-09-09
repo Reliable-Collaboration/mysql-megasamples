@@ -68,7 +68,7 @@ class Dialect:
 
     def check_functions(self):
         """Functions a CHECK clause may use in this dialect; others cause the check to be dropped."""
-        return {"upper", "lower", "length", "abs", "regexp_like"}
+        return {"upper", "lower", "length", "abs", "regexp_like", "ifnull", "coalesce"}
 
     def generated(self, col, expr):
         return f"GENERATED ALWAYS AS ({expr}) STORED"
@@ -113,7 +113,7 @@ class SQLite(Dialect):
         return typemap.sqlite(col)
 
     def check_functions(self):
-        return {"upper", "lower", "length", "abs"}      # no regexp_like: dropped, with a reason
+        return {"upper", "lower", "length", "abs", "ifnull", "coalesce"}      # no regexp_like: GLOB, or dropped
 
     def identity(self, col):
         return ""                                        # INTEGER PRIMARY KEY is the rowid alias
@@ -189,11 +189,22 @@ def default_clause(col, dialect):
     return f"DEFAULT {d}", None
 
 
+class UnportableColumn(Exception):
+    """A column the target cannot carry at all: the port stops here, with the reason, before writing."""
+
+
 def column_def(table, col, dialect, dropped):
     parts = [dialect.quote(col.name), dialect.type(col)]
     pk = table.primary_key
     single_int_pk = bool(pk) and pk.columns == [(col.name, None)] and col.data_type in typemap.INT_PG
     if col.generated:
+        # a generated column is recomputed by the target from its expression (the dump holds no
+        # value for it), so a function the target lacks leaves nothing to load: the port stops
+        missing = functions_in(col.generation) - dialect.check_functions()
+        if missing:
+            raise UnportableColumn(f"{table.name}.{col.name} is generated with {', '.join(sorted(missing))}, "
+                                   f"which {dialect.name} lacks; the dataset cannot be ported to {dialect.name} until "
+                                   f"the expression is translated (megasamples/port/ddl.py)")
         parts.append(dialect.generated(col, translate_expr(col.generation, dialect)))
     elif col.auto_increment:
         if dialect.name == "sqlite" and single_int_pk:

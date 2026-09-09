@@ -99,6 +99,10 @@ def main(argv=None):
             c.expect(q(statement, user="demo", pw="demo", database=schema).returncode != 0, f"demo cannot {label}")
         w = q("CREATE TABLE t_probe (i int); DROP TABLE t_probe", user="admin", pw="admin", database=schema)
         c.expect(w.returncode == 0, "admin can write" + ("" if w.returncode == 0 else f" -- {w.stderr.strip()[:120]}"))
+        # the baked tables are admin's own: the "full access" account can change and remove them
+        w = q(f'BEGIN; ALTER TABLE "{table}" ADD COLUMN t_probe int; ALTER TABLE "{table}" DROP COLUMN t_probe; ROLLBACK',
+              user="admin", pw="admin", database=schema)
+        c.expect(w.returncode == 0, "admin owns the baked tables and can alter them" + ("" if w.returncode == 0 else f" -- {w.stderr.strip()[:120]}"))
         empty = q("SELECT count(*) FROM pg_authid WHERE rolcanlogin AND rolpassword IS NULL").stdout.strip()
         c.expect(empty == "0", "no login role is passwordless")
         size = sh("docker", "exec", NAME, "sh", "-c", "du -sm /var/lib/postgresql/18/docker | cut -f1").stdout.strip()

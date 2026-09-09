@@ -4,7 +4,9 @@
 PY  ?= $(shell test -x .venv/bin/python && echo .venv/bin/python || echo python3)
 MS   = PYTHONPATH=. $(PY) -m megasamples
 DATASETS := $(shell PYTHONPATH=. $(PY) -m megasamples list --names 2>/dev/null)
-export SF                      # scale factor for the generated benchmarks: make tpch SF=0.01
+ifdef SF                       # scale factor for the generated benchmarks: make tpch SF=0.01
+export SF                      # (unset: megasamples.yaml build.scale_factor, default 1)
+endif
 
 .PHONY: help configure list list-core list-quick fetch build image test-image run up down status clean clean-all \
         compose console-page catalogue provenance check okf-check audit-assets prepub-check \

@@ -10,8 +10,7 @@ Record: knowledge/datasets/oracle-oe-pm-ix.md
 """
 import os, re, sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
-import plsql  # noqa: E402
+from megasamples.sources import plsql  # noqa: E402
 
 # `SET FEEDBACK OFF` is a SQL*Plus directive; `SET sales_rep_id = NULL` is the SET clause of an
 # UPDATE, which happens to start its own line in pord_v3.sql. Requiring the SQL*Plus two-word form

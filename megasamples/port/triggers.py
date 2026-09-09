@@ -29,30 +29,10 @@ class Unportable(sqltranslate.Unportable):
 
 # --- parsing the MySQL body ----------------------------------------------------------------------
 def _split_statements(text):
-    """Top-level statements of a body, respecting strings and IF ... END IF nesting."""
-    out, buf, depth, quote, i = [], [], 0, None, 0
-    low = text.lower()
-    while i < len(text):
-        ch = text[i]
-        if quote:
-            buf.append(ch)
-            if ch == quote:
-                quote = None
-            i += 1
-            continue
-        if ch in ("'", '"', "`"):
-            quote = ch; buf.append(ch); i += 1; continue
-        if re.match(r"\bif\b", low[i:i + 3]) and (i == 0 or not low[i - 1].isalnum()) and not low[i - 4:i].endswith("end "):
-            depth += 1
-        if low.startswith("end if", i) and (i == 0 or not low[i - 1].isalnum()):
-            depth -= 1
-        if ch == ";" and depth == 0:
-            out.append("".join(buf).strip()); buf = []; i += 1; continue
-        buf.append(ch); i += 1
-    tail = "".join(buf).strip()
-    if tail:
-        out.append(tail)
-    return [s for s in out if s]
+    """Top-level statements of a body: the routine port's scanner, which keeps IF ... END IF blocks
+    whole and does not take IF(a, b, c) for one."""
+    from megasamples.port.routines import split_statements
+    return split_statements(text)
 
 
 def parse_body(body):

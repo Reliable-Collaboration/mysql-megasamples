@@ -32,6 +32,8 @@ MIT via the repository `license.txt` ([license record](/licenses/mit.md)); copyr
 
 Converted by [`datasets/northwind/convert.py`](convert.py). Northwind: translate Microsoft's T-SQL install script to MySQL.
 
+145 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
+
 What was and was not ported:
 
 * 16 views: port all; they use only joins, aggregates, `CONVERT`/`DATEPART`-style expressions and `TOP`-less selects - **Inferred:** `"Sales by Year"`-type procedures use `CONVERT(varchar, ..., 101)` and `"Ten Most Expensive Products"` uses `TOP 10`; rewrite to `DATE_FORMAT` and `LIMIT`.

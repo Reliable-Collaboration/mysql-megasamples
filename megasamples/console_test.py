@@ -127,11 +127,12 @@ def main(argv=None):
         except Exception as exc:  # noqa: BLE001
             failures.append(f"{engine.title}: could not read the registry: {str(exc)[:150]}")
             continue
-        missing = [n for n in names if f">{n}<" not in page]
-        if missing:
-            failures.append(f"the landing page omits {len(missing)} {engine.title} database(s): " + ", ".join(missing[:6]))
-        else:
-            print(f"  . the landing page names all {len(names)} {engine.title} databases in the registry")
+        if "landing" in cfg.consoles:
+            missing = [n for n in names if f">{n}<" not in page]
+            if missing:
+                failures.append(f"the landing page omits {len(missing)} {engine.title} database(s): " + ", ".join(missing[:6]))
+            else:
+                print(f"  . the landing page names all {len(names)} {engine.title} databases in the registry")
         engine_checks(engine, cfg, demo_pw, admin_pw, failures)
 
     if "cloudbeaver" in cfg.consoles:
@@ -146,7 +147,7 @@ def main(argv=None):
         except (urllib.error.URLError, OSError, ValueError, KeyError) as exc:
             failures.append(f"CloudBeaver: could not check its state: {exc}")
 
-    for account in ("demo", "admin"):
+    for account in ("demo", "admin") if "landing" in cfg.consoles else ():
         if account not in page:
             failures.append(f"the landing page does not state the {account} account, and Adminer's login form needs it")
 

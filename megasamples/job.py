@@ -136,6 +136,9 @@ def up(argv=None):
         if subprocess.run(["docker", "compose", "-f", COMPOSE, "up", "-d", "--force-recreate", "--renew-anon-volumes",
                            "--no-deps", "--wait", *stale], cwd=ROOT).returncode != 0:
             return 1
+    if "landing" in cfg.consoles:
+        # the bind mount's source; Docker would otherwise create it owned by root
+        os.makedirs(os.path.join(ROOT, "consoles", "landing"), exist_ok=True)
     print("  . docker compose up -d --wait")
     if subprocess.run(["docker", "compose", "-f", COMPOSE, "up", "-d", "--wait"], cwd=ROOT).returncode != 0:
         return 1

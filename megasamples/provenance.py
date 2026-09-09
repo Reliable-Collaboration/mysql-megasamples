@@ -168,12 +168,12 @@ def build_provenance(name, cfg, arts, record, measurements, licences):
     else:
         out += [f"Staged by [`megasamples/stage.py`](../../megasamples/stage.py); no dataset-specific "
                 f"converter.", ""]
-    name_map = os.path.join(stage_dir(name), "name_map.yaml")
+    name_map = os.path.join(ROOT, "datasets", name, "name_map.yaml")
     if os.path.exists(name_map):
         renames = sum(1 for line in open(name_map, encoding="utf-8") if ":" in line
                       and not line.startswith("#"))
-        out += [f"{renames} identifiers were renamed; the mapping is written to "
-                f"`name_map.yaml` beside the staged SQL at build time.", ""]
+        out += [f"{renames} identifiers were renamed; the mapping is committed as "
+                f"[`name_map.yaml`](name_map.yaml), written by the converter.", ""]
     if "Programmable objects" in sections:
         out += ["What was and was not ported:", "", sections["Programmable objects"], ""]
 

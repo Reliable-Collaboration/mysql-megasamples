@@ -13,7 +13,13 @@ binary column passes through unchanged, which is most of them.
 """
 import base64, glob, json, os, re
 
-from compression import zstd
+try:
+    from compression import zstd                  # Python 3.14+
+except ImportError:                               # 3.11-3.13: the same API from the backport
+    try:
+        from backports import zstd
+    except ImportError as exc:
+        raise ImportError("reading MySQL Shell dumps needs zstd: run on Python 3.14+, or install backports.zstd") from exc
 
 UNESCAPE = {b"0": b"\x00", b"b": b"\b", b"n": b"\n", b"r": b"\r", b"t": b"\t", b"Z": b"\x1a", b"\\": b"\\"}
 
@@ -44,9 +50,10 @@ class TableDump:
         for chunk in self.chunks:
             with open(chunk, "rb") as fh:
                 data = zstd.decompress(fh.read())
-            for line in data.split(b"\n"):
-                if line:
-                    yield line
+            parts = data.split(b"\n")
+            if parts and parts[-1] == b"":
+                parts.pop()                       # the remainder after the final newline
+            yield from parts                      # an empty line is a one-column row holding ''
 
     def rows(self):
         for line in self.lines():

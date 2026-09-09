@@ -498,5 +498,5 @@ def translate(sql, dialect, schema, extra=(), names=None, exclude=(), condition=
     if rollup:
         if dialect != "postgres":
             raise Unportable("GROUP BY ... WITH ROLLUP: SQLite has no ROLLUP")
-        out = re.sub(r"GROUP BY (.+?) WITH ROLLUP", lambda m: f"GROUP BY ROLLUP ({m.group(1)})", out, count=1)
+        out = re.sub(r"GROUP BY (.+?) WITH ROLLUP", lambda m: f"GROUP BY ROLLUP ({m.group(1)})", out)
     return out

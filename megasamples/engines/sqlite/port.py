@@ -4,7 +4,8 @@
   python3 -m megasamples sqlite-port <dataset>
 
 Reads the model from the MySQL build server and the data from the MySQL Shell dump, and writes
-build/sqlite/<dataset>/:
+build/sqlite/<database>/ (the whole database, whichever dataset asked; an `append: true`
+dataset extends its base's):
 
     <database>.sqlite  the database: tables with primary keys, foreign keys and checks declared
                        inline (SQLite cannot add them later), data, then secondary indexes; VACUUMed;
@@ -27,7 +28,8 @@ from megasamples.port import ddl, model, record, tsv, typemap, views as view_por
 
 
 def out_dir(dataset):
-    return os.path.join(engine_build_dir("sqlite"), dataset)
+    # keyed by database, like the PostgreSQL port: the file is the whole database
+    return os.path.join(engine_build_dir("sqlite"), inventory.load(dataset)["database"])
 
 
 def rows_for(loaded, dump):
@@ -42,17 +44,19 @@ def rows_for(loaded, dump):
 def write(dataset):
     cfg = inventory.load(dataset)
     schema = cfg["database"]
-    dumps = os.path.join(engine_build_dir("mysql"), "dumps", dataset)
     mysql.start()
-    if not os.path.exists(os.path.join(dumps, "@.json")):
-        dumper.dump(dataset)
     database = model.extract(schema)
     if not database.tables:
         sys.exit(f"{dataset}: `{schema}` has no tables in the MySQL build server; run: make {dataset}")
+    from megasamples.engines.postgres.port import dump_dir
+    dumps = dump_dir(dataset, schema, [t.name for t in database.tables])
     target = out_dir(dataset)
     shutil.rmtree(target, ignore_errors=True)
     os.makedirs(target)
-    rendered = ddl.render(database, "sqlite")
+    try:
+        rendered = ddl.render(database, "sqlite")
+    except ddl.UnportableColumn as exc:
+        sys.exit(f"{dataset}: {exc}")
     view_sql = rendered["views"]
     ported_views = [st.split('"')[1] for st in view_sql]
     with open(os.path.join(target, "model.json"), "w", encoding="utf-8") as fh:
@@ -69,7 +73,10 @@ def write(dataset):
 
     path = os.path.join(target, f"{schema}.sqlite")
     started = time.time()
-    con = sqlite3.connect(path)
+    # built under a temporary name and moved into place when complete, so a file at the final
+    # name is always a whole database (the image builder and the release staging trust its existence)
+    building = path + ".building"
+    con = sqlite3.connect(building)
     con.execute("PRAGMA journal_mode=OFF")
     con.execute("PRAGMA synchronous=OFF")
     con.execute("PRAGMA foreign_keys=OFF")
@@ -96,6 +103,7 @@ def write(dataset):
     con.execute("PRAGMA journal_mode=DELETE")
     con.execute("VACUUM")
     con.close()
+    os.replace(building, path)
     size = os.path.getsize(path) / 1048576
     print(f"  . {dataset}: {len(database.tables)} tables, {total:,} rows -> {rel(path)} ({size:.1f} MB) "
           f"in {time.time() - started:.1f}s; {len(rendered['dropped'])} object(s) not ported (dropped.txt)")

@@ -19,13 +19,15 @@ DUMPS = os.path.join(engine_build_dir("mysql"), "dumps")   # the server mounts b
 def dump(dataset):
     cfg = yaml.safe_load(open(os.path.join(ROOT, "datasets", dataset, "dataset.yaml"), encoding="utf-8"))
     schema = cfg["database"]
-    host_dir = os.path.join(DUMPS, dataset)
+    # keyed by database: an `append: true` dataset adds tables to another dataset's database, and
+    # the dump is of the database as it stands, whichever dataset asked for it
+    host_dir = os.path.join(DUMPS, schema)
     if os.path.exists(host_dir):
         shutil.rmtree(host_dir)
     os.makedirs(os.path.dirname(host_dir), exist_ok=True)
     started = time.time()
     # mysqlsh needs the directory to not exist; it creates it itself
-    script = (f"util.dump_schemas(['{schema}'], '/build/mysql/dumps/{dataset}', "
+    script = (f"util.dump_schemas(['{schema}'], '/build/mysql/dumps/{schema}', "
               f"{{'showProgress': False, 'compression': 'zstd', 'threads': 4}})")
     # --no-defaults: mysqlsh reads my.cnf's [client] section and rejects default-character-set,
     # which the MySQL Shell record already flagged as a difference from the mysql client.
@@ -50,7 +52,7 @@ def dump(dataset):
     manifest = {"dataset": dataset, "database": schema, "files": len(files),
                 "bytes": total, "sha256": digest.hexdigest(),
                 "seconds": round(time.time() - started, 2)}
-    with open(os.path.join(DUMPS, f"{dataset}.json"), "w", encoding="utf-8") as fh:
+    with open(os.path.join(DUMPS, f"{schema}.json"), "w", encoding="utf-8") as fh:
         json.dump(manifest, fh, indent=2, sort_keys=True)
     print(f"  . dumped {schema}: {len(files)} files, {total:,} bytes, sha256 {digest.hexdigest()[:12]}")
     return manifest
@@ -68,3 +70,12 @@ def main(argv=None):
 
 if __name__ == "__main__":
     sys.exit(main())
+
+
+def complete(schema, tables=()):
+    """True when the database's dump finished and holds every named table: a dump taken before an
+    `append: true` dataset was loaded lacks that dataset's tables and must be taken again."""
+    host_dir = os.path.join(DUMPS, schema)
+    if not os.path.exists(os.path.join(host_dir, "@.done.json")):
+        return False
+    return all(os.path.exists(os.path.join(host_dir, f"{schema}@{t}.json")) for t in tables)

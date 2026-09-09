@@ -10,6 +10,7 @@ the sqlite3 command-line shell, so `docker run` and `docker exec` work as they d
 import os, shutil, sqlite3, subprocess, sys
 
 from megasamples import datasets as inventory, registry, verify as verifier
+from megasamples.engines import unique_databases
 from megasamples.engines.base import Engine
 from megasamples.engines.mysql import server as mysql
 from megasamples.engines.sqlite import image_test as tester, port
@@ -27,10 +28,7 @@ class SQLite(Engine):
 
     def build(self, dataset, fresh=False):
         from megasamples.engines import get
-        schema = inventory.load(dataset)["database"]
-        mysql.start()
-        if not mysql.rows("SELECT schema_name FROM information_schema.schemata "
-                          f"WHERE schema_name = '{schema}'"):
+        if not get("mysql").holds(dataset):
             print(f"  . {dataset}: not in the MySQL build server yet; building it there first (the hub)")
             rc = get("mysql").build(dataset)
             if rc:
@@ -45,11 +43,10 @@ class SQLite(Engine):
         context = os.path.join(engine_build_dir(self.name), "image")
         shutil.rmtree(context, ignore_errors=True)
         os.makedirs(os.path.join(context, "data"))
-        for d in datasets:
-            database = inventory.load(d)["database"]
-            src = os.path.join(engine_build_dir(self.name), d, f"{database}.sqlite")
+        for database in unique_databases(datasets):
+            src = os.path.join(engine_build_dir(self.name), database, f"{database}.sqlite")
             if not os.path.exists(src):
-                sys.exit(f"no SQLite port for {d} at {rel(src)}; run: make build ENGINE=sqlite D={d}")
+                sys.exit(f"no SQLite port of `{database}` at {rel(src)}; run: make build ENGINE=sqlite D=<dataset>")
             os.link(src, os.path.join(context, "data", f"{database}.sqlite"))
         port.write_registry(os.path.join(context, "data", "megasamples.sqlite"), datasets)
         cmd = ["docker", "build", "-f", os.path.join(engine_dir(self.name), "Dockerfile"), "-t", self.image, ROOT]
@@ -107,7 +104,8 @@ class SQLite(Engine):
         return out
 
     def connection_hint(self, cfg):
-        return "docker exec -it megasamples-sqlite sqlite3 /data/sakila.sqlite"
+        from megasamples.engines import first_database
+        return f"docker exec -it megasamples-sqlite sqlite3 /data/{first_database(cfg, 'sqlite')}.sqlite"
 
 
 ENGINE = SQLite()

@@ -32,7 +32,7 @@ MIT, repository `license.txt` ([license record](/licenses/mit.md)); the script h
 
 Converted by [`datasets/adventureworks/convert.py`](convert.py). AdventureWorks OLTP -> MySQL.
 
-1045 identifiers were renamed; the mapping is written to `name_map.yaml` beside the staged SQL at build time.
+1045 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
 
 What was and was not ported:
 

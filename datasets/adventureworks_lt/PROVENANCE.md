@@ -31,6 +31,8 @@ MIT via repository `license.txt` ([license record](/licenses/mit.md)); script he
 
 Converted by [`datasets/adventureworks_lt/convert.py`](convert.py). AdventureWorks LT: translate the 2012 install script and its tab-separated data files.
 
+218 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
+
 ## Measured
 
 12 tables, 4,277 rows. Per-table counts, digests, index sets,

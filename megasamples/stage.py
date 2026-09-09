@@ -20,7 +20,8 @@ the first entry of its `load:` list:
     stage: {input: export}
         convert.py <downloads/<name>/export> <out.sql>; the export is made once by `wwi-export`
     stage: {input: none, scale_factor: true}
-        generators: convert.py <out.sql> --sf <SF>, from the SF environment variable (default 1)
+        generators: convert.py <out.sql> --sf <SF>, from the SF environment variable, else
+                    megasamples.yaml build.scale_factor (default 1)
 
 A dataset with no `stage:` block and an empty `load:` list (the licence-gated bike-share datasets)
 has nothing to stage: its loader writes the SQL itself.
@@ -74,7 +75,8 @@ def plan(name):
         raise SystemExit(f"{name}: unknown stage input kind {kind!r}")
     argv += [str(a) for a in (spec.get("args") or [])]
     if spec.get("scale_factor"):
-        argv += ["--sf", os.environ.get("SF", "1")]
+        from megasamples import config as stack
+        argv += ["--sf", os.environ.get("SF") or str(stack.load().build.get("scale_factor", 1))]
     steps.append((f"run {rel(converter)} -> {rel(out)}", ("run", argv, dest)))
     return steps
 

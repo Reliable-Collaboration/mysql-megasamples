@@ -19,13 +19,15 @@ DUMPS = os.path.join(engine_build_dir("mysql"), "dumps")
 
 
 def restorable():
-    return [d for d in inventory.names() if os.path.exists(os.path.join(DUMPS, d, "@.done.json"))]
+    """The datasets whose database has a complete dump (an `append: true` dataset rides on its base's)."""
+    return [d for d in inventory.names() if not inventory.load(d).get("append")
+            and os.path.exists(os.path.join(DUMPS, inventory.load(d)["database"], "@.done.json"))]
 
 
 def restore(dataset, threads=4):
     cfg = inventory.load(dataset)
     schema = cfg["database"]
-    src = os.path.join(DUMPS, dataset)
+    src = os.path.join(DUMPS, schema)
     if not os.path.exists(os.path.join(src, "@.done.json")):
         sys.exit(f"{dataset}: no complete dump under {rel(src)}")
     started = time.time()
@@ -42,7 +44,7 @@ def restore(dataset, threads=4):
         print(f"  ! dropped {len(inbound)} foreign key(s) into {schema} from "
               f"{', '.join(sorted({r[0] for r in inbound}))}; restore those datasets again")
     db.sql(f"DROP DATABASE IF EXISTS `{schema}`")
-    script = (f"util.load_dump('/build/mysql/dumps/{dataset}', {{'deferTableIndexes': 'all', "
+    script = (f"util.load_dump('/build/mysql/dumps/{schema}', {{'deferTableIndexes': 'all', "
               f"'threads': {threads}, 'showProgress': False, 'resetProgress': True, 'skipBinlog': True}})")
     out = db.run(["docker", "exec", "-u", f"{os.getuid()}:{os.getgid()}", "-e", "HOME=/build", db.NAME,
                   "mysqlsh", "--no-defaults", f"root:{db.PW}@127.0.0.1:3306", "--py", "-e", script])

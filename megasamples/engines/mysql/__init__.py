@@ -7,8 +7,9 @@ of what this one verified.
 """
 import os, shutil, subprocess, sys
 
-from megasamples import registry, stage as stager, verify as verifier, workspace
+from megasamples import datasets as inventory, registry, stage as stager, verify as verifier, workspace
 from megasamples.engines.base import Engine
+from megasamples.engines import expected_tables, unique_databases
 from megasamples.engines.mysql import dump as dumper, image_test as tester, load as loader, server
 from megasamples.paths import ROOT, engine_build_dir, engine_dir, rel
 
@@ -45,21 +46,36 @@ class MySQL(Engine):
     def verify(self, dataset, stages=None, pin=False):
         return verifier.verify(dataset, stages, engine="mysql", pin=pin)
 
+    def holds(self, dataset):
+        """True when the build server has the dataset: its database, and for an `append: true`
+        dataset every table its expected_counts.yaml names, since the base dataset made the database."""
+        cfg = inventory.load(dataset)
+        schema = cfg["database"]
+        server.start()
+        if not server.rows(f"SELECT schema_name FROM information_schema.schemata WHERE schema_name = '{schema}'"):
+            return False
+        if not cfg.get("append"):
+            return True
+        tables = {r[0] for r in server.rows(f"SELECT table_name FROM information_schema.tables WHERE table_schema = '{schema}'")}
+        return all(t in tables for t in expected_tables(dataset))
+
     def image_build(self, datasets, keep=False, threads=4, from_dumps=False):
         dumps = os.path.join(engine_build_dir(self.name), "dumps")
+        databases = unique_databases(datasets)
         if from_dumps:
-            missing = [d for d in datasets if not os.path.exists(os.path.join(dumps, f"{d}.json"))]
+            missing = [s for s in databases if not os.path.exists(os.path.join(dumps, f"{s}.json"))]
             if missing:
                 sys.exit(f"no dump under {rel(dumps)} for: {' '.join(missing)}; build them first")
-            print(f"  . baking from the {len(datasets)} dump(s) already in {rel(dumps)}")
+            print(f"  . baking from the {len(databases)} dump(s) already in {rel(dumps)}")
         else:
             server.start()
             for d in datasets:
-                dumper.dump(d)
+                if not inventory.load(d).get("append"):          # the base's dump carries the appended tables
+                    dumper.dump(d)
         context = os.path.join(engine_build_dir(self.name), "image")
         shutil.rmtree(context, ignore_errors=True)
-        for d in datasets:
-            link_tree(os.path.join(dumps, d), os.path.join(context, "dumps", d))
+        for s in databases:
+            link_tree(os.path.join(dumps, s), os.path.join(context, "dumps", s))
         registry.main(list(datasets) + ["--dialect", "mysql", "--out", os.path.join(context, "registry.sql")])
         cmd = ["docker", "build", "-f", os.path.join(engine_dir(self.name), "Dockerfile"),
                "-t", self.image, ROOT]
@@ -113,9 +129,7 @@ class MySQL(Engine):
                     "PORT_mysql_admin": "3306", "USER_mysql_admin": "admin", "PASSWORD_mysql_admin": admin,
                     "ENGINE_mysql_admin": "mysql@dbgate-plugin-mysql"}
         if console == "cloudbeaver":
-            return {"CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM": "true",
-                    "CLOUDBEAVER_APP_READ_ONLY_CONNECTION_INFO": "true",
-                    "CLOUDBEAVER_SYSTEM_VARIABLES_RESOLVING_ENABLED": "true",
+            return {
                     "DEMO_PASSWORD": demo, "ADMIN_PASSWORD": admin}
         return {}
 
@@ -138,7 +152,8 @@ class MySQL(Engine):
                        "GROUP BY table_schema")}
 
     def connection_hint(self, cfg):
-        return f"mysql -h 127.0.0.1 -P {cfg.ports.get('mysql', self.port)} -u demo -pdemo sakila"
+        from megasamples.engines import first_database
+        return f"mysql -h 127.0.0.1 -P {cfg.ports.get('mysql', self.port)} -u demo -pdemo {first_database(cfg, 'mysql')}"
 
 
 ENGINE = MySQL()

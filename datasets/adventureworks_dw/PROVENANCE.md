@@ -31,7 +31,7 @@ MIT via repository `license.txt` ([license record](/licenses/mit.md)); script he
 
 Converted by [`datasets/adventureworks_dw/convert.py`](convert.py). AdventureWorks DW (2025 edition) -> MySQL.
 
-382 identifiers were renamed; the mapping is written to `name_map.yaml` beside the staged SQL at build time.
+382 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
 
 What was and was not ported:
 

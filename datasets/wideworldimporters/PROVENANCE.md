@@ -56,6 +56,8 @@ The maintainer accepted these terms explicitly, and the acceptance is recorded r
 
 Converted by [`datasets/wideworldimporters/convert.py`](convert.py). WideWorldImporters (OLTP) -> MySQL.
 
+605 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
+
 What was and was not ported:
 
 * Website procedures (11: ActivateWebsiteLogon, ChangePassword, InsertCustomerOrders (TVP), InvoiceCustomerOrders, RecordColdRoomTemperatures (TVP), RecordVehicleTemperature (JSON), SearchFor*) -> port the JSON/search ones where feasible (`SearchForStockItemsByTags` uses `OPENJSON`; MySQL `JSON_TABLE` can replace), drop TVP-based ones (MySQL has no table-valued parameters) with stubs.

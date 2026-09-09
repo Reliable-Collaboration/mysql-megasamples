@@ -39,10 +39,7 @@ def write(dataset, engine, rendered):
         with open(os.path.join(d, "notes.yaml"), "w", encoding="utf-8") as fh:
             fh.write(notes_text(rendered.get("notes") or {}))
     path = os.path.join(d, "not_ported.yaml")
-    current = {}
-    if os.path.exists(path):
-        with open(path, encoding="utf-8") as fh:
-            current = yaml.safe_load(fh) or {}
+    current = read_not_ported(dataset)
     current[engine] = list(rendered["dropped"])
     with open(path, "w", encoding="utf-8") as fh:
         fh.write(not_ported_text(current))
@@ -89,3 +86,12 @@ def notes_text(notes):
     return ("# What the PostgreSQL port changed inside a routine body, by routine: constructs with no\n"
             "# PL/pgSQL counterpart, replaced by rule (megasamples/port/routines.py).\n"
             + yaml.safe_dump(notes, sort_keys=True, default_flow_style=False, allow_unicode=True, width=120))
+
+
+def read_not_ported(dataset):
+    """{engine: [lines]} as committed, or {}."""
+    path = os.path.join(DATASETS, dataset, "ports", "not_ported.yaml")
+    if not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        return yaml.safe_load(fh) or {}

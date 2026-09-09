@@ -39,7 +39,7 @@ class SQLiteAdapter:
     exact_decimals = False
 
     def __init__(self, dataset):
-        base = os.path.join(engine_build_dir("sqlite"), dataset)
+        base = os.path.join(engine_build_dir("sqlite"), inventory.load(dataset)["database"])
         self.path = os.path.join(base, f"{inventory.load(dataset)['database']}.sqlite")
         if not os.path.exists(self.path):
             raise SystemExit(f"{dataset}: no SQLite port at {self.path}; run: megasamples sqlite-port {dataset}")

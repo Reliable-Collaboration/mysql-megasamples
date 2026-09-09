@@ -37,17 +37,19 @@ psql -v ON_ERROR_STOP=1 -q -f /build/init/00-users.sql postgres
 for d in /build/databases/*/; do
   name=$(basename "$d")
   echo "== $name"
-  psql -v ON_ERROR_STOP=1 -q -c "CREATE DATABASE \"$name\" TEMPLATE template0 ENCODING 'UTF8'" postgres
-  psql -v ON_ERROR_STOP=1 -q -f "$d/schema.sql" "$name"
+  # admin owns the database and everything loaded into it, so the account the consoles call "full
+  # access" can alter and drop what it sees; the loopback of this private server is trusted
+  psql -v ON_ERROR_STOP=1 -q -c "CREATE DATABASE \"$name\" OWNER admin TEMPLATE template0 ENCODING 'UTF8'" postgres
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/schema.sql" "$name"
   while IFS=$'\t' read -r table file cols; do
-    psql -v ON_ERROR_STOP=1 -q -c "\\copy \"$table\" ($cols) FROM '$d/data/$file' WITH (FORMAT text)" "$name"
+    psql -U admin -v ON_ERROR_STOP=1 -q -c "\\copy \"$table\" ($cols) FROM '$d/data/$file' WITH (FORMAT text)" "$name"
   done < "$d/data/tables.tsv"
-  psql -v ON_ERROR_STOP=1 -q -f "$d/indexes.sql" "$name"
-  psql -v ON_ERROR_STOP=1 -q -f "$d/constraints.sql" "$name"
-  psql -v ON_ERROR_STOP=1 -q -f "$d/routines.sql" "$name"
-  psql -v ON_ERROR_STOP=1 -q -f "$d/views.sql" "$name"
-  psql -v ON_ERROR_STOP=1 -q -f "$d/triggers.sql" "$name"
-  psql -v ON_ERROR_STOP=1 -q -c "ANALYZE" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/indexes.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/constraints.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/routines.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/views.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/triggers.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -c "ANALYZE" "$name"
   psql -v ON_ERROR_STOP=1 -q -c "GRANT CONNECT ON DATABASE \"$name\" TO demo, admin" postgres
   psql -v ON_ERROR_STOP=1 -q -f /build/init/20-grants.sql "$name"
 done

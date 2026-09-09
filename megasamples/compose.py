@@ -45,7 +45,7 @@ def console_service(console, cfg, engines):
     present = [e for e in engines if not console.engines or e.name in console.engines]
     if present:
         service["depends_on"] = {e.name: {"condition": "service_healthy"} for e in present}
-    env = {}
+    env = dict(console.environment)
     for e in present:
         extra = e.console_environment(console.name, cfg)
         if "CONNECTIONS" in extra and "CONNECTIONS" in env:

@@ -4,7 +4,8 @@
   python3 -m megasamples pg-port <dataset> [--files-only]
 
 Reads the model from the MySQL build server (information_schema) and the data from the MySQL Shell
-dump under build/mysql/dumps/<dataset>/, and writes build/postgres/<dataset>/:
+dump under build/mysql/dumps/<database>/, and writes build/postgres/<database>/ (an `append: true`
+dataset extends its base's database, and the port is always of the whole database):
 
     model.json         the engine-neutral model the DDL was generated from (the adapter reads it)
     schema.sql         CREATE TABLE with primary keys, defaults, generated columns, enum checks
@@ -15,6 +16,7 @@ dump under build/mysql/dumps/<dataset>/, and writes build/postgres/<dataset>/:
     views.sql          the views, in the order their dependencies allow
     triggers.sql       the triggers, as PL/pgSQL trigger functions
     dropped.txt        what PostgreSQL does not carry, one line each, with the reason
+    complete           written last; the image builder takes only directories that have it
 
 then loads them into the PostgreSQL build server: CREATE DATABASE, schema, \\copy per table,
 indexes, constraints, ANALYZE. The image builder replays the same files (engines/postgres/Dockerfile).
@@ -31,7 +33,17 @@ from megasamples.port import ddl, model, record, tsv, typemap, views as view_por
 
 
 def out_dir(dataset):
-    return os.path.join(engine_build_dir("postgres"), dataset)
+    # keyed by database: an `append: true` dataset extends its base's database, and the port is of
+    # the whole database whichever dataset asked for it
+    return os.path.join(engine_build_dir("postgres"), inventory.load(dataset)["database"])
+
+
+def dump_dir(dataset, database, tables):
+    """The MySQL Shell dump of the database, taken now unless a complete one holding every table exists."""
+    dumps = os.path.join(engine_build_dir("mysql"), "dumps", database)
+    if not dumper.complete(database, tables):
+        dumper.dump(dataset)
+    return dumps
 
 
 def setval_statements(database, dialect):
@@ -88,20 +100,22 @@ class ResultProbe:
 def write_files(dataset):
     cfg = inventory.load(dataset)
     schema = cfg["database"]
-    dumps = os.path.join(engine_build_dir("mysql"), "dumps", dataset)
     mysql.start()
-    if not os.path.exists(os.path.join(dumps, "@.json")):
-        dumper.dump(dataset)
     database = model.extract(schema)
     if not database.tables:
         sys.exit(f"{dataset}: `{schema}` has no tables in the MySQL build server; run: make {dataset}")
+    dumps = dump_dir(dataset, schema, [t.name for t in database.tables])
     target = out_dir(dataset)
     shutil.rmtree(target, ignore_errors=True)
     os.makedirs(os.path.join(target, "data"))
     dialect = ddl.DIALECTS["postgres"]
     result_columns = {}
     prober = ResultProbe(schema, database)
-    rendered = ddl.render(database, "postgres", result_columns, prober.probe)
+    try:
+        rendered = ddl.render(database, "postgres", result_columns, prober.probe)
+    except ddl.UnportableColumn as exc:
+        prober.close()
+        sys.exit(f"{dataset}: {exc}")
     prober.close()
     rendered["result_columns"] = result_columns
 
@@ -147,6 +161,8 @@ def write_files(dataset):
             total += n
             cols = ",".join(dialect.quote(c.name) for c in loaded)
             listing.write(f"{table.name}\t{table.name}.tsv\t{cols}\n")
+    with open(os.path.join(target, "complete"), "w", encoding="utf-8") as fh:
+        fh.write(f"{dataset} {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}\n")   # written last: the image builder's gate
     print(f"  . {dataset}: {len(database.tables)} tables, {total:,} rows written to {rel(target)} "
           f"in {time.time() - started:.1f}s; {len(rendered['dropped'])} object(s) not ported (dropped.txt)")
     return database
@@ -156,7 +172,7 @@ def load(dataset):
     cfg = inventory.load(dataset)
     schema = cfg["database"]
     target = out_dir(dataset)
-    inside = f"/build/postgres/{dataset}"
+    inside = f"/build/postgres/{schema}"
     pg.start()
     started = time.time()
     pg.psql(f'DROP DATABASE IF EXISTS "{schema}"')

@@ -30,6 +30,8 @@ MIT via repository `license.txt` ([license record](/licenses/mit.md)); the scrip
 
 Converted by [`datasets/pubs/convert.py`](convert.py). Northwind: translate Microsoft's T-SQL install script to MySQL.
 
+0 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
+
 What was and was not ported:
 
 * Trigger `employee_insupd` (INSERT/UPDATE, checks job_lvl within jobs.min_lvl..max_lvl, raises error) -> port as two MySQL triggers (BEFORE INSERT, BEFORE UPDATE) using `SIGNAL SQLSTATE '45000'`.

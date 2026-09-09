@@ -167,3 +167,34 @@ def test_json_table_nested_path_keeps_the_parent_row_on_sqlite():
     out = sqltranslate.translate(sql, "sqlite", "db")
     assert 'LEFT JOIN JSON_EACH("p"."details", \'$.reviews\') AS r ON 1 = 1' in out and "JSON_EXTRACT(r.value, '$.rating')" in out
     assert "NESTED PATH '$.reviews[*]'" in sqltranslate.translate(sql, "postgres", "db")
+
+
+def test_generated_column_with_a_function_the_target_lacks_stops_the_port():
+    t = model.Table("s", "t", columns=[col("a", "varchar", "varchar(5)", char_len=5),
+                                        col("g", "time", generation="maketime(cast(left(`a`,2) as unsigned),0,0)", extra="STORED GENERATED")],
+                    indexes=[])
+    for dialect in ("postgres", "sqlite"):
+        try:
+            ddl.schema(t, ddl.DIALECTS[dialect])
+            assert False, dialect
+        except ddl.UnportableColumn as exc:
+            assert "t.g is generated with" in str(exc) and "maketime" in str(exc)
+    # ifnull, which the emitter turns into coalesce, is fine on both
+    t.columns[1] = col("g", "int", generation="ifnull((`a` - 1),0)", extra="STORED GENERATED")
+    for dialect in ("postgres", "sqlite"):
+        sql, dropped = ddl.schema(t, ddl.DIALECTS[dialect])
+        assert "GENERATED ALWAYS AS (coalesce((" in sql and dropped == []
+
+
+def test_dump_lines_keep_an_empty_single_column_row(tmp_path):
+    import json
+    from megasamples.port import tsv
+    try:
+        from compression import zstd
+    except ImportError:
+        from backports import zstd
+    base = tmp_path / "s@t"
+    (tmp_path / "s@t.json").write_text(json.dumps({"options": {"columns": ["c"]}}))
+    (tmp_path / "s@t@@0.tsv.zst").write_bytes(zstd.compress(b"a\n\nb\n"))
+    dump = tsv.TableDump(str(tmp_path), "s", "t")
+    assert list(dump.lines()) == [b"a", b"", b"b"]

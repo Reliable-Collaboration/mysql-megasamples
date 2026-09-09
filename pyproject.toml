@@ -10,6 +10,7 @@ dependencies = [
     "lxml>=5.0",
     "sqlglot>=25.0",
     "py7zr>=1.1.3",
+    "backports.zstd>=1.0; python_version < '3.14'",
 ]
 
 [dependency-groups]

@@ -31,6 +31,8 @@ a download does not match.
 
 Converted by [`datasets/chinook/convert.py`](convert.py). Chinook: rewrite the upstream MySQL script for MySQL 9.7 and this project's naming convention.
 
+84 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
+
 What was and was not ported:
 
 None upstream (no views, routines, triggers). 11 foreign keys `ON DELETE NO ACTION ON UPDATE NO ACTION` and 11 `IFK_*` indexes ported as-is.

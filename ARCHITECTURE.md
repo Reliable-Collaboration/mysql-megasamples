@@ -151,7 +151,7 @@ is the registry the configuration names.
 ### 4.2 PostgreSQL (`engines/postgres/`, `megasamples/engines/postgres/`)
 
 * **Port** (`megasamples pg-port`, or `make build ENGINE=postgres`): the model and the dump become
-  `build/postgres/<dataset>/` — `schema.sql`, `data/<table>.tsv` in `COPY` text format with the
+  `build/postgres/<database>/` — `schema.sql`, `data/<table>.tsv` in `COPY` text format with the
   insertable columns listed, `indexes.sql` (btree, and a GIN index over `to_tsvector('simple', …)`
   for every FULLTEXT index), `constraints.sql` (foreign keys, checks, and `setval` for every
   identity sequence), `routines.sql` (PL/pgSQL), `views.sql`, `triggers.sql` (PL/pgSQL trigger
@@ -159,7 +159,11 @@ is the registry the configuration names.
   and are loaded in that order into a throwaway `postgres:18.6-bookworm` build server,
   `megasamples-build-postgres`, with `\copy`. A procedure that returns rows becomes a function
   `RETURNS TABLE(...)`; its columns are measured once with psql's `\gdesc` on the ported schema and
-  recorded in `datasets/<name>/ports/result_sets.yaml`, so the next render needs no server.
+  recorded in `datasets/<name>/ports/result_sets.yaml`, so the next render needs no server. A
+  `complete` marker is written last, and the image builder takes only directories that have it;
+  the SQLite port likewise builds its file under a temporary name and moves it into place when done.
+  Both are keyed by database, so an `append: true` dataset extends its base's port rather than
+  making a second one.
 * **Image.** `engines/postgres/Dockerfile`: a builder stage runs `initdb` at the image's own
   `PGDATA`, appends the `host all all all scram-sha-256` rule the official entrypoint would have
   written, starts a private server with bulk-load settings, creates the accounts and the registry,
@@ -179,7 +183,7 @@ is the registry the configuration names.
 ### 4.3 SQLite (`engines/sqlite/`, `megasamples/engines/sqlite/`)
 
 * **Port** (`megasamples sqlite-port`, or `make build ENGINE=sqlite`): the stdlib `sqlite3` driver
-  writes `build/sqlite/<dataset>/<database>.sqlite` — MySQL-like declared types for their affinity,
+  writes `build/sqlite/<database>/<database>.sqlite` — MySQL-like declared types for their affinity,
   keys, foreign keys and checks inline (a `REGEXP` check becomes a `GLOB` when its pattern is an
   anchored run of character classes), secondary indexes after the data, then an FTS5
   external-content table with three sync triggers for every FULLTEXT index, the views, and the

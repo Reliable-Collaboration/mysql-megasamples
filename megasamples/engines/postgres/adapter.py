@@ -57,7 +57,8 @@ class PostgresAdapter:
     exact_decimals = True
 
     def __init__(self, dataset):
-        path = os.path.join(engine_build_dir("postgres"), dataset, "model.json")
+        from megasamples import datasets as inventory
+        path = os.path.join(engine_build_dir("postgres"), inventory.load(dataset)["database"], "model.json")
         if not os.path.exists(path):
             raise SystemExit(f"{dataset}: no PostgreSQL port under build/postgres/; run: megasamples pg-port {dataset}")
         with open(path, encoding="utf-8") as fh:

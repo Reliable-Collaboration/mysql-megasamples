@@ -19,6 +19,7 @@ class Console:
     deep_link: str = ""            # URL template opening one database, {port} and {db}; "" if none
     letter: str = ""               # the one-letter badge the landing page uses for the deep link
     volumes: list = field(default_factory=list)
+    environment: dict = field(default_factory=dict)   # settings the console needs whatever the engines
 
     @property
     def container(self):
@@ -47,7 +48,13 @@ CONSOLES = [
             "Open as a guest; both connections are in the sidebar.",
             volumes=["./consoles/cloudbeaver/.cloudbeaver.auto.conf:/opt/cloudbeaver/conf/.cloudbeaver.auto.conf:ro",
                      "./consoles/cloudbeaver/generated/cloudbeaver.conf:/opt/cloudbeaver/conf/cloudbeaver.conf:ro",
-                     "./consoles/cloudbeaver/generated/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf:ro"]),
+                     "./consoles/cloudbeaver/generated/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf:ro"],
+            # guests see the preconfigured connections, cannot edit them, and the ${DEMO_PASSWORD}
+            # placeholders in the generated data sources resolve -- whichever engines are in the stack
+            environment={"CLOUDBEAVER_APP_GRANT_CONNECTIONS_ACCESS_TO_ANONYMOUS_TEAM": "true",
+                         "CLOUDBEAVER_APP_READ_ONLY_CONNECTION_INFO": "true",
+                         "CLOUDBEAVER_SYSTEM_VARIABLES_RESOLVING_ENABLED": "true",
+                         "DEMO_PASSWORD": "${DEMO_PASSWORD:-demo}", "ADMIN_PASSWORD": "${ADMIN_PASSWORD:-admin}"}),
 ]
 _BY_NAME = {c.name: c for c in CONSOLES}
 

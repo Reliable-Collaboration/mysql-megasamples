@@ -56,6 +56,8 @@ The maintainer accepted these terms explicitly, and the acceptance is recorded r
 
 Converted by [`datasets/wideworldimporters_dw/convert.py`](convert.py). WideWorldImportersDW -> MySQL.
 
+204 identifiers were renamed; the mapping is committed as [`name_map.yaml`](name_map.yaml), written by the converter.
+
 What was and was not ported:
 
 Drop all: `Application.Configuration_*` (columnstore/in-memory/PolyBase/partitioning/PopulateLargeSaleTable/ReseedETL), `Integration.Get*/Migrate*` ETL procedures, `Integration.PopulateDateDimensionForYear` (could be ported as a MySQL procedure - nice to have), `Sequences.Reseed*`. Views: **Inferred** few/none beyond PowerBI helpers - port if trivial.
