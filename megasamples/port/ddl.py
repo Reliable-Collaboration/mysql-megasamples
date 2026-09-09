@@ -44,7 +44,13 @@ def physical_index_name(table, index):
     name to map observed indexes back to MySQL's names."""
     return short_name(f"{table}_{index}")
 
-DROP_SPATIAL = "SPATIAL index: not ported"
+# the one kind of index no target carries; the geometry column itself is ported as standard WKB
+DROP_SPATIAL = {
+    "postgres": "SPATIAL index: not ported; PostgreSQL indexes geometry only with PostGIS, which the image does not carry "
+                "(knowledge/decisions/programmable-object-parity.md, exception 7)",
+    "sqlite": "SPATIAL index: not ported; SQLite has no geometry type, and an R*Tree cannot be maintained from the WKB "
+              "column (knowledge/decisions/programmable-object-parity.md, exception 7)",
+}
 
 
 class Dialect:
@@ -243,7 +249,7 @@ def indexes(table, dialect):
             out += dialect.fulltext_index(table, index)
             continue
         if index.type == "SPATIAL":
-            dropped.append(f"{table.name}.{index.name}: {DROP_SPATIAL}")
+            dropped.append(f"{table.name}.{index.name}: {DROP_SPATIAL[dialect.name]}")
             continue
         out.append(dialect.create_index(table, index))
     return out, dropped

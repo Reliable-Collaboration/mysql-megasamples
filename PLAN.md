@@ -29,11 +29,6 @@ per container, as the earlier experiment had to learn.
 
 ## 3. Open in this repository
 
-* **The spatial index.** `sakila.address.idx_location` is the one index no port carries
-  (`knowledge/decisions/programmable-object-parity.md`, exception 7). PostgreSQL could, with PostGIS:
-  the base image would move from the official `postgres:18.6-bookworm` to `postgis/postgis:18-3.6`
-  and the geometry column from WKB in `bytea` to `geometry(Point)`; SQLite cannot. The maintainer
-  decides whether that trade is worth one index.
 * **Extended-tier ports.** The ports cover what is loaded in the MySQL build server, so an extended
   dataset ports once it is built there; the `append: true` datasets (reviews, yellow trips, the
   full Chicago set) add tables to a core database and the port has to run after the append.

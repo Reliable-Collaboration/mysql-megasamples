@@ -204,8 +204,9 @@ def render(cfg, data):
 <footer>
   Generated from the provenance registry inside each running engine, so it cannot drift from what is actually loaded.
   PostgreSQL and SQLite are ports of the verified MySQL corpus: the same rows, checked by the same content digests;
-  "not ported" counts the views, routines, triggers and full-text or spatial indexes that engine does not carry, and lists
-  them when you hover. Each dataset keeps its own upstream licence — see <code>datasets/&lt;name&gt;/PROVENANCE.md</code>
+  "not ported" counts the views, routines, triggers, indexes and columns that engine cannot carry, lists them with the
+  reason when you hover, and <code>knowledge/decisions/programmable-object-parity.md</code> in the repository explains
+  each kind. Each dataset keeps its own upstream licence — see <code>datasets/&lt;name&gt;/PROVENANCE.md</code>
   in the repository — and each description comes from its research record rather than being written here.
 </footer>
 """

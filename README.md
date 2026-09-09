@@ -171,6 +171,29 @@ verified against the same `datasets/<name>/tests/` files as MySQL — counts, ca
 digests, foreign keys, indexes, the digest of every view, and the printed output of every routine
 call and trigger scenario, pinned from MySQL.
 
+### What the ports do not carry, and why
+
+Everything an engine cannot carry is refused by name, with its reason, and the reason is the same
+in three places: `datasets/<name>/ports/not_ported.yaml`, the `not_ported` column of that
+database's registry row inside the image, and the tooltip behind "n not ported" on the landing
+page. There are seven kinds, and every one is an engine's limitation rather than a translation
+left undone ([the record](knowledge/decisions/programmable-object-parity.md) has the evidence):
+
+| what | engines | why |
+|---|---|---|
+| 2 views and 3 foreign keys of `oracle_oe` that reach into `oracle_hr` | both | a PostgreSQL database or a SQLite file cannot reference another database |
+| the 42 stored routines, and the 2 `employees` views that call them | SQLite | SQLite has no stored routines |
+| 3 AdventureWorks views that read XML with `EXTRACTVALUE` | SQLite | SQLite has no XML functions (PostgreSQL carries them through `xpath()`) |
+| `sakila.actor_info` | SQLite | `group_concat` cannot combine DISTINCT with a separator or an ORDER BY |
+| the `oracle_oe` trigger that assigns `line_item_id` before an insert | SQLite | a SQLite trigger cannot modify the row being inserted, and the key must be there first |
+| 4 AdventureWorks `AUTO_INCREMENT` columns inside composite keys | SQLite | SQLite auto-assigns only a single-column INTEGER PRIMARY KEY; an insert must supply the value |
+| the spatial index on `sakila.address` | both | core PostgreSQL indexes geometry only with PostGIS, which would change the image's base; SQLite has no geometry type. The column itself is ported as standard WKB |
+
+Two comparisons are weaker than a digest and say so in the verification output: a view whose
+`GROUP_CONCAT` has no ORDER BY is held to its row count (MySQL leaves that order unspecified), and
+on SQLite, which does decimal arithmetic in floating point, a view's computed decimal columns are
+left out of the digest while every other column is still compared exactly.
+
 ## The consoles
 
 `make up` brings the engines and the consoles up as one stack, and `make down` takes it away again.

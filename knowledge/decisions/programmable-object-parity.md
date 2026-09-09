@@ -19,7 +19,7 @@ generated:
   at: "2026-09-09T22:40:00Z"
 verified:
 - by: claude-code/claude-fable-5-1
-  at: "2026-09-09T22:40:00Z"
+  at: "2026-09-10T00:20:00Z"
 sources:
 - resource: /decisions/engine-hub.md
   title: MySQL is the hub; PostgreSQL and SQLite are ports of the verified MySQL corpus
@@ -128,10 +128,13 @@ The exceptions, each a technical limitation of the engine and recorded by name i
    `adventureworks` and `adventureworks_lt`): SQLite auto-assigns only a single-column INTEGER
    PRIMARY KEY; inserts must supply the value.
 7. **The SPATIAL index** (`sakila.address.idx_location`, both engines): core PostgreSQL has no
-   geometry type to index the WKB the port stores (PostGIS would, at the cost of moving the image
-   off the official `postgres` base to `postgis/postgis:18-3.6`, which exists as of 2026-08-31);
-   SQLite has no geometry type or functions and an R*Tree cannot be maintained from a BLOB.
-   Open with the maintainer; the limitation stands recorded meanwhile.
+   geometry type to index the WKB the port stores; PostGIS would carry it, at the cost of moving
+   the image off the official `postgres` base to `postgis/postgis:18-3.6` (which exists as of
+   2026-08-31) and of a GPL-2 extension in the runtime image, for one demonstration index on a
+   603-row table. SQLite has no geometry type or functions, and an R*Tree cannot be maintained
+   from a BLOB column. **Decided by the maintainer on 2026-09-10: the limitation is kept** on both
+   engines; the geometry column itself is ported as standard WKB, so the points are there and a
+   reader with its own geometry library can use them.
 
 Two comparisons are deliberately weaker than a digest, and say so in the verification output: a
 view with a `GROUP_CONCAT` that has no ORDER BY is held to its row count (MySQL leaves the order

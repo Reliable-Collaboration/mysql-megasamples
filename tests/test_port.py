@@ -88,7 +88,8 @@ def test_fulltext_becomes_gin_or_fts5_and_spatial_is_dropped_named():
     t.indexes = [model.Index("sp", False, "SPATIAL", [("c", None)])]
     for dialect in ("postgres", "sqlite"):
         stmts, dropped = ddl.indexes(t, ddl.DIALECTS[dialect])
-        assert stmts == [] and dropped == ["t.sp: SPATIAL index: not ported"]
+        assert stmts == [] and len(dropped) == 1 and dropped[0].startswith("t.sp: SPATIAL index: not ported; ")
+        assert "programmable-object-parity.md, exception 7" in dropped[0]
 
 
 def test_tsv_escapes_round_trip_into_postgres_copy_format():
