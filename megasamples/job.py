@@ -29,6 +29,26 @@ def _datasets(cfg, engine, named):
     return list(named) if named else cfg.datasets(engine.name)
 
 
+def _fetch_all(cfg, engines, named):
+    """Fetch every configured dataset's artifacts once. Returns {dataset: [reasons]} for the datasets
+    whose downloads are not in place; the build goes on without them and says so at the end."""
+    wanted = []
+    for engine in engines:
+        for d in _datasets(cfg, engine, named):
+            if d not in wanted:
+                wanted.append(d)
+    if not wanted:
+        return {}
+    print(f"== fetch: {' '.join(wanted)}")
+    return fetcher.fetch_for(wanted)
+
+
+def _report_blocked(blocked):
+    if blocked:
+        print(f"  x {len(blocked)} dataset(s) left out, their downloads not in place: {', '.join(sorted(blocked))}"
+              " -- see the fetch lines above for what to obtain, or leave them out of megasamples.yaml")
+
+
 def build(argv=None):
     ap = argparse.ArgumentParser(description="fetch, stage, load and verify datasets on an engine")
     ap.add_argument("datasets", nargs="*")
@@ -37,21 +57,20 @@ def build(argv=None):
     ap.add_argument("--no-fetch", action="store_true", help="assume the downloads are present")
     a = ap.parse_args(argv)
     cfg = stack.load()
+    engines = _engines(cfg, a.engine)
+    blocked = {} if a.no_fetch else _fetch_all(cfg, engines, a.datasets)
     failures = 0
-    for engine in _engines(cfg, a.engine):
-        datasets = _datasets(cfg, engine, a.datasets)
+    for engine in engines:
+        datasets = [d for d in _datasets(cfg, engine, a.datasets) if d not in blocked]
         if not datasets:
-            print(f"  . {engine.name}: no datasets configured")
+            print(f"  . {engine.name}: no datasets to build")
             continue
-        if not a.no_fetch:
-            print(f"== fetch: {' '.join(datasets)}")
-            if fetcher.main(datasets):
-                return 1
         for i, d in enumerate(datasets):
             print(f"== {engine.name} {d} ({i + 1}/{len(datasets)})")
             failures += engine.build(d, fresh=a.fresh and i == 0) or 0
-    print(f"build: {failures} failure(s)")
-    return 1 if failures else 0
+    _report_blocked(blocked)
+    print(f"build: {failures} failure(s)" + (f", {len(blocked)} dataset(s) not fetched" if blocked else ""))
+    return 1 if failures or blocked else 0
 
 
 def image(argv=None):
@@ -103,13 +122,25 @@ def main(argv=None):
     for name, datasets in cfg.engines.items():
         print(f"  {name}: {len(datasets)} dataset(s)")
     print(f"  consoles: {', '.join(cfg.consoles)}\n")
-    if build(["--no-fetch"] if a.no_fetch else []):
-        return 1
-    if image([]):
-        return 1
-    if a.up:
+    # everything is fetched once, up front; a dataset whose download is not in place is left out of
+    # every engine's build and image, and named at the end, rather than stopping the whole job
+    engines = _engines(cfg, None)
+    blocked = {} if a.no_fetch else _fetch_all(cfg, engines, [])
+    rc = 0
+    for engine in engines:
+        datasets = [d for d in cfg.datasets(engine.name) if d not in blocked]
+        if not datasets:
+            print(f"  . {engine.name}: no datasets to build")
+            continue
+        if build(["--no-fetch", "--engine", engine.name, *datasets]):
+            rc = 1
+            continue                    # an engine that did not build is not baked
+        if image(["--engine", engine.name, *datasets]):
+            rc = 1
+    _report_blocked(blocked)
+    if a.up and not rc:
         return up([])
-    return 0
+    return 1 if rc or blocked else rc
 
 
 def up(argv=None):

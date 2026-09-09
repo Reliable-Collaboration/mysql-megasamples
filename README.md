@@ -241,10 +241,16 @@ verification pass — and prints one permanent line per artifact; several run at
 that makes no progress for two minutes is retried over IPv4, which on this project's build machines
 is what a hang usually means, and the fallback is recorded with the file.
 
-One core dataset has to be supplied by hand: `lahman` (baseball, 27 tables) is published behind a
-SABR share link that no build can fetch. The fetch names the exact URL and the path to put it at
-(`downloads/lahman/lahman_1871-2025_csv.zip`), and verifies its checksum like every other artifact.
-Leave `lahman` out of your dataset list if you would rather skip it.
+Two core datasets cannot be fetched from their upstream today, and until the project's `data-v1`
+release assets are published the fetch says so and the build goes on without them: `lahman`
+(baseball, 27 tables) is published behind a SABR share link that no build can fetch, and
+`chicago_crimes` comes from a portal whose 2024 extract has changed since the bytes the image
+holds were pinned. Every artifact carries the release asset as a mirror, tried when the upstream
+bytes are not the pinned ones; the fetch names the exact URL and the path to put a file at
+(`downloads/lahman/lahman_1871-2025_csv.zip`, `downloads/chicago_crimes/crimes_2024.csv`) and
+verifies its checksum like every other artifact. A dataset whose download is not in place is left
+out of every engine's build and image and named at the end of `make run`, which then exits 1;
+leave it out of your dataset list if you would rather not see that.
 
 ## Building piece by piece
 

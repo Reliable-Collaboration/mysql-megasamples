@@ -1194,7 +1194,8 @@ artifacts:
   - id: chicago_crimes/crimes_2024.csv
     dataset: chicago_crimes
     url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2024&$order=id&$limit=300000"
-    mirrors: []
+    mirrors:
+    - https://github.com/Reliable-Collaboration/sql-megasamples/releases/download/data-v1/chicago-crimes-2024.csv   # the data-v1 release asset (release/data-v1/MANIFEST.md)
     sha256: "243fb805b601e958ce12461f32746187fe9588da21146e96ffdfe11bbac736b6"
     size_bytes: 74811578
     license: chicago-data-portal-terms
@@ -1202,7 +1203,8 @@ artifacts:
   - id: chicago_crimes/iucr.csv
     dataset: chicago_crimes
     url: "https://data.cityofchicago.org/api/views/c7ck-438e/rows.csv?accessType=DOWNLOAD"
-    mirrors: []
+    mirrors:
+    - https://github.com/Reliable-Collaboration/sql-megasamples/releases/download/data-v1/chicago-iucr.csv   # the data-v1 release asset (release/data-v1/MANIFEST.md)
     sha256: "257503d02bfbf487b8679c0aa1dfb45217fcd1867c909e2ed41cfdbf7e46f370"
     size_bytes: 24230
     license: chicago-data-portal-terms
@@ -1214,7 +1216,8 @@ artifacts:
   - id: stackexchange_beer/beer.stackexchange.com.7z
     dataset: stackexchange_beer
     url: https://archive.org/download/stackexchange/beer.stackexchange.com.7z
-    mirrors: []
+    mirrors:
+    - https://github.com/Reliable-Collaboration/sql-megasamples/releases/download/data-v1/beer.stackexchange.com.7z   # the data-v1 release asset (release/data-v1/MANIFEST.md)
     sha256: "29e057c640ad2792c8fc063d3ef52e6d2ce397db995a8ca5a06f1735a82d84c2"
     size_bytes: 4317770
     license: cc-by-sa-4-0
@@ -1226,7 +1229,8 @@ artifacts:
   - id: lahman/lahman_1871-2025_csv.zip
     dataset: lahman
     url: https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd
-    mirrors: []
+    mirrors:
+    - https://github.com/Reliable-Collaboration/sql-megasamples/releases/download/data-v1/lahman_1871-2025_csv.zip   # the data-v1 release asset (release/data-v1/MANIFEST.md)
     manual: true
     sha256: "2c293c7b4a4e3a86a494d5163c9f52958298d3e189c9ccea7dae507fcdb8de22"
     size_bytes: 42207356
@@ -1633,7 +1637,8 @@ artifacts:
   - id: stackexchange_dba/dba.stackexchange.com.7z
     dataset: stackexchange_dba
     url: https://archive.org/download/stackexchange/dba.stackexchange.com.7z
-    mirrors: []
+    mirrors:
+    - https://github.com/Reliable-Collaboration/sql-megasamples/releases/download/data-v1/dba.stackexchange.com.7z   # the data-v1 release asset (release/data-v1/MANIFEST.md)
     sha256: "4db21874f8bad5e6cfc4dcba9c6489bd27a571cbec62f402f0a7b7ebb702bc0e"
     size_bytes: 319345462
     license: cc-by-sa-4-0

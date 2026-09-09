@@ -3,7 +3,9 @@
 
   python3 -m megasamples fetch [dataset ...] [--id ID] [--jobs N] [--all] [--list] [--plain]
 
-Every artifact is fetched from its `url`, then from each `mirrors` entry in turn, with curl
+Every artifact is fetched from its `url`, then from each `mirrors` entry in turn (a source whose
+bytes are not the pinned ones gives way to the next, so a release asset can stand in for an upstream
+extract that has changed), with curl
 (`--fail --location --retry 5 -C -`); the file is verified against the manifest's `sha256` (and its
 `size_bytes` when recorded) and a `downloads/<id>.ok` marker records the verified digest. A file
 whose marker matches is never fetched again -- not on this run, not on the next -- so re-running a
@@ -147,36 +149,48 @@ def curl(url, dest, ipv4, job, stall, timeout=1800):
             return STALL_RC, "", "curl exceeded the local timeout"
 
 
-def download(job, dest_path, stall):
-    """Try url then mirrors, each over the flagged stack and then forced IPv4. Returns meta or raises."""
+def download_source(job, source, dest_path, stall, attempts):
+    """One source over the flagged stack and then forced IPv4. Returns meta, or None when it failed."""
     art = job.art
-    attempts, sources = [], [art["url"]] + list(art.get("mirrors") or [])
-    for source in sources:
-        for ipv4 in ([True] if art.get("ipv4_first") else [False, True]):
-            job.detail = f"{'IPv4 ' if ipv4 else ''}{source.split('//', 1)[-1].split('/', 1)[0]}"
-            job._window = (time.time(), os.path.getsize(dest_path) if os.path.exists(dest_path) else 0)
-            started = time.time()
-            rc, out, err = curl(source, dest_path, ipv4, job, stall)
-            attempts.append({"url": source, "ipv4": ipv4, "rc": rc, "detail": (err or out)[:200]})
-            if rc == 0:
-                return {"source": source, "ipv4_forced": ipv4, "curl": out,
-                        "seconds": round(time.time() - started, 2), "attempts": attempts}
-            if rc == STALL_RC and not ipv4:
-                job.detail = "stalled; retrying over IPv4"
-            if rc not in CURL_RETRYABLE and ipv4 is False:
-                break  # a 404 will not be fixed by changing address family; go to the next mirror
-    raise RuntimeError("all sources failed: " + "; ".join(
-        f"{a['url']} ipv4={a['ipv4']} rc={a['rc']} {a['detail']}" for a in attempts))
+    for ipv4 in ([True] if art.get("ipv4_first") else [False, True]):
+        job.detail = f"{'IPv4 ' if ipv4 else ''}{source.split('//', 1)[-1].split('/', 1)[0]}"
+        job._window = (time.time(), os.path.getsize(dest_path) if os.path.exists(dest_path) else 0)
+        started = time.time()
+        rc, out, err = curl(source, dest_path, ipv4, job, stall)
+        attempts.append({"url": source, "ipv4": ipv4, "rc": rc, "detail": (err or out)[:200]})
+        if rc == 0:
+            return {"source": source, "ipv4_forced": ipv4, "curl": out,
+                    "seconds": round(time.time() - started, 2), "attempts": list(attempts)}
+        if rc == STALL_RC and not ipv4:
+            job.detail = "stalled; retrying over IPv4"
+        if rc not in CURL_RETRYABLE and ipv4 is False:
+            break  # a 404 will not be fixed by changing address family; go to the next mirror
+    return None
+
+
+def verify_file(path, art):
+    """(digest, size), or a reason the file is not the pinned artifact."""
+    digest, size = sha256_of(path), os.path.getsize(path)
+    want_size = art.get("size_bytes") or 0
+    if want_size and size != want_size:
+        return None, f"size {size} != manifest size_bytes {want_size}"
+    if art.get("sha256") and digest != art["sha256"]:
+        return None, f"sha256 {digest} != manifest {art['sha256']}"
+    return (digest, size), None
 
 
 def fetch_one(job, dest_root, manifest_path, trust_first, stall):
-    """Fetch and verify one artifact, updating `job` as it goes. Returns the final state."""
+    """Returns "cached" | "manual" | "fetched"; raises with the reason otherwise.
+
+    The sources are the upstream `url` and then each `mirrors` entry: a source that cannot be
+    reached, or whose bytes are not the pinned ones (an upstream extract that has changed since it
+    was pinned), gives way to the next. A `manual` artifact is looked for on disk first; when it is
+    absent its mirrors are tried before the caller is told to obtain it."""
     art, art_id = job.art, job.id
     dest = os.path.join(dest_root, art_id)
     ok_marker = dest + ".ok"
-    expected = (art.get("sha256") or "").strip()
+    expected = art.get("sha256")
     os.makedirs(os.path.dirname(dest), exist_ok=True)
-    job.started = time.time()
 
     if os.path.exists(ok_marker) and os.path.exists(dest):
         recorded = open(ok_marker, encoding="utf-8").read().strip()
@@ -188,11 +202,7 @@ def fetch_one(job, dest_root, manifest_path, trust_first, stall):
             return "cached"
         job.detail = f"cached digest {recorded[:12]} != manifest {expected[:12]}, refetching"
 
-    if art.get("manual"):
-        if not os.path.exists(dest):
-            raise RuntimeError(f"maintainer-supplied and not present.\n"
-                               f"      Obtain it from: {art['url']}\n"
-                               f"      Then put it at: {dest}")
+    if art.get("manual") and os.path.exists(dest):
         job.state = "verifying"
         digest, size = sha256_of(dest, job), os.path.getsize(dest)
         want_size = art.get("size_bytes") or 0
@@ -209,44 +219,56 @@ def fetch_one(job, dest_root, manifest_path, trust_first, stall):
         job.verdict = "maintainer-supplied, " + ("verified" if expected else "digest recorded")
         return "manual"
 
+    sources = list(art.get("mirrors") or []) if art.get("manual") else [art["url"]] + list(art.get("mirrors") or [])
     tmp = dest + ".part"
-    if os.path.exists(tmp):
-        os.remove(tmp)
-    job.state = "downloading"
-    meta = download(job, tmp, stall)
-    job.state = "verifying"
-    job.size = os.path.getsize(tmp)
-    job._window = (time.time(), 0)
-    digest, size = sha256_of(tmp, job), os.path.getsize(tmp)
-
-    want_size = art.get("size_bytes") or 0
-    if want_size and size != want_size:
-        os.remove(tmp)
-        raise RuntimeError(f"size {size} != manifest size_bytes {want_size}")
-    if expected:
-        if digest != expected:
+    attempts, reasons = [], []
+    for source in sources:
+        if os.path.exists(tmp):
             os.remove(tmp)
-            raise RuntimeError(f"sha256 {digest} != manifest {expected}")
-        job.verdict = "verified"
-    elif trust_first:
-        wrote = write_manifest_sha(manifest_path, art_id, digest)
-        write_manifest_size(manifest_path, art_id, size)
-        job.verdict = "first fetch, digest recorded" if wrote else "first fetch, MANIFEST NOT UPDATED"
-        job.detail = f"VERIFICATION for knowledge/log.md: sha256 {digest} size {size}"
-    else:
-        os.remove(tmp)
-        raise RuntimeError(f"manifest has no sha256; rerun with MEGASAMPLES_TRUST_FIRST_FETCH=1 "
-                           f"to pin the observed digest {digest}")
+        job.state = "downloading"
+        meta = download_source(job, source, tmp, stall, attempts)
+        if meta is None:
+            last = attempts[-1] if attempts else {}
+            reasons.append(f"{source}: rc={last.get('rc')} {last.get('detail', '')}".rstrip())
+            continue
+        job.state = "verifying"
+        job.size = os.path.getsize(tmp)
+        job._window = (time.time(), 0)
+        verified, reason = verify_file(tmp, art)
+        if reason and (expected or (art.get("size_bytes") or 0)):
+            os.remove(tmp)
+            reasons.append(f"{source}: {reason}")
+            continue
+        digest, size = verified if verified else (sha256_of(tmp), os.path.getsize(tmp))
+        if expected:
+            job.verdict = "verified"
+        elif trust_first:
+            wrote = write_manifest_sha(manifest_path, art_id, digest)
+            write_manifest_size(manifest_path, art_id, size)
+            job.verdict = "first fetch, digest recorded" if wrote else "first fetch, MANIFEST NOT UPDATED"
+            job.detail = f"VERIFICATION for knowledge/log.md: sha256 {digest} size {size}"
+        else:
+            os.remove(tmp)
+            raise RuntimeError(f"manifest has no sha256; rerun with MEGASAMPLES_TRUST_FIRST_FETCH=1 "
+                               f"to pin the observed digest {digest}")
+        os.replace(tmp, dest)
+        open(ok_marker, "w", encoding="utf-8").write(digest + "\n")
+        meta.update({"id": art_id, "sha256": digest, "size_bytes": size,
+                     "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
+        with open(dest + ".meta.json", "w", encoding="utf-8") as fh:
+            json.dump(meta, fh, indent=2, sort_keys=True)
+        if meta["ipv4_forced"] and not art.get("ipv4_first"):
+            job.verdict += " (IPv4 fallback used)"
+        if source != art["url"]:
+            job.verdict += f" (from mirror {source.split('//', 1)[-1].split('/', 1)[0]})"
+        return "fetched"
 
-    os.replace(tmp, dest)
-    open(ok_marker, "w", encoding="utf-8").write(digest + "\n")
-    meta.update({"id": art_id, "sha256": digest, "size_bytes": size,
-                 "fetched_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())})
-    with open(dest + ".meta.json", "w", encoding="utf-8") as fh:
-        json.dump(meta, fh, indent=2, sort_keys=True)
-    if meta["ipv4_forced"] and not art.get("ipv4_first"):
-        job.verdict += " (IPv4 fallback used)"
-    return "fetched"
+    if art.get("manual"):
+        raise RuntimeError(f"maintainer-supplied and not present.\n"
+                           f"      Obtain it from: {art['url']}\n"
+                           f"      Then put it at: {dest}"
+                           + ("".join(f"\n      mirror tried: {r}" for r in reasons)))
+    raise RuntimeError("every source failed: " + "; ".join(reasons))
 
 
 # --- the monitor ------------------------------------------------------------------------------------
@@ -389,6 +411,36 @@ def fetch(arts, dest_root=DOWNLOADS, manifest_path=MANIFEST, jobs=3, stall=120, 
     print(f"fetch: {len(results['fetched'])} fetched ({human(sum(j.size for j in fetched))}), "
           f"{len(results['cached']) + len(results['manual'])} already verified, {len(results['failed'])} failed")
     return results, failures
+
+
+def blocked_datasets(failures, arts):
+    """{dataset: [reasons]} for the datasets a failed artifact belongs to, so a build can go on
+    with the others and say exactly what it left out."""
+    owner = {a["id"]: a.get("dataset") for a in arts}
+    out = {}
+    for f in failures:
+        art_id = f.split(":", 1)[0]
+        out.setdefault(owner.get(art_id) or art_id.split("/", 1)[0], []).append(f)
+    return out
+
+
+def fetch_for(datasets, manifest_path=MANIFEST, dest=DOWNLOADS, jobs=None, stall=120, plain=False):
+    """Fetch every artifact the named datasets own. Returns {dataset: [reasons]} for what could not be
+    fetched (empty when everything is verified), after printing the failures."""
+    arts = [x for x in load_manifest(manifest_path) if x.get("dataset") in set(datasets)]
+    if not arts:
+        print(f"  . nothing to fetch for {' '.join(datasets)}: no artifacts of their own in the manifest")
+        return {}
+    if not jobs:
+        from megasamples import config as stack
+        jobs = int(stack.load().downloads.get("concurrency", 3))
+    _results, failures = fetch(arts, dest, manifest_path, jobs=jobs, stall=stall, plain=plain)
+    blocked = blocked_datasets(failures, arts)
+    for dataset, reasons in sorted(blocked.items()):
+        print(f"  x {dataset}: cannot be built until its download is in place")
+        for r in reasons:
+            print(f"      {r}")
+    return blocked
 
 
 def main(argv=None):
