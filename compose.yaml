@@ -50,7 +50,13 @@ name: mysql-megasamples
 services:
   mysql:
     image: ${MEGASAMPLES_IMAGE:-mysql-megasamples:dev}
-    mem_limit: 2g
+    # 1 GB, with the buffer pool named explicitly. MySQL sizes its buffer pool from the *host's*
+    # memory rather than the container's, so a small limit without this makes it plan for more than
+    # it is allowed to have and be killed for it. 256 MB is ample for serving 21 sample databases
+    # to a few console clients; the dolt-megasamples experiment lowers this further by stopping the
+    # container outright while it loads, since nothing reads it during a load.
+    mem_limit: 1g
+    command: ["mysqld", "--innodb-buffer-pool-size=256M"]
     container_name: megasamples-mysql
     ports: ["127.0.0.1:3306:3306"]
     environment:

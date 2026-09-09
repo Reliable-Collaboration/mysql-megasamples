@@ -284,6 +284,17 @@ generated:
 
 `make help` lists every target.
 
+## Built on this
+
+[`dolt-megasamples`](https://github.com/Reliable-Collaboration/dolt-megasamples) loads these same 21
+databases into [Dolt](https://github.com/dolthub/dolt) — a SQL database with Git-like versioning —
+and measures what the same data costs in each engine, in disk, time and memory. It reads this image
+as its input and does not modify it.
+
+It is worth a look if you are choosing between the two, or if you want a worked example of what this
+corpus is useful for: 21 databases of varied shape and size, all licensed for redistribution, is a
+better basis for a storage comparison than any one dataset.
+
 ## How the repository is laid out
 
 | Path | What it holds |
