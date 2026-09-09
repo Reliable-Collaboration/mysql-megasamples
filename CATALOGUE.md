@@ -3,10 +3,11 @@
 
 # Catalogue
 
-**21 databases in the image** — 248 tables, 9,056,697 rows — plus the datasets that are opt-in, generated on your machine, or that you fetch yourself.
+**21 databases in the core image** — 248 tables, 9,056,697 rows — plus the datasets that are opt-in, generated on your machine, or that you fetch yourself.
 
-Generated from the registry inside the built MySQL image, from `datasets/*/dataset.yaml`, and from
-each dataset's `ports/not_ported.yaml`, so it cannot drift from what was actually built. `README.md`
+Generated from `datasets/*/dataset.yaml`, each core dataset's pinned `tests/expected_counts.yaml` (the
+counts every image is tested against) and each dataset's `ports/not_ported.yaml`, so it cannot drift
+from what is built. `README.md`
 explains the project; `datasets/<name>/PROVENANCE.md` has the full derivation of any one row.
 
 The **engines** column names the engines a dataset has been built and verified on. PostgreSQL and

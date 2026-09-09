@@ -116,17 +116,23 @@ def licence_obligations():
     return out
 
 
-def collect(container):
-    # Only the registry is used for the measured shape. `information_schema` sizes are not: InnoDB
-    # reports a slightly different data_length after a restart, which would make this file differ
-    # from itself on every run and `make check` fail for no reason. Table and row counts are baked
-    # at build time and do not move.
-    measured = {r[0]: r for r in query(container, "SELECT name, tier, JSON_LENGTH(row_counts), "
-                                                 "JSON_EXTRACT(licenses, '$[0]') FROM megasamples.datasets")}
-    rows_by_db = {r[0]: r[1] for r in query(container,
-             "SELECT name, (SELECT SUM(v) FROM JSON_TABLE(row_counts, '$.*' COLUMNS (v BIGINT PATH '$')) t) "
-             "FROM megasamples.datasets")}
+def pinned_counts(dataset):
+    """{table: rows} from tests/expected_counts.yaml: the counts every image is tested against, and
+    what the registry inside an image carries. Read from the repository, so the catalogue is the
+    same on a fresh clone as on a machine that has built the images."""
+    path = os.path.join(ROOT, "datasets", dataset, "tests", "expected_counts.yaml")
+    if not os.path.exists(path):
+        return None
+    counts = yaml.safe_load(open(path, encoding="utf-8")) or {}
+    return {t: int(n) for t, n in counts.items() if isinstance(n, int)}
 
+
+def collect(container=None):
+    # The shape comes from the pinned expectations, not from a running image: `information_schema`
+    # sizes move with every restart, and an image is not always on the machine. The core tier is
+    # what the default image bakes; every image is tested against these same counts.
+    from megasamples import datasets as inventory
+    core_names = set(inventory.core())            # what the default image bakes: the `core` selector
     out = []
     for d in sorted(os.listdir(os.path.join(ROOT, "datasets"))):
         spec_path = os.path.join(ROOT, "datasets", d, "dataset.yaml")
@@ -135,7 +141,7 @@ def collect(container):
         spec = yaml.safe_load(open(spec_path, encoding="utf-8")) or {}
         db = spec.get("database", d)
         append = bool(spec.get("append"))
-        m = measured.get(d)
+        counts = pinned_counts(d) if d in core_names else None
         ports_path = os.path.join(ROOT, "datasets", d, "ports", "not_ported.yaml")
         ports = yaml.safe_load(open(ports_path, encoding="utf-8")) or {} if os.path.exists(ports_path) else {}
         out.append(dict(
@@ -150,8 +156,8 @@ def collect(container):
             # accepted, which means nothing to someone looking at a list of databases
             what=spec.get("blurb") or record_description(spec.get("record", "")),
             append=append,
-            tables=int(m[2]) if m else None,
-            rows=int(rows_by_db[d]) if m and rows_by_db.get(d, "").isdigit() else None,
+            tables=len(counts) if counts else None,
+            rows=sum(counts.values()) if counts else None,
         ))
     return out
 
@@ -163,10 +169,11 @@ def render(items):
     total_rows = sum(i["rows"] or 0 for i in in_image)
 
     L = [GENERATED.rstrip(), "", "# Catalogue", "",
-         f"**{len(in_image)} databases in the image** — {total_tables:,} tables, {total_rows:,} rows — "
+         f"**{len(in_image)} databases in the core image** — {total_tables:,} tables, {total_rows:,} rows — "
          "plus the datasets that are opt-in, generated on your machine, or that you fetch yourself.",
-         "", "Generated from the registry inside the built MySQL image, from `datasets/*/dataset.yaml`, and from",
-         "each dataset's `ports/not_ported.yaml`, so it cannot drift from what was actually built. `README.md`",
+         "", "Generated from `datasets/*/dataset.yaml`, each core dataset's pinned `tests/expected_counts.yaml` (the",
+         "counts every image is tested against) and each dataset's `ports/not_ported.yaml`, so it cannot drift",
+         "from what is built. `README.md`",
          "explains the project; `datasets/<name>/PROVENANCE.md` has the full derivation of any one row.",
          "", "The **engines** column names the engines a dataset has been built and verified on. PostgreSQL and",
          "SQLite are ports of the MySQL corpus with the same rows, checked by the same content digests;",
@@ -266,7 +273,7 @@ def main(argv=None):
     open(OUT, "w", encoding="utf-8").write(text)
     splice_readme(items, check=False)
     measured = sum(1 for i in items if i["tables"] is not None)
-    print(f"  . wrote CATALOGUE.md: {len(items)} datasets, {measured} measured from the image")
+    print(f"  . wrote CATALOGUE.md: {len(items)} datasets, {measured} with pinned table and row counts")
     return 0
 
 
