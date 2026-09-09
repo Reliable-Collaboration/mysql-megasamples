@@ -59,6 +59,21 @@ class MySQL(Engine):
         tables = {r[0] for r in server.rows(f"SELECT table_name FROM information_schema.tables WHERE table_schema = '{schema}'")}
         return all(t in tables for t in expected_tables(dataset))
 
+    def ensure(self, dataset):
+        """The dataset is in the build server when this returns 0: already there, restored from a
+        complete dump (what `make image` leaves behind after removing the server), or built."""
+        from megasamples.engines import expected_tables
+        from megasamples.engines.mysql import dump as dumper, restore as restorer
+        if self.holds(dataset):
+            return 0
+        schema = inventory.load(dataset)["database"]
+        if not inventory.load(dataset).get("append") and dumper.complete(schema, expected_tables(dataset)):
+            print(f"  . {dataset}: not in the MySQL build server; restoring it from its dump")
+            restorer.restore(dataset)
+            return 0
+        print(f"  . {dataset}: not in the MySQL build server yet; building it there first (the hub)")
+        return self.build(dataset)
+
     def image_build(self, datasets, keep=False, threads=4, from_dumps=False):
         dumps = os.path.join(engine_build_dir(self.name), "dumps")
         databases = unique_databases(datasets)

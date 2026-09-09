@@ -13,7 +13,7 @@ there (ARCHITECTURE.md section 3).
 """
 import argparse, os, subprocess, sys
 
-from megasamples import compose, config as stack, console_page, fetch as fetcher, engines as engine_registry
+from megasamples import workspace, compose, config as stack, console_page, fetch as fetcher, engines as engine_registry
 from megasamples.paths import COMPOSE, ROOT
 
 
@@ -135,8 +135,13 @@ def main(argv=None):
         if build(["--no-fetch", "--engine", engine.name, *datasets]):
             rc = 1
             continue                    # an engine that did not build is not baked
-        if image(["--engine", engine.name, *datasets]):
+        # the build servers stay up across engines: the ports read the hub, and every engine's
+        # image is baked from what one MySQL build loaded
+        if image(["--engine", engine.name, "--keep", *datasets]):
             rc = 1
+    if not cfg.build.get("keep_build_server"):
+        print("  . removing the build servers; set build.keep_build_server to keep them next time")
+        workspace.clean()
     _report_blocked(blocked)
     if a.up and not rc:
         return up([])

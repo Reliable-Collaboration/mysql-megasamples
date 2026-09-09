@@ -29,11 +29,9 @@ class Postgres(Engine):
 
     def build(self, dataset, fresh=False):
         from megasamples.engines import get
-        if not get("mysql").holds(dataset):
-            print(f"  . {dataset}: not in the MySQL build server yet; building it there first (the hub)")
-            rc = get("mysql").build(dataset)
-            if rc:
-                return rc
+        rc = get("mysql").ensure(dataset)          # the hub holds it, is restored from its dump, or builds it
+        if rc:
+            return rc
         if fresh:
             server.start(fresh=True)
         port.write_files(dataset)
