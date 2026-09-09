@@ -12,7 +12,7 @@ status: stable
 trust: verified
 generated:
   by: claude-code/claude-fable-5-1
-  at: "2026-09-02T21:00:18Z"
+  at: "2026-09-09T19:15:22Z"
 verified:
 - by: claude-code/claude-fable-5-1
   at: "2026-09-02T21:00:18Z"
@@ -50,3 +50,14 @@ sources:
 # Limits
 * The builder that runs SQL Server or Oracle cannot be a Dockerfile stage (no Docker-in-Docker); those run as Compose services on the host and only their exported TSV/dump directories enter the build context ([orchestration decision](/decisions/build-orchestration.md)).
 * Base is `microdnf`-only; extra tools (python, duckdb, curl) live in the separate `loader` image, never in the final stage.
+
+# A recreated container keeps its anonymous data volume (observed 2026-09-09)
+The official `postgres` and `mysql` images declare a `VOLUME` for their data directory. When an
+engine's image is rebuilt under the same tag and `docker compose up` recreates the container, Compose
+keeps the container's anonymous volume unless told otherwise, so the old data directory shadows the
+new image's: two rebaked PostgreSQL images whose own tests passed on fresh volumes kept answering
+with the previous cluster in the stack (a registry database without the grants the new init file
+carried), until the container was recreated with `--renew-anon-volumes`. `megasamples up` now
+recreates an engine whose container is not on the current image with `--force-recreate
+--renew-anon-volumes`. A BuildKit `CACHED` line on the init directory's `COPY` step was seen during
+the investigation and suspected first; it was not the cause, and no stale layer content was shown.

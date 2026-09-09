@@ -1,29 +1,21 @@
 #!/usr/bin/env python3
-"""S10: the browsing console starts and shows what is actually loaded.
+"""S10: the browsing console starts and shows what is actually loaded, for every engine in the stack.
 
   python3 -m megasamples test-console
 
-Deliberately shallow: it catches a withdrawn image tag, a console that no
-longer starts, and a landing page that has drifted from the registry. It does not try to drive three
-web applications.
+Deliberately shallow: it catches a withdrawn image tag, a console that no longer starts, a landing
+page that has drifted from the registries, and an account whose privileges are not what the page
+says. It does not try to drive four web applications.
 """
-import http.cookiejar, json, subprocess, sys, urllib.error, urllib.request
+import http.cookiejar, json, os, subprocess, sys, urllib.error, urllib.request
 
-ENDPOINTS = [("landing page", "http://127.0.0.1:8080/"),
-             ("phpMyAdmin", "http://127.0.0.1:8081/"),
-             ("Adminer", "http://127.0.0.1:8082/"),
-             ("DbGate", "http://127.0.0.1:8083/"),
-             ("CloudBeaver", "http://127.0.0.1:8084/")]
-CONTAINER = "megasamples-mysql"
+from megasamples import config as stack, consoles as console_registry, engines as engine_registry
+from megasamples.paths import ROOT
 
 
 def passwords():
-    """Whatever compose is actually using: .env if there is one, else the environment, else the
-    image's baked defaults. Mirrors megasamples/console_page.py."""
-    import os
-    root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     found = {}
-    env_file = os.path.join(root, ".env")
+    env_file = os.path.join(ROOT, ".env")
     if os.path.exists(env_file):
         for line in open(env_file, encoding="utf-8"):
             line = line.strip()
@@ -35,16 +27,17 @@ def passwords():
             found.get("ADMIN_PASSWORD") or os.environ.get("ADMIN_PASSWORD") or "admin")
 
 
-PASSWORDS = passwords()
+def get(url, timeout=20):
+    with urllib.request.urlopen(url, timeout=timeout) as r:
+        return r.status, r.read().decode("utf-8", "replace")
 
 
-def cloudbeaver_ready(timeout=20):
-    """CloudBeaver answers on 8084 even while it is showing its setup wizard, so HTTP 200 proves
-    nothing. Ask it whether it is still in configuration mode and whether an anonymous visitor can
-    actually see the connection -- the two things that silently regress."""
-    gql = "http://127.0.0.1:8084/api/gql"
-    opener = urllib.request.build_opener(
-        urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+def cloudbeaver_ready(port, wanted, timeout=20):
+    """CloudBeaver answers even while it shows its setup wizard, so HTTP 200 proves nothing. Ask
+    whether it is still in configuration mode and whether an anonymous visitor can open each
+    connection -- the two things that silently regress."""
+    gql = f"http://127.0.0.1:{port}/api/gql"
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
 
     def call(query):
         req = urllib.request.Request(gql, data=json.dumps({"query": query}).encode(),
@@ -53,7 +46,7 @@ def cloudbeaver_ready(timeout=20):
             return json.load(r).get("data") or {}
 
     def connect(conn_id):
-        q = ('mutation{initConnection(projectId:"g_GlobalConfiguration",id:"%s"){connected}}' % conn_id)
+        q = 'mutation{initConnection(projectId:"g_GlobalConfiguration",id:"%s"){connected}}' % conn_id
         return (call(q).get("initConnection") or {}).get("connected")
 
     call("mutation{openSession{valid}}")
@@ -61,87 +54,101 @@ def cloudbeaver_ready(timeout=20):
     problems = []
     if d.get("serverConfig", {}).get("configurationMode"):
         problems.append("CloudBeaver is in configuration mode: it is showing its setup wizard")
-
     ids = {c["id"] for c in d.get("userConnections") or []}
-    for wanted in ("megasamples-demo", "megasamples-admin"):
-        if wanted not in ids:
-            problems.append(f"CloudBeaver does not offer the {wanted} connection anonymously")
-        elif not connect(wanted):
-            # a connection that lists but will not open is the caching_sha2 public-key trap:
-            # the JDBC driver needs allowPublicKeyRetrieval on a cold server credential cache
-            problems.append(f"CloudBeaver lists {wanted} but cannot connect with it")
+    for w in wanted:
+        if w not in ids:
+            problems.append(f"CloudBeaver does not offer the {w} connection anonymously")
+        elif not connect(w):
+            problems.append(f"CloudBeaver lists {w} but cannot connect with it")
     return problems
 
 
-def get(url, timeout=20):
-    with urllib.request.urlopen(url, timeout=timeout) as r:
-        return r.status, r.read().decode("utf-8", "replace")
+def engine_checks(engine, cfg, demo_pw, admin_pw, failures):
+    """demo reads and cannot write; admin writes -- on the engine's own client, through its container."""
+    c = engine.container
+    if engine.name == "mysql":
+        def run(user, pw, sql):
+            return subprocess.run(["docker", "exec", c, "mysql", f"-u{user}", f"-p{pw}", "-N", "--batch", "-e", sql],
+                                  capture_output=True, text=True).returncode
+        db = "sakila" if "sakila" in cfg.datasets("mysql") else cfg.datasets("mysql")[0]
+        ok_read = run("demo", demo_pw, f"SELECT 1 FROM information_schema.tables WHERE table_schema='{db}' LIMIT 1") == 0
+        can_write = run("demo", demo_pw, f"CREATE TABLE {db}.t_console_probe (i INT)") == 0
+        if can_write:
+            run("admin", admin_pw, f"DROP TABLE IF EXISTS {db}.t_console_probe")
+        admin_ok = run("admin", admin_pw, f"CREATE TABLE {db}.t_console_probe (i INT); DROP TABLE {db}.t_console_probe") == 0
+    elif engine.name == "postgres":
+        def run(user, pw, sql, db="megasamples"):
+            return subprocess.run(["docker", "exec", "-e", f"PGPASSWORD={pw}", c, "psql", "-h", "127.0.0.1", "-U", user,
+                                   "-d", db, "-v", "ON_ERROR_STOP=1", "-tAc", sql], capture_output=True, text=True).returncode
+        ok_read = run("demo", demo_pw, "SELECT count(*) FROM datasets") == 0
+        can_write = run("demo", demo_pw, "CREATE TABLE t_console_probe (i int)") == 0
+        if can_write:
+            run("admin", admin_pw, "DROP TABLE IF EXISTS t_console_probe")
+        admin_ok = run("admin", admin_pw, "CREATE TABLE t_console_probe (i int); DROP TABLE t_console_probe") == 0
+    else:
+        ok_read = subprocess.run(["docker", "exec", c, "sqlite3", "/data/megasamples.sqlite", "SELECT count(*) FROM datasets"],
+                                 capture_output=True).returncode == 0
+        can_write, admin_ok = False, True
+    if not ok_read:
+        failures.append(f"{engine.title}: the demo account cannot read with the configured password")
+    if can_write:
+        failures.append(f"{engine.title}: the demo account can write; it is meant to be read-only")
+    if not admin_ok:
+        failures.append(f"{engine.title}: the admin account cannot write")
+    if ok_read and not can_write and admin_ok:
+        print(f"  . {engine.title}: demo reads and cannot write; admin writes" if engine.port else f"  . {engine.title}: files readable")
 
 
 def main(argv=None):
+    cfg = stack.load()
+    demo_pw, admin_pw = passwords()
     failures, page = [], ""
-    for name, url in ENDPOINTS:
+    for name in cfg.consoles:
+        console = console_registry.get(name)
+        if console.engines and not any(e in cfg.engines for e in console.engines):
+            continue
+        url = f"http://127.0.0.1:{cfg.ports[name]}/"
         try:
             status, body = get(url)
             if status != 200:
-                failures.append(f"{name}: HTTP {status}")
+                failures.append(f"{console.title}: HTTP {status}")
             else:
-                print(f"  . {name:<14} HTTP 200 ({len(body):,} bytes)")
-            if name == "landing page":
+                print(f"  . {console.title:<14} HTTP 200 ({len(body):,} bytes)")
+            if name == "landing":
                 page = body
         except (urllib.error.URLError, OSError) as exc:
-            failures.append(f"{name}: {exc}")
-            print(f"  x {name:<14} {exc}")
+            failures.append(f"{console.title}: {exc}")
+            print(f"  x {console.title:<14} {exc}")
 
-    p = subprocess.run(["docker", "exec", CONTAINER, "mysql", "-udemo", f"-p{PASSWORDS[0]}",
-                        "-N", "--batch",
-                        "-e", "SELECT name FROM megasamples.datasets ORDER BY name"],
-                       capture_output=True, text=True)
-    if p.returncode != 0:
-        failures.append(f"could not read the registry: {p.stderr.strip()[:150]}")
-    else:
-        names = [n for n in p.stdout.split() if n]
+    for name in cfg.engines:
+        engine = engine_registry.get(name)
+        try:
+            names = [r[0] for r in engine.registry_rows(engine.container)]
+        except Exception as exc:  # noqa: BLE001
+            failures.append(f"{engine.title}: could not read the registry: {str(exc)[:150]}")
+            continue
         missing = [n for n in names if f">{n}<" not in page]
         if missing:
-            failures.append(f"the landing page omits {len(missing)} database(s): "
-                            + ", ".join(missing[:6]))
+            failures.append(f"the landing page omits {len(missing)} {engine.title} database(s): " + ", ".join(missing[:6]))
         else:
-            print(f"  . the landing page names all {len(names)} databases in the registry")
+            print(f"  . the landing page names all {len(names)} {engine.title} databases in the registry")
+        engine_checks(engine, cfg, demo_pw, admin_pw, failures)
 
-    try:
-        problems = cloudbeaver_ready()
-        failures += problems
-        if not problems:
-            print("  . CloudBeaver is configured and shows the connection anonymously")
-    except (urllib.error.URLError, OSError, ValueError, KeyError) as exc:
-        failures.append(f"CloudBeaver: could not check its state: {exc}")
+    if "cloudbeaver" in cfg.consoles:
+        wanted = [f"{e}-{a}" for e in cfg.engines if e in ("mysql", "postgres") for a in ("demo", "admin")]
+        wanted += [f"sqlite-{d}" for d in ([] if "sqlite" not in cfg.engines else
+                                          [__import__("megasamples.datasets", fromlist=["load"]).load(x)["database"] for x in cfg.datasets("sqlite")[:2]])]
+        try:
+            problems = cloudbeaver_ready(cfg.ports["cloudbeaver"], wanted)
+            failures += problems
+            if not problems:
+                print(f"  . CloudBeaver is configured and opens {len(wanted)} connection(s) anonymously")
+        except (urllib.error.URLError, OSError, ValueError, KeyError) as exc:
+            failures.append(f"CloudBeaver: could not check its state: {exc}")
 
-    # both accounts must be real, and must differ: read-only is a claim the page makes, so test it
-    def mysql(user, password, sql):
-        return subprocess.run(["docker", "exec", CONTAINER, "mysql", f"-u{user}", f"-p{password}",
-                               "-N", "--batch", "-e", sql], capture_output=True, text=True)
-
-    demo_pw, admin_pw = PASSWORDS
-    if mysql("demo", demo_pw, "SELECT 1").returncode != 0:
-        failures.append("the demo account cannot log in with the configured password")
-    elif mysql("demo", demo_pw, "CREATE TABLE sakila.t_console_probe (i INT)").returncode == 0:
-        mysql("admin", admin_pw, "DROP TABLE IF EXISTS sakila.t_console_probe")
-        failures.append("the demo account can write: it is meant to be read-only")
-    else:
-        print("  . demo can read and cannot write")
-
-    w = mysql("admin", admin_pw, "CREATE TABLE sakila.t_console_probe (i INT); "
-                                 "DROP TABLE sakila.t_console_probe")
-    if w.returncode != 0:
-        failures.append(f"the admin account cannot write: {w.stderr.strip()[:120]}")
-    else:
-        print("  . admin can write")
-
-    # the credentials have to be on the page: Adminer's login form is not preset
     for account in ("demo", "admin"):
         if account not in page:
-            failures.append(f"the landing page does not state the {account} account, "
-                            "and Adminer's login form needs it")
+            failures.append(f"the landing page does not state the {account} account, and Adminer's login form needs it")
 
     for f in failures:
         print(f"  x {f}")

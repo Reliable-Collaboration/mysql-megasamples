@@ -8,7 +8,8 @@ import importlib
 
 from megasamples.engines.base import Engine  # noqa: F401  (re-exported)
 
-_MODULES = {"mysql": "megasamples.engines.mysql"}
+_MODULES = {"mysql": "megasamples.engines.mysql", "postgres": "megasamples.engines.postgres",
+            "sqlite": "megasamples.engines.sqlite"}
 _instances = {}
 
 

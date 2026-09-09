@@ -136,9 +136,12 @@ def collect(container):
         db = spec.get("database", d)
         append = bool(spec.get("append"))
         m = measured.get(d)
+        ports_path = os.path.join(ROOT, "datasets", d, "ports", "not_ported.yaml")
+        ports = yaml.safe_load(open(ports_path, encoding="utf-8")) or {} if os.path.exists(ports_path) else {}
         out.append(dict(
             name=d,
             database=db,
+            ports={e: len(v or []) for e, v in ports.items()},
             tier=spec.get("tier", "?"),
             licences=spec.get("licenses", []) or [],
             record=spec.get("record", ""),
@@ -162,17 +165,21 @@ def render(items):
     L = [GENERATED.rstrip(), "", "# Catalogue", "",
          f"**{len(in_image)} databases in the image** — {total_tables:,} tables, {total_rows:,} rows — "
          "plus the datasets that are opt-in, generated on your machine, or that you fetch yourself.",
-         "", "Generated from the registry inside the built image and from `datasets/*/dataset.yaml`, so",
-         "it cannot drift from what was actually built. `README.md` explains the project;",
-         "`datasets/<name>/PROVENANCE.md` has the full derivation of any one row.", ""]
+         "", "Generated from the registry inside the built MySQL image, from `datasets/*/dataset.yaml`, and from",
+         "each dataset's `ports/not_ported.yaml`, so it cannot drift from what was actually built. `README.md`",
+         "explains the project; `datasets/<name>/PROVENANCE.md` has the full derivation of any one row.",
+         "", "The **engines** column names the engines a dataset has been built and verified on. PostgreSQL and",
+         "SQLite are ports of the MySQL corpus with the same rows, checked by the same content digests;",
+         "\"not ported\" counts the views, routines, triggers and full-text or spatial indexes that engine does",
+         "not carry, listed by name in `datasets/<name>/ports/not_ported.yaml`.", ""]
 
     for tier in ("core", "core-medium", "extended", "generated", "user-fetched", "not-shipped"):
         group = [i for i in items if i["tier"] == tier]
         if not group:
             continue
         L += [f"## {tier} — {TIER_NOTE.get(tier, '')}", "",
-              "| database | what it is | tables | rows | licence | asks of a redistributor |",
-              "|---|---|---:|---:|---|---|"]
+              "| database | what it is | tables | rows | engines | licence | asks of a redistributor |",
+              "|---|---|---:|---:|---|---|---|"]
         for i in group:
             lic = ", ".join(f"[{x}](knowledge/licenses/{x}.md)" for x in i["licences"]) or "—"
             parts = [p for x in i["licences"] for p in asks.get(x, "").split(", ") if p]
@@ -184,7 +191,11 @@ def render(items):
             r = f"{i['rows']:,}" if i["rows"] else "—"
             label = f"`{i['name']}`" + (f"<br>appends to `{i['database']}`" if i["append"] else "")
             what = i["what"].replace("|", "\\|")
-            L.append(f"| {label} | {what} | {t} | {r} | {lic} | {ask} |")
+            engines = ["MySQL"] if i["tables"] is not None else []
+            for e, title in (("postgres", "PostgreSQL"), ("sqlite", "SQLite")):
+                if e in i["ports"]:
+                    engines.append(f"{title} ({i['ports'][e]} not ported)" if i["ports"][e] else title)
+            L.append(f"| {label} | {what} | {t} | {r} | {' · '.join(engines) or '—'} | {lic} | {ask} |")
         L.append("")
 
     L += ["TPC-C is generated too, by `make load-tpcc`, but has no `datasets/*/dataset.yaml` and so no",

@@ -40,10 +40,10 @@ class MySQL(Engine):
     def build(self, dataset, fresh=False):
         stager.stage(dataset)
         loader.main([dataset] + (["--fresh"] if fresh else []))
-        return verifier.main([dataset])
+        return verifier.verify(dataset, engine="mysql")
 
     def verify(self, dataset, stages=None, pin=False):
-        return verifier.main([dataset] + list(stages or []) + (["--pin"] if pin else []))
+        return verifier.verify(dataset, stages, engine="mysql", pin=pin)
 
     def image_build(self, datasets, keep=False, threads=4, from_dumps=False):
         dumps = os.path.join(engine_build_dir(self.name), "dumps")
@@ -60,7 +60,7 @@ class MySQL(Engine):
         shutil.rmtree(context, ignore_errors=True)
         for d in datasets:
             link_tree(os.path.join(dumps, d), os.path.join(context, "dumps", d))
-        registry.main(list(datasets) + ["--out", os.path.join(context, "registry.sql")])
+        registry.main(list(datasets) + ["--dialect", "mysql", "--out", os.path.join(context, "registry.sql")])
         cmd = ["docker", "build", "-f", os.path.join(engine_dir(self.name), "Dockerfile"),
                "-t", self.image, ROOT]
         print(f"  . docker build -t {self.image} ({len(datasets)} datasets from {rel(context)})")

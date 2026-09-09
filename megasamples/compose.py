@@ -47,7 +47,10 @@ def console_service(console, cfg, engines):
         service["depends_on"] = {e.name: {"condition": "service_healthy"} for e in present}
     env = {}
     for e in present:
-        env.update(e.console_environment(console.name, cfg))
+        extra = e.console_environment(console.name, cfg)
+        if "CONNECTIONS" in extra and "CONNECTIONS" in env:
+            extra["CONNECTIONS"] = env["CONNECTIONS"] + "," + extra["CONNECTIONS"]
+        env.update(extra)
     if console.name == "landing":
         env = {}
     if env:
@@ -66,6 +69,11 @@ def render(cfg):
             continue
         services[c.name] = console_service(c, cfg, engines)
     doc = {"name": PROJECT, "services": services}
+    if "sqlite" in services:
+        doc["volumes"] = {"megasamples-sqlite": {}}
+        for name in cfg.consoles:
+            if name in services and name != "sqlite" and "sqlite" in console_registry.get(name).engines:
+                services[name].setdefault("volumes", []).append("megasamples-sqlite:/data:ro")
     return HEADER + yaml.safe_dump(doc, sort_keys=False, default_flow_style=False, width=100)
 
 

@@ -8,7 +8,7 @@ export SF                      # scale factor for the generated benchmarks: make
 
 .PHONY: help configure list list-core list-quick fetch build image test-image run up down status clean clean-all \
         compose console-page catalogue provenance check okf-check audit-assets prepub-check \
-        release release-check test-console build-server build-server-stop loader-image \
+        release release-check test-console build-server build-server-stop restore loader-image \
         wwi-export verify-oracle load-citibike load-divvy load-tpcc bench $(DATASETS)
 
 help:
@@ -27,12 +27,13 @@ help:
 	@echo "                        (FROM_DUMPS=1: from the dumps already built, without the build server)"
 	@echo "  make test-image [ENGINE=mysql]      the image-level tests"
 	@echo "  make test-console     the consoles are up and the accounts behave"
+	@echo "  make restore [D=...]  reload datasets into the MySQL build server from their dumps"
 	@echo ""
 	@echo "Documents and checks:"
 	@echo "  make check            the local gate: bundle validation + generated files up to date"
 	@echo "  make catalogue | provenance         regenerate CATALOGUE.md | LICENSE, PROVENANCE, NOTICE files"
 	@echo "  make audit-assets | prepub-check    nothing unredistributable is shipped | the release checklist"
-	@echo "  make release          stage the release assets (staging only; never publishes)"
+	@echo "  make release [SET=sqlite]   stage the release assets (staging only; never publishes)"
 	@echo ""
 	@echo "Source-side tools (each prints its licence gate and refuses until you accept):"
 	@echo "  make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server EULA)"
@@ -64,11 +65,12 @@ check:          ; @$(MS) check
 okf-check:      ; @$(MS) okf-check --bundle knowledge && $(MS) okf-fix-quotes --bundle knowledge --check
 audit-assets:   ; @$(MS) audit-assets
 prepub-check:   ; @$(MS) prepub-check
-release:        ; @$(MS) release stage
-release-check:  ; @$(MS) release check
+release:        ; @$(MS) release stage $(if $(SET),--set $(SET),)
+release-check:  ; @$(MS) release check $(if $(SET),--set $(SET),)
 test-console:   ; @$(MS) test-console
 build-server:   ; @$(MS) build-server start
 build-server-stop: ; @$(MS) build-server stop
+restore:        ; @$(MS) restore $(D)
 bench:          ; @$(MS) bench --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)
 
 # the build-time loader image: compiles SSB's dbgen and carries sysbench for TPC-C. Nothing from it

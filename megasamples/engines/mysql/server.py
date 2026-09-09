@@ -69,11 +69,13 @@ def stop():
     run(["docker", "rm", "-f", NAME])
 
 
-def sql(statement, database=None, table=False, check=True):
+def sql(statement, database=None, table=False, check=True, raw=True):
+    """Run a statement through the mysql client. `raw=False` keeps the client's batch escaping
+    (\\n, \\t, \\\\, \\0 inside values), so a value holding a newline or a tab cannot break a row."""
     cmd = ["docker", "exec", "-i", NAME, "mysql", f"-p{PW}", "-uroot",
            "--default-character-set=utf8mb4", "--local-infile=1"]
     if not table:
-        cmd += ["-N", "--batch", "--raw"]
+        cmd += ["-N", "--batch"] + (["--raw"] if raw else [])
     else:
         cmd += ["--table"]
     if database:
@@ -102,6 +104,31 @@ def sql_file(path, database=None):
 def rows(statement, database=None):
     out = sql(statement, database=database)
     return [line.split("\t") for line in out.splitlines() if line]
+
+
+BATCH_UNESCAPE = {"n": "\n", "t": "\t", "\\": "\\", "0": "\x00"}
+
+
+def unescape_batch(field):
+    if "\\" not in field:
+        return field
+    out, i = [], 0
+    while i < len(field):
+        c = field[i]
+        if c == "\\" and i + 1 < len(field):
+            out.append(BATCH_UNESCAPE.get(field[i + 1], field[i + 1]))
+            i += 2
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+
+def rows_escaped(statement, database=None):
+    """Rows whose values may hold newlines or tabs: the client escapes them, and they are unescaped
+    here, so every row is one line and every field one cell."""
+    out = sql(statement, database=database, raw=False)
+    return [[unescape_batch(f) for f in line.split("\t")] for line in out.splitlines() if line]
 
 
 def main(argv=None):

@@ -29,7 +29,10 @@ def column_sql(name, data_type):
         expr = f"LOWER(HEX({q}))"
     elif t in ("geometry", "point", "linestring", "polygon", "multipoint",
                "multilinestring", "multipolygon", "geometrycollection"):
-        expr = f"LOWER(HEX(ST_AsBinary({q})))"
+        # standard WKB, X = longitude first. MySQL's default axis order for a geographic SRS (4326)
+        # is latitude first, which is not what its stored bytes hold nor what any other engine
+        # expects; long-lat is both, so every engine hashes the same bytes (verified 2026-09-09).
+        expr = f"LOWER(HEX(ST_AsBinary({q}, 'axis-order=long-lat')))"
     elif t == "char":
         expr = f"RTRIM({q})"          # CHAR is space-padded on the source side
     else:

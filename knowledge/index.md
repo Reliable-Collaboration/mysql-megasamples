@@ -11,9 +11,9 @@ Sample databases for MySQL, PostgreSQL and SQLite: the research trail and the de
 
 ## Directories
 * [datasets/](datasets/index.md) - 34 concepts
-* [decisions/](decisions/index.md) - 35 concepts
+* [decisions/](decisions/index.md) - 38 concepts
 * [licenses/](licenses/index.md) - 24 concepts
 * [questions/](questions/index.md) - 38 concepts
 * [runbooks/](runbooks/index.md) - 4 concepts
-* [sources/](sources/index.md) - 375 concepts
-* [tools/](tools/index.md) - 28 concepts
+* [sources/](sources/index.md) - 378 concepts
+* [tools/](tools/index.md) - 30 concepts

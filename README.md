@@ -7,20 +7,24 @@ consoles that come up beside them, already connected, so you can start looking a
 configuring clients. You choose the engines, the databases and the consoles; one file holds the
 choice and one command builds it.
 
-| engine | what ships | status |
+| engine | what ships | size |
 |---|---|---|
-| **MySQL 9.7 LTS** | `sql-megasamples-mysql`, an image with the databases baked into its data directory | built and tested |
-| **PostgreSQL** | an image, ported from the verified MySQL corpus | in progress — [`PLAN.md`](PLAN.md) |
-| **SQLite** | one file per database, plus an image carrying the `sqlite3` CLI | in progress — [`PLAN.md`](PLAN.md) |
+| **MySQL 9.7.2** | `sql-megasamples-mysql`: an image with the databases baked into its data directory | 3.5 GB image |
+| **PostgreSQL 18.6** | `sql-megasamples-postgres`: an image with the databases in its cluster, ported from the verified MySQL corpus | 4.0 GB image (2.5 GB data directory) |
+| **SQLite 3.49** | `sql-megasamples-sqlite`: one `.sqlite` file per database with the `sqlite3` shell beside them, also staged as release assets | 1.2 GB image (867 MB of files) |
+
+Every dataset is built and verified on all three engines. PostgreSQL and SQLite are **ports of the
+MySQL corpus**: the same rows, proved by the same per-table content digests, foreign-key checks and
+index parity that MySQL is checked against — and produced by one deterministic program, never by hand.
 
 Every dataset keeps its own upstream licence — this project never places a single licence over the
 data. [`CATALOGUE.md`](CATALOGUE.md) lists all 38 datasets with what each licence asks of you, and
 [Licensing](#licensing) is worth reading before you publish anything built from this.
 
-**Status: not published yet.** There is no image to `docker pull`; you build it locally, which is
-what the rest of this page is about. [`ARCHITECTURE.md`](ARCHITECTURE.md) describes how the pieces
-fit, [`PLAN.md`](PLAN.md) what is being built next, and [`knowledge/`](knowledge/index.md) is the
-evidence bundle behind every claim in both.
+**Status: not published yet.** There is no image to `docker pull`; you build them locally, which
+is what the rest of this page is about. [`ARCHITECTURE.md`](ARCHITECTURE.md) describes how the
+pieces fit, [`PLAN.md`](PLAN.md) what is being built next, and [`knowledge/`](knowledge/index.md)
+is the evidence bundle behind every claim in both.
 
 ## Quick start
 
@@ -38,10 +42,11 @@ command reads. You can also copy [`megasamples.example.yaml`](megasamples.exampl
 it, or run with no file at all: the built-in default is MySQL with the 21 core databases and the
 four consoles.
 
-You need **Docker** (Desktop or Engine), **Python 3.11+** with [`uv`](https://docs.astral.sh/uv/),
-and room: the core tier is 1.4 GB of downloads, a build server holding a copy of the data, and a
-3.5 GB MySQL image. A full core build loads nine million rows and is not a five-minute job; the
-15-dataset **quick** subset (196 MB of downloads) builds in minutes.
+You need **Docker** (Desktop or Engine), **Python 3.14+** with [`uv`](https://docs.astral.sh/uv/),
+and room: the core tier is 1.4 GB of downloads, two build servers holding a copy of the data, and
+up to 8.7 GB of images for the three engines. A full core build converts and loads nine million rows
+and is not a five-minute job; the 15-dataset **quick** subset (196 MB of downloads) builds in
+minutes, and the PostgreSQL and SQLite ports of an already-built MySQL corpus take minutes too.
 
 ## The databases
 
@@ -113,11 +118,45 @@ A `megasamples` database inside the image holds the provenance registry: one row
 its tier, knowledge record, licences, source artifacts and digests, and pinned row counts. The
 catalogue, the landing page and the image tests all read it, so none can drift from what was baked.
 
-### PostgreSQL and SQLite
+### PostgreSQL
 
-Both are being added as ports of the MySQL corpus; [`PLAN.md`](PLAN.md) has the design, the
-measured inventory of what the ports must translate, and the status. When they land, the same
-`megasamples.yaml` names them and the same `make run` builds them.
+`sql-megasamples-postgres:dev` is `postgres:18.6-bookworm` with one database per dataset already in
+its cluster, the same `demo` (read-only) and `admin` accounts, the superuser `postgres` with
+password `root`, and a `megasamples` database holding the registry. `POSTGRES_PASSWORD`,
+`DEMO_PASSWORD` and `ADMIN_PASSWORD` override the passwords at start. Tables, data, primary and
+unique keys, secondary indexes, foreign keys, check constraints and stored generated columns are
+ported; views, routines, triggers and full-text or spatial indexes are not, and each database's
+registry row and [`CATALOGUE.md`](CATALOGUE.md) say exactly which. The identical table set is kept,
+so a query written for one engine names the same tables on the other.
+
+```sh
+PGPASSWORD=demo psql -h 127.0.0.1 -p 5432 -U demo sakila
+```
+
+### SQLite
+
+`sql-megasamples-sqlite:dev` carries one file per database under `/data` plus
+`/data/megasamples.sqlite`, the registry, and the `sqlite3` shell. The same files are staged as a
+release asset set (`make release SET=sqlite`) for readers that want a database without a server,
+and are what [DoltLite](https://github.com/dolthub/doltlite) opens directly. Types are declared in
+MySQL's terms (`DECIMAL(10,2)`, `DATETIME`, `VARCHAR(45)`) so readers see the intent; foreign keys are
+declared and verified, and enforced by the reader's `PRAGMA foreign_keys=ON`, as with any SQLite file.
+
+```sh
+docker exec -it megasamples-sqlite sqlite3 /data/sakila.sqlite
+docker run --rm -it sql-megasamples-sqlite:dev sqlite3 /data/chinook.sqlite
+```
+
+### How the ports are made, and why you can trust them
+
+One program, `megasamples/port/`, reads each database's schema from the MySQL build server's
+`information_schema` and its rows from the MySQL Shell dump, applies one type-mapping table and one
+DDL emitter with two dialects, and loads the result with the engine's own tools (`psql \copy`, the
+`sqlite3` driver). Nothing is written by hand and nothing is guessed: a type with no mapping stops
+the build. The DDL and the not-ported list of every dataset are committed under
+`datasets/<name>/ports/`, so a mapping change shows up as a diff, and `make check` regenerates them
+and fails on any byte of difference. Then the port is verified against the same
+`datasets/<name>/tests/` files as MySQL — counts, canonical content digests, foreign keys, indexes.
 
 ## The consoles
 
@@ -127,11 +166,11 @@ because someone opened a laptop in a café. Publishing one more widely is a deli
 
 | | address | browses | notes |
 |---|---|---|---|
-| **console index** | **<http://127.0.0.1:8080/>** | — | **start here**: every database with its size, licence and provenance, generated from the running stack |
+| **console index** | **<http://127.0.0.1:8080/>** | every engine | **start here**: every database on every engine with its size, licence and what a port left out, generated from the running stack |
 | phpMyAdmin | <http://127.0.0.1:8081/> | MySQL | signed in already; the server menu switches account |
-| Adminer | <http://127.0.0.1:8082/> | MySQL, PostgreSQL, SQLite | its login form remains — type either account |
-| DbGate | <http://127.0.0.1:8083/> | MySQL, PostgreSQL, SQLite | both connections preconfigured in the sidebar |
-| CloudBeaver | <http://127.0.0.1:8084/> | MySQL, PostgreSQL, SQLite | opens as a guest; both connections in the sidebar |
+| Adminer | <http://127.0.0.1:8082/> | MySQL, PostgreSQL | its login form remains — type either account |
+| DbGate | <http://127.0.0.1:8083/> | MySQL, PostgreSQL, SQLite | every connection preconfigured in the sidebar, one per SQLite file |
+| CloudBeaver | <http://127.0.0.1:8084/> | MySQL, PostgreSQL, SQLite | opens as a guest; every connection in the sidebar |
 
 A console starts only when an engine it can browse is in the stack, and is configured for every
 engine present. `compose.yaml` is generated from `megasamples.yaml` by `make up` (or `make compose`)
@@ -143,6 +182,8 @@ pinned by digest.
 ```yaml
 engines:
   mysql: {datasets: core}          # core | quick | all | a tier name | [sakila, chinook, ...]
+  postgres: {datasets: core}
+  sqlite: {datasets: quick}
 consoles: [landing, phpmyadmin, adminer, dbgate, cloudbeaver]
 ports: {mysql: 3306, landing: 8080, phpmyadmin: 8081, adminer: 8082, dbgate: 8083, cloudbeaver: 8084}
 build: {threads: 4, keep_build_server: false, scale_factor: 1}
@@ -178,17 +219,21 @@ Every command is a `make` target, and every target is a one-line shim over
 ```sh
 make sakila                        # fetch, convert, load and verify one dataset on MySQL
 make build D="sakila chinook"      # the same for several
-make image                         # bake the configured datasets into the MySQL image
-make image FROM_DUMPS=1            # re-bake from the dumps already built, without the build server
-make test-image                    # assert the image: counts, accounts, CHECK TABLE, overrides
-make test-console                  # assert the consoles are up and the two accounts behave
+make build ENGINE=postgres D=sakila   # port a dataset from the MySQL corpus and verify it there
+make build ENGINE=sqlite           # port every configured dataset to SQLite files
+make image ENGINE=postgres         # bake the configured datasets into an engine's image
+make image FROM_DUMPS=1            # re-bake MySQL from the dumps already built, without the build server
+make restore                       # reload the MySQL build server from its dumps, in a minute, to port from
+make test-image ENGINE=sqlite      # assert an image: counts, integrity, accounts, overrides
+make test-console                  # assert the consoles are up and the accounts behave on every engine
 make status                        # the stack, and any transient container
 make clean                         # remove the transient containers; the stack keeps running
 ```
 
-The build server is reused across a session, because reloading everything takes hours;
-`make image` removes it when the image is done, and `KEEP_BUILD_RESOURCES=1` (or
-`build.keep_build_server: true`) keeps it, which is what you want while developing a converter.
+The build servers are reused across a session, because reconverting everything takes hours;
+`make image` removes them when an image is done, and `KEEP_BUILD_RESOURCES=1` (or
+`build.keep_build_server: true`) keeps them, which is what you want while developing a converter
+or a port. `make restore` brings the MySQL build server back from the dumps in about a minute.
 
 ## Licensing
 
@@ -318,7 +363,7 @@ redistribution, are a better basis for a storage comparison than any one dataset
 | `megasamples/` | the package: the pipeline, one subpackage per engine, the upstream-format translators |
 | `engines/<engine>/` | each engine's Dockerfile, server configuration and init SQL |
 | `consoles/<console>/` | each console's configuration; the generated index page |
-| `datasets/<name>/` | per-dataset contract, converter, pinned expectations, licence and provenance |
+| `datasets/<name>/` | per-dataset contract, converter, pinned expectations, licence and provenance, and `ports/`: the generated PostgreSQL and SQLite DDL with what each port leaves out |
 | `knowledge/` | OKF v0.2 evidence bundle: datasets, licences, tools, decisions, sources, runbooks, open questions |
 | `manifest.yaml` | every downloadable artifact with checksum, size and licence |
 | `megasamples.example.yaml` | the stack configuration, documented |
@@ -331,8 +376,8 @@ dataset was converted the way it was, that is where the answer is.
 ## Development
 
 ```sh
-make check                       # the local gate: bundle validation + generated files up to date
-uv run pytest -q                 # unit tests for the inventory, configuration and staging logic
+make check                       # the local gate: bundle, generated files, port records reproducible, unit tests
+uv run pytest -q                 # the unit tests alone: inventory, configuration, staging, the port toolkit
 make build D="$(make -s list-quick)"   # the quick subset end to end, before a push that touches the pipeline
 ```
 

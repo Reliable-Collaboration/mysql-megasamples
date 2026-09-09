@@ -11,8 +11,8 @@ tags:
 status: stable
 trust: verified
 generated:
-  by: claude-code/claude-opus-5
-  at: "2026-09-04T00:00:00Z"
+  by: claude-code/claude-fable-5-1
+  at: "2026-09-09T19:06:58Z"
 verified:
 - by: claude-code/claude-opus-5
   at: "2026-09-04T00:00:00Z"
@@ -129,3 +129,18 @@ curl -s -b $J -X POST http://127.0.0.1:8084/api/gql -H 'Content-Type: applicatio
 `configurationMode: false` plus a non-empty `userConnections` is the pair worth asserting;
 `megasamples/console_test.py` asserts exactly that, because HTTP 200 does not distinguish a working console
 from a wizard.
+
+# Enabling the SQLite driver (measured 2026-09-09)
+
+CloudBeaver ships the SQLite driver (`drivers/sqlite/xerial/sqlite-jdbc-3.48.0.0.jar`, plugin
+`org.jkiss.dbeaver.ext.sqlite`) but a connection to it fails with `org.jkiss.dbeaver.DBException:
+Driver disabled`: file-based drivers are disabled unless the server configuration enables them, and
+the image's `conf/cloudbeaver.conf` names no drivers at all (its `app` block carries only the
+environment-backed booleans). What works: the same file with
+`enabledDrivers: [ "mysql:mysql8", "postgresql:postgres-jdbc", "sqlite:sqlite_jdbc" ]` inserted into
+the `app` block, mounted over `/opt/cloudbeaver/conf/cloudbeaver.conf`. With it, the console test
+opened the MySQL, PostgreSQL and SQLite connections anonymously; the provider and driver ids for
+PostgreSQL (`postgresql` / `postgres-jdbc`) and SQLite (`sqlite` / `sqlite_jdbc`, `database` the file
+path) are the ones that connected. `megasamples console-config` generates that file from the
+pinned image's own copy, so the other settings never drift from the image.
+

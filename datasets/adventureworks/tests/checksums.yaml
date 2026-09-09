@@ -100,8 +100,8 @@ person_address:
   - modifieddate
   excluded: []
   n: 19614
-  s: 6947430843658205068
-  x: 9426532576342562640
+  s: 2075970676456213566
+  x: 12664272496545780950
 person_addresstype:
   columns:
   - addresstypeid

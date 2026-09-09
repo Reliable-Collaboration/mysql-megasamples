@@ -1,11 +1,15 @@
-# The MySQL image build context is the repository root, filtered down to what the Dockerfile copies:
-# the engine's configuration, the dumps and registry `megasamples image` staged for this build, and
+# Every engine's image build context is the repository root, filtered down to what its Dockerfile
+# copies: the engine's configuration, what `megasamples image` staged under build/<engine>/image/, and
 # the licence files that must travel with the data. Everything else is repository weight.
 *
 !engines/mysql/my.cnf
 !engines/mysql/init/
 !engines/mysql/entrypoint-wrapper.sh
 !build/mysql/image/
+!engines/postgres/init/
+!engines/postgres/entrypoint-wrapper.sh
+!build/postgres/image/
+!build/sqlite/image/
 !NOTICE.md
 !LICENSES.md
 !CATALOGUE.md

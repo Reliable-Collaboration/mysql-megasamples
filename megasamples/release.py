@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Stage the `data-v1` release assets. Prepares; never publishes.
 
-  python3 -m megasamples release stage    copy the assets into release/data-v1/ and write the manifest
-  python3 -m megasamples release check    re-verify what is staged against SHA256SUMS
+  python3 -m megasamples release stage [--set data-v1|sqlite]   copy the assets into release/<set>/ and write the manifest
+  python3 -m megasamples release check [--set ...]              re-verify what is staged against SHA256SUMS
+
+Two asset sets exist. `data-v1` mirrors upstream source artifacts a third party could not otherwise
+obtain and verify (the rule below). `sqlite` is the SQLite port of every core dataset -- one file per
+database plus the registry, from build/sqlite/ -- staged so the files can be published for readers
+that want a database without a server.
 
 This script has no network access and creates no release. Uploading the staged directory, tagging
 `data-v1` and making it public are the maintainer's decisions, not the build's (ARCHITECTURE.md section 8).
@@ -69,6 +74,50 @@ def place(src, dst):
     except OSError:
         shutil.copy2(src, dst)
         return "copied"
+
+
+def stage_sqlite():
+    """The SQLite files under build/sqlite/, hardlinked into release/sqlite/ with checksums."""
+    from megasamples import datasets as inventory
+    from megasamples.engines.sqlite import port as sqlite_port
+    from megasamples.paths import engine_build_dir
+    stage_dir = os.path.join(ROOT, "release", "sqlite")
+    os.makedirs(stage_dir, exist_ok=True)
+    rows, missing = [], []
+    for name in inventory.core():
+        db = inventory.load(name)["database"]
+        src = os.path.join(engine_build_dir("sqlite"), name, f"{db}.sqlite")
+        if not os.path.exists(src):
+            missing.append(name)
+            print(f"  x {db}.sqlite: not built -- make build ENGINE=sqlite D={name}")
+            continue
+        how = place(src, os.path.join(stage_dir, f"{db}.sqlite"))
+        digest, size = sha256(os.path.join(stage_dir, f"{db}.sqlite")), os.path.getsize(src)
+        rows.append((f"{db}.sqlite", digest, size, name, ", ".join(inventory.load(name).get("licenses") or []), "the port of this dataset"))
+        print(f"  . {db + '.sqlite':<34} {size/1e6:>8.1f} MB  {digest[:12]} ({how})")
+    registry = os.path.join(stage_dir, "megasamples.sqlite")
+    sqlite_port.write_registry(registry, [n for n in inventory.core() if n not in missing])
+    rows.append(("megasamples.sqlite", sha256(registry), os.path.getsize(registry), "-", "-", "the provenance registry"))
+    with open(os.path.join(stage_dir, "SHA256SUMS"), "w", encoding="utf-8") as fh:
+        for r in sorted(rows):
+            fh.write(f"{r[1]}  {r[0]}\n")
+    lines = ["# sqlite release assets", "",
+             "Staged by `python3 -m megasamples release stage --set sqlite`. **Not published**: creating the",
+             "release, uploading these files and making them public is the maintainer's decision.", "",
+             "One SQLite file per core database, ported from the verified MySQL corpus and checked against the",
+             "same counts, content digests, foreign keys and indexes (`knowledge/decisions/sqlite-file-conventions.md`),",
+             "plus `megasamples.sqlite`, the provenance registry. Each database keeps its own upstream licence,",
+             "named below and in full in `datasets/<name>/LICENSE`; the share-alike ones stay under their terms.", "",
+             "Verify with `sha256sum -c SHA256SUMS`, or `python3 -m megasamples release check --set sqlite`.", "",
+             "| file | size | dataset | licence |", "|---|---:|---|---|"]
+    for name, _d, size, dataset, licence, _why in sorted(rows):
+        lines.append(f"| `{name}` | {size/1e6:.1f} MB | `{dataset}` | {licence} |")
+    with open(os.path.join(stage_dir, "MANIFEST.md"), "w", encoding="utf-8") as fh:
+        fh.write("\n".join(lines) + "\n")
+    total = sum(r[2] for r in rows)
+    print(f"\nstaged {len(rows)} file(s), {total/1e6:.0f} MB, in {os.path.relpath(stage_dir, ROOT)}")
+    print("nothing has been published; creating the release is the maintainer's step")
+    return 1 if missing else 0
 
 
 def stage():
@@ -140,14 +189,14 @@ def write_manifest(rows):
         fh.write("\n".join(lines) + "\n")
 
 
-def check():
-    sums = os.path.join(STAGE, "SHA256SUMS")
+def check(stage_dir=None):
+    sums = os.path.join(stage_dir or STAGE, "SHA256SUMS")
     if not os.path.exists(sums):
         sys.exit(f"nothing staged: {os.path.relpath(sums, ROOT)} does not exist")
     failures = 0
     for line in open(sums, encoding="utf-8"):
         want, name = line.strip().split("  ", 1)
-        path = os.path.join(STAGE, name)
+        path = os.path.join(stage_dir or STAGE, name)
         if not os.path.exists(path):
             print(f"  x {name}: missing"); failures += 1; continue
         got = sha256(path)
@@ -160,7 +209,11 @@ def check():
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("action", choices=["stage", "check"], nargs="?", default="stage")
-    return stage() if ap.parse_args(argv).action == "stage" else check()
+    ap.add_argument("--set", default="data-v1", choices=["data-v1", "sqlite"])
+    a = ap.parse_args(argv)
+    if a.set == "sqlite":
+        return stage_sqlite() if a.action == "stage" else check(os.path.join(ROOT, "release", "sqlite"))
+    return stage() if a.action == "stage" else check()
 
 
 if __name__ == "__main__":

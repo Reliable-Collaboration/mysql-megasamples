@@ -35,7 +35,7 @@ CONSOLES = [
             "Signed in already; the server menu switches account.",
             "http://127.0.0.1:{port}/index.php?route=/database/structure&db={db}&server=1", "P",
             volumes=["./consoles/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"]),
-    Console("adminer", "Adminer", ("mysql", "postgres", "sqlite"),
+    Console("adminer", "Adminer", ("mysql", "postgres"),
             "adminer@sha256:f1e2ba27b10a565ac77b2d8555d803be4ddb3232f4216dcf0ea85bcd8f2f1343", 8080, "160m",
             "Its login form remains; use either account below.",
             "http://127.0.0.1:{port}/?server=mysql&username=demo&db={db}", "A"),
@@ -46,7 +46,8 @@ CONSOLES = [
             "dbeaver/cloudbeaver@sha256:3b4bf82287cf4febe0d335873f1346a01100f3951d266cd6a78c27fe30429cbc", 8978, "640m",
             "Open as a guest; both connections are in the sidebar.",
             volumes=["./consoles/cloudbeaver/.cloudbeaver.auto.conf:/opt/cloudbeaver/conf/.cloudbeaver.auto.conf:ro",
-                     "./consoles/cloudbeaver/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf:ro"]),
+                     "./consoles/cloudbeaver/generated/cloudbeaver.conf:/opt/cloudbeaver/conf/cloudbeaver.conf:ro",
+                     "./consoles/cloudbeaver/generated/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf:ro"]),
 ]
 _BY_NAME = {c.name: c for c in CONSOLES}
 

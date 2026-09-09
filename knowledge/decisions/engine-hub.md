@@ -13,7 +13,7 @@ status: stable
 trust: inferred
 generated:
   by: claude-code/claude-fable-5-1
-  at: "2026-09-09T18:09:52Z"
+  at: "2026-09-09T18:52:50Z"
 sources:
 - resource: /decisions/test-checksum-method.md
   title: the canonical row digest is defined as text and computable outside MySQL
@@ -70,6 +70,21 @@ columns are ported; FULLTEXT and SPATIAL indexes, views, routines and triggers a
 catalogue lists them per database. Enum and set become text with a CHECK constraint on every target;
 no boolean is inferred from `tinyint(1)`; the `<schema>_<table>` flattening is kept so every
 engine carries an identical table set.
+
+Rules fixed while porting the 21 core datasets on 2026-09-09, each the outcome of a verification
+failure and now covered by a unit test:
+* An identity column keeps an integer type PostgreSQL accepts: a `bigint unsigned auto_increment`
+  key becomes `bigint`, where a plain `bigint unsigned` becomes `numeric(20,0)`.
+* Index and constraint names longer than 63 bytes are shortened with a hash suffix by one function
+  the emitter and the verification adapters share, so PostgreSQL never truncates them silently.
+* Stored generated columns are not in the dump; the ports load the other columns and each engine
+  computes them from the translated expression, and the digest check proves the values agree.
+* Geometry is standard WKB with longitude first: the canonical digest on the MySQL side renders
+  `ST_AsBinary(col, 'axis-order=long-lat')`, because MySQL's default order for a geographic SRS
+  (4326) is latitude first and hashes different bytes from the same point
+  ([checksum method](/decisions/test-checksum-method.md)).
+* Multi-line table comments and defaults are read from the client in escaped batch mode, so a
+  value holding a newline cannot break a row of `information_schema` output.
 
 # Status
 accepted

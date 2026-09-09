@@ -17,6 +17,7 @@ __pycache__/
 megasamples.yaml
 compose.yaml
 consoles/landing/index.html
+consoles/cloudbeaver/generated/
 
 # staged release assets: the files are large and are mirrors of upstream artifacts, but the
 # manifest and checksums that describe them are the record and are committed

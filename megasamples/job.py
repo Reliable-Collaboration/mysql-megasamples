@@ -116,8 +116,26 @@ def up(argv=None):
     ap = argparse.ArgumentParser(description="regenerate compose.yaml and the landing page, start the stack")
     ap.parse_args(argv)
     cfg = stack.load()
+    from megasamples import console_config
+    console_config.main([])
     if compose.main([]):
         return 2
+    # Compose does not recreate a service whose image was rebuilt under the same tag, and when it
+    # does recreate one it keeps the anonymous volume the official images declare for their data
+    # directory -- so the old data would shadow the new image. An engine whose running container is
+    # not on the current image is recreated first, with its anonymous volumes renewed.
+    stale = []
+    for name in cfg.engines:
+        e = engine_registry.get(name)
+        running = subprocess.run(["docker", "inspect", "-f", "{{.Image}}", e.container], capture_output=True, text=True)
+        current = subprocess.run(["docker", "image", "inspect", "-f", "{{.Id}}", e.image], capture_output=True, text=True)
+        if running.returncode == 0 and current.returncode == 0 and running.stdout.strip() != current.stdout.strip():
+            stale.append(name)
+    if stale:
+        print(f"  . recreating {', '.join(stale)}: the image was rebuilt since the container started")
+        if subprocess.run(["docker", "compose", "-f", COMPOSE, "up", "-d", "--force-recreate", "--renew-anon-volumes",
+                           "--no-deps", "--wait", *stale], cwd=ROOT).returncode != 0:
+            return 1
     print("  . docker compose up -d --wait")
     if subprocess.run(["docker", "compose", "-f", COMPOSE, "up", "-d", "--wait"], cwd=ROOT).returncode != 0:
         return 1
@@ -128,7 +146,8 @@ def up(argv=None):
     print("  . the stack is up:")
     for name in cfg.engines:
         e = engine_registry.get(name)
-        print(f"      {e.title:<14} 127.0.0.1:{cfg.ports.get(name, e.port)}   {e.connection_hint(cfg)}")
+        where = f"127.0.0.1:{cfg.ports.get(name, e.port)}" if e.port else "files in the container"
+        print(f"      {e.title:<14} {where:<22} {e.connection_hint(cfg)}")
     for name in cfg.consoles:
         if name in cfg.ports:
             print(f"      {name:<14} http://127.0.0.1:{cfg.ports[name]}/")
@@ -152,6 +171,7 @@ def check(argv=None):
              ("frontmatter quoting", lambda: okf_fix_quotes.main(["--bundle", "knowledge", "--check"])),
              ("licence and provenance files", lambda: provenance.main(["--check"])),
              ("catalogue and README table", lambda: catalogue.main(["--check"])),
+             ("port records reproducible", lambda: __import__("megasamples.ports_check", fromlist=["main"]).main([])),
              ("unit tests", lambda: subprocess.run([sys.executable, "-m", "pytest", "-q", "tests"], cwd=ROOT).returncode)]
     failed = []
     for label, fn in steps:

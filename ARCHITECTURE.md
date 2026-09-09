@@ -7,8 +7,8 @@ cite them. `README.md` says what the project is for; this says how it works.
 
 Three things are chosen independently, and one file names the choice:
 
-* **engines** — the database products the datasets are built for: MySQL today; PostgreSQL and
-  SQLite are being added as ports of the MySQL corpus (`PLAN.md`).
+* **engines** — the database products the datasets are built for: MySQL, the hub every dataset is
+  converted into first, and PostgreSQL and SQLite, ports of that verified corpus (section 3).
 * **datasets** — 38 sample and public databases, each converted from its authoritative upstream
   source by a converter committed beside it, each verified against pinned expectations.
 * **consoles** — web UIs that come up beside the engines, already connected.
@@ -30,15 +30,16 @@ one-line shims over `python3 -m megasamples <command>` (section 7).
 │   ├── cli.py  paths.py  config.py  datasets.py  consoles.py  compose.py  job.py  matrix.py
 │   ├── fetch.py  stage.py  canon.py  verify.py  registry.py  catalogue.py  console_page.py
 │   ├── provenance.py  release.py  prepub.py  audit.py  workspace.py  okf_check.py  okf_fix_quotes.py
-│   ├── engines/                one subpackage per engine: mysql/ (server, load, dump, bench, image_test)
+│   ├── engines/                one subpackage per engine: mysql/, postgres/, sqlite/ (server, load or port, adapter, image_test)
+│   ├── port/                   the MySQL corpus -> engine-neutral model -> other engines (model, typemap, ddl, tsv, record)
 │   └── sources/                upstream-format translators and exporters (T-SQL, PL/SQL, .bak, CSV, XML)
 ├── engines/<engine>/           committed engine assets: Dockerfile, server configuration, init SQL
 ├── consoles/<console>/         console configuration; consoles/landing/ holds the generated index page
-├── datasets/<name>/            dataset.yaml  convert.py  tests/  LICENSE  PROVENANCE.md  [name_map.yaml]
+├── datasets/<name>/            dataset.yaml  convert.py  tests/  ports/  LICENSE  PROVENANCE.md  [name_map.yaml]
 ├── knowledge/                  the OKF v0.2 evidence bundle behind every decision
 ├── release/<set>/              staged release assets: SHA256SUMS and MANIFEST.md committed, files not
 ├── downloads/                  git-ignored: verified upstream artifacts, <id>.ok and <id>.meta.json
-└── build/                      git-ignored: stage/<name>/ (converted SQL), <engine>/ (dumps, image context)
+└── build/                      git-ignored: stage/<name>/ (converted SQL), <engine>/ (dumps or port files, image context)
 ```
 
 **Downloads happen once.** `megasamples fetch` reads `manifest.yaml`, tries `url` then each of
@@ -81,11 +82,30 @@ backup, exported once from a SQL Server container), `csvtable.py`, `bulkinsert.p
 and summarised in each `PROVENANCE.md`.
 
 **MySQL is the hub.** The staged SQL is loaded into a throwaway MySQL build server, verified there
-(section 5), and dumped with MySQL Shell. That verified corpus is the input to every other engine:
-a PostgreSQL or SQLite build reads the MySQL dump (data as TSV) and `information_schema` (schema),
-translates through one type-mapping table, loads, and is verified against the same expectations.
+(section 5), and dumped with MySQL Shell. That verified corpus is the input to every other engine.
 Naming a dataset for any engine therefore builds it in the MySQL build server first, whether or not
-it is in the MySQL image. The rationale is in `knowledge/decisions/engine-hub.md`.
+it is in the MySQL image; `make restore` reloads the build server from the dumps in about a minute
+when it has been removed. The rationale is in `knowledge/decisions/engine-hub.md`.
+
+**The port is one deterministic program**, `megasamples/port/`, and nothing is written by hand:
+
+| module | does |
+|---|---|
+| `model.py` | reads a database back from `information_schema` as tables, columns (type, nullability, default, generated expression), indexes, foreign keys and checks, plus the names of its views, routines and triggers |
+| `typemap.py` | the one mapping table: a MySQL column to its PostgreSQL and SQLite declarations; a type it does not know stops the build |
+| `ddl.py` | one emitter, two dialects: `CREATE TABLE` with keys, defaults, generated columns and enum checks; secondary indexes; foreign keys and checks (inline for SQLite, which cannot add them later); every object a dialect cannot carry is returned by name with the reason |
+| `tsv.py` | reads the MySQL Shell dump's chunks (`knowledge/tools/mysql-shell-dump-format.md`) and re-encodes rows for `COPY` |
+| `record.py` | writes `datasets/<name>/ports/{postgres,sqlite}.sql` and `not_ported.yaml` |
+
+Rules the emitter follows, each fixed by a verification failure and covered by a unit test: unsigned
+integers widen to the next signed type and `tinyint(1)` is never a boolean; enum becomes text with a
+membership check and set becomes text; an identity column keeps an integer type; names over 63
+bytes are shortened by one function the adapters share; stored generated columns are recomputed by
+the target from the translated expression; geometry is standard WKB with longitude first; foreign
+keys into another database are dropped and named. Not ported anywhere: views, routines, triggers,
+FULLTEXT and SPATIAL indexes, `ON UPDATE CURRENT_TIMESTAMP`, and on SQLite a CHECK using
+`regexp_like`. `megasamples ports-check` (part of `make check`) regenerates every committed port
+record and fails on a byte of difference, which is what makes the ports reproducible by construction.
 
 Conventions every dataset follows: one database per dataset, lower snake_case names, multi-schema
 sources flattened to `<schema>_<table>` (`knowledge/decisions/database-naming-convention.md`,
@@ -128,12 +148,48 @@ is the registry the configuration names.
 * **Loader image.** `engines/mysql/loader.Dockerfile` builds the generators the generated tier needs
   (SSB's dbgen, sysbench for TPC-C); nothing from it reaches any published image.
 
-### 4.2 PostgreSQL and SQLite
+### 4.2 PostgreSQL (`engines/postgres/`, `megasamples/engines/postgres/`)
 
-Both are ports of the verified MySQL corpus (section 3): `PLAN.md` carries the plan and the status.
-When they land, `engines/postgres/` and `engines/sqlite/` hold their Dockerfiles and configuration,
-`megasamples/engines/postgres/` and `megasamples/engines/sqlite/` implement the interface, and this
-section describes them.
+* **Port** (`megasamples pg-port`, or `make build ENGINE=postgres`): the model and the dump become
+  `build/postgres/<dataset>/` — `schema.sql`, `data/<table>.tsv` in `COPY` text format with the
+  insertable columns listed, `indexes.sql`, `constraints.sql` (foreign keys, checks, and `setval`
+  for every identity sequence), `model.json`, `dropped.txt` — and are loaded into a throwaway
+  `postgres:18.6-bookworm` build server, `megasamples-build-postgres`, with `\copy`.
+* **Image.** `engines/postgres/Dockerfile`: a builder stage runs `initdb` at the image's own
+  `PGDATA`, appends the `host all all all scram-sha-256` rule the official entrypoint would have
+  written, starts a private server with bulk-load settings, creates the accounts and the registry,
+  replays every port's files, and stops; the final stage is the official image plus that cluster.
+  First start answers a real query in under a second; the data directory is 2.5 GB for the 21 core
+  databases and the image is 4.0 GB. Details: `knowledge/decisions/postgres-image-shape.md`.
+* **Accounts.** `postgres` (superuser, `root`), `admin` (create, alter, drop; `ALL` on every table),
+  `demo` (`SELECT` everywhere). `POSTGRES_PASSWORD`, `ADMIN_PASSWORD`, `DEMO_PASSWORD` override them
+  at start through the wrapper entrypoint. Tag: `sql-megasamples-postgres:dev`.
+* **Registry.** Database `megasamples`, table `datasets`: MySQL's columns plus `engine` and
+  `not_ported`.
+* **Verification.** The adapter (`adapter.py`) computes the canonical digest in Python from a
+  `COPY ... TO STDOUT` of each table rendered column by column, because PostgreSQL text cannot hold
+  the U+0000 sentinel; counts, foreign keys and indexes come from the catalog, with index names
+  mapped back to MySQL's.
+
+### 4.3 SQLite (`engines/sqlite/`, `megasamples/engines/sqlite/`)
+
+* **Port** (`megasamples sqlite-port`, or `make build ENGINE=sqlite`): the stdlib `sqlite3` driver
+  writes `build/sqlite/<dataset>/<database>.sqlite` — MySQL-like declared types for their affinity,
+  keys, foreign keys and checks inline, secondary indexes after the data, `VACUUM`ed, rollback
+  journal, `application_id` `MSMP`. There is no build server: the file is the database. Details:
+  `knowledge/decisions/sqlite-file-conventions.md`.
+* **Image.** `engines/sqlite/Dockerfile`: Alpine 3.22 (digest-pinned) with the `sqlite` package
+  (SQLite 3.49.2), the files under `/data` and `/data/megasamples.sqlite` as the registry; its default
+  command sleeps so the container holds the files for `docker exec` and for the consoles. The 21 core
+  databases are 867 MB of files and a 1.2 GB image. The same files are a release asset set
+  (`make release SET=sqlite`).
+* **Stack.** The `sqlite` service copies the image's files into the named volume `megasamples-sqlite`
+  at every start, and the consoles that can open SQLite mount that volume read-only, so a rebuilt
+  image replaces what they see.
+* **Verification.** The adapter opens the file with the stdlib driver and renders each value in the
+  canonical text form in Python (decimals at the declared scale, date-times with six fractional
+  digits); foreign keys are checked by the orphan query with the model's names; indexes come from
+  the pragmas.
 
 ## 5. Verification
 
@@ -148,14 +204,17 @@ files under `datasets/<name>/tests/`, so a port is verified against exactly what
 | S5 integrity | every foreign key has zero orphans, including cross-database keys | `verify … fks` |
 | S6 indexes | every index in `tests/indexes.yaml` exists with the same columns, uniqueness and type; smoke queries do not full-scan the tables `tests/explain.yaml` names | `verify … indexes explain` |
 | S7 semantics | canonical queries return `tests/smoke.expected.yaml` | `verify … smoke` |
-| S8 image | the image answers a real query within 30 s, holds exactly the registered datasets with their pinned counts, `demo` cannot write (including through a routine), no account is passwordless, `CHECK TABLE` passes, time-zone conversion works, password overrides apply | `megasamples test-image` |
-| S10 console | every console answers HTTP 200, the landing page names every registered database, CloudBeaver is out of its wizard and shows the connection, `demo` reads and cannot write, `admin` writes | `megasamples test-console` |
+| S8 image | per engine: the image answers a real query within 30 s, holds exactly the registered datasets with their pinned counts, `demo` cannot write and `admin` can, no account is passwordless, password overrides apply (over the network for PostgreSQL); MySQL adds `CHECK TABLE` and time-zone conversion, SQLite adds `integrity_check`, `foreign_key_check` and the journal mode | `megasamples test-image --engine …` |
+| S10 console | every console answers HTTP 200, the landing page names every registered database of every engine, CloudBeaver is out of its wizard and opens each engine's connections, `demo` reads and cannot write and `admin` writes on each server engine | `megasamples test-console` |
 
 The canonical row digest (`megasamples/canon.py`, `knowledge/decisions/test-checksum-method.md`) is
 one definition computable in SQL and in Python: columns in DDL order joined by U+001F, NULL as
-U+0000, dates and times in fixed formats, binary as lowercase hex; float, double and JSON columns are
-excluded and compared by aggregates instead. Because it is defined as text, the same digest can be
-computed by any engine, which is what makes a port provably equal to the MySQL corpus. `--pin`
+U+0000, dates and times in fixed formats, binary and geometry as lowercase hex of standard WKB;
+float, double and JSON columns are excluded and compared by aggregates instead. Because it is
+defined as text, the same digest is computed on every engine — in SQL on MySQL, in Python from
+`COPY` output on PostgreSQL, in Python from the driver on SQLite — which is what makes a port
+provably equal to the MySQL corpus. `verify --engine postgres|sqlite` runs counts, digests, foreign
+keys and indexes; explain and smoke stay MySQL-only, since their queries are written in its dialect. `--pin`
 writes observed values instead of comparing them, which is how a native-SQL dataset with no
 converter-side baseline gets its first expectations; a `# authority:` header on a counts file marks
 it as generated from the source and refuses pinning.
@@ -167,8 +226,10 @@ it as generated from the source and refuses pinning.
 ```yaml
 engines:
   mysql: {datasets: core}          # core | quick | all | a tier | [names]
+  postgres: {datasets: core}
+  sqlite: {datasets: core}
 consoles: [landing, phpmyadmin, adminer, dbgate, cloudbeaver]
-ports: {mysql: 3306, landing: 8080, phpmyadmin: 8081, adminer: 8082, dbgate: 8083, cloudbeaver: 8084}
+ports: {mysql: 3306, postgres: 5432, landing: 8080, phpmyadmin: 8081, adminer: 8082, dbgate: 8083, cloudbeaver: 8084}
 build: {threads: 4, keep_build_server: false, scale_factor: 1}
 downloads: {concurrency: 3}
 ```
@@ -191,7 +252,11 @@ runs first), so the stack is exactly what was chosen. Rules the generated file f
   cannot reach the registry, and the digest is what makes the two paths name the same bytes.
 * A console is started only when an engine it can browse is selected, and is configured for every
   engine present, read-only account first. `megasamples/consoles.py` is the registry: which engines
-  each console supports, its image, its memory, how it is pointed at a database.
+  each console supports, its image, its memory, how it is pointed at a database. phpMyAdmin browses
+  MySQL; Adminer MySQL and PostgreSQL; DbGate and CloudBeaver all three, with one connection per
+  SQLite file. `megasamples console-config` (run by `make up`) generates CloudBeaver's connections
+  and its server configuration with the three drivers enabled — CloudBeaver disables file-based
+  drivers such as SQLite by default (`knowledge/runbooks/cloudbeaver-unattended-startup.md`).
 * Passwords come from `.env` (`.env.example` is the template): compose passes each value to the
   server, which applies it at startup, and to every console, so the two cannot drift apart.
 
@@ -208,10 +273,11 @@ database in their URL, the connection details and both accounts.
 ## 7. Commands and gates
 
 `python3 -m megasamples --help` lists every command; each has its own `--help`. The ones a build
-runs, in order: `fetch` → `stage` → `load` → `verify` → `dump` → `image` → `test-image`, wrapped as
-`build` (fetch through verify, for the configured datasets of an engine), `image`, and `run` (build
-and image for every configured engine, `--up` to start the stack afterwards). `make <dataset>` is
-`build --engine mysql <dataset>`.
+runs, in order: `fetch` → `stage` → `load` → `verify` → `dump` for MySQL, then `pg-port` or
+`sqlite-port` → `verify --engine …` for a port, then `image` → `test-image` per engine; wrapped as
+`build` (through verify, for the configured datasets of an engine), `image`, and `run` (build and
+image for every configured engine, `--up` to start the stack afterwards). `make <dataset>` is
+`build --engine mysql <dataset>`; `make restore` reloads the MySQL build server from its dumps.
 
 | gate | command | cost | when |
 |---|---|---|---|
@@ -222,9 +288,10 @@ and image for every configured engine, `--up` to start the stack afterwards). `m
 | the console | `make up` then `make test-console` | seconds | when the stack or a console changes |
 
 `make check` runs the knowledge-bundle checker (`okf_check.py`: frontmatter, sections, trust rules,
-links, indexes, log order), the frontmatter-quoting check, and the drift checks for every generated
-file (`LICENSE`, `PROVENANCE.md`, `NOTICE.md`, `LICENSES.md`, `CATALOGUE.md`, the README's database
-table).
+links, indexes, log order), the frontmatter-quoting check, the drift checks for every generated file
+(`LICENSE`, `PROVENANCE.md`, `NOTICE.md`, `LICENSES.md`, `CATALOGUE.md`, the README's database
+table), the port-record reproducibility check for every dataset loaded in the MySQL build server,
+and the unit tests.
 
 ## 8. Licensing and release
 
@@ -252,9 +319,10 @@ provenance records the 2024-04-02 snapshot and the unaccepted click-through; (9)
 hbiostat and Iris notices are verbatim in `README.md` and `NOTICE.md`; (10) the open licensing
 questions are listed in the README with their status.
 
-**Release assets** (`megasamples release stage`) are staged under `release/<set>/` with `SHA256SUMS`
-and a `MANIFEST.md` that says why each file is mirrored; only upstream artifacts that a third party
-could not otherwise obtain and verify belong there. **Nothing in this repository publishes.**
+**Release assets** (`megasamples release stage [--set data-v1|sqlite]`) are staged under
+`release/<set>/` with `SHA256SUMS` and a `MANIFEST.md`. The `data-v1` set mirrors only upstream
+artifacts that a third party could not otherwise obtain and verify; the `sqlite` set is the SQLite
+port of every core database plus the registry. **Nothing in this repository publishes.**
 Creating a release, uploading an asset, pushing an image or making anything public is the
 maintainer's decision and action, never the build's.
 
@@ -270,6 +338,8 @@ listed on the record or produced by a command whose output is recorded; estimate
 and `convert.py`; `make <name>` with `megasamples verify <name> --pin` for the first expectations;
 `make provenance` and `make catalogue`; `make check`.
 
-**To add an engine:** implement `megasamples/engines/<name>/` against `base.Engine`, register it in
+**To add an engine:** implement `megasamples/engines/<name>/` against `base.Engine` — a port that
+reads the model and the dump through `megasamples/port/`, a `Dialect` in `ddl.py` and a column in
+`typemap.py`, a verification adapter, an image and its test — register it in
 `megasamples/engines/__init__.py`, put its Dockerfile and configuration under `engines/<name>/`,
 declare which consoles can browse it in `megasamples/consoles.py`, and add its section here.
