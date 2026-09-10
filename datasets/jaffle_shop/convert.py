@@ -6,8 +6,8 @@ upstream data and are kept that way rather than silently converted to a decimal 
 Record: knowledge/datasets/jaffle-shop.md
 """
 import os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
-import csvtable  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+from megasamples.sources import csvtable  # noqa: E402
 
 CUSTOMERS = [("id", "id", "INT UNSIGNED"), ("first_name", "first_name", "VARCHAR(50)"),
              ("last_name", "last_name", "VARCHAR(50)")]

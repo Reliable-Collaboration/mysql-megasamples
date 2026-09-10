@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: Build orchestration with make, Compose profiles and BuildKit
-description: A Makefile drives per-dataset builds; Compose profiles start temporary native database products only for the datasets that need them; the final image is a multi-stage Dockerfile.
+description: A Python package (`python3 -m megasamples <command>`) drives every step, `make` targets are one-line shims over it, one configuration file names what to build, and verification runs on the build machine in Docker with no CI service.
 resource: /decisions/build-orchestration.md
 tags:
 - decision
@@ -12,7 +12,7 @@ status: stable
 trust: inferred
 generated:
   by: claude-code/claude-fable-5-1
-  at: "2026-09-02T20:17:31Z"
+  at: "2026-09-09T18:09:52Z"
 sources:
 - resource: /sources/build-machine-environment-2026-09-02.md
   title: Build machine survey
@@ -33,27 +33,28 @@ How can one dataset be rebuilt without rebuilding all, while the final image rem
 * [MySQL Shell utilities](/tools/mysql-shell-utilities.md): `util.dumpSchemas`/`loadDump` provide the per-dataset artifact format.
 
 # Outcome
-* Conversion runs on the host via Compose services: `mssql` (profile `build-mssql`), `oracle` (profile `build-oracle`), `work` (the loader image with python/duckdb/mysqlsh; profile `build`), and a scratch `mysql-build` server used to load, index, test and dump each dataset.
-* Each dataset target: fetch → convert → load into `mysql-build` → index → constraints → tests → `util.dumpSchemas` into `build/dump/` → write `build/baseline.json`.
-* `make image`: copies core `build/dump/` directories into `docker/context/`, builds the multi-stage image where a builder stage starts mysqld, runs `util.loadDump` for each core dataset, creates users, shuts down, and the final stage `COPY --from=builder /var/lib/mysql /var/lib/mysql` (see [bake vs initdb](/decisions/bake-data-vs-initdb.md)).
-* `make extended` loads every extended dataset that has a release asset into a running server; generators (`make gen-*`) and the license-gated `load-citibike`/`load-divvy` are separate because they cannot run unattended or produce redistributable assets.
-* Caching: BuildKit cache mounts for package installs; dataset dumps are content-addressed (`sha256` of the dump dir recorded in `baseline.json`), so unchanged datasets do not change the image layer input.
-
-# Amendment (2026-09-03, maintainer decision)
-**No CI service.** The plan assumed GitHub Actions workflows (`ci.yaml`, `okf.yaml`, `native.yaml`,
-`extended.yaml`); the maintainer decided against them for this repository. The pipeline downloads
-about 1.5 GB and bakes a 3.46 GB image, which is a poor use of hosted-runner minutes for a project
-whose entire content is data, and the build machine already has Docker.
-
-Nothing about the verification is lost — only the automation of when it runs. The workflows are
-replaced by `make` targets that run exactly the same code: `make check` (bundle validation and the
-generated licence files, seconds, no Docker), `make core-fast` (the 15-dataset subset end to end),
-`make image-only` + `make test-image` (bake and S8), and `make core` before a release. PLAN.md §4.3
-carries the table of gates.
-
-Two datasets could never have run in a hosted CI anyway, which is worth stating because it is a
-property of the data rather than of the choice: `lahman` is maintainer-supplied and has no fetchable
-URL, and `chicago_crimes` is a live API whose pinned digest changes daily.
+* The package `megasamples/` is the pipeline; every `make` target is a one-line shim over
+  `python3 -m megasamples <command>`, so `make -n` shows what runs and the same code runs without make.
+* Conversion runs on the host, not inside a Dockerfile: `megasamples stage` runs the dataset's
+  converter into `build/stage/<name>/`; native products (SQL Server for the WideWorldImporters
+  export, Oracle for the cross-check) run as transient containers.
+* `make <dataset>` is `megasamples build --engine mysql <dataset>`: fetch → stage → load into the
+  throwaway MySQL build server → verify. `megasamples build` does the same for the datasets
+  `megasamples.yaml` names for an engine; `megasamples run` builds and bakes every configured
+  engine; `megasamples image` dumps each dataset with `util.dumpSchemas` into
+  `build/mysql/dumps/<name>/` (content-addressed by `<name>.json`), hardlinks exactly the dumps being
+  baked into `build/mysql/image/`, writes the registry SQL there, and builds
+  `engines/mysql/Dockerfile` with the repository root as context filtered by `.dockerignore`.
+  `--from-dumps` re-bakes from existing dumps without the build server.
+* The build server is reused across a session and removed when the image is done unless
+  `build.keep_build_server` is set; `megasamples clean` removes every container labelled
+  `megasamples.transient=true`.
+* **No CI service.** The pipeline downloads about 1.4 GB and bakes a 3.5 GB image, a poor use of
+  hosted-runner minutes for a project whose content is data, and the build machine has Docker. The
+  gates are `make` targets that run the same code (ARCHITECTURE.md section 7): `make check` in
+  seconds, the quick subset end to end, `make image` with `make test-image`, and the full core build
+  before a release. Two datasets could never run in hosted CI anyway: `lahman` is
+  maintainer-supplied, and `chicago_crimes` comes from a live API whose pinned digest changes daily.
 
 # Status
 accepted

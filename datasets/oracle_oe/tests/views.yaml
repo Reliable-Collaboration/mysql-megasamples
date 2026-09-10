@@ -1,0 +1,117 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+account_managers:
+  columns:
+  - acct_mgr
+  - region
+  - country
+  - province
+  - num_customers
+  excluded: []
+  n: 43
+  s: 98534649269563288
+  x: 10137245265221996054
+bombay_inventory:
+  columns:
+  - product_id
+  - product_name
+  - quantity_on_hand
+  excluded: []
+  n: 128
+  s: 11860632543935135670
+  x: 12671515560105821478
+customers_view:
+  columns:
+  - customer_id
+  - cust_first_name
+  - cust_last_name
+  - street_address
+  - postal_code
+  - city
+  - state_province
+  - country_id
+  - country_name
+  - region_id
+  - nls_language
+  - nls_territory
+  - credit_limit
+  - cust_email
+  - primary_phone_number
+  - phone_number_2
+  - phone_number_3
+  - phone_number_4
+  - phone_number_5
+  - account_mgr_id
+  - location_x
+  - location_y
+  excluded: []
+  n: 319
+  s: 6133311614488351761
+  x: 1728609448679814373
+orders_view:
+  columns:
+  - order_id
+  - order_date
+  - order_mode
+  - customer_id
+  - order_status
+  - order_total
+  - sales_rep_id
+  - promotion_id
+  excluded: []
+  n: 105
+  s: 13611454367182559373
+  x: 12089141982163914353
+product_prices:
+  columns:
+  - category_id
+  - '#_of_products'
+  - low_price
+  - high_price
+  excluded: []
+  inexact:
+  - high_price
+  - low_price
+  n: 17
+  s: 1297387881677960101
+  s_exact: 6698827539157178571
+  x: 1758653743726797035
+  x_exact: 16559031131341680725
+products:
+  columns:
+  - product_id
+  - language_id
+  - product_name
+  - category_id
+  - product_description
+  - weight_class
+  - warranty_months
+  - supplier_id
+  - product_status
+  - list_price
+  - min_price
+  - catalog_url
+  excluded: []
+  n: 288
+  s: 147053527520367378
+  x: 14144134042917351910
+sydney_inventory:
+  columns:
+  - product_id
+  - product_name
+  - quantity_on_hand
+  excluded: []
+  n: 208
+  s: 17840139275343692704
+  x: 13549778349639221056
+toronto_inventory:
+  columns:
+  - product_id
+  - product_name
+  - quantity_on_hand
+  excluded: []
+  n: 114
+  s: 18173591263828426694
+  x: 16734996860944074484

@@ -1,4 +1,4 @@
-# Every downloadable artifact the build needs. scripts/fetch.py is the only reader.
+# Every downloadable artifact the build needs. megasamples/fetch.py is the only reader.
 # Adding a mirror never requires editing build logic. See PLAN.md section 2.5.
 #
 #   id            unique key; also the filename under downloads/
@@ -1195,8 +1195,8 @@ artifacts:
     dataset: chicago_crimes
     url: "https://data.cityofchicago.org/resource/ijzp-q8t2.csv?$where=year=2024&$order=id&$limit=300000"
     mirrors: []
-    sha256: "243fb805b601e958ce12461f32746187fe9588da21146e96ffdfe11bbac736b6"
-    size_bytes: 74811578
+    sha256: "5e67e3861a76d5cfa38bb2d57cc2ed7962808402282eedc07c54602b9a481ffe"
+    size_bytes: 74885948
     license: chicago-data-portal-terms
     ipv4_first: false
   - id: chicago_crimes/iucr.csv

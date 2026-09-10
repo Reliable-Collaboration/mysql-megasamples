@@ -14,8 +14,9 @@ Record: knowledge/datasets/oracle-oe-pm-ix.md
 import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import oeparse, schema, plsql  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+import oeparse, schema
+from megasamples.sources import plsql  # noqa: E402
 
 DATABASE = "oracle_oe"
 HR = "oracle_hr"

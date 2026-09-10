@@ -4,6 +4,6 @@ tier: extended
 record: knowledge/datasets/enron.md
 licenses: [enron-public-record]
 artifacts: [enron/enron_mail_20150507.tar.gz]
-converter: none
+stage: {input: dir, source: enron, converter: enron, args: [--full]}
 load:
   - enron_full.sql

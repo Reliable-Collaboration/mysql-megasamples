@@ -1,0 +1,238 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+Invoices:
+  columns:
+  - ShipName
+  - ShipAddress
+  - ShipCity
+  - ShipRegion
+  - ShipPostalCode
+  - ShipCountry
+  - CustomerID
+  - CustomerName
+  - Address
+  - City
+  - Region
+  - PostalCode
+  - Country
+  - Salesperson
+  - OrderID
+  - OrderDate
+  - RequiredDate
+  - ShippedDate
+  - ShipperName
+  - ProductID
+  - ProductName
+  - UnitPrice
+  - Quantity
+  - ExtendedPrice
+  - Freight
+  excluded:
+  - Discount
+  inexact:
+  - ExtendedPrice
+  n: 2155
+  s: 413958922243249604
+  s_exact: 11648206751134441962
+  x: 4727975331335293766
+  x_exact: 9342015833088948382
+alphabetical_list_of_products:
+  columns:
+  - productid
+  - productname
+  - supplierid
+  - categoryid
+  - quantityperunit
+  - unitprice
+  - unitsinstock
+  - unitsonorder
+  - reorderlevel
+  - discontinued
+  - CategoryName
+  excluded: []
+  n: 69
+  s: 12038703250148662541
+  x: 16385028512820396597
+category_sales_for_1997:
+  columns:
+  - CategoryName
+  - CategorySales
+  excluded: []
+  inexact:
+  - CategorySales
+  n: 8
+  s: 18312336692084267343
+  s_exact: 10997789303620049105
+  x: 11159519612142115475
+  x_exact: 15003720764618390893
+current_product_list:
+  columns:
+  - ProductID
+  - ProductName
+  excluded: []
+  n: 69
+  s: 8066297681448884007
+  x: 634845381567706561
+customer_and_suppliers_by_city:
+  columns:
+  - City
+  - CompanyName
+  - ContactName
+  - Relationship
+  excluded: []
+  n: 120
+  s: 12232114452486297072
+  x: 3721770303733887234
+order_details_extended:
+  columns:
+  - OrderID
+  - ProductID
+  - ProductName
+  - UnitPrice
+  - Quantity
+  - ExtendedPrice
+  excluded:
+  - Discount
+  inexact:
+  - ExtendedPrice
+  n: 2155
+  s: 13621464576596001722
+  s_exact: 12894168560215531867
+  x: 3124976019113135194
+  x_exact: 16474814348449097383
+order_subtotals:
+  columns:
+  - OrderID
+  - Subtotal
+  excluded: []
+  inexact:
+  - Subtotal
+  n: 830
+  s: 12223148527239708334
+  s_exact: 14600791302850164662
+  x: 9599853217592457828
+  x_exact: 15336618757550214790
+orders_qry:
+  columns:
+  - OrderID
+  - CustomerID
+  - EmployeeID
+  - OrderDate
+  - RequiredDate
+  - ShippedDate
+  - ShipVia
+  - Freight
+  - ShipName
+  - ShipAddress
+  - ShipCity
+  - ShipRegion
+  - ShipPostalCode
+  - ShipCountry
+  - CompanyName
+  - Address
+  - City
+  - Region
+  - PostalCode
+  - Country
+  excluded: []
+  n: 830
+  s: 10602177867839351333
+  x: 11579537634110438491
+product_sales_for_1997:
+  columns:
+  - CategoryName
+  - ProductName
+  - ProductSales
+  excluded: []
+  inexact:
+  - ProductSales
+  n: 77
+  s: 1933705617352916936
+  s_exact: 4780406879504423508
+  x: 11351812510118357878
+  x_exact: 16592666521565098478
+products_above_average_price:
+  columns:
+  - ProductName
+  - UnitPrice
+  excluded: []
+  n: 25
+  s: 6221545748548623274
+  x: 13717298824755400442
+products_by_category:
+  columns:
+  - CategoryName
+  - ProductName
+  - QuantityPerUnit
+  - UnitsInStock
+  - Discontinued
+  excluded: []
+  n: 69
+  s: 9068128226791332506
+  x: 849889420388933472
+quarterly_orders:
+  columns:
+  - CustomerID
+  - CompanyName
+  - City
+  - Country
+  excluded: []
+  n: 86
+  s: 11146724265960837966
+  x: 7239729958082107590
+sales_by_category:
+  columns:
+  - CategoryID
+  - CategoryName
+  - ProductName
+  - ProductSales
+  excluded: []
+  inexact:
+  - ProductSales
+  n: 77
+  s: 8397465793967879086
+  s_exact: 12578797527130663529
+  x: 4732693965782211766
+  x_exact: 14277951102472491655
+sales_totals_by_amount:
+  columns:
+  - SaleAmount
+  - OrderID
+  - CompanyName
+  - ShippedDate
+  excluded: []
+  inexact:
+  - SaleAmount
+  n: 66
+  s: 10788540045611010306
+  s_exact: 12368328815453342977
+  x: 12626392227930968764
+  x_exact: 18205878843743392257
+summary_of_sales_by_quarter:
+  columns:
+  - ShippedDate
+  - OrderID
+  - Subtotal
+  excluded: []
+  inexact:
+  - Subtotal
+  n: 809
+  s: 14127898899078763187
+  s_exact: 9640546454910947855
+  x: 2805413788616907793
+  x_exact: 18079858470335766227
+summary_of_sales_by_year:
+  columns:
+  - ShippedDate
+  - OrderID
+  - Subtotal
+  excluded: []
+  inexact:
+  - Subtotal
+  n: 809
+  s: 14127898899078763187
+  s_exact: 9640546454910947855
+  x: 2805413788616907793
+  x_exact: 18079858470335766227

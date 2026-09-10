@@ -30,7 +30,7 @@ sources:
 4. If any answer is no: switch to a seeded Python populator writing `.tbl` files per spec Clause 4.3.3 (option 4 in the [decision](/decisions/tpcc-implementation-choice.md)).
 
 # Cheapest experiment
-Loader image: `apt-get install sysbench`; run W=1 twice with the same seed and threads=1, compute the per-table digests with `scripts/canon.py` excluding c_since/h_date/o_entry_d/ol_delivery_d; repeat with threads=4; grep `math.random` seeding in sysbench's Lua bootstrap (`src/lua/internal/sysbench.rand.lua`).
+Loader image: `apt-get install sysbench`; run W=1 twice with the same seed and threads=1, compute the per-table digests with `megasamples/canon.py` excluding c_since/h_date/o_entry_d/ol_delivery_d; repeat with threads=4; grep `math.random` seeding in sysbench's Lua bootstrap (`src/lua/internal/sysbench.rand.lua`).
 
 # Resolves
 [TPC-C record](/datasets/tpc-c.md) tests section; whether `baseline.json` for tpcc can be pre-committed.
@@ -43,7 +43,7 @@ Loader image: `apt-get install sysbench`; run W=1 twice with the same seed and t
 generation, so the data differs run to run regardless.
 
 The consequences were taken rather than worked around. TPC-C is the one dataset in this project that
-carries **no pinned content digests**: `scripts/tpcc_load.py` asserts the specification's W=1
+carries **no pinned content digests**: `megasamples/sources/tpcc_load.py` asserts the specification's W=1
 cardinalities instead, which seven of the nine tables meet exactly, and says plainly that content is
 not pinned. `order_line` is excluded even from the count check, because the specification calls for 5
 to 15 lines per order at random — it came out at 299,674 and 300,222 on two runs. Pinning a checksum

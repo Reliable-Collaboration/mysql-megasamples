@@ -75,7 +75,7 @@ was renumbered onto key 1, collided with the real key-1 row, and `LOAD DATA LOCA
 
 What made it visible was refusing to pin the expectation from the load. `expected_counts.yaml` for both
 WWI databases is generated from `sys.partitions` inside the restored backup and carries an
-`# authority:` header that `scripts/verify.py --pin` now declines to overwrite; pinning it from MySQL
+`# authority:` header that `megasamples/verify.py --pin` now declines to overwrite; pinning it from MySQL
 would have recorded 402 as correct. The load sets `NO_AUTO_VALUE_ON_ZERO`, and a smoke query asserts
 that customer key 0 is still `Unknown`.
 

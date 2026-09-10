@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """AdventureWorks DW (2025 edition) -> MySQL.
 
-The same install-script shape as the OLTP database and the same reader (`scripts/bulkinsert.py`),
+The same install-script shape as the OLTP database and the same reader (`megasamples/sources/bulkinsert.py`),
 but a far simpler schema: one `dbo` schema so nothing is prefixed, one terminator family (`|` and a
 newline), no computed columns and none of SQL Server's exotic types -- the only awkward ones are four
 `varbinary` photo columns and a single `xml`.
@@ -11,8 +11,8 @@ Record: knowledge/datasets/adventureworks-dw.md
 import os, re, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import tsql, tsqlbody, ddlutil, bulkinsert  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+from megasamples.sources import tsql, tsqlbody, ddlutil, bulkinsert  # noqa: E402
 
 DATABASE = "adventureworks_dw"
 CONTEXT = "/context/adventureworks_dw"
@@ -39,7 +39,7 @@ def main():
     buckets = {k: [] for k in ("table", "index", "constraint", "view", "procedure", "function",
                                "trigger", "dml")}
     columns, unported, deferred_routines = {}, [], set()
-    # the routine bodies are translated by scripts/tsqlbody.py; anything it refuses is named here
+    # the routine bodies are translated by megasamples/sources/tsqlbody.py; anything it refuses is named here
     # with its reason, and a view that calls a refused routine is dropped below
     udts = dict(tsql.collect_tsql_types(script))
     routines, refused, routine_notes = tsqlbody.port(statements, udts)

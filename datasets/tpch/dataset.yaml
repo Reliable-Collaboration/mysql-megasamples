@@ -7,6 +7,6 @@ licenses: [tpc-eula]
 # them, and the 22 query texts are written into the staging directory at build time. See
 # knowledge/questions/tpc-eula-generated-data-redistribution.md.
 artifacts: []
-converter: none
+stage: {input: none, scale_factor: true}
 load:
   - tpch.sql

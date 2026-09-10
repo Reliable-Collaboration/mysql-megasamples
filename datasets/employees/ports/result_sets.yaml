@@ -1,0 +1,9 @@
+# The result columns PostgreSQL infers for each procedure that returns rows, measured with
+# psql's \gdesc on the ported schema; the procedure becomes a function RETURNS TABLE(...).
+employees_help:
+- [info, text]
+show_departments:
+- [dept_no, character(4)]
+- [dept_name, character varying(40)]
+- [manager, character varying]
+- [count, bigint]

@@ -41,10 +41,10 @@ sources:
 # Inferred
 * **Inferred:** the Terms of Use page (https://archive.org/about/terms.php) renders only through JavaScript and the Wayback Machine is not reachable from this session, so the exact upload warranty wording is unverified; the help-centre rights page is the closest authoritative text. Treat the obligation as: upload only content whose license permits redistribution, carry the license and attribution in item metadata, and never upload click-through-licensed or "personal use only" material.
 * **Inferred:** public download URLs follow `https://archive.org/download/<identifier>/<filename>`; download speed varies widely and items can be dark-listed after a takedown — hence "fallback, not primary".
-* **Inferred:** one item per dataset+version (`mysql-megasamples-<slug>-<version>`) with `mediatype:data`, `collection:opensource_media` (or whatever `ia upload` defaults to for new accounts), sha256 sidecars, and `x-archive-queue-derive:0`.
+* **Inferred:** one item per dataset+version (`sql-megasamples-<slug>-<version>`) with `mediatype:data`, `collection:opensource_media` (or whatever `ia upload` defaults to for new accounts), sha256 sidecars, and `x-archive-queue-derive:0`.
 
 # Limits
-1. Not a documented CDN: no SLA, no bandwidth guarantee, possible 503 SlowDown on upload; `scripts/fetch.py` tries the canonical URL first, then a GitHub release asset, then archive.org, verifying sha256 each time.
+1. Not a documented CDN: no SLA, no bandwidth guarantee, possible 503 SlowDown on upload; `megasamples/fetch.py` tries the canonical URL first, then a GitHub release asset, then archive.org, verifying sha256 each time.
 2. Only redistributable datasets may be mirrored (CC0, CC BY, BSD/MIT-licensed samples, public-record data); datasets under click-through EULAs are never mirrored.
 3. The AGPL-3 `internetarchive` package is a maintainer-side tool, never shipped in the image.
 

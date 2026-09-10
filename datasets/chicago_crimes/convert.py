@@ -72,7 +72,7 @@ def full(downloads, dest):
     files = [os.path.join(downloads, "full", f"crimes_{y}.csv") for y in YEARS]
     missing = [os.path.basename(f) for f in files if not os.path.exists(f)]
     if missing:
-        sys.exit(f"missing year file(s): {', '.join(missing)}; run scripts/fetch.py chicago_crimes_full")
+        sys.exit(f"missing year file(s): {', '.join(missing)}; run megasamples/fetch.py chicago_crimes_full")
     glob = os.path.join(downloads, "full", "crimes_2[0-9][0-9][0-9].csv").replace("'", "''")
     source = f"read_csv('{glob}', header=true, union_by_name=true)"
 

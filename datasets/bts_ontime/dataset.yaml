@@ -8,6 +8,6 @@ artifacts:
   - bts_ontime/L_AIRPORT.csv
   - bts_ontime/L_AIRLINE_ID.csv
   - bts_ontime/L_UNIQUE_CARRIERS.csv
-converter: none
+stage: {input: dir}
 load:
   - bts_ontime.sql

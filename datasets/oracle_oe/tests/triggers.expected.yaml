@@ -1,0 +1,4 @@
+# S9: what each scenario's probe in triggers.yaml prints on MySQL after the scenario's
+# statements, normalised and sorted line by line (megasamples/probe.py).
+insert_ord_line:
+- "13\t7"

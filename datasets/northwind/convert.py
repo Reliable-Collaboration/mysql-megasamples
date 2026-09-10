@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """Northwind: translate Microsoft's T-SQL install script to MySQL.
 
-Emits statements in the order PLAN.md section 5 requires -- tables (primary keys only), then data,
+Emits statements in the order the indexing strategy requires (ARCHITECTURE.md section 4) -- tables (primary keys only), then data,
 then secondary indexes, then foreign keys -- rather than in the upstream file's order, so the bulk
 load runs without foreign-key checks and the constraints are validated once at the end.
 
 Record: knowledge/datasets/northwind.md   Decision: knowledge/decisions/mssql-northwind-pubs-conversion-path.md
 """
 import os, re, sys
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
-import tsql  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+from megasamples.sources import tsql  # noqa: E402
 
 # CK_Birthdate compares against getdate(); MySQL forbids non-deterministic functions in CHECK.
 DROP_CHECKS = ["CK_Birthdate"]

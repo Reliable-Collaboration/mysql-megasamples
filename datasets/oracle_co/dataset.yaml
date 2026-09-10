@@ -1,9 +1,10 @@
 name: oracle_co
 database: oracle_co
 tier: core
+quick: true
 record: knowledge/datasets/oracle-co.md
 licenses: [mit]
 artifacts: [oracle_co/co_create.sql, oracle_co/co_populate.sql]
-converter: none
+stage: {input: dir}
 load:
   - oracle_co.sql

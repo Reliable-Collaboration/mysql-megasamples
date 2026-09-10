@@ -39,7 +39,7 @@ Which of Percona-Lab/tpcc-mysql, Percona-Lab/sysbench-tpcc (+sysbench) and Hamme
 [TPC-C implementations record](/tools/tpcc-implementations.md); [sysbench-tpcc source](/sources/github-percona-lab-sysbench-tpcc.md); [sysbench/Debian](/sources/github-akopytov-sysbench.md); [HammerDB source](/sources/github-tpc-council-hammerdb.md) and [docs](/sources/hammerdb-docs-ch03s02-tproc-c.md); [tpcc-mysql source](/sources/github-percona-lab-tpcc-mysql.md); [TPC-C spec](/sources/tpc-c-specification-v5-11.md).
 
 # Outcome
-`apt-get install sysbench` + `git clone --depth 1 … sysbench-tpcc` (pinned commit f110afa) in `docker/loader.Dockerfile`; `make gen-tpcc W=10 THREADS=4 SEED=42` runs `prepare` with `--tables=1 --use_fk=0`, renames the nine tables, applies our `indexes.sql`/`constraints.sql`, computes the baseline from MySQL. Naming and README disclaimer follow HammerDB's "derived from TPC-C" formula. The first execution task: connect with MySQL 9.7 (`caching_sha2_password`), load W=1 twice with the same seed and `--threads=1`, and diff digests.
+`apt-get install sysbench` + `git clone --depth 1 … sysbench-tpcc` (pinned commit f110afa) in `engines/mysql/loader.Dockerfile`; `make gen-tpcc W=10 THREADS=4 SEED=42` runs `prepare` with `--tables=1 --use_fk=0`, renames the nine tables, applies our `indexes.sql`/`constraints.sql`, computes the baseline from MySQL. Naming and README disclaimer follow HammerDB's "derived from TPC-C" formula. The first execution task: connect with MySQL 9.7 (`caching_sha2_password`), load W=1 twice with the same seed and `--threads=1`, and diff digests.
 
 # Status
 accepted (pending [tpcc-loader-determinism](/questions/tpcc-loader-determinism.md))

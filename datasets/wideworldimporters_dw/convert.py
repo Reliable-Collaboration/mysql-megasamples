@@ -11,8 +11,8 @@ Record: knowledge/datasets/wideworldimporters-dw.md
 import json, os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import wwi  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+from megasamples.sources import wwi  # noqa: E402
 
 EXPORT = os.path.abspath(os.path.join(HERE, "..", "..", "downloads", "wideworldimporters_dw",
                                       "export"))

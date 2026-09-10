@@ -5,7 +5,7 @@
 
 SSB's generator is a fork of TPC-H's dbgen: no fork carries a LICENSE file and the sources keep the
 TPC SCCS ids, so the TPC EULA governs it as a modified dbgen. It is therefore cloned and compiled
-inside `docker/loader.Dockerfile` at build time and never vendored here, and its output is never
+inside `engines/mysql/loader.Dockerfile` at build time and never vendored here, and its output is never
 shipped -- the same position as TPC-H and TPC-DS.
 
 The generator is built with `EOL_HANDLING=ON` (no trailing pipe, so MySQL sees the real column count)
@@ -20,7 +20,7 @@ Record: knowledge/datasets/ssb.md
 import os, subprocess, sys
 
 DATABASE = "ssb"
-IMAGE = os.environ.get("LOADER_IMAGE", "mms-loader:dev")
+IMAGE = os.environ.get("LOADER_IMAGE", "sql-megasamples-loader:dev")
 TABLES = {
     "customer": ([("c_custkey", "INT NOT NULL"), ("c_name", "VARCHAR(25) NOT NULL"),
                   ("c_address", "VARCHAR(25) NOT NULL"), ("c_city", "CHAR(10) NOT NULL"),
@@ -82,7 +82,7 @@ def generate(context, sf):
     if p.returncode != 0 or not os.path.exists(os.path.join(context, "lineorder.tbl")):
         sys.exit(f"ssb-dbgen failed in {IMAGE}: {(p.stderr or p.stdout)[-400:]}\n"
                  f"Build the loader image first: "
-                 f"docker build -f docker/loader.Dockerfile -t {IMAGE} .")
+                 f"make loader-image")
     return f"generated in {IMAGE}"
 
 
@@ -119,7 +119,7 @@ def main():
               f"REFERENCES `{rt}` (`{rc}`);" for t, c, rt, rc in FOREIGN_KEYS]
 
     sql = f"""-- Star Schema Benchmark at scale factor {sf:g}, prepared by datasets/{DATABASE}/convert.py.
--- The generator is compiled in docker/loader.Dockerfile and its output is never shipped.
+-- The generator is compiled in engines/mysql/loader.Dockerfile and its output is never shipped.
 --
 -- {DISCLAIMER}
 SET NAMES utf8mb4;

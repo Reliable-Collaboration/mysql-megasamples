@@ -6,8 +6,8 @@ key because none of the three files has a natural one. Layout decision:
 knowledge/decisions/smallsets-database-layout.md
 """
 import os, sys
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
-import csvtable  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+from megasamples.sources import csvtable  # noqa: E402
 
 SPECIES = {"0": "setosa", "1": "versicolor", "2": "virginica"}
 

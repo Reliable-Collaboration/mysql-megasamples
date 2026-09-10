@@ -2,7 +2,7 @@
 # restored .bak, carried through the export -- not counts read back from MySQL. A
 # row lost on the way in therefore fails the check instead of being pinned as
 # correct, which is how a silently dropped row was found. Regenerate with
-#   python3 scripts/stage.py wideworldimporters
+#   python3 -m megasamples stage wideworldimporters
 application_cities: 37940
 application_cities_archive: 28
 application_countries: 190

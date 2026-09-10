@@ -1,9 +1,10 @@
 name: oracle_hr
 database: oracle_hr
 tier: core
+quick: true
 record: knowledge/datasets/oracle-hr.md
 licenses: [mit]
 artifacts: [oracle_hr/hr_create.sql, oracle_hr/hr_populate.sql, oracle_hr/hr_code.sql]
-converter: none
+stage: {input: dir}
 load:
   - oracle_hr.sql

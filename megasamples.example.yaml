@@ -1,0 +1,52 @@
+# megasamples.yaml -- the stack this checkout builds and runs.
+#
+#   cp megasamples.example.yaml megasamples.yaml     # then edit, or: make configure (interactive)
+#
+# Without a megasamples.yaml the built-in default applies, which is this file as written: MySQL
+# with the core tier, and the four consoles. Every command reads it -- `make build`, `make image`,
+# `make up` -- so one file says what exists on this machine.
+
+# Which engines, and which datasets on each. A value is a selector or a list:
+#   core    the 21 datasets that fit the image budget (tiers core and core-medium)
+#   quick   the 15-dataset subset that builds in minutes with no large download
+#   all     every dataset in datasets/, including the extended and generated tiers
+#   a tier  core | core-medium | extended | generated
+#   a list  [sakila, chinook, employees]
+# MySQL is the hub: every dataset is converted into MySQL first and verified there, and the other
+# engines are ported from that corpus. Naming a dataset under postgres or sqlite therefore also
+# builds it in the MySQL build server, whether or not it is in the MySQL image.
+engines:
+  mysql:
+    datasets: core
+  # postgres:
+  #   datasets: core
+  # sqlite:
+  #   datasets: quick
+
+# The web consoles that come up beside the engines. Each is started only when an engine it can
+# browse is selected, and configured for every engine present, read-only account first.
+#   landing      the generated index page: every database, its size, licence and links
+#   phpmyadmin   MySQL only
+#   adminer      MySQL, PostgreSQL, SQLite
+#   dbgate       MySQL, PostgreSQL, SQLite
+#   cloudbeaver  MySQL, PostgreSQL, SQLite
+consoles: [landing, cloudbeaver, dbgate, adminer, phpmyadmin]
+
+# Host ports. Every one binds to 127.0.0.1: an unauthenticated database UI should not appear on the
+# network because someone opened a laptop in a cafe.
+ports:
+  mysql: 3306
+  postgres: 5432
+  landing: 8080
+  phpmyadmin: 8081
+  adminer: 8082
+  dbgate: 8083
+  cloudbeaver: 8084
+
+build:
+  threads: 4                  # parallel dump and load threads
+  keep_build_server: false    # keep the MySQL build server after `make image` (reuses loaded data)
+  scale_factor: 1             # SF for the generated benchmarks (TPC-H, TPC-DS, SSB)
+
+downloads:
+  concurrency: 3              # artifacts fetched at once; each is verified and fetched only once

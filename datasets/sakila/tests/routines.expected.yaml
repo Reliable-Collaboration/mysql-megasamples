@@ -1,0 +1,24 @@
+# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by
+# line (megasamples/probe.py); 'ERROR' when the call must fail.
+film_in_stock_1_1:
+- '1'
+- '2'
+- '3'
+- '4'
+- '4'
+film_not_in_stock_1_1:
+- '0'
+get_customer_balance_1:
+- '0'
+get_customer_balance_2:
+- '0'
+inventory_held_by_customer_1:
+- 'NULL'
+inventory_held_by_customer_6:
+- '554'
+inventory_in_stock_1:
+- '1'
+inventory_in_stock_6:
+- '0'
+rewards_report:
+- '0'

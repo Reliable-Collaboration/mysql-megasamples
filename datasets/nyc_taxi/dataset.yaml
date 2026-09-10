@@ -1,9 +1,10 @@
 name: nyc_taxi
 database: nyc_taxi
 tier: core
+quick: true
 record: knowledge/datasets/nyc-tlc.md
 licenses: [nyc-open-data-terms]
 artifacts: [nyc_taxi/green_tripdata_2025-01.parquet, nyc_taxi/taxi_zone_lookup.csv]
-converter: none
+stage: {input: dir}
 load:
   - nyc_taxi.sql

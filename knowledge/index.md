@@ -6,14 +6,14 @@ bundle_status: stable
 # Knowledge bundle
 
 <!-- intro -->
-MySQL LTS sample-database image: research trail and decisions. Read [runbooks/knowledge-bundle-conventions.md](/runbooks/knowledge-bundle-conventions.md) first; change history in [log.md](/log.md).
+Sample databases for MySQL, PostgreSQL and SQLite: the research trail and the decisions behind sql-megasamples. Read [runbooks/knowledge-bundle-conventions.md](/runbooks/knowledge-bundle-conventions.md) first; change history in [log.md](/log.md).
 <!-- /intro -->
 
 ## Directories
 * [datasets/](datasets/index.md) - 34 concepts
-* [decisions/](decisions/index.md) - 33 concepts
+* [decisions/](decisions/index.md) - 41 concepts
 * [licenses/](licenses/index.md) - 24 concepts
 * [questions/](questions/index.md) - 38 concepts
-* [runbooks/](runbooks/index.md) - 4 concepts
-* [sources/](sources/index.md) - 375 concepts
-* [tools/](tools/index.md) - 28 concepts
+* [runbooks/](runbooks/index.md) - 5 concepts
+* [sources/](sources/index.md) - 378 concepts
+* [tools/](tools/index.md) - 30 concepts

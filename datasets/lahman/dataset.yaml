@@ -4,6 +4,6 @@ tier: core
 record: knowledge/datasets/lahman.md
 licenses: [cc-by-sa-3-0]
 artifacts: [lahman/lahman_1871-2025_csv.zip]
-converter: none
+stage: {input: dir}
 load:
   - lahman.sql

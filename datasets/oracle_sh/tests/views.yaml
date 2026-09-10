@@ -1,0 +1,51 @@
+# S4v: every view's row count and canonical fingerprint (count, BIT_XOR, SUM mod
+# 2^64) over the row digest of megasamples/canon.py, pinned from MySQL. x_exact and
+# s_exact leave out the `inexact` columns: decimals the view computes, which an engine
+# without decimal arithmetic (SQLite) cannot reproduce to the digit.
+cal_month_sales_mv:
+  columns:
+  - calendar_month_desc
+  - dollars
+  excluded: []
+  inexact:
+  - dollars
+  n: 48
+  s: 14950184838693474857
+  s_exact: 1673582714634880106
+  x: 11027054252705978989
+  x_exact: 12690117146866065508
+fweek_pscat_sales_mv:
+  columns:
+  - week_ending_day
+  - prod_subcategory
+  - dollars
+  - channel_id
+  - promo_id
+  excluded: []
+  inexact:
+  - dollars
+  n: 10512
+  s: 7501575586650164708
+  s_exact: 13544689688157647813
+  x: 9402875503253965046
+  x_exact: 11145950032448795593
+profits:
+  columns:
+  - channel_id
+  - cust_id
+  - prod_id
+  - promo_id
+  - time_id
+  - unit_cost
+  - unit_price
+  - amount_sold
+  - quantity_sold
+  - TOTAL_COST
+  excluded: []
+  inexact:
+  - TOTAL_COST
+  n: 916039
+  s: 9684848875971314269
+  s_exact: 500403176077210291
+  x: 3404145724666370237
+  x_exact: 4979609565330491429

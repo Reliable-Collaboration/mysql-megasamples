@@ -1,0 +1,20 @@
+# The result columns PostgreSQL infers for each procedure that returns rows, measured with
+# psql's \gdesc on the ported schema; the procedure becomes a function RETURNS TABLE(...).
+uspgetbillofmaterials:
+- [productassemblyid, integer]
+- [componentid, integer]
+- [componentdesc, character varying(50)]
+- [totalquantity, numeric]
+- [standardcost, 'numeric(19,4)']
+- [listprice, 'numeric(19,4)']
+- [bomlevel, smallint]
+- [recursionlevel, integer]
+uspgetwhereusedproductid:
+- [productassemblyid, integer]
+- [componentid, integer]
+- [componentdesc, character varying(50)]
+- [totalquantity, numeric]
+- [standardcost, 'numeric(19,4)']
+- [listprice, 'numeric(19,4)']
+- [bomlevel, smallint]
+- [recursionlevel, integer]

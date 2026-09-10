@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """WideWorldImporters (OLTP) -> MySQL.
 
-Everything general lives in scripts/wwi.py; this file holds the decisions that are specific to this
+Everything general lives in megasamples/sources/wwi.py; this file holds the decisions that are specific to this
 database and should be visible rather than inferred: which text columns are really JSON, and what
 each of the eight computed columns becomes.
 
@@ -10,8 +10,8 @@ Record: knowledge/datasets/wideworldimporters.md
 import os, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import wwi  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+from megasamples.sources import wwi  # noqa: E402
 
 # Columns SQL Server stores as nvarchar(max) but that hold JSON. Only `ReturnedDeliveryData` carries
 # an `isjson` CHECK upstream; the rest are named as JSON by the sample's own documentation and by the

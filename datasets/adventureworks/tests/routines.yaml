@@ -1,0 +1,37 @@
+# S8: calls of the stored routines, with arguments as MySQL literals. What each call prints on
+# MySQL is pinned into routines.expected.yaml (normalised and sorted line by line,
+# megasamples/probe.py), and every port must print the same. A call runs inside a transaction
+# that is rolled back; `probe` is a query printed after the call; `error: true` means the call
+# must fail, on every engine; `probe_only: true` compares the probe alone, not the OUT values.
+# The three update procedures are called with a businessentityid that does not exist, so nothing
+# changes; uspupdateemployeehireinfo then inserts a pay-history row for it, which its foreign key
+# rejects, and its handler calls usplogerror(), which the T-SQL conversion does not carry: the call
+# fails, on MySQL as on every port (knowledge/datasets/adventureworks.md).
+- {name: ufngetaccountingenddate, routine: ufngetaccountingenddate, args: []}
+- {name: ufngetaccountingstartdate, routine: ufngetaccountingstartdate, args: []}
+- {name: ufngetdocumentstatustext_1, routine: ufngetdocumentstatustext, args: [1]}
+- {name: ufngetdocumentstatustext_9, routine: ufngetdocumentstatustext, args: [9]}
+- {name: ufngetproductdealerprice_707, routine: ufngetproductdealerprice, args: [707, "'2023-08-01'"]}
+- {name: ufngetproductlistprice_707, routine: ufngetproductlistprice, args: [707, "'2023-08-01'"]}
+- {name: ufngetproductlistprice_707_now, routine: ufngetproductlistprice, args: [707, "'2025-01-01'"]}
+- {name: ufngetproductstandardcost_707, routine: ufngetproductstandardcost, args: [707, "'2023-08-01'"]}
+- {name: ufngetpurchaseorderstatustext_2, routine: ufngetpurchaseorderstatustext, args: [2]}
+- {name: ufngetsalesorderstatustext_5, routine: ufngetsalesorderstatustext, args: [5]}
+- {name: ufngetstock_1, routine: ufngetstock, args: [1]}
+- {name: ufngetstock_707, routine: ufngetstock, args: [707]}
+- {name: ufnleadingzeros_42, routine: ufnleadingzeros, args: [42]}
+- {name: uspgetbillofmaterials_800, routine: uspgetbillofmaterials, args: [800, "'2022-01-01'"]}
+- {name: uspgetwhereusedproductid_819, routine: uspgetwhereusedproductid, args: [819, "'2022-01-01'"]}
+- {name: uspprinterror, routine: uspprinterror, args: []}
+- name: humanresources_uspupdateemployeelogin
+  routine: humanresources_uspupdateemployeelogin
+  args: [-1, "0x00", "'adventure-works\\verify'", "'Verifier'", "'2020-01-01'", 1]
+  probe: "SELECT COUNT(*) FROM humanresources_employee WHERE businessentityid = -1"
+- name: humanresources_uspupdateemployeepersonalinfo
+  routine: humanresources_uspupdateemployeepersonalinfo
+  args: [-1, "'999999999'", "'1990-01-01'", "'S'", "'F'"]
+  probe: "SELECT COUNT(*) FROM humanresources_employee WHERE businessentityid = -1"
+- name: humanresources_uspupdateemployeehireinfo
+  routine: humanresources_uspupdateemployeehireinfo
+  args: [-1, "'Verifier'", "'2020-01-01'", "'2020-01-01'", 10.0, 2, 1]
+  error: true

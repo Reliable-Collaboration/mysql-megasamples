@@ -65,7 +65,7 @@ Observed on this machine on 2026-09-02: only link-local IPv6, `disable_ipv6=0`, 
 
 # 2. Work around without privileges (allowed, in this order)
 1. Per-command IPv4: `curl -4`, `wget --inet4-only` (**Inferred** wget flag; verify with `wget --help`), Python `requests` via `urllib3.util.connection.HAS_IPV6 = False` (**Inferred**).
-2. `scripts/fetch.py` passes `curl -4` for manifest entries flagged `ipv4_first` (hosts with AAAA records that hang) and prefers hosts without AAAA (GitHub release assets, archive.org) as mirrors ([mirroring](/tools/internet-archive-mirroring.md)).
+2. `megasamples/fetch.py` passes `curl -4` for manifest entries flagged `ipv4_first` (hosts with AAAA records that hang) and prefers hosts without AAAA (GitHub release assets, archive.org) as mirrors ([mirroring](/tools/internet-archive-mirroring.md)).
 3. Build-time: `docker buildx build --network=host --allow network.host` or `--add-host host:ipv4` for a single stubborn host ([buildx build](/sources/docker-docs-buildx-build.md)); `RUN --network=host` per instruction.
 4. Registry: pull the base image once via a proxy/mirror that resolves IPv4 (e.g. a ghcr.io copy), or `docker login` to rule out rate limiting.
 If the step still fails, go to section 3.
@@ -78,12 +78,12 @@ while from the same shell `curl -4` to that exact URL returns 200 in 0.15 s and 
 20 ms with "Could not connect". Same signature, different registry: this one has AAAA records too, and
 the daemon reaches it through the Desktop VM's stack.
 
-`scripts/pull_image.py` is the section-2 workaround made repeatable. It speaks the OCI distribution
+`megasamples/pull_image.py` is the section-2 workaround made repeatable. It speaks the OCI distribution
 API over `curl -4`: resolve the tag, fetch the config and layer blobs, verify each against the digest
 the registry named, assemble an OCI archive and `docker load` it. It handles a 401 by fetching an
 anonymous token from the realm the challenge names, so it is not MCR-specific.
 
-    python3 scripts/pull_image.py mcr.microsoft.com/mssql/server:2022-latest
+    python3 -m megasamples pull-image mcr.microsoft.com/mssql/server:2022-latest
 
 It prints `image@sha256:...` for the caller to pin, which is *stricter* than `docker pull` of a
 floating tag. It needs no privileges and changes nothing on the host. The daemon-level fix in section 3

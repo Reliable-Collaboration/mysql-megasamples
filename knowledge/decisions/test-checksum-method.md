@@ -44,7 +44,7 @@ How do we prove, for every table, that what landed in MySQL equals what the sour
 * [Mathematical functions](/sources/mysql-refman-9-7-mathematical-functions.md): CONV returns a string with 64-bit precision; ROUND on DOUBLE is C-library dependent.
 * [CHECKSUM TABLE](/sources/mysql-refman-9-7-checksum-table.md), [TABLES](/sources/mysql-refman-9-7-information-schema-tables.md).
 
-# Canonical row form (`scripts/canon.py` and the generated SQL must agree byte-for-byte)
+# Canonical row form (`megasamples/canon.py` and the generated SQL must agree byte-for-byte)
 Columns in DDL order, joined by the unit separator U+001F, with each value rendered as below. **The separator must be written as `CHAR(31)` (or `0x1F`) in SQL and `\x1f` in Python — never as `'\x1f'` in a MySQL string literal**: MySQL drops the backslash before an unrecognised escape, so `'a\x1fb'` is the six characters `ax1fb` (`HEX()` = `6178316662`), silently producing a digest that can never match the Python baseline. Verified 2026-09-02 on `mysql:9.7.2`: `SHA2(CONCAT('a',CHAR(31),'b'),256)` and Python `hashlib.sha256(b"a\x1fb")` both give `17315457580335015581` after the CONV/CAST reduction.
 
 | Source type class | Canonical text | MySQL expression |
@@ -57,7 +57,7 @@ Columns in DDL order, joined by the unit separator U+001F, with each value rende
 | DATETIME / TIMESTAMP | `YYYY-MM-DD HH:MM:SS.ffffff` always 6 fractional digits, UTC for offset-bearing sources | `DATE_FORMAT(col, '%Y-%m-%d %H:%i:%s.%f')` |
 | TIME | `HH:MM:SS.ffffff` | `DATE_FORMAT(col, '%H:%i:%s.%f')` |
 | CHAR/VARCHAR/TEXT | the string as-is; trailing whitespace preserved on both sides unless the dataset record says the source type pads (SQL Server `char`, Oracle `CHAR`) in which case both sides `RTRIM` | `col` (or `RTRIM(col)`) |
-| BINARY/BLOB/geometry WKB/uniqueidentifier | lowercase hex | `LOWER(HEX(col))`; geometry: `LOWER(HEX(ST_AsBinary(col)))` |
+| BINARY/BLOB/geometry WKB/uniqueidentifier | lowercase hex | `LOWER(HEX(col))`; geometry: `LOWER(HEX(ST_AsBinary(col, 'axis-order=long-lat')))` — standard WKB with longitude first, which is what MySQL stores and what every other engine expects; MySQL's default output order for a geographic SRS (4326) is latitude first and would hash different bytes from the same point |
 | JSON/XML | XML: verbatim source text stored in a TEXT column and digested as a string. JSON: **excluded from the row digest**; `verify.py` fetches the column and compares `json.loads` objects on both sides (dict order-insensitive), because MySQL re-serialises JSON with its own key order and spacing ([json](/sources/mysql-refman-9-7-json.md)) | XML: `col`; JSON: not part of `row_text` |
 
 Row digest: `d = CAST(CONV(SUBSTRING(SHA2(row_text, 256), 1, 16), 16, 10) AS UNSIGNED)` — `CONV` returns a *string*, so the `CAST` is what makes the aggregates evaluate it as an unsigned 64-bit integer ([SHA2](/sources/mysql-refman-9-7-encryption-functions.md), [CONV 64-bit](/sources/mysql-refman-9-7-mathematical-functions.md)). Python: `int(hashlib.sha256(row_text.encode('utf-8')).hexdigest()[:16], 16)`.

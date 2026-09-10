@@ -1,0 +1,6 @@
+# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by
+# line (megasamples/probe.py); 'ERROR' when the call must fail.
+ufngetsalesorderstatustext_5:
+- Shipped
+ufngetsalesorderstatustext_9:
+- '** Invalid **'

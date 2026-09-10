@@ -51,7 +51,7 @@ AdventureWorksDW. Proposed MySQL database name: **`adventureworks_dw`**. All tab
 `factresellersales`. The localisation columns survive — 396 products carry non-ASCII Arabic text, and
 French names read `Cadre de vélo de route HL - rouge, 62`.
 
-This uses the same converter machinery as the OLTP database (`scripts/bulkinsert.py`), and the schema
+This uses the same converter machinery as the OLTP database (`megasamples/sources/bulkinsert.py`), and the schema
 is far simpler: one `dbo` schema so nothing is prefixed, one terminator family (`|` and a newline), no
 computed columns, and none of SQL Server's exotic types.
 

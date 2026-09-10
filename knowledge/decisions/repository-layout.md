@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: Repository layout, committed versus downloaded content, and the download manifest
-description: One directory per dataset with code, DDL, tests, license and provenance committed; all upstream artifacts and generated dumps live in git-ignored folders and are fetched through a single YAML manifest.
+description: One Python package for the pipeline, one directory per engine and per console, one directory per dataset with its contract, converter, tests, licence and provenance; upstream artifacts and every build output live in git-ignored folders, fetched through a single YAML manifest.
 resource: /decisions/repository-layout.md
 tags:
 - decision
@@ -12,7 +12,7 @@ status: stable
 trust: inferred
 generated:
   by: claude-code/claude-fable-5-1
-  at: "2026-09-02T20:17:31Z"
+  at: "2026-09-09T18:09:52Z"
 sources:
 - resource: /tools/github-limits.md
   title: GitHub size limits (tools agent)
@@ -32,42 +32,44 @@ What is committed, what is downloaded, and how does the build find downloads wit
 * Per-dataset source sizes in the dataset records (committed artifacts are all under 7 MB per file).
 
 # Outcome
-The authoritative tree is PLAN.md §2.1; this record mirrors it and is updated in the same commit whenever it changes.
+The tree, which ARCHITECTURE.md section 2 carries and this record mirrors:
 ```
 .
-├── PLAN.md  README.md  LICENSES.md  NOTICE.md   # LICENSES/NOTICE generated from knowledge/licenses
-├── Makefile                                     # targets listed in PLAN.md §2.4
-├── manifest.yaml                                # every downloadable artifact: url, mirrors, sha256, size, license, flags
-├── uv.lock  pyproject.toml
-├── docker/  Dockerfile  loader.Dockerfile  compose.yaml  my.cnf  init/00-users.sql  entrypoint-wrapper.sh
-├── scripts/  fetch.py  canon.py  canon.sql  verify.py  load.py  dumps.py  registry.py  gen_provenance.py  okf_check.py  okf_fix_quotes.py  mirror.sh (maintainer upload wrapper)
-├── datasets/<db_name>/
-│   ├── dataset.yaml                             # db name, tier, tables and load order, manifest ids, routines security
-│   ├── LICENSE  PROVENANCE.md  name_map.yaml    # generated
-│   ├── schema.sql  indexes.sql  constraints.sql  routines.sql
-│   ├── convert/                                 # converter or generator runner
-│   ├── data/                                    # only small upstream artifacts that are themselves redistributable
-│   ├── tests/                                   # expected_counts.yaml  samples.yaml  indexes.yaml  explain.yaml  smoke.sql  smoke.expected.yaml
-│   └── build/                                   # git-ignored: tsv/, dump/, baseline.json, load.log
-├── downloads/                                   # git-ignored, sha256-verified upstream artifacts (+ <id>.meta.json)
-├── knowledge/                                   # OKF bundle
-└── .github/workflows/  ci.yaml  native.yaml  extended.yaml  okf.yaml
+├── README.md  ARCHITECTURE.md  PLAN.md  CATALOGUE.md  LICENSES.md  NOTICE.md  LICENSE   # CATALOGUE, LICENSES, NOTICE generated
+├── Makefile                    one-line shims over `python3 -m megasamples <command>`
+├── manifest.yaml               every downloadable artifact: url, mirrors, sha256, size, licence, flags
+├── megasamples.example.yaml    the stack configuration, documented; `make configure` writes megasamples.yaml
+├── pyproject.toml  uv.lock     the pinned Python stack
+├── megasamples/                the package: pipeline, engines/<engine>/, sources/ (upstream translators), port/
+├── engines/<engine>/           Dockerfile, server configuration, init SQL
+├── consoles/<console>/         console configuration; consoles/landing/index.html is generated
+├── datasets/<name>/            dataset.yaml  convert.py  tests/  LICENSE  PROVENANCE.md  [name_map.yaml]
+├── knowledge/                  the OKF bundle
+├── release/<set>/              SHA256SUMS and MANIFEST.md committed; the staged files are not
+├── downloads/                  git-ignored: verified artifacts, <id>.ok markers, <id>.meta.json
+└── build/                      git-ignored: stage/<name>/ (converted SQL), <engine>/ (dumps, image context)
 ```
-* `.gitignore` (the committed file is authoritative): `downloads/`, `datasets/*/build/`, `docker/context/`, `*.bak`, `*.7z`, `*.parquet`, `*.zst`, `*.tsv`, `.venv/`, `work/`, `__pycache__/`.
+* `.gitignore` (the committed file is authoritative): `downloads/`, `build/`, `*.bak`, `*.7z`,
+  `*.parquet`, `*.zst`, `*.tsv`, `.venv/`, `work/`, `__pycache__/`, `.env`, `megasamples.yaml`,
+  `compose.yaml`, `consoles/landing/index.html`, and everything under `release/*/` except the two
+  record files.
 * `manifest.yaml` entry schema:
 ```yaml
 - id: nyc_taxi/yellow_2025-01
   dataset: nyc_taxi
   url: https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet
-  mirrors: [https://github.com/<org>/mysql-megasamples/releases/download/data-v1/yellow_tripdata_2025-01.parquet, https://archive.org/download/<item>/yellow_tripdata_2025-01.parquet]
-  sha256: ""            # empty until the first verified fetch; the build refuses to proceed unless MEGASAMPLES_TRUST_FIRST_FETCH=1, then writes the value back
+  mirrors: []
+  sha256: ""            # empty until the first verified fetch; refused unless MEGASAMPLES_TRUST_FIRST_FETCH=1, which writes it back
   size_bytes: 59158238
   license: nyc-open-data-terms
-  requires_login: false
-  ipv4_first: true      # curl -4 first; set for hosts with AAAA records that hang (cloudfront, wikimedia); default false
+  ipv4_first: false     # curl -4 first, for hosts with AAAA records that hang
 ```
-* `scripts/fetch.py` reads the manifest, tries `url` then `mirrors` in order with `curl --fail --location --retry 5 --retry-all-errors --connect-timeout 20 -C -` (adding `-4` when `ipv4_first`), verifies sha256, writes `downloads/<id>.ok` and `<id>.meta.json` (size, Last-Modified, source used), and skips files with a valid `.ok` marker.
-* Projected fresh clone size: code + DDL + committed small artifacts, target **< 60 MB** (ceiling 150 MB); the Employees dumps (172 MB) and everything larger are downloads mirrored as release assets.
+* `megasamples fetch` reads the manifest, tries `url` then `mirrors` with
+  `curl --fail --location --retry 5 --retry-all-errors --connect-timeout 20 -C -` (with `-4` when
+  `ipv4_first`, and again over IPv4 when a transfer stalls), verifies sha256, writes
+  `downloads/<id>.ok` and `<id>.meta.json`, and never fetches a file whose marker matches.
+* Committed size: code, contracts, tests and the bundle; every artifact larger than a small upstream
+  script is a download.
 
 # Status
-accepted; sizes to be confirmed during execution
+accepted

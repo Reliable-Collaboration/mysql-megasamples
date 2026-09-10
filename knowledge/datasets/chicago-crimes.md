@@ -150,3 +150,12 @@ None upstream. This project adds a view `v_crime_iucr` joining `crimes` to `iucr
 # Open questions
 * Whether every `IUCR` value in the loaded subset exists in the 434-row lookup (one left join).
 * Whether the 2024 subset stays at 259,267 rows between builds - CPD revises history, so the test should assert a tolerance rather than an exact equality. Cheapest check: re-run the `$select=count(*)&$where=year=2024` query at build time and compare with the manifest.
+
+# Snapshot re-pinned (2026-09-10)
+The portal's 2024 extract grew between 2026-09-03 and 2026-09-09: 74,811,578 bytes (259,267 rows)
+became 74,885,948 bytes (sha256 `5e67e3861a76…`, 259,607 rows), the city having amended the year.
+No release asset mirrors the earlier bytes -- the project publishes only the repository -- so the
+manifest and every expectation (counts, digests, views, smoke results) now pin the 2026-09-09
+extract, verified on MySQL with 0 failures and re-ported. The next amendment fails the digest
+check by design; `MEGASAMPLES_ACCEPT_DRIFT=1` accepts the newer bytes, re-pins the manifest, and
+`megasamples verify chicago_crimes --pin` moves the expectations after the MySQL build.

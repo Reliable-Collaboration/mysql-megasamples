@@ -1,0 +1,10 @@
+# S9: trigger scenarios. Each runs its statements (MySQL dialect; the ports translate them with
+# the same translator that ported the triggers) inside a transaction, prints the probe query, and
+# rolls back. What MySQL prints is pinned into triggers.expected.yaml (megasamples/probe.py).
+# `trigger` names the trigger exercised, so an engine that could not port it skips the scenario;
+# a scenario without one exercises ON UPDATE CURRENT_TIMESTAMP, which every port emulates.
+- name: insert_ord_line
+  trigger: insert_ord_line
+  statements:
+  - "INSERT INTO order_items (order_id, product_id, unit_price, quantity) VALUES (2458, 3400, 389.00, 1)"
+  probe: "SELECT MAX(line_item_id), COUNT(*) FROM order_items WHERE order_id = 2458"

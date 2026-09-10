@@ -3,9 +3,10 @@
 name: northwind
 database: northwind
 tier: core
+quick: true
 record: knowledge/datasets/northwind.md
 licenses: [mit]
 artifacts: [northwind/instnwnd.sql]
-converter: none          # convert.py runs at stage time and emits a plain .sql file
+stage: {input: artifact}
 load:
   - northwind.sql

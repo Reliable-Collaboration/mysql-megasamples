@@ -50,7 +50,7 @@ Before any step marked "verify first" in PLAN.md, run the named check and record
 
 # 4. Reproducibility rules
 * No hand-edited SQL or CSV in the repository. Every artifact under `datasets/*/build/` is produced by `make <dataset>` from the upstream artifact plus committed code.
-* Every download goes through `scripts/fetch.py` reading `manifest.yaml`; the script verifies sha256 and skips verified files.
+* Every download goes through `megasamples/fetch.py` reading `manifest.yaml`; the script verifies sha256 and skips verified files.
 * Every dataset build ends by running its `tests/` and refusing to publish on failure.
 
 # 5. IPv6 first when networking misbehaves

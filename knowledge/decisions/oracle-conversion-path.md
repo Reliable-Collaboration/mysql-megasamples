@@ -41,7 +41,7 @@ sources:
 How do we turn the four Oracle sample schemas (HR, CO, SH, OE) into MySQL databases: (a) parse the upstream SQL/CSV artifacts directly, or (b) run Oracle Database Free in the build, install the schemas with their own scripts, and export?
 
 # Options considered
-1. **(a) Direct conversion with a Python converter (`datasets/oracle_*/convert/oracle_scripts.py (one shared parser module, `scripts/oracle_scripts.py`)`)** — chosen for all four schemas.
+1. **(a) Direct conversion with a Python converter (`datasets/oracle_*/convert/oracle_scripts.py (one shared parser module, `megasamples/oracle_scripts.py`)`)** — chosen for all four schemas.
    * HR: 7 tables / 216 rows of `INSERT ... VALUES` with `TO_DATE` — trivial grammar ([HR source](/sources/github-oracle-samples-db-sample-schemas-hr-scripts.md)).
    * CO: one 1.27 MB script of column-list INSERTs with `TO_TIMESTAMP` and `UTL_RAW.CAST_TO_RAW('{json}')`; multi-line literals ([CO source](/sources/github-oracle-samples-db-sample-schemas-co-scripts.md)).
    * SH: three tiny INSERT dimensions plus **six plain CSV files with header rows** (SQLcl `LOAD` defaults = comma, double-quote enclosure, UTF-8); only quirks are 80-column space padding in sales.csv and `""`-as-NULL ([SH source](/sources/github-oracle-samples-db-sample-schemas-sh-scripts.md)). `LOAD DATA LOCAL INFILE` handles 918,843 rows in seconds.

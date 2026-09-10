@@ -61,7 +61,7 @@ stale_after: "2027-03-01"
   with a bare `EOF` from the manifest request while `curl -4` to the same URL answered in 0.15 s —
   the IPv6 signature the [runbook](/runbooks/ipv6-and-privileges.md) puts first, and one the Docker
   Desktop fix applied for Docker Hub at P-02 does not cover. The no-privilege workaround in that
-  runbook's section 2 is now a script: `scripts/pull_image.py` fetches the manifest and blobs over
+  runbook's section 2 is now a script: `megasamples/pull_image.py` fetches the manifest and blobs over
   IPv4, verifies every digest, and hands Docker an OCI archive. It pins by digest, so it is a
   stricter fetch than `docker pull` of a floating tag, not a looser one.
 

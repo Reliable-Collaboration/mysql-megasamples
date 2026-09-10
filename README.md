@@ -1,39 +1,76 @@
-# mysql-megasamples
+# sql-megasamples
 
-A MySQL 9.7 LTS Docker image preloaded with 21 well-known sample and public databases, each
-converted from its authoritative upstream source by a scripted, rerunnable pipeline — and a set of
-four web consoles that come up beside it, already connected, so you can start looking at data
-instead of configuring clients.
+Sample databases for **MySQL, PostgreSQL and SQLite**: 38 well-known sample and public datasets,
+each converted from its authoritative upstream source by a scripted, rerunnable pipeline and
+verified against pinned expectations, shipped as engine images and files — with a set of web
+consoles that come up beside them, already connected, so you can start looking at data instead of
+configuring clients. You choose the engines, the databases and the consoles; one file holds the
+choice and one command builds it.
 
-|  |  |
-|---|---|
-| databases | 21, listed below |
-| tables / rows | 248 tables, 9,056,697 rows |
-| data size | ~660 MB loaded; the built image is ~3.5 GB |
-| server | MySQL 9.7.2, `utf8mb4`, InnoDB |
-| consoles | phpMyAdmin, Adminer, DbGate, CloudBeaver, plus a generated index page |
-| accounts | `demo` (read-only) and `admin` (full privileges) |
+| engine | what ships | size |
+|---|---|---|
+| **MySQL 9.7.2** | `sql-megasamples-mysql`: an image with the databases baked into its data directory | 3.5 GB image |
+| **PostgreSQL 18.6** | `sql-megasamples-postgres`: an image with the databases in its cluster, ported from the verified MySQL corpus | 4.1 GB image (2.6 GB data directory) |
+| **SQLite 3.49** | `sql-megasamples-sqlite`: one `.sqlite` file per database with the `sqlite3` shell beside them; the files are also under `build/sqlite/` to copy anywhere | 1.3 GB image (899 MB of files) |
+
+Every dataset is built and verified on all three engines. PostgreSQL and SQLite are **ports of the
+MySQL corpus**: the same rows, proved by the same per-table content digests, foreign-key checks and
+index parity that MySQL is checked against — and produced by one deterministic program, never by hand.
 
 Every dataset keeps its own upstream licence — this project never places a single licence over the
 data. [`CATALOGUE.md`](CATALOGUE.md) lists all 38 datasets with what each licence asks of you, and
 [Licensing](#licensing) is worth reading before you publish anything built from this.
 
-**Status: not published yet.** There is no image to `docker pull`; you build it locally, which is
-what the rest of this page is about. [`PLAN.md`](PLAN.md) is the plan being executed and
-[`knowledge/`](knowledge/index.md) is the evidence bundle behind every claim in it.
+<p align="center">
+  <a href="docs/screenshots/landing.png"><img src="docs/screenshots/landing.png" alt="The console index: how to connect your own tool to MySQL, PostgreSQL and SQLite, the four consoles, and the 21 databases with their tables, rows and sizes on each engine" width="100%"></a>
+</p>
+<p align="center">
+  <a href="docs/screenshots/cloudbeaver.png"><img src="docs/screenshots/cloudbeaver.png" alt="CloudBeaver, opened as a guest: the MySQL read-only connection expanded to its 21 databases, and Sakila's film table on the Data tab" width="49%"></a>
+  <a href="docs/screenshots/dbgate.png"><img src="docs/screenshots/dbgate.png" alt="DbGate with every connection preconfigured: Sakila's tables with their row counts, the film table's columns and references, and its rows" width="49%"></a>
+</p>
+<p align="center"><sub>The console index at <code>http://127.0.0.1:8080/</code>, then CloudBeaver and DbGate on Sakila's <code>film</code> table — all three engines, every database, one <code>make up</code>. Retake them with <code>make screenshots</code>.</sub></p>
 
-## The 21 databases
+**Status: not published yet.** There is no image to `docker pull`; you build them locally, which
+is what the rest of this page is about. [`ARCHITECTURE.md`](ARCHITECTURE.md) describes how the
+pieces fit, [`PLAN.md`](PLAN.md) what is being built next, and [`knowledge/`](knowledge/index.md)
+is the evidence bundle behind every claim in both.
+
+## Quick start
+
+```sh
+uv sync            # the Python stack (PyYAML, PyMySQL, duckdb, lxml, sqlglot, py7zr)
+make configure     # choose engines x databases and consoles; writes megasamples.yaml
+make run           # fetch (once), convert, load, verify, bake the images
+make up            # start the stack, then open http://127.0.0.1:8080/
+```
+
+`make configure` is a full-screen chooser: the engines, then a matrix of every dataset against
+every engine — with each dataset's tier, download size and whether that download is already
+verified on this machine — then the consoles. It writes `megasamples.yaml`, which every other
+command reads. You can also copy [`megasamples.example.yaml`](megasamples.example.yaml) and edit
+it, or run with no file at all: the built-in default is MySQL with the 21 core databases and the
+four consoles.
+
+You need **Docker** (Desktop or Engine), **Python 3.14+** with [`uv`](https://docs.astral.sh/uv/),
+and room: the core tier is 1.4 GB of downloads, two build servers holding a copy of the data, and
+up to 8.7 GB of images for the three engines. A full core build converts and loads nine million rows
+and is not a five-minute job; the 15-dataset **quick** subset (196 MB of downloads) builds in
+minutes, and the PostgreSQL and SQLite ports of an already-built MySQL corpus take minutes too.
+
+## The databases
 
 Each one is converted from its authoritative upstream source; the description is the one its own
 research record carries, so it says what the thing actually is rather than what a blurb writer
-guessed. Full detail — every tier, licence and obligation — is in [`CATALOGUE.md`](CATALOGUE.md).
+guessed. These 21 are the **core** tier, the ones an image holds by default; full detail — every
+tier, licence and obligation — is in [`CATALOGUE.md`](CATALOGUE.md), and `make list` prints every
+dataset with its tier, download size and shape.
 
 <!-- databases:start -->
 | database | what it is | tables | rows |
 |---|---|---:|---:|
 | `adventureworks` | Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer) | 69 | 759,240 |
 | `adventureworks_lt` | The lightweight 12-table AdventureWorks (SalesLT schema) | 12 | 4,277 |
-| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 259,702 |
+| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 260,041 |
 | `chinook` | Luis Rocha's digital media store sample (v1.4.5, 2024-02-12) | 11 | 15,607 |
 | `contoso` | SQLBI's synthetic Contoso retail star schema V2 | 8 | 753,467 |
 | `dvdstore` | Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships) | 9 | 174,716 |
@@ -55,92 +92,22 @@ guessed. Full detail — every tier, licence and obligation — is in [`CATALOGU
 <!-- databases:end -->
 
 Beyond these, the extended, generated and user-fetched datasets are in
-[Beyond the 21](#beyond-the-21).
+[Beyond the core](#beyond-the-core).
 
-## What you need
+## The engines
 
-* **Docker** (Desktop or Engine) with ~10 GB free: 1.4 GB of downloads, 145 MB of dumps, a build
-  server holding a copy of the data, and the ~3.5 GB image.
-* **Python 3.11+**, and [`uv`](https://docs.astral.sh/uv/).
-* Time. A full build fetches 155 artifacts and loads 9 million rows; it is not a five-minute job.
+**MySQL is the hub.** Every dataset is converted into MySQL first, loaded into a throwaway build
+server, verified there — row counts, a canonical content digest of every table, foreign-key
+integrity, the index set, every view's digest, the output of every stored routine and trigger,
+query plans, canonical query results — and dumped. The other engines are ports of that verified
+corpus, checked against the same expectations, so a database in PostgreSQL or SQLite is provably
+the same rows, the same views and the same behaviour as in MySQL.
 
-```sh
-uv sync          # .venv with PyYAML, PyMySQL, duckdb, lxml, sqlglot, py7zr
-```
+### MySQL
 
-Every command below is a `make` target, and every target is a thin shim over a script in
-`scripts/` — so nothing here is magic, and `make -n <target>` shows you exactly what will run.
-
-## Build it
-
-```sh
-make image
-```
-
-That fetches every core dataset (verifying each download against a recorded SHA-256), loads it into
-a throwaway MySQL "build server", tests it, dumps it, and bakes the result into
-`mysql-megasamples:dev`.
-
-**When the build finishes it removes the build containers**, because at that point they hold nothing
-you need — a second copy of every dataset in a container nobody will remember starting. To keep them
-up, which is what you want while developing a converter:
-
-```sh
-make image KEEP_BUILD_RESOURCES=1     # keep the build server so the next load reuses it
-```
-
-You can remove them later at any time with `make clean`.
-
-### A shorter build
-
-`make image` builds all 21. To try the pipeline without the large downloads, build the fifteen-dataset
-subset CI uses — 203 MB instead of 1.4 GB:
-
-```sh
-make image DATASETS="$(make print-core-fast)"
-```
-
-### One dataset you have to supply yourself
-
-`lahman` (baseball, 27 tables) is published behind a SABR share link that a build cannot fetch. If
-you run the full `make image` without it, the fetch stops and names both the exact URL to get it from
-and the path to put it at (`downloads/lahman/lahman_1871-2025_csv.zip`); its checksum is then
-verified like every other artifact. Leave `lahman` out of `DATASETS` if you would rather skip it:
-
-```sh
-make image DATASETS="$(make print-core | tr ' ' '\n' | grep -v '^lahman$' | tr '\n' ' ')"
-```
-
-## Run it, and open the console
-
-```sh
-make up
-```
-
-One stack, up together — the database and all four consoles:
-
-| | address | notes |
-|---|---|---|
-| **console index** | **<http://127.0.0.1:8080/>** | **start here**: every database with its size, licence and provenance |
-| phpMyAdmin | <http://127.0.0.1:8081/> | signed in already; the server menu switches account |
-| Adminer | <http://127.0.0.1:8082/> | its login form remains — type either account |
-| DbGate | <http://127.0.0.1:8083/> | both connections preconfigured in the sidebar |
-| CloudBeaver | <http://127.0.0.1:8084/> | opens as a guest; both connections in the sidebar |
-| MySQL itself | `127.0.0.1:3306` | for `mysql`, DBeaver, DataGrip, an application |
-
-Every port binds to `127.0.0.1`, not `0.0.0.0`: an unauthenticated database UI should not appear on
-the network because someone opened a laptop in a café. Publishing them more widely is a deliberate
-edit to `compose.yaml`.
-
-```sh
-make down        # all of it down again
-```
-
-`make up` is `docker compose up -d` with the index page regenerated from the running database first,
-so it always matches what is actually loaded; `make down` is `docker compose down`. If you want only
-the database: `docker compose up -d mysql`.
-
-### The two accounts
+`sql-megasamples-mysql:dev` is `mysql:9.7.2` (`utf8mb4`, InnoDB) with the chosen databases already
+in its data directory: first start answers a real query in about two seconds, and nothing is loaded
+at startup. Two accounts are offered from every console, and both are usable from any client:
 
 | account | password | privileges |
 |---|---|---|
@@ -148,33 +115,218 @@ the database: `docker compose up -d mysql`.
 | `admin` | `admin` | `ALL PRIVILEGES WITH GRANT OPTION` |
 
 Each console opens on `demo`, because the safe account should be the one you get without choosing.
-Both are offered everywhere, so switching to `admin` is a menu, not a config edit.
-
-These are boilerplate credentials for a disposable local database and they are committed on purpose,
-so `make up` needs no setup. To change them, copy `.env.example` to `.env` and edit it — the same
-value reaches the server (applied with `ALTER USER` at startup) and every console, so the two cannot
-drift apart. `.env` is gitignored.
+The passwords are boilerplate for a disposable local database and are committed on purpose; to
+change them, copy `.env.example` to `.env` — the same value reaches the server (applied at startup)
+and every console, so the two cannot drift apart.
 
 ```sh
 mysql -h 127.0.0.1 -P 3306 -u demo -pdemo sakila
+docker compose up -d mysql        # the database alone, no consoles
 ```
 
-## Housekeeping
+A `megasamples` database inside the image holds the provenance registry: one row per dataset with
+its tier, knowledge record, licences, source artifacts and digests, and pinned row counts. The
+catalogue, the landing page and the image tests all read it, so none can drift from what was baked.
 
-Two kinds of container exist here, and they are not the same kind of thing:
+### PostgreSQL
+
+`sql-megasamples-postgres:dev` is `postgres:18.6-bookworm` with one database per dataset already in
+its cluster, the same `demo` (read-only) and `admin` accounts, the superuser `postgres` with
+password `root`, and a `megasamples` database holding the registry. `POSTGRES_PASSWORD`,
+`DEMO_PASSWORD` and `ADMIN_PASSWORD` override the passwords at start. Tables, data, primary and
+unique keys, secondary indexes, foreign keys, check constraints, stored generated columns, views,
+stored routines (as PL/pgSQL; a procedure that returns rows is a function you `SELECT * FROM`),
+triggers, `ON UPDATE CURRENT_TIMESTAMP` columns and full-text indexes (GIN over `to_tsvector`) are
+all ported. Of the corpus's 69 views two are not carried (they reach into another database), and
+the one spatial index is not; each database's registry row and [`CATALOGUE.md`](CATALOGUE.md) say
+exactly which, and [`knowledge/decisions/programmable-object-parity.md`](knowledge/decisions/programmable-object-parity.md)
+says why. The identical table set is kept, so a query written for one engine names the same tables
+on the other.
 
 ```sh
-make status      # the stack, and any transient container, listed separately
-make clean       # remove the transient ones; the stack keeps running
-make clean-all   # remove the transient ones and take the stack down
+PGPASSWORD=demo psql -h 127.0.0.1 -p 5432 -U demo sakila
 ```
 
-The **stack** is the six services in `compose.yaml`. Everything else — the build server, the SQL
-Server behind `make wwi-export`, the loader image, the servers the tests start — is **transient**,
-carries the label `megasamples.transient=true`, and is what `make clean` removes. Nothing removes
-the build server on a timer, because doing so discards every dataset loaded into it and reloading
-takes hours; `make image` removes it when the build is done, and `make clean` is how you end a
-session you kept it for.
+### SQLite
+
+`sql-megasamples-sqlite:dev` carries one file per database under `/data` plus
+`/data/megasamples.sqlite`, the registry, and the `sqlite3` shell. The same files sit under
+`build/sqlite/<database>/` on the machine that built them, for readers that want a database
+without a server, and are what [DoltLite](https://github.com/dolthub/doltlite) opens directly. Types are declared in
+MySQL's terms (`DECIMAL(10,2)`, `DATETIME`, `VARCHAR(45)`) so readers see the intent; foreign keys are
+declared and verified, and enforced by the reader's `PRAGMA foreign_keys=ON`, as with any SQLite file.
+Views, triggers, `ON UPDATE` columns and full-text indexes (an FTS5 table beside each indexed
+table, kept in step by triggers) are ported; SQLite has no stored routines, so the 42 routines are
+not, nor are the views that call them, the three views that read XML, and a handful of others the
+catalogue names — every one with its reason in `datasets/<name>/ports/not_ported.yaml`.
+
+```sh
+docker exec -it megasamples-sqlite sqlite3 /data/sakila.sqlite
+docker run --rm -it sql-megasamples-sqlite:dev sqlite3 /data/chinook.sqlite
+```
+
+### How the ports are made, and why you can trust them
+
+One program, `megasamples/port/`, reads each database's schema, views, routines and triggers from
+the MySQL build server's `information_schema` and its rows from the MySQL Shell dump, applies one
+type-mapping table and one DDL emitter with two dialects, translates every view, routine body and
+trigger by rule (sqlglot for the statements, a scanner over the constructs the corpus uses for the
+procedural bodies), and loads the result with the engine's own tools (`psql \copy`, the `sqlite3`
+driver). Nothing is written by hand and nothing is guessed: a type with no mapping or a function the
+target lacks stops that object with its name. The DDL, the translated objects and the not-ported
+list of every dataset are committed under `datasets/<name>/ports/`, so a rule change shows up as a
+diff, and `make check` regenerates them and fails on any byte of difference. Then the port is
+verified against the same `datasets/<name>/tests/` files as MySQL — counts, canonical content
+digests, foreign keys, indexes, the digest of every view, and the printed output of every routine
+call and trigger scenario, pinned from MySQL.
+
+### What the ports do not carry, and why
+
+Everything an engine cannot carry is refused by name, with its reason, and the reason is the same
+in three places: `datasets/<name>/ports/not_ported.yaml`, the `not_ported` column of that
+database's registry row inside the image, and the tooltip behind "n not ported" on the landing
+page. There are seven kinds, and every one is an engine's limitation rather than a translation
+left undone ([the record](knowledge/decisions/programmable-object-parity.md) has the evidence):
+
+| what | engines | why |
+|---|---|---|
+| 2 views and 3 foreign keys of `oracle_oe` that reach into `oracle_hr` | both | a PostgreSQL database or a SQLite file cannot reference another database |
+| the 42 stored routines, and the 2 `employees` views that call them | SQLite | SQLite has no stored routines |
+| 3 AdventureWorks views that read XML with `EXTRACTVALUE` | SQLite | SQLite has no XML functions (PostgreSQL carries them through `xpath()`) |
+| `sakila.actor_info` | SQLite | `group_concat` cannot combine DISTINCT with a separator or an ORDER BY |
+| the `oracle_oe` trigger that assigns `line_item_id` before an insert | SQLite | a SQLite trigger cannot modify the row being inserted, and the key must be there first |
+| 4 AdventureWorks `AUTO_INCREMENT` columns inside composite keys | SQLite | SQLite auto-assigns only a single-column INTEGER PRIMARY KEY; an insert must supply the value |
+| the spatial index on `sakila.address` | both | core PostgreSQL indexes geometry only with PostGIS, which would change the image's base; SQLite has no geometry type. The column itself is ported as standard WKB |
+
+Two comparisons are weaker than a digest and say so in the verification output: a view whose
+`GROUP_CONCAT` has no ORDER BY is held to its row count (MySQL leaves that order unspecified), and
+on SQLite, which does decimal arithmetic in floating point, a view's computed decimal columns are
+left out of the digest while every other column is still compared exactly.
+
+## Connect with your own tool
+
+Every server engine listens on `127.0.0.1` of the machine running the stack, with the same two
+accounts. DBeaver, DataGrip, TablePlus, VS Code's database extensions, a language driver or the
+engine's own client take these details as they are; the console index page repeats them with the
+ports and passwords you actually configured.
+
+| | MySQL | PostgreSQL | SQLite |
+|---|---|---|---|
+| address | `127.0.0.1` port `3306` | `127.0.0.1` port `5432` | files, no server |
+| read only | `demo` / `demo` | `demo` / `demo` | — |
+| full access | `admin` / `admin` (all privileges) | `admin` / `admin` (owns every sample table) | — |
+| superuser | `root` / `root` | `postgres` / `root` | — |
+| database | any of the 21, e.g. `sakila` | one per dataset; connect to it, or to `megasamples` for the registry | one file per database |
+| client | `mysql -h 127.0.0.1 -P 3306 -u demo -pdemo sakila` | `PGPASSWORD=demo psql -h 127.0.0.1 -p 5432 -U demo sakila` | `sqlite3 sakila.sqlite` |
+| URL | `mysql://demo:demo@127.0.0.1:3306/sakila` | `postgresql://demo:demo@127.0.0.1:5432/sakila` | the file's path |
+| JDBC | `jdbc:mysql://127.0.0.1:3306/sakila` | `jdbc:postgresql://127.0.0.1:5432/sakila` | `jdbc:sqlite:/path/to/sakila.sqlite` |
+
+MySQL 9 authenticates with `caching_sha2_password` only, so use a client or driver from the MySQL 8
+era or newer. The SQLite files live inside the `megasamples-sqlite` container under `/data/`, one
+`<database>.sqlite` each plus `megasamples.sqlite` (the registry), and under
+`build/sqlite/<database>/` on the machine that built them; `docker cp megasamples-sqlite:/data/sakila.sqlite .`
+takes one out, and DB Browser for SQLite, DBeaver, DataGrip or Python's `sqlite3` open it as it is.
+Run `PRAGMA foreign_keys=ON` to enforce the foreign keys the file declares; a full-text index is an
+FTS5 table named `<table>_<index>_fts`. Ports and passwords are yours to change in
+`megasamples.yaml` and `.env`, and every page and console follows.
+
+## The consoles
+
+`make up` brings the engines and the consoles up as one stack, and `make down` takes it away again.
+Every port binds to `127.0.0.1`: an unauthenticated database UI should not appear on the network
+because someone opened a laptop in a café. Publishing one more widely is a deliberate edit. Only
+CloudBeaver and DbGate browse all three engines; the index page lists the consoles by how much
+they cover and marks the one that is MySQL only.
+
+| | address | browses | notes |
+|---|---|---|---|
+| **console index** | **<http://127.0.0.1:8080/>** | every engine | **start here**: how to connect your own tool, then every database on every engine with its size, licence and what a port left out, generated from the running stack |
+| CloudBeaver | <http://127.0.0.1:8084/> | MySQL, PostgreSQL, SQLite | opens as a guest; both accounts on each server engine and one connection per SQLite file in the sidebar |
+| DbGate | <http://127.0.0.1:8083/> | MySQL, PostgreSQL, SQLite | every connection preconfigured in the sidebar, one per SQLite file |
+| Adminer | <http://127.0.0.1:8082/> | MySQL, PostgreSQL | its login form remains; the index page's Adminer card opens a page that says what to type for each engine and opens Adminer filled in |
+| phpMyAdmin | <http://127.0.0.1:8081/> | MySQL only | signed in already; the server menu switches account |
+
+Inside the stack an engine is reached by its service name — Adminer's "Server" field takes `mysql`
+or `postgres`, not `127.0.0.1` — and from your machine by `127.0.0.1` and the port above. A console
+starts only when an engine it can browse is in the stack, and is configured for every engine
+present. `compose.yaml` is generated from `megasamples.yaml` by `make up` (or `make compose`)
+so the stack is exactly what you chose; every service carries a memory limit and every image is
+pinned by digest.
+
+## The configuration file
+
+```yaml
+engines:
+  mysql: {datasets: core}          # core | quick | all | a tier name | [sakila, chinook, ...]
+  postgres: {datasets: core}
+  sqlite: {datasets: quick}
+consoles: [landing, phpmyadmin, adminer, dbgate, cloudbeaver]
+ports: {mysql: 3306, landing: 8080, phpmyadmin: 8081, adminer: 8082, dbgate: 8083, cloudbeaver: 8084}
+build: {threads: 4, keep_build_server: false, scale_factor: 1}
+downloads: {concurrency: 3}
+```
+
+`make run` reads it and, for every engine named, fetches the datasets' artifacts, converts and
+loads them, verifies them and bakes the image; `make up` starts what was built. Naming a dataset
+for any engine also builds it in the MySQL build server, because that is where every port comes
+from. [`megasamples.example.yaml`](megasamples.example.yaml) documents every key.
+
+## Downloads: once, verified, watched
+
+`make fetch` (which `make run` and `make <dataset>` call first) downloads each artifact in
+`manifest.yaml`, verifies its SHA-256 against the recorded value, and writes a marker beside it.
+**A verified file is never fetched again**, on this run or the next, so an interrupted build resumes
+where it stopped. While transfers run, a monitor shows each one — bytes, rate, time left, then the
+verification pass — and prints one permanent line per artifact; several run at once. A transfer
+that makes no progress for two minutes is retried over IPv4, which on this project's build machines
+is what a hang usually means, and the fallback is recorded with the file.
+
+There are no release assets: the repository is what is published, and every byte of data comes from
+its upstream to your machine. Two core datasets need a hand from you:
+
+* **`lahman`** (baseball, 27 tables) is published behind a SABR share link that no script can
+  fetch. Download it in a browser from the URL the fetch prints
+  (<https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd>), put it at
+  `downloads/lahman/lahman_1871-2025_csv.zip`, and the next `make run` verifies its checksum like
+  every other artifact.
+* **`chicago_crimes`** comes from a portal that amends past years, so its 2024 extract changes
+  from time to time and stops matching the pinned digest. The pin is the extract of 2026-09-09.
+  When the fetch reports a mismatch, decide whether you want the newer extract:
+  `MEGASAMPLES_ACCEPT_DRIFT=1 make chicago_crimes` accepts it, re-pins `manifest.yaml`, and the
+  verification then fails on the pinned counts and digests, which
+  `python3 -m megasamples verify chicago_crimes --pin` moves to what you loaded. Your numbers will
+  differ from the documented ones by whatever the city changed. The same switch works for any
+  artifact whose upstream has moved, and for a file you obtained yourself and placed under
+  `downloads/`.
+
+A dataset whose download is not in place is left out of every engine's build and image and named
+at the end of `make run`, which then exits 1; leave it out of your dataset list if you would rather
+not see that.
+
+## Building piece by piece
+
+Every command is a `make` target, and every target is a one-line shim over
+`python3 -m megasamples <command>` — `make -n <target>` shows exactly what will run, and
+`python3 -m megasamples --help` lists every command.
+
+```sh
+make sakila                        # fetch, convert, load and verify one dataset on MySQL
+make build D="sakila chinook"      # the same for several
+make build ENGINE=postgres D=sakila   # port a dataset from the MySQL corpus and verify it there
+make build ENGINE=sqlite           # port every configured dataset to SQLite files
+make image ENGINE=postgres         # bake the configured datasets into an engine's image
+make image FROM_DUMPS=1            # re-bake MySQL from the dumps already built, without the build server
+make restore                       # reload the MySQL build server from its dumps, in a minute, to port from
+make test-image ENGINE=sqlite      # assert an image: counts, integrity, accounts, overrides
+make test-console                  # assert the consoles are up and the accounts behave on every engine
+make status                        # the stack, and any transient container
+make clean                         # remove the transient containers; the stack keeps running
+```
+
+The build servers are reused across a session, because reconverting everything takes hours;
+`make image` removes them when an image is done, and `KEEP_BUILD_RESOURCES=1` (or
+`build.keep_build_server: true`) keeps them, which is what you want while developing a converter
+or a port. `make restore` brings the MySQL build server back from the dumps in about a minute.
 
 ## Licensing
 
@@ -187,7 +339,7 @@ and in a few cases share-alike. Before you redistribute anything built from this
 * `datasets/<name>/LICENSE` and `datasets/<name>/PROVENANCE.md` — per dataset, generated from
   [`knowledge/licenses/`](knowledge/licenses/index.md), never hand-written
 
-Project **code** is **Apache-2.0** — [`LICENSE`](LICENSE) — and that covers the scripts, converters,
+Project **code** is **Apache-2.0** — [`LICENSE`](LICENSE) — and that covers the package, converters,
 tests, Dockerfiles, knowledge bundle and generated documentation. It covers **none of the data**, and
 is not a relicensing of anything upstream: the share-alike datasets stay CC BY-SA and are offered as
 such. Where the two could appear to conflict, the dataset's licence governs the dataset and
@@ -199,9 +351,8 @@ beside it, so the answer to "what am I allowed to do with this table" is one cli
 `employees`, `lahman`, the Stack Exchange datasets and `wikipedia_simple` are CC BY-SA. A converted
 database is an adaptation, so **this project offers those four converted databases under the same
 licence** — CC BY-SA 3.0 for `employees` and `lahman`, CC BY-SA 4.0 for Stack Exchange and
-`wikipedia_simple` — and so must anyone who redistributes a modified version. The project's own MIT
-licence covers the code, and carves these datasets out. [`CATALOGUE.md`](CATALOGUE.md) marks every
-dataset with what its licence asks of a redistributor.
+`wikipedia_simple` — and so must anyone who redistributes a modified version, in any engine.
+[`CATALOGUE.md`](CATALOGUE.md) marks every dataset with what its licence asks of a redistributor.
 
 ### Notices that must travel with the data
 
@@ -258,11 +409,11 @@ means running **SQL Server 2022 Developer Edition** in a container and accepting
 > … to design, develop, test and demonstrate your programs. You may not use the software on a device
 > or server in a production environment.
 
-**Using the image does not involve that licence.** No SQL Server code, tool or layer is in it; the
-container is deleted when the export finishes — including if it fails — and the data it produced is
-MIT, like AdventureWorks and Northwind. Building any other dataset does not involve it either.
-
-You accept it only if you re-run the export yourself, and the target refuses to start until you do:
+**Using the images does not involve that licence.** No SQL Server code, tool or layer is in any of
+them; the container is deleted when the export finishes — including if it fails — and the data it
+produced is MIT, like AdventureWorks and Northwind. Building any other dataset does not involve it
+either. You accept it only if you re-run the export yourself, and the target refuses to start until
+you do:
 
 ```sh
 MEGASAMPLES_ACCEPT_MSSQL_EULA=1 make wwi-export   # prints the terms first
@@ -271,58 +422,59 @@ MEGASAMPLES_ACCEPT_MSSQL_EULA=1 make wwi-export   # prints the terms first
 The acceptance is recorded with the image digest and engine build in
 `downloads/wideworldimporters/export/server.json`.
 
-## Beyond the 21
+## Beyond the core
 
-The image holds the *core* tier. Others are opt-in, because they are large, licence-gated, or
-generated:
+The core tier is what an image holds by default. The others are opt-in, because they are large,
+licence-gated, or generated — name them in `megasamples.yaml`, or build one directly:
 
 | tier | what | how |
 |---|---|---|
-| extended | AdventureWorks DW, BTS on-time, WideWorldImporters (+DW), and bigger versions of datasets already in the image (8.2 M Chicago crimes, 3.5 M yellow-cab trips, 10 M-row Contoso, full Enron, full Simple Wikipedia) | `make adventureworks_dw`, `make chicago-full`, `make nyc-taxi-yellow`, … |
-| generated | TPC-H, TPC-DS, SSB, TPC-C at a scale factor you choose | `make gen-tpch SF=1`, `make gen-tpcds`, `make gen-ssb`, `make load-tpcc W=1` |
+| extended | AdventureWorks DW, BTS on-time, WideWorldImporters (+DW), and bigger versions of core datasets (8.2 M Chicago crimes, 3.5 M yellow-cab trips, 1 M- and 10 M-row Contoso, full Enron, full Simple Wikipedia, dba.stackexchange.com, DVD Store reviews) | `make adventureworks_dw`, `make chicago_crimes_full`, `make nyc_taxi_yellow`, … |
+| generated | TPC-H, TPC-DS, SSB, TPC-C at a scale factor you choose | `make tpch SF=1`, `make tpcds`, `make ssb`, `make load-tpcc W=1` |
 | user-fetched | Citi Bike, Divvy | `make load-citibike`, `make load-divvy` (licence gate above) |
 
-`make help` lists every target.
+`make help` lists every target; `make list` every dataset.
 
 ## Built on this
 
-[`dolt-megasamples`](https://github.com/Reliable-Collaboration/dolt-megasamples) loads these same 21
+[`dolt-megasamples`](https://github.com/Reliable-Collaboration/dolt-megasamples) loads these same
 databases into [Dolt](https://github.com/dolthub/dolt) — a SQL database with Git-like versioning —
-and measures what the same data costs in each engine, in disk, time and memory. It reads this image
-as its input and does not modify it.
+and measures what the same data costs in each engine, in disk, time and memory. It reads the MySQL
+image as its input and does not modify it.
 
 It is worth a look if you are choosing between the two, or if you want a worked example of what this
-corpus is useful for: 21 databases of varied shape and size, all licensed for redistribution, is a
-better basis for a storage comparison than any one dataset.
+corpus is useful for: twenty-one databases of varied shape and size, all licensed for
+redistribution, are a better basis for a storage comparison than any one dataset.
 
 ## How the repository is laid out
 
 | Path | What it holds |
 |---|---|
+| `ARCHITECTURE.md` | how it works: layout, the dataset contract, the MySQL hub, engines, verification, the stack, gates, licensing and publishing |
+| `PLAN.md` | what is being built next |
 | `CATALOGUE.md` | every dataset: tier, shape, licence, and what that licence asks of a redistributor (generated) |
-| `PLAN.md` | the plan: architecture, per-dataset conversion paths, tests, licensing |
+| `megasamples/` | the package: the pipeline, one subpackage per engine, the upstream-format translators |
+| `engines/<engine>/` | each engine's Dockerfile, server configuration and init SQL |
+| `consoles/<console>/` | each console's configuration; the generated index page |
+| `datasets/<name>/` | per-dataset contract, converter, pinned expectations, licence and provenance, and `ports/`: the generated PostgreSQL and SQLite DDL with what each port leaves out |
 | `knowledge/` | OKF v0.2 evidence bundle: datasets, licences, tools, decisions, sources, runbooks, open questions |
-| `scripts/` | the pipeline: fetch, stage, load, verify, dump, plus the converters |
-| `datasets/<db>/` | per-dataset DDL, converter, tests, licence and provenance |
-| `docker/` | Dockerfile, MySQL config, init SQL, console configuration |
-| `compose.yaml` | the stack: database + four consoles |
 | `manifest.yaml` | every downloadable artifact with checksum, size and licence |
-| `downloads/` | gitignored, checksum-verified upstream artifacts |
+| `megasamples.example.yaml` | the stack configuration, documented |
+| `downloads/`, `build/` | gitignored: verified upstream artifacts; everything a build produces |
 
-Every factual claim in `PLAN.md` traces to a record in `knowledge/`, and
-`python3 scripts/okf_check.py` enforces that the bundle stays internally consistent. If you want to
-know *why* a dataset was converted the way it was, that is where the answer is.
+Every factual claim in `ARCHITECTURE.md` and `PLAN.md` traces to a record in `knowledge/`, and
+`make check` enforces that the bundle stays internally consistent. If you want to know *why* a
+dataset was converted the way it was, that is where the answer is.
 
 ## Development
 
 ```sh
-make check                       # the local gate: bundle validation + generated files up to date
-make test-image                  # assert the built image's row counts and checksums
-make test-console                # assert the consoles are up and the two accounts behave
-make build-server                # a MySQL to load into by hand
-make build-server-stop           # remove it (this discards everything loaded into it)
+make check                       # the local gate: bundle, generated files, port records reproducible, unit tests
+uv run pytest -q                 # the unit tests alone: inventory, configuration, staging, the port toolkit
+make build D="$(make -s list-quick)"   # the quick subset end to end, before a push that touches the pipeline
+make screenshots                 # retake the README's pictures from the running stack (docs/screenshots/capture.py)
 ```
 
 If a `docker pull` or a download hangs with no error, suspect IPv6 first — see
 [`knowledge/runbooks/ipv6-and-privileges.md`](knowledge/runbooks/ipv6-and-privileges.md), which also
-covers the `scripts/pull_image.py` workaround this project uses to fetch images over IPv4.
+covers the `make pull-image` workaround this project uses to fetch images over IPv4.

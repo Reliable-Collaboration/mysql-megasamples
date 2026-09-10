@@ -35,7 +35,7 @@ Build automation needs a URL. Box shared folders can be downloaded via the Box "
 There is no static URL, and the dataset is now built anyway.
 
 The maintainer downloaded the folder once and placed the zip; `manifest.yaml` gained `manual: true`
-for artifacts no build can fetch, so `scripts/fetch.py` verifies the placed file against its sha256
+for artifacts no build can fetch, so `megasamples/fetch.py` verifies the placed file against its sha256
 and size rather than reaching the network, and says exactly where to put it when it is missing. The
 repository stays small and the bytes are still pinned. See the
 [decision's amendment](/decisions/lahman-conversion-path.md).

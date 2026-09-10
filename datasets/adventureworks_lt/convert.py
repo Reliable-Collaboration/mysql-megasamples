@@ -10,8 +10,8 @@ upstream shows up as a conversion failure instead of silent corruption.
 Record: knowledge/datasets/adventureworks-lt.md
 """
 import os, re, sys, zipfile
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
-import tsql, ddlutil  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
+from megasamples.sources import tsql, ddlutil  # noqa: E402
 
 DATABASE = "adventureworks_lt"
 # T-SQL infers a computed column's type; MySQL makes you declare it. SalesOrderDetail.LineTotal is

@@ -54,7 +54,7 @@ Option 1, done, and the shape it took differs from the plan in three ways worth 
   descriptions), `baseline.json` (row counts plus three per-column aggregates) and one `.dat` per
   table. The MySQL DDL is generated from that catalogue rather than translated from a script, which is
   why both databases share one converter.
-* **Digests are not computed in SQL Server.** Rendering `scripts/canon.py`'s row digest in T-SQL would
+* **Digests are not computed in SQL Server.** Rendering `megasamples/canon.py`'s row digest in T-SQL would
   have meant matching `HASHBYTES` over UTF-16 against Python over UTF-8, which is a second thing to get
   wrong. Instead each column carries three numbers the export cannot fake — non-null count, total
   UTF-16 code units, and rows containing any character outside printable ASCII — and the converter
@@ -63,7 +63,7 @@ Option 1, done, and the shape it took differs from the plan in three ways worth 
   The per-column counts earned this immediately: they found the NUL-valued supplier addresses.
 * **Row counts are the expectation, not an observation.** `expected_counts.yaml` is generated from
   `sys.partitions` in the restored backup and marked `# authority: SQL Server`, and
-  `scripts/verify.py --pin` refuses to overwrite a file so marked. That is what turned a silently
+  `megasamples/verify.py --pin` refuses to overwrite a file so marked. That is what turned a silently
   dropped row into a failing test.
 
 Measured: 49 s to restore, catalogue, baseline and export both databases; 5.6 M rows and 614 MB of

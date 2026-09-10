@@ -1,0 +1,138 @@
+# S8: what each call in routines.yaml prints on MySQL, normalised and sorted line by
+# line (megasamples/probe.py); 'ERROR' when the call must fail.
+humanresources_uspupdateemployeehireinfo:
+- ERROR
+humanresources_uspupdateemployeelogin:
+- '0'
+humanresources_uspupdateemployeepersonalinfo:
+- '0'
+ufngetaccountingenddate:
+- '2004-06-30 23:59:59.998'
+ufngetaccountingstartdate:
+- '2003-07-01 00:00:00'
+ufngetdocumentstatustext_1:
+- Pending approval
+ufngetdocumentstatustext_9:
+- '** Invalid **'
+ufngetproductdealerprice_707:
+- '20.1865'
+ufngetproductlistprice_707:
+- '33.6442'
+ufngetproductlistprice_707_now:
+- '34.99'
+ufngetproductstandardcost_707:
+- '13.8782'
+ufngetpurchaseorderstatustext_2:
+- Approved
+ufngetsalesorderstatustext_5:
+- Shipped
+ufngetstock_1:
+- '324'
+ufngetstock_707:
+- '0'
+ufnleadingzeros_42:
+- '00000042'
+uspgetbillofmaterials_800:
+- "3\t2\tBearing Ball\t10\t0\t0\t3\t2"
+- "3\t461\tLock Ring\t1\t0\t0\t3\t2"
+- "3\t504\tCup-Shaped Race\t2\t0\t0\t3\t2"
+- "3\t505\tCone-Shaped Race\t2\t0\t0\t3\t2"
+- "316\t486\tMetal Sheet 5\t1\t0\t0\t4\t3"
+- "324\t486\tMetal Sheet 5\t1\t0\t0\t3\t2"
+- "327\t483\tMetal Sheet 3\t1\t0\t0\t3\t2"
+- "329\t482\tMetal Sheet 2\t1\t0\t0\t3\t2"
+- "331\t482\tMetal Sheet 2\t1\t0\t0\t4\t3"
+- "350\t486\tMetal Sheet 5\t1\t0\t0\t4\t3"
+- "398\t487\tMetal Sheet 6\t1\t0\t0\t3\t2"
+- "399\t485\tMetal Sheet 4\t1\t0\t0\t3\t2"
+- "401\t524\tHL Spindle/Axle\t2\t0\t0\t3\t2"
+- "401\t526\tHL Shell\t2\t0\t0\t3\t2"
+- "518\t497\tPinch Bolt\t4\t0\t0\t2\t1"
+- "518\t528\tSeat Lug\t1\t0\t0\t2\t1"
+- "518\t530\tSeat Post\t1\t0\t0\t2\t1"
+- "518\t912\tML Road Seat/Saddle\t1\t17.3782\t39.14\t2\t1"
+- "529\t477\tMetal Bar 1\t1\t0\t0\t3\t2"
+- "531\t487\tMetal Sheet 6\t1\t0\t0\t4\t3"
+- "532\t484\tMetal Sheet 7\t1\t0\t0\t3\t2"
+- "533\t478\tMetal Bar 2\t1\t0\t0\t3\t2"
+- "534\t482\tMetal Sheet 2\t1\t0\t0\t3\t2"
+- "800\t518\tML Road Seat Assembly\t1\t108.99\t147.14\t1\t0"
+- "800\t806\tML Headset\t1\t45.4168\t102.29\t1\t0"
+- "800\t812\tML Road Handlebars\t1\t27.4925\t61.92\t1\t0"
+- "800\t819\tML Road Front Wheel\t1\t110.2829\t248.385\t1\t0"
+- "800\t827\tML Road Rear Wheel\t1\t122.2709\t275.385\t1\t0"
+- "800\t835\tML Road Frame-W - Yellow, 44\t1\t360.9428\t594.83\t1\t0"
+- "800\t894\tRear Derailleur\t1\t53.9282\t121.46\t1\t0"
+- "800\t907\tRear Brakes\t1\t47.286\t106.5\t1\t0"
+- "800\t939\tML Road Pedal\t1\t27.568\t62.09\t1\t0"
+- "800\t945\tFront Derailleur\t1\t40.6216\t91.49\t1\t0"
+- "800\t948\tFront Brakes\t1\t47.286\t106.5\t1\t0"
+- "800\t950\tML Crankset\t1\t113.8816\t256.49\t1\t0"
+- "800\t952\tChain\t1\t8.9866\t20.24\t1\t0"
+- "800\t994\tLL Bottom Bracket\t1\t23.9716\t53.99\t1\t0"
+- "803\t316\tBlade\t2\t0\t0\t3\t2"
+- "803\t331\tFork End\t2\t0\t0\t3\t2"
+- "803\t350\tFork Crown\t1\t0\t0\t3\t2"
+- "803\t531\tSteerer\t1\t0\t0\t3\t2"
+- "806\t1\tAdjustable Race\t1\t0\t0\t2\t1"
+- "806\t323\tCrown Race\t1\t0\t0\t2\t1"
+- "806\t4\tHeadset Ball Bearings\t8\t0\t0\t2\t1"
+- "806\t402\tKeyed Washer\t1\t0\t0\t2\t1"
+- "806\t459\tLock Nut 19\t1\t0\t0\t2\t1"
+- "806\t462\tLower Head Race\t1\t0\t0\t2\t1"
+- "812\t329\tRoad End Caps\t2\t0\t0\t2\t1"
+- "812\t357\tML Grip Tape\t40\t0\t0\t2\t1"
+- "812\t398\tHandlebar Tube\t1\t0\t0\t2\t1"
+- "812\t529\tStem\t1\t0\t0\t2\t1"
+- "819\t401\tHL Hub\t1\t0\t0\t2\t1"
+- "819\t490\tLL Nipple\t36\t0\t0\t2\t1"
+- "819\t506\tReflector\t2\t0\t0\t2\t1"
+- "819\t511\tML Road Rim\t1\t0\t0\t2\t1"
+- "819\t527\tSpokes\t36\t0\t0\t2\t1"
+- "819\t922\tRoad Tire Tube\t1\t1.4923\t3.99\t2\t1"
+- "819\t932\tML Road Tire\t1\t9.3463\t24.99\t2\t1"
+- "827\t401\tHL Hub\t1\t0\t0\t2\t1"
+- "827\t490\tLL Nipple\t36\t0\t0\t2\t1"
+- "827\t506\tReflector\t2\t0\t0\t2\t1"
+- "827\t511\tML Road Rim\t1\t0\t0\t2\t1"
+- "827\t527\tSpokes\t36\t0\t0\t2\t1"
+- "827\t922\tRoad Tire Tube\t1\t1.4923\t3.99\t2\t1"
+- "827\t932\tML Road Tire\t1\t9.3463\t24.99\t2\t1"
+- "835\t324\tChain Stays\t2\t0\t0\t2\t1"
+- "835\t325\tDecal 1\t2\t0\t0\t2\t1"
+- "835\t326\tDecal 2\t1\t0\t0\t2\t1"
+- "835\t327\tDown Tube\t1\t0\t0\t2\t1"
+- "835\t399\tHead Tube\t1\t0\t0\t2\t1"
+- "835\t496\tPaint - Yellow\t8\t0\t0\t2\t1"
+- "835\t532\tSeat Stays\t4\t0\t0\t2\t1"
+- "835\t533\tSeat Tube\t1\t0\t0\t2\t1"
+- "835\t534\tTop Tube\t1\t0\t0\t2\t1"
+- "835\t803\tML Fork\t1\t77.9176\t175.49\t2\t1"
+- "894\t355\tGuide Pulley\t1\t0\t0\t2\t1"
+- "894\t535\tTension Pulley\t1\t0\t0\t2\t1"
+- "894\t679\tRear Derailleur Cage\t1\t0\t0\t2\t1"
+- "945\t351\tFront Derailleur Cage\t1\t0\t0\t2\t1"
+- "945\t352\tFront Derailleur Linkage\t1\t0\t0\t2\t1"
+- "950\t318\tML Crankarm\t2\t0\t0\t2\t1"
+- "950\t320\tChainring Bolts\t3\t0\t0\t2\t1"
+- "950\t321\tChainring Nut\t3\t0\t0\t2\t1"
+- "950\t322\tChainring\t3\t0\t0\t2\t1"
+- "950\t332\tFreewheel\t1\t0\t0\t2\t1"
+- "994\t3\tBB Ball Bearing\t10\t0\t0\t2\t1"
+- "994\t525\tLL Shell\t1\t0\t0\t2\t1"
+uspgetwhereusedproductid_819:
+- "754\t819\tRoad-450 Red, 58\t1\t884.7083\t1457.99\t1\t0"
+- "755\t819\tRoad-450 Red, 60\t1\t884.7083\t1457.99\t1\t0"
+- "756\t819\tRoad-450 Red, 44\t1\t884.7083\t1457.99\t1\t0"
+- "757\t819\tRoad-450 Red, 48\t1\t884.7083\t1457.99\t1\t0"
+- "758\t819\tRoad-450 Red, 52\t1\t884.7083\t1457.99\t1\t0"
+- "797\t819\tRoad-550-W Yellow, 38\t1\t713.0798\t1120.49\t1\t0"
+- "798\t819\tRoad-550-W Yellow, 40\t1\t713.0798\t1120.49\t1\t0"
+- "799\t819\tRoad-550-W Yellow, 42\t1\t713.0798\t1120.49\t1\t0"
+- "800\t819\tRoad-550-W Yellow, 44\t1\t713.0798\t1120.49\t1\t0"
+- "801\t819\tRoad-550-W Yellow, 48\t1\t713.0798\t1120.49\t1\t0"
+- "973\t819\tRoad-350-W Yellow, 40\t1\t1082.51\t1700.99\t1\t0"
+- "974\t819\tRoad-350-W Yellow, 42\t1\t1082.51\t1700.99\t1\t0"
+- "975\t819\tRoad-350-W Yellow, 44\t1\t1082.51\t1700.99\t1\t0"
+- "976\t819\tRoad-350-W Yellow, 48\t1\t1082.51\t1700.99\t1\t0"
+uspprinterror: []

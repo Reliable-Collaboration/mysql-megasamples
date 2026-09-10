@@ -15,12 +15,12 @@ Record: knowledge/datasets/adventureworks-oltp.md
 import csv, os, re, struct, sys, zipfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, "..", "..", "scripts"))
-import tsql, tsqlbody, hierarchyid, ddlutil, bulkinsert  # noqa: E402
+sys.path.insert(0, os.path.join(HERE, "..", ".."))
+from megasamples.sources import tsql, tsqlbody, hierarchyid, ddlutil, bulkinsert  # noqa: E402
 
 DATABASE = "adventureworks"
 SCRIPT = "instawdb.sql"
-CONTEXT = "/context/adventureworks"      # the read-only mount scripts/db.py gives the build server
+CONTEXT = "/context/adventureworks"      # the read-only mount megasamples/engines/mysql/server.py gives the build server
 # every schema in the script, and the prefix its tables take
 SCHEMAS = {"person": "person_", "humanresources": "humanresources_", "production": "production_",
            "purchasing": "purchasing_", "sales": "sales_", "dbo": ""}
@@ -75,7 +75,7 @@ PATH_COLUMN = re.compile(r"(?im)^(\s*)`(\w+)`(\s+VARBINARY\(892\))")
 def add_path_columns(create_table):
     """Give every hierarchyid column a decoded-path column beside it.
 
-    The raw bytes are kept so nothing is lost -- `scripts/hierarchyid.py` round-trips them -- but
+    The raw bytes are kept so nothing is lost -- `megasamples/sources/hierarchyid.py` round-trips them -- but
     they are unusable as they stand, so the path SQL Server would print is materialised next to them.
     """
     table = re.search(r"(?is)CREATE\s+TABLE\s+`([^`]+)`", create_table)
@@ -112,7 +112,7 @@ def main():
         if kind == "table":
             sql = add_path_columns(sql)
         if kind in ("procedure", "function", "trigger"):
-            continue                 # translated in one pass by scripts/tsqlbody.py, below
+            continue                 # translated in one pass by megasamples/sources/tsqlbody.py, below
         blockers = tsql.xml_blockers(sql) if kind == "view" else []
         if blockers:
             name = re.search(r"(?i)(view|procedure|function|trigger)\s+`?([\w.]+)`?", sql)

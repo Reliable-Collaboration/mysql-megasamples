@@ -1,0 +1,6 @@
+# What the PostgreSQL port changed inside a routine body, by routine: constructs with no
+# PL/pgSQL counterpart, replaced by rule (megasamples/port/routines.py).
+humanresources_uspupdateemployeehireinfo:
+- 'ROLLBACK dropped: the procedure runs in the caller''s transaction, rolled back on error'
+- 'START TRANSACTION dropped: the procedure runs in the caller''s transaction, rolled back on error'
+- 'COMMIT dropped: the procedure runs in the caller''s transaction, rolled back on error'

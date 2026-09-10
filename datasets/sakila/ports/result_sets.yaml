@@ -1,0 +1,16 @@
+# The result columns PostgreSQL infers for each procedure that returns rows, measured with
+# psql's \gdesc on the ported schema; the procedure becomes a function RETURNS TABLE(...).
+film_in_stock:
+- [inventory_id, integer]
+film_not_in_stock:
+- [inventory_id, integer]
+rewards_report:
+- [customer_id, integer]
+- [store_id, smallint]
+- [first_name, character varying(45)]
+- [last_name, character varying(45)]
+- [email, character varying(50)]
+- [address_id, integer]
+- [active, smallint]
+- [create_date, timestamp(0) without time zone]
+- [last_update, timestamp(0) without time zone]

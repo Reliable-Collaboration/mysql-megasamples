@@ -1,0 +1,72 @@
+# syntax=docker/dockerfile:1.7
+# sql-megasamples-postgres: PostgreSQL with sample databases baked into its cluster.
+# The builder initialises a cluster at the image's own PGDATA, creates the accounts and the
+# provenance registry, loads each configured database from the port files (schema, data, indexes,
+# constraints), and stops cleanly; the final stage carries only that cluster. The context is the
+# repository root filtered by .dockerignore; build/postgres/image/ holds exactly the databases being
+# baked. See ARCHITECTURE.md section 4.
+ARG POSTGRES_IMAGE=postgres:18.6-bookworm
+
+FROM ${POSTGRES_IMAGE} AS builder
+COPY engines/postgres/init/ /build/init/
+COPY build/postgres/image/ /build/databases/
+COPY NOTICE.md LICENSES.md CATALOGUE.md README.md /docs/
+COPY datasets/ /build/datasets/
+RUN set -eu; \
+    mkdir -p /docs/datasets; \
+    for d in /build/datasets/*/; do \
+        n=$(basename "$d"); \
+        [ -f "$d/LICENSE" ] && cp "$d/LICENSE" "/docs/datasets/$n.LICENSE"; \
+        [ -f "$d/PROVENANCE.md" ] && cp "$d/PROVENANCE.md" "/docs/datasets/$n.PROVENANCE.md"; \
+        true; \
+    done
+USER postgres
+RUN <<'SH'
+#!/bin/bash
+set -euo pipefail
+export PGDATA
+# initdb with the image's own settings: the entrypoint's defaults for encoding and locale
+initdb --username=postgres --pwfile=<(printf 'root\n') --encoding=UTF8 --locale=C.UTF-8 >/dev/null
+# what the official entrypoint appends when it initialises a cluster, and never does on a baked one:
+# clients on the network authenticate with scram-sha-256 (the image's own loopback stays trusted)
+printf 'host all all all scram-sha-256\n' >> "$PGDATA/pg_hba.conf"
+# loading tuned for a one-off bulk load into a throwaway server; the shipped cluster keeps the
+# image's stock postgresql.conf, since these are unsafe settings for a running database
+pg_ctl -w -o "-c listen_addresses='' -c fsync=off -c synchronous_commit=off -c full_page_writes=off -c maintenance_work_mem=512MB -c max_wal_size=4GB -c wal_level=minimal -c max_wal_senders=0" start >/dev/null
+psql -v ON_ERROR_STOP=1 -q -f /build/init/00-users.sql postgres
+for d in /build/databases/*/; do
+  name=$(basename "$d")
+  echo "== $name"
+  # admin owns the database and everything loaded into it, so the account the consoles call "full
+  # access" can alter and drop what it sees; the loopback of this private server is trusted
+  psql -v ON_ERROR_STOP=1 -q -c "CREATE DATABASE \"$name\" OWNER admin TEMPLATE template0 ENCODING 'UTF8'" postgres
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/schema.sql" "$name"
+  while IFS=$'\t' read -r table file cols; do
+    psql -U admin -v ON_ERROR_STOP=1 -q -c "\\copy \"$table\" ($cols) FROM '$d/data/$file' WITH (FORMAT text)" "$name"
+  done < "$d/data/tables.tsv"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/indexes.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/constraints.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/routines.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/views.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -f "$d/triggers.sql" "$name"
+  psql -U admin -v ON_ERROR_STOP=1 -q -c "ANALYZE" "$name"
+  psql -v ON_ERROR_STOP=1 -q -c "GRANT CONNECT ON DATABASE \"$name\" TO demo, admin" postgres
+  psql -v ON_ERROR_STOP=1 -q -f /build/init/20-grants.sql "$name"
+done
+psql -v ON_ERROR_STOP=1 -q -f /build/databases/registry.sql megasamples
+pg_ctl -w -m fast stop >/dev/null
+SH
+USER root
+RUN rm -rf /build
+
+FROM ${POSTGRES_IMAGE}
+LABEL org.opencontainers.image.title="sql-megasamples-postgres" \
+      org.opencontainers.image.description="PostgreSQL 18 preloaded with well-known sample databases (sql-megasamples)" \
+      org.opencontainers.image.licenses="MIT AND BSD-3-Clause AND CC-BY-SA-3.0"
+COPY engines/postgres/entrypoint-wrapper.sh /usr/local/bin/entrypoint-wrapper.sh
+COPY --from=builder --chown=postgres:postgres /var/lib/postgresql/18/docker /var/lib/postgresql/18/docker
+RUN chmod 700 /var/lib/postgresql/18/docker
+COPY --from=builder /docs /usr/share/doc/megasamples
+ENTRYPOINT ["entrypoint-wrapper.sh"]
+EXPOSE 5432
+CMD ["postgres"]

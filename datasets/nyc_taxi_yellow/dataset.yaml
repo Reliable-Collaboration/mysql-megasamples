@@ -5,6 +5,6 @@ tier: extended
 record: knowledge/datasets/nyc-tlc.md
 licenses: [nyc-open-data-terms]
 artifacts: [nyc_taxi/yellow_tripdata_2025-01.parquet]
-converter: none
+stage: {input: dir, source: nyc_taxi, converter: nyc_taxi, args: [--yellow]}
 load:
   - nyc_taxi_yellow.sql

@@ -4,6 +4,6 @@ tier: extended
 record: knowledge/datasets/contoso.md
 licenses: [mit]
 artifacts: [contoso/csv-1m.7z]
-converter: none
+stage: {input: dir, source: contoso, converter: contoso, args: [--size, 1m]}
 load:
   - contoso_1m.sql

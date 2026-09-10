@@ -1,7 +1,7 @@
 # S7: the specification's own validation output. Q1 at DELTA=90 is the canonical check -- its four
 # rows are quoted in the TPC-H spec, and they are what a wrong DECIMAL type or a wrong collation
 # changes first. The full 22-query comparison against DuckDB's tpch_answers() is a separate step,
-# `python3 scripts/tpc_check.py`, because it takes three minutes at SF 1.
+# `python3 -m megasamples tpc-check`, because it takes three minutes at SF 1.
 - name: q1_validation_rows
   query: >
     SELECT l_returnflag, l_linestatus, SUM(l_quantity), ROUND(SUM(l_extendedprice), 2),
