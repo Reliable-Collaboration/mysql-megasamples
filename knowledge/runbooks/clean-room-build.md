@@ -1,7 +1,7 @@
 ---
 type: Runbook
 title: "The clean-room build: prove the README's quick start from a fresh clone with nothing pre-built"
-description: How the project is tested as a first-time user would meet it -- its images, containers, volumes and build servers removed, a fresh clone, uv sync, the example configuration with all three engines, make run, make up and the tests -- what was measured on 2026-09-09/10 (1.4 GB fetched in 8 minutes, all 21 core datasets on three engines in 39 minutes, every test green), which two artifacts a first-time user cannot fetch until the data-v1 release is published, and the defects the first attempts surfaced.
+description: How the project is tested as a first-time user would meet it -- its images, containers, volumes and build servers removed, a fresh clone, uv sync, the example configuration with all three engines, make run, make up and the tests -- what was measured on 2026-09-09/10 (1.4 GB fetched in 8 minutes, all 21 core datasets on three engines in 20 minutes once the run order was fixed, every test green), which two artifacts a first-time user cannot fetch until the data-v1 release is published, and the defects the first attempts surfaced.
 resource: /runbooks/clean-room-build.md
 tags:
 - runbook
@@ -66,6 +66,7 @@ lock file that was never regenerated, an upstream download that has changed sinc
 | images | `sql-megasamples-mysql:dev` 3.46 GB, `-postgres:dev` 4.05 GB, `-sqlite:dev` 1.26 GB |
 | `make up`, `make test-console` | the stack up, the landing page with 21 databases on each engine, 0 failures |
 | `make test-image` ×3, `make check` | 0 failures each |
+| `make run` again (head 0a80e79, build output, images and build servers wiped; downloads kept) | 19 min 40 s: the MySQL phase as before, then the PostgreSQL and SQLite phases ported straight from the kept hub -- no dataset rebuilt, 0 failures on all 63 verifications; `make up`, `make test-console`, `make test-image` ×3 and `make check` 0 failures again |
 
 ## What the first attempts surfaced, each fixed before the run above passed
 
