@@ -29,8 +29,13 @@ def container_state():
 
 
 def ready(timeout=120):
+    """Wait until the server answers over TCP. On its first start the official image runs a
+    temporary server on the Unix socket alone (listen_addresses='') while it initialises, then
+    stops it and starts the real one; a socket check answers during that window and the next
+    statement finds no server (measured: a 109 ms gap between the two on 2026-09-10)."""
     for _ in range(int(timeout * 5)):
-        if run(["docker", "exec", NAME, "psql", "-U", "postgres", "-tAc", "SELECT 1"]).returncode == 0:
+        if run(["docker", "exec", "-e", f"PGPASSWORD={PW}", NAME, "psql", "-h", "127.0.0.1", "-U", "postgres",
+                "-tAc", "SELECT 1"]).returncode == 0:
             return True
         time.sleep(0.2)
     return False

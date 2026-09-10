@@ -27,9 +27,12 @@ def container_state():
 
 
 def ready(timeout=180):
-    """Wait until a real statement succeeds. `mysqladmin ping` answers on access-denied (P-02)."""
+    """Wait until a real statement succeeds over TCP. `mysqladmin ping` answers on access-denied
+    (P-02), and the socket answers during the official image's first-start initialisation, when a
+    temporary server runs with --skip-networking and is stopped before the real one starts."""
     for _ in range(int(timeout * 5)):
-        if run(["docker", "exec", NAME, "mysql", f"-p{PW}", "-uroot", "-N", "-e", "SELECT 1"]).returncode == 0:
+        if run(["docker", "exec", NAME, "mysql", "-h", "127.0.0.1", "--protocol=tcp", f"-p{PW}", "-uroot",
+                "-N", "-e", "SELECT 1"]).returncode == 0:
             return True
         time.sleep(0.2)
     return False
