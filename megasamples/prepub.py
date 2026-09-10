@@ -4,10 +4,11 @@
   python3 -m megasamples prepub-check [--image sql-megasamples-mysql:dev] [--skip-image]
 
 Ten items, each either proved here or delegated to the script that owns it. Written to be re-run:
-these are the checks that must still pass the day the release is actually published, which may be
-long after the day it was prepared.
+these are the checks that must still pass the day an image is published, which may be long after
+the day it was prepared. There are no release assets: the repository is what is published, and
+every image is built from it on the user's machine.
 
-Items 4, 5 and 6 (nothing unredistributable in the repo, image or release) are `audit_assets.py`;
+Items 4, 5 and 6 (nothing unredistributable in the repo or the image) are `audit_assets.py`;
 item 1 is `gen_provenance.py --check`. This script runs both rather than reimplementing them.
 """
 import argparse, os, re, subprocess, sys
@@ -95,7 +96,7 @@ def main(argv=None):
     # 4, 5, 6 -------------------------------------------------------------------------------
     cmd = [PY, "-m", "megasamples", "audit-assets", "--image", a.image] + (["--skip-image"] if a.skip_image else [])
     p = run(cmd)
-    f += item(4, "no Citi Bike, Divvy or TPC data in the repo, image or release (audit_assets.py)",
+    f += item(4, "no Citi Bike, Divvy or TPC data in the repo or the image (audit_assets.py)",
               p.returncode == 0, p.stdout.strip().splitlines()[-1] if p.stdout else "")
 
     tpc_ok = all("TPC Benchmark" in read(f"datasets/{d}/LICENSE") for d in ("tpch", "tpcds", "ssb"))

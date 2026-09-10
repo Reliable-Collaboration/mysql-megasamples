@@ -10,7 +10,7 @@ endif
 
 .PHONY: help configure list list-core list-quick fetch build image test-image run up down status clean clean-all \
         compose console-page catalogue provenance check okf-check audit-assets prepub-check \
-        release release-check test-console build-server build-server-stop restore loader-image \
+        test-console build-server build-server-stop restore loader-image \
         wwi-export verify-oracle load-citibike load-divvy load-tpcc bench $(DATASETS)
 
 help:
@@ -34,8 +34,7 @@ help:
 	@echo "Documents and checks:"
 	@echo "  make check            the local gate: bundle validation + generated files up to date"
 	@echo "  make catalogue | provenance         regenerate CATALOGUE.md | LICENSE, PROVENANCE, NOTICE files"
-	@echo "  make audit-assets | prepub-check    nothing unredistributable is shipped | the release checklist"
-	@echo "  make release [SET=sqlite]   stage the release assets (staging only; never publishes)"
+	@echo "  make audit-assets | prepub-check    nothing unredistributable is shipped | the pre-publication checklist"
 	@echo ""
 	@echo "Source-side tools (each prints its licence gate and refuses until you accept):"
 	@echo "  make wwi-export       re-derive WideWorldImporters from Microsoft's .bak (SQL Server EULA)"
@@ -67,8 +66,6 @@ check:          ; @$(MS) check
 okf-check:      ; @$(MS) okf-check --bundle knowledge && $(MS) okf-fix-quotes --bundle knowledge --check
 audit-assets:   ; @$(MS) audit-assets
 prepub-check:   ; @$(MS) prepub-check
-release:        ; @$(MS) release stage $(if $(SET),--set $(SET),)
-release-check:  ; @$(MS) release check $(if $(SET),--set $(SET),)
 test-console:   ; @$(MS) test-console
 build-server:   ; @$(MS) build-server start
 build-server-stop: ; @$(MS) build-server stop

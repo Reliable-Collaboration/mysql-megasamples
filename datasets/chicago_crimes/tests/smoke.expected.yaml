@@ -1,14 +1,14 @@
 # S7: canonical query results, tab-separated as the client prints them.
-arrest_and_domestic_rates: "35882\t47634\t259268"
-block_is_truncated_to_hundred_block: '259267'
-crimes_by_month: "1\t19672\n2\t19956\n3\t20922\n4\t20501\n5\t22999\n6\t23217\n7\t\
-  24116\n8\t23021\n9\t22995\n10\t22502\n11\t19746\n12\t19621"
+arrest_and_domestic_rates: "35884\t47711\t259607"
+block_is_truncated_to_hundred_block: '259606'
+crimes_by_month: "1\t19710\n2\t19984\n3\t20952\n4\t20532\n5\t23031\n6\t23245\n7\t\
+  24149\n8\t23045\n9\t23025\n10\t22521\n11\t19763\n12\t19650"
 disclaimer_is_carried_in_the_schema: '1'
 every_row_is_2024: "2024-01-01 00:00:00\t2024-12-31 23:58:00\t1"
-id_is_unique_case_number_is_not: "259268\t259268\t259239"
+id_is_unique_case_number_is_not: "259607\t259607\t259578"
 iucr_join_is_complete: '0'
 iucr_lookup_shape: "434\t424\t33"
-missing_coordinates_are_null: "1744\t1744\t1167"
-top_primary_types: "THEFT\t60551\nBATTERY\t46157\nCRIMINAL DAMAGE\t28555\nASSAULT\t\
-  23483\nMOTOR VEHICLE THEFT\t21713\nOTHER OFFENSE\t17141\nDECEPTIVE PRACTICE\t16406\n\
-  ROBBERY\t9110\nBURGLARY\t8437\nWEAPONS VIOLATION\t7839"
+missing_coordinates_are_null: "2081\t2081\t1169"
+top_primary_types: "THEFT\t60557\nBATTERY\t46186\nCRIMINAL DAMAGE\t28557\nASSAULT\t\
+  23485\nMOTOR VEHICLE THEFT\t21713\nOTHER OFFENSE\t17164\nDECEPTIVE PRACTICE\t16444\n\
+  ROBBERY\t9120\nBURGLARY\t8437\nWEAPONS VIOLATION\t7841"

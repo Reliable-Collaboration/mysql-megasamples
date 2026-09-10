@@ -149,5 +149,17 @@ Images are pinned by digest rather than tag, which is good practice and, on this
 only thing that works: the daemon cannot fetch blobs from Docker Hub's CDN, so `megasamples/pull_image.py`
 fetches them over IPv4 and compose refers to the digests it reports.
 
+# The DbGate image and the console order (2026-09-10)
+DbGate runs from the Debian-based `dbgate/dbgate:6.6.1` image (digest-pinned in
+`megasamples/consoles.py`), not the Alpine variant: on `6.6.1-alpine` the SQLite driver's native
+module does not load -- `Error relocating .../better-sqlite3/build/Release/better_sqlite3.node:
+fcntl64: symbol not found`, the prebuilt binary wanting glibc on musl -- so every SQLite connection
+in its sidebar failed; on the Debian image the same module opens a file and answers a query, which
+`make test-console` now proves inside the running console. The index page lists the consoles by how
+many engines they browse (CloudBeaver and DbGate all three, Adminer two, phpMyAdmin one, marked
+"MySQL only" and shown smaller and last), opens with how to connect a tool of one's own to each
+engine, and the Adminer card leads to `adminer.html`, which states what its login form wants per
+engine and opens it filled in.
+
 # Status
 accepted. All four consoles ship. CloudBeaver meets the unattended-startup condition this decision set for it, once the undocumented `conf/.cloudbeaver.auto.conf` trigger and the anonymous-team grant are both in place ([runbook](/runbooks/cloudbeaver-unattended-startup.md)). The [preconfiguration question](/questions/console-preconfiguration-limits.md) is answered.

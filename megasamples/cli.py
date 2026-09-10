@@ -41,9 +41,8 @@ COMMANDS = {
     "ports-check":  ("megasamples.ports_check", "main", "re-render every port's DDL and compare it with the committed files"),
     "okf-check":    ("megasamples.okf_check", "main", "validate the knowledge bundle"),
     "okf-fix-quotes": ("megasamples.okf_fix_quotes", "main", "normalise frontmatter quoting in the bundle"),
-    "audit-assets": ("megasamples.audit", "main", "prove nothing unredistributable is in the repo, image or release"),
+    "audit-assets": ("megasamples.audit", "main", "prove nothing unredistributable is in the repo or an image"),
     "prepub-check": ("megasamples.prepub", "main", "the pre-publication checklist"),
-    "release":      ("megasamples.release", "main", "stage | check the release assets (never publishes)"),
     # source-side tools
     "pull-image":   ("megasamples.pull_image", "main", "pull an image over IPv4 and load it into Docker"),
     "wwi-export":   ("megasamples.sources.wwi_export", "main", "export WideWorldImporters from SQL Server (EULA gate)"),

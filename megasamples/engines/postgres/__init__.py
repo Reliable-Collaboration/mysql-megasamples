@@ -82,7 +82,9 @@ class Postgres(Engine):
     def console_environment(self, console, cfg):
         demo, admin = "${DEMO_PASSWORD:-demo}", "${ADMIN_PASSWORD:-admin}"
         if console == "adminer" and "mysql" not in cfg.engines:
-            return {"ADMINER_DEFAULT_SERVER": "postgres", "ADMINER_DEFAULT_DRIVER": "pgsql"}
+            # the login form defaults to the hub when MySQL is in the stack; every engine's details
+            # and a filled-in link are on the landing site's adminer.html either way
+            return {} if "mysql" in cfg.engines else {"ADMINER_DEFAULT_SERVER": "postgres", "ADMINER_DEFAULT_DRIVER": "pgsql"}
         if console == "dbgate":
             return {"CONNECTIONS": "postgres_demo,postgres_admin",
                     "LABEL_postgres_demo": "PostgreSQL (read-only)", "SERVER_postgres_demo": "postgres",

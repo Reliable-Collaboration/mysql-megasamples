@@ -30,7 +30,7 @@ engines:
 #   adminer      MySQL, PostgreSQL, SQLite
 #   dbgate       MySQL, PostgreSQL, SQLite
 #   cloudbeaver  MySQL, PostgreSQL, SQLite
-consoles: [landing, phpmyadmin, adminer, dbgate, cloudbeaver]
+consoles: [landing, cloudbeaver, dbgate, adminer, phpmyadmin]
 
 # Host ports. Every one binds to 127.0.0.1: an unauthenticated database UI should not appear on the
 # network because someone opened a laptop in a cafe.

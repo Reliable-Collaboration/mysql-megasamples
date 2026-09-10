@@ -8,7 +8,7 @@ it. Without the file the built-in default applies: MySQL with the core tier and 
       mysql:      {datasets: core}          # a selector (core | quick | all | a tier) or a list
       postgres:   {datasets: [sakila, chinook]}
       sqlite:     {datasets: quick}
-    consoles: [landing, phpmyadmin, adminer, dbgate, cloudbeaver]
+    consoles: [landing, cloudbeaver, dbgate, adminer, phpmyadmin]
     ports:    {mysql: 3306, landing: 8080, ...}   # host ports; every one binds to 127.0.0.1
     build:    {threads: 4, keep_build_server: false, scale_factor: 1}
     downloads: {concurrency: 3}
@@ -22,7 +22,7 @@ from megasamples.paths import CONFIG, rel
 
 DEFAULT = {
     "engines": {"mysql": {"datasets": "core"}},
-    "consoles": ["landing", "phpmyadmin", "adminer", "dbgate", "cloudbeaver"],
+    "consoles": ["landing", "cloudbeaver", "dbgate", "adminer", "phpmyadmin"],
     "ports": {"mysql": 3306, "postgres": 5432, "landing": 8080, "phpmyadmin": 8081,
               "adminer": 8082, "dbgate": 8083, "cloudbeaver": 8084, "pgadmin": 8085,
               "sqlite-web": 8086},

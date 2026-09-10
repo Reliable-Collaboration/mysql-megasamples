@@ -29,7 +29,7 @@ one-line shims over `python3 -m megasamples <command>` (section 7).
 ├── megasamples/                the package
 │   ├── cli.py  paths.py  config.py  datasets.py  consoles.py  compose.py  job.py  matrix.py
 │   ├── fetch.py  stage.py  canon.py  verify.py  registry.py  catalogue.py  console_page.py
-│   ├── provenance.py  release.py  prepub.py  audit.py  workspace.py  okf_check.py  okf_fix_quotes.py
+│   ├── provenance.py  prepub.py  audit.py  workspace.py  okf_check.py  okf_fix_quotes.py
 │   ├── engines/                one subpackage per engine: mysql/, postgres/, sqlite/ (server, load or port, adapter, image_test)
 │   ├── port/                   the MySQL corpus -> engine-neutral model -> other engines (model, typemap, ddl, tsv, record)
 │   └── sources/                upstream-format translators and exporters (T-SQL, PL/SQL, .bak, CSV, XML)
@@ -37,7 +37,6 @@ one-line shims over `python3 -m megasamples <command>` (section 7).
 ├── consoles/<console>/         console configuration; consoles/landing/ holds the generated index page
 ├── datasets/<name>/            dataset.yaml  convert.py  tests/  ports/  LICENSE  PROVENANCE.md  [name_map.yaml]
 ├── knowledge/                  the OKF v0.2 evidence bundle behind every decision
-├── release/<set>/              staged release assets: SHA256SUMS and MANIFEST.md committed, files not
 ├── downloads/                  git-ignored: verified upstream artifacts, <id>.ok and <id>.meta.json
 └── build/                      git-ignored: stage/<name>/ (converted SQL), <engine>/ (dumps or port files, image context)
 ```
@@ -192,8 +191,8 @@ is the registry the configuration names.
 * **Image.** `engines/sqlite/Dockerfile`: Alpine 3.22 (digest-pinned) with the `sqlite` package
   (SQLite 3.49.2), the files under `/data` and `/data/megasamples.sqlite` as the registry; its default
   command sleeps so the container holds the files for `docker exec` and for the consoles. The 21 core
-  databases are 899 MB of files and a 1.3 GB image. The same files are a release asset set
-  (`make release SET=sqlite`).
+  databases are 899 MB of files and a 1.3 GB image. The same files stay under
+  `build/sqlite/<database>/` for readers that want a database without a server.
 * **Stack.** The `sqlite` service copies the image's files into the named volume `megasamples-sqlite`
   at every start, and the consoles that can open SQLite mount that volume read-only, so a rebuilt
   image replaces what they see.
@@ -275,7 +274,7 @@ engines:
   mysql: {datasets: core}          # core | quick | all | a tier | [names]
   postgres: {datasets: core}
   sqlite: {datasets: core}
-consoles: [landing, phpmyadmin, adminer, dbgate, cloudbeaver]
+consoles: [landing, cloudbeaver, dbgate, adminer, phpmyadmin]
 ports: {mysql: 3306, postgres: 5432, landing: 8080, phpmyadmin: 8081, adminer: 8082, dbgate: 8083, cloudbeaver: 8084}
 build: {threads: 4, keep_build_server: false, scale_factor: 1}
 downloads: {concurrency: 3}
@@ -331,7 +330,7 @@ image for every configured engine, `--up` to start the stack afterwards). `make 
 | bundle and generated files | `make check` | seconds, no Docker | before every commit |
 | the quick subset end to end | `make build D="$(make -s list-quick)"` or a config with `datasets: quick` | 15 datasets, minutes | before a push that touches the pipeline |
 | the image and S8 | `make image` then `make test-image` | one bake | with the above |
-| everything | a config with `datasets: core`, then `make run` and `make test-image` | 21 datasets, a 3.5 GB image | before a release |
+| everything | a config with `datasets: core`, then `make run` and `make test-image` | 21 datasets, a 3.5 GB image | before publishing an image |
 | the console | `make up` then `make test-console` | seconds | when the stack or a console changes |
 
 `make check` runs the knowledge-bundle checker (`okf_check.py`: frontmatter, sections, trust rules,
@@ -340,7 +339,7 @@ links, indexes, log order), the frontmatter-quoting check, the drift checks for 
 table), the port-record reproducibility check for every dataset loaded in the MySQL build server,
 and the unit tests.
 
-## 8. Licensing and release
+## 8. Licensing and publishing
 
 **Every dataset keeps its own upstream licence**; the project's code is Apache-2.0 and covers none
 of the data. `megasamples provenance` generates, from the knowledge bundle and never by hand:
@@ -358,7 +357,7 @@ machine and nothing TPC-authored is committed or shipped.
 **The pre-publication checklist**, `megasamples prepub-check`, is ten items and is meant to be re-run
 on the day of publication: (1) generated licence and provenance files are current; (2) every
 dataset has `LICENSE` and `PROVENANCE.md` pinning what it downloads; (3) the README states the
-share-alike terms; (4) no Citi Bike, Divvy or TPC data in the repository, the image or the release
+share-alike terms; (4) no Citi Bike, Divvy or TPC data in the repository or the image
 (`megasamples audit-assets`); (5) TPC licences carry the EULA legend and no TPC metric names are
 used; (6) no non-redistributable binaries — `.bak`, `.mwb`, `.pbix` — anywhere the project publishes;
 (7) Enron provenance documents the personal-data handling and removal procedure; (8) Stack Exchange
@@ -366,12 +365,13 @@ provenance records the 2024-04-02 snapshot and the unaccepted click-through; (9)
 hbiostat and Iris notices are verbatim in `README.md` and `NOTICE.md`; (10) the open licensing
 questions are listed in the README with their status.
 
-**Release assets** (`megasamples release stage [--set data-v1|sqlite]`) are staged under
-`release/<set>/` with `SHA256SUMS` and a `MANIFEST.md`. The `data-v1` set mirrors only upstream
-artifacts that a third party could not otherwise obtain and verify; the `sqlite` set is the SQLite
-port of every core database plus the registry. **Nothing in this repository publishes.**
-Creating a release, uploading an asset, pushing an image or making anything public is the
-maintainer's decision and action, never the build's.
+**There are no release assets.** The repository is what is published; every byte of data comes
+from its upstream to the user's machine, verified against the digests `manifest.yaml` pins, and
+what a script cannot fetch the README tells the user how to obtain (`lahman`, behind a share link)
+or how to accept when the upstream has moved (`chicago_crimes`, with `MEGASAMPLES_ACCEPT_DRIFT=1`
+re-pinning the manifest and `verify --pin` the expectations). **Nothing in this repository
+publishes.** Pushing an image or making anything public is the maintainer's decision and action,
+never the build's; `knowledge/decisions/no-release-assets.md` records why nothing is mirrored.
 
 ## 9. The knowledge bundle, and how to extend the project
 

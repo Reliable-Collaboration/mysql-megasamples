@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Assert that nothing which may not be redistributed is in the repository, the image or the release.
+"""Assert that nothing which may not be redistributed is in the repository or the image.
 
   python3 -m megasamples audit-assets [--image sql-megasamples-mysql:dev]
 
 ARCHITECTURE.md section 8 items 4, 5 and 6, run as one check because they are one question: did anything
 whose licence forbids redistribution end up somewhere we publish?
 
-  4. No Citi Bike or Divvy data in any image layer or release asset. Both Lyft licences prohibit
+  4. No Citi Bike or Divvy data in any image layer. Both Lyft licences prohibit
      hosting or distributing the data as a stand-alone dataset, so the project ships the loaders and
      never the data.
   5. No TPC-generated data committed, and no modified TPC query text. The TPC EULA permits
@@ -83,7 +83,7 @@ def main(argv=None):
     ap.add_argument("--image", default=os.environ.get("MEGASAMPLES_MYSQL_IMAGE", "sql-megasamples-mysql:dev"))
     ap.add_argument("--base", default="mysql:9.7.2",
                     help="the image this one is built FROM; its own files are not our doing")
-    ap.add_argument("--skip-image", action="store_true", help="audit only the repo and the release")
+    ap.add_argument("--skip-image", action="store_true", help="audit only the repository")
     a = ap.parse_args(argv)
     failures = []
 
@@ -102,18 +102,6 @@ def main(argv=None):
         failures.append(f"files that are not openly licensed are committed: {', '.join(bad[:3])}")
     else:
         print("  . no .bak/.mwb/.pbix/.mdf/.ldf/.ndf files are committed")
-
-    # --- 4: the staged release ---------------------------------------------------------------
-    rel = os.path.join(ROOT, "release")
-    staged = []
-    for dirpath, _dirs, files in os.walk(rel):
-        staged += [os.path.join(dirpath, f) for f in files]
-    for f in staged:
-        low = os.path.basename(f).lower()
-        hit = next((d for d in BIKESHARE_DB + TPC_DB if d in low), None)
-        if hit:
-            failures.append(f"release asset {os.path.basename(f)} looks like {hit} data")
-    print(f"  . {len(staged)} staged release file(s), none of them bike-share or TPC data")
 
     # --- 4, 5 and 6: the image ---------------------------------------------------------------
     if a.skip_image:

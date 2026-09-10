@@ -44,29 +44,32 @@ def load_manifest(path):
     return data.get("artifacts") or []
 
 
-def write_manifest_size(manifest_path, art_id, size):
-    """Backfill size_bytes for an artifact whose entry left it at 0."""
+def write_manifest_size(manifest_path, art_id, size, replace=False):
+    """Backfill size_bytes for an artifact whose entry left it at 0 (or, with `replace`, re-pin it)."""
     with _manifest_lock:
         lines = open(manifest_path, encoding="utf-8").read().split("\n")
         for i, line in enumerate(lines):
             if line.strip() == f"- id: {art_id}":
                 for j in range(i, min(i + 12, len(lines))):
-                    if lines[j].strip() == "size_bytes: 0":
-                        lines[j] = lines[j].replace("size_bytes: 0", f"size_bytes: {size}")
+                    m = re.match(r"^(\s+size_bytes: )(\d+)\s*$", lines[j])
+                    if m and (m.group(2) == "0" or replace):
+                        lines[j] = f"{m.group(1)}{size}"
                         open(manifest_path, "w", encoding="utf-8").write("\n".join(lines))
                         return True
                 return False
     return False
 
 
-def write_manifest_sha(manifest_path, art_id, digest):
-    """Write a first-fetch digest back into the manifest without disturbing anything else."""
+def write_manifest_sha(manifest_path, art_id, digest, replace=False):
+    """Write a first-fetch digest back into the manifest without disturbing anything else (or, with
+    `replace`, re-pin an artifact whose upstream has moved)."""
     with _manifest_lock:
         text = open(manifest_path, encoding="utf-8").read()
         block = re.search(r"(^  - id: " + re.escape(art_id) + r"$.*?)(?=^  - id: |\Z)", text, re.M | re.S)
         if not block:
             return False
-        updated = re.sub(r'^(\s+sha256: )""\s*$', r'\1"' + digest + '"', block.group(1), count=1, flags=re.M)
+        pattern = r'^(\s+sha256: )"[0-9a-f]*"\s*$' if replace else r'^(\s+sha256: )""\s*$'
+        updated = re.sub(pattern, r'\1"' + digest + '"', block.group(1), count=1, flags=re.M)
         if updated == block.group(1):
             return False
         open(manifest_path, "w", encoding="utf-8").write(text[:block.start(1)] + updated + text[block.end(1):])
@@ -206,10 +209,15 @@ def fetch_one(job, dest_root, manifest_path, trust_first, stall):
         job.state = "verifying"
         digest, size = sha256_of(dest, job), os.path.getsize(dest)
         want_size = art.get("size_bytes") or 0
-        if want_size and size != want_size:
-            raise RuntimeError(f"size {size} != manifest size_bytes {want_size}")
-        if expected and digest != expected:
-            raise RuntimeError(f"sha256 {digest} != manifest {expected}")
+        moved = (f"size {size} != manifest size_bytes {want_size}" if want_size and size != want_size
+                 else f"sha256 {digest} != manifest {expected}" if expected and digest != expected else None)
+        if moved and accept_drift():
+            write_manifest_sha(manifest_path, art_id, digest, replace=True)
+            write_manifest_size(manifest_path, art_id, size, replace=True)
+            expected = digest
+            job.detail = f"DRIFT ACCEPTED: {moved}; manifest re-pinned"
+        elif moved:
+            raise RuntimeError(moved + "\n      (a newer upstream copy? MEGASAMPLES_ACCEPT_DRIFT=1 accepts it and re-pins the manifest)")
         if not expected:
             if not trust_first:
                 raise RuntimeError(f"manifest has no sha256; rerun with MEGASAMPLES_TRUST_FIRST_FETCH=1 to pin {digest}")
@@ -221,7 +229,7 @@ def fetch_one(job, dest_root, manifest_path, trust_first, stall):
 
     sources = list(art.get("mirrors") or []) if art.get("manual") else [art["url"]] + list(art.get("mirrors") or [])
     tmp = dest + ".part"
-    attempts, reasons = [], []
+    attempts, reasons, drift = [], [], None
     for source in sources:
         if os.path.exists(tmp):
             os.remove(tmp)
@@ -236,12 +244,24 @@ def fetch_one(job, dest_root, manifest_path, trust_first, stall):
         job._window = (time.time(), 0)
         verified, reason = verify_file(tmp, art)
         if reason and (expected or (art.get("size_bytes") or 0)):
-            os.remove(tmp)
-            reasons.append(f"{source}: {reason}")
-            continue
+            if accept_drift():
+                # the upstream has moved since it was pinned and the caller said so is fine: the
+                # observed digest and size replace the pinned ones, here and in the manifest, and
+                # the dataset's own expectations have to be re-pinned on MySQL afterwards
+                digest, size = sha256_of(tmp), os.path.getsize(tmp)
+                write_manifest_sha(manifest_path, art_id, digest, replace=True)
+                write_manifest_size(manifest_path, art_id, size, replace=True)
+                expected = digest
+                drift = f"DRIFT ACCEPTED: {reason}; manifest re-pinned to sha256 {digest[:12]}, size {size}"
+                job.detail = "re-pin this dataset's tests with `megasamples verify <dataset> --pin` after the MySQL build"
+                verified = (digest, size)
+            else:
+                os.remove(tmp)
+                reasons.append(f"{source}: {reason}")
+                continue
         digest, size = verified if verified else (sha256_of(tmp), os.path.getsize(tmp))
         if expected:
-            job.verdict = "verified"
+            job.verdict = drift or "verified"
         elif trust_first:
             wrote = write_manifest_sha(manifest_path, art_id, digest)
             write_manifest_size(manifest_path, art_id, size)
@@ -264,11 +284,17 @@ def fetch_one(job, dest_root, manifest_path, trust_first, stall):
         return "fetched"
 
     if art.get("manual"):
-        raise RuntimeError(f"maintainer-supplied and not present.\n"
-                           f"      Obtain it from: {art['url']}\n"
-                           f"      Then put it at: {dest}"
+        raise RuntimeError(f"not fetchable by a script; obtain it yourself.\n"
+                           f"      Download it from: {art['url']}\n"
+                           f"      Then put it at:   {dest}"
                            + ("".join(f"\n      mirror tried: {r}" for r in reasons)))
-    raise RuntimeError("every source failed: " + "; ".join(reasons))
+    raise RuntimeError("every source failed: " + "; ".join(reasons)
+                       + ("\n      (the upstream bytes have changed since they were pinned; MEGASAMPLES_ACCEPT_DRIFT=1 "
+                          "accepts the current ones and re-pins the manifest)" if any("!= manifest" in r for r in reasons) else ""))
+
+
+def accept_drift():
+    return os.environ.get("MEGASAMPLES_ACCEPT_DRIFT") == "1"
 
 
 # --- the monitor ------------------------------------------------------------------------------------

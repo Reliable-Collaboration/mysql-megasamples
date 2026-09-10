@@ -8,7 +8,7 @@ def test_default_is_mysql_core_four_consoles():
     cfg = stack.Config({})
     assert list(cfg.engines) == ["mysql"]
     assert len(cfg.engines["mysql"]) == 21
-    assert cfg.consoles == ["landing", "phpmyadmin", "adminer", "dbgate", "cloudbeaver"]
+    assert cfg.consoles == ["landing", "cloudbeaver", "dbgate", "adminer", "phpmyadmin"]
     assert cfg.validate() == []
 
 

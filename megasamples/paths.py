@@ -15,7 +15,6 @@ KNOWLEDGE = os.path.join(ROOT, "knowledge")        # the OKF evidence bundle
 DOWNLOADS = os.path.join(ROOT, "downloads")        # sha256-verified upstream artifacts (git-ignored)
 BUILD = os.path.join(ROOT, "build")                # everything a build produces (git-ignored)
 STAGE = os.path.join(BUILD, "stage")               # converted SQL per dataset: the build server's input
-RELEASE = os.path.join(ROOT, "release")            # staged release assets and their checksums
 
 MANIFEST = os.path.join(ROOT, "manifest.yaml")     # every downloadable artifact
 CONFIG = os.path.join(ROOT, "megasamples.yaml")    # the stack: engines x datasets, consoles, ports

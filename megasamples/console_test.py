@@ -4,8 +4,9 @@
   python3 -m megasamples test-console
 
 Deliberately shallow: it catches a withdrawn image tag, a console that no longer starts, a landing
-page that has drifted from the registries, and an account whose privileges are not what the page
-says. It does not try to drive four web applications.
+page that has drifted from the registries or lost its connection help, an account whose privileges
+are not what the page says, and a DbGate whose SQLite driver does not load. It does not try to
+drive four web applications.
 """
 import http.cookiejar, json, os, subprocess, sys, urllib.error, urllib.request
 
@@ -150,6 +151,38 @@ def main(argv=None):
     for account in ("demo", "admin") if "landing" in cfg.consoles else ():
         if account not in page:
             failures.append(f"the landing page does not state the {account} account, and Adminer's login form needs it")
+    if "landing" in cfg.consoles:
+        # the page tells a visitor how to reach each engine from a tool of their own
+        if "Connect with your own tool" not in page:
+            failures.append("the landing page has no 'Connect with your own tool' section")
+        for name in cfg.engines:
+            engine = engine_registry.get(name)
+            marker = f"127.0.0.1 port {cfg.ports.get(name, engine.port)}" if engine.port else "docker cp megasamples-sqlite:/data/"
+            if marker not in page:
+                failures.append(f"the landing page does not say how to connect to {engine.title} ({marker!r} missing)")
+        if "adminer" in cfg.consoles:
+            try:
+                status, body = get(f"http://127.0.0.1:{cfg.ports['landing']}/adminer.html")
+                if status != 200 or "Open as demo" not in body:
+                    failures.append("adminer.html, the page behind the Adminer card, is missing or has no filled-in link")
+                else:
+                    print("  . adminer.html states the login details and opens Adminer filled in")
+            except (urllib.error.URLError, OSError) as exc:
+                failures.append(f"adminer.html: {exc}")
+
+    if "dbgate" in cfg.consoles and "sqlite" in cfg.engines:
+        # DbGate's SQLite driver is a native module; on the Alpine image it did not load at all
+        # ("fcntl64: symbol not found"), so the check opens a mounted file through that module inside
+        # the running console container and reads the registry
+        probe = ("const D=require('/home/dbgate-docker/node_modules/better-sqlite3');"
+                 "const db=new D('/data/megasamples.sqlite',{readonly:true});"
+                 "console.log(db.prepare('select count(*) n from datasets').get().n)")
+        p = subprocess.run(["docker", "exec", console_registry.get("dbgate").container, "node", "-e", probe],
+                           capture_output=True, text=True)
+        if p.returncode == 0 and p.stdout.strip().isdigit():
+            print(f"  . DbGate's SQLite driver opens a mounted file and reads the registry ({p.stdout.strip()} datasets)")
+        else:
+            failures.append(f"DbGate cannot open a SQLite file: {(p.stderr or p.stdout).strip()[:160]}")
 
     for f in failures:
         print(f"  x {f}")

@@ -48,7 +48,7 @@ def test_a_manual_artifact_tries_its_mirror_before_asking_for_the_file(tmp_path)
         fetch.fetch_one(fetch.Job(art), str(tmp_path / "dl2"), str(tmp_path / "m.yaml"), False, stall=5)
         assert False
     except RuntimeError as exc:
-        assert "maintainer-supplied and not present" in str(exc) and "mirror tried" in str(exc)
+        assert "not fetchable by a script" in str(exc) and "mirror tried" in str(exc)
 
 
 def test_failures_are_grouped_by_the_dataset_they_block():
@@ -57,3 +57,36 @@ def test_failures_are_grouped_by_the_dataset_they_block():
     blocked = fetch.blocked_datasets(["lahman/lahman.zip: maintainer-supplied and not present.",
                                       "chicago_crimes/crimes_2024.csv: size 1 != manifest size_bytes 2"], arts)
     assert sorted(blocked) == ["chicago_crimes", "lahman"] and len(blocked["chicago_crimes"]) == 1
+
+
+def test_manifest_repin_replaces_a_pinned_digest_and_size(tmp_path):
+    m = tmp_path / "manifest.yaml"
+    m.write_text('artifacts:\n  - id: a/one.csv\n    dataset: a\n    url: "x"\n    sha256: "00aa"\n    size_bytes: 10\n  - id: a/two.csv\n    dataset: a\n    url: "y"\n    sha256: ""\n    size_bytes: 0\n')
+    assert fetch.write_manifest_sha(str(m), "a/one.csv", "11bb") is False          # pinned already: a first fetch does not overwrite
+    assert fetch.write_manifest_sha(str(m), "a/one.csv", "11bb", replace=True) is True
+    assert fetch.write_manifest_size(str(m), "a/one.csv", 12, replace=True) is True
+    assert fetch.write_manifest_sha(str(m), "a/two.csv", "22cc") is True and fetch.write_manifest_size(str(m), "a/two.csv", 5) is True
+    text = m.read_text()
+    assert 'sha256: "11bb"' in text and "size_bytes: 12" in text and 'sha256: "22cc"' in text and "size_bytes: 5" in text
+    assert text.count("- id:") == 2
+
+
+def test_drift_is_accepted_only_when_asked(tmp_path, monkeypatch):
+    good, moved = tmp_path / "good.csv", tmp_path / "moved.csv"
+    good.write_bytes(b"a\n"); moved.write_bytes(b"a\nb\n")
+    m = tmp_path / "manifest.yaml"
+    m.write_text(f'artifacts:\n  - id: a/rows.csv\n    dataset: a\n    url: "file://{moved}"\n    sha256: "{hashlib.sha256(b"a\\n").hexdigest()}"\n    size_bytes: 2\n')
+    art = {"id": "a/rows.csv", "dataset": "a", "url": f"file://{moved}", "mirrors": [],
+           "sha256": hashlib.sha256(b"a\n").hexdigest(), "size_bytes": 2}
+    monkeypatch.delenv("MEGASAMPLES_ACCEPT_DRIFT", raising=False)
+    try:
+        fetch.fetch_one(fetch.Job(art), str(tmp_path / "dl"), str(m), False, stall=5)
+        assert False
+    except RuntimeError as exc:
+        assert "MEGASAMPLES_ACCEPT_DRIFT=1" in str(exc)
+    monkeypatch.setenv("MEGASAMPLES_ACCEPT_DRIFT", "1")
+    job = fetch.Job(art)
+    assert fetch.fetch_one(job, str(tmp_path / "dl"), str(m), False, stall=5) == "fetched"
+    new_digest = hashlib.sha256(b"a\nb\n").hexdigest()
+    assert job.verdict.startswith("DRIFT ACCEPTED") and new_digest[:12] in job.verdict
+    assert f'sha256: "{new_digest}"' in m.read_text() and "size_bytes: 4" in m.read_text()

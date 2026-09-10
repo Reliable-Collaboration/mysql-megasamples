@@ -19,9 +19,9 @@ now has the inputs to add Dolt's siblings:
 
 * **DoltgreSQL** (PostgreSQL wire protocol): loaded from the PostgreSQL port through `pg_dump` and
   `psql`, one Dolt database per sample database, the same disk, time and memory measurements as Dolt.
-* **DoltLite** (a SQLite fork that reads stock SQLite files): opened directly on the files
-  `make release SET=sqlite` stages, then committed, so the measurement is what the file costs once
-  it is history rather than what a load costs.
+* **DoltLite** (a SQLite fork that reads stock SQLite files): opened directly on the files under
+  `build/sqlite/<database>/`, then committed, so the measurement is what the file costs once it is
+  history rather than what a load costs.
 
 Both go into `dolt-megasamples`, not here. Before either starts, its plan there answers: which
 versions to pin, what a "commit per row" means for a file-based engine, and how memory is bounded
@@ -34,5 +34,6 @@ per container, as the earlier experiment had to learn.
   full Chicago set) add tables to a core database and the port has to run after the append.
 * **A PostgreSQL browser.** pgAdmin or pgweb is evaluated and recorded before being added to the
   console registry; Adminer, DbGate and CloudBeaver already browse PostgreSQL.
-* **Publishing.** Nothing is published yet: the images, the `data-v1` assets and the `sqlite` set
-  are staged and checked by `make prepub-check`; publishing them is the maintainer's step.
+* **Publishing.** The repository is the release; no data or file asset is published beside it.
+  No image is published yet: `make prepub-check` is the checklist for the day one is, and pushing
+  it is the maintainer's step.

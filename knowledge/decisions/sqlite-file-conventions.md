@@ -1,7 +1,7 @@
 ---
 type: Decision
 title: "How the SQLite port is shaped: one file per database, written by the stdlib driver, shipped in a data image"
-description: "Each database becomes <name>.sqlite with MySQL-like declared types, inline constraints, secondary indexes, a rollback journal and an application id; the files ship as release assets and in an Alpine image carrying the sqlite3 shell."
+description: "Each database becomes <name>.sqlite with MySQL-like declared types, inline constraints, secondary indexes, a rollback journal and an application id; the files ship in an Alpine image carrying the sqlite3 shell and stay under build/sqlite/ for use without a server."
 resource: /decisions/sqlite-file-conventions.md
 tags:
 - decision
@@ -31,7 +31,7 @@ What does a port of the corpus look like, and how is it shipped?
 # Options considered
 1. **One `<database>.sqlite` file per dataset, written by Python's stdlib `sqlite3` from the model and
    the MySQL Shell dump; a data image (`alpine` plus the `sqlite3` shell) carrying the files under
-   `/data`; the same files as release assets** (chosen).
+   `/data`; the same files kept under `build/sqlite/` for use without a server** (chosen).
 2. One file holding every database as attached schemas -- rejected: a 660 MB file nobody wants whole,
    and DoltLite opens one database per file.
 3. A server-side driver for writing (a SQLite container) -- rejected: the stdlib driver on the build
@@ -66,8 +66,9 @@ What does a port of the corpus look like, and how is it shipped?
   registry with the same columns as the other engines plus `engine` and `not_ported`.
 * **Shipping.** `sql-megasamples-sqlite:dev` is `alpine:3.22` (digest-pinned) with the `sqlite`
   package and the files under `/data`; its default command sleeps so the container holds the files
-  for `docker exec` and for the consoles through a named volume. The files are also staged as a
-  release asset set.
+  for `docker exec` and for the consoles through a named volume. The files are not published
+  beside the repository ([no release assets](/decisions/no-release-assets.md)); a reader builds
+  them or copies them out of the container.
 
 # Status
 accepted

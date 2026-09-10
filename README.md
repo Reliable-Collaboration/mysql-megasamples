@@ -11,7 +11,7 @@ choice and one command builds it.
 |---|---|---|
 | **MySQL 9.7.2** | `sql-megasamples-mysql`: an image with the databases baked into its data directory | 3.5 GB image |
 | **PostgreSQL 18.6** | `sql-megasamples-postgres`: an image with the databases in its cluster, ported from the verified MySQL corpus | 4.1 GB image (2.6 GB data directory) |
-| **SQLite 3.49** | `sql-megasamples-sqlite`: one `.sqlite` file per database with the `sqlite3` shell beside them, also staged as release assets | 1.3 GB image (899 MB of files) |
+| **SQLite 3.49** | `sql-megasamples-sqlite`: one `.sqlite` file per database with the `sqlite3` shell beside them; the files are also under `build/sqlite/` to copy anywhere | 1.3 GB image (899 MB of files) |
 
 Every dataset is built and verified on all three engines. PostgreSQL and SQLite are **ports of the
 MySQL corpus**: the same rows, proved by the same per-table content digests, foreign-key checks and
@@ -61,7 +61,7 @@ dataset with its tier, download size and shape.
 |---|---|---:|---:|
 | `adventureworks` | Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer) | 69 | 759,240 |
 | `adventureworks_lt` | The lightweight 12-table AdventureWorks (SalesLT schema) | 12 | 4,277 |
-| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 259,702 |
+| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 260,041 |
 | `chinook` | Luis Rocha's digital media store sample (v1.4.5, 2024-02-12) | 11 | 15,607 |
 | `contoso` | SQLBI's synthetic Contoso retail star schema V2 | 8 | 753,467 |
 | `dvdstore` | Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships) | 9 | 174,716 |
@@ -141,9 +141,9 @@ PGPASSWORD=demo psql -h 127.0.0.1 -p 5432 -U demo sakila
 ### SQLite
 
 `sql-megasamples-sqlite:dev` carries one file per database under `/data` plus
-`/data/megasamples.sqlite`, the registry, and the `sqlite3` shell. The same files are staged as a
-release asset set (`make release SET=sqlite`) for readers that want a database without a server,
-and are what [DoltLite](https://github.com/dolthub/doltlite) opens directly. Types are declared in
+`/data/megasamples.sqlite`, the registry, and the `sqlite3` shell. The same files sit under
+`build/sqlite/<database>/` on the machine that built them, for readers that want a database
+without a server, and are what [DoltLite](https://github.com/dolthub/doltlite) opens directly. Types are declared in
 MySQL's terms (`DECIMAL(10,2)`, `DATETIME`, `VARCHAR(45)`) so readers see the intent; foreign keys are
 declared and verified, and enforced by the reader's `PRAGMA foreign_keys=ON`, as with any SQLite file.
 Views, triggers, `ON UPDATE` columns and full-text indexes (an FTS5 table beside each indexed
@@ -194,22 +194,53 @@ Two comparisons are weaker than a digest and say so in the verification output: 
 on SQLite, which does decimal arithmetic in floating point, a view's computed decimal columns are
 left out of the digest while every other column is still compared exactly.
 
+## Connect with your own tool
+
+Every server engine listens on `127.0.0.1` of the machine running the stack, with the same two
+accounts. DBeaver, DataGrip, TablePlus, VS Code's database extensions, a language driver or the
+engine's own client take these details as they are; the console index page repeats them with the
+ports and passwords you actually configured.
+
+| | MySQL | PostgreSQL | SQLite |
+|---|---|---|---|
+| address | `127.0.0.1` port `3306` | `127.0.0.1` port `5432` | files, no server |
+| read only | `demo` / `demo` | `demo` / `demo` | — |
+| full access | `admin` / `admin` (all privileges) | `admin` / `admin` (owns every sample table) | — |
+| superuser | `root` / `root` | `postgres` / `root` | — |
+| database | any of the 21, e.g. `sakila` | one per dataset; connect to it, or to `megasamples` for the registry | one file per database |
+| client | `mysql -h 127.0.0.1 -P 3306 -u demo -pdemo sakila` | `PGPASSWORD=demo psql -h 127.0.0.1 -p 5432 -U demo sakila` | `sqlite3 sakila.sqlite` |
+| URL | `mysql://demo:demo@127.0.0.1:3306/sakila` | `postgresql://demo:demo@127.0.0.1:5432/sakila` | the file's path |
+| JDBC | `jdbc:mysql://127.0.0.1:3306/sakila` | `jdbc:postgresql://127.0.0.1:5432/sakila` | `jdbc:sqlite:/path/to/sakila.sqlite` |
+
+MySQL 9 authenticates with `caching_sha2_password` only, so use a client or driver from the MySQL 8
+era or newer. The SQLite files live inside the `megasamples-sqlite` container under `/data/`, one
+`<database>.sqlite` each plus `megasamples.sqlite` (the registry), and under
+`build/sqlite/<database>/` on the machine that built them; `docker cp megasamples-sqlite:/data/sakila.sqlite .`
+takes one out, and DB Browser for SQLite, DBeaver, DataGrip or Python's `sqlite3` open it as it is.
+Run `PRAGMA foreign_keys=ON` to enforce the foreign keys the file declares; a full-text index is an
+FTS5 table named `<table>_<index>_fts`. Ports and passwords are yours to change in
+`megasamples.yaml` and `.env`, and every page and console follows.
+
 ## The consoles
 
 `make up` brings the engines and the consoles up as one stack, and `make down` takes it away again.
 Every port binds to `127.0.0.1`: an unauthenticated database UI should not appear on the network
-because someone opened a laptop in a café. Publishing one more widely is a deliberate edit.
+because someone opened a laptop in a café. Publishing one more widely is a deliberate edit. Only
+CloudBeaver and DbGate browse all three engines; the index page lists the consoles by how much
+they cover and marks the one that is MySQL only.
 
 | | address | browses | notes |
 |---|---|---|---|
-| **console index** | **<http://127.0.0.1:8080/>** | every engine | **start here**: every database on every engine with its size, licence and what a port left out, generated from the running stack |
-| phpMyAdmin | <http://127.0.0.1:8081/> | MySQL | signed in already; the server menu switches account |
-| Adminer | <http://127.0.0.1:8082/> | MySQL, PostgreSQL | its login form remains — type either account |
+| **console index** | **<http://127.0.0.1:8080/>** | every engine | **start here**: how to connect your own tool, then every database on every engine with its size, licence and what a port left out, generated from the running stack |
+| CloudBeaver | <http://127.0.0.1:8084/> | MySQL, PostgreSQL, SQLite | opens as a guest; both accounts on each server engine and one connection per SQLite file in the sidebar |
 | DbGate | <http://127.0.0.1:8083/> | MySQL, PostgreSQL, SQLite | every connection preconfigured in the sidebar, one per SQLite file |
-| CloudBeaver | <http://127.0.0.1:8084/> | MySQL, PostgreSQL, SQLite | opens as a guest; every connection in the sidebar |
+| Adminer | <http://127.0.0.1:8082/> | MySQL, PostgreSQL | its login form remains; the index page's Adminer card opens a page that says what to type for each engine and opens Adminer filled in |
+| phpMyAdmin | <http://127.0.0.1:8081/> | MySQL only | signed in already; the server menu switches account |
 
-A console starts only when an engine it can browse is in the stack, and is configured for every
-engine present. `compose.yaml` is generated from `megasamples.yaml` by `make up` (or `make compose`)
+Inside the stack an engine is reached by its service name — Adminer's "Server" field takes `mysql`
+or `postgres`, not `127.0.0.1` — and from your machine by `127.0.0.1` and the port above. A console
+starts only when an engine it can browse is in the stack, and is configured for every engine
+present. `compose.yaml` is generated from `megasamples.yaml` by `make up` (or `make compose`)
 so the stack is exactly what you chose; every service carries a memory limit and every image is
 pinned by digest.
 
@@ -241,16 +272,27 @@ verification pass — and prints one permanent line per artifact; several run at
 that makes no progress for two minutes is retried over IPv4, which on this project's build machines
 is what a hang usually means, and the fallback is recorded with the file.
 
-Two core datasets cannot be fetched from their upstream today, and until the project's `data-v1`
-release assets are published the fetch says so and the build goes on without them: `lahman`
-(baseball, 27 tables) is published behind a SABR share link that no build can fetch, and
-`chicago_crimes` comes from a portal whose 2024 extract has changed since the bytes the image
-holds were pinned. Every artifact carries the release asset as a mirror, tried when the upstream
-bytes are not the pinned ones; the fetch names the exact URL and the path to put a file at
-(`downloads/lahman/lahman_1871-2025_csv.zip`, `downloads/chicago_crimes/crimes_2024.csv`) and
-verifies its checksum like every other artifact. A dataset whose download is not in place is left
-out of every engine's build and image and named at the end of `make run`, which then exits 1;
-leave it out of your dataset list if you would rather not see that.
+There are no release assets: the repository is what is published, and every byte of data comes from
+its upstream to your machine. Two core datasets need a hand from you:
+
+* **`lahman`** (baseball, 27 tables) is published behind a SABR share link that no script can
+  fetch. Download it in a browser from the URL the fetch prints
+  (<https://sabr.box.com/s/y1prhc795jk8zvmelfd3jq7tl389y6cd>), put it at
+  `downloads/lahman/lahman_1871-2025_csv.zip`, and the next `make run` verifies its checksum like
+  every other artifact.
+* **`chicago_crimes`** comes from a portal that amends past years, so its 2024 extract changes
+  from time to time and stops matching the pinned digest. The pin is the extract of 2026-09-09.
+  When the fetch reports a mismatch, decide whether you want the newer extract:
+  `MEGASAMPLES_ACCEPT_DRIFT=1 make chicago_crimes` accepts it, re-pins `manifest.yaml`, and the
+  verification then fails on the pinned counts and digests, which
+  `python3 -m megasamples verify chicago_crimes --pin` moves to what you loaded. Your numbers will
+  differ from the documented ones by whatever the city changed. The same switch works for any
+  artifact whose upstream has moved, and for a file you obtained yourself and placed under
+  `downloads/`.
+
+A dataset whose download is not in place is left out of every engine's build and image and named
+at the end of `make run`, which then exits 1; leave it out of your dataset list if you would rather
+not see that.
 
 ## Building piece by piece
 
@@ -399,7 +441,7 @@ redistribution, are a better basis for a storage comparison than any one dataset
 
 | Path | What it holds |
 |---|---|
-| `ARCHITECTURE.md` | how it works: layout, the dataset contract, the MySQL hub, engines, verification, the stack, gates, licensing and release |
+| `ARCHITECTURE.md` | how it works: layout, the dataset contract, the MySQL hub, engines, verification, the stack, gates, licensing and publishing |
 | `PLAN.md` | what is being built next |
 | `CATALOGUE.md` | every dataset: tier, shape, licence, and what that licence asks of a redistributor (generated) |
 | `megasamples/` | the package: the pipeline, one subpackage per engine, the upstream-format translators |

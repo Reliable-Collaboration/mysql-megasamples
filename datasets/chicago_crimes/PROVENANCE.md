@@ -16,7 +16,7 @@ a download does not match.
 
 | artifact | bytes | sha256 |
 |---|---:|---|
-| `chicago_crimes/crimes_2024.csv` | 74,811,578 | `243fb805b601e958ce12461f32746187fe9588da21146e96ffdfe11bbac736b6` |
+| `chicago_crimes/crimes_2024.csv` | 74,885,948 | `5e67e3861a76d5cfa38bb2d57cc2ed7962808402282eedc07c54602b9a481ffe` |
 | `chicago_crimes/iucr.csv` | 24,230 | `257503d02bfbf487b8679c0aa1dfb45217fcd1867c909e2ed41cfdbf7e46f370` |
 
 ## What upstream publishes
@@ -43,6 +43,6 @@ None upstream. This project adds a view `v_crime_iucr` joining `crimes` to `iucr
 
 ## Measured
 
-2 tables, 259,702 rows. Per-table counts, digests, index sets,
+2 tables, 260,041 rows. Per-table counts, digests, index sets,
 query plans and canonical query results are pinned under `tests/` and are
 checked on every build.

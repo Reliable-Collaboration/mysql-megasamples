@@ -1,7 +1,7 @@
 ---
 type: Runbook
 title: "The clean-room build: prove the README's quick start from a fresh clone with nothing pre-built"
-description: How the project is tested as a first-time user would meet it -- its images, containers, volumes and build servers removed, a fresh clone, uv sync, the example configuration with all three engines, make run, make up and the tests -- what was measured on 2026-09-09/10 (1.4 GB fetched in 8 minutes, all 21 core datasets on three engines in 20 minutes once the run order was fixed, every test green), which two artifacts a first-time user cannot fetch until the data-v1 release is published, and the defects the first attempts surfaced.
+description: How the project is tested as a first-time user would meet it -- its images, containers, volumes and build servers removed, a fresh clone, uv sync, the example configuration with all three engines, make run, make up and the tests -- what was measured on 2026-09-09/10 (1.4 GB fetched in 8 minutes, all 21 core datasets on three engines in 20 minutes once the run order was fixed, every test green), which two artifacts need the user's own hand, and the defects the first attempts surfaced.
 resource: /runbooks/clean-room-build.md
 tags:
 - runbook
@@ -48,13 +48,14 @@ lock file that was never regenerated, an upstream download that has changed sinc
    all three engines on `core` (the interactive `make configure` cannot be driven from a script);
    `make run` under `nohup` with its output kept; then `make up`, `make test-console`,
    `make test-image ENGINE=` for each engine, `make check`.
-4. **Two artifacts need the maintainer** until the `data-v1` release assets are published
-   (`release/data-v1/MANIFEST.md`): `lahman/lahman_1871-2025_csv.zip` (a Box share, no static URL)
-   and `chicago_crimes/crimes_2024.csv` (the portal's 2024 extract has changed since it was
-   pinned: 74,885,948 bytes on 2026-09-09 against 74,811,578 pinned). The fetch reports both and
-   the build goes on without them. For the test they were placed under `downloads/` from the
-   maintainer's verified copies, whose digests the fetcher checked against the manifest -- the
-   same bytes the release asset will deliver, so the run is what a user gets once it is published.
+4. **Two artifacts need the user's hand** ([no release assets](/decisions/no-release-assets.md)):
+   `lahman/lahman_1871-2025_csv.zip` is behind a Box share with no static URL, and
+   `chicago_crimes/crimes_2024.csv` comes from a portal that amends past years (on 2026-09-09 the
+   extract was 74,885,948 bytes against 74,811,578 pinned on 2026-09-03; the manifest and the
+   dataset's expectations were re-pinned to the 2026-09-09 extract afterwards). The fetch reports
+   what it cannot verify and the build goes on without that dataset. For this test the lahman zip
+   was placed under `downloads/` from the maintainer's verified copy, whose digest the fetcher
+   checked, and the Chicago file from the same copy of the then-pinned extract.
 
 ## Measured, 2026-09-09/10, on the build machine (WSL2, 20 GB RAM)
 
@@ -71,9 +72,9 @@ lock file that was never regenerated, an upstream download that has changed sinc
 ## What the first attempts surfaced, each fixed before the run above passed
 
 * `make run` stopped after the downloads because one artifact failed; a dataset whose download is
-  not in place is now left out of every engine's build and image and named at the end, and the
-  fetcher tries each `mirrors` entry when the upstream bytes are not the pinned ones, with the
-  five data-v1 release assets as mirrors.
+  not in place is now left out of every engine's build and image and named at the end, the
+  fetcher tries each `mirrors` entry when the upstream bytes are not the pinned ones, and
+  `MEGASAMPLES_ACCEPT_DRIFT=1` accepts a moved upstream and re-pins the manifest.
 * `make check` failed on a fresh clone: the catalogue read its numbers from a running image; it
   now reads the pinned counts from the repository, with identical numbers.
 * `uv sync` rewrote `uv.lock`, which had not been regenerated for a dependency marker; the lock is

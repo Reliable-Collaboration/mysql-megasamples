@@ -61,14 +61,23 @@ class SQLite(Engine):
         # a container that holds the files: `docker exec megasamples-sqlite sqlite3 /data/sakila.sqlite`
         # is the client. At start it copies the image's files into the named volume the consoles
         # mount, so a rebuilt image replaces what they see rather than leaving a stale volume behind.
+        # Each file is copied under a temporary name and moved into place, and a marker is written
+        # last: the health check waits for the marker, so a console never opens a half-copied file
+        # and `up --wait` waits for the whole 900 MB rather than for the first file. The copy of
+        # that much data was OOM-killed under a 64 MB limit on the first start (2026-09-10), so the
+        # limit is 256 MB and the health check has a start period long enough for a slow disk.
+        # `$$`: Compose interpolates a single `$` in compose.yaml; the doubled one reaches the shell
+        copy = ("rm -f /shared/.complete; for f in /data/*.sqlite; do n=$$(basename \"$$f\"); "
+                "cp -f \"$$f\" \"/shared/.$$n.part\" && mv -f \"/shared/.$$n.part\" \"/shared/$$n\" || exit 1; done; "
+                "touch /shared/.complete && exec sleep infinity")
         return {
             "image": f"${{MEGASAMPLES_SQLITE_IMAGE:-{self.image}}}",
-            "mem_limit": "64m",
+            "mem_limit": "256m",
             "container_name": self.container,
-            "command": ["sh", "-c", "cp -f /data/*.sqlite /shared/ && exec sleep infinity"],
+            "command": ["sh", "-c", copy],
             "volumes": ["megasamples-sqlite:/shared"],
-            "healthcheck": {"test": ["CMD-SHELL", "test -s /shared/megasamples.sqlite"],
-                            "interval": "5s", "timeout": "5s", "retries": 6},
+            "healthcheck": {"test": ["CMD-SHELL", "test -f /shared/.complete"],
+                            "interval": "5s", "timeout": "5s", "retries": 12, "start_period": "180s"},
             "restart": "unless-stopped",
         }
 

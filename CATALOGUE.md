@@ -3,7 +3,7 @@
 
 # Catalogue
 
-**21 databases in the core image** — 248 tables, 9,056,697 rows — plus the datasets that are opt-in, generated on your machine, or that you fetch yourself.
+**21 databases in the core image** — 248 tables, 9,057,036 rows — plus the datasets that are opt-in, generated on your machine, or that you fetch yourself.
 
 Generated from `datasets/*/dataset.yaml`, each core dataset's pinned `tests/expected_counts.yaml` (the
 counts every image is tested against) and each dataset's `ports/not_ported.yaml`, so it cannot drift
@@ -21,7 +21,7 @@ not carry, listed by name in `datasets/<name>/ports/not_ported.yaml`.
 |---|---|---:|---:|---|---|---|
 | `adventureworks` | Microsoft's flagship 68-table, 5-schema OLTP sample (bicycle manufacturer) | 69 | 759,240 | MySQL · PostgreSQL · SQLite (21 not ported) | [mit](knowledge/licenses/mit.md) | ship the notice |
 | `adventureworks_lt` | The lightweight 12-table AdventureWorks (SalesLT schema) | 12 | 4,277 | MySQL · PostgreSQL · SQLite (3 not ported) | [mit](knowledge/licenses/mit.md) | ship the notice |
-| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 259,702 | MySQL · PostgreSQL · SQLite | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) | attribution, verbatim disclaimer |
+| `chicago_crimes` | The City of Chicago's 8.6 M-row reported-crime extract plus the 434-row IUCR code lookup | 2 | 260,041 | MySQL · PostgreSQL · SQLite | [chicago-data-portal-terms](knowledge/licenses/chicago-data-portal-terms.md) | attribution, verbatim disclaimer |
 | `chinook` | Luis Rocha's digital media store sample (v1.4.5, 2024-02-12) | 11 | 15,607 | MySQL · PostgreSQL · SQLite | [mit](knowledge/licenses/mit.md) | ship the notice |
 | `contoso` | SQLBI's synthetic Contoso retail star schema V2 | 8 | 753,467 | MySQL · PostgreSQL · SQLite | [mit](knowledge/licenses/mit.md) | ship the notice |
 | `dvdstore` | Dell/VMware's open-source OLTP benchmark schema (DVD e-commerce with reviews and memberships) | 9 | 174,716 | MySQL · PostgreSQL · SQLite (2 not ported) | [gpl-2-0](knowledge/licenses/gpl-2-0.md) | share-alike |

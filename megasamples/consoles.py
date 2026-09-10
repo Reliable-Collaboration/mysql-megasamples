@@ -29,23 +29,11 @@ class Console:
 CONSOLES = [
     Console("landing", "Console index", (),
             "nginx@sha256:3bcf852aed06467cf075c6105892e4d5a6ebbbafa0ce22d35062db9e90ddef4c", 80, "32m",
-            "Start here: every database with its size, licence and provenance.",
+            "Start here: every database with its size, licence and provenance, and how to connect your own tool.",
             volumes=["./consoles/landing:/usr/share/nginx/html:ro"]),
-    Console("phpmyadmin", "phpMyAdmin", ("mysql",),
-            "phpmyadmin@sha256:20fa6f724ba77d41abc25b1aeb4d97692ce344c7ace305594e57c5893f60f0f7", 80, "256m",
-            "Signed in already; the server menu switches account.",
-            "http://127.0.0.1:{port}/index.php?route=/database/structure&db={db}&server=1", "P",
-            volumes=["./consoles/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"]),
-    Console("adminer", "Adminer", ("mysql", "postgres"),
-            "adminer@sha256:f1e2ba27b10a565ac77b2d8555d803be4ddb3232f4216dcf0ea85bcd8f2f1343", 8080, "160m",
-            "Its login form remains; use either account below.",
-            "http://127.0.0.1:{port}/?server=mysql&username=demo&db={db}", "A"),
-    Console("dbgate", "DbGate", ("mysql", "postgres", "sqlite"),
-            "dbgate/dbgate@sha256:14fce4ece52df514e0d320dc82cbfbca5e8f18f98464a6389b1c126f783a6b7e", 3000, "320m",
-            "Both connections are preconfigured; pick one in the sidebar."),
     Console("cloudbeaver", "CloudBeaver", ("mysql", "postgres", "sqlite"),
             "dbeaver/cloudbeaver@sha256:3b4bf82287cf4febe0d335873f1346a01100f3951d266cd6a78c27fe30429cbc", 8978, "640m",
-            "Open as a guest; both connections are in the sidebar.",
+            "Opens as a guest with every connection in the sidebar: both accounts on each server engine, one connection per SQLite file.",
             volumes=["./consoles/cloudbeaver/.cloudbeaver.auto.conf:/opt/cloudbeaver/conf/.cloudbeaver.auto.conf:ro",
                      "./consoles/cloudbeaver/generated/cloudbeaver.conf:/opt/cloudbeaver/conf/cloudbeaver.conf:ro",
                      "./consoles/cloudbeaver/generated/initial-data-sources.conf:/opt/cloudbeaver/conf/initial-data-sources.conf:ro"],
@@ -55,6 +43,21 @@ CONSOLES = [
                          "CLOUDBEAVER_APP_READ_ONLY_CONNECTION_INFO": "true",
                          "CLOUDBEAVER_SYSTEM_VARIABLES_RESOLVING_ENABLED": "true",
                          "DEMO_PASSWORD": "${DEMO_PASSWORD:-demo}", "ADMIN_PASSWORD": "${ADMIN_PASSWORD:-admin}"}),
+    # the Debian-based image, not the Alpine one: the SQLite driver's native module (better-sqlite3)
+    # is built against glibc and fails to load on musl ("fcntl64: symbol not found"), measured on
+    # 6.6.1-alpine on 2026-09-10; on this image it opens a file and answers a query
+    Console("dbgate", "DbGate", ("mysql", "postgres", "sqlite"),
+            "dbgate/dbgate@sha256:7f8c7a155673e910270563054be27868421da961d4e909f568eafd61e6541fe2", 3000, "320m",
+            "Every connection preconfigured in the sidebar: both accounts on each server engine, one per SQLite file."),
+    Console("adminer", "Adminer", ("mysql", "postgres"),
+            "adminer@sha256:f1e2ba27b10a565ac77b2d8555d803be4ddb3232f4216dcf0ea85bcd8f2f1343", 8080, "160m",
+            "Its login form remains: the page behind this card says what to type for each engine, and opens it filled in.",
+            "http://127.0.0.1:{port}/?server=mysql&username=demo&db={db}", "A"),
+    Console("phpmyadmin", "phpMyAdmin", ("mysql",),
+            "phpmyadmin@sha256:20fa6f724ba77d41abc25b1aeb4d97692ce344c7ace305594e57c5893f60f0f7", 80, "256m",
+            "MySQL only. Signed in already; the server menu switches account.",
+            "http://127.0.0.1:{port}/index.php?route=/database/structure&db={db}&server=1", "P",
+            volumes=["./consoles/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php:ro"]),
 ]
 _BY_NAME = {c.name: c for c in CONSOLES}
 
