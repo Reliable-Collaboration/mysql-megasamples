@@ -10,7 +10,7 @@ endif
 
 .PHONY: help configure list list-core list-quick fetch build image test-image run up down status clean clean-all \
         compose console-page catalogue provenance check okf-check audit-assets prepub-check \
-        test-console build-server build-server-stop restore loader-image \
+        test-console screenshots build-server build-server-stop restore loader-image \
         wwi-export verify-oracle load-citibike load-divvy load-tpcc bench $(DATASETS)
 
 help:
@@ -29,6 +29,7 @@ help:
 	@echo "                        (FROM_DUMPS=1: from the dumps already built, without the build server)"
 	@echo "  make test-image [ENGINE=mysql]      the image-level tests"
 	@echo "  make test-console     the consoles are up and the accounts behave"
+	@echo "  make screenshots      retake the README's pictures from the running stack (docs/screenshots/)"
 	@echo "  make restore [D=...]  reload datasets into the MySQL build server from their dumps"
 	@echo ""
 	@echo "Documents and checks:"
@@ -71,6 +72,12 @@ build-server:   ; @$(MS) build-server start
 build-server-stop: ; @$(MS) build-server stop
 restore:        ; @$(MS) restore $(D)
 bench:          ; @$(MS) bench --dataset $(or $(DATASET),employees) --repeat $(or $(REPEAT),1)
+
+# the README's screenshots, taken by docs/screenshots/capture.py in the Playwright image on the stack's network
+screenshots:
+	@docker run --rm --network sql-megasamples_default -v "$(CURDIR)/docs/screenshots:/out" --label megasamples.transient=true \
+	  mcr.microsoft.com/playwright/python:v1.49.1-noble sh -c "pip install -q --break-system-packages playwright==1.49.1 && python3 /out/capture.py"
+	@ls -l docs/screenshots/*.png
 
 # the build-time loader image: compiles SSB's dbgen and carries sysbench for TPC-C. Nothing from it
 # reaches any published image.

@@ -21,6 +21,15 @@ Every dataset keeps its own upstream licence — this project never places a sin
 data. [`CATALOGUE.md`](CATALOGUE.md) lists all 38 datasets with what each licence asks of you, and
 [Licensing](#licensing) is worth reading before you publish anything built from this.
 
+<p align="center">
+  <a href="docs/screenshots/landing.png"><img src="docs/screenshots/landing.png" alt="The console index: how to connect your own tool to MySQL, PostgreSQL and SQLite, the four consoles, and the 21 databases with their tables, rows and sizes on each engine" width="100%"></a>
+</p>
+<p align="center">
+  <a href="docs/screenshots/cloudbeaver.png"><img src="docs/screenshots/cloudbeaver.png" alt="CloudBeaver, opened as a guest: the MySQL read-only connection expanded to its 21 databases, and Sakila's film table on the Data tab" width="49%"></a>
+  <a href="docs/screenshots/dbgate.png"><img src="docs/screenshots/dbgate.png" alt="DbGate with every connection preconfigured: Sakila's tables with their row counts, the film table's columns and references, and its rows" width="49%"></a>
+</p>
+<p align="center"><sub>The console index at <code>http://127.0.0.1:8080/</code>, then CloudBeaver and DbGate on Sakila's <code>film</code> table — all three engines, every database, one <code>make up</code>. Retake them with <code>make screenshots</code>.</sub></p>
+
 **Status: not published yet.** There is no image to `docker pull`; you build them locally, which
 is what the rest of this page is about. [`ARCHITECTURE.md`](ARCHITECTURE.md) describes how the
 pieces fit, [`PLAN.md`](PLAN.md) what is being built next, and [`knowledge/`](knowledge/index.md)
@@ -463,6 +472,7 @@ dataset was converted the way it was, that is where the answer is.
 make check                       # the local gate: bundle, generated files, port records reproducible, unit tests
 uv run pytest -q                 # the unit tests alone: inventory, configuration, staging, the port toolkit
 make build D="$(make -s list-quick)"   # the quick subset end to end, before a push that touches the pipeline
+make screenshots                 # retake the README's pictures from the running stack (docs/screenshots/capture.py)
 ```
 
 If a `docker pull` or a download hangs with no error, suspect IPv6 first — see
